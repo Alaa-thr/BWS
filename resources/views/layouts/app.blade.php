@@ -1,5 +1,7 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<script src="{{ asset('js/vue.js') }}"></script>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,6 +13,7 @@
    
 
     <!-- Scripts -->
+
     <script src="{{ asset('jss/app.js') }}" ></script>
     <!--<link href="{{ asset('csss/app.css') }}" rel="stylesheet" type="text/css">-->
      <link href="assetsClient/css/bootstrap.min.css" rel="stylesheet" />
@@ -1071,6 +1074,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         });
     </script>
     <script src="js/main.js"></script>
+
 
 </body>
 </html>

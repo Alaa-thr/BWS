@@ -31,14 +31,13 @@
             </div>
             <div class="card-body"  >
 				<form class="bg0 p-t-75 p-b-85"  id="cx" style="height: 300px;">
-				
 					<!--Demande d'Emploi 1-->
-					<div class="card-head"  id="cmd">              
+					<div class="card-head"  id="c">              
 					  <div class="row" >
 						<div class="col-md-4 pr-1" >
-						  <div >
-						  <input class="increase" type="checkbox" />         
-							   <p class="" id="t" > Demande d'Emploi  1</p>
+						  <div>
+							<input class="increase" type="checkbox" />         
+							   <p class="" id="t" > Demande d'Emploi 1</p>
 						  </div>
 						</div>
 						<div class="col-md-4 px-1">
@@ -47,9 +46,9 @@
 						<div class="col-md-4 pl-1">
 						  <div class="">
 							<a class="f" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
-							  <i class="fas fa-ellipsis-v"  id="y" style="	margin-left: 232px;"></i>
+							  <i class="fas fa-ellipsis-v"  id="y"></i>
 						   </a>
-						  <div class="dropdown-menu " x-placement="right-start" style=" margin-right: -371px;">
+						  <div class="dropdown-menu " x-placement="right-start" style=" margin-right: 11px;">
 						<a  href="#" id="vv"  class=" trans-04 p-lr-11 icon-header-noti  js-show-modal1" >Plus de Détails</a><br>
 						<a href="#" id="vv">Supprimer</a>
 						   </div><p class=""  id="tt" > 09/04/2020 15:39</p>
@@ -65,55 +64,48 @@
 						<div class="col-md-4 px-1">
 						 
 						</div>
-						<div class="col-md-4 pr-3">
-						  <div class="">
-							<label  id="tttt">Prix Total : 2290 Da</label>
+							  </div>      
+					</div>
+					
+		  
+					   <!--Demande d'Emploi 2-->
+					<div class="card-head"  id="c">              
+					  <div class="row" >
+						<div class="col-md-4 pr-1" >
+						  <div>
+							<input class="increase" type="checkbox" />         
+							   <p class="" id="t" > Demande d'Emploi 1</p>
 						  </div>
 						</div>
+						<div class="col-md-4 px-1">
+						 
+						</div>
+						<div class="col-md-4 pl-1">
+						  <div class="">
+							<a class="f" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
+							  <i class="fas fa-ellipsis-v"  id="y"></i>
+						   </a>
+						  <div class="dropdown-menu " x-placement="right-start" style=" margin-right: 11px;">
+						<a  href="#" id="vv"  class=" trans-04 p-lr-11 icon-header-noti  js-show-modal1" >Plus de Détails</a><br>
+						<a href="#" id="vv">Supprimer</a>
+						   </div><p class=""  id="tt" > 09/04/2020 15:39</p>
+						  </div>
+						</div>
+					  </div>
+					  <div class="row">
+						<div class="col-md-4 pr-1">
+						  <div class="">
+							<label  id="ttt">Addresse : Mansourah-Tlemcen</label>
+						  </div>
+						</div>
+						<div class="col-md-4 px-1">
+						 
+						</div>
+					
 					  </div>      
 					</div>
-
 					
-					<!--Demande d'Emploi 2-->
-					<div class="card-head"  id="cmdd">              
-					  <div class="row" >
-						<div class="col-md-4 pr-1" >
-						  <div >
-						  <input class="increase" type="checkbox" />         
-							   <p class="" id="t" > Demande d'Emploi 2</p>
-						  </div>
-						</div>
-						<div class="col-md-4 px-1">
-						 
-						</div>
-						<div class="col-md-4 pl-1">
-						  <div class="">
-							<a class="f" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
-							  <i class="fas fa-ellipsis-v"  id="y" style="	margin-left: 232px;"></i>
-						   </a>
-						  <div class="dropdown-menu " x-placement="right-start" style=" margin-right: -371px;">
-						<a  href="#" id="vv"  class=" trans-04 p-lr-11 icon-header-noti  js-show-modal1" >Plus de Détails</a><br>
-						<a href="#" id="vv">Supprimer</a>
-						   </div><p class=""  id="tt" > 09/04/2020 15:39</p>
-						  </div>
-						</div>
-					  </div>
-					  <div class="row">
-						<div class="col-md-4 pr-1">
-						  <div class="">
-							<label  id="ttt">Addresse : Mansourah-Tlemcen</label>
-						  </div>
-						</div>
-						<div class="col-md-4 px-1">
-						 
-						</div>
-						<div class="col-md-4 pr-3">
-						  <div class="">
-							<label  id="tttt">Prix Total : 2290 Da</label>
-						  </div>
-						</div>
-					  </div>      
-					</div>  
+					  
 				</form>
 				  
 				
