@@ -246,6 +246,9 @@
       <!-- End Navbar -->
       @yield('content')
 </div>
+  
+  @stack('javascripts')
+
   <script src="assetsAdmin/js/jquery-3.2.1.min.js"></script>
   <script src="assetsAdmin/js/animsition.min.js"></script>
   <script src="assetsAdmin/js/main.js"></script>

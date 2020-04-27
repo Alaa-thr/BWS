@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Client;
+use Auth;
 
 class BwsController extends Controller
 {
@@ -133,7 +135,7 @@ class BwsController extends Controller
     public function favoris_client(){
         return view('favoris_client');
     }
-
+   
 
 /************************************************ Vendeur***********************************************/
 
