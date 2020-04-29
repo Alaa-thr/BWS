@@ -1,11 +1,11 @@
 @extends('layouts.template_clinet')
 @section('content')
 
-	
-	<head>
-		<title>{{ ( 'Historique') }}</title>
-	</head>
-	<nav class="navbar navbar-expand-lg navbar-transparent  bg-primary  navbar-absolute">
+  
+  <head>
+    <title>{{ ( 'Historique') }}</title>
+  </head>
+  <nav class="navbar navbar-expand-lg navbar-transparent  bg-primary  navbar-absolute">
         <div class="container-fluid">
           <div class="navbar-wrapper">
             <div class="navbar-toggle">
@@ -23,7 +23,7 @@
     </div>
 
 
-	<div class="content" id="pr">
+  <div class="content" id="pr">
          <div class="row"  >
             <div class="col-md-12" >
               <div class="card"  id="xc" style=" width: 1000px;"  >
@@ -38,207 +38,130 @@
                      
                     </thead>
                     <tbody>
+                    <!--historique 1-->
                          <tr>
                  <td>
    
 
 <form>
-  <div>
-  	    <input type="checkbox"  name="subscribe" value="newsletter" style="margin-top:15px;">
-  <label for="subscribeNews" class="description text-right"  >  
-  	        <a class="dropdown-item " href="#"  style="margin-left:-800px;">21:48</a>
-
-     </label>
-<label for="subscribeNews" >
-  	        <a class="dropdown-item"   href="#" style="margin-left:102px; margin-top:-20px;" >   Vous Avez ajouter 'nom_Produit' sur votre panier</a>
-
-     </label>
-
- </div>
- 
-    
+    <input type="checkbox"  name="subscribe" value="newsletter">  
+    <label for="subscribeNews" class="description text-right"  > 
+        <a class="dropdown-item " href="#" id="h" >21:48</a>
+    </label>
+    <label for="subscribeNews" >
+        <a class="dropdown-item"   href="#" id="d"  >   Vous Avez ajouter 'nom_Produit' sur votre panier</a>
+    </label>
 </form>
 
   <td  class="dropdown " id="k3">
-                          <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
-                                <img src="{{ asset('assetsClient/img/input/delete.png') }}" id="k1" height="20px" height="10px">
-                             </a>
-                            <div class="dropdown-menu " x-placement="right-start" >
-                               
-                                <a class="dropdown-item" href="#" id="k3">Supprimer</a>
-                            </div>
-                        </td>
-       
-
-    </tr>
+    <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
+         <img src="{{ asset('assetsClient/img/input/delete.png') }}" id="k1" height="20px" height="10px">
+     </a>
+    <div class="dropdown-menu " x-placement="right-start" id="supp">
+       <a class="dropdown-item" href="#" id="k3">Supprimer</a>
+    </div>
+  </td></tr>
                         
-   <tr>
+   
+
+                           <!--historique 2-->
+
+   
+                           <tr>
                  <td>
    
 
 <form>
-  <div>
-  	    <input type="checkbox" style="margin-top:15px; name="subscribe" value="newsletter">
-  <label for="subscribeNews" class="description text-right"  >  
-  	        <a class="dropdown-item " class="letter-spacing:6px"  href="#"  style="margin-left:-800px;">21:48</a>
-
-     </label>
-<label for="subscribeNews" class="description text-right">
-  	        <a class="dropdown-item" class="letter-spacing:6px"    href="#"  style="margin-left:102px; margin-top:-20px;" >   Vous Avez ajouter 'nom_Produit' sur votre panier</a>
-
-     </label>
-
- </div>
- 
-    
+    <input type="checkbox"  name="subscribe" value="newsletter">  
+    <label for="subscribeNews" class="description text-right"  > 
+        <a class="dropdown-item " href="#" id="h" >21:48</a>
+    </label>
+    <label for="subscribeNews" >
+        <a class="dropdown-item"   href="#" id="d"  >   Vous Avez ajouter 'nom_Produit' sur votre panier</a>
+    </label>
 </form>
-<td  class="dropdown " id="k3">
-                          <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
-                                <img src="{{ asset('assetsClient/img/input/delete.png') }}" alt="..."/ id="k1" height="20px" height="10px">
-                             </a>
-                            <div class="dropdown-menu " x-placement="right-start" >
-                               
-                                <a class="dropdown-item" href="#" id="k3">Supprimer</a>
-                            </div>
-                        </td>
 
-    </tr>
-                       
+  <td  class="dropdown " id="k3">
+    <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
+         <img src="{{ asset('assetsClient/img/input/delete.png') }}" id="k1" height="20px" height="10px">
+     </a>
+    <div class="dropdown-menu " x-placement="right-start" id="supp">
+       <a class="dropdown-item" href="#" id="k3">Supprimer</a>
+    </div>
+  </td></tr>
+                             <!--historique 3-->
+
+                             <tr>
+                 <td>
    
+
+<form>
+    <input type="checkbox"  name="subscribe" value="newsletter">  
+    <label for="subscribeNews" class="description text-right"  > 
+        <a class="dropdown-item " href="#" id="h" >21:48</a>
+    </label>
+    <label for="subscribeNews" >
+        <a class="dropdown-item"   href="#" id="d"  >   Vous Avez ajouter 'nom_Produit' sur votre panier</a>
+    </label>
+</form>
+
+  <td  class="dropdown " id="k3">
+    <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
+         <img src="{{ asset('assetsClient/img/input/delete.png') }}" id="k1" height="20px" height="10px">
+     </a>
+    <div class="dropdown-menu " x-placement="right-start" id="supp">
+       <a class="dropdown-item" href="#" id="k3">Supprimer</a>
+    </div>
+  </td></tr>
+    <!--historique 4-->
+
+    <tr>
+                 <td>
+   
+
+<form>
+    <input type="checkbox"  name="subscribe" value="newsletter">  
+    <label for="subscribeNews" class="description text-right"  > 
+        <a class="dropdown-item " href="#" id="h" >21:48</a>
+    </label>
+    <label for="subscribeNews" >
+        <a class="dropdown-item"   href="#" id="d"  >   Vous Avez ajouter 'nom_Produit' sur votre panier</a>
+    </label>
+</form>
+
+  <td  class="dropdown " id="k3">
+    <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
+         <img src="{{ asset('assetsClient/img/input/delete.png') }}" id="k1" height="20px" height="10px">
+     </a>
+    <div class="dropdown-menu " x-placement="right-start" id="supp">
+       <a class="dropdown-item" href="#" id="k3">Supprimer</a>
+    </div>
+  </td></tr>
+              <!--historique 5-->
+
               <tr>
                  <td>
    
 
 <form>
-  <div>
-  	    <input type="checkbox" style="margin-top:15px; name="subscribe" value="newsletter">
-  <label for="subscribeNews" class="description text-right"  >  
-  	        <a class="dropdown-item " class="letter-spacing:6px"  href="#"style="margin-left:-800px;">21:48</a>
-
-     </label>
-<label for="subscribeNews" class="description text-right">
-  	        <a class="dropdown-item" class="letter-spacing:6px"    href="#"  style="margin-left:102px; margin-top:-20px;" >   Vous Avez ajouter 'nom_Produit' sur votre panier</a>
-
-     </label>
-
- </div>
- 
-    
+    <input type="checkbox"  name="subscribe" value="newsletter">  
+    <label for="subscribeNews" class="description text-right"  > 
+        <a class="dropdown-item " href="#" id="h" >21:48</a>
+    </label>
+    <label for="subscribeNews" >
+        <a class="dropdown-item"   href="#" id="d"  >   Vous Avez ajouter 'nom_Produit' sur votre panier</a>
+    </label>
 </form>
-  
+
   <td  class="dropdown " id="k3">
-                          <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
-                                <img src="{{ asset('assetsClient/img/input/delete.png') }}" alt="..."/ id="k1" height="20px" height="10px">
-                             </a>
-                            <div class="dropdown-menu " x-placement="right-start" >
-                               
-                                <a class="dropdown-item" href="#" id="k3">Supprimer</a>
-                            </div>
-                        </td>
-
-    </tr>
-       <tr>
-                 <td>
-   
-
-<form>
-  <div>
-  	    <input type="checkbox" style="margin-top:15px; name="subscribe" value="newsletter">
-  <label for="subscribeNews" class="description text-right"  >  
-  	        <a class="dropdown-item " class="letter-spacing:6px"  href="#"style="margin-left:-800px;">21:48</a>
-
-     </label>
-<label for="subscribeNews" class="description text-right">
-  	        <a class="dropdown-item" class="letter-spacing:6px"    href="#"  style="margin-left:102px; margin-top:-20px;" >   Vous Avez ajouter 'nom_Produit' sur votre panier</a>
-
-     </label>
-
- </div>
- 
-    
-</form>
-  <td  class="dropdown " id="k3">
-                          <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
-                                <img src="{{ asset('assetsClient/img/input/delete.png') }}" alt="..."/ id="k1" height="20px" height="10px">
-                             </a>
-                            <div class="dropdown-menu " x-placement="right-start" >
-                               
-                                <a class="dropdown-item" href="#" id="k3">Supprimer</a>
-                            </div>
-                        </td>
-
-    </tr>            
-          <tr>
-                 <td>
-   
-
-<form>
-  <div>
-  	    <input type="checkbox" style="margin-top:15px; name="subscribe" value="newsletter">
-  <label for="subscribeNews" class="description text-right"  >  
-  	        <a class="dropdown-item " class="letter-spacing:6px"  href="#"style="margin-left:-800px;">21:48</a>
-
-     </label>
-<label for="subscribeNews" class="description text-right">
-  	        <a class="dropdown-item" class="letter-spacing:6px"    href="#"  style="margin-left:102px; margin-top:-20px;" >   Vous Avez ajouter 'nom_Produit' sur votre panier</a>
-
-     </label>
-
- </div>
- 
-    
-</form>
-  <td  class="dropdown " id="k3">
-                          <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
-                                <img src="{{ asset('assetsClient/img/input/delete.png') }}" alt="..."/ id="k1" height="20px" height="10px">
-                             </a>
-                            <div class="dropdown-menu " x-placement="right-start" >
-                               
-                                <a class="dropdown-item" href="#" id="k3">Supprimer</a>
-                            </div>
-                        </td>
-
-    </tr>
-       <tr>
-                 <td>
-   
-
-<form>
-  <div>
-  	    <input type="checkbox" style="margin-top:15px; name="subscribe" value="newsletter">
-  <label for="subscribeNews" class="description text-right"  >  
-  	        <a class="dropdown-item " class="letter-spacing:6px"  href="#"style="margin-left:-800px;">21:48</a>
-
-     </label>
-<label for="subscribeNews" class="description text-right">
-  	        <a class="dropdown-item" class="letter-spacing:6px"    href="#"  style="margin-left:102px; margin-top:-20px;" >   Vous Avez ajouter 'nom_Produit' sur votre panier</a>
-
-     </label>
-
- </div>
- 
-    
-</form>
-  <td  class="dropdown " id="k3">
-                          <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
-                                <img src="{{ asset('assetsClient/img/input/delete.png') }}" alt="..."/ id="k1" height="20px" height="10px">
-                             </a>
-                            <div class="dropdown-menu " x-placement="right-start" >
-                               
-                                <a class="dropdown-item" href="#" id="k3">Supprimer</a>
-                            </div>
-                        </td>
-
-    </tr>               
-        
-         
-                       
-                        
-                       
-                        
-                        
-                      
-                    </tbody>
+    <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
+         <img src="{{ asset('assetsClient/img/input/delete.png') }}" id="k1" height="20px" height="10px">
+     </a>
+    <div class="dropdown-menu " x-placement="right-start" id="supp">
+       <a class="dropdown-item" href="#" id="k3">Supprimer</a>
+    </div>
+  </td></tr>
+        </tbody>
                   </table>
                   <div class="pagination" >
                         <a href="#"> &laquo; </a>

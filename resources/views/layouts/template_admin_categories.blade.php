@@ -227,7 +227,8 @@
       @yield('content')
        
 </div>
-  
+           
+      @stack('javascripts')
 
   <script src="assetsAdmin/js/core/jquery.min.js"></script>
   <script src="assetsAdmin/js/core/popper.min.js"></script>

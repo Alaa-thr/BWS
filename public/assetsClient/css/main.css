@@ -85,7 +85,7 @@ font-size: 16px;}
 }
 /*carré blanc du commande*/
 #p{
-  box-shadow: 10px 10px 15px grey;/*الظل */  
+  box-shadow: 10px 10px 15px grey;/*???? */  
    width: 1030px;
   margin-left: -20px;
   margin-top: -50px;
@@ -100,12 +100,11 @@ padding-top: 10px;
 }
 
 #t{
-color:black;
+  color:black;
 font-size: 15px; 
 font-weight: 600;
 font-style: italic;
 margin-top: -18px;
-margin-left: 12px;
 }
 #tt{
   color:black;
@@ -123,7 +122,7 @@ font-size: 15px;
 font-weight: 400;
 font-style: italic;
 margin-top:20px;
-padding-left: 40px;
+padding-left: 30px;
 }
 #tttt{
 width:200px;
@@ -3055,6 +3054,7 @@ input.num-product::-webkit-inner-spin-button {
 .bg8 {background-color: #f3f3f3;}
 .bg9 {background-color: rgba(255,255,255,0.9);}
 .bg10 {background-color: #db1313;}
+.bg11 {background-color: #13db45;}
 /*---------------------------------------------*/
 .bg-overlay1::before {
   content: "";
