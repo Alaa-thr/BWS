@@ -420,7 +420,14 @@
                               </button>
                               
                               <div class="dropdown-menu m-r-35" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#">Profil</a>
+                                @if(Auth::user()->type_compte == 'c')
+                                <a class="dropdown-item" href="{{ route('profilClient')}}">Profil</a>
+                                @elseif(Auth::user()->type_compte == 'v')
+                                <a class="dropdown-item" href="{{ route('profilVendeur')}}">Profil</a>
+                                @elseif(Auth::user()->type_compte == 'e')
+                                <a class="dropdown-item" href="{{route('profilEmployeur')}}">Profil</a>@elseif(Auth::user()->type_compte == 'a')
+                                <a class="dropdown-item" href="{{route('profilAdmin')}}">Profil</a>
+                                @endif
                                 <div class="dropdown-divider"></div>
                                 <div>
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
@@ -473,7 +480,14 @@
                               </button>
                               
                               <div class="dropdown-menu m-r-35" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#">Profil</a>
+                                @if(Auth::user()->type_compte == 'c')
+                                <a class="dropdown-item" href="{{ route('profilClient')}}">Profil</a>
+                                @elseif(Auth::user()->type_compte == 'v')
+                                <a class="dropdown-item" href="{{ route('profilVendeur')}}">Profil</a>
+                                @elseif(Auth::user()->type_compte == 'e')
+                                <a class="dropdown-item" href="{{route('profilEmployeur')}}">Profil</a>@elseif(Auth::user()->type_compte == 'a')
+                                <a class="dropdown-item" href="{{route('profilAdmin')}}">Profil</a>
+                                @endif
                                 <div class="dropdown-divider"></div>
                                 <div>
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();

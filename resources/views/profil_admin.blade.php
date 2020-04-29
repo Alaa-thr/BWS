@@ -1,4 +1,4 @@
-@extends('layouts.template_clinet')
+@extends('layouts.template_admin')
 
 @section('content')
 

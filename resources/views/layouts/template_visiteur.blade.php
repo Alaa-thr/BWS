@@ -90,7 +90,7 @@
         <!-- Header desktop -->
         <?php
 
-                $stripeAccueil=$stripeShop=$stripeEmploi=$stripeArticle=$stripeAPropos=$stripeContact='';
+                $stripeAccueil=$stripeShop=$stripeEmploi=$stripeArticle=$stripeAPropos=$stripeContact=$stripePanier='';
                 
                 $urlAcctuiel = Route::getCurrentRoute()->uri();
                 if($urlAcctuiel == 'article'){
@@ -405,7 +405,7 @@
                             <i class="zmdi zmdi-search"></i>
                         </div>
 
-                        <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11  js-show-cart <?php echo $stripePanier ?>" >
+                        <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11  js-show-cart <?php echo $stripePanier ?>">
                             <i class="zmdi zmdi-shopping-cart"></i>
                         
                         </div>
@@ -422,7 +422,14 @@
                               </button>
                               
                               <div class="dropdown-menu m-r-35" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#">Profil</a>
+                                @if(Auth::user()->type_compte == 'c')
+                                <a class="dropdown-item" href="{{ route('profilClient')}}">Profil</a>
+                                @elseif(Auth::user()->type_compte == 'v')
+                                <a class="dropdown-item" href="{{ route('profilVendeur')}}">Profil</a>
+                                @elseif(Auth::user()->type_compte == 'e')
+                                <a class="dropdown-item" href="{{route('profilEmployeur')}}">Profil</a>@elseif(Auth::user()->type_compte == 'a')
+                                <a class="dropdown-item" href="{{route('profilAdmin')}}">Profil</a>
+                                @endif
                                 <div class="dropdown-divider"></div>
                                 <div>
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
@@ -475,7 +482,14 @@
                               </button>
                               
                               <div class="dropdown-menu m-r-35" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#">Profil</a>
+                                 @if(Auth::user()->type_compte == 'c')
+                                <a class="dropdown-item" href="{{ route('profilClient')}}">Profil</a>
+                                @elseif(Auth::user()->type_compte == 'v')
+                                <a class="dropdown-item" href="{{ route('profilVendeur')}}">Profil</a>
+                                @elseif(Auth::user()->type_compte == 'e')
+                                <a class="dropdown-item" href="{{route('profilEmployeur')}}">Profil</a>@elseif(Auth::user()->type_compte == 'a')
+                                <a class="dropdown-item" href="{{route('profilAdmin')}}">Profil</a>
+                                @endif
                                 <div class="dropdown-divider"></div>
                                 <div>
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
@@ -729,11 +743,11 @@
                     </div>
 
                     <div class="header-cart-buttons flex-w w-full">
-                        <a href="shoping-cart.html" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+                        <a  href="{{route('panierVisiteur')}}" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
                             View Cart
                         </a>
 
-                        <a href="shoping-cart.html" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
+                        <a  href="{{route('panierVisiteur')}}" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
                             Check Out
                         </a>
                     </div>
