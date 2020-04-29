@@ -19,16 +19,37 @@
   <link href="assetsAdmin/css/now-ui-dashboard.css?v=1.5.0" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="assetsAdmin/demo/demo.css" rel="stylesheet" />
-   <?php
+  
 
-         $stripeCatego='';
+  <link href="assetsAdmin/css/util.css" rel="stylesheet" />
+  <link href="assetsAdmin/css/main.css" rel="stylesheet" />
+  <?php
+
+         $stripeProfil=$stripeStatistique=$stripeEmail=$stripeNotif=$stripeArticle=$stripeCatego=$stripeGererUser='';
                 
          $urlAcctuiel = Route::getCurrentRoute()->uri();
-         if($urlAcctuiel == 'categoriesAdmin'){
+         if($urlAcctuiel == 'statistiquesAdmin'){
+             $stripeStatistique='active';
+         }
+         else if($urlAcctuiel == 'profilAdmin'){
+             $stripeProfil='active';
+         }
+         else if($urlAcctuiel == 'emails'){
+             $stripeEmail='active';
+         }
+         else if($urlAcctuiel == 'vendeur' || $urlAcctuiel == 'admin' || $urlAcctuiel == 'client' ||$urlAcctuiel == 'employeur'){
+             $stripeGererUser='active';
+         }
+         else if($urlAcctuiel == 'notificationsAdmin'){
+             $stripeNotif='active';
+         }
+         else if($urlAcctuiel == 'articlesAdmin'){
+             $stripeArticle='active';
+         }
+         else if($urlAcctuiel == 'categoriesAdmin'){
              $stripeCatego='active';
          }
   ?>
-
 </head>
 
 <body >
@@ -42,27 +63,27 @@
       </div>
       <div class="sidebar-wrapper" id="sidebar-wrapper">
         <ul class="nav">
-
-          <li >
-            <a href="{{route('statistiquesAdmin')}}">
+         
+          <li class="<?php echo $stripeStatistique ?>">
+            <a href="<?php echo e(route('statistiquesAdmin')); ?>">
               <i class="now-ui-icons business_chart-bar-32" id="y"></i>
               <div class="m-t-5" id="x">Statistiques</div>
             </a>
           </li>
-          <li>
-            <a href="{{route('profilAdmin')}}">
+          <li class="<?php echo $stripeProfil ?>">
+            <a href="<?php echo e(route('profilAdmin')); ?>">
               <i class="now-ui-icons users_single-02" id="y"></i>
               <div class="m-t-5" id="x">Profile</div>
             </a>
           </li>
           
-          <li >
-            <a href="{{route('emails')}}">
+          <li class="<?php echo $stripeEmail ?>">
+            <a href="<?php echo e(route('emails')); ?>">
               <i class="now-ui-icons ui-1_send" id="y"></i>
               <div class="m-t-5" id="x">Emails</div>
             </a>
           </li>
-          <li class=" dropdown" >
+          <li class=" dropdown <?php echo $stripeGererUser ?>" >
           <a href="#"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
 
               <i class="now-ui-icons business_badge" id="y"></i>
@@ -71,26 +92,26 @@
             <div class="dropdown-menu dropdown-menu-right" style="margin-right: 50px;">
                   <div class="account-item clearfix js-item-menu">
                     <div class="card-body">
-                      <a href="{{route('vendeur')}}" id="s"><b>Vendeur</b></a>
+                      <a href="<?php echo e(route('vendeur')); ?>" id="s"><b>Vendeur</b></a>
                       <hr>
-                      <a href="{{route('client')}}" id="s"><b>Client</b></a>
+                      <a href="<?php echo e(route('client')); ?>" id="s"><b>Client</b></a>
                       <hr>
-                      <a href="{{route('employeur')}}" id="s"><b>Employeur</b></a>
+                      <a href="<?php echo e(route('employeur')); ?>" id="s"><b>Employeur</b></a>
                       <hr>
-                      <a href="{{route('admin')}}" id="s"><b>Admin</b></a>
+                      <a href="<?php echo e(route('admin')); ?>" id="s"><b>Admin</b></a>
                       </div>
                     </div>
             </div>
           </li>
-          <li>
-            <a href="{{route('notificationsAdmin')}}">
+          <li class="<?php echo $stripeNotif ?>">
+            <a href="<?php echo e(route('notificationsAdmin')); ?>">
               <i class="now-ui-icons ui-1_bell-53" id="y"></i>
               <div class="m-t-5" id="x">Notifications</div>
             </a>
           </li>
           
-          <li>
-            <a href="{{route('articlesAdmin')}}">
+          <li class="<?php echo $stripeArticle ?>">
+            <a href="<?php echo e(route('articlesAdmin')); ?>">
               <i class="now-ui-icons education_paper" id="y"></i>
               <div class="m-t-5" id="x">Articles</div>
             </a>
@@ -98,7 +119,7 @@
           
          
           <li class="<?php echo $stripeCatego ?>">
-            <a href="{{route('categoriesAdmin')}}">
+            <a href="<?php echo e(route('categoriesAdmin')); ?>">
               <i class="now-ui-icons design_bullet-list-67" id="y"></i>
               <div class="m-t-5" id="x">Categories</div>
             </a>
@@ -108,7 +129,6 @@
       </div>
     </div>
 
-    
     <!-- Navbar -->
       <nav class="navbar navbar-expand-lg navbar-transparent  bg-primary  navbar-absolute">
         <div class="container-fluid">
@@ -224,12 +244,11 @@
         </div>
       </nav>
       <!-- End Navbar -->
-      @yield('content')
-       
+      <?php echo $__env->yieldContent('content'); ?>
 </div>
-           
-      @stack('javascripts')
-
+  <script src="assetsAdmin/js/jquery-3.2.1.min.js"></script>
+  <script src="assetsAdmin/js/animsition.min.js"></script>
+  <script src="assetsAdmin/js/main.js"></script>
   <script src="assetsAdmin/js/core/jquery.min.js"></script>
   <script src="assetsAdmin/js/core/popper.min.js"></script>
   <script src="assetsAdmin/js/core/bootstrap.min.js"></script>
@@ -251,4 +270,4 @@
     });
   </script>
 </body>
-</html>
+</html><?php /**PATH C:\xampp\htdocs\Basmah.WS\resources\views/layouts/template_admin.blade.php ENDPATH**/ ?>

@@ -3,8 +3,8 @@
 
 <head>
   <meta charset="utf-8"/>
-  <link rel="apple-touch-icon" sizes="76x76" href="assetsVendeur/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="assetsVendeur/img/favicon.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="assetsEmployeur/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="assetsEmployeur/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
@@ -12,37 +12,35 @@
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
   <!-- CSS Files -->
-  <link href="assetsVendeur/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="assetsVendeur/css/now-ui-dashboard.css?v=1.5.0" rel="stylesheet" />
+  <link href="assetsEmployeur/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="assetsEmployeur/css/now-ui-dashboard.css?v=1.5.0" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
-  <link href="assetsVendeur/demo/demo.css" rel="stylesheet" />
-  <link rel="stylesheet" type="text/css" href="assetsVendeur/vendor/css-hamburgers/hamburgers.min.css">
-  <link href="assetsVendeur/fonts/font-awesome-4.7.0/css/font-awesome.min.css"  rel="stylesheet" >
-  <link href="assetsVendeur/fonts/iconic/css/material-design-iconic-font.min.css" rel="stylesheet" />
-  <link href="assetsVendeur/css/util.css" rel="stylesheet" />
-  <link href="assetsVendeur/css/main.css" rel="stylesheet" />
-  <link rel="stylesheet" type="text/css" href="assetsVendeur/fonts/linearicons-v1.0.0/icon-font.min.css">
+  <link href="assetsEmployeur/demo/demo.css" rel="stylesheet" />
+  <link rel="stylesheet" type="text/css" href="assetsEmployeur/vendor/css-hamburgers/hamburgers.min.css">
+  <link href="assetsEmployeur/fonts/font-awesome-4.7.0/css/font-awesome.min.css"  rel="stylesheet" >
+  <link href="assetsEmployeur/fonts/iconic/css/material-design-iconic-font.min.css" rel="stylesheet" />
+  <link href="assetsEmployeur/css/util.css" rel="stylesheet" />
+  <link href="assetsEmployeur/css/main.css" rel="stylesheet" />
+  <link rel="stylesheet" type="text/css" href="assetsEmployeur/fonts/linearicons-v1.0.0/icon-font.min.css">
   <?php
 
-        		$stripeProfil=$stripeProduit=$stripeCmdR=$stripeCmdT=$stripeStatistique='';
-        		
-        		$urlAcctuiel = Route::getCurrentRoute()->uri();
-        		if($urlAcctuiel == 'statistiquesVendeur'){
-        			$stripeStatistique='active';
-        		}
-        		else if($urlAcctuiel == 'profilVendeur'){
-        			$stripeProfil='active';
-        		}
-        		else if($urlAcctuiel == 'produitVendeur'){
-        			$stripeProduit='active';
-        		}
-        		else if($urlAcctuiel == 'commandeRecuVendeur'){
-        			$stripeCmdR='active';
-        		}
-        		else if($urlAcctuiel == 'commandeTraiterVendeur'){
-        			$stripeCmdT='active';
-        		}
-  ?>
+           $stripeProfil=$stripeAnnonce=$stripeDmndR=$stripeDmndT='';
+                
+           $urlAcctuiel = Route::getCurrentRoute()->uri();
+           if($urlAcctuiel == 'profilEmployeur'){
+               $stripeProfil='active';
+           }
+           else if($urlAcctuiel == 'annonceEmploi'){
+               $stripeAnnonce='active';
+           }
+           else if($urlAcctuiel == 'demandeEmploiRecu'){
+               $stripeDmndR='active';
+           }
+           else if($urlAcctuiel == 'demandeEmploiTraite'){
+               $stripeDmndT='active';
+           }
+
+	?>
 </head>
 
 <body >
@@ -81,13 +79,15 @@
 					<div class="menu-desktop">
 						<ul class="main-menu">
 							<li class="active-menu">
-								<a href="{{route('accueil')}}">Accueil</a>
+								<a href="<?php echo e(route('accueil')); ?>">Accueil</a>
 							</li>
-							<li class="menu1">
-                                    <a href="{{route('shop')}}">Shop&nbsp&nbsp</a>
-                                    <span >
-                                        <i class="fa fa-angle-right" aria-hidden="true"></i>
-                                    </span>
+							<li >
+									<div class="menu1">
+										<a href="<?php echo e(route('shop')); ?>">Shop&nbsp&nbsp</a>
+										<span >
+											<i class="fa fa-angle-right" aria-hidden="true"></i>
+										</span>
+									</div>
 									<ul class="sub-menu " >
 											<div class="flex-w bg6 w-full p-lr-30 p-t-27 p-lr-15-sm">
 												<div class="filter-col1  p-b-27">
@@ -214,7 +214,7 @@
 										
 							</li>
 							<li class="menu1">
-									<a href="{{route('emploi')}}">Emploi&nbsp&nbsp</a>
+									<a href="<?php echo e(route('emploi')); ?>">Emploi&nbsp&nbsp</a>
 									<span >
 										<i class="fa fa-angle-right" aria-hidden="true"></i>
 									</span>
@@ -331,13 +331,13 @@
 								</ul>
 							</li>
 							<li>
-									<a href="{{route('article')}}">Article</a>
+									<a href="<?php echo e(route('article')); ?>">Article</a>
 							</li>
 							<li>
-									<a href="{{route('apropos')}}">A Propos</a>
+									<a href="<?php echo e(route('apropos')); ?>">A Propos</a>
 							</li>
 							<li>
-								<a href="{{route('contact')}}">Contact</a>
+								<a href="<?php echo e(route('contact')); ?>">Contact</a>
 							</li>
 						</ul>						
 					</div>	
@@ -353,34 +353,33 @@
 						
 						</div>
 							
-						 @guest
+						 <?php if(auth()->guard()->guest()): ?>
                             
                             <div class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-22 js-show-connect">
                                 <i class="zmdi zmdi-account"></i>
                              </div>
-                        @else
+                        <?php else: ?>
                            <div class="dropdown">
                               <button class="  dis-block dropdown-toggle icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-22" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="zmdi zmdi-account"></i>
                               </button>
                               
                               <div class="dropdown-menu m-r-35" aria-labelledby="dropdownMenuButton">
-                                <div href="{{ route('profilVendeur') }}">
-                              		<a class="dropdown-item" href="{{ route('profilVendeur') }}">{{ __('Profil') }}</a>
-                              	</div>
+                                <a class="dropdown-item" href="#">Profil</a>
                                 <div class="dropdown-divider"></div>
                                 <div>
-                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                    <a class="dropdown-item" href="<?php echo e(route('logout')); ?>" onclick="event.preventDefault();
                                                          document.getElementById('logout-form').submit();">
-                                            {{ __('Logout') }}
+                                            <?php echo e(__('Logout')); ?>
+
                                     </a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            @csrf
+                                    <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" style="display: none;">
+                                            <?php echo csrf_field(); ?>
                                     </form>
                                 </div>
                               </div>
                             </div>
-                        @endguest
+                        <?php endif; ?>
 
 					</div>
 				</nav>
@@ -391,11 +390,10 @@
 		<!-- Header Mobile -->
 		
 		<div class="wrap-header-mobile">
-      
-      
+
 			<!-- Logo moblie -->		
 			<div class="logo-mobile">
-				<a href="{{route('accueil')}}"><img src="images/icons/LogoFinal2.png" alt="IMG-LOGO"></a>
+				<a href="<?php echo e(route('accueil')); ?>"><img src="images/icons/LogoFinal2.png" alt="IMG-LOGO"></a>
 			</div>
 
 			<!-- Icon header -->
@@ -414,18 +412,19 @@
                               </button>
                               
                               <div class="dropdown-menu m-r-35" aria-labelledby="dropdownMenuButton">
-                              	<div href="{{ route('profilVendeur') }}">
-                              		<a class="dropdown-item" href="{{ route('profilVendeur') }}" >{{ __('Profil') }}</a>
+                              	<div href="<?php echo e(route('profilVendeur')); ?>">
+                              		<a class="dropdown-item" href="<?php echo e(route('profilVendeur')); ?>" ><?php echo e(__('Profil')); ?></a>
                               	</div>
                                 
                                 <div class="dropdown-divider"></div>
                                 <div>
-                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                    <a class="dropdown-item" href="<?php echo e(route('logout')); ?>" onclick="event.preventDefault();
                                                          document.getElementById('logout-form').submit();">
-                                            {{ __('Logout') }}
+                                            <?php echo e(__('Logout')); ?>
+
                                     </a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            @csrf
+                                    <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" style="display: none;">
+                                            <?php echo csrf_field(); ?>
                                     </form>
                                 </div>
                               </div>
@@ -435,7 +434,7 @@
 			<!-- Button show menu -->
 			<div class="btn-show-menu-mobile hov-cl1 hamburger hamburger--squeeze" >
 				<a class="hamburger-box" >
-					<img src="assetsVendeur/img/menu.png" alt="..." style="width: 60%;">
+					<img src="assetsEmployeur/img/menu.png" alt="..." style="width: 60%;">
         </a>
 			</div>
 		</div>
@@ -468,20 +467,12 @@
 
 			<ul class="main-menu-m">
 				<li>
-					<a href="{{route('accueil')}}" id="colorr">Accueil</a>
+					<a href="<?php echo e(route('accueil')); ?>" id="colorr">Accueil</a>
 					
 				</li>
 
 				<li>
-					<a href="{{route('shop')}}" id="colorr">Shop</a>
-					
-					<span class="arrow-main-menu-m">
-						<i class="fa fa-angle-right" aria-hidden="true"></i>
-					</span>
-				</li>
-
-				<li>
-					<a href="{{route('emploi')}}" id="colorr">Emploi</a>
+					<a href="<?php echo e(route('shop')); ?>" id="colorr">Shop</a>
 					
 					<span class="arrow-main-menu-m">
 						<i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -489,15 +480,23 @@
 				</li>
 
 				<li>
-					<a href="{{route('article')}}" id="colorr">Article</a>
+					<a href="<?php echo e(route('emploi')); ?>" id="colorr">Emploi</a>
+					
+					<span class="arrow-main-menu-m">
+						<i class="fa fa-angle-right" aria-hidden="true"></i>
+					</span>
 				</li>
 
 				<li>
-					<a href="{{route('apropos')}}" id="colorr">A propos</a>
+					<a href="<?php echo e(route('article')); ?>" id="colorr">Article</a>
 				</li>
 
 				<li>
-					<a href="{{route('contact')}}" id="colorr">Contact</a>
+					<a href="<?php echo e(route('apropos')); ?>" id="colorr">A propos</a>
+				</li>
+
+				<li>
+					<a href="<?php echo e(route('contact')); ?>" id="colorr">Contact</a>
 				</li>
 			</ul>
 		</div>
@@ -518,7 +517,7 @@
 				
 			</div>
 		</div>
-
+	
     <!-- Cart -->
     <div class="wrap-header-cart js-panel-cart" style="z-index: 13000; ">
         <div class="s-full js-hide-cart"></div>
@@ -608,53 +607,47 @@
 	</header>
 
   <div class="wrapper">
-    <div class="sidebarr" data-color="griss" style="z-index: 10000;">
+  	<div class="sidebarr" data-color="griss" style="z-index: 10000;">
       
       <div class="logo m-t-15">
-        <img src ="assetsVendeur/img/logo1.png" alt="...">
+        <img src ="assetsEmployeur/img/logo1.png" alt="...">
       </div>
       <div class="sidebar-wrapper " id="sidebar-wrapper">
         <ul class="nav">
-        	
-           <li class="<?php echo $stripeStatistique ?>">
-            <a href="{{route('statistiquesVendeur')}}">
-              <i class="now-ui-icons business_chart-bar-32" id="y"></i>
-              <div class="m-t-5" id="x">Statistique</div>
-            </a>
-          </li>
+        	 
           <li class="<?php echo $stripeProfil ?>">
-            <a href="{{route('profilVendeur')}}">
+            <a  href="<?php echo e(route('profilEmployeur')); ?>">
               <i class="now-ui-icons users_single-02" id="y"></i>
               <div class="m-t-5" id="x">Profil</div>
             </a>
           </li>
-          <li class="<?php echo $stripeProduit ?>">
-             <a href="{{route('produitVendeur')}}">
-              <i class="now-ui-icons shopping_shop" id="y"></i>
-              <div class="m-t-5" id="x">produits</div>
+          <li class="<?php echo $stripeAnnonce ?>">
+            <a href="<?php echo e(route('annonceEmploi')); ?>">
+              <i class="now-ui-icons business_briefcase-24" id="y"></i>
+              <div class="m-t-5" id="x">Annonces d'emplois</div>
             </a>
           </li>
-          <li class="<?php echo $stripeCmdR ?>">
-            <a href="{{route('commandeRecuVendeur')}}">
+          <li class="<?php echo $stripeDmndR ?>">
+            <a href="<?php echo e(route('demandeEmploiRecu')); ?>">
               <i class="now-ui-icons ui-1_bell-53" id="y"></i>
-              <div class="m-t-5" id="x">Commandes  Reçus</div>
+              <div class="m-t-5" id="x">Demandes d'emplois Reçus</div>
             </a>
           </li>
-          <li class="<?php echo $stripeCmdT ?>">
-            <a href="{{route('commandeTraiterVendeur')}}">
+          <li class="<?php echo $stripeDmndT ?>">
+            <a href="<?php echo e(route('demandeEmploiTraite')); ?>">
               <i class="now-ui-icons files_single-copy-04" id="y"></i>
-              <div class="m-t-5" id="x">Commande traité</div>
+              <div class="m-t-5" id="x">demandes traités</div>
             </a>
           </li>
-          
         </ul>
       </div>
     </div>
 
+
 	    <div class="main-panel" id="main-panel">
 	    	
-		 	@yield('content')
-<div>
+		 	<?php echo $__env->yieldContent('content'); ?>
+			<div>
   <footer class="bg3 p-t-75 p-b-32 ">
     <div class="container">
       <div class="row">
@@ -776,34 +769,24 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 		</div>
 	</div>
 
-
-	  @stack('javascripts') 
-
 	
 
- <script src="assetsVendeur/js/jquery-3.2.1.min.js"></script>
-  <script src="assetsVendeur/js/animsition.min.js"></script>
-  <script src="assetsVendeur/js/main.js"></script>
-  <script src="assetsVendeur/js/core/jquery.min.js"></script>
-  <script src="assetsVendeur/js/core/popper.min.js"></script>
-  <script src="assetsVendeur/js/core/bootstrap.min.js"></script>
-  <script src="assetsVendeur/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+  <script src="assetsEmployeur/js/jquery-3.2.1.min.js"></script>
+  <script src="assetsEmployeur/js/animsition.min.js"></script>
+  <script src="assetsEmployeur/js/main.js"></script>
+  <script src="assetsEmployeur/js/core/jquery.min.js"></script>
+  <script src="assetsEmployeur/js/core/popper.min.js"></script>
+  <script src="assetsEmployeur/js/core/bootstrap.min.js"></script>
+  <script src="assetsEmployeur/js/plugins/perfect-scrollbar.jquery.min.js"></script>
   <!--  Google Maps Plugin    -->
   <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
   <!-- Chart JS -->
-  <script src="assetsVendeur/js/plugins/chartjs.min.js"></script>
+  <script src="assetsEmployeur/js/plugins/chartjs.min.js"></script>
   <!--  Notifications Plugin    -->
-  <script src="assetsVendeur/js/plugins/bootstrap-notify.js"></script>
+  <script src="assetsEmployeur/js/plugins/bootstrap-notify.js"></script>
   <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="assetsVendeur/js/now-ui-dashboard.min.js?v=1.5.0" type="text/javascript"></script><!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
-  <script src="assetsVendeur/demo/demo.js"></script>
-  <script>
-    $(document).ready(function() {
-      // Javascript method's body can be found in assets/js/demos.js
-      demo.initDashboardPageCharts();
-
-    });
-  </script>
+  <script src="assetsEmployeur/js/now-ui-dashboard.min.js?v=1.5.0" type="text/javascript"></script><!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
+  <script src="assetsEmployeur/demo/demo.js"></script>
 
 </body>
-</html>
+</html><?php /**PATH C:\xampp\htdocs\Basmah.WS\resources\views/layouts/template_employeur.blade.php ENDPATH**/ ?>

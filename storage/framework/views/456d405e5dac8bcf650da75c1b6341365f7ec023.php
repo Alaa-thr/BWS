@@ -87,11 +87,11 @@
                     <div class="menu-desktop">
                         <ul class="main-menu">
                             <li class="active-menu">
-                                <a href="{{route('accueil')}}">Accueil</a>
+                                <a href="<?php echo e(route('accueil')); ?>">Accueil</a>
                             </li>
                             <li >
                                     <div class="menu1">
-                                        <a href="{{route('shop')}}">Shop&nbsp&nbsp</a>
+                                        <a href="<?php echo e(route('shop')); ?>">Shop&nbsp&nbsp</a>
                                         <span >
                                             <i class="fa fa-angle-right" aria-hidden="true"></i>
                                         </span>
@@ -222,7 +222,7 @@
                                         
                             </li>
                             <li class="menu1">
-                                    <a href="{{route('emploi')}}">Emploi&nbsp&nbsp</a>
+                                    <a href="<?php echo e(route('emploi')); ?>">Emploi&nbsp&nbsp</a>
                                     <span >
                                         <i class="fa fa-angle-right" aria-hidden="true"></i>
                                     </span>
@@ -339,13 +339,13 @@
                                 </ul>
                             </li>
                             <li>
-                                    <a href="{{route('article')}}">Article</a>
+                                    <a href="<?php echo e(route('article')); ?>">Article</a>
                             </li>
                             <li>
-                                    <a href="{{route('apropos')}}">A Propos</a>
+                                    <a href="<?php echo e(route('apropos')); ?>">A Propos</a>
                             </li>
                             <li>
-                                <a href="{{route('contact')}}">Contact</a>
+                                <a href="<?php echo e(route('contact')); ?>">Contact</a>
                             </li>
                         </ul>                       
                     </div>  
@@ -361,12 +361,12 @@
                         
                         </div>
                             
-                         @guest
+                         <?php if(auth()->guard()->guest()): ?>
                             
                             <div class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-22 js-show-connect">
                                 <i class="zmdi zmdi-account"></i>
                              </div>
-                        @else
+                        <?php else: ?>
                            <div class="dropdown">
                               <button class="  dis-block dropdown-toggle icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-22" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="zmdi zmdi-account"></i>
@@ -376,17 +376,18 @@
                                 <a class="dropdown-item" href="#">Profil</a>
                                 <div class="dropdown-divider"></div>
                                 <div>
-                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                    <a class="dropdown-item" href="<?php echo e(route('logout')); ?>" onclick="event.preventDefault();
                                                          document.getElementById('logout-form').submit();">
-                                            {{ __('Logout') }}
+                                            <?php echo e(__('Logout')); ?>
+
                                     </a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            @csrf
+                                    <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" style="display: none;">
+                                            <?php echo csrf_field(); ?>
                                     </form>
                                 </div>
                               </div>
                             </div>
-                        @endguest
+                        <?php endif; ?>
 
                     </div>
                 </nav>
@@ -400,7 +401,7 @@
 
             <!-- Logo moblie -->        
             <div class="logo-mobile">
-                <a href="{{route('accueil')}}"><img src="images/icons/LogoFinal2.png" alt="IMG-LOGO"></a>
+                <a href="<?php echo e(route('accueil')); ?>"><img src="images/icons/LogoFinal2.png" alt="IMG-LOGO"></a>
             </div>
 
             <!-- Icon header -->
@@ -419,18 +420,19 @@
                               </button>
                               
                               <div class="dropdown-menu m-r-35" aria-labelledby="dropdownMenuButton">
-                                <div href="{{ route('profilVendeur') }}">
-                                    <a class="dropdown-item" href="{{ route('profilVendeur') }}" >{{ __('Profil') }}</a>
+                                <div href="<?php echo e(route('profilVendeur')); ?>">
+                                    <a class="dropdown-item" href="<?php echo e(route('profilVendeur')); ?>" ><?php echo e(__('Profil')); ?></a>
                                 </div>
                                 
                                 <div class="dropdown-divider"></div>
                                 <div>
-                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                    <a class="dropdown-item" href="<?php echo e(route('logout')); ?>" onclick="event.preventDefault();
                                                          document.getElementById('logout-form').submit();">
-                                            {{ __('Logout') }}
+                                            <?php echo e(__('Logout')); ?>
+
                                     </a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            @csrf
+                                    <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" style="display: none;">
+                                            <?php echo csrf_field(); ?>
                                     </form>
                                 </div>
                               </div>
@@ -473,20 +475,12 @@
 
             <ul class="main-menu-m">
                 <li>
-                    <a href="{{route('accueil')}}" id="colorr">Accueil</a>
+                    <a href="<?php echo e(route('accueil')); ?>" id="colorr">Accueil</a>
                     
                 </li>
 
                 <li>
-                    <a href="{{route('shop')}}" id="colorr">Shop</a>
-                    
-                    <span class="arrow-main-menu-m">
-                        <i class="fa fa-angle-right" aria-hidden="true"></i>
-                    </span>
-                </li>
-
-                <li>
-                    <a href="{{route('emploi')}}" id="colorr">Emploi</a>
+                    <a href="<?php echo e(route('shop')); ?>" id="colorr">Shop</a>
                     
                     <span class="arrow-main-menu-m">
                         <i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -494,15 +488,23 @@
                 </li>
 
                 <li>
-                    <a href="{{route('article')}}" id="colorr">Article</a>
+                    <a href="<?php echo e(route('emploi')); ?>" id="colorr">Emploi</a>
+                    
+                    <span class="arrow-main-menu-m">
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </span>
                 </li>
 
                 <li>
-                    <a href="{{route('apropos')}}" id="colorr">A propos</a>
+                    <a href="<?php echo e(route('article')); ?>" id="colorr">Article</a>
                 </li>
 
                 <li>
-                    <a href="{{route('contact')}}" id="colorr">Contact</a>
+                    <a href="<?php echo e(route('apropos')); ?>" id="colorr">A propos</a>
+                </li>
+
+                <li>
+                    <a href="<?php echo e(route('contact')); ?>" id="colorr">Contact</a>
                 </li>
             </ul>
         </div>
@@ -623,45 +625,45 @@
 
 
        <li  class="<?php echo $stripeProfil ?>">
-         <a href="{{route('profilClient')}}">
+         <a href="<?php echo e(route('profilClient')); ?>">
            <i class="now-ui-icons users_single-02" id="y"></i>
            <div class="m-t-5" id="x">Profile</div>
          </a>
        </li>
        <li class="<?php echo $stripePanier ?>" >
-         <a href="{{route('panierClient')}}">
+         <a href="<?php echo e(route('panierClient')); ?>">
            <i class="now-ui-icons shopping_cart-simple" id="y"></i>
            <div class="m-t-5" id="x">Panier</div>
          </a>
        </li>
        <li  class="<?php echo $stripeCmd ?>">
-         <a href="{{route('commandeClient')}}">
+         <a href="<?php echo e(route('commandeClient')); ?>">
            <i class="now-ui-icons shopping_bag-16" id="y"></i>
            <div class="m-t-5" id="x">Commandes</div>
          </a>
        </li>
        <li class="<?php echo $stripeNotif ?>"> 
-         <a href="{{route('notificationClient')}}">
+         <a href="<?php echo e(route('notificationClient')); ?>">
            <i class="now-ui-icons ui-1_bell-53" id="y"></i>
            <div class="m-t-5" id="x">Notifications</div>
          </a>
        </li>
        
        <li class="<?php echo $stripeDmnd ?>">
-         <a href="{{route('demandeClient')}}">
+         <a href="<?php echo e(route('demandeClient')); ?>">
            <i class="now-ui-icons business_briefcase-24" id="y"></i>
            <div class="m-t-5" id="x"> Demande d'Emploi</div>
          </a>
        </li>
       
        <li class="<?php echo $stripeFavoris ?>">
-         <a href="{{route('favorisClient')}}">
+         <a href="<?php echo e(route('favorisClient')); ?>">
            <i class="now-ui-icons ui-2_favourite-28" id="y"></i>
            <div class="m-t-5" id="x">Favoris</div>
          </a>
        </li>
        <li class="<?php echo $stripeHisto ?>">
-         <a href="{{route('historiqueClient')}}">
+         <a href="<?php echo e(route('historiqueClient')); ?>">
            <i class="fas fa-history" id="y"></i>
            <div class="m-t-5" id="x">Historique</div>
          </a>
@@ -673,7 +675,7 @@
     </div>
         <div class="main-panel" id="main-panel">
             
-            @yield('content')
+            <?php echo $__env->yieldContent('content'); ?>
             <div>
   <footer class="bg3 p-t-75 p-b-32 ">
     <div class="container">
@@ -795,7 +797,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 </div>
     </div>
      
-   @stack('javascripts') 
+
+    
 
   <script src="assetsClient/js/jquery-3.2.1.min.js"></script>
   <script src="assetsClient/js/animsition.min.js"></script>
@@ -815,4 +818,4 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
   <script src="assetsClient/demo/demo.js"></script>
 
 </body>
-</html>
+</html><?php /**PATH C:\xampp\htdocs\Basmah.WS\resources\views/layouts/template_clinet.blade.php ENDPATH**/ ?>

@@ -50,10 +50,12 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Employeur');
     }
+
     public function admin()
     {
         return $this->belongsTo('App\Admin');
     }
+
 
 
 }

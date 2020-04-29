@@ -86,7 +86,7 @@
                     <!-- Menu desktop -->
                     <div class="menu-desktop">
                         <ul class="main-menu">
-                            <li class="active-menu">
+                            <li>
                                 <a href="{{route('accueil')}}">Accueil</a>
                             </li>
                             <li >
@@ -795,7 +795,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 </div>
     </div>
      
-   @stack('javascripts') 
+
+    
 
   <script src="assetsClient/js/jquery-3.2.1.min.js"></script>
   <script src="assetsClient/js/animsition.min.js"></script>

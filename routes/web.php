@@ -40,31 +40,44 @@ Route::get('/client', 'BwsController@client_admin')->name('client');
 Route::get('/emails', 'BwsController@emails_admin')->name('emails');
 Route::get('/employeur', 'BwsController@employeur_admin')->name('employeur');
 Route::get('/notificationsAdmin', 'BwsController@notifications_admin')->name('notificationsAdmin');
-Route::get('/profilAdmin', 'BwsController@profil_admin')->name('profilAdmin');
+Route::get('/profilAdmin', 'AdminController@profil_admin')->name('profilAdmin');
 Route::get('/statistiquesAdmin', 'BwsController@statistiques_admin')->name('statistiquesAdmin');
 Route::get('/vendeur', 'BwsController@vendeur_admin')->name('vendeur');
+Route::put('/updateProfilA/{id}','AdminController@update_profil');
 
 /************************************************ Employeur***********************************************/
 
 Route::get('/demandeEmploiRecu', 'BwsController@demande_emploi_reçu_employeur')->name('demandeEmploiRecu');
-Route::get('/profilEmployeur', 'BwsController@profil_employeur')->name('profilEmployeur');
+Route::get('/profilEmployeur', 'EmployeurController@profil_employeur')->name('profilEmployeur');
 Route::get('/annonceEmploi', 'BwsController@annonce_emploi_employeur')->name('annonceEmploi');
 Route::get('/demandeEmploiTraite', 'BwsController@demande_emploi_traite_employeur')->name('demandeEmploiTraite');
+Route::put('/updateProfilE/{id}','EmployeurController@update_profil');
+
 
 /************************************************ Vendeur***********************************************/
 
 Route::get('/statistiquesVendeur', 'BwsController@statistiques_vendeur')->name('statistiquesVendeur');
-Route::get('/profilVendeur', 'BwsController@profil_vendeur')->name('profilVendeur');
+Route::get('/profilVendeur', 'VendeurController@profil_vendeur')->name('profilVendeur');
 Route::get('/produitVendeur', 'BwsController@produit_vendeur')->name('produitVendeur');
 Route::get('/commandeTraiterVendeur', 'BwsController@commande_traiter_vendeur')->name('commandeTraiterVendeur');
 Route::get('/commandeRecuVendeur', 'BwsController@commande_recu_vendeur')->name('commandeRecuVendeur');
+Route::put('/updateProfilV/{id}','VendeurController@update_profil');
+
 
 /************************************************ Client***********************************************/
 
-Route::get('profilClient','BwsController@profil_clinet')->name('profilClient');
-Route::get('commandeClient','BwsController@commande_client')->name('commandeClient');
-Route::get('historiqueClient','BwsController@historique_client')->name('historiqueClient');
-Route::get('demandeClient','BwsController@demande_clinet')->name('demandeClient');
-Route::get('panierClient','BwsController@panier_client')->name('panierClient');
-Route::get('notificationClient','BwsController@notification_client')->name('notificationClient');
-Route::get('favorisClient','BwsController@favoris_client')->name('favorisClient');
+Route::get('/profilClient','ClientController@profil_clinet')->name('profilClient');
+Route::get('/commandeClient','BwsController@commande_client')->name('commandeClient');
+Route::get('/historiqueClient','BwsController@historique_client')->name('historiqueClient');
+Route::get('/demandeClient','BwsController@demande_clinet')->name('demandeClient');
+Route::get('/panierClient','BwsController@panier_client')->name('panierClient');
+Route::get('/notificationClient','BwsController@notification_client')->name('notificationClient');
+Route::get('/favorisClient','BwsController@favoris_client')->name('favorisClient');
+Route::put('/updateProfilC/{id}','ClientController@update_profil');
+
+
+
+
+
+
+

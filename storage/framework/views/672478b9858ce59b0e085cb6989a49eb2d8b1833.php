@@ -44,20 +44,20 @@
         <ul class="nav">
 
           <li >
-            <a href="{{route('statistiquesAdmin')}}">
+            <a href="<?php echo e(route('statistiquesAdmin')); ?>">
               <i class="now-ui-icons business_chart-bar-32" id="y"></i>
               <div class="m-t-5" id="x">Statistiques</div>
             </a>
           </li>
           <li>
-            <a href="{{route('profilAdmin')}}">
+            <a href="<?php echo e(route('profilAdmin')); ?>">
               <i class="now-ui-icons users_single-02" id="y"></i>
               <div class="m-t-5" id="x">Profile</div>
             </a>
           </li>
           
           <li >
-            <a href="{{route('emails')}}">
+            <a href="<?php echo e(route('emails')); ?>">
               <i class="now-ui-icons ui-1_send" id="y"></i>
               <div class="m-t-5" id="x">Emails</div>
             </a>
@@ -71,26 +71,26 @@
             <div class="dropdown-menu dropdown-menu-right" style="margin-right: 50px;">
                   <div class="account-item clearfix js-item-menu">
                     <div class="card-body">
-                      <a href="{{route('vendeur')}}" id="s"><b>Vendeur</b></a>
+                      <a href="<?php echo e(route('vendeur')); ?>" id="s"><b>Vendeur</b></a>
                       <hr>
-                      <a href="{{route('client')}}" id="s"><b>Client</b></a>
+                      <a href="<?php echo e(route('client')); ?>" id="s"><b>Client</b></a>
                       <hr>
-                      <a href="{{route('employeur')}}" id="s"><b>Employeur</b></a>
+                      <a href="<?php echo e(route('employeur')); ?>" id="s"><b>Employeur</b></a>
                       <hr>
-                      <a href="{{route('admin')}}" id="s"><b>Admin</b></a>
+                      <a href="<?php echo e(route('admin')); ?>" id="s"><b>Admin</b></a>
                       </div>
                     </div>
             </div>
           </li>
           <li>
-            <a href="{{route('notificationsAdmin')}}">
+            <a href="<?php echo e(route('notificationsAdmin')); ?>">
               <i class="now-ui-icons ui-1_bell-53" id="y"></i>
               <div class="m-t-5" id="x">Notifications</div>
             </a>
           </li>
           
           <li>
-            <a href="{{route('articlesAdmin')}}">
+            <a href="<?php echo e(route('articlesAdmin')); ?>">
               <i class="now-ui-icons education_paper" id="y"></i>
               <div class="m-t-5" id="x">Articles</div>
             </a>
@@ -98,7 +98,7 @@
           
          
           <li class="<?php echo $stripeCatego ?>">
-            <a href="{{route('categoriesAdmin')}}">
+            <a href="<?php echo e(route('categoriesAdmin')); ?>">
               <i class="now-ui-icons design_bullet-list-67" id="y"></i>
               <div class="m-t-5" id="x">Categories</div>
             </a>
@@ -224,11 +224,10 @@
         </div>
       </nav>
       <!-- End Navbar -->
-      @yield('content')
+      <?php echo $__env->yieldContent('content'); ?>
        
 </div>
-           
-      @stack('javascripts')
+  
 
   <script src="assetsAdmin/js/core/jquery.min.js"></script>
   <script src="assetsAdmin/js/core/popper.min.js"></script>
@@ -251,4 +250,4 @@
     });
   </script>
 </body>
-</html>
+</html><?php /**PATH C:\xampp\htdocs\Basmah.WS\resources\views/layouts/template_admin_categories.blade.php ENDPATH**/ ?>

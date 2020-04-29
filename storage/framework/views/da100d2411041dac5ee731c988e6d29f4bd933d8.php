@@ -81,10 +81,10 @@
 					<div class="menu-desktop">
 						<ul class="main-menu">
 							<li class="active-menu">
-								<a href="{{route('accueil')}}">Accueil</a>
+								<a href="<?php echo e(route('accueil')); ?>">Accueil</a>
 							</li>
 							<li class="menu1">
-                                    <a href="{{route('shop')}}">Shop&nbsp&nbsp</a>
+                                    <a href="<?php echo e(route('shop')); ?>">Shop&nbsp&nbsp</a>
                                     <span >
                                         <i class="fa fa-angle-right" aria-hidden="true"></i>
                                     </span>
@@ -214,7 +214,7 @@
 										
 							</li>
 							<li class="menu1">
-									<a href="{{route('emploi')}}">Emploi&nbsp&nbsp</a>
+									<a href="<?php echo e(route('emploi')); ?>">Emploi&nbsp&nbsp</a>
 									<span >
 										<i class="fa fa-angle-right" aria-hidden="true"></i>
 									</span>
@@ -331,13 +331,13 @@
 								</ul>
 							</li>
 							<li>
-									<a href="{{route('article')}}">Article</a>
+									<a href="<?php echo e(route('article')); ?>">Article</a>
 							</li>
 							<li>
-									<a href="{{route('apropos')}}">A Propos</a>
+									<a href="<?php echo e(route('apropos')); ?>">A Propos</a>
 							</li>
 							<li>
-								<a href="{{route('contact')}}">Contact</a>
+								<a href="<?php echo e(route('contact')); ?>">Contact</a>
 							</li>
 						</ul>						
 					</div>	
@@ -353,34 +353,35 @@
 						
 						</div>
 							
-						 @guest
+						 <?php if(auth()->guard()->guest()): ?>
                             
                             <div class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-22 js-show-connect">
                                 <i class="zmdi zmdi-account"></i>
                              </div>
-                        @else
+                        <?php else: ?>
                            <div class="dropdown">
                               <button class="  dis-block dropdown-toggle icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-22" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="zmdi zmdi-account"></i>
                               </button>
                               
                               <div class="dropdown-menu m-r-35" aria-labelledby="dropdownMenuButton">
-                                <div href="{{ route('profilVendeur') }}">
-                              		<a class="dropdown-item" href="{{ route('profilVendeur') }}">{{ __('Profil') }}</a>
+                                <div href="<?php echo e(route('profilVendeur')); ?>">
+                              		<a class="dropdown-item" href="<?php echo e(route('profilVendeur')); ?>"><?php echo e(__('Profil')); ?></a>
                               	</div>
                                 <div class="dropdown-divider"></div>
                                 <div>
-                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                    <a class="dropdown-item" href="<?php echo e(route('logout')); ?>" onclick="event.preventDefault();
                                                          document.getElementById('logout-form').submit();">
-                                            {{ __('Logout') }}
+                                            <?php echo e(__('Logout')); ?>
+
                                     </a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            @csrf
+                                    <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" style="display: none;">
+                                            <?php echo csrf_field(); ?>
                                     </form>
                                 </div>
                               </div>
                             </div>
-                        @endguest
+                        <?php endif; ?>
 
 					</div>
 				</nav>
@@ -395,7 +396,7 @@
       
 			<!-- Logo moblie -->		
 			<div class="logo-mobile">
-				<a href="{{route('accueil')}}"><img src="images/icons/LogoFinal2.png" alt="IMG-LOGO"></a>
+				<a href="<?php echo e(route('accueil')); ?>"><img src="images/icons/LogoFinal2.png" alt="IMG-LOGO"></a>
 			</div>
 
 			<!-- Icon header -->
@@ -414,18 +415,19 @@
                               </button>
                               
                               <div class="dropdown-menu m-r-35" aria-labelledby="dropdownMenuButton">
-                              	<div href="{{ route('profilVendeur') }}">
-                              		<a class="dropdown-item" href="{{ route('profilVendeur') }}" >{{ __('Profil') }}</a>
+                              	<div href="<?php echo e(route('profilVendeur')); ?>">
+                              		<a class="dropdown-item" href="<?php echo e(route('profilVendeur')); ?>" ><?php echo e(__('Profil')); ?></a>
                               	</div>
                                 
                                 <div class="dropdown-divider"></div>
                                 <div>
-                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                    <a class="dropdown-item" href="<?php echo e(route('logout')); ?>" onclick="event.preventDefault();
                                                          document.getElementById('logout-form').submit();">
-                                            {{ __('Logout') }}
+                                            <?php echo e(__('Logout')); ?>
+
                                     </a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            @csrf
+                                    <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" style="display: none;">
+                                            <?php echo csrf_field(); ?>
                                     </form>
                                 </div>
                               </div>
@@ -468,20 +470,12 @@
 
 			<ul class="main-menu-m">
 				<li>
-					<a href="{{route('accueil')}}" id="colorr">Accueil</a>
+					<a href="<?php echo e(route('accueil')); ?>" id="colorr">Accueil</a>
 					
 				</li>
 
 				<li>
-					<a href="{{route('shop')}}" id="colorr">Shop</a>
-					
-					<span class="arrow-main-menu-m">
-						<i class="fa fa-angle-right" aria-hidden="true"></i>
-					</span>
-				</li>
-
-				<li>
-					<a href="{{route('emploi')}}" id="colorr">Emploi</a>
+					<a href="<?php echo e(route('shop')); ?>" id="colorr">Shop</a>
 					
 					<span class="arrow-main-menu-m">
 						<i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -489,15 +483,23 @@
 				</li>
 
 				<li>
-					<a href="{{route('article')}}" id="colorr">Article</a>
+					<a href="<?php echo e(route('emploi')); ?>" id="colorr">Emploi</a>
+					
+					<span class="arrow-main-menu-m">
+						<i class="fa fa-angle-right" aria-hidden="true"></i>
+					</span>
 				</li>
 
 				<li>
-					<a href="{{route('apropos')}}" id="colorr">A propos</a>
+					<a href="<?php echo e(route('article')); ?>" id="colorr">Article</a>
 				</li>
 
 				<li>
-					<a href="{{route('contact')}}" id="colorr">Contact</a>
+					<a href="<?php echo e(route('apropos')); ?>" id="colorr">A propos</a>
+				</li>
+
+				<li>
+					<a href="<?php echo e(route('contact')); ?>" id="colorr">Contact</a>
 				</li>
 			</ul>
 		</div>
@@ -617,31 +619,31 @@
         <ul class="nav">
         	
            <li class="<?php echo $stripeStatistique ?>">
-            <a href="{{route('statistiquesVendeur')}}">
+            <a href="<?php echo e(route('statistiquesVendeur')); ?>">
               <i class="now-ui-icons business_chart-bar-32" id="y"></i>
               <div class="m-t-5" id="x">Statistique</div>
             </a>
           </li>
           <li class="<?php echo $stripeProfil ?>">
-            <a href="{{route('profilVendeur')}}">
+            <a href="<?php echo e(route('profilVendeur')); ?>">
               <i class="now-ui-icons users_single-02" id="y"></i>
               <div class="m-t-5" id="x">Profil</div>
             </a>
           </li>
           <li class="<?php echo $stripeProduit ?>">
-             <a href="{{route('produitVendeur')}}">
+             <a href="<?php echo e(route('produitVendeur')); ?>">
               <i class="now-ui-icons shopping_shop" id="y"></i>
               <div class="m-t-5" id="x">produits</div>
             </a>
           </li>
           <li class="<?php echo $stripeCmdR ?>">
-            <a href="{{route('commandeRecuVendeur')}}">
+            <a href="<?php echo e(route('commandeRecuVendeur')); ?>">
               <i class="now-ui-icons ui-1_bell-53" id="y"></i>
               <div class="m-t-5" id="x">Commandes  Reçus</div>
             </a>
           </li>
           <li class="<?php echo $stripeCmdT ?>">
-            <a href="{{route('commandeTraiterVendeur')}}">
+            <a href="<?php echo e(route('commandeTraiterVendeur')); ?>">
               <i class="now-ui-icons files_single-copy-04" id="y"></i>
               <div class="m-t-5" id="x">Commande traité</div>
             </a>
@@ -653,7 +655,7 @@
 
 	    <div class="main-panel" id="main-panel">
 	    	
-		 	@yield('content')
+		 	<?php echo $__env->yieldContent('content'); ?>
 <div>
   <footer class="bg3 p-t-75 p-b-32 ">
     <div class="container">
@@ -776,9 +778,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 		</div>
 	</div>
 
-
-	  @stack('javascripts') 
-
 	
 
  <script src="assetsVendeur/js/jquery-3.2.1.min.js"></script>
@@ -806,4 +805,4 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
   </script>
 
 </body>
-</html>
+</html><?php /**PATH C:\xampp\htdocs\Basmah.WS\resources\views/layouts/template_vendeur.blade.php ENDPATH**/ ?>
