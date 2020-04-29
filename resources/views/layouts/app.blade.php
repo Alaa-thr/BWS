@@ -12,6 +12,9 @@
 
     <!-- Scripts -->
     <script src="{{ asset('jss/app.js') }}" ></script>
+    <script src="{{ asset('jss/vue.js') }}"></script>
+    <script src="{{asset('jss/axios.min.js')}}">></script>
+    <script src="{{asset('jss/vee-validate.min.js')}}"></script>
     <!--<link href="{{ asset('csss/app.css') }}" rel="stylesheet" type="text/css">-->
      <link href="assetsClient/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
@@ -455,9 +458,32 @@
                     <i class="zmdi zmdi-shopping-cart"></i>
                 </div>
 
-                <a href="#" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-connect">
-                    <i class="zmdi zmdi-account"></i>
-                </a>
+                @guest
+                            
+                            <div class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-22 js-show-connect">
+                                <i class="zmdi zmdi-account"></i>
+                             </div>
+                        @else
+                           <div class="dropdown">
+                              <button class="  dis-block dropdown-toggle icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-22" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="zmdi zmdi-account"></i>
+                              </button>
+                              
+                              <div class="dropdown-menu m-r-35" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#">Profil</a>
+                                <div class="dropdown-divider"></div>
+                                <div>
+                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                         document.getElementById('logout-form').submit();">
+                                            {{ __('Logout') }}
+                                    </a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            @csrf
+                                    </form>
+                                </div>
+                              </div>
+                            </div>
+                        @endguest
             </div>
 
             <!-- Button show menu -->
@@ -993,7 +1019,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
             </div>
         </div>
     </div>
-
+    @stack('javascript')
    <!--<script src="vendor/jquery/jquery-3.2.1.min.js"></script>-->  
     <script src="vendor/animsition/js/animsition.min.js"></script>
     <script src="vendor/bootstrap/js/popper.js"></script>

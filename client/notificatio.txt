@@ -1,11 +1,11 @@
 @extends('layouts.template_clinet')
 @section('content')
 
-  
-  <head>
-    <title>{{ ( 'Notification') }}</title>
-  </head>
-  <nav class="navbar navbar-expand-lg navbar-transparent  bg-primary  navbar-absolute">
+	
+	<head>
+		<title>{{ ( 'Notification') }}</title>
+	</head>
+	<nav class="navbar navbar-expand-lg navbar-transparent  bg-primary  navbar-absolute">
         <div class="container-fluid">
           <div class="navbar-wrapper">
             <div class="navbar-toggle">
@@ -23,7 +23,7 @@
     </div>
 
 
-  <div class="content" id="pr">
+	<div class="content" id="pr">
          <div class="row"  >
             <div class="col-md-12" >
               <div class="card"  id="xc" style=" width: 1000px;"  >
@@ -48,7 +48,7 @@
         <a class="dropdown-item " href="#" id="hn" >2h</a>
     </label>
     <label for="subscribeNews" >
-        <a class="dropdown-item"   href="#" id="dn"  >  Vous etes envoyÃ© la commande 1</a>
+        <a class="dropdown-item"   href="#" id="dn"  >  Vous etes envoyé la commande 1</a>
     </label>
 </form>
 
@@ -63,7 +63,7 @@
         <a class="dropdown-item " href="#" id="hn" >21h</a>
     </label>
     <label for="subscribeNews" >
-        <a class="dropdown-item"   href="#" id="dn"  >  Vous etes envoyÃ© la commande 2</a>
+        <a class="dropdown-item"   href="#" id="dn"  >  Vous etes envoyé la commande 2</a>
     </label>
 </form>
 
@@ -81,7 +81,7 @@
         <a class="dropdown-item " href="#" id="hn" >1j</a>
     </label>
     <label for="subscribeNews" >
-        <a class="dropdown-item"   href="#" id="dn"  >  Vous etes envoyÃ© la demande 1</a>
+        <a class="dropdown-item"   href="#" id="dn"  >  Vous etes envoyé la demande 1</a>
     </label>
 </form>
 
@@ -97,7 +97,7 @@
         <a class="dropdown-item " href="#" id="hn" >6j</a>
     </label>
     <label for="subscribeNews" >
-        <a class="dropdown-item"   href="#" id="dn"  >  Vous etes envoyÃ© la demande 2</a>
+        <a class="dropdown-item"   href="#" id="dn"  >  Vous etes envoyé la demande 2</a>
     </label>
 </form>
 
@@ -114,7 +114,7 @@
         <a class="dropdown-item " href="#" id="hn" >21j</a>
     </label>
     <label for="subscribeNews" >
-        <a class="dropdown-item"   href="#" id="dn"  >  Vous etes envoyÃ© la demande 3</a>
+        <a class="dropdown-item"   href="#" id="dn"  >  Vous etes envoyé la demande 3</a>
     </label>
 </form>
 

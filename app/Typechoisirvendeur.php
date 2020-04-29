@@ -4,11 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Ville extends Model
+class Typechoisirvendeur extends Model
 {
-    
     protected $fillable = [
-        'nom',
+        'vendeur_id','type_livraison',
     ];
 
     public function vendeur()

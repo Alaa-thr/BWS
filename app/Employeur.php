@@ -8,7 +8,7 @@ class Employeur extends Model
 {
     protected $fillable = [
         'nom','prenom','num_tel', 'email','user_id','address','nom_societe', 
-        'num_compte_banquiare',
+        'num_compte_banquiare','image',
     ];
 
     public function user()

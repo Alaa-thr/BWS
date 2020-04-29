@@ -1,11 +1,11 @@
 @extends('layouts.template_clinet')
 @section('content')
 
-  
-  <head>
-    <title>{{ ( 'Panier') }}</title>
-  </head>
-  <nav class="navbar navbar-expand-lg navbar-transparent  bg-primary  navbar-absolute">
+	
+	<head>
+		<title>{{ ( 'Panier') }}</title>
+	</head>
+	<nav class="navbar navbar-expand-lg navbar-transparent  bg-primary  navbar-absolute">
         <div class="container-fluid">
           <div class="navbar-wrapper">
             <div class="navbar-toggle">
@@ -35,7 +35,7 @@
                       <th class="column-1">Produit</th>
                       <th class="column-2"></th>
                       <th class="column-3">Prix</th>
-                      <th class="column-4">QuantitÃ©</th>
+                      <th class="column-4">Quantité</th>
                       <th class="column-5">Supprimer</th>
                     </tr>
     
