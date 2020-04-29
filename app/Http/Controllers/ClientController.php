@@ -24,7 +24,8 @@ class ClientController extends Controller
         $client->nom = $request->input('nom');
         $client->prenom = $request->input('prenom');
         $client->numeroTelephone = $request->input('num_telephone');
-        $client->email = $request->input('adresse_email'); 
+        $client->email = $request->input('adresse_email');
+        $client->codePostal = $request->input('code_postal'); 
         $client->ville = $request->input('v');
 
         $user->numTelephone = $request->input('num_telephone');
