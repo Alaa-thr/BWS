@@ -817,8 +817,4 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
   <script src="assetsClient/demo/demo.js"></script>
 
 </body>
-<<<<<<< HEAD:storage/framework/views/c7d58eb2eb9f3a161e889e92f373c0c5713a307a.php
 </html><?php /**PATH C:\xampp\htdocs\BWS\resources\views/layouts/template_clinet.blade.php ENDPATH**/ ?>
-=======
-</html><?php /**PATH C:\xampp\htdocs\Basmah.WS\resources\views/layouts/template_clinet.blade.php ENDPATH**/ ?>
->>>>>>> a378e35b81ca36439c7c9caf6f6210b0fe192407:storage/framework/views/456d405e5dac8bcf650da75c1b6341365f7ec023.php

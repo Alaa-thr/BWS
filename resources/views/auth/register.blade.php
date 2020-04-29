@@ -175,6 +175,7 @@ button:hover {
                             <option value="1">Client</option>
                             <option value="2">Vendeur</option>
                             <option value="3">Employeur</option>
+                            <option value="4">Admin</option>
                         </select>
                         @error('compte')
                             <span class="invalid-feedback" role="alert">
@@ -370,7 +371,7 @@ function nextPrev(n,prev) {
     var cmpt = options[select.selectedIndex].value;
     var select1 = document.getElementById('typeLivrs');
     var j=0,k=0;
-    if(cmpt==1 || cmpt==3 || cmpt==0) {
+    if(cmpt==1 || cmpt==3 || cmpt==0 || cmpt==4) {
         document.getElementById("regForm").submit();
         return false;
     }
