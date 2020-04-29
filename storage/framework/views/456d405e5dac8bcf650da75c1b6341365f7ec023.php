@@ -797,8 +797,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 </div>
     </div>
      
-
-    
+   <?php echo $__env->yieldPushContent('javascripts'); ?> 
 
   <script src="assetsClient/js/jquery-3.2.1.min.js"></script>
   <script src="assetsClient/js/animsition.min.js"></script>
