@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
+use App\Ville;
+use App\Vendeur;
 use App\Client;
 use Auth;
 
@@ -45,6 +48,15 @@ class BwsController extends Controller
         return view('article_detaille');
     }
 
+    public function panier_visiteur()
+    {
+        return view('panier_visiteur');
+    }
+
+    public function get_ville(){
+        $ville = Ville::all();
+        return $ville;
+    }
 /*********************************************** Admin ***********************************************/
 
     public function admin_admin(){

@@ -11,7 +11,7 @@ use Auth;
 class VendeurController extends Controller
 {
      public function profil_vendeur(){
-        $vendeur=Vendeur::find(Auth::user()->id); 
+        $vendeur = Vendeur::find(Auth::user()->id); 
         return view('profil_vendeur',['vendeur'=>$vendeur]);
     }
     public function update_profil(Request $request, $id) {

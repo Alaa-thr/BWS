@@ -29,7 +29,8 @@ Route::get('/emploi', 'BwsController@emploi')->name('emploi');
 Route::get('/article', 'BwsController@article')->name('article');
 Route::get('/contact', 'BwsController@contact')->name('contact');
 Route::get('/article_detaillé', 'BwsController@article_D')->name('article_D');
-
+Route::get('/panierVisiteur', 'BwsController@panier_visiteur')->name('panierVisiteur');
+Route::get('/getville', 'BwsController@get_ville');
 /************************************************ Admin***********************************************/
 
 Route::get('/admin', 'BwsController@admin_admin')->name('admin');

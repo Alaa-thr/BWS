@@ -102,7 +102,10 @@
                 else if($urlAcctuiel == 'contact'){
                     $stripeContact='active-menu';
                 }
-  ?>
+                else if($urlAcctuiel == 'panierVisiteur'){
+                    $stripePanier='active-menu';
+                }
+        ?>
         <div class="container-menu-desktop">
             <!-- Topbar -->
             <div class="top-bar">
@@ -402,7 +405,7 @@
                             <i class="zmdi zmdi-search"></i>
                         </div>
 
-                        <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11  js-show-cart" >
+                        <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11  js-show-cart <?php echo $stripePanier ?>" >
                             <i class="zmdi zmdi-shopping-cart"></i>
                         
                         </div>
@@ -456,13 +459,36 @@
                     <i class="zmdi zmdi-search"></i>
                 </div>
 
-                <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-22  js-show-cart" >
+                <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-22  js-show-cart <?php echo $stripePanier ?>" >
                     <i class="zmdi zmdi-shopping-cart"></i>
                 </div>
 
-                <a href="#" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-connect">
-                    <i class="zmdi zmdi-account"></i>
-                </a>
+                @guest
+                            
+                    <div class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-22 js-show-connect">
+                                <i class="zmdi zmdi-account"></i>
+                    </div>
+                    @else
+                           <div class="dropdown">
+                              <button class="  dis-block dropdown-toggle icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-22" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="zmdi zmdi-account"></i>
+                              </button>
+                              
+                              <div class="dropdown-menu m-r-35" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#">Profil</a>
+                                <div class="dropdown-divider"></div>
+                                <div>
+                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                         document.getElementById('logout-form').submit();">
+                                            {{ __('Logout') }}
+                                    </a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            @csrf
+                                    </form>
+                                </div>
+                              </div>
+                            </div>
+                @endguest
             </div>
 
             <!-- Button show menu -->
