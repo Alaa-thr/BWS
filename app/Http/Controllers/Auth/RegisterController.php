@@ -122,6 +122,7 @@ class RegisterController extends Controller
                     'prenom' => $data['prenom'],
                     'ville' => $data['ville'],
                     'email' => $data['email'],
+                    
                     'numeroTelephone' => $data['numTelephone']            
                 ]);
                 return $objet_user;
