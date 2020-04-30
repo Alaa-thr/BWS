@@ -1,18 +1,18 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="<?php echo e(str_replace('_', '-', app()->getLocale())); ?>">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link  href="images/icons/favicon.png" rel="icon" type="image/png">
     
     <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
 
     
 
     <!-- Scripts -->
-    <script src="{{ asset('jss/app.js') }}" ></script>
-    <!--<link href="{{ asset('csss/app.css') }}" rel="stylesheet" type="text/css">-->
+    <script src="<?php echo e(asset('jss/app.js')); ?>" ></script>
+    <!--<link href="<?php echo e(asset('csss/app.css')); ?>" rel="stylesheet" type="text/css">-->
     
     <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
@@ -38,10 +38,11 @@
     <!--<div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                <a class="navbar-brand" href="<?php echo e(url('/')); ?>">
+                    <?php echo e(config('app.name', 'Laravel')); ?>
+
                 </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="<?php echo e(__('Toggle navigation')); ?>">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -54,34 +55,35 @@
                     <!-- Right Side Of Navbar
                     <ul class="navbar-nav ml-auto"> -->
                         <!-- Authentication Links -->
-                        <!--@guest
+                        <!--<?php if(auth()->guard()->guest()): ?>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                <a class="nav-link" href="<?php echo e(route('login')); ?>"><?php echo e(__('Login')); ?></a>
                             </li>
-                            @if (Route::has('register'))
+                            <?php if(Route::has('register')): ?>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link" href="<?php echo e(route('register')); ?>"><?php echo e(__('Register')); ?></a>
                                 </li>
-                            @endif
-                        @else
+                            <?php endif; ?>
+                        <?php else: ?>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->id }} <span class="caret"></span>
+                                    <?php echo e(Auth::user()->id); ?> <span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                    <a class="dropdown-item" href="<?php echo e(route('logout')); ?>"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        <?php echo e(__('Logout')); ?>
+
                                     </a>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
+                                    <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" style="display: none;">
+                                        <?php echo csrf_field(); ?>
                                     </form>
                                 </div>
                             </li>
-                        @endguest
+                        <?php endif; ?>
                     </ul>
                 </div>
             </div>
@@ -137,10 +139,10 @@
                     <div class="menu-desktop">
                         <ul class="main-menu">
                             <li>
-                                <a href="{{route('accueil')}}">Accueil</a>
+                                <a href="<?php echo e(route('accueil')); ?>">Accueil</a>
                             </li>
                             <li class="menu1">
-                                    <a href="{{route('shop')}}">Shop&nbsp&nbsp</a>
+                                    <a href="<?php echo e(route('shop')); ?>">Shop&nbsp&nbsp</a>
                                     <span >
                                         <i class="fa fa-angle-right" aria-hidden="true"></i>
                                     </span>
@@ -271,7 +273,7 @@
                                         
                             </li>
                             <li class="menu1">
-                                    <a href="{{route('emploi')}}">Emploi&nbsp&nbsp</a>
+                                    <a href="<?php echo e(route('emploi')); ?>">Emploi&nbsp&nbsp</a>
                                     <span >
                                         <i class="fa fa-angle-right" aria-hidden="true"></i>
                                     </span>
@@ -388,13 +390,13 @@
                                 </ul>
                             </li>
                             <li class="<?php echo $stripeArticle ?>">
-                                    <a href="{{route('article')}}">Article</a>
+                                    <a href="<?php echo e(route('article')); ?>">Article</a>
                             </li>
                             <li class="<?php echo $stripeAPropos ?>">
-                                    <a href="{{route('apropos')}}">A Propos</a>
+                                    <a href="<?php echo e(route('apropos')); ?>">A Propos</a>
                             </li>
                             <li class="<?php echo $stripeContact ?>">
-                                <a href="{{route('contact')}}">Contact</a>
+                                <a href="<?php echo e(route('contact')); ?>">Contact</a>
                             </li>
                         </ul>                       
                     </div>  
@@ -410,39 +412,40 @@
                         
                         </div>
                         
-                        @guest
+                        <?php if(auth()->guard()->guest()): ?>
                             
                             <div class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-22 js-show-connect">
                                 <i class="zmdi zmdi-account"></i>
                              </div>
-                        @else
+                        <?php else: ?>
                            <div class="dropdown">
                               <button class="  dis-block dropdown-toggle icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-22" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="zmdi zmdi-account"></i>
                               </button>
                               
                               <div class="dropdown-menu m-r-35" aria-labelledby="dropdownMenuButton">
-                                @if(Auth::user()->type_compte == 'c')
-                                <a class="dropdown-item" href="{{ route('profilClient')}}">Profil</a>
-                                @elseif(Auth::user()->type_compte == 'v')
-                                <a class="dropdown-item" href="{{ route('profilVendeur')}}">Profil</a>
-                                @elseif(Auth::user()->type_compte == 'e')
-                                <a class="dropdown-item" href="{{route('profilEmployeur')}}">Profil</a>@elseif(Auth::user()->type_compte == 'a')
-                                <a class="dropdown-item" href="{{route('profilAdmin')}}">Profil</a>
-                                @endif
+                                <?php if(Auth::user()->type_compte == 'c'): ?>
+                                <a class="dropdown-item" href="<?php echo e(route('profilClient')); ?>">Profil</a>
+                                <?php elseif(Auth::user()->type_compte == 'v'): ?>
+                                <a class="dropdown-item" href="<?php echo e(route('profilVendeur')); ?>">Profil</a>
+                                <?php elseif(Auth::user()->type_compte == 'e'): ?>
+                                <a class="dropdown-item" href="<?php echo e(route('profilEmployeur')); ?>">Profil</a><?php elseif(Auth::user()->type_compte == 'a'): ?>
+                                <a class="dropdown-item" href="<?php echo e(route('profilAdmin')); ?>">Profil</a>
+                                <?php endif; ?>
                                 <div class="dropdown-divider"></div>
                                 <div>
-                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                    <a class="dropdown-item" href="<?php echo e(route('logout')); ?>" onclick="event.preventDefault();
                                                          document.getElementById('logout-form').submit();">
-                                            {{ __('Logout') }}
+                                            <?php echo e(__('Logout')); ?>
+
                                     </a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            @csrf
+                                    <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" style="display: none;">
+                                            <?php echo csrf_field(); ?>
                                     </form>
                                 </div>
                               </div>
                             </div>
-                        @endguest
+                        <?php endif; ?>
                         
 
                     </div>
@@ -470,39 +473,40 @@
                     <i class="zmdi zmdi-shopping-cart"></i>
                 </div>
 
-                @guest
+                <?php if(auth()->guard()->guest()): ?>
                             
                     <div class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-22 js-show-connect">
                                 <i class="zmdi zmdi-account"></i>
                     </div>
-                    @else
+                    <?php else: ?>
                            <div class="dropdown">
                               <button class="  dis-block dropdown-toggle icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-22" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="zmdi zmdi-account"></i>
                               </button>
                               
                               <div class="dropdown-menu m-r-35" aria-labelledby="dropdownMenuButton">
-                                 @if(Auth::user()->type_compte == 'c')
-                                <a class="dropdown-item" href="{{ route('profilClient')}}">Profil</a>
-                                @elseif(Auth::user()->type_compte == 'v')
-                                <a class="dropdown-item" href="{{ route('profilVendeur')}}">Profil</a>
-                                @elseif(Auth::user()->type_compte == 'e')
-                                <a class="dropdown-item" href="{{route('profilEmployeur')}}">Profil</a>@elseif(Auth::user()->type_compte == 'a')
-                                <a class="dropdown-item" href="{{route('profilAdmin')}}">Profil</a>
-                                @endif
+                                 <?php if(Auth::user()->type_compte == 'c'): ?>
+                                <a class="dropdown-item" href="<?php echo e(route('profilClient')); ?>">Profil</a>
+                                <?php elseif(Auth::user()->type_compte == 'v'): ?>
+                                <a class="dropdown-item" href="<?php echo e(route('profilVendeur')); ?>">Profil</a>
+                                <?php elseif(Auth::user()->type_compte == 'e'): ?>
+                                <a class="dropdown-item" href="<?php echo e(route('profilEmployeur')); ?>">Profil</a><?php elseif(Auth::user()->type_compte == 'a'): ?>
+                                <a class="dropdown-item" href="<?php echo e(route('profilAdmin')); ?>">Profil</a>
+                                <?php endif; ?>
                                 <div class="dropdown-divider"></div>
                                 <div>
-                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                    <a class="dropdown-item" href="<?php echo e(route('logout')); ?>" onclick="event.preventDefault();
                                                          document.getElementById('logout-form').submit();">
-                                            {{ __('Logout') }}
+                                            <?php echo e(__('Logout')); ?>
+
                                     </a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            @csrf
+                                    <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" style="display: none;">
+                                            <?php echo csrf_field(); ?>
                                     </form>
                                 </div>
                               </div>
                             </div>
-                @endguest
+                <?php endif; ?>
             </div>
 
             <!-- Button show menu -->
@@ -539,20 +543,12 @@
 
             <ul class="main-menu-m">
                 <li>
-                    <a href="{{route('accueil')}} id="colorr">Accueil</a>
+                    <a href="<?php echo e(route('accueil')); ?> id="colorr">Accueil</a>
                     
                 </li>
 
                 <li>
-                    <a href="{{route('shop')}}id="colorr">Shop</a>
-                    
-                    <span class="arrow-main-menu-m">
-                        <i class="fa fa-angle-right" aria-hidden="true"></i>
-                    </span>
-                </li>
-
-                <li>
-                    <a href="{{route('emploi')}}" id="colorr">Emploi</a>
+                    <a href="<?php echo e(route('shop')); ?>id="colorr">Shop</a>
                     
                     <span class="arrow-main-menu-m">
                         <i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -560,15 +556,23 @@
                 </li>
 
                 <li>
-                    <a href="{{route('article')}}id="colorr">Article</a>
+                    <a href="<?php echo e(route('emploi')); ?>" id="colorr">Emploi</a>
+                    
+                    <span class="arrow-main-menu-m">
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </span>
                 </li>
 
                 <li>
-                    <a href="{{route('apropos')}} id="colorr">A propos</a>
+                    <a href="<?php echo e(route('article')); ?>id="colorr">Article</a>
                 </li>
 
                 <li>
-                    <a href="{{route('contact')}} id="colorr">Contact</a>
+                    <a href="<?php echo e(route('apropos')); ?> id="colorr">A propos</a>
+                </li>
+
+                <li>
+                    <a href="<?php echo e(route('contact')); ?> id="colorr">Contact</a>
                 </li>
             </ul>
         </div>
@@ -613,31 +617,59 @@
                         <span class="splash-description">Please enter your user information.</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('login') }}">
-                            @csrf
+                        <form method="POST" action="<?php echo e(route('login')); ?>">
+                            <?php echo csrf_field(); ?>
                             <div class="form-group">
-                                <input class="form-control form-control-lg @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" type="email" placeholder="Email ou Telephone"  id="email">
+                                <input class="form-control form-control-lg <?php $__errorArgs = ['email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" name="email" value="<?php echo e(old('email')); ?>" type="email" placeholder="Email ou Telephone"  id="email">
 
-                                @error('email')
+                                <?php $__errorArgs = ['email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                        <strong><?php echo e($message); ?></strong>
                                     </span>
-                                @enderror
+                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
 
                             </div>
                             <div class="form-group">
-                                <input class="form-control form-control-lg @error('password') is-invalid @enderror" name="password" id="password" type="password" placeholder="Mot de passe">
+                                <input class="form-control form-control-lg <?php $__errorArgs = ['password'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" name="password" id="password" type="password" placeholder="Mot de passe">
 
-                                @error('password')
+                                <?php $__errorArgs = ['password'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                        <strong><?php echo e($message); ?></strong>
                                     </span>
-                                @enderror
+                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
 
                             </div>
                             <div class="form-check">
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                                    <input type="checkbox" class="custom-control-input" name="remember" id="remember" <?php echo e(old('remember') ? 'checked' : ''); ?>>
                                     <label class="custom-control-label p-t-4" for="remember">Remeber me</label>
                                 </div>
                             </div>
@@ -646,19 +678,19 @@
                     </div>
                     <div class="card-footer" >
                         
-                        @if (Route::has('register'))
+                        <?php if(Route::has('register')): ?>
                         <div class="card-footer-item card-footer-item-bordered" >
-                            <a href="{{ route('register') }}" style="color:rgb(122, 122, 122); margin-right: 2%;" lass="nav-link">{{ __('Creer un Compte') }}</a>
+                            <a href="<?php echo e(route('register')); ?>" style="color:rgb(122, 122, 122); margin-right: 2%;" lass="nav-link"><?php echo e(__('Creer un Compte')); ?></a>
                         </div>
 
-                        @endif
+                        <?php endif; ?>
                          
-                        @if (Route::has('password.request'))
+                        <?php if(Route::has('password.request')): ?>
                                     
                             <div class="card-footer-item card-footer-item-bordered" >
-                                 <a href="{{ route('password.request') }}" style="color:rgb(122, 122, 122); margin-left: 10%;">{{ __('Forgot Password') }}</a>
+                                 <a href="<?php echo e(route('password.request')); ?>" style="color:rgb(122, 122, 122); margin-left: 10%;"><?php echo e(__('Forgot Password')); ?></a>
                             </div>
-                        @endif
+                        <?php endif; ?>
                         
                     </div>
                     </form>
@@ -743,11 +775,11 @@
                     </div>
 
                     <div class="header-cart-buttons flex-w w-full">
-                        <a  href="{{route('panierVisiteur')}}" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+                        <a  href="<?php echo e(route('panierVisiteur')); ?>" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
                             View Cart
                         </a>
 
-                        <a  href="{{route('panierVisiteur')}}" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
+                        <a  href="<?php echo e(route('panierVisiteur')); ?>" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
                             Check Out
                         </a>
                     </div>
@@ -759,7 +791,7 @@
     </header>
 
        
-            @yield('content')
+            <?php echo $__env->yieldContent('content'); ?>
         
     <!-- Footer -->
     <footer class="bg3 p-t-75 p-b-32">
@@ -1119,3 +1151,4 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
 </body>
 </html>
+<?php /**PATH C:\xampp\htdocs\BWS\resources\views/layouts/template_visiteur.blade.php ENDPATH**/ ?>

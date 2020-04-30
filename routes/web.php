@@ -45,7 +45,7 @@ Route::get('/statistiquesAdmin', 'BwsController@statistiques_admin')->name('stat
 Route::get('/vendeur', 'BwsController@vendeur_admin')->name('vendeur');
 Route::put('/updateProfilA/{id}','AdminController@update_profil');
 
-/************************************************ Employeur***********************************************/
+/*********************************************** Employeur***********************************************/
 
 Route::get('/demandeEmploiRecu', 'BwsController@demande_emploi_reçu_employeur')->name('demandeEmploiRecu');
 Route::get('/profilEmployeur', 'EmployeurController@profil_employeur')->name('profilEmployeur');

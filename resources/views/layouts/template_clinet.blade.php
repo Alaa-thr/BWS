@@ -629,7 +629,7 @@
          </a>
        </li>
        <li class="<?php echo $stripePanier ?>" >
-         <a href="{{route('panierClient')}}">
+         <a href="{{route('panierVisiteur')}}">
            <i class="now-ui-icons shopping_cart-simple" id="y"></i>
            <div class="m-t-5" id="x">Panier</div>
          </a>
