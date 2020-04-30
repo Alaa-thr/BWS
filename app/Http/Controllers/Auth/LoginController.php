@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use Session;
+use Illuminate\Support\Facades\Route;
 class LoginController extends Controller
 {
     /*
@@ -42,16 +43,11 @@ class LoginController extends Controller
     }
     public function logout()
     {
-        if(Auth::user()->type_compte == 'c' || Auth::user()->type_compte == 'e' || Auth::user()->type_compte == 'v' || Auth::user()->type_compte == 'a'){
+        
             Auth::logout();
             Session::flush();
             return redirect('/accueil');
-        }
-        else{
-            Auth::logout();
-            Session::flush();
-            return redirect(url()->previous());
-        }
+        
     }
 
 

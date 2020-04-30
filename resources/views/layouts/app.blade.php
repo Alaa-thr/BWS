@@ -99,7 +99,7 @@
                 $stripeAccueil=$stripeShop=$stripeEmploi=$stripeArticle=$stripeAPropos=$stripeContact='';
                 
                 $urlAcctuiel = Route::getCurrentRoute()->uri();
-                if($urlAcctuiel == 'accueil'){
+                if($urlAcctuiel == 'accueil' || $urlAcctuiel == '/'){
                     $stripeAccueil='active-menu';
                 }
   ?>

@@ -1,11 +1,11 @@
 
 <?php $__env->startSection('content'); ?>
 
-  
-  <head>
-    <title><?php echo e(( 'Historique')); ?></title>
-  </head>
-  <nav class="navbar navbar-expand-lg navbar-transparent  bg-primary  navbar-absolute">
+	
+	<head>
+		<title><?php echo e(( 'Historique')); ?></title>
+	</head>
+	<nav class="navbar navbar-expand-lg navbar-transparent  bg-primary  navbar-absolute">
         <div class="container-fluid">
           <div class="navbar-wrapper">
             <div class="navbar-toggle">
@@ -23,7 +23,7 @@
     </div>
 
 
-  <div class="content" id="pr">
+	<div class="content" id="pr">
          <div class="row"  >
             <div class="col-md-12" >
               <div class="card"  id="xc" style=" width: 1000px;"  >
@@ -44,7 +44,7 @@
    
 
 <form>
-    <input type="checkbox"  name="subscribe" value="newsletter">  
+  	<input type="checkbox"  name="subscribe" value="newsletter">  
     <label for="subscribeNews" class="description text-right"  > 
         <a class="dropdown-item " href="#" id="h" >21:48</a>
     </label>
@@ -72,7 +72,7 @@
    
 
 <form>
-    <input type="checkbox"  name="subscribe" value="newsletter">  
+  	<input type="checkbox"  name="subscribe" value="newsletter">  
     <label for="subscribeNews" class="description text-right"  > 
         <a class="dropdown-item " href="#" id="h" >21:48</a>
     </label>
@@ -96,7 +96,7 @@
    
 
 <form>
-    <input type="checkbox"  name="subscribe" value="newsletter">  
+  	<input type="checkbox"  name="subscribe" value="newsletter">  
     <label for="subscribeNews" class="description text-right"  > 
         <a class="dropdown-item " href="#" id="h" >21:48</a>
     </label>
@@ -120,7 +120,7 @@
    
 
 <form>
-    <input type="checkbox"  name="subscribe" value="newsletter">  
+  	<input type="checkbox"  name="subscribe" value="newsletter">  
     <label for="subscribeNews" class="description text-right"  > 
         <a class="dropdown-item " href="#" id="h" >21:48</a>
     </label>
@@ -144,7 +144,7 @@
    
 
 <form>
-    <input type="checkbox"  name="subscribe" value="newsletter">  
+  	<input type="checkbox"  name="subscribe" value="newsletter">  
     <label for="subscribeNews" class="description text-right"  > 
         <a class="dropdown-item " href="#" id="h" >21:48</a>
     </label>
