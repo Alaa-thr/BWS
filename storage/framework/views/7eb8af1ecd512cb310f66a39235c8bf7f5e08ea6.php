@@ -31,24 +31,30 @@
               <h5 class="title">Editer Profile</h5>
             </div>
             <div class="card-body">
-              <form style="margin-top: 15px; font-weight: 700;" >
+
+             <form action="<?php echo e(url('/updateProfilA/'.$admin->id)); ?>" method="post" enctype="multipart/form-data" style="margin-top: 15px; font-weight: 700;">
+                <input type="hidden" name="_method" value="PUT">
+                <?php echo e(csrf_field()); ?>
+
+
+              <!--form style="margin-top: 15px; font-weight: 700;" -->
                 <div class="row">
                   <div class="col-md-4 pl-2">
                     <div class="form-group">
                       <label>Nom</label>
-                      <input type="text" class="form-control" v-model="profiladmin.nom" value="<?php echo e(old('nom')); ?>">
+                      <input name="nom" type="text" class="form-control" v-model="profiladmin.nom" value="<?php echo e(old('nom')); ?>">
                     </div>
                   </div>
                   <div class="col-md-4 pl-1">
                     <div class="form-group">
                       <label>Prénom</label>
-                      <input type="text" class="form-control" v-model="profiladmin.prenom" value="<?php echo e(old('prenom')); ?>">
+                      <input name="prenom" type="text" class="form-control" v-model="profiladmin.prenom" value="<?php echo e(old('prenom')); ?>">
                    </div>
                  </div>
                   <div class="col-md-4 pl-1">
                     <div class="form-group">
                       <label>Numero Telephone</label>
-                      <input type="" class="form-control" v-model="profiladmin.numTelephone" value="<?php echo e(old('numTelephone')); ?>">
+                      <input name="num" type="" class="form-control" v-model="profiladmin.numTelephone" value="<?php echo e(old('numTelephone')); ?>">
                     </div>
                   </div>
                 </div>
@@ -56,13 +62,13 @@
                   <div class="col-md-8 pl-2">
                     <div class="form-group">
                       <label for="exampleInputEmail1" >Adresse Email</label>
-                      <input type="email" class="form-control" v-model="profiladmin.email" value="<?php echo e(old('admin')); ?>">
+                      <input name="adresse_email" type="email" class="form-control" v-model="profiladmin.email" value="<?php echo e(old('admin')); ?>">
                     </div>
                   </div>
                   <div class="col-md-4 pl-1">
                     <div class="form-group">
                       <label>Numero compte BNQ</label>
-                      <input type="text" class="form-control" v-model="profiladmin.numCarteBanquaire" value="<?php echo e(old('numCarteBanquaire')); ?>">
+                      <input name="bnq" type="text" class="form-control" v-model="profiladmin.numCarteBanquaire" value="<?php echo e(old('numCarteBanquaire')); ?>">
                     </div>
                   </div>
                 </div>
@@ -84,8 +90,11 @@
                 </div>
                   
                 <div class="row">
-                  <div class="col-md-12">
-                        <input type="button" class="form-control btn btn-warning" value="Modifier" style="margin-top: 40px;  font-weight: 700; border: 0; background-color: #F4A460;">     
+                  <div class="col-md-6">
+                        <button type="submit"  value="Modifier" class="btn btn-warning btn-block" style="margin-top: 40px;  border: 0;  border-radius: 2em; font-size: 12px; font-weight: 700;" >Modifier</button>     
+                  </div>
+                  <div class="col-md-6">
+                    <a class=" btn btn-danger btn-block" type="submit" style="margin-top: 40px;  border: 0;  border-radius: 2em; font-size: 12px; font-weight: 900;" href="<?php echo e(route('profilAdmin')); ?>">Annuler</a>
                   </div>
                 </div>
               </form>

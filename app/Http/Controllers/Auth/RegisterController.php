@@ -10,7 +10,8 @@ use App\Vendeur;
 use App\Employeur;
 use App\Tarif_livraison;
 use App\Ville;
-use App \Typechoisirvendeur;
+use App\Typechoisirvendeur;
+use App\Admin;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -94,6 +95,14 @@ class RegisterController extends Controller
             'nom_societe'=> ['required'],
             ]);
         }
+        else if($data['compte'] == 4){
+            return Validator::make($data, [
+            'nom' => ['required', 'string', 'max:30'],
+            'prenom' => ['required', 'string', 'max:30'],
+            'email' => ['required', 'string', 'email', 'max:255'],
+            'password' => ['required', 'string', 'min:8'],
+            ]);
+        }
 
     }
 
@@ -144,7 +153,7 @@ class RegisterController extends Controller
                     'prenom' => $data['prenom'],
                     'email' => $data['email'],
                     'numTelephone' => $data['numTelephone'],
-                    
+                   
                     'Nom_boutique' => $data['Nom_boutique'],
                     'Num_Compte_Banquaire' => $data['Num_Compte_Banquaire'],
                     'image' => $data['photoV'],   
@@ -191,6 +200,27 @@ class RegisterController extends Controller
                     'address' => $data['addrsse_soct'],
                     'nom_societe' => $data['nom_societe'],
                     'num_compte_banquiare' => $data['num_compte_banquiare'],
+                    'image' => $data['photoE'],            
+                ]);
+                return $objet_user;
+        }
+        else if($data['compte'] == 4){
+       
+                $objet_user = User::create([
+                        
+                        'numTelephone' => $data['numTelephone'],
+                        'email' => $data['email'],
+                        'type_compte' => 'a', 
+                        'password' => Hash::make($data['password']),
+
+                ]);
+                Admin::create([
+                    'nom' => $data['nom'],
+                    'user_id' => $objet_user->id,
+                    'prenom' => $data['prenom'],
+                    'email' => $data['email'],
+                    'numTelephone' => $data['numTelephone'],
+                    'numCarteBanquaire' => $data['num_compte_banquiare'],
                     'image' => $data['photoE'],            
                 ]);
                 return $objet_user;

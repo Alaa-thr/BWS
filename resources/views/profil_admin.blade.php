@@ -1,4 +1,4 @@
-@extends('layouts.template_clinet')
+@extends('layouts.template_admin')
 
 @section('content')
 
@@ -6,24 +6,11 @@
   <head>
     <title>{{ ( 'Profile') }}</title>
   </head>
-  
-   <nav class="navbar navbar-expand-lg navbar-transparent  bg-primary  navbar-absolute" >
-        <div class="container-fluid"  >
-          <div class="navbar-wrapper">
-            <div class="navbar-toggle">
-              <button type="button" class="navbar-toggler">
-                <span class="navbar-toggler-bar bar1"></span>
-                <span class="navbar-toggler-bar bar2"></span>
-                <span class="navbar-toggler-bar bar3"></span>
-              </button>
-            </div>
-            <a class="navbar-brand" href="#pablo">Profile </a>
-          </div>
-        </div>
-      </nav>
+  <div class="main-panel" id="main-panel">
+      
       <div class="panel-header panel-header-sm">
       </div>
-  <div class="content" id="app" id='pr'>
+  <div class="content" id="app" >
      <div class="row">
         <div class="col-md-8">
           <div class="card">
@@ -140,6 +127,35 @@
         
       </div>
   </div>
+  <footer class="footer">
+        <div class=" container-fluid ">
+          <nav>
+            <ul>
+              <li>
+                <a href="https://www.creative-tim.com">
+                  BASMAHW&S
+                </a>
+              </li>
+              <li>
+                <a href="http://presentation.creative-tim.com">
+                  A Propos
+                </a>
+              </li>
+              <li>
+                <a href="http://blog.creative-tim.com">
+                  Blog
+                </a>
+              </li>
+            </ul>
+          </nav>
+          <div class="copyright" id="copyright">
+            &copy; <script>
+              document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))
+            </script>, Desinger par <a href="https://www.invisionapp.com" target="_blank">BS</a>. Codé par <a href="https://www.creative-tim.com" target="_blank">BASMAHW&S</a>.
+          </div>
+        </div>
+      </footer>
+    </div>
 
  
 @endsection
