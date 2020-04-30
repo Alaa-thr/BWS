@@ -128,6 +128,6 @@
         </div>
       </footer>
     </div>
-  </div>
+  
   
   @endsection
