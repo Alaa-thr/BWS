@@ -1,4 +1,48 @@
 
+<?php $__env->startPush('javascripts'); ?>
+
+
+<script src="<?php echo e(asset('assetsClient/js/vue.js')); ?>"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+ 
+<script>
+        window.Laravel = <?php echo json_encode([
+               'csrfToken' => csrf_token(),
+                'client'=>$client,  //client connecté
+               'url'       => url('/')  
+          ]); ?>;
+</script>
+
+<script>
+   var app = new Vue({
+
+    el: '#app',
+    data:{
+        msg: "hello",
+        profilclient:[],
+                   
+      },
+
+    methods: {
+      profil_clinet: function(){
+        axios.get(window.Laravel.url+'/profilClient')
+
+            .then(response => {
+                 this.profilclient = window.Laravel.client;
+            })
+            .catch(error =>{
+                 console.log('errors :' , error);
+            })
+      }
+      
+    },
+    mounted:function(){
+      this.profil_clinet();
+    }
+  });
+</script>
+
+<?php $__env->stopPush(); ?>
 
 <?php $__env->startSection('content'); ?>
 
@@ -151,50 +195,7 @@
  
 <?php $__env->stopSection(); ?>
 
-<?php $__env->startPush('javascripts'); ?>
 
-
-<script src="<?php echo e(asset('assetsClient/js/vue.js')); ?>"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
- 
-<script>
-        window.Laravel = <?php echo json_encode([
-               'csrfToken' => csrf_token(),
-                'client'=>$client,  //client connecté
-               'url'       => url('/')  
-          ]); ?>;
-</script>
-
-<script>
-   var app = new Vue({
-
-    el: '#app',
-    data:{
-        msg: "hello",
-        profilclient:[],
-                   
-      },
-
-    methods: {
-      profil_clinet: function(){
-        axios.get(window.Laravel.url+'/profilClient')
-
-            .then(response => {
-                 this.profilclient = window.Laravel.client;
-            })
-            .catch(error =>{
-                 console.log('errors :' , error);
-            })
-      }
-      
-    },
-    mounted:function(){
-      this.profil_clinet();
-    }
-  });
-</script>
-
-<?php $__env->stopPush(); ?>
 
 
 

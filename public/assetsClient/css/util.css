@@ -3853,8 +3853,12 @@ background-color: chartreuse;
 		margin-top: -72px;
 
 	}
-<<<<<<< HEAD
-=======
+#point{
+	margin-left: 240px;
+}
+#pl{
+	margin-left: -8px;
+}
 #cmd{
 	margin-top: -70px;
 	padding-top: 12px;
@@ -3869,7 +3873,6 @@ background-color: chartreuse;
 	border: 2px solid gray;
 	border-radius: 25px;
 }
-<<<<<<< HEAD
 #d{
 	margin-left:102px; margin-top:-33px;
 }
@@ -3981,6 +3984,3 @@ background-color: chartreuse;
   }
   #in{
 float: right;  }
-=======
->>>>>>> a189f78fbb80c2941637b65e38ab3c3a2cef36ca
->>>>>>> a378e35b81ca36439c7c9caf6f6210b0fe192407

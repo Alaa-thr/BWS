@@ -101,7 +101,7 @@
                 $stripeAccueil=$stripeShop=$stripeEmploi=$stripeArticle=$stripeAPropos=$stripeContact='';
                 
                 $urlAcctuiel = Route::getCurrentRoute()->uri();
-                if($urlAcctuiel == 'accueil'){
+                if($urlAcctuiel == 'accueil' || $urlAcctuiel == '/'){
                     $stripeAccueil='active-menu';
                 }
   ?>
@@ -422,7 +422,14 @@
                               </button>
                               
                               <div class="dropdown-menu m-r-35" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#">Profil</a>
+                                <?php if(Auth::user()->type_compte == 'c'): ?>
+                                <a class="dropdown-item" href="<?php echo e(route('profilClient')); ?>">Profil</a>
+                                <?php elseif(Auth::user()->type_compte == 'v'): ?>
+                                <a class="dropdown-item" href="<?php echo e(route('profilVendeur')); ?>">Profil</a>
+                                <?php elseif(Auth::user()->type_compte == 'e'): ?>
+                                <a class="dropdown-item" href="<?php echo e(route('profilEmployeur')); ?>">Profil</a><?php elseif(Auth::user()->type_compte == 'a'): ?>
+                                <a class="dropdown-item" href="<?php echo e(route('profilAdmin')); ?>">Profil</a>
+                                <?php endif; ?>
                                 <div class="dropdown-divider"></div>
                                 <div>
                                     <a class="dropdown-item" href="<?php echo e(route('logout')); ?>" onclick="event.preventDefault();
@@ -476,7 +483,14 @@
                               </button>
                               
                               <div class="dropdown-menu m-r-35" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#">Profil</a>
+                                <?php if(Auth::user()->type_compte == 'c'): ?>
+                                <a class="dropdown-item" href="<?php echo e(route('profilClient')); ?>">Profil</a>
+                                <?php elseif(Auth::user()->type_compte == 'v'): ?>
+                                <a class="dropdown-item" href="<?php echo e(route('profilVendeur')); ?>">Profil</a>
+                                <?php elseif(Auth::user()->type_compte == 'e'): ?>
+                                <a class="dropdown-item" href="<?php echo e(route('profilEmployeur')); ?>">Profil</a><?php elseif(Auth::user()->type_compte == 'a'): ?>
+                                <a class="dropdown-item" href="<?php echo e(route('profilAdmin')); ?>">Profil</a>
+                                <?php endif; ?>
                                 <div class="dropdown-divider"></div>
                                 <div>
                                     <a class="dropdown-item" href="<?php echo e(route('logout')); ?>" onclick="event.preventDefault();
