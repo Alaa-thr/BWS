@@ -24,7 +24,7 @@
 
       <div class="content" id="pr">
      <div class="row"  >
-        <div class="col-md-8" >
+        <div class="col-md-12" >
           <div class="card"  id="xc" style=" width: 1000px;" >
             <div class="card-header">
               <h5 class="titre" >Demande d'Emploi</h5>

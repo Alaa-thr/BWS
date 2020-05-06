@@ -7,9 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="assetsAdmin/img/apple-icon.png">
   <link rel="icon" type="image/png" href="assetsAdmin/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <title>
-    Basmah WS_Admin
-  </title>
+  
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
@@ -206,7 +204,7 @@
                     </div>
                   </div>
               </li>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown" style="cursor: pointer;">
                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <img class="img-xs rounded-circle" src="assetsAdmin/img/admin.jpg" alt="..."/>
                   <p>
@@ -234,7 +232,13 @@
                       <a class="dropdown-item" href="user.html" id="n"><i class="now-ui-icons users_single-02" id="m"></i><b>Profil</b></a>
                       <a class="dropdown-item" href="#" id="n"><i class="now-ui-icons loader_gear"id="m"></i><b>Paramètres</b></a>
                       <hr width="90%">
-                      <a class="dropdown-item" href="#" id="n"><i class="now-ui-icons media-1_button-power" id="m"></i><b>Déconnexion</b></a>
+                      <a class="dropdown-item" href="<?php echo e(route('logout')); ?>" onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();" id="n">
+                        <i class="now-ui-icons media-1_button-power" id="m"></i>
+                        <?php echo e(__('Déconnexion')); ?> </a>
+                        <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" style="display: none;">
+                          <?php echo csrf_field(); ?>
+                        </form>
                   </div>
                 </div> 
             </li>

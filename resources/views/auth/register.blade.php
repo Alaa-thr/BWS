@@ -105,7 +105,7 @@ button:hover {
   <div class="tab" >
     <div class="form-group flex-t m-b-35">
                     <div class=" m-r-30" style="width: 375px">
-                        <input class="form-control form-control-lg  @error('nom') is-invalid @enderror" id="nom" name="nom" type="text" placeholder="Nom*" >
+                        <input class="form-control form-control-lg  @error('nom') is-invalid @enderror" id="nom" name="nom" type="text" placeholder="Nom*" value="{{ old('nom') }}">
 
                         @error('nom')
                             <span class="invalid-feedback" role="alert">
@@ -115,7 +115,7 @@ button:hover {
                     </div>
 
                     <div class="" style="width: 375px">
-                        <input class="form-control form-control-lg @error('prenom') is-invalid @enderror" id="prenom" type="text" name="prenom"placeholder="Prenom*" >
+                        <input class="form-control form-control-lg @error('prenom') is-invalid @enderror" id="prenom" type="text" name="prenom"placeholder="Prenom*" value="{{ old('prenom') }}">
                         
 
                         @error('prenom')
@@ -158,9 +158,9 @@ button:hover {
     </div>
     <div class="form-group flex-t m-b-35">
                     <div class=" m-r-30" style="width: 375px ">
-                        <select class="form-control form-control-lg @error('ville') is-invalid @enderror" id="exampleFormControlSelect2" name="ville" style="height: 45px" >
-                          <option value="" disabled selected>Choisir une ville</option> 
-                          <option v-for="v in villes" :value="v.nom">@{{v.nom}}</option> 
+                        <select class="form-control form-control-lg @error('ville') is-invalid @enderror" id="exampleFormControlSelect2" name="ville" style="height: 45px">
+                          <option value="" hidden="hidden" selected>Choisir une ville</option> 
+                          <option v-for="v in villes" :value="v.nom" >@{{v.nom}}</option> 
                         </select>
 
                         @error('ville')
@@ -170,12 +170,21 @@ button:hover {
                         @enderror
                     </div>
                     <div class="" style="width: 375px">
+<<<<<<< HEAD
                         <select class="form-control form-control-lg @error('compte') is-invalid @enderror" id="exampleFormControlSelect1"  name="compte"  onchange="onChange()" style="height: 45px">
                             <option value="0" disabled selected>Crée compte tant que</option>
                             <option value="1">Client</option>
                             <option value="2">Vendeur</option>
                             <option value="3">Employeur</option>
                             <option value="4">Admin</option>
+=======
+                        <select class="form-control form-control-lg @error('compte') is-invalid @enderror" id="exampleFormControlSelect1"  name="compte"  onchange="onChange()" style="height: 45px" value="{{ old('compte') }}">
+                            <option value="" selected hidden="hidden">Crée compte tent que</option>
+                            <option value="1" {{old('compte') == 1 ? 'selected' : '' }}>Client</option>
+                            <option value="2" {{old('compte') == 2 ? 'selected' : '' }}>Vendeur</option>
+                            <option value="3" {{old('compte') == 3 ? 'selected' : '' }}>Employeur</option>
+                            <option value="4" {{old('compte') == 4 ? 'selected' : '' }}>Admin</option>
+>>>>>>> 7085ab4448d06dbd9a4f2e0a2b9febbd21c620e9
                         </select>
                         @error('compte')
                             <span class="invalid-feedback" role="alert">
@@ -186,10 +195,10 @@ button:hover {
     </div>
      <div class="form-group flex-t m-b-35 openV"  style="display: none">
                     <div class=" m-r-30" style="width: 375px">
-                        <input class="form-control form-control-lg  " id="nom_btq" type="text" placeholder="Nom de Boutique" name="Nom_boutique"/>
+                        <input class="form-control form-control-lg  " id="nom_btq" type="text" placeholder="Nom de Boutique" name="Nom_boutique" value="{{ old('Nom_boutique') }}">
                     </div>
                     <div class="" style="width: 375px">
-                        <input class="form-control form-control-lg @error('Num_Compte_Banquaire') is-invalid @enderror" id="nom_btq"  name="Num_Compte_Banquaire" type="text" placeholder="Numero Compte Bancaire*" /> 
+                        <input class="form-control form-control-lg @error('Num_Compte_Banquaire') is-invalid @enderror" id="nom_btq"  name="Num_Compte_Banquaire" type="text" placeholder="Numero Compte Bancaire*" value="{{ old('Num_Compte_Banquaire') }}"> 
 
                         @error('Num_Compte_Banquaire')
                             <span class="invalid-feedback" role="alert">
@@ -199,7 +208,7 @@ button:hover {
                     </div>
     </div>
     <div class="form-group m-b-35 openV" style="display: none">
-                    <input class="form-control form-control-lg @error('addrsse_boutique') is-invalid @enderror" id="addrsse_btq" name ="addrsse_boutique" type="text" placeholder="Addresse de Boutique*">    
+                    <input class="form-control form-control-lg @error('addrsse_boutique') is-invalid @enderror" id="addrsse_btq" name ="addrsse_boutique" type="text" placeholder="Addresse de Boutique*" value="{{ old('addrsse_boutique') }}">    
 
                     @error('addrsse_boutique')
                         <span class="invalid-feedback" role="alert">
@@ -209,12 +218,17 @@ button:hover {
 
     </div>
     <div class="from-group  m-b-40 openV" style="display: none">
-                    <input type="file" class="form-control " name="photoV" value="{{old('image')}}" style="height: 45px">
+                    <input type="file" class="form-control @error('photoV') is-invalid @enderror" name="photoV" value="{{old('photoV')}}" style="height: 45px">
+                    @error('photoV')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                    @enderror
                         
     </div>
     <div class="form-group flex-t m-b-35 openE" style="display: none">
                     <div class=" m-r-30" style="width: 375px">
-                        <input class="form-control form-control-lg  @error('nom_societe') is-invalid @enderror" id="nom_btq" name="nom_societe" type="text" placeholder="Nom de Société*">
+                        <input class="form-control form-control-lg  @error('nom_societe') is-invalid @enderror" id="nom_btq" name="nom_societe" type="text" placeholder="Nom de Société*" value="{{ old('nom_societe') }}">
 
                         @error('nom_societe')
                             <span class="invalid-feedback" role="alert">
@@ -223,7 +237,7 @@ button:hover {
                         @enderror
                     </div>
                     <div class="" style="width: 375px">
-                        <input class="form-control form-control-lg @error('num_compte_banquiare') is-invalid @enderror" id="nom_btq" name="num_compte_banquiare" type="text" placeholder="Numero Compte Bancaire*" > 
+                        <input class="form-control form-control-lg @error('num_compte_banquiare') is-invalid @enderror" id="nom_btq" name="num_compte_banquiare" type="text" placeholder="Numero Compte Bancaire*" value="{{ old('num_compte_banquiare') }}"> 
 
                         @error('num_compte_banquiare')
                             <span class="invalid-feedback" role="alert">
@@ -233,7 +247,7 @@ button:hover {
                     </div>
     </div>
     <div class="form-group m-b-35 openE" style="display: none">
-                    <input class="form-control form-control-lg @error('addrsse_soct') is-invalid @enderror" id="addrsse_soct" name="addrsse_soct" type="text" placeholder="Addresse de Société*" >
+                    <input class="form-control form-control-lg @error('addrsse_soct') is-invalid @enderror" id="addrsse_soct" name="addrsse_soct" type="text" placeholder="Addresse de Société*" value="{{ old('addrsse_soct') }}">
 
                     @error('addrsse_soct')
                         <span class="invalid-feedback" role="alert">
@@ -243,18 +257,25 @@ button:hover {
 
     </div>
     <div class="from-group  m-b-40 openE" style="display: none">
-                    <input type="file" class="form-control " name="photoE" value="{{old('image')}}" style="height: 45px">
+                    <input type="file" class="form-control @error('photoE') is-invalid @enderror" name="photoE" value="{{old('photoE')}}" style="height: 45px">
+                    @error('photoE')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                         
     </div>
   </div>
   <div class="tab">
     <div class="form-group m-b-35" >
                     <label class="m-b-13" style="font-size: 20px">Sélectionnez le(s) type(s) de livraison que que vous pouvez effectuer :</label>
-                    <select class="form-control form-control-lg @error('typeL') is-invalid @enderror" id="typeLivrs"  name="typeL[]" multiple onchange="onChangeTypeL()">
-                            <option value="0" disabled selected>Sélectionnez</option>
-                            <option value="dhl">DHL(Poste)</option>
-                            <option value="vc">Vous effectuer la livraison</option>
-                            <option value="cv">Client ramener ces produits</option>
+                    <select class="form-control form-control-lg @error('typeL') is-invalid @enderror" id="typeLivrs"  name="typeL[]" multiple >
+                       <option value="0" disabled >Sélectionnez</option>
+                        <option value="dhl" {{in_array("dhl", old("typeL") ?: []) ? "selected": ""}}>DHL(Poste)</option>
+                        <option value="vc"{{in_array("vc", old("typeL") ?: []) ? "selected": ""}}>Vous effectuer la livraison</option>
+                        <option value="cv"{{in_array("cv", old("typeL") ?: []) ? "selected": ""}}>Client ramener ces produits</option>
+                           
+                            
                     </select>                           
                         @error('typeL')
                             <span class="invalid-feedback" role="alert">
@@ -263,36 +284,37 @@ button:hover {
                         @enderror
     </div>
   </div>
-  <div class="tab " style="border: 2px" >
+  <!--<div class="tab " style="border: 2px" >
     <div class="custom-checkbox m-b-20">
-        <input type="checkbox" class="custom-control-input form-control m-t-2" value="" id="cocher" name="selectAll[]" >
-        <label class="custom-control-label p-l-25 " for="cocher" style="font-size: 20px" >Selectionner Tout :</label>
+        <input type="checkbox" class="custom-control-input form-control m-t-2" value="" id="selectall" onclick="selectAll(this);" >
+        <label class="custom-control-label p-l-25 " for="selectall" style="font-size: 20px" >Selectionner Tout :</label>
     </div>
    <div class="form-group m-b-35 m-l-50 " v-for="v in villes" style="display: inline-flex;">
                     <div class="custom-checkbox m-r-14" >
-                        <input type="checkbox" class="custom-control-input form-control" :value="v.id" :id="v.id" name="villeC[]" >
+                        <input type="checkbox" class="custom-control-input form-control  @error('villeC') is-invalid @enderror" value="v.id" :id="v.id" name="villeC[]" >
                         <label class="custom-control-label p-l-25 p-t-4" :for="v.id" >@{{v.nom}}</label>
-                    </div>
-                    <script type="text/javascript">
-                        var i=0;
-
-                    </script>
-    </div>
-    <div class="form-group input-group m-b-60">
-                  <input type="text" class="form-control" aria-label="Text input with dropdown button" placeholder="Entrez le prix de livraison pour la(les) ville(s) selectionner" name="prix_tarif" style="height: 45px">
-                        @error('prix_tarif')
+                        @error('villeC')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
+                    </div>
+    </div>
+    <div class="form-group input-group m-b-60">
+                  <input type="text" class="form-control @error('prix_tarif') is-invalid @enderror" aria-label="Text input with dropdown button" placeholder="Entrez le prix de livraison pour la(les) ville(s) selectionner" name="prix_tarif" style="height: 45px" value="{{old('prix_tarif')}}">
                   <div class="input-group-append">
                     <select class="form-control form-control-lg @error('poids') is-invalid @enderror" id="exampleFormControlSelect1"  name="poids" style="height: 45px">
-                            <option value="1" selected>/Kg</option>
-                            <option value="2">/g</option>
+                            <option value="1" selected {{ old('poids') == 1 ? 'selected' : '' }}>/Kg</option>
+                            <option value="2" {{ old('poids') == 2 ? 'selected' : '' }}>/g</option>
                     </select>
                   </div>
+                  @error('prix_tarif')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                  @enderror
     </div>
-  </div>
+  </div>-->
     <div id="nextPrevious">
       <button type="button" id="prevBtn" onclick="nextPrev(-1,-1)" class="btn-lg m-t-8 btn-block m-r-30" style="background-color:#ca2323;color:white">Previous</button>
       <button type="button" id="nextBtn" onclick="nextPrev(1,1)" class="btn-lg btn-block bg10" style="background-color:#ca2323;color:white">Creer Compte</button>
@@ -302,7 +324,7 @@ button:hover {
   <div style="text-align:center;margin-top:40px; display: none;" id="stepp">
     <span class="step"></span>
     <span class="step"></span>
-    <span class="step"></span>
+    <!--<span class="step"></span>-->
   </div>
 
 </form>
@@ -310,38 +332,19 @@ button:hover {
         </div>
     </section>
 </div>
-   <!-- --*******************************************************************************************************-->
-   <script>
-$(document).ready(function(){
-
-// TOUT COCHER
-$(":cocher").click(function(){
-$(':checkbox.checkClass').prop('checked', true);
-$(":radio#decocher").prop('checked', false);
-});
-// TOUT DE-COCHER
-$(":radio#decocher").click(function(){
-$(':checkbox.checkClass').prop('checked', false);
-$(":radio#cocher").prop('checked', false);
-});
-// UNCHECK SI UNE CHECKBOX EST SELECTIONNEE
-$(':checkbox.checkClass').click(function(){
-$(":radio#cocher").prop('checked', false);
-$(":radio#decocher").prop('checked', false);
-});
-
-
-});
-</script>
 <script>
-var currentTab = 0; // Current tab is set to be the first tab (0)
-showTab(currentTab,1); // Display the current tab
-
+var currentTab = 0;
+showTab(currentTab,1); 
 function showTab(n,perv) {
-  // This function will display the specified tab of the form...
+
   var x = document.getElementsByClassName("tab");
+  var select = document.getElementById('exampleFormControlSelect1');
+  var options = select.getElementsByTagName('option');
+  var cmpt = options[select.selectedIndex].value;
   x[n].style.display = "block";
-  //... and fix the Previous/Next buttons:
+  if (cmpt==2 || cmpt==3){
+      onChange();
+  }
   if (n == 0) {
     document.getElementById("prevBtn").style.display = "none";
   } else {
@@ -361,90 +364,57 @@ function showTab(n,perv) {
     document.getElementById("nextBtn").innerHTML = "Suivant";
     document.getElementById("nextBtn").style.background = "#13c940";
   }
-  //... and run a function that will display the correct step indicator:
-  fixStepIndicator(n)
+
+  fixStepIndicator(n);
 }
 
 function nextPrev(n,prev) {
     var select = document.getElementById('exampleFormControlSelect1');
     var options = select.getElementsByTagName('option');
     var cmpt = options[select.selectedIndex].value;
-    var select1 = document.getElementById('typeLivrs');
-    var j=0,k=0;
-    if(cmpt==1 || cmpt==3 || cmpt==0 || cmpt==4) {
+    validateForm();
+    if(cmpt==1 || cmpt==3 || cmpt==4 || cmpt=="") {
         document.getElementById("regForm").submit();
         return false;
     }
 
-    for ( var i=1; i< select1.options.length; i++) {
-        if ( select1.options[i].selected) 
-        {
-          if(select1.options[i].value=="dhl"){
-            j++; k++;
-          }
-          else if(select1.options[i].value=="cv"){
-            j++; k++;
-          }
-          else if(select1.options[i].value=="vc"){
-            j++;
-          }
-        }
-    }
-    if((j == 2 && k == 2)|| (j==1 && k==1) && prev == 1 && currentTab != 0){
-        document.getElementById("regForm").submit();
-        return false;
-    } 
-
-
-  // This function will figure out which tab to display
+    
   var x = document.getElementsByClassName("tab");
-  // Exit the function if any field in the current tab is invalid:
-  if (n == 1 && !validateForm()) return false;
-  // Hide the current tab:
+
   if(currentTab != x.length-1 && prev==1){
     x[currentTab].style.display = "none";
   }
   else if(prev==-1){
     x[currentTab].style.display = "none";
   }
-  // Increase or decrease the current tab by 1:
-  currentTab = currentTab + n;
 
-  // if you have reached the end of the form...
+  currentTab = currentTab + n;
   if (currentTab >= x.length) {
-    // ... the form gets submitted:
+
     document.getElementById("regForm").submit();
     return false;
   }
-  // Otherwise, display the correct tab:
-    showTab(currentTab,n);
-  
+
+    showTab(currentTab,n); 
 }
 
 function validateForm() {
-  // This function deals with validation of the form fields
-  var x, y, i, valid = true;
-  x = document.getElementsByClassName("tab");
-  y = x[currentTab].getElementsByTagName("input");
-  // A loop that checks every input field in the current tab:
-  for (i = 0; i < y.length; i++) {
-    // If a field is empty...
-    
-  }
-  // If the valid status is true, mark the step as finished and valid:
+
+  var  valid = true;
+
   if (valid) {
     document.getElementsByClassName("step")[currentTab].className += " finish";
   }
-  return valid; // return the valid status
+  return valid; 
 }
 
 function fixStepIndicator(n) {
-  // This function removes the "active" class of all steps...
+
   var i, x = document.getElementsByClassName("step");
   for (i = 0; i < x.length; i++) {
     x[i].className = x[i].className.replace(" active", "");
   }
-  //... and adds the "active" class on the current step:
+
   x[n].className += " active";
 }
 
@@ -499,35 +469,13 @@ function onChange() {
     }
 
 }
-function onChangeTypeL(){
-  var select = document.getElementById('typeLivrs');
-  var options = select.getElementsByTagName('option');
-  var typeL = options[select.selectedIndex].value;
-  var j=0,k=0;
 
-
-    for ( var i=1; i< select.options.length; i++){
-        if ( select.options[i].selected) {
-          if(select.options[i].value=="dhl"){
-            j++; k++;
-          }
-          else if(select.options[i].value=="cv"){
-            j++; k++;
-          }
-          else if(select.options[i].value=="vc"){
-            j++;
-          }
-        }
-   }
-  if(j == 3 ||(j == 2 && k == 1) || (j == 1 && k == 0)){
-    document.getElementById("nextBtn").innerHTML = "Suivant"; 
-  }
-  else if((j == 2 && k == 2)|| (j==1 && k==1)){
-    document.getElementById("nextBtn").innerHTML = "Creer Compte"; 
-  }
-
-
-
+function selectAll(source) {
+    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i] != source)
+            checkboxes[i].checked = source.checked;
+    }
 }
 </script>
 @endsection
