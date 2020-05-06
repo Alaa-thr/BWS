@@ -10,16 +10,16 @@
 
       <div class="panel-header panel-header-sm">
       </div>
-      <div class="content">
+      <div class="content" id="app" >
         <div class="row">
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
                 <h4 class="card-title"> Vendeur</h4>
               </div>
-              <div class="card-body">
+              <div class="card-body" >
                 <div class="table-responsive">
-                  <table class="table">
+                  <table class="table" >
                     <thead class=" text-primary">
                       <th><b>Indice</b></th>
                       <th ><b>Nom_Prenom</b></th>
@@ -29,56 +29,12 @@
                       <th></th>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>ggggggggg</td>
-                        <td>ggggg</td>
-                        <td >ggggg</td>
-                        <td >gggggggggggg</td>
-                        <td  class="dropdown " id="k">
-                            <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
-                                <img src="assetsAdmin/img/menu.png" alt="..." id="k1">
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right" >
-                              <a class="dropdown-item js-show-modal1" href="#" id="k2">Details</a>
-                                <a class="dropdown-item" href="#" id="k2">Supprimer</a>
-                            </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>ggggggggg</td>
-                        <td>ggggg</td>
-                        <td >ggggg</td>
-                        <td >gggggggggggg</td>
-                        <td  class="dropdown " id="k">
-                            <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
-                                <img src="assetsAdmin/img/menu.png" alt="..." id="k1">
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right" >
-                              <a class="dropdown-item js-show-modal1" href="#" id="k2">Details</a>
-                                <a class="dropdown-item" href="#" id="k2">Supprimer</a>
-                            </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>ggggggggg</td>
-                        <td>ggggg</td>
-                        <td >ggggg</td>
-                        <td >gggggggggggg</td>
-                        <td  class="dropdown " id="k">
-                            <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
-                                <img src="assetsAdmin/img/menu.png" alt="..." id="k1">
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right" >
-                              <a class="dropdown-item js-show-modal1" href="#" id="k2">Details</a>
-                                <a class="dropdown-item" href="#" id="k2">Supprimer</a>
-                            </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>ggggggggg</td>
-                        <td>ggggg</td>
-                        <td >ggggg</td>
-                        <td >gggggggggggg</td>
+                      <tr v-for="vendeura in vendeuradmin">
+                        <td>{{vendeura.id}}</td>
+
+                        <td>{{vendeura.Nom}} {{vendeura.Prenom}}</td>
+                        <td >{{vendeura.numTelephone}}</td>
+                        <td >{{vendeura.email}}</td>
                         <td  class="dropdown " id="k">
                             <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
                                 <img src="assetsAdmin/img/menu.png" alt="..." id="k1">
@@ -101,7 +57,9 @@
                         <a href="#"> 5 </a>
                         <a href="#"> &raquo; </a>
                     </div>
+                  
                 </div>
+
               </div>
             </div>
           </div>
@@ -419,4 +377,46 @@
   </div>
 
   <?php $__env->stopSection(); ?>
+
+  <?php $__env->startPush('javascripts'); ?>
+
+
+<script src="<?php echo e(asset('assetsClient/js/vue.js')); ?>"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+ 
+<script>
+        window.Laravel = <?php echo json_encode([
+               'csrfToken' => csrf_token(),
+                  'vendeur' => $vendeur,  //vendeur connecté
+                'url'      => url('/')  
+          ]); ?>;
+</script>
+
+<script>
+   var app = new Vue({
+
+    el: '#app',
+    data:{
+        
+        vendeuradmin:[],           
+      },
+    methods: {
+      vendeur_admin: function(){
+        axios.get(window.Laravel.url+'/vendeur')
+
+            .then(response => {
+                 this.vendeuradmin = window.Laravel.vendeur;
+            })
+            .catch(error =>{
+                 console.log('errors :' , error);
+            })
+      }
+    },
+    mounted:function(){
+      this.vendeur_admin();
+    }
+  });
+</script>
+
+<?php $__env->stopPush(); ?>
 <?php echo $__env->make('layouts.template_admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\BWS\BWS\resources\views/vendeur_admin.blade.php ENDPATH**/ ?>

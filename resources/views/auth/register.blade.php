@@ -171,7 +171,7 @@ button:hover {
                     </div>
                     <div class="" style="width: 375px">
                         <select class="form-control form-control-lg @error('compte') is-invalid @enderror" id="exampleFormControlSelect1"  name="compte"  onchange="onChange()" style="height: 45px">
-                            <option value="0" disabled selected>Crée compte tent que</option>
+                            <option value="0" disabled selected>Crée compte tant que</option>
                             <option value="1">Client</option>
                             <option value="2">Vendeur</option>
                             <option value="3">Employeur</option>

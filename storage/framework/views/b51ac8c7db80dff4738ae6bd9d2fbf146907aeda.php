@@ -126,7 +126,7 @@
                 </div>
                 <div class="row" style="margin-top: 20px;">
                   <div class=" title" style="margin-left: 20px;">Numero:</div>
-                  <div class="col-md-8 Email" >{{ profilclient.numeroTelephone }}</div>
+                  <div class="col-md-8 " >{{ profilclient.numeroTelephone }}</div>
                 </div>
               </div>
             </div>
@@ -195,6 +195,7 @@
 </script>
 
 <?php $__env->stopPush(); ?>
+
 
 
 

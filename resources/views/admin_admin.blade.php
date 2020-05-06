@@ -9,7 +9,7 @@
       
       <div class="panel-header panel-header-sm">
       </div>
-      <div class="content">
+      <div class="content" id="app">
         <div class="row">
           <div class="col-md-12">
             <div class="card">
@@ -38,18 +38,18 @@
                       </th>
                     </thead>
                     <tbody>
-                      <tr>
+                      <tr v-for="admina in adminadmin">
                         <td>
-                          
+                         @{{admina.id}}  
                         </td>
                         <td>
-                          
+                          @{{admina.nom}} @{{admina.prenom}} 
                         </td>
                         <td>
-                          
+                          @{{admina.numTelephone}} 
                         </td>
                         <td>
-                        	
+                        	@{{admina.email}} 
 
                         </td>
                         <td  class="dropdown " id="k">
@@ -58,169 +58,13 @@
                              </a>
                             <div class="dropdown-menu dropdown-menu-right" >
                             	<a class="dropdown-item js-show-modal1" href="#" id="k2">Details</a>
-				                  <a class="dropdown-item" href="#" id="k2">Supprimer</a>
-				                  
-				          </div>
+				                      <a class="dropdown-item" href="#" id="k2">Supprimer</a>
+				                    </div>
                         </td>
                         <td>
                         </td>
                       </tr>
-                      <tr>
-                        <td>
-                          
-                        </td>
-                        <td>
-                          
-                        </td>
-                        <td>
-                          
-                        </td>
-                        <td>
-
-                        </td>
-                        <td  class="dropdown " id="k">
-                        	<a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
-                        	      <img src="assetsAdmin/img/menu.png" alt="..."/ id="k1">
-                             </a>
-                            <div class="dropdown-menu dropdown-menu-right" >
-                            	<a class="dropdown-item js-show-modal1" href="#" id="k2">Details</a>
-				                  <a class="dropdown-item" href="#" id="k2">Supprimer</a>
-				                  
-				          </div>
-                        </td>
-                        <td>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          
-                        </td>
-                        <td>
-                          
-                        </td>
-                        <td>
-                          
-                        </td>
-                        <td>
-
-                        </td>
-                        <td  class="dropdown " id="k">
-                        	<a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
-                        	      <img src="assetsAdmin/img/menu.png" alt="..."/ id="k1">
-                             </a>
-                            <div class="dropdown-menu dropdown-menu-right" >
-                            	 <a class="dropdown-item js-show-modal1" href="#" id="k2">Details</a>
-				                  <a class="dropdown-item" href="#" id="k2">Supprimer</a>
-				                 
-				          </div>
-                        </td>
-                        <td>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          
-                        </td>
-                        <td>
-                          
-                        </td>
-                        <td>
-                          
-                        </td>
-                        <td>
-                          
-                        </td>
-                        <td  class="dropdown " id="k">
-                        	<a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
-                        	      <img src="assetsAdmin/img/menu.png" alt="..."/ id="k1">
-                             </a>
-                            <div class="dropdown-menu dropdown-menu-right" >
-                            	<a class="dropdown-item js-show-modal1" href="#" id="k2">Details</a>
-				                  <a class="dropdown-item" href="#" id="k2">Supprimer</a>
-				                  
-				          </div>
-                        </td>
-                        <td>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          
-                        </td>
-                        <td>
-                          
-                        </td>
-                        <td>
-                          
-                        </td>
-                        <td>
-                          
-                        </td>
-                        <td  class="dropdown " id="k">
-                        	<a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
-                        	      <img src="assetsAdmin/img/menu.png" alt="..."/ id="k1">
-                             </a>
-                            <div class="dropdown-menu dropdown-menu-right" >
-                            	<a class="dropdown-item js-show-modal1" href="#" id="k2">Details</a>
-				                  <a class="dropdown-item" href="#" id="k2">Supprimer</a>
-				                  
-				          </div>
-                        </td>
-                        <td>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          
-                        </td>
-                        <td>
-                          
-                        </td>
-                        <td>
-                          
-                        </td>
-                        <td>
-                          
-                        </td>
-                       <td  class="dropdown " id="k">
-                        	<a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
-                        	      <img src="assetsAdmin/img/menu.png" alt="..."/ id="k1">
-                             </a>
-                            <div class="dropdown-menu dropdown-menu-right" >
-                            	<a class="dropdown-item js-show-modal1" href="#" id="k2">Details</a>
-				                  <a class="dropdown-item" href="#" id="k2">Supprimer</a>
-				                  
-				          </div>
-                        </td>
-                        <td>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          
-                        </td>
-                        <td>
-                          
-                        </td>
-                        <td>
-                          
-                        </td>
-                        <td>
-                          
-                        </td>
-                        <td  class="dropdown " id="k">
-                        	<a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
-                        	      <img src="assetsAdmin/img/menu.png" alt="..."/ id="k1">
-                             </a>
-                            <div class="dropdown-menu dropdown-menu-right" >
-                            	<a class="dropdown-item js-show-modal1" href="#" id="k2">Details</a>
-				                  <a class="dropdown-item" href="#" id="k2">Supprimer</a>
-				                  
-				          </div>
-                        </td>
-                        <td>
-                        </td>
-                      </tr>
+                      
                     </tbody>
                   </table>
                   <div class="pagination" >
@@ -556,3 +400,45 @@
   <!--*****************************************************************************************************************************************************************************************************************************-->
  
 @endsection
+
+@push('javascripts')
+
+
+<script src="{{ asset('assetsClient/js/vue.js') }}"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+ 
+<script>
+        window.Laravel = {!! json_encode([
+               'csrfToken' => csrf_token(),
+                  'admin' => $admin,  //vendeur connecté
+                'url'      => url('/')  
+          ]) !!};
+</script>
+
+<script>
+   var app = new Vue({
+
+    el: '#app',
+    data:{
+        
+        adminadmin:[],           
+      },
+    methods: {
+      admin_admin: function(){
+        axios.get(window.Laravel.url+'/admin')
+
+            .then(response => {
+                 this.adminadmin = window.Laravel.admin;
+            })
+            .catch(error =>{
+                 console.log('errors :' , error);
+            })
+      }
+    },
+    mounted:function(){
+      this.admin_admin();
+    }
+  });
+</script>
+
+@endpush

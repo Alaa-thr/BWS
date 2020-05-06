@@ -86,7 +86,7 @@
                     <!-- Menu desktop -->
                     <div class="menu-desktop">
                         <ul class="main-menu">
-                            <li class="active-menu">
+                            <li>
                                 <a href="<?php echo e(route('accueil')); ?>">Accueil</a>
                             </li>
                             <li >
@@ -631,7 +631,7 @@
          </a>
        </li>
        <li class="<?php echo $stripePanier ?>" >
-         <a href="<?php echo e(route('panierClient')); ?>">
+         <a href="<?php echo e(route('panierVisiteur')); ?>">
            <i class="now-ui-icons shopping_cart-simple" id="y"></i>
            <div class="m-t-5" id="x">Panier</div>
          </a>

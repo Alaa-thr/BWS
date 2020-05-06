@@ -10,7 +10,7 @@
       
      <div class="panel-header panel-header-sm">
       </div>
-      <div class="content">
+      <div class="content" id="app">
         <div class="row">
           <div class="col-md-12">
             <div class="card">
@@ -20,7 +20,7 @@
               <div class="card-body">
                 <div class="table-responsive">
                   <table class="table">
-                    <thead class=" text-primary">
+                    <thead class=" text-primary" >
                       <th>
                        <b> Indice</b>
                       </th>
@@ -28,12 +28,12 @@
                         <b>Nom_Prenom</b>
                       </th>
                       <th>
-                        <b>N°_Telephone</b>
+                        <b>N°_Tel</b>
                       </th>
                       <th>
                         <b>Email</b>
                       </th> 
-                      <th class="text-right">
+                      <th >
                         <b>ville</b>
                       </th>
                       <th>
@@ -42,21 +42,21 @@
                       </th>
                     </thead>
                     <tbody>
-                      <tr>
+                      <tr v-for="clienta in clientadmin">
                         <td>
-                          
+                          @{{clienta.id}}
                         </td>
                         <td>
-                          
+                          @{{clienta.nom}} @{{clienta.prenom}}
                         </td>
                         <td>
-                          
+                          @{{clienta.numeroTelephone}}
                         </td>
                         <td >
-                          
+                          @{{clienta.email}}
                         </td>
-                        <td class="text-right">
-                          
+                        <td >
+                          @{{clienta.ville}}
                         </td>
                         <td  class="dropdown " id="k">
                           <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
@@ -70,174 +70,7 @@
                         <td>
                         </td>
                       </tr>
-                      <tr>
-                        <td>
-     
-                        </td>
-                        <td>
-     
-                        </td>
-                        <td>
-     
-                        </td>
-                        <td >
-                          
-                        </td>
-                        <td class="text-right">
-     
-                        </td>
-                        <td  class="dropdown " id="k">
-                          <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
-                                <img src="assetsAdmin/img/menu.png" alt="..."/ id="k1">
-                             </a>
-                            <div class="dropdown-menu dropdown-menu-right" >
-                              <a class="dropdown-item js-show-modal1" href="#" id="k2">Details</a>
-                          <a class="dropdown-item" href="#" id="k2">Supprimer</a>
-                            </div>
-                        </td>
-                        <td>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          
-                        </td>
-                        <td>
-
-                        </td>
-                        <td>
-
-                        </td>
-                        <td >
-                          
-                        </td>
-                        <td class="text-right">
-
-                        </td>
-                        <td  class="dropdown " id="k">
-                          <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
-                                <img src="assetsAdmin/img/menu.png" alt="..."/ id="k1">
-                             </a>
-                            <div class="dropdown-menu dropdown-menu-right" >
-                               <a class="dropdown-item js-show-modal1" href="#" id="k2">Details</a>
-                          <a class="dropdown-item" href="#" id="k2">Supprimer</a>
-                             </div>
-                        </td>
-                        <td>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-
-                        </td>
-                        <td>
-
-                        </td>
-                        <td>
-
-                        </td>
-                        <td >
-                          
-                        </td>
-                        <td class="text-right">
-
-                        </td>
-                        <td  class="dropdown " id="k">
-                          <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
-                                <img src="assetsAdmin/img/menu.png" alt="..."/ id="k1">
-                             </a>
-                            <div class="dropdown-menu dropdown-menu-right" >
-                               <a class="dropdown-item js-show-modal1" href="#" id="k2">Details</a>
-                          <a class="dropdown-item" href="#" id="k2">Supprimer</a>
-                            </div>
-                        </td>
-                        <td>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          
-                        </td>
-                        <td>
-                          
-                        </td>
-                        <td>
-                    
-                        </td>
-                        <td >
-                          
-                        </td>
-                        <td class="text-right">
-                 
-                        </td>
-                        <td  class="dropdown " id="k">
-                          <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
-                                <img src="assetsAdmin/img/menu.png" alt="..."/ id="k1">
-                             </a>
-                            <div class="dropdown-menu dropdown-menu-right" >
-                              <a class="dropdown-item js-show-modal1" href="#" id="k2">Details</a>
-                          <a class="dropdown-item" href="#" id="k2">Supprimer</a>
-                            </div>
-                        </td>
-                        <td>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-   
-                        </td>
-                        <td>
-                  
-                        </td>
-                        <td>
-            
-                        </td>
-                        <td >
-                          
-                        </td>
-                        <td class="text-right">
-                          
-                        </td>
-                        <td  class="dropdown " id="k">
-                          <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
-                            <img src="assetsAdmin/img/menu.png" alt="..."/ id="k1">
-                                </a>
-                            <div class="dropdown-menu dropdown-menu-right" >
-                                <a class="dropdown-item js-show-modal1" href="#" id="k2">Details</a>
-                          <a class="dropdown-item" href="#" id="k2">Supprimer</a>
-                            </div>
-                        </td>
-                        <td>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          
-                        </td>
-                        <td>
-                          
-                        </td>
-                        <td>
-                          
-                        </td>
-                        <td >
-                          
-                        </td>
-                        <td class="text-right">
-
-                        </td>
-                        <td  class="dropdown " id="k">
-                          <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
-                                <img src="assetsAdmin/img/menu.png" alt="..."/ id="k1">
-                                </a>
-                            <div class="dropdown-menu dropdown-menu-right" >
-                               <a class="dropdown-item js-show-modal1" href="#" id="k2">Details</a>
-                          <a class="dropdown-item" href="#" id="k2">Supprimer</a>
-                            </div>
-                        </td>
-                        <td>
-                        </td>
-                      </tr>
+                      
                     </tbody>
 
                   </table>
@@ -566,3 +399,45 @@
 
   <!-- Core JS Files   -->
   @endsection
+
+  @push('javascripts')
+
+
+<script src="{{ asset('assetsClient/js/vue.js') }}"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+ 
+<script>
+        window.Laravel = {!! json_encode([
+               'csrfToken' => csrf_token(),
+                  'client' => $client,  //vendeur connecté
+                'url'      => url('/')  
+          ]) !!};
+</script>
+
+<script>
+   var app = new Vue({
+
+    el: '#app',
+    data:{
+        
+        clientadmin:[],           
+      },
+    methods: {
+      client_admin: function(){
+        axios.get(window.Laravel.url+'/client')
+
+            .then(response => {
+                 this.clientadmin = window.Laravel.client;
+            })
+            .catch(error =>{
+                 console.log('errors :' , error);
+            })
+      }
+    },
+    mounted:function(){
+      this.client_admin();
+    }
+  });
+</script>
+
+@endpush

@@ -162,8 +162,10 @@
     $('.container-search-header').on('click', function(e){
         e.stopPropagation();
     });
+    
+    /*----------------------------*/
 
-
+    
     /*==================================================================
     [ Isotope ]*/
     var $topeContainer = $('.isotope-grid');
@@ -353,6 +355,7 @@
         }
         
     });
+   
 
 
 

@@ -70,7 +70,7 @@
                   <div class="col-md-4 pl-2">
                     <div class="form-group">
                       <label>pays</label>
-                      <input type="" class="form-control" placeholder="pays" value="Algerie">
+                      <input type="" class="form-control" placeholder="pays" value="Algerie" disabled="">
                     </div>
                   </div>
                 </div>
