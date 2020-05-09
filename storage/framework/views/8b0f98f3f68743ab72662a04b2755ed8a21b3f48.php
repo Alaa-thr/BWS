@@ -27,7 +27,7 @@
                       <label :for="articlea.id" style="margin-top: 40px; margin-left: 10px;"></label>
                     
                     <div class="col-md-3" style="padding-right: 20px;" >
-                      <!--<img :src="articlea.image">-->
+                      <img src="articlea.image">
                     </div>
                     
                     <div class="col-md-6" >
@@ -88,15 +88,14 @@
       </footer>
     </div>
    <!-- Modal1 for laptob-->
-    <div class="wrap-modal11 js-modal1 p-t-38 p-b-20 p-l-15 p-r-15">
-      <div class="overlay-modal11 js-hide-modal1"></div>
+    <div class="wrap-modal11 js-modal1 p-t-38 p-b-20 p-l-15 p-r-15"  id="app2" v-if="cc">
+      <div class="overlay-modal11 " v-on:click="cc = false"></div>
   
-      <div class="container" id="app2">
-        <div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent" style=" width: 1000px;"   v-for="articlea in articlesadmin2">
-          <button class="how-pos3 hov3 trans-04 p-t-6 js-hide-modal1">
+      <div class="container">
+        <div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent" v-if="openInfo " style=" width: 1000px;"   v-for="articlea in articlesadmin2">
+          <button class="how-pos3 hov3 trans-04 p-t-6 " v-on:click="cc = false">
             <img src="images/icon-close.png" alt="CLOSE">
           </button>
-          <div v-if="openInfo ">
           <div class="p-b-30 p-l-40" style="margin-left: 80px;" >
             <h3 class=" cl2" >
                Informations sur l'image
@@ -113,18 +112,16 @@
                 {{ articlea.description }}
                 </div>               
             </div>
-          </div>
         </div>
 
 <!--********************************************************************************************************************************************************************-->
         
-        <div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent" style=" width: 1000px;">
-          <button class="how-pos3 hov3 trans-04 p-t-6 js-hide-modal1">
+        <div class="bg0 p-b-150 p-lr-15-lg how-pos3-parent" v-if="openAjout" style=" width: 1000px; padding-top: 45%">
+          <button class="how-pos3 hov3 trans-04 p-t-6" v-on:click="cc = false">
             <img src="images/icon-close.png" alt="CLOSE">
           </button>
           
-          <div v-if="openAjout">
-              <div  style="margin-top: -300px; margin-left: 80px; font-weight: 700;" >
+              <div  style="margin-top: -300px; margin-left: 140px" >
                 <div class="row">
                   <div class="col-md-10 pr-2" >
                     <div class="form-group">
@@ -145,18 +142,17 @@
                   <div class="col-md-10 pr-2" >
                     <div class="form-group" >
                       <label for="" >image</label>
-                     <!-- <input type="file" class="form-control" v-mode="art.image" >-->
+                      <input type="file" class="form-control"  name="image">
                     </div>
                  </div>
                 </div>
                 <div class="row">
                   <div class="col-md-10">
-                        <button type="submit"  class="btn btn-success btn-block " style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="addArticle" >Ajouter
+                        <button type="submit"  class="btn btn-success btn-block " style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="addArticle()" >Ajouter
                         </button>     
                   </div>
                 </div>
               </div>
-            </div>
         </div>
       </div>
     </div>
@@ -176,94 +172,127 @@
 
 <?php $__env->startPush('javascripts'); ?>
 
+<script src="<?php echo e(asset('js/vue.js')); ?>"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
  
 <script>
         window.Laravel = <?php echo json_encode([
                'csrfToken'  => csrf_token(),
-               'article'   => $article, 
-               //'article_detaills' => $article_detaills,
+               'article'   => $article,
+               'idArticle' => $idArticle,
                'url'       => url('/')  
           ]); ?>;
 </script>
 
 <script>
+
+   Vue.mixin({
+
+      data: function(){
+        return{
+          
+        }
+        
+      },
+        methods:{
+          addArticle: function(){
+
+        axios.post(window.Laravel.url+'/addarticle',app2.art)
+
+            .then(response => {
+              if(response.data.etat){
+                 app2.art = response.data.articleAjout;
+                 app2.cc=false;
+                 app.articlesadmin.unshift(app2.art);
+                 app2.art={
+                      id: 0,
+                      admin_id: window.Laravel.idArticle,
+                      titre: '', 
+                      description: '',
+                      image: ''
+                 }  
+              }          
+            })
+            .catch(error =>{
+                 console.log('errors :' , error);
+            })
+      }
+        }
+           
+          
+    });
   var app2 = new Vue({
       el: '#app2',
       data:{
         articlesadmin2: [],
         openInfo: false,
         openAjout: false,
+        cc: false,
         art: {
           id: 0,
-          admin_id: 6,
+          admin_id: window.Laravel.idArticle,
           titre: '', 
           description: '',
-        }
+          image: ''
+        },
+        detaillsA: {
+          idA: 0,
+        },
+        
                    
       },
     methods: {
-      detaillsArticle: function($id){
-        axios.post(window.Laravel.url+'/detaillsarticle',$id)
+      detaillsArticle: function(){
+        axios.post(window.Laravel.url+'/detaillsarticle', this.detaillsA)
 
             .then(response => {
-                 this.articlesadmin2 = window.Laravel.article_detaills;
-                 
-                 //console.log('success : ' ,response);
+
+                 this.articlesadmin2 = response.data;
                  
             })
             .catch(error =>{
                  console.log('errors :' , error);
             })
-      },
-      
-     
-
-      
-    },
-    mounted:function(){
-      this.detaillsArticle();
-
-    }
+      }
+    },    
 });
 
    var app = new Vue({
 
     el: '#app',
+   
     
     data:{
-        
-        articlesadmin: [],
-        
-                   
+      articlesadmin: [],
+                           
       },
     methods: {
-      article_admin: function(){
-        axios.get(window.Laravel.url+'/articlesAdmin')
-
-            .then(response => {
-                 this.articlesadmin = window.Laravel.article;
-                 
-                 console.log('success : ' ,response);
-                 
-            })
-            .catch(error =>{
-                 console.log('errors :' , error);
-            })
-      },
+      
       AfficherAjout: function(){
+         app2.cc = true;
          app2.openAjout = true;
          app2.openInfo = false;
       },
       AfficheInfo: function($id){
+        app2.cc = true;
         app2.openAjout = false;
         app2.openInfo = true;
-        app2.detaillsArticle($id);
-      }
+        app2.detaillsA.idA= $id;
+        app2.detaillsArticle();
+      },article_admin: function(){
+                axios.get(window.Laravel.url+'/articlesAdmin')
 
-      
+                    .then(response => {
+                         this.articlesadmin = window.Laravel.article;
+                                                  
+                    })
+                    .catch(error =>{
+                         console.log('errors :' , error);
+                    })
+      } 
     },
-    mounted:function(){
+     created:function(){
       this.article_admin();
 
     }

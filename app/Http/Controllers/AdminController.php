@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 use DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use App\Admin;
 use App\Vendeur;
 use App\Client;
 use App\Employeur;
 use App\Article;
 use App\User;
+use App\Categorie;
+use App\SousCategorie;
 use Auth;
 
 class AdminController extends Controller
@@ -43,13 +46,12 @@ class AdminController extends Controller
         $c = Admin::find(Auth::user()->id);       
         $article = \DB::table('articles')->where('admin_id', $c->id)->orderBy('created_at','desc')->get();
         
-        return view('articles_admin',['article'=>$article]);  
+        return view('articles_admin',['article'=>$article, 'idArticle' => $c->id]);  
 
     }
     public function detaillsArticle(Request $request){
-        $article_detaills = \DB::table('articles')->where('id', $request->id)->get();
-        echo "$request->id";
-        return view('articles_admin',['article_detaills' => $article_detaills]);
+        $article_detaills = \DB::table('articles')->where('id', $request->idA)->get();
+        return  $article_detaills;
 
     }
      public function addArticle(Request $request){
@@ -58,10 +60,12 @@ class AdminController extends Controller
         $article2->titre = $request->titre;
         $article2->description = $request->description;
         $article2->admin_id = $request->admin_id;
-
+        //if($request->hasFile('image')){     // verifier si il ya une image
+            $article2->image= $request->image->store('Images');  // cree un dossier images dans storage/app/public et stocke l'image dans dossier images  et cette ligna return le lien ou le nom de la tof est stocke dans articl2->image
+       // }
         $article2->save();
 
-        return Response()->json(['etat' => true,'id' => $article2->id]);
+        return Response()->json(['etat' => true,'articleAjout' => $article2]);
     }
     public function update_profil(Request $request, $id) {
                 
@@ -83,7 +87,39 @@ class AdminController extends Controller
        
         return redirect('profilAdmin');
     }
+    public function categories_admin(){
+        $cat = Categorie::all();
+        $nabil = \DB::table('categories')->orderBy('created_at','desc')->get();
+        return view('categories_admin',['categorie'=>$nabil]);
+    }
+        
+    public function addCategorie(Request $request){
+        $categorie = new Categorie;
 
+        $categorie->libellé = $request->libellé;
+
+        $categorie->save();
+
+        return Response()->json(['etat' => true, 'id' => $categorie]);
+    }
+    public function updateCategorie(Request $request){
+        $categorie = Categorie::find($request->id);
+
+        $categorie->libellé = $request->libellé;
+
+        $categorie->save();
+
+        return Response()->json(['etat' => true]);
+    
+    }
+    public function deleteCategorie($id){
+        $categorie = Categorie::find($id);
+        $categorie->delete();
+
+     return Response()->json(['etat' => $categorie]);
+    }
+   
+   
 
 
 }

@@ -255,21 +255,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                     </div>
                     <div class="" style="width: 375px">
-<<<<<<< HEAD
-                        <select class="form-control form-control-lg <?php $__errorArgs = ['compte'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>" id="exampleFormControlSelect1"  name="compte"  onchange="onChange()" style="height: 45px">
-                            <option value="0" disabled selected>Crée compte tant que</option>
-                            <option value="1">Client</option>
-                            <option value="2">Vendeur</option>
-                            <option value="3">Employeur</option>
-                            <option value="4">Admin</option>
-=======
+
                         <select class="form-control form-control-lg <?php $__errorArgs = ['compte'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -278,12 +264,12 @@ $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>" id="exampleFormControlSelect1"  name="compte"  onchange="onChange()" style="height: 45px" value="<?php echo e(old('compte')); ?>">
-                            <option value="" selected hidden="hidden">Crée compte tent que</option>
+                            <option value="" selected hidden="hidden">Crée compte tant que</option>
                             <option value="1" <?php echo e(old('compte') == 1 ? 'selected' : ''); ?>>Client</option>
                             <option value="2" <?php echo e(old('compte') == 2 ? 'selected' : ''); ?>>Vendeur</option>
                             <option value="3" <?php echo e(old('compte') == 3 ? 'selected' : ''); ?>>Employeur</option>
                             <option value="4" <?php echo e(old('compte') == 4 ? 'selected' : ''); ?>>Admin</option>
->>>>>>> 7085ab4448d06dbd9a4f2e0a2b9febbd21c620e9
+
                         </select>
                         <?php $__errorArgs = ['compte'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
