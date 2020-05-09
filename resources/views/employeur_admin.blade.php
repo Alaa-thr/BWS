@@ -10,7 +10,7 @@
      
       <div class="panel-header panel-header-sm">
       </div>
-      <div class="content">
+      <div class="content" id="app">
         <div class="row">
           <div class="col-md-12">
             <div class="card">
@@ -41,18 +41,18 @@
                       </th>
                     </thead>
                     <tbody>
-                      <tr>
+                      <tr v-for="employeura in employeuradmin">
                         <td>
-                          
+                          @{{employeura.id}}
                         </td>
                         <td>
-                          
+                          @{{employeura.nom}} @{{employeura.prenom}} 
                         </td>
                         <td>
-                          
+                          @{{employeura.num_tel}}
                         </td>
                         <td >
-                          
+                          @{{employeura.email}}
                         </td>
                         <td  class="dropdown " id="k">
                           <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
@@ -66,156 +66,7 @@
                         <td>
                         </td>
                       </tr>
-                      <tr>
-                        <td>
-     
-                        </td>
-                        <td>
-     
-                        </td>
-                        <td>
-     
-                        </td>
-                        <td >
-                          
-                        </td>
-                        <td  class="dropdown " id="k">
-                          <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
-                                <img src="assetsAdmin/img/menu.png" alt="..."/ id="k1">
-                             </a>
-                            <div class="dropdown-menu dropdown-menu-right" >
-                               <a class="dropdown-item js-show-modal1" href="#" id="k2">Details</a>
-                               <a class="dropdown-item" href="#" id="k2">Supprimer</a>
-                            </div>
-                        </td>
-                        <td>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          
-                        </td>
-                        <td>
-
-                        </td>
-                        <td>
-
-                        </td>
-                        <td >
-                          
-                        </td>
-                        <td  class="dropdown " id="k">
-                          <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
-                                <img src="assetsAdmin/img/menu.png" alt="..."/ id="k1">
-                             </a>
-                            <div class="dropdown-menu dropdown-menu-right" >
-                               <a class="dropdown-item js-show-modal1" href="#" id="k2">Details</a>
-                                <a class="dropdown-item" href="#" id="k2">Supprimer</a>
-                            </div>
-                        </td>
-                        <td>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-
-                        </td>
-                        <td>
-
-                        </td>
-                        <td>
-
-                        </td>
-                        <td >
-                          
-                        </td>
-                        <td  class="dropdown " id="k">
-                          <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
-                                <img src="assetsAdmin/img/menu.png" alt="..."/ id="k1">
-                             </a>
-                            <div class="dropdown-menu dropdown-menu-right" >
-                               <a class="dropdown-item js-show-modal1" href="#" id="k2">Details</a>
-                               <a class="dropdown-item" href="#" id="k2">Supprimer</a>
-                            </div>
-                        </td>
-                        <td>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          
-                        </td>
-                        <td>
-                          
-                        </td>
-                        <td>
-                    
-                        </td>
-                        <td >
-                          
-                        </td>
-                        <td  class="dropdown " id="k">
-                          <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
-                                <img src="assetsAdmin/img/menu.png" alt="..."/ id="k1">
-                             </a>
-                            <div class="dropdown-menu dropdown-menu-right" >
-                               <a class="dropdown-item js-show-modal1" href="#" id="k2">Details</a>
-                                <a class="dropdown-item" href="#" id="k2">Supprimer</a>
-                            </div>
-                        </td>
-                        <td>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-   
-                        </td>
-                        <td>
-                  
-                        </td>
-                        <td>
-            
-                        </td>
-                        <td >
-                          
-                        </td>
-                        <td  class="dropdown " id="k">
-                          <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
-                                <img src="assetsAdmin/img/menu.png" alt="..."/ id="k1">
-                             </a>
-                            <div class="dropdown-menu dropdown-menu-right" >
-                               <a class="dropdown-item js-show-modal1" href="#" id="k2">Details</a>
-                               <a class="dropdown-item" href="#" id="k2">Supprimer</a>
-                            </div>
-                        </td>
-                        <td>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          
-                        </td>
-                        <td>
-                          
-                        </td>
-                        <td>
-                          
-                        </td>
-                        <td >
-                          
-                        </td>
-                        <td  class="dropdown " id="k">
-                          <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
-                                <img src="assetsAdmin/img/menu.png" alt="..."/ id="k1">
-                             </a>
-                            <div class="dropdown-menu dropdown-menu-right" >
-                               <a class="dropdown-item js-show-modal1" href="#" id="k2">Details</a>
-                                <a class="dropdown-item" href="#" id="k2">Supprimer</a>
-                            </div>
-                        </td>
-                        <td>
-                        </td>
-                      </tr>
+                      
                     </tbody>
                   </table>
                   <div class="pagination" >
@@ -544,3 +395,45 @@
   </div>
  
  @endsection
+
+  @push('javascripts')
+
+
+<script src="{{ asset('js/vue.js') }}"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+ 
+<script>
+        window.Laravel = {!! json_encode([
+               'csrfToken' => csrf_token(),
+                  'employeur' => $employeur,  //vendeur connecté
+                'url'      => url('/')  
+          ]) !!};
+</script>
+
+<script>
+   var app = new Vue({
+
+    el: '#app',
+    data:{
+        
+        employeuradmin:[],           
+      },
+    methods: {
+      employeur_admin: function(){
+        axios.get(window.Laravel.url+'/employeur')
+
+            .then(response => {
+                 this.employeuradmin = window.Laravel.employeur;
+            })
+            .catch(error =>{
+                 console.log('errors :' , error);
+            })
+      }
+    },
+    mounted:function(){
+      this.employeur_admin();
+    }
+  });
+</script>
+
+@endpush

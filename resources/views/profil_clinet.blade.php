@@ -1,48 +1,4 @@
 @extends('layouts.template_clinet')
-@push('javascripts')
-
-
-<script src="{{ asset('assetsClient/js/vue.js') }}"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
- 
-<script>
-        window.Laravel = {!! json_encode([
-               'csrfToken' => csrf_token(),
-                'client'=>$client,  //client connecté
-               'url'       => url('/')  
-          ]) !!};
-</script>
-
-<script>
-   var app = new Vue({
-
-    el: '#app',
-    data:{
-        msg: "hello",
-        profilclient:[],
-                   
-      },
-
-    methods: {
-      profil_clinet: function(){
-        axios.get(window.Laravel.url+'/profilClient')
-
-            .then(response => {
-                 this.profilclient = window.Laravel.client;
-            })
-            .catch(error =>{
-                 console.log('errors :' , error);
-            })
-      }
-      
-    },
-    mounted:function(){
-      this.profil_clinet();
-    }
-  });
-</script>
-
-@endpush
 
 @section('content')
 
@@ -133,7 +89,7 @@
                   <div class="col-md-4 px-2">
                     <div class="form-group">
                       <label>pays</label>
-                      <input type="" class="form-control" placeholder="pays" value="Algerie">
+                      <input type="" class="form-control" placeholder="pays" value="Algerie" disabled="">
                     </div>
                   </div>
                 </div>
@@ -169,7 +125,7 @@
                 </div>
                 <div class="row" style="margin-top: 20px;">
                   <div class=" title" style="margin-left: 20px;">Numero:</div>
-                  <div class="col-md-8 Email" >@{{ profilclient.numeroTelephone }}</div>
+                  <div class="col-md-8 " >@{{ profilclient.numeroTelephone }}</div>
                 </div>
               </div>
             </div>
@@ -194,6 +150,50 @@
  
 @endsection
 
+@push('javascripts')
+
+
+<script src="{{ asset('js/vue.js') }}"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+ 
+<script>
+        window.Laravel = {!! json_encode([
+               'csrfToken' => csrf_token(),
+                'client'=>$client,  //client connecté
+               'url'       => url('/')  
+          ]) !!};
+</script>
+
+<script>
+   var app = new Vue({
+
+    el: '#app',
+    data:{
+        msg: "hello",
+        profilclient:[],
+                   
+      },
+
+    methods: {
+      profil_clinet: function(){
+        axios.get(window.Laravel.url+'/profilClient')
+
+            .then(response => {
+                 this.profilclient = window.Laravel.client;
+            })
+            .catch(error =>{
+                 console.log('errors :' , error);
+            })
+      }
+      
+    },
+    mounted:function(){
+      this.profil_clinet();
+    }
+  });
+</script>
+
+@endpush
 
 
 

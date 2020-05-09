@@ -170,12 +170,14 @@ button:hover {
                         @enderror
                     </div>
                     <div class="" style="width: 375px">
+
                         <select class="form-control form-control-lg @error('compte') is-invalid @enderror" id="exampleFormControlSelect1"  name="compte"  onchange="onChange()" style="height: 45px" value="{{ old('compte') }}">
-                            <option value="" selected hidden="hidden">Crée compte tent que</option>
+                            <option value="" selected hidden="hidden">Crée compte tant que</option>
                             <option value="1" {{old('compte') == 1 ? 'selected' : '' }}>Client</option>
                             <option value="2" {{old('compte') == 2 ? 'selected' : '' }}>Vendeur</option>
                             <option value="3" {{old('compte') == 3 ? 'selected' : '' }}>Employeur</option>
                             <option value="4" {{old('compte') == 4 ? 'selected' : '' }}>Admin</option>
+
                         </select>
                         @error('compte')
                             <span class="invalid-feedback" role="alert">

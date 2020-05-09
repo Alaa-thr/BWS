@@ -32,10 +32,10 @@
             <div class="card-body"  >
 				<form class="bg0 p-t-75 p-b-85"  id="cx" style="height: 300px;">
 					<!--Demande d'Emploi 1-->
-					<div class="card-head"  id="c">              
+					<div class="card-head"  id="cmd" >              
 					  <div class="row" >
 						<div class="col-md-4 pr-1" >
-						  <div>
+						  <div style="margin-left:22px">
 							<input class="increase" type="checkbox" />         
 							   <p class="" id="t" > Demande d'Emploi 1</p>
 						  </div>
@@ -45,13 +45,13 @@
 						</div>
 						<div class="col-md-4 pl-1">
 						  <div class="">
-							<a class="f" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
+							<a class="f" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#" id="point">
 							  <i class="fas fa-ellipsis-v"  id="y"></i>
 						   </a>
-						  <div class="dropdown-menu " x-placement="right-start" style=" margin-right: 11px;">
+						  <div class="dropdown-menu " x-placement="right-start" id="pl">
 						<a  href="#" id="vv"  class=" trans-04 p-lr-11 icon-header-noti  js-show-modal1" >Plus de Détails</a><br>
-						<a href="#" id="vv">Supprimer</a>
-						   </div><p class=""  id="tt" > 09/04/2020 15:39</p>
+						<a href="#" id="vv" style="padding-left:12px">Supprimer</a>
+						   </div><p class=""  id="tt" > 24/04/2020 15:39</p>
 						  </div>
 						</div>
 					  </div>
@@ -61,20 +61,17 @@
 							<label  id="ttt">Addresse : Mansourah-Tlemcen</label>
 						  </div>
 						</div>
-						<div class="col-md-4 px-1">
-						 
-						</div>
-							  </div>      
+					  </div>      
 					</div>
 					
 		  
 					   <!--Demande d'Emploi 2-->
-					<div class="card-head"  id="c">              
+					   <div class="card-head"  id="cmdd" >              
 					  <div class="row" >
 						<div class="col-md-4 pr-1" >
-						  <div>
+						  <div style="margin-left:22px">
 							<input class="increase" type="checkbox" />         
-							   <p class="" id="t" > Demande d'Emploi 1</p>
+							   <p class="" id="t" > Demande d'Emploi 2</p>
 						  </div>
 						</div>
 						<div class="col-md-4 px-1">
@@ -82,13 +79,13 @@
 						</div>
 						<div class="col-md-4 pl-1">
 						  <div class="">
-							<a class="f" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
+							<a class="f" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#" id="point">
 							  <i class="fas fa-ellipsis-v"  id="y"></i>
 						   </a>
-						  <div class="dropdown-menu " x-placement="right-start" style=" margin-right: 11px;">
-						<a  href="#" id="vv"  class=" trans-04 p-lr-11 icon-header-noti  js-show-modal1" >Plus de Détails</a><br>
-						<a href="#" id="vv">Supprimer</a>
-						   </div><p class=""  id="tt" > 09/04/2020 15:39</p>
+						  <div class="dropdown-menu " x-placement="right-start" id="pl">
+						<a  href="#" id="vv"  class=" trans-04 p-lr-11 icon-header-noti  js-show-modal1" id="cl" >Plus de Détails</a><br>
+						<a href="#" id="vv" style="padding-left:12px">Supprimer</a>
+						   </div><p class=""  id="tt" > 29/04/2020 15:39</p>
 						  </div>
 						</div>
 					  </div>
@@ -98,10 +95,7 @@
 							<label  id="ttt">Addresse : Mansourah-Tlemcen</label>
 						  </div>
 						</div>
-						<div class="col-md-4 px-1">
-						 
-						</div>
-					
+						
 					  </div>      
 					</div>
 					

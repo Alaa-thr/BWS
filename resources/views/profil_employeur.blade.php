@@ -88,7 +88,7 @@
                   <div class="col-md-5 px-2">
                     <div class="form-group">
                       <label>pays</label>
-                      <input type="" class="form-control" placeholder="pays" value="Algerie">
+                      <input type="" class="form-control" placeholder="pays" value="Algerie" disabled="">
                     </div>
                   </div>
                 </div>
@@ -152,7 +152,7 @@
 @push('javascripts')
 
 
-<script src="{{ asset('assetsClient/js/vue.js') }}"></script>
+<script src="{{ asset('js/vue.js') }}"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
  
 <script>

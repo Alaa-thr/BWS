@@ -86,7 +86,7 @@
                     <!-- Menu desktop -->
                     <div class="menu-desktop">
                         <ul class="main-menu">
-                            <li class="active-menu">
+                            <li>
                                 <a href="<?php echo e(route('accueil')); ?>">Accueil</a>
                             </li>
                             <li >
@@ -351,7 +351,7 @@
                     </div>  
 
                     <!-- Icon header -->
-                    <div class="wrap-icon-header flex-r-m " style="margin-left: 33%">
+                    <div class="wrap-icon-header flex-r-m " style="margin-left: 28%">
                         <div class="icon-header-item cl2 hov-cl1 trans-04  p-r-11 js-show-modal-search">
                             <i class="zmdi zmdi-search"></i>
                         </div>
@@ -367,19 +367,18 @@
                                 <i class="zmdi zmdi-account"></i>
                              </div>
                         <?php else: ?>
-                           <div class="dropdown">
-                              <button class="  dis-block dropdown-toggle icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-22" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                           <div class="dropdown" >
+                              <button class="  dis-block dropdown-toggle icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-22" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
                                 <i class="zmdi zmdi-account"></i>
                               </button>
                               
-                              <div class="dropdown-menu m-r-35" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#">Profil</a>
+                              <div class="dropdown-menu m-r-35" aria-labelledby="dropdownMenuButton" >
+                                <a class="dropdown-item" href="#" ><b>Profil</b></a>
                                 <div class="dropdown-divider"></div>
                                 <div>
                                     <a class="dropdown-item" href="<?php echo e(route('logout')); ?>" onclick="event.preventDefault();
                                                          document.getElementById('logout-form').submit();">
-                                            <?php echo e(__('Logout')); ?>
-
+                                           <b> <?php echo e(__('Logout')); ?> </b>
                                     </a>
                                     <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" style="display: none;">
                                             <?php echo csrf_field(); ?>
@@ -631,7 +630,7 @@
          </a>
        </li>
        <li class="<?php echo $stripePanier ?>" >
-         <a href="<?php echo e(route('panierClient')); ?>">
+         <a href="<?php echo e(route('panierVisiteur')); ?>">
            <i class="now-ui-icons shopping_cart-simple" id="y"></i>
            <div class="m-t-5" id="x">Panier</div>
          </a>

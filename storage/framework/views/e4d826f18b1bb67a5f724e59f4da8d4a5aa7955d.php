@@ -21,6 +21,8 @@
 
   <link href="assetsAdmin/css/util.css" rel="stylesheet" />
   <link href="assetsAdmin/css/main.css" rel="stylesheet" />
+  <script src="<?php echo e(asset('assetsClient/js/vue.js')); ?>"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <?php
 
          $stripeProfil=$stripeStatistique=$stripeEmail=$stripeNotif=$stripeArticle=$stripeCatego=$stripeGererUser='';
@@ -229,9 +231,7 @@
                         </a>  
                     </div> 
                     <hr width="90%">
-                      <a class="dropdown-item" href="user.html" id="n"><i class="now-ui-icons users_single-02" id="m"></i><b>Profil</b></a>
-                      <a class="dropdown-item" href="#" id="n"><i class="now-ui-icons loader_gear"id="m"></i><b>Paramètres</b></a>
-                      <hr width="90%">
+                      <a class="dropdown-item" href="<?php echo e(route('profilAdmin')); ?>" id="n"><i class="now-ui-icons users_single-02" id="m"></i><b>Profil</b></a>
                       <a class="dropdown-item" href="<?php echo e(route('logout')); ?>" onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();" id="n">
                         <i class="now-ui-icons media-1_button-power" id="m"></i>
@@ -252,6 +252,7 @@
 </div>
   
   <?php echo $__env->yieldPushContent('javascripts'); ?>
+  
 
   <script src="assetsAdmin/js/jquery-3.2.1.min.js"></script>
   <script src="assetsAdmin/js/animsition.min.js"></script>

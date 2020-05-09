@@ -113,7 +113,7 @@ if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
-unset($__errorArgs, $__bag); ?>" id="nom" name="nom" type="text" placeholder="Nom*" >
+unset($__errorArgs, $__bag); ?>" id="nom" name="nom" type="text" placeholder="Nom*" value="<?php echo e(old('nom')); ?>">
 
                         <?php $__errorArgs = ['nom'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -137,7 +137,7 @@ if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
-unset($__errorArgs, $__bag); ?>" id="prenom" type="text" name="prenom"placeholder="Prenom*" >
+unset($__errorArgs, $__bag); ?>" id="prenom" type="text" name="prenom"placeholder="Prenom*" value="<?php echo e(old('prenom')); ?>">
                         
 
                         <?php $__errorArgs = ['prenom'];
@@ -236,9 +236,9 @@ if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
-unset($__errorArgs, $__bag); ?>" id="exampleFormControlSelect2" name="ville" style="height: 45px" >
-                          <option value="" disabled selected>Choisir une ville</option> 
-                          <option v-for="v in villes" :value="v.nom">{{v.nom}}</option> 
+unset($__errorArgs, $__bag); ?>" id="exampleFormControlSelect2" name="ville" style="height: 45px">
+                          <option value="" hidden="hidden" selected>Choisir une ville</option> 
+                          <option v-for="v in villes" :value="v.nom" >{{v.nom}}</option> 
                         </select>
 
                         <?php $__errorArgs = ['ville'];
@@ -255,6 +255,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                     </div>
                     <div class="" style="width: 375px">
+
                         <select class="form-control form-control-lg <?php $__errorArgs = ['compte'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -262,12 +263,13 @@ if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
-unset($__errorArgs, $__bag); ?>" id="exampleFormControlSelect1"  name="compte"  onchange="onChange()" style="height: 45px">
-                            <option value="0" disabled selected>Crée compte tent que</option>
-                            <option value="1">Client</option>
-                            <option value="2">Vendeur</option>
-                            <option value="3">Employeur</option>
-                            <option value="4">Admin</option>
+unset($__errorArgs, $__bag); ?>" id="exampleFormControlSelect1"  name="compte"  onchange="onChange()" style="height: 45px" value="<?php echo e(old('compte')); ?>">
+                            <option value="" selected hidden="hidden">Crée compte tant que</option>
+                            <option value="1" <?php echo e(old('compte') == 1 ? 'selected' : ''); ?>>Client</option>
+                            <option value="2" <?php echo e(old('compte') == 2 ? 'selected' : ''); ?>>Vendeur</option>
+                            <option value="3" <?php echo e(old('compte') == 3 ? 'selected' : ''); ?>>Employeur</option>
+                            <option value="4" <?php echo e(old('compte') == 4 ? 'selected' : ''); ?>>Admin</option>
+
                         </select>
                         <?php $__errorArgs = ['compte'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -285,7 +287,7 @@ unset($__errorArgs, $__bag); ?>
     </div>
      <div class="form-group flex-t m-b-35 openV"  style="display: none">
                     <div class=" m-r-30" style="width: 375px">
-                        <input class="form-control form-control-lg  " id="nom_btq" type="text" placeholder="Nom de Boutique" name="Nom_boutique"/>
+                        <input class="form-control form-control-lg  " id="nom_btq" type="text" placeholder="Nom de Boutique" name="Nom_boutique" value="<?php echo e(old('Nom_boutique')); ?>">
                     </div>
                     <div class="" style="width: 375px">
                         <input class="form-control form-control-lg <?php $__errorArgs = ['Num_Compte_Banquaire'];
@@ -295,7 +297,7 @@ if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
-unset($__errorArgs, $__bag); ?>" id="nom_btq"  name="Num_Compte_Banquaire" type="text" placeholder="Numero Compte Bancaire*" /> 
+unset($__errorArgs, $__bag); ?>" id="nom_btq"  name="Num_Compte_Banquaire" type="text" placeholder="Numero Compte Bancaire*" value="<?php echo e(old('Num_Compte_Banquaire')); ?>"> 
 
                         <?php $__errorArgs = ['Num_Compte_Banquaire'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -319,7 +321,7 @@ if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
-unset($__errorArgs, $__bag); ?>" id="addrsse_btq" name ="addrsse_boutique" type="text" placeholder="Addresse de Boutique*">    
+unset($__errorArgs, $__bag); ?>" id="addrsse_btq" name ="addrsse_boutique" type="text" placeholder="Addresse de Boutique*" value="<?php echo e(old('addrsse_boutique')); ?>">    
 
                     <?php $__errorArgs = ['addrsse_boutique'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -336,7 +338,26 @@ unset($__errorArgs, $__bag); ?>
 
     </div>
     <div class="from-group  m-b-40 openV" style="display: none">
-                    <input type="file" class="form-control " name="photoV" value="<?php echo e(old('image')); ?>" style="height: 45px">
+                    <input type="file" class="form-control <?php $__errorArgs = ['photoV'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" name="photoV" value="<?php echo e(old('photoV')); ?>" style="height: 45px">
+                    <?php $__errorArgs = ['photoV'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <span class="invalid-feedback" role="alert">
+                                <strong><?php echo e($message); ?></strong>
+                            </span>
+                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                         
     </div>
     <div class="form-group flex-t m-b-35 openE" style="display: none">
@@ -348,7 +369,7 @@ if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
-unset($__errorArgs, $__bag); ?>" id="nom_btq" name="nom_societe" type="text" placeholder="Nom de Société*">
+unset($__errorArgs, $__bag); ?>" id="nom_btq" name="nom_societe" type="text" placeholder="Nom de Société*" value="<?php echo e(old('nom_societe')); ?>">
 
                         <?php $__errorArgs = ['nom_societe'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -371,7 +392,7 @@ if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
-unset($__errorArgs, $__bag); ?>" id="nom_btq" name="num_compte_banquiare" type="text" placeholder="Numero Compte Bancaire*" > 
+unset($__errorArgs, $__bag); ?>" id="nom_btq" name="num_compte_banquiare" type="text" placeholder="Numero Compte Bancaire*" value="<?php echo e(old('num_compte_banquiare')); ?>"> 
 
                         <?php $__errorArgs = ['num_compte_banquiare'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -395,7 +416,7 @@ if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
-unset($__errorArgs, $__bag); ?>" id="addrsse_soct" name="addrsse_soct" type="text" placeholder="Addresse de Société*" >
+unset($__errorArgs, $__bag); ?>" id="addrsse_soct" name="addrsse_soct" type="text" placeholder="Addresse de Société*" value="<?php echo e(old('addrsse_soct')); ?>">
 
                     <?php $__errorArgs = ['addrsse_soct'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -412,7 +433,26 @@ unset($__errorArgs, $__bag); ?>
 
     </div>
     <div class="from-group  m-b-40 openE" style="display: none">
-                    <input type="file" class="form-control " name="photoE" value="<?php echo e(old('image')); ?>" style="height: 45px">
+                    <input type="file" class="form-control <?php $__errorArgs = ['photoE'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" name="photoE" value="<?php echo e(old('photoE')); ?>" style="height: 45px">
+                    <?php $__errorArgs = ['photoE'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <span class="invalid-feedback" role="alert">
+                                <strong><?php echo e($message); ?></strong>
+                            </span>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                         
     </div>
   </div>
@@ -426,11 +466,13 @@ if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
-unset($__errorArgs, $__bag); ?>" id="typeLivrs"  name="typeL[]" multiple onchange="onChangeTypeL()">
-                            <option value="0" disabled selected>Sélectionnez</option>
-                            <option value="dhl">DHL(Poste)</option>
-                            <option value="vc">Vous effectuer la livraison</option>
-                            <option value="cv">Client ramener ces produits</option>
+unset($__errorArgs, $__bag); ?>" id="typeLivrs"  name="typeL[]" multiple >
+                       <option value="0" disabled >Sélectionnez</option>
+                        <option value="dhl" <?php echo e(in_array("dhl", old("typeL") ?: []) ? "selected": ""); ?>>DHL(Poste)</option>
+                        <option value="vc"<?php echo e(in_array("vc", old("typeL") ?: []) ? "selected": ""); ?>>Vous effectuer la livraison</option>
+                        <option value="cv"<?php echo e(in_array("cv", old("typeL") ?: []) ? "selected": ""); ?>>Client ramener ces produits</option>
+                           
+                            
                     </select>                           
                         <?php $__errorArgs = ['typeL'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -446,24 +488,23 @@ endif;
 unset($__errorArgs, $__bag); ?>
     </div>
   </div>
-  <div class="tab " style="border: 2px" >
+  <!--<div class="tab " style="border: 2px" >
     <div class="custom-checkbox m-b-20">
-        <input type="checkbox" class="custom-control-input form-control m-t-2" value="" id="cocher" name="selectAll[]" >
-        <label class="custom-control-label p-l-25 " for="cocher" style="font-size: 20px" >Selectionner Tout :</label>
+        <input type="checkbox" class="custom-control-input form-control m-t-2" value="" id="selectall" onclick="selectAll(this);" >
+        <label class="custom-control-label p-l-25 " for="selectall" style="font-size: 20px" >Selectionner Tout :</label>
     </div>
    <div class="form-group m-b-35 m-l-50 " v-for="v in villes" style="display: inline-flex;">
                     <div class="custom-checkbox m-r-14" >
-                        <input type="checkbox" class="custom-control-input form-control" :value="v.id" :id="v.id" name="villeC[]" >
+                        <input type="checkbox" class="custom-control-input form-control  <?php $__errorArgs = ['villeC'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" value="v.id" :id="v.id" name="villeC[]" >
                         <label class="custom-control-label p-l-25 p-t-4" :for="v.id" >{{v.nom}}</label>
-                    </div>
-                    <script type="text/javascript">
-                        var i=0;
-
-                    </script>
-    </div>
-    <div class="form-group input-group m-b-60">
-                  <input type="text" class="form-control" aria-label="Text input with dropdown button" placeholder="Entrez le prix de livraison pour la(les) ville(s) selectionner" name="prix_tarif" style="height: 45px">
-                        <?php $__errorArgs = ['prix_tarif'];
+                        <?php $__errorArgs = ['villeC'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -475,6 +516,17 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+                    </div>
+    </div>
+    <div class="form-group input-group m-b-60">
+                  <input type="text" class="form-control <?php $__errorArgs = ['prix_tarif'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" aria-label="Text input with dropdown button" placeholder="Entrez le prix de livraison pour la(les) ville(s) selectionner" name="prix_tarif" style="height: 45px" value="<?php echo e(old('prix_tarif')); ?>">
                   <div class="input-group-append">
                     <select class="form-control form-control-lg <?php $__errorArgs = ['poids'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -484,12 +536,24 @@ $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>" id="exampleFormControlSelect1"  name="poids" style="height: 45px">
-                            <option value="1" selected>/Kg</option>
-                            <option value="2">/g</option>
+                            <option value="1" selected <?php echo e(old('poids') == 1 ? 'selected' : ''); ?>>/Kg</option>
+                            <option value="2" <?php echo e(old('poids') == 2 ? 'selected' : ''); ?>>/g</option>
                     </select>
                   </div>
+                  <?php $__errorArgs = ['prix_tarif'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <span class="invalid-feedback" role="alert">
+                                <strong><?php echo e($message); ?></strong>
+                            </span>
+                  <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
     </div>
-  </div>
+  </div>-->
     <div id="nextPrevious">
       <button type="button" id="prevBtn" onclick="nextPrev(-1,-1)" class="btn-lg m-t-8 btn-block m-r-30" style="background-color:#ca2323;color:white">Previous</button>
       <button type="button" id="nextBtn" onclick="nextPrev(1,1)" class="btn-lg btn-block bg10" style="background-color:#ca2323;color:white">Creer Compte</button>
@@ -499,7 +563,7 @@ unset($__errorArgs, $__bag); ?>" id="exampleFormControlSelect1"  name="poids" st
   <div style="text-align:center;margin-top:40px; display: none;" id="stepp">
     <span class="step"></span>
     <span class="step"></span>
-    <span class="step"></span>
+    <!--<span class="step"></span>-->
   </div>
 
 </form>
@@ -507,38 +571,19 @@ unset($__errorArgs, $__bag); ?>" id="exampleFormControlSelect1"  name="poids" st
         </div>
     </section>
 </div>
-   <!-- --*******************************************************************************************************-->
-   <script>
-$(document).ready(function(){
-
-// TOUT COCHER
-$(":cocher").click(function(){
-$(':checkbox.checkClass').prop('checked', true);
-$(":radio#decocher").prop('checked', false);
-});
-// TOUT DE-COCHER
-$(":radio#decocher").click(function(){
-$(':checkbox.checkClass').prop('checked', false);
-$(":radio#cocher").prop('checked', false);
-});
-// UNCHECK SI UNE CHECKBOX EST SELECTIONNEE
-$(':checkbox.checkClass').click(function(){
-$(":radio#cocher").prop('checked', false);
-$(":radio#decocher").prop('checked', false);
-});
-
-
-});
-</script>
 <script>
-var currentTab = 0; // Current tab is set to be the first tab (0)
-showTab(currentTab,1); // Display the current tab
-
+var currentTab = 0;
+showTab(currentTab,1); 
 function showTab(n,perv) {
-  // This function will display the specified tab of the form...
+
   var x = document.getElementsByClassName("tab");
+  var select = document.getElementById('exampleFormControlSelect1');
+  var options = select.getElementsByTagName('option');
+  var cmpt = options[select.selectedIndex].value;
   x[n].style.display = "block";
-  //... and fix the Previous/Next buttons:
+  if (cmpt==2 || cmpt==3){
+      onChange();
+  }
   if (n == 0) {
     document.getElementById("prevBtn").style.display = "none";
   } else {
@@ -558,90 +603,57 @@ function showTab(n,perv) {
     document.getElementById("nextBtn").innerHTML = "Suivant";
     document.getElementById("nextBtn").style.background = "#13c940";
   }
-  //... and run a function that will display the correct step indicator:
-  fixStepIndicator(n)
+
+  fixStepIndicator(n);
 }
 
 function nextPrev(n,prev) {
     var select = document.getElementById('exampleFormControlSelect1');
     var options = select.getElementsByTagName('option');
     var cmpt = options[select.selectedIndex].value;
-    var select1 = document.getElementById('typeLivrs');
-    var j=0,k=0;
-    if(cmpt==1 || cmpt==3 || cmpt==0 || cmpt==4) {
+    validateForm();
+    if(cmpt==1 || cmpt==3 || cmpt==4 || cmpt=="") {
         document.getElementById("regForm").submit();
         return false;
     }
 
-    for ( var i=1; i< select1.options.length; i++) {
-        if ( select1.options[i].selected) 
-        {
-          if(select1.options[i].value=="dhl"){
-            j++; k++;
-          }
-          else if(select1.options[i].value=="cv"){
-            j++; k++;
-          }
-          else if(select1.options[i].value=="vc"){
-            j++;
-          }
-        }
-    }
-    if((j == 2 && k == 2)|| (j==1 && k==1) && prev == 1 && currentTab != 0){
-        document.getElementById("regForm").submit();
-        return false;
-    } 
-
-
-  // This function will figure out which tab to display
+    
   var x = document.getElementsByClassName("tab");
-  // Exit the function if any field in the current tab is invalid:
-  if (n == 1 && !validateForm()) return false;
-  // Hide the current tab:
+
   if(currentTab != x.length-1 && prev==1){
     x[currentTab].style.display = "none";
   }
   else if(prev==-1){
     x[currentTab].style.display = "none";
   }
-  // Increase or decrease the current tab by 1:
-  currentTab = currentTab + n;
 
-  // if you have reached the end of the form...
+  currentTab = currentTab + n;
   if (currentTab >= x.length) {
-    // ... the form gets submitted:
+
     document.getElementById("regForm").submit();
     return false;
   }
-  // Otherwise, display the correct tab:
-    showTab(currentTab,n);
-  
+
+    showTab(currentTab,n); 
 }
 
 function validateForm() {
-  // This function deals with validation of the form fields
-  var x, y, i, valid = true;
-  x = document.getElementsByClassName("tab");
-  y = x[currentTab].getElementsByTagName("input");
-  // A loop that checks every input field in the current tab:
-  for (i = 0; i < y.length; i++) {
-    // If a field is empty...
-    
-  }
-  // If the valid status is true, mark the step as finished and valid:
+
+  var  valid = true;
+
   if (valid) {
     document.getElementsByClassName("step")[currentTab].className += " finish";
   }
-  return valid; // return the valid status
+  return valid; 
 }
 
 function fixStepIndicator(n) {
-  // This function removes the "active" class of all steps...
+
   var i, x = document.getElementsByClassName("step");
   for (i = 0; i < x.length; i++) {
     x[i].className = x[i].className.replace(" active", "");
   }
-  //... and adds the "active" class on the current step:
+
   x[n].className += " active";
 }
 
@@ -696,37 +708,14 @@ function onChange() {
     }
 
 }
-function onChangeTypeL(){
-  var select = document.getElementById('typeLivrs');
-  var options = select.getElementsByTagName('option');
-  var typeL = options[select.selectedIndex].value;
-  var j=0,k=0;
 
-
-    for ( var i=1; i< select.options.length; i++){
-        if ( select.options[i].selected) {
-          if(select.options[i].value=="dhl"){
-            j++; k++;
-          }
-          else if(select.options[i].value=="cv"){
-            j++; k++;
-          }
-          else if(select.options[i].value=="vc"){
-            j++;
-          }
-        }
-   }
-  if(j == 3 ||(j == 2 && k == 1) || (j == 1 && k == 0)){
-    document.getElementById("nextBtn").innerHTML = "Suivant"; 
-  }
-  else if((j == 2 && k == 2)|| (j==1 && k==1)){
-    document.getElementById("nextBtn").innerHTML = "Creer Compte"; 
-  }
-
-
-
+function selectAll(source) {
+    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i] != source)
+            checkboxes[i].checked = source.checked;
+    }
 }
 </script>
 <?php $__env->stopSection(); ?>
-
 <?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\BWS\BWS\resources\views/auth/register.blade.php ENDPATH**/ ?>

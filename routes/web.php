@@ -33,17 +33,24 @@ Route::get('/panierVisiteur', 'BwsController@panier_visiteur')->name('panierVisi
 Route::get('/getville', 'BwsController@get_ville');
 /************************************************ Admin***********************************************/
 
-Route::get('/admin', 'BwsController@admin_admin')->name('admin');
-Route::get('/articlesAdmin', 'BwsController@articles_admin')->name('articlesAdmin');
-Route::get('/categoriesAdmin', 'BwsController@categories_admin')->name('categoriesAdmin');
-Route::get('/client', 'BwsController@client_admin')->name('client');
+Route::get('/admin', 'AdminController@admin_admin')->name('admin');
+Route::get('/articlesAdmin', 'AdminController@article_admin')->name('articlesAdmin');
+Route::get('/categoriesAdmin', 'AdminController@categories_admin')->name('categoriesAdmin');
+Route::get('/client', 'AdminController@client_admin')->name('client');
 Route::get('/emails', 'BwsController@emails_admin')->name('emails');
-Route::get('/employeur', 'BwsController@employeur_admin')->name('employeur');
+Route::get('/employeur', 'AdminController@employeur_admin')->name('employeur');
 Route::get('/notificationsAdmin', 'BwsController@notifications_admin')->name('notificationsAdmin');
 Route::get('/profilAdmin', 'AdminController@profil_admin')->name('profilAdmin');
 Route::get('/statistiquesAdmin', 'BwsController@statistiques_admin')->name('statistiquesAdmin');
-Route::get('/vendeur', 'BwsController@vendeur_admin')->name('vendeur');
+Route::get('/vendeur', 'AdminController@vendeur_admin')->name('vendeur');
 Route::put('/updateProfilA/{id}','AdminController@update_profil');
+Route::post('/addarticle', 'AdminController@addArticle');
+Route::post('/detaillsarticle', 'AdminController@detaillsArticle');
+Route::post('/addcategorie', 'AdminController@addCategorie');
+Route::put('/updatecategorie','AdminController@updateCategorie');
+Route::delete('/deletecategorie/{id}','AdminController@deleteCategorie');
+
+
 
 /*********************************************** Employeur***********************************************/
 
@@ -62,6 +69,7 @@ Route::get('/produitVendeur', 'BwsController@produit_vendeur')->name('produitVen
 Route::get('/commandeTraiterVendeur', 'BwsController@commande_traiter_vendeur')->name('commandeTraiterVendeur');
 Route::get('/commandeRecuVendeur', 'BwsController@commande_recu_vendeur')->name('commandeRecuVendeur');
 Route::put('/updateProfilV/{id}','VendeurController@update_profil');
+
 
 
 /************************************************ Client***********************************************/

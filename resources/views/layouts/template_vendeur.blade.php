@@ -343,7 +343,7 @@
 					</div>	
 
 					<!-- Icon header -->
-					<div class="wrap-icon-header  flex-r-m " style="margin-left: 33%">
+					<div class="wrap-icon-header  flex-r-m " style="margin-left:28%">
 						<div class="icon-header-item cl2 hov-cl1 trans-04  p-r-11 js-show-modal-search">
 							<i class="zmdi zmdi-search"></i>
 						</div>
@@ -366,13 +366,13 @@
                               
                               <div class="dropdown-menu m-r-35" aria-labelledby="dropdownMenuButton">
                                 <div href="{{ route('profilVendeur') }}">
-                              		<a class="dropdown-item" href="{{ route('profilVendeur') }}">{{ __('Profil') }}</a>
+                              		<a class="dropdown-item" href="{{ route('profilVendeur') }}"><b>{{ __('Profil') }}</b></a>
                               	</div>
                                 <div class="dropdown-divider"></div>
                                 <div>
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                          document.getElementById('logout-form').submit();">
-                                            {{ __('Logout') }}
+                                           <b> {{ __('Logout') }} </b>
                                     </a>
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                             @csrf
