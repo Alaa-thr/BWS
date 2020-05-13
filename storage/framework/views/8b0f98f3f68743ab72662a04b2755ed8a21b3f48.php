@@ -16,24 +16,28 @@
             <div class="card">
               <div class="card-header" >
                 <h4 class="card-title">Articles</h4>
-                <div style="margin-top: -50px; margin-left: 850px; " >
-                  <button  class="btn-sm btn-info js-show-modal1" style="height: 35px;" v-on:click="AfficherAjout()" ><b>Ajouter article</b></button>
-                </div>
-                
-                <hr>       
-               
+                <div style="margin-top: -50px; margin-left: 750px; " >
+                      <button v-if="suppr" class="btn-sm btn-danger " style="height: 35px; " v-on:click="deleteArticle(articlea)"><b>Supprimer</b>
+                      </button>
+                      
+                      <button v-else  class="btn-sm btn-info js-show-modal1" style="height: 35px;" v-on:click="AfficherAjout()" ><b>Ajouter article</b>
+                      
+                      </button>
+                      <button v-on:click="AnnulerSel()" v-if="suppr" class="btn-sm btn-warning " style="height: 35px; " ><b>Annuler</b>
+                      </button>
+                   </div>
+                <hr>
                <div class="row m-b-10" v-for="articlea in articlesadmin" >
-                      <input type="checkbox" :id="articlea.id" >
-                      <label :for="articlea.id" style="margin-top: 40px; margin-left: 10px;"></label>
-                    
+                      <input  type="checkbox" :id="articlea.id" :value="articlea.id" v-model="checkedArticles" @change="changeButton()" >
+                      <label :for="articlea.id" style="margin-top: 40px; margin-left: 10px;">
+                      </label>
                     <div class="col-md-3" style="padding-right: 20px;" >
                       <img src="articlea.image">
                     </div>
-                    
                     <div class="col-md-6" >
                       <h5 class="title" style="margin-top: -8px; margin-left: 20px; color: red;" >{{ articlea.titre }}</h5><br>
                         <div class="description" style="margin-top: -10px; font-size: 17px; margin-left: 20px;">{{ articlea.description }}<br>
-                           <a class="js-show-modal1" href="#"  style="margin-left: 260px; color: black; font-style: italic; font-weight: 500; " v-on:click="AfficheInfo(articlea.id)"><b> Continue la lecture </b>
+                           <a class="js-show-modal1"  style="margin-left: 260px; color: black; font-style: italic; font-weight: 500; cursor: pointer;" v-on:click="AfficheInfo(articlea.id)"><b> Continue la lecture </b>
                            </a>
                         </div>
                     </div>
@@ -44,7 +48,7 @@
                            <img src="assetsAdmin/img/menu.png" alt="..."  style="margin-left: 50px;"/> 
                           </a>
                           <div class="dropdown-menu dropdown-menu-left "  style="margin-left: 50px;">   
-                           <a class="dropdown-item js-show-modal1"  style="color: red; font-style: italic; font-weight: 900; " v-on:click="openInfo=true">Modifier</a>
+                           <a class="dropdown-item js-show-modal1"  style="color: red; font-style: italic; font-weight: 900; cursor: pointer;" v-on:click="editerArticle(articlea)">Modifier</a>
                            <a class="dropdown-item" href="#" style="color: red; font-style: italic; font-weight: 900;">Supprimer</a>
                           </div>
                         </td>
@@ -217,8 +221,10 @@
             .catch(error =>{
                  console.log('errors :' , error);
             })
-      }
-        }
+      },
+      
+    
+    }
            
           
     });
@@ -226,6 +232,7 @@
       el: '#app2',
       data:{
         articlesadmin2: [],
+       
         openInfo: false,
         openAjout: false,
         cc: false,
@@ -265,7 +272,11 @@
     
     data:{
       articlesadmin: [],
-                           
+        suppr: false, 
+        ajout:false,
+        nbr: 0,
+       chek: true ,
+       checkedArticles: [],                  
       },
     methods: {
       
@@ -290,8 +301,27 @@
                     .catch(error =>{
                          console.log('errors :' , error);
                     })
-      } 
+      },
+      editerArticle(articlea){
+        this.AfficherAjout();
+        app2.art = articlea;
+      },
+      changeButton: function(){
+        if(this.checkedArticles.length > 0){
+          this.suppr=true;
+        }
+        else{
+          this.suppr=false;
+        }        
+      }, 
+      AnnulerSel: function(){
+        this.checkedArticles.length = [];
+        this.changeButton();
+      },
+      
+      
     },
+    
      created:function(){
       this.article_admin();
 

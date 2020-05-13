@@ -410,7 +410,7 @@
 <script>
         window.Laravel = {!! json_encode([
                'csrfToken' => csrf_token(),
-                  'admin' => $admin,  //vendeur connecté
+                  'admin' => $admin,  //admin connecté
                 'url'      => url('/')  
           ]) !!};
 </script>

@@ -9,6 +9,10 @@ class Categorie extends Model
     protected $fillable = [
         'libellé',
     ];
+    /*public function souscategorie()
+    {
+        return $this->belongsTo('App\SousCategorie');
+    }*/
     
     
     

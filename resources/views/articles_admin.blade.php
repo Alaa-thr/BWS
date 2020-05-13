@@ -16,14 +16,22 @@
             <div class="card">
               <div class="card-header" >
                 <h4 class="card-title">Articles</h4>
-                <div style="margin-top: -50px; margin-left: 850px; " >
-                  <button  class="btn-sm btn-info js-show-modal1" style="height: 35px;" v-on:click="AfficherAjout()" ><b>Ajouter article</b></button>
-                </div>
+                <div style="margin-top: -50px; margin-left: 750px; " >
+                      <button v-if="suppr" class="btn-sm btn-danger " style="height: 35px; " v-on:click="deleteArticle(articlea)"><b>Supprimer</b>
+                      </button>
+                      
+                      <button v-else  class="btn-sm btn-info js-show-modal1" style="height: 35px;" v-on:click="AfficherAjout()" ><b>Ajouter article</b>
+                      
+                      </button>
+                      <button v-on:click="AnnulerSel()" v-if="suppr" class="btn-sm btn-warning " style="height: 35px; " ><b>Annuler</b>
+                      </button>
+                   </div>
+             
                 
                 <hr>       
               
                <div class="row m-b-10" v-for="articlea in articlesadmin" >
-                    <input type="checkbox" :id="articlea.id" >
+                    <input type="checkbox" :id="articlea.id" :value="articlea.id" v-model="checkedArticles" @change="changeButton()">
                     <label :for="articlea.id" style="margin-top: 40px; margin-left: 10px;"></label>
                     <div class="col-md-3 " style="padding-right: 20px; " >
                       <img  :src="'storage/articles_image/'+ articlea.image" style="height: 130px;width: 800px; margin-bottom: 20px">
@@ -48,6 +56,9 @@
                           <a data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
                            <img src="assetsAdmin/img/menu.png" /> 
                           </a>
+
+                          <div class="dropdown-menu dropdown-menu-left "  style="margin-left: 50px;">   
+                           <a class="dropdown-item js-show-modal1"  style="color: red; font-style: italic; font-weight: 900; cursor: pointer;" v-on:click="editerArticle(articlea)">Modifier</a>
                           <div class="dropdown-menu dropdown-menu-right ">   
                            <a class="dropdown-item js-show-modal1"  style="color: red; font-style: italic; font-weight: 900; " v-on:click="openInfo=true">Modifier</a>
                            <a class="dropdown-item" href="#" style="color: red; font-style: italic; font-weight: 900;">Supprimer</a>
@@ -240,8 +251,10 @@
                 app2.message = error.response.data.errors;
                 console.log('errors :' , app2.message);
             })
-      }
-        }
+      },
+      
+    
+    }
            
           
     });
@@ -249,6 +262,7 @@
       el: '#app2',
       data:{
         articlesadmin2: [],
+       
         openInfo: false,
         openAjout: false,
         cc: false,
@@ -304,6 +318,13 @@
     
     data:{
       articlesadmin: [],
+
+        suppr: false, 
+        ajout:false,
+        nbr: 0,
+       chek: true ,
+       checkedArticles: [],                  
+
       nextPage: null,
 
       },
@@ -326,7 +347,7 @@
                 axios.get(window.Laravel.url+'/articlesAdmin')
 
                     .then(response => {
-                         this.articlesadmin = window.Laravel.article.data;
+                         this.articlesadmin = window.Laravel.article;
                          this.nextPage = window.Laravel.article.next_page_url;
                            console.log('ccccc',window.Laravel.article);                       
                     })
@@ -334,6 +355,29 @@
                          console.log('errors :' , error);
                     })
       },
+
+      editerArticle(articlea){
+        this.AfficherAjout();
+        app2.art = articlea;
+      },
+      changeButton: function(){
+        if(this.checkedArticles.length > 0){
+          this.suppr=true;
+        }
+        else{
+          this.suppr=false;
+        }        
+      }, 
+      AnnulerSel: function(){
+        this.checkedArticles.length = [];
+        this.changeButton();
+      },
+      
+      
+    
+    
+   
+
       getNext: function(urll) {
               axios.get(urll)
 
@@ -362,8 +406,9 @@
           return text.substring(0, length) + suffix;
 
       } 
-    },
-     mounted:function(){
+    },  created:function(){
+     
+
       this.article_admin();
 
 

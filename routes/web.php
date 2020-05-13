@@ -36,6 +36,8 @@ Route::get('/getville', 'BwsController@get_ville');
 Route::get('/admin', 'AdminController@admin_admin')->name('admin');
 Route::get('/articlesAdmin', 'AdminController@article_admin')->name('articlesAdmin');
 Route::get('/categoriesAdmin', 'AdminController@categories_admin')->name('categoriesAdmin');
+Route::get('/getsouscategories','AdminController@sousCategories')->name('getsouscategories');
+
 Route::get('/client', 'AdminController@client_admin')->name('client');
 Route::get('/emails', 'BwsController@emails_admin')->name('emails');
 Route::get('/employeur', 'AdminController@employeur_admin')->name('employeur');

@@ -48,7 +48,7 @@ class AdminController extends Controller
 
     public function article_admin(){
         $c = Admin::find(Auth::user()->id);       
-        $article = \DB::table('articles')->where('admin_id', $c->id)->simplepaginate(3);
+        $article = \DB::table('articles')->where('admin_id', $c->id)-->orderBy('created_at','desc')->get();
         
         return view('articles_admin',['article'=>$article, 'idArticle' => $c->id]);  
 
@@ -58,6 +58,7 @@ class AdminController extends Controller
         return  $article_detaills;
 
     }
+
      public function addArticle(ArticleRequest $request){
 
        // \Log::info($request->all());
@@ -78,7 +79,16 @@ class AdminController extends Controller
                 $article2->image = $fileName;
                 $article2->save();
                 return Response()->json(['etat' => true,'articleAjout' => $article2]);
+
     }
+     public function deleteArticle($id){
+        $article = Article::find($id);
+        $article->delete();
+
+     return Response()->json(['etat' => $article]);
+    }
+   
+
     public function update_profil(Request $request, $id) {
                 
 
@@ -129,6 +139,11 @@ class AdminController extends Controller
         $categorie->delete();
 
      return Response()->json(['etat' => $categorie]);
+    }
+    public function sousCategories(){
+        $scat = SousCategorie::all();
+        echo "$scat";
+        return $scat;
     }
    
    
