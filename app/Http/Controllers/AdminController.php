@@ -48,7 +48,7 @@ class AdminController extends Controller
 
     public function article_admin(){
         $c = Admin::find(Auth::user()->id);       
-        $article = \DB::table('articles')->where('admin_id', $c->id)->simplepaginate(3);
+        $article = \DB::table('articles')->where('admin_id', $c->id)->orderBy('created_at','desc')->get();
         
         return view('articles_admin',['article'=>$article, 'idArticle' => $c->id]);  
 

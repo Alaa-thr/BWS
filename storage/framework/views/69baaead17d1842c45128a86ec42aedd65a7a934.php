@@ -326,7 +326,7 @@
                 axios.get(window.Laravel.url+'/articlesAdmin')
 
                     .then(response => {
-                         this.articlesadmin = window.Laravel.article.data;
+                         this.articlesadmin = window.Laravel.article;
                          this.nextPage = window.Laravel.article.next_page_url;
                            console.log('ccccc',window.Laravel.article);                       
                     })

@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link  href="images/icons/favicon.png" rel="icon" type="image/png">
+    <link  href="<?php echo e(asset('images/icons/favicon.png')); ?>" rel="icon" type="image/png">
     
     <!-- CSRF Token -->
     <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
@@ -19,21 +19,21 @@
     <script src="<?php echo e(asset('jss/axios.min.js')); ?>">></script>
     <script src="<?php echo e(asset('jss/vee-validate.min.js')); ?>"></script>
     <!--<link href="<?php echo e(asset('csss/app.css')); ?>" rel="stylesheet" type="text/css">-->
-     <link href="assetsClient/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
-    <link rel="stylesheet" type="text/css" href="fonts/linearicons-v1.0.0/icon-font.min.css">
-    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
-    <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
-    <link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
-    <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
-    <link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
-    <link rel="stylesheet" type="text/css" href="vendor/slick/slick.css">
-    <link rel="stylesheet" type="text/css" href="vendor/MagnificPopup/magnific-popup.css">
-    <link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
-    <link rel="stylesheet" type="text/css" href="css/util.css">
-    <link rel="stylesheet" type="text/css" href="css/main.css">
+     <link href="<?php echo e(asset('assetsClient/css/bootstrap.min.css')); ?>" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="<?php echo e(asset('vendor/bootstrap/css/bootstrap.min.css')); ?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo e(asset('fonts/font-awesome-4.7.0/css/font-awesome.min.css')); ?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo e(asset('fonts/iconic/css/material-design-iconic-font.min.css')); ?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo e(asset('fonts/linearicons-v1.0.0/icon-font.min.css')); ?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo e(asset('vendor/animate/animate.css')); ?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo e(asset('vendor/css-hamburgers/hamburgers.min.css')); ?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo e(asset('vendor/animsition/css/animsition.min.css')); ?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo e(asset('vendor/select2/select2.min.css')); ?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo e(asset('vendor/daterangepicker/daterangepicker.css')); ?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo e(asset('vendor/slick/slick.css')); ?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo e(asset('vendor/MagnificPopup/magnific-popup.css')); ?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo e(asset('vendor/perfect-scrollbar/perfect-scrollbar.css')); ?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo e(asset('css/util.css')); ?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo e(asset('css/main.css')); ?>">
  
   
 
@@ -129,7 +129,7 @@
                     
                     <!-- Logo desktop -->       
                     <a href="#" class="logo">
-                        <img src="images/icons/LogoFinal2.png" alt="IMG-LOGO">
+                        <img src="<?php echo e(asset('images/icons/LogoFinal2.png')); ?>" alt="IMG-LOGO">
                     </a>
 
                     <!-- Menu desktop -->
@@ -155,32 +155,32 @@
                                                     <ul>
                                                         <li class="p-b-6 ">
                                                         
-                                                            <img src="images/icons/tshirt.png" class="p-b-4">
+                                                            <img src="<?php echo e(asset('images/icons/tshirt.png')); ?>" class="p-b-4">
                                                             <a href="#" class="filter-link stext-106 trans-04">
                                                                 Vêtements
                                                             </a>
                                                         </li>
                                                         <li class="p-b-6">
-                                                            <img src="images/icons/Shoes.png" class="p-b-2">
+                                                            <img src="<?php echo e(asset('images/icons/Shoes.png')); ?>" class="p-b-2">
                                                             <a href="#" class="filter-link stext-106 trans-04">
                                                                 Chaussures
                                                             </a>
                                                         </li>
                                                         <li class="p-b-6">
-                                                            <img src="images/icons/cosmetics.png" class="p-b-2">
+                                                            <img src="<?php echo e(asset('images/icons/cosmetics.png')); ?>" class="p-b-2">
                                                             <a href="#" class="filter-link stext-106 trans-04">
                                                                 Santé & Beauté 
                                                             </a>
                                                         </li>
                                                         <li class="p-b-6">
-                                                            <img src="images/icons/lipstick.png" class="p-b-2">
+                                                            <img src="<?php echo e(asset('images/icons/lipstick.png')); ?>" class="p-b-2">
                                                             <a href="#" class="filter-link stext-106 trans-04 ">
                                                                 Maquillages
                                                             </a>
                                                         </li>
                                     
                                                         <li class="p-b-6">
-                                                            <img src="images/icons/diamond.png" class="p-b-2">
+                                                            <img src="<?php echo e(asset('images/icons/diamond.png')); ?>" class="p-b-2">
                                                             <a href="#" class="filter-link stext-106 trans-04">
                                                                 Bijoux
                                                             </a>
@@ -197,31 +197,31 @@
                                                 <div class="filter-col2 p-b-27 p-t-39">
                                                     <ul>
                                                         <li class="p-b-6">
-                                                            <img src="images/icons/house.png" class="p-b-2">
+                                                            <img src="<?php echo e(asset('images/icons/house.png')); ?>" class="p-b-2">
                                                             <a href="#" class="filter-link stext-106 trans-04 ">
                                                                 Immobilieres
                                                             </a>
                                                         </li>
                                                         <li class="p-b-6">
-                                                            <img src="images/icons/nightstand.png" class="p-b-2">
+                                                            <img src="<?php echo e(asset('images/icons/nightstand.png')); ?>" class="p-b-2">
                                                             <a href="#" class="filter-link stext-106 trans-04">
                                                                 Electroménagers & Meubles
                                                             </a>
                                                         </li>
                                                         <li class="p-b-6">
-                                                            <img src="images/icons/repair.png" class="p-b-2">
+                                                            <img src="<?php echo e(asset('images/icons/repair.png')); ?>" class="p-b-2">
                                                             <a href="#" class="filter-link stext-106 trans-04">
                                                                 Matériels
                                                             </a>
                                                         </li>
                                                         <li class="p-b-6">
-                                                            <img src="images/icons/smartphone.png" class="p-b-2">
+                                                            <img src="<?php echo e(asset('images/icons/smartphone.png')); ?>" class="p-b-2">
                                                             <a href="#" class="filter-link stext-106 trans-04">
                                                                 Télephones& Accessoires
                                                             </a>
                                                         </li>
                                                         <li class="p-b-6">
-                                                            <img src="images/icons/laptop.png" class="p-b-2">
+                                                            <img src="<?php echo e(asset('images/icons/laptop.png')); ?>" class="p-b-2">
                                                             <a href="#" class="filter-link stext-106 trans-04">
                                                                 Informatiques
                                                             </a>
@@ -237,13 +237,13 @@
                                                 <div class="filter-col3  p-b-27 p-t-39" >
                                                     <ul>
                                                         <li class="p-b-6">
-                                                            <img src="images/icons/car.png" class="p-b-2">
+                                                            <img src="<?php echo e(asset('images/icons/car.png')); ?>" class="p-b-2">
                                                             <a href="#" class="filter-link stext-106 trans-04">
                                                                 Véhicules & Automobiles
                                                             </a>
                                                         </li>
                                                         <li class="p-b-6">
-                                                            <img src="images/icons/customer.png" class="p-b-2">
+                                                            <img src="<?php echo e(asset('images/icons/customer.png')); ?>" class="p-b-2">
                                                             <a href="#" class="filter-link stext-106 trans-04">
                                                                     Services
                                                             </a>
@@ -284,31 +284,31 @@
                             
                                             <ul>
                                                 <li class="p-b-6">
-                                                    <img src="images/icons/architect.png" class="p-b-2">
+                                                    <img src="<?php echo e(asset('images/icons/architect.png')); ?>" class="p-b-2">
                                                     <a href="#" class="filter-link stext-106 trans-04">
                                                         Architecture
                                                     </a>
                                                 </li>
                                                 <li class="p-b-6">
-                                                    <img src="images/icons/programmer.png" class="p-b-2">
+                                                    <img src="<?php echo e(asset('images/icons/programmer.png')); ?>" class="p-b-2">
                                                     <a href="#" class="filter-link stext-106 trans-04">
                                                         Informatique
                                                     </a>
                                                 </li>
                                                 <li class="p-b-6">
-                                                    <img src="images/icons/flash.png" class="p-b-2">
+                                                    <img src="<?php echo e(asset('images/icons/flash.png')); ?>" class="p-b-2">
                                                     <a href="#" class="filter-link stext-106 trans-04">
                                                         Electricité
                                                     </a>
                                                 </li>
                                                 <li class="p-b-6">
-                                                    <img src="images/icons/shield.png" class="p-b-2">
+                                                    <img src="<?php echo e(asset('images/icons/shield.png')); ?>" class="p-b-2">
                                                     <a href="#" class="filter-link stext-106 trans-04 ">
                                                         Sécurité
                                                     </a>
                                                 </li>
                                                 <li class="p-b-6">
-                                                    <img src="images/icons/hotel.png" class="p-b-2">
+                                                    <img src="<?php echo e(asset('images/icons/hotel.png')); ?>" class="p-b-2">
                                                     <a href="#" class="filter-link stext-106 trans-04">
                                                         Hôtel
                                                     </a>
@@ -323,25 +323,25 @@
                                         <div class="filter-col2 p-b-27 p-t-39">
                                             <ul>
                                                 <li class="p-b-6">
-                                                    <img src="images/icons/money.png" class="p-b-2">
+                                                    <img src="<?php echo e(asset('images/icons/money.png')); ?>" class="p-b-2">
                                                     <a href="#" class="filter-link stext-106 trans-04 ">
                                                         Banque
                                                     </a>
                                                 </li>
                                                 <li class="p-b-6">
-                                                    <img src="images/icons/fruit.png" class="p-b-2">
+                                                    <img src="<?php echo e(asset('images/icons/fruit.png')); ?>" class="p-b-2">
                                                     <a href="#" class="filter-link stext-106 trans-04">
                                                         Alimentation
                                                     </a>
                                                 </li>
                                                 <li class="p-b-6">
-                                                    <img src="images/icons/medication.png" class="p-b-2">
+                                                    <img src="<?php echo e(asset('images/icons/medication.png')); ?>" class="p-b-2">
                                                     <a href="#" class="filter-link stext-106 trans-04">
                                                         Pharmacie
                                                     </a>
                                                 </li>
                                                 <li class="p-b-6">
-                                                    <img src="images/icons/wrench.png" class="p-b-2">
+                                                    <img src="<?php echo e(asset('images/icons/wrench.png')); ?>" class="p-b-2">
                                                     <a href="#" class="filter-link stext-106 trans-04">
                                                         Mécanicien Automobile
                                                     </a>
@@ -359,13 +359,13 @@
                                         <div class="filter-col3  p-b-27 p-t-39">
                                             <ul>
                                                 <li class="p-b-6">
-                                                    <img src="images/icons/saw.png" class="p-b-2">
+                                                    <img src="<?php echo e(asset('images/icons/saw.png')); ?>" class="p-b-2">
                                                     <a href="#" class="filter-link stext-106 trans-04">
                                                         Menuiserie
                                                     </a>
                                                 </li>
                                                 <li class="p-b-6">
-                                                    <img src="images/icons/medicine.png" class="p-b-2">
+                                                    <img src="<?php echo e(asset('images/icons/medicine.png')); ?>" class="p-b-2">
                                                     <a href="#" class="filter-link stext-106 trans-04 ">
                                                         Hôpital
                                                     </a>
@@ -458,7 +458,7 @@
             
             <!-- Logo moblie -->        
             <div class="logo-mobile">
-                <a href="index.html"><img src="images/icons/LogoFinal2.png" alt="IMG-LOGO"></a>
+                <a href="index.html"><img src="<?php echo e(asset('images/icons/LogoFinal2.png')); ?>" alt="IMG-LOGO"></a>
             </div>
 
             <!-- Icon header -->
@@ -510,7 +510,7 @@
             <!-- Button show menu -->
             <div class="btn-show-menu-mobile hov-cl1 hamburger hamburger--squeeze" >
                 <a class="hamburger-box" >
-                    <img src="images/menu.png" alt="..." style="width: 60%;">
+                    <img src="<?php echo e(asset('images/menu.png')); ?>" alt="..." style="width: 60%;">
                 </a>
             </div>
         </div>
@@ -541,12 +541,12 @@
 
              <ul class="main-menu-m">
                 <li>
-                    <a href="<?php echo e(route('accueil')); ?> id="colorr">Accueil</a>
+                    <a href="<?php echo e(route('accueil')); ?>" id="colorr">Accueil</a>
                     
                 </li>
 
                 <li>
-                    <a href="<?php echo e(route('shop')); ?>id="colorr">Shop</a>
+                    <a href="<?php echo e(route('shop')); ?>"id="colorr">Shop</a>
                     
                     <span class="arrow-main-menu-m">
                         <i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -562,15 +562,15 @@
                 </li>
 
                 <li>
-                    <a href="<?php echo e(route('article')); ?>id="colorr">Article</a>
+                    <a href="<?php echo e(route('article')); ?>"id="colorr">Article</a>
                 </li>
 
                 <li>
-                    <a href="<?php echo e(route('apropos')); ?> id="colorr">A propos</a>
+                    <a href="<?php echo e(route('apropos')); ?> "id="colorr">A propos</a>
                 </li>
 
                 <li>
-                    <a href="<?php echo e(route('contact')); ?> id="colorr">Contact</a>
+                    <a href="<?php echo e(route('contact')); ?>" id="colorr">Contact</a>
                 </li>
             </ul>
         </div>
@@ -579,7 +579,7 @@
         <div class="modal-search-header flex-c-m trans-04 js-hide-modal-search">
             <div class="container-search-header">
                 <button class="flex-c-m btn-hide-modal-search trans-04 js-hide-modal-search">
-                    <img src="images/icons/icon-close2.png" alt="CLOSE">
+                    <img src="<?php echo e(asset('images/icons/icon-close2.png')); ?>" alt="CLOSE">
                 </button>
 
                 <form class="wrap-search-header flex-w p-l-15">
@@ -610,7 +610,7 @@
                 <div class="card " >
                     <div class="card-header">
                         <a href="index.html" class="logo p-l-50" >
-                            <img src="images/icons/LogoFinal2.png" alt="IMG-LOGO" >
+                            <img src="<?php echo e(asset('images/icons/LogoFinal2.png')); ?>" alt="IMG-LOGO" >
                         </a>
                         <span class="splash-description">Please enter your user information.</span>
                     </div>
@@ -736,7 +736,7 @@ unset($__errorArgs, $__bag); ?>
 
                     <li class="header-cart-item flex-w flex-t m-b-12">
                         <div class="header-cart-item-img">
-                            <img src="images/item-cart-02.jpg" alt="IMG">
+                            <img src="<?php echo e(asset('images/item-cart-02.jpg')); ?>" alt="IMG">
                         </div>
 
                         <div class="header-cart-item-txt p-t-8">
@@ -752,7 +752,7 @@ unset($__errorArgs, $__bag); ?>
 
                     <li class="header-cart-item flex-w flex-t m-b-12">
                         <div class="header-cart-item-img">
-                            <img src="images/item-cart-03.jpg" alt="IMG">
+                            <img src="<?php echo e(asset('images/item-cart-03.jpg')); ?>" alt="IMG">
                         </div>
 
                         <div class="header-cart-item-txt p-t-8">
@@ -792,7 +792,7 @@ unset($__errorArgs, $__bag); ?>
             <?php echo $__env->yieldContent('content'); ?>
         
     <!-- Footer -->
-    <footer class="bg3 p-t-75 p-b-32">
+    <footer class="bg3 p-t-75 p-b-32" style="margin-top:12%;">
         <div class="container">
             <div class="row">
                 <div class="p-b-50" style="width: 8%;">
@@ -878,23 +878,23 @@ unset($__errorArgs, $__bag); ?>
             <div class="p-t-40">
                 <div class="flex-c-m flex-w p-b-18">
                     <a href="#" class="m-all-1">
-                        <img src="images/icons/icon-pay-01.png" alt="ICON-PAY">
+                        <img src="<?php echo e(asset('images/icons/icon-pay-01.png')); ?>" alt="ICON-PAY">
                     </a>
 
                     <a href="#" class="m-all-1">
-                        <img src="images/icons/icon-pay-02.png" alt="ICON-PAY">
+                        <img src="<?php echo e(asset('images/icons/icon-pay-02.png')); ?>" alt="ICON-PAY">
                     </a>
 
                     <a href="#" class="m-all-1">
-                        <img src="images/icons/icon-pay-03.png" alt="ICON-PAY">
+                        <img src="<?php echo e(asset('images/icons/icon-pay-03.png')); ?>" alt="ICON-PAY">
                     </a>
 
                     <a href="#" class="m-all-1">
-                        <img src="images/icons/icon-pay-04.png" alt="ICON-PAY">
+                        <img src="<?php echo e(asset('images/icons/icon-pay-04.png')); ?>" alt="ICON-PAY">
                     </a>
 
                     <a href="#" class="m-all-1">
-                        <img src="images/icons/icon-pay-05.png" alt="ICON-PAY">
+                        <img src="<?php echo e(asset('images/icons/icon-pay-05.png')); ?>" alt="ICON-PAY">
                     </a>
                 </div>
 
@@ -921,7 +921,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         <div class="container">
             <div class="bg0 p-t-60 p-b-30 p-lr-15-lg how-pos3-parent">
                 <button class="how-pos3 hov3 trans-04 js-hide-modal1">
-                    <img src="images/icons/icon-close.png" alt="CLOSE">
+                    <img src="<?php echo e(asset('images/icons/icon-close.png')); ?>" alt="CLOSE">
                 </button>
 
                 <div class="row">
@@ -934,7 +934,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                                 <div class="slick3 gallery-lb">
                                     <div class="item-slick3" data-thumb="images/product-detail-01.jpg">
                                         <div class="wrap-pic-w pos-relative">
-                                            <img src="images/product-detail-01.jpg" alt="IMG-PRODUCT">
+                                            <img src="<?php echo e(asset('images/product-detail-01.jpg')); ?>" alt="IMG-PRODUCT">
 
                                             <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="images/product-detail-01.jpg">
                                                 <i class="fa fa-expand"></i>
@@ -944,7 +944,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
                                     <div class="item-slick3" data-thumb="images/product-detail-02.jpg">
                                         <div class="wrap-pic-w pos-relative">
-                                            <img src="images/product-detail-02.jpg" alt="IMG-PRODUCT">
+                                            <img src="<?php echo e(asset('images/product-detail-02.jpg')); ?>" alt="IMG-PRODUCT">
 
                                             <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="images/product-detail-02.jpg">
                                                 <i class="fa fa-expand"></i>
@@ -954,7 +954,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
                                     <div class="item-slick3" data-thumb="images/product-detail-03.jpg">
                                         <div class="wrap-pic-w pos-relative">
-                                            <img src="images/product-detail-03.jpg" alt="IMG-PRODUCT">
+                                            <img src="<?php echo e(asset('images/product-detail-03.jpg')); ?>" alt="IMG-PRODUCT">
 
                                             <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="images/product-detail-03.jpg">
                                                 <i class="fa fa-expand"></i>
@@ -1070,10 +1070,10 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     </div>
     <?php echo $__env->yieldPushContent('javascript'); ?>
    <!--<script src="vendor/jquery/jquery-3.2.1.min.js"></script>-->  
-    <script src="vendor/animsition/js/animsition.min.js"></script>
-    <script src="vendor/bootstrap/js/popper.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-    <script src="vendor/select2/select2.min.js"></script>
+    <script src="<?php echo e(asset('vendor/animsition/js/animsition.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('vendor/bootstrap/js/popper.js')); ?>"></script>
+    <script src="<?php echo e(asset('vendor/bootstrap/js/bootstrap.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('vendor/select2/select2.min.js')); ?>"></script>
     <script>
         $(".js-select2").each(function(){
             $(this).select2({
@@ -1082,17 +1082,17 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
             });
         })
     </script>
-    <script src="vendor/daterangepicker/moment.min.js"></script>
-    <script src="vendor/daterangepicker/daterangepicker.js"></script>
-    <script src="vendor/slick/slick.min.js"></script>
-    <script src="js/slick-custom.js"></script>
+    <script src="<?php echo e(asset('vendor/daterangepicker/moment.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('vendor/daterangepicker/daterangepicker.js')); ?>"></script>
+    <script src="<?php echo e(asset('vendor/slick/slick.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('js/slick-custom.js')); ?>"></script>
 
-    <script src="vendor/parallax100/parallax100.js"></script>
+    <script src="<?php echo e(asset('vendor/parallax100/parallax100.js')); ?>"></script>
     <script>
         $('.parallax100').parallax100();
     </script>
-    <script src="vendor/isotope/isotope.pkgd.min.js"></script>
-    <script src="vendor/sweetalert/sweetalert.min.js"></script>
+    <script src="vendor/isotope/isotope.pkgd.min.js')}}"></script>
+    <script src="<?php echo e(asset('vendor/sweetalert/sweetalert.min.js')); ?>"></script>
     <script>
         $('.js-addwish-b2').on('click', function(e){
             e.preventDefault();
@@ -1129,7 +1129,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         });
     
     </script>
-    <script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="<?php echo e(asset('vendor/perfect-scrollbar/perfect-scrollbar.min.js')); ?>"></script>
     <script>
         $('.js-pscroll').each(function(){
             $(this).css('position','relative');
@@ -1145,7 +1145,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
             })
         });
     </script>
-    <script src="js/main.js"></script>
+    <script src="<?php echo e(asset('js/main.js')); ?>"></script>
 
 
 </body>
