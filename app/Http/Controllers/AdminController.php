@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use DB;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
@@ -14,6 +14,10 @@ use App\User;
 use App\Categorie;
 use App\SousCategorie;
 use Auth;
+use App\Http\Requests\ArticleRequest;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Pagination\Paginator;
 
 class AdminController extends Controller
 {
@@ -44,7 +48,7 @@ class AdminController extends Controller
 
     public function article_admin(){
         $c = Admin::find(Auth::user()->id);       
-        $article = \DB::table('articles')->where('admin_id', $c->id)->orderBy('created_at','desc')->get();
+        $article = \DB::table('articles')->where('admin_id', $c->id)->simplepaginate(3);
         
         return view('articles_admin',['article'=>$article, 'idArticle' => $c->id]);  
 
@@ -54,18 +58,26 @@ class AdminController extends Controller
         return  $article_detaills;
 
     }
-     public function addArticle(Request $request){
+     public function addArticle(ArticleRequest $request){
 
-        $article2 = new Article;
-        $article2->titre = $request->titre;
-        $article2->description = $request->description;
-        $article2->admin_id = $request->admin_id;
-        //if($request->hasFile('image')){     // verifier si il ya une image
-            $article2->image= $request->image->store('Images');  // cree un dossier images dans storage/app/public et stocke l'image dans dossier images  et cette ligna return le lien ou le nom de la tof est stocke dans articl2->image
-       // }
-        $article2->save();
-
-        return Response()->json(['etat' => true,'articleAjout' => $article2]);
+       // \Log::info($request->all());
+                $exploded = explode(',', $request->image);
+                $decoded = base64_decode($exploded[1]);
+                if(str_contains($exploded[0], 'jpeg')){
+                    $extension = 'jpg';
+                }
+                else{
+                    $extension = 'png';
+                }
+                $fileName = str_random().'.'.$extension;
+                Storage::put('/public/articles_image/' . $fileName, $decoded);
+                $article2 = new Article;
+                $article2->titre = $request->titre;
+                $article2->description = $request->description;
+                $article2->admin_id = $request->admin_id;
+                $article2->image = $fileName;
+                $article2->save();
+                return Response()->json(['etat' => true,'articleAjout' => $article2]);
     }
     public function update_profil(Request $request, $id) {
                 

@@ -49,6 +49,7 @@ Route::post('/detaillsarticle', 'AdminController@detaillsArticle');
 Route::post('/addcategorie', 'AdminController@addCategorie');
 Route::put('/updatecategorie','AdminController@updateCategorie');
 Route::delete('/deletecategorie/{id}','AdminController@deleteCategorie');
+Route::get('/articlesAdmin?page=2','AdminController@article_admin');
 
 
 

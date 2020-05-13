@@ -28,6 +28,7 @@ class ComposerStaticInit6ac30e15a1ee6806079f05ef802d642c
         'b6ec61354e97f32c0ae683041c78392a' => __DIR__ . '/..' . '/scrivo/highlight.php/HighlightUtilities/functions.php',
         'ed962a97bd972bc82007176b647d4e36' => __DIR__ . '/..' . '/facade/ignition/src/helpers.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
+        '17d016dc52a631c1e74d2eb8fdd57342' => __DIR__ . '/..' . '/laravel/helpers/src/helpers.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -523,6 +524,8 @@ class ComposerStaticInit6ac30e15a1ee6806079f05ef802d642c
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
+        'App\\Rules\\EmailExist' => __DIR__ . '/../..' . '/app/Rules/EmailExist.php',
+        'App\\Rules\\NumberExist' => __DIR__ . '/../..' . '/app/Rules/NumberExist.php',
         'App\\Signal' => __DIR__ . '/../..' . '/app/Signal.php',
         'App\\SousCategorie' => __DIR__ . '/../..' . '/app/SousCategorie.php',
         'App\\Tarif_livraison' => __DIR__ . '/../..' . '/app/Tarif_livraison.php',

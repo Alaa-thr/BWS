@@ -51,6 +51,8 @@ return array(
     'App\\Providers\\BroadcastServiceProvider' => $baseDir . '/app/Providers/BroadcastServiceProvider.php',
     'App\\Providers\\EventServiceProvider' => $baseDir . '/app/Providers/EventServiceProvider.php',
     'App\\Providers\\RouteServiceProvider' => $baseDir . '/app/Providers/RouteServiceProvider.php',
+    'App\\Rules\\EmailExist' => $baseDir . '/app/Rules/EmailExist.php',
+    'App\\Rules\\NumberExist' => $baseDir . '/app/Rules/NumberExist.php',
     'App\\Signal' => $baseDir . '/app/Signal.php',
     'App\\SousCategorie' => $baseDir . '/app/SousCategorie.php',
     'App\\Tarif_livraison' => $baseDir . '/app/Tarif_livraison.php',

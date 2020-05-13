@@ -21,29 +21,34 @@
                 </div>
                 
                 <hr>       
-               
+              
                <div class="row m-b-10" v-for="articlea in articlesadmin" >
-                      <input type="checkbox" :id="articlea.id" >
-                      <label :for="articlea.id" style="margin-top: 40px; margin-left: 10px;"></label>
-                    
-                    <div class="col-md-3" style="padding-right: 20px;" >
-                      <img src="articlea.image">
+                    <input type="checkbox" :id="articlea.id" >
+                    <label :for="articlea.id" style="margin-top: 40px; margin-left: 10px;"></label>
+                    <div class="col-md-3 " style="padding-right: 20px; " >
+                      <img  :src="'storage/articles_image/'+ articlea.image" style="height: 130px;width: 800px; margin-bottom: 20px">
                     </div>
                     
-                    <div class="col-md-6" >
+                    <div class="col-md-8" >
                       <h5 class="title" style="margin-top: -8px; margin-left: 20px; color: red;" >@{{ articlea.titre }}</h5><br>
-                        <div class="description" style="margin-top: -10px; font-size: 17px; margin-left: 20px;">@{{ articlea.description }}<br>
-                           <a class="js-show-modal1" href="#"  style="margin-left: 260px; color: black; font-style: italic; font-weight: 500; " v-on:click="AfficheInfo(articlea.id)"><b> Continue la lecture </b>
+                        <div class="description" style="margin-top: -10px; font-size: 17px; margin-left: 20px;">
+                          @{{ MoitieDescription(articlea.description,100, '...') }}
+
+                         
+                          <div class="txt-right m-t-20">
+                           <a class="js-show-modal1 " style=" color: black; font-style: italic; font-weight: 500; " v-on:click="AfficheInfo(articlea.id)"><b> Continue la lecture </b>
                            </a>
+                           </div>
                         </div>
+                         
                     </div>
                     <table>
                      <tr>                        
                         <td class="dropdown" >
                           <a data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
-                           <img src="assetsAdmin/img/menu.png" alt="..."  style="margin-left: 50px;"/> 
+                           <img src="assetsAdmin/img/menu.png" /> 
                           </a>
-                          <div class="dropdown-menu dropdown-menu-left "  style="margin-left: 50px;">   
+                          <div class="dropdown-menu dropdown-menu-right ">   
                            <a class="dropdown-item js-show-modal1"  style="color: red; font-style: italic; font-weight: 900; " v-on:click="openInfo=true">Modifier</a>
                            <a class="dropdown-item" href="#" style="color: red; font-style: italic; font-weight: 900;">Supprimer</a>
                           </div>
@@ -51,7 +56,11 @@
                      </tr>
                    </table> 
                 </div>
-               
+                 <div class="" v-if="nextPage"> 
+                       <button @click="getNext(nextPage)">
+                         show next
+                       </button>
+                  </div>
                 </div>      
               </div>
             </div>      
@@ -102,7 +111,7 @@
             </h3>
           </div>
             <div class="col-md-10" >
-                <img src="images/blog-05.jpg" alt="..." style="width: 1000px; margin-left: 80px;" />
+                <img :src="'storage/articles_image/'+ articlea.image" style="width: 1000px; margin-left: 80px; " />
             </div> 
               <div class="title" style="color: red; margin-top: 30px; margin-left: 90px;" >
                 <h4><b>@{{  articlea.titre }}</b></h4>
@@ -120,13 +129,16 @@
           <button class="how-pos3 hov3 trans-04 p-t-6" v-on:click="cc = false">
             <img src="images/icon-close.png" alt="CLOSE">
           </button>
-          
-              <div  style="margin-top: -300px; margin-left: 140px" >
+          <section class=" creat-article " >     
+              <div  class=" container-creat-article">
                 <div class="row">
                   <div class="col-md-10 pr-2" >
-                    <div class="form-group">
+                    <div class="form-group mb-3">
                       <label>Titre</label>
-                      <input  type="text" class="form-control" placeholder="Titre" v-model="art.titre" >
+                      <input  type="text" class="form-control" placeholder="Titre" v-model="art.titre" :class="{'is-invalid' : message.titre}">
+                      <span class="px-3 cl13" v-if="message.titre" v-text="message.titre[0]">
+                      </span>
+
                     </div>
                   </div>
                 </div>
@@ -134,25 +146,34 @@
                   <div class="col-md-10 pr-2" >
                     <div class="form-group">
                       <label>description</label>
-                      <textarea class="form-control" placeholder="Description" v-model="art.description" ></textarea>
+                      <textarea class="form-control" placeholder="Description" v-model="art.description" :class="{'is-invalid' : message.description}"></textarea>
+                      <span class="px-3 cl13" v-if="message.description" v-text="message.description[0]">
+                      </span>
                     </div>
                   </div>
                 </div>
                 <div class="row" >
                   <div class="col-md-10 pr-2" >
-                    <div class="form-group" >
-                      <label for="" >image</label>
-                      <input type="file" class="form-control"  name="image">
+                    <div class="form-group">
+                      <label for="image" >image</label>
+                      <input type="file" class="form-control"  v-on:change="imagePreview" :class="{'is-invalid' : message.image}">
+                      <span class="px-3 cl13" v-if="message.image" v-text="message.image[0]"></span>
                     </div>
                  </div>
                 </div>
                 <div class="row">
-                  <div class="col-md-10">
+                  <div class="col-md-10 flex-t">
+                        <button type="submit"  class="btn btn-danger btn-block " style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="CancelArticle()" >Anuller
+                        </button> 
                         <button type="submit"  class="btn btn-success btn-block " style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="addArticle()" >Ajouter
                         </button>     
                   </div>
                 </div>
+
               </div>
+            
+          </section>
+              
         </div>
       </div>
     </div>
@@ -170,35 +191,34 @@
 
 
 
-@push('javascripts')
+@push("javascripts")
 
-<script src="{{ asset('js/vue.js') }}"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
 
  
 <script>
         window.Laravel = {!! json_encode([
-               'csrfToken'  => csrf_token(),
-               'article'   => $article,
-               'idArticle' => $idArticle,
-               'url'       => url('/')  
+               "csrfToken"  => csrf_token(),
+               "article"   => $article,
+               "idArticle" => $idArticle,
+               "url"      => url("/")  
           ]) !!};
 </script>
 
 <script>
 
+
    Vue.mixin({
 
       data: function(){
         return{
-          
+           text: '',
         }
         
       },
         methods:{
           addArticle: function(){
-
-        axios.post(window.Laravel.url+'/addarticle',app2.art)
+        axios.post(window.Laravel.url+"/addarticle",app2.art)
 
             .then(response => {
               if(response.data.etat){
@@ -211,11 +231,14 @@
                       titre: '', 
                       description: '',
                       image: ''
-                 }  
+                 };
+                 app2.message = {};
+
               }          
             })
             .catch(error =>{
-                 console.log('errors :' , error);
+                app2.message = error.response.data.errors;
+                console.log('errors :' , app2.message);
             })
       }
         }
@@ -239,6 +262,8 @@
         detaillsA: {
           idA: 0,
         },
+        message: {},
+
         
                    
       },
@@ -254,6 +279,20 @@
             .catch(error =>{
                  console.log('errors :' , error);
             })
+      },
+      imagePreview(event) {
+           var fileR = new FileReader();
+           fileR.readAsDataURL(event.target.files[0]);
+           fileR.onload = (event) => {
+              this.art.image = event.target.result;
+         
+           }
+           
+      },
+      CancelArticle(){
+        this.cc = false;
+        this.art = {};
+        this.message = {};
       }
     },    
 });
@@ -265,9 +304,11 @@
     
     data:{
       articlesadmin: [],
-                           
+      nextPage: null,
+
       },
     methods: {
+      
       
       AfficherAjout: function(){
          app2.cc = true;
@@ -280,20 +321,51 @@
         app2.openInfo = true;
         app2.detaillsA.idA= $id;
         app2.detaillsArticle();
-      },article_admin: function(){
+      },
+      article_admin: function(){
                 axios.get(window.Laravel.url+'/articlesAdmin')
 
                     .then(response => {
-                         this.articlesadmin = window.Laravel.article;
-                                                  
+                         this.articlesadmin = window.Laravel.article.data;
+                         this.nextPage = window.Laravel.article.next_page_url;
+                           console.log('ccccc',window.Laravel.article);                       
                     })
                     .catch(error =>{
                          console.log('errors :' , error);
                     })
+      },
+      getNext: function(urll) {
+              axios.get(urll)
+
+                    .then(response => {
+                          console.log('bbbbb',urll); 
+                         this.articlesadmin = window.Laravel.article.data;
+                         this.nextPage = window.Laravel.article.next_page_url;
+                         console.log('aaaaa',window.Laravel.article);                       
+                    })
+                    .catch(error =>{
+                         console.log('errors :' , error);
+                    })
+      },
+      getImageArticle: function(){
+        
+          return "storage/articles_image/"+ this.articlesadmin[0].image;
+          
+      },
+      MoitieDescription:  function (text, length, suffix){
+          // si la taille de text est <= a l'argument Length, return the text as he is 
+          if(text.length <= length){
+            return text;
+
+          }
+          // else leave in the text Length caractere and but the '...' in the end
+          return text.substring(0, length) + suffix;
+
       } 
     },
-     created:function(){
+     mounted:function(){
       this.article_admin();
+
 
     }
   });
