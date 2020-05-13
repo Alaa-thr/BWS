@@ -21,8 +21,8 @@
 
   <link href="assetsAdmin/css/util.css" rel="stylesheet" />
   <link href="assetsAdmin/css/main.css" rel="stylesheet" />
-  <script src="{{ asset('assetsClient/js/vue.js') }}"></script>
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="{{ asset('jss/vue.js') }}"></script>
+  <script src="{{asset('jss/axios.min.js')}}"></script>
   <?php
 
          $stripeProfil=$stripeStatistique=$stripeEmail=$stripeNotif=$stripeArticle=$stripeCatego=$stripeGererUser='';

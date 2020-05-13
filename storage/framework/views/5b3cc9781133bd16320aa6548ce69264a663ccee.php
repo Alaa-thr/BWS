@@ -1,48 +1,4 @@
 
-<?php $__env->startPush('javascripts'); ?>
-
-
-<script src="<?php echo e(asset('assetsClient/js/vue.js')); ?>"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
- 
-<script>
-        window.Laravel = <?php echo json_encode([
-               'csrfToken' => csrf_token(),
-                'client'=>$client,  //client connecté
-               'url'       => url('/')  
-          ]); ?>;
-</script>
-
-<script>
-   var app = new Vue({
-
-    el: '#app',
-    data:{
-        msg: "hello",
-        profilclient:[],
-                   
-      },
-
-    methods: {
-      profil_clinet: function(){
-        axios.get(window.Laravel.url+'/profilClient')
-
-            .then(response => {
-                 this.profilclient = window.Laravel.client;
-            })
-            .catch(error =>{
-                 console.log('errors :' , error);
-            })
-      }
-      
-    },
-    mounted:function(){
-      this.profil_clinet();
-    }
-  });
-</script>
-
-<?php $__env->stopPush(); ?>
 
 <?php $__env->startSection('content'); ?>
 
@@ -134,7 +90,7 @@
                   <div class="col-md-4 px-2">
                     <div class="form-group">
                       <label>pays</label>
-                      <input type="" class="form-control" placeholder="pays" value="Algerie">
+                      <input type="" class="form-control" placeholder="pays" value="Algerie" disabled="">
                     </div>
                   </div>
                 </div>
@@ -170,7 +126,7 @@
                 </div>
                 <div class="row" style="margin-top: 20px;">
                   <div class=" title" style="margin-left: 20px;">Numero:</div>
-                  <div class="col-md-8 Email" >{{ profilclient.numeroTelephone }}</div>
+                  <div class="col-md-8 " >{{ profilclient.numeroTelephone }}</div>
                 </div>
               </div>
             </div>
@@ -195,6 +151,50 @@
  
 <?php $__env->stopSection(); ?>
 
+<?php $__env->startPush('javascripts'); ?>
+
+
+<script src="<?php echo e(asset('js/vue.js')); ?>"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+ 
+<script>
+        window.Laravel = <?php echo json_encode([
+               'csrfToken' => csrf_token(),
+                'client'=>$client,  //client connecté
+               'url'       => url('/')  
+          ]); ?>;
+</script>
+
+<script>
+   var app = new Vue({
+
+    el: '#app',
+    data:{
+        msg: "hello",
+        profilclient:[],
+                   
+      },
+
+    methods: {
+      profil_clinet: function(){
+        axios.get(window.Laravel.url+'/profilClient')
+
+            .then(response => {
+                 this.profilclient = window.Laravel.client;
+            })
+            .catch(error =>{
+                 console.log('errors :' , error);
+            })
+      }
+      
+    },
+    mounted:function(){
+      this.profil_clinet();
+    }
+  });
+</script>
+
+<?php $__env->stopPush(); ?>
 
 
 

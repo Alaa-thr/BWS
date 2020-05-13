@@ -16,6 +16,8 @@
   <link href="assetsAdmin/css/now-ui-dashboard.css?v=1.5.0" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="assetsAdmin/demo/demo.css" rel="stylesheet" />
+  <script src="{{ asset('jss/vue.js') }}"></script>
+  <script src="{{asset('jss/axios.min.js')}}"></script>
    <?php
 
          $stripeCatego='';

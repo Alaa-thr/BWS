@@ -76,7 +76,7 @@ class RegisterController extends Controller
                     return Validator::make($data, [
                     'nom' => ['required', 'string', 'max:30'],
                     'prenom' => ['required', 'string', 'max:30'],
-                    'email' => ['required', 'string', 'email', 'max:255', new EmailExist($data['compte'])],
+                    'email' => ['required', 'string', 'email', 'max:255', new EmailExist($data['compte']),'regex:/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/'],
                     'password' => ['required', 'string', 'min:8'],
                     'ville' => ['required'],
                     'numTelephone' => ['required', 'string','regex:/0[5-7]/',"min:10","max:10", new NumberExist($data['compte'])],
@@ -87,10 +87,11 @@ class RegisterController extends Controller
                     return Validator::make($data, [
                     'nom' => ['required', 'string', 'max:30'],
                     'prenom' => ['required', 'string', 'max:30'],
-                    'email' => ['required', 'string', 'email', 'max:255' , new EmailExist($data['compte'])],
+                    'email' => ['required', 'string', 'email', 'max:255' , new EmailExist($data['compte']),'regex:/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/'],
                     'password' => ['required', 'string', 'min:8'],
                     'ville' => ['required'],
                     'numTelephone' => ['required', 'string','regex:/0[5-7]/',"min:10","max:10", new NumberExist($data['compte'])],
+                    //'regex:/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/' => characters@characters.domain (characters followed by an @ sign, followed by more characters, and then a "." After the "." sign, add at least 2 letters from a to z
                     'Num_Compte_Banquaire' => ['required'], 
                     'addrsse_boutique'=> ['required'],
                     'compte' => ['required'],
@@ -102,7 +103,7 @@ class RegisterController extends Controller
                     return Validator::make($data, [
                     'nom' => ['required', 'string', 'max:30'],
                     'prenom' => ['required', 'string', 'max:30'],
-                    'email' => ['required', 'string', 'email', 'max:255' , new EmailExist($data['compte'])],
+                    'email' => ['required', 'string', 'email', 'max:255' , new EmailExist($data['compte']),'regex:/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/'],
                     'password' => ['required', 'string', 'min:8'],
                     'ville' => ['required'],
                     'numTelephone' => ['required', 'string','regex:/0[5-7]/',"min:10","max:10", new NumberExist($data['compte'])],

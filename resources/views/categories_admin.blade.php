@@ -187,6 +187,7 @@
 
   @push('javascripts')
 
+
 <script src="{{ asset('jss/vue.js') }}"></script>
   <script src="{{asset('jss/axios.min.js')}}"></script>
 
