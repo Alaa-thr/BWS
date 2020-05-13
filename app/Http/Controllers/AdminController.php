@@ -60,13 +60,19 @@ class AdminController extends Controller
         $article2->titre = $request->titre;
         $article2->description = $request->description;
         $article2->admin_id = $request->admin_id;
-        //if($request->hasFile('image')){     // verifier si il ya une image
-            $article2->image= $request->image->store('Images');  // cree un dossier images dans storage/app/public et stocke l'image dans dossier images  et cette ligna return le lien ou le nom de la tof est stocke dans articl2->image
-       // }
+        
         $article2->save();
 
         return Response()->json(['etat' => true,'articleAjout' => $article2]);
     }
+     public function deleteArticle($id){
+        $article = Article::find($id);
+        $article->delete();
+
+     return Response()->json(['etat' => $article]);
+    }
+   
+
     public function update_profil(Request $request, $id) {
                 
 
@@ -117,6 +123,11 @@ class AdminController extends Controller
         $categorie->delete();
 
      return Response()->json(['etat' => $categorie]);
+    }
+    public function sousCategories(){
+        $scat = SousCategorie::all();
+        echo "$scat";
+        return $scat;
     }
    
    

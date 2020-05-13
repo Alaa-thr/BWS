@@ -523,6 +523,8 @@ class ComposerStaticInit6ac30e15a1ee6806079f05ef802d642c
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
+        'App\\Rules\\EmailExist' => __DIR__ . '/../..' . '/app/Rules/EmailExist.php',
+        'App\\Rules\\NumberExist' => __DIR__ . '/../..' . '/app/Rules/NumberExist.php',
         'App\\Signal' => __DIR__ . '/../..' . '/app/Signal.php',
         'App\\SousCategorie' => __DIR__ . '/../..' . '/app/SousCategorie.php',
         'App\\Tarif_livraison' => __DIR__ . '/../..' . '/app/Tarif_livraison.php',
