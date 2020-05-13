@@ -226,7 +226,7 @@
       },
 
     methods: { 
-      getSouscategories: function(){
+      /*getSouscategories: function(){
               axios.get(window.Laravel.url+'/getsouscategories')
               .then(response => {
                   console.log('success :' ,response);
@@ -234,12 +234,12 @@
               .catch(error => {
                   console.log('errors : '  , error);
              })
-          },
-           /*getCategories:function(){
+          },*/
+           getCategories:function(){
              axios.get(window.Laravel.url+'/categoriesAdmin')
              .then(response => {
                   this.categories = window.Laravel.categorie;
-                  this.getSouscategories();
+                  
              })
              .catch(error => {
                   console.log('errors : '  ,error);
@@ -359,11 +359,11 @@
               .catch(error => {
                 console.log('errors' ,error)
               })
-          },*/   
+          },   
      
      },
     mounted: function(){
-      this.getSouscategories();
+      this.getCategories();
      }
      
  
