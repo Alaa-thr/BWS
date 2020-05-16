@@ -3781,4 +3781,10 @@ input.num-product::-webkit-inner-spin-button {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.pagination li { 
+  display: inline-flex;
+  padding: 10px;
+  text-decoration: none;
+}
+
 

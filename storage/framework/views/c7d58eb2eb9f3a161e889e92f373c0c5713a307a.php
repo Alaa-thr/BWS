@@ -373,7 +373,7 @@
                               </button>
                               
                               <div class="dropdown-menu m-r-35" aria-labelledby="dropdownMenuButton" >
-                                <a class="dropdown-item" href="#" ><b>Profil</b></a>
+                                <a class="dropdown-item" href="<?php echo e(route('profilClient')); ?>"><b>Mon Espace</b></a>
                                 <div class="dropdown-divider"></div>
                                 <div>
                                     <a class="dropdown-item" href="<?php echo e(route('logout')); ?>" onclick="event.preventDefault();
@@ -419,8 +419,8 @@
                               </button>
                               
                               <div class="dropdown-menu m-r-35" aria-labelledby="dropdownMenuButton">
-                                <div href="<?php echo e(route('profilVendeur')); ?>">
-                                    <a class="dropdown-item" href="<?php echo e(route('profilVendeur')); ?>" ><?php echo e(__('Profil')); ?></a>
+                                <div href="<?php echo e(route('profilClient')); ?>">
+                                    <a class="dropdown-item" href="<?php echo e(route('profilClient')); ?>" ><?php echo e(__('Mon Espace')); ?></a>
                                 </div>
                                 
                                 <div class="dropdown-divider"></div>

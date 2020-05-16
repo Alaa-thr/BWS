@@ -37,7 +37,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->redirectTo = url()->previous();
+        
         $this->middleware('guest')->except('logout');
 
     }
@@ -49,7 +49,21 @@ class LoginController extends Controller
             return redirect('/accueil');
         
     }
-
+    protected function redirectTo()
+    {
+       if(Auth::user()->type_compte == "c"){
+                return url()->previous();
+        }
+        else if(Auth::user()->type_compte == "v"){
+               return RouteServiceProvider::VENDEUR;
+        }
+        else if(Auth::user()->type_compte == "e"){
+              return  RouteServiceProvider::EMPLOYEUR;
+        }
+        else if(Auth::user()->type_compte == "a"){
+              return  RouteServiceProvider::ADMIN;
+        }
+    }
     
     
 

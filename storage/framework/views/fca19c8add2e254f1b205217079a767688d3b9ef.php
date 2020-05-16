@@ -423,12 +423,12 @@
                               
                               <div class="dropdown-menu m-r-35" aria-labelledby="dropdownMenuButton">
                                 <?php if(Auth::user()->type_compte == 'c'): ?>
-                                <a class="dropdown-item" href="<?php echo e(route('profilClient')); ?>">Profil</a>
+                                <a class="dropdown-item" href="<?php echo e(route('profilClient')); ?>">Mon Espace</a>
                                 <?php elseif(Auth::user()->type_compte == 'v'): ?>
-                                <a class="dropdown-item" href="<?php echo e(route('profilVendeur')); ?>">Profil</a>
+                                <a class="dropdown-item" href="<?php echo e(route('statistiquesVendeur')); ?>">Mon Espace</a>
                                 <?php elseif(Auth::user()->type_compte == 'e'): ?>
-                                <a class="dropdown-item" href="<?php echo e(route('profilEmployeur')); ?>">Profil</a><?php elseif(Auth::user()->type_compte == 'a'): ?>
-                                <a class="dropdown-item" href="<?php echo e(route('profilAdmin')); ?>">Profil</a>
+                                <a class="dropdown-item" href="<?php echo e(route('profilEmployeur')); ?>">Mon Espace</a><?php elseif(Auth::user()->type_compte == 'a'): ?>
+                                <a class="dropdown-item" href="<?php echo e(route('statistiquesAdmin')); ?>">Mon Espace</a>
                                 <?php endif; ?>
                                 <div class="dropdown-divider"></div>
                                 <div>
@@ -484,12 +484,12 @@
                               
                               <div class="dropdown-menu m-r-35" aria-labelledby="dropdownMenuButton">
                                 <?php if(Auth::user()->type_compte == 'c'): ?>
-                                <a class="dropdown-item" href="<?php echo e(route('profilClient')); ?>">Profil</a>
+                                <a class="dropdown-item" href="<?php echo e(route('profilClient')); ?>">Mon Espace</a>
                                 <?php elseif(Auth::user()->type_compte == 'v'): ?>
-                                <a class="dropdown-item" href="<?php echo e(route('profilVendeur')); ?>">Profil</a>
+                                <a class="dropdown-item" href="<?php echo e(route('statistiquesVendeur')); ?>">Mon Espace</a>
                                 <?php elseif(Auth::user()->type_compte == 'e'): ?>
-                                <a class="dropdown-item" href="<?php echo e(route('profilEmployeur')); ?>">Profil</a><?php elseif(Auth::user()->type_compte == 'a'): ?>
-                                <a class="dropdown-item" href="<?php echo e(route('profilAdmin')); ?>">Profil</a>
+                                <a class="dropdown-item" href="<?php echo e(route('profilEmployeur')); ?>">Mon Espace</a><?php elseif(Auth::user()->type_compte == 'a'): ?>
+                                <a class="dropdown-item" href="<?php echo e(route('statistiquesAdmin')); ?>">Mon Espace</a>
                                 <?php endif; ?>
                                 <div class="dropdown-divider"></div>
                                 <div>

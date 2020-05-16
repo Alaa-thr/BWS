@@ -365,7 +365,7 @@
                               </button>
                               
                               <div class="dropdown-menu m-r-35" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#"><b>Profil</b></a>
+                                <a class="dropdown-item" href="{{ route('profilEmployeur') }}"><b>Mon Espace</b></a>
                                 <div class="dropdown-divider"></div>
                                 <div>
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
@@ -411,8 +411,8 @@
                               </button>
                               
                               <div class="dropdown-menu m-r-35" aria-labelledby="dropdownMenuButton">
-                              	<div href="{{ route('profilVendeur') }}">
-                              		<a class="dropdown-item" href="{{ route('profilVendeur') }}" >{{ __('Profil') }}</a>
+                              	<div href="{{ route('profilEmployeur') }}">
+                              		<a class="dropdown-item" href="{{ route('profilEmployeur') }}" >{{ __('Mon Espace') }}</a>
                               	</div>
                                 
                                 <div class="dropdown-divider"></div>

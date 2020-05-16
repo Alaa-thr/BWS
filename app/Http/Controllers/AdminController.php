@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\DB;
+use DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
@@ -17,7 +17,7 @@ use Auth;
 use App\Http\Requests\ArticleRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Pagination\Paginator;
+use App\Rules\ModifieTextDescriptionArticle;
 
 class AdminController extends Controller
 {
@@ -46,23 +46,23 @@ class AdminController extends Controller
         return view('admin_admin',['admin'=>$admin]);
     }
 
-    public function article_admin(){
-        $c = Admin::find(Auth::user()->id);       
-        $article = \DB::table('articles')->where('admin_id', $c->id)->orderBy('created_at','desc')->get();
-        
-        return view('articles_admin',['article'=>$article, 'idArticle' => $c->id]);  
-
+    public function article_admin(){//fcnt qui retourné tout les articles qui sont dans la table "Article" et trie par ordre desc selon son dates de creations
+        $c = Admin::find(Auth::user()->id);//recuperé "user_id" de admin qui est connecter       
+        $article = \DB::table('articles')->where('admin_id', $c->id)->orderBy('created_at','desc')->paginate(3) ;//recuperé les articles qui sont dans la table "Article" et trie par ordre desc selon son dates de creations et pour "->paginate(5)" c a d f kol page t'affichilek 5 ta3 les article  
+        return view('articles_admin',['article'=>$article, 'idAdmin' => $c->id]);//reteurné a la view "articles_admin" et les 2 attributs "article" (contient tout les articles) et "idAdmin" (id de l'admin cncté) 
     }
-    public function detaillsArticle(Request $request){
+
+    public function detaillsArticle(Request $request){//fcnt retourné l'article di rena habin n2affichiw les détaills te3o, 3anda un parametre di fih id ta3 article rechercher
         $article_detaills = \DB::table('articles')->where('id', $request->idA)->get();
         return  $article_detaills;
-
     }
-     public function addArticle(ArticleRequest $request){
+
+    public function addArticle(ArticleRequest $request){//fcnt pour ajouter un article tretourni un attributs "etat"(le cas di l'ajout yesra nichan c a d pas d'erreur) et "articleAjout"(article di ajoutinah) w 3andha un parametre "$request" di fih les info ta3 article di rena habin n2ajoutiwah et de type "ArticleRequest"(ArticleRequest est un request tejebrouh f "app/http/Requests" fayda te3o => ytestilna les info di rena 7abin n2ajoutiwhom ida yetmechaw 3la 7sab les regles tawa3na ou nn(si oui y ajouti w ykml khademto, sinon yretourni des erreur)) 
 
        // \Log::info($request->all());
+    /***********************KI TEWESLO HNA HADRO M3AYA BACH NFAHEMKM ***************************/
                 $exploded = explode(',', $request->image);
-                $decoded = base64_decode($exploded[1]);
+                $decoded = base64_decode($exploded[1]);//Décode une chaîne en MIME base64
                 if(str_contains($exploded[0], 'jpeg')){
                     $extension = 'jpg';
                 }
@@ -71,6 +71,7 @@ class AdminController extends Controller
                 }
                 $fileName = str_random().'.'.$extension;
                 Storage::put('/public/articles_image/' . $fileName, $decoded);
+    /*******************************************************************************************/         
                 $article2 = new Article;
                 $article2->titre = $request->titre;
                 $article2->description = $request->description;
@@ -79,6 +80,45 @@ class AdminController extends Controller
                 $article2->save();
                 return Response()->json(['etat' => true,'articleAjout' => $article2]);
     }
+
+    public function deleteArticle($id){//fnct pour supprimer un article di 3ando un parametre di hoda id ta3 article di nssuprimiwah w tretourni un attributs "etat"(ida kan = true => la supprision n3amlt ghaya)
+        $article = Article::find($id);//n7awes 3la l article di rena habin nsupprimiwah
+        $article->delete();
+        return Response()->json(['etat' => true]);
+    }
+
+    public function updateArticleButton(Request $request){//fct pour modifie un article, 3andha un parametre di fih les info modifier ta3 article di rena 7abin nmodifiwah, w tretouni 2 attributs "etat" et "articleAjout"(article di modifyinah) 
+
+        $request->validate([//hna nvirifyiw ida les info di dakhelhom f les inputs w ra hab Aybedelhom f article yrespictiw les regles tawa3na ou nn(si oui yakhdem nichan, sinon yred des erreur di yenstokaw f tableau 'message')
+             'titre' => [new ModifieTextDescriptionArticle($request->id),'regex:/^[a-z0-9A-Z][a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],//"new ModifieTextDescriptionArticle($request->id)"(appele l constructeur de Rule "ModifieTextDescriptionArticle" di tejebrouha f "app/Rules" w ta3tilo un parametre di fih id ta3 article)
+             'description' => [new ModifieTextDescriptionArticle($request->id),'regex:/^[a-z0-9A-Z][a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
+         ]);
+        $article2 = Article::find($request->id);
+            
+        if($article2->image == $request->image){//hadi f le cas di maykounch modifya l'image
+            $article2->image = $request->image;
+        }
+        else{                   // ki ykoun modifya l'image
+            $exploded = explode(',', $request->image);
+            $decoded = base64_decode($exploded[1]);
+            if(str_contains($exploded[0], 'jpeg')){
+                $extension = 'jpg';
+            }
+            else{
+                $extension = 'png';
+            }
+            $fileName = str_random().'.'.$extension;
+            Storage::put('/public/articles_image/' . $fileName, $decoded);
+            $article2->image = $fileName;
+        }
+        $article2->titre = $request->titre;
+        $article2->description = $request->description;
+        $article2->admin_id = $request->admin_id;           
+        $article2->save();
+        return Response()->json(['etat' => true,'articleAjout' => $article2]);
+    
+    }
+
     public function update_profil(Request $request, $id) {
                 
 
@@ -125,10 +165,17 @@ class AdminController extends Controller
     
     }
     public function deleteCategorie($id){
+
         $categorie = Categorie::find($id);
+       
         $categorie->delete();
 
-     return Response()->json(['etat' => $categorie]);
+     return Response()->json(['etat' => true, 'id' => $categorie]);
+    }
+    public function sousCategories(){
+        $scat = SousCategorie::all();
+        echo "$scat";
+        return $scat;
     }
    
    
