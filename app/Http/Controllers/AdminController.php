@@ -48,7 +48,7 @@ class AdminController extends Controller
 
     public function article_admin(){//fcnt qui retourné tout les articles qui sont dans la table "Article" et trie par ordre desc selon son dates de creations
         $c = Admin::find(Auth::user()->id);//recuperé "user_id" de admin qui est connecter       
-        $article = \DB::table('articles')->where('admin_id', $c->id)->orderBy('created_at','desc')->paginate(3) ;//recuperé les articles qui sont dans la table "Article" et trie par ordre desc selon son dates de creations et pour "->paginate(5)" c a d f kol page t'affichilek 5 ta3 les article  
+        $article = \DB::table('articles')->where('admin_id', $c->id)->orderBy('created_at','desc')->paginate(5) ;//recuperé les articles qui sont dans la table "Article" et trie par ordre desc selon son dates de creations et pour "->paginate(5)" c a d f kol page t'affichilek 5 ta3 les article  
         return view('articles_admin',['article'=>$article, 'idAdmin' => $c->id]);//reteurné a la view "articles_admin" et les 2 attributs "article" (contient tout les articles) et "idAdmin" (id de l'admin cncté) 
     }
 

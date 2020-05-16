@@ -56,7 +56,7 @@
 
                          
                           <div class="txt-right m-t-20">
-                           <a class="js-show-modal1 " style=" color: black; font-style: italic; font-weight: 500; cursor: pointer;" v-on:click="AfficheInfo(articlea.id)"><b> Continue la lecture </b>
+                           <a class="js-show-modal1 " style=" color: black; font-style: italic; font-weight: 500; cursor: pointer;" v-on:click="AfficheInfo(articlea.id)"><b> Afficher Plus </b>
                            </a>
                            </div>
                         </div>
@@ -239,6 +239,7 @@
               if(response.data.etat){
                  app2.art = response.data.articleAjout;//n7ato l article jdid di criyinah f 'art'
                  app2.art.id = response.data.articleAjout.id;//stoké id de article di criyinah
+                 window.location.reload();//pour actualiser la page
                  app.articlesadmin.unshift(app2.art);//n ajoutiw l'aricle jdid f debut ta3  tableau "articlesadmin"(di y affichilna les article f la page "Article")(bach fawek ma najoutiw article yet2aficha f lwl)
                  console.log("app.articlesadmin",app.articlesadmin)
                  app2.art={//vider tableau "art"
@@ -252,7 +253,6 @@
                  app2.openAjout = false;
                  app2.message = {};//vider tableau "message" pour vider les erreurs
                  app2.image = '';
-
               }          
             })
             .catch(error =>{
