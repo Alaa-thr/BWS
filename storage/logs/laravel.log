@@ -19306,3 +19306,7 @@
 #31 C:\\xampp\\htdocs\\BWS\\BWS\\artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
 #32 {main}
 "} 
+[2020-05-20 00:32:07] local.ERROR: Can't use method return value in write context {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Can't use method return value in write context at C:\\xampp\\htdocs\\BWS\\app\\Http\\Controllers\\AdminController.php:51)
+[stacktrace]
+#0 {main}
+"} 
