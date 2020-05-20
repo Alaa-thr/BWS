@@ -187,10 +187,7 @@
   <?php $__env->startPush('javascripts'); ?>
 
 
-<script src="<?php echo e(asset('jss/vue.js')); ?>"></script>
-  <script src="<?php echo e(asset('jss/axios.min.js')); ?>"></script>
 
- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.10.7/dist/sweetalert2.all.min.js"></script>
 
 <script> 
         window.Laravel = <?php echo json_encode([

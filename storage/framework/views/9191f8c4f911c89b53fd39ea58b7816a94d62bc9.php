@@ -24,6 +24,8 @@
   <link rel="stylesheet" type="text/css" href="assetsVendeur/fonts/linearicons-v1.0.0/icon-font.min.css">
   <script src="<?php echo e(asset('jss/vue.js')); ?>"></script>
   <script src="<?php echo e(asset('jss/axios.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('jss/sweetalert2.js')); ?>"></script>
+  
   <?php
 
         		$stripeProfil=$stripeProduit=$stripeCmdR=$stripeCmdT=$stripeStatistique='';

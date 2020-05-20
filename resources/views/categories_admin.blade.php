@@ -187,10 +187,7 @@
   @push('javascripts')
 
 
-<script src="{{ asset('jss/vue.js') }}"></script>
-  <script src="{{asset('jss/axios.min.js')}}"></script>
 
- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.10.7/dist/sweetalert2.all.min.js"></script>
 
 <script> 
         window.Laravel = {!! json_encode([
