@@ -153,9 +153,7 @@
 @push('javascripts')
 
 
-<script src="{{ asset('js/vue.js') }}"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
- 
+
 <script>
         window.Laravel = {!! json_encode([
                'csrfToken' => csrf_token(),

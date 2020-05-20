@@ -8,7 +8,7 @@ class Admin extends Model
 	protected $primaryKey = 'user_id';
 	
     protected $fillable = [
-        'nom','prenom','numTelephone', 'email','user_id','numCarteBanquaire','image',
+        'nom','prenom','numTelephone','email','user_id','numCarteBanquaire','image','big_admin'
     ];
 
      public function user()

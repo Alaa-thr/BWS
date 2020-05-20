@@ -89,7 +89,9 @@ Route::get('/favorisClient','BwsController@favoris_client')->name('favorisClient
 Route::put('/updateProfilC/{id}','ClientController@update_profil');
 
 Route::get('/getcommande','ClientController@getCommande');
+Route::delete('/deletearticle/{id}','ClientController@deleteArticle');
 
+Route::post('/detaillscommande', 'ClientController@detaillsCommande');
 
 
 

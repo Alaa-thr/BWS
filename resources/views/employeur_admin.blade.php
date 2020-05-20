@@ -18,7 +18,7 @@
                 <h4 class="card-title"> Employeur</h4>
               </div>
               <div class="card-body">
-                <div class="table-responsive">
+                <div class="table-responsive" style="height: 620px;">
                   <table class="table">
                     <thead class=" text-primary">
                       <th>
@@ -58,9 +58,9 @@
                           <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
                                 <img src="assetsAdmin/img/menu.png" alt="..."/ id="k1">
                              </a>
-                            <div class="dropdown-menu dropdown-menu-right" >
-                               <a class="dropdown-item js-show-modal1" href="#" id="k2">Details</a>
-                               <a class="dropdown-item" href="#" id="k2">Supprimer</a>
+                            <div class="dropdown-menu dropdown-menu-right" style="margin-top: -10px; margin-right: -10px;">
+                               <a class="dropdown-item js-show-modal1" href="#" id="k2" v-on:click="AfficherInfo(employeura.id)">Details</a>
+                               <a class="dropdown-item" href="#" id="k2" v-on:click="deleteEmployeur(employeura)">Supprimer</a>
                             </div>
                         </td>
                         <td>
@@ -69,15 +69,9 @@
                       
                     </tbody>
                   </table>
-                  <div class="pagination" >
-                        <a href="#"> &laquo; </a>
-                        <a href="#" class="active"> 1 </a>
-                        <a href="#"> 2 </a>
-                        <a href="#"> 3 </a>
-                        <a href="#"> 4 </a>
-                        <a href="#"> 5 </a>
-                        <a href="#"> &raquo; </a>
-                   </div>
+                </div>
+                <div>
+                   {{ $employeur->links() }}
                 </div>
               </div>
             </div>
@@ -121,296 +115,166 @@
   **************************************************************************************************************-->
     <!-- Modal1 for laptob-->
     
-    <div class="wrap-modal11 js-modal1 p-t-38 p-b-20 p-l-15 p-r-15 " style="">
+     <div class="wrap-modal11 js-modal1 p-t-38 p-b-20 p-l-15 p-r-15 " id="app2" v-if="hideModel">
       <div class="overlay-modal11 js-hide-modal1"></div>
   
       <div class="container">
-        <div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent">
+        <div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent"  style="width: 985px;" v-for="employeuraa in employeuradmin2">
           <button class="how-pos3 hov3 trans-04 p-t-6 js-hide-modal1">
-            <img src="images/icon-close.png" alt="CLOSE">
+            <img src="images/icon-close.png" alt="CLOSE"  v-on:click="CancelEmp()">
           </button>
-          <div class="p-b-30 p-l-40">
-            <h4 class=" cl2">
-              Commande de Tahraoui Alaâ
-            </h4>
-          </div>
-  
-          <div class="row">
-            <div class="col-md-6 col-lg-6">
-              <div class="p-l-50 p-lr-0-lg">
-                <div class="wrap-slick3 flex-sb flex-w">
-                  <div class="p-t-20 p-b-20 p-l-50">
-                    <h4 class="cl13 p-l-70">
-                      Vos Produits
-                    </h4>
-                  </div>
-                  <div class="div1">
-                    <div>
-                      <div class="table_row flex-t p-b-10">
-                        <div class="column-1">
-                          <div class="how-itemcart1">
-                            <img src="images/item-cart-04.jpg" alt="IMG">
-                          </div>
-                        </div>
-                        <div class="column-2 p-l-40 p-r-40 p-t-27">36.00 DA</div>
-                        <div class="column-2 p-l-40 p-t-27">DHL / 36.00 DA</div>
+          <section class=" creat-article " style="margin-top: 50px;">
+            <div class="container-creat-article">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="col-md-6" style="margin-left: -60px; margin-top: -20px;">
+                    <div class="card card-user" >
+                      <div class="image">
+                        <img src="assetsClient/img/input/bg5.jpg" alt="...">
                       </div>
-                      <div class="table_row flex-t p-b-10">
-                        <div class="column-1">
-                          <div class="how-itemcart1">
-                            <img src="images/item-cart-05.jpg" alt="IMG">
+                      <div class="card-body" >
+                          <div class="author">
+                            <a href="#">
+                              <img class="avatar border-gray" src="assetsClient/img/input/profil_img.jpg" alt="..."/>
+                            </a>
+                            <h5 class="title cl13">@{{ employeuraa.nom }} @{{ employeuraa.prenom }}
+                            </h5>
                           </div>
-                        </div>
-                        <div class="column-2 p-l-40 p-r-40 p-t-27">36.00 DA</div>
-                        <div class="column-2 p-l-40 p-t-27">Vendeure / 142.50 DA</div>
-                      </div>
-                      <div class="table_row flex-t p-b-10">
-                        <div class="column-1">
-                          <div class="how-itemcart1">
-                            <img src="images/item-cart-01.jpg" alt="IMG">
+                          <div style="margin-top: 30px;">
+                            <hr>
                           </div>
-                        </div>
-                        <div class="column-2 p-l-40 p-r-40 p-t-27">36.00 DA</div>
-                        <div class="column-2 p-l-40 p-t-27">Vendeure / 142.50 DA</div>
-                      </div>
-                      <div class="table_row flex-t p-b-10">
-                        <div class="column-1">
-                          <div class="how-itemcart1">
-                            <img src="images/item-cart-02.jpg" alt="IMG">
+                           <div class="row">
+                            <!--div class=" title" style="margin-left: 20px; margin-top: 50px;">Email</div>
+                            <div class="title" style="margin-top: 50px; margin-left: 35px;">:</div-->
+                            <div class="author" style="margin-left: 85px; color:black; margin-top: 30px;"><b>@{{ employeuraa.email }}</b></div>
                           </div>
-                        </div>
-                        <div class="column-2 p-l-40 p-r-40 p-t-27">36.00 DA</div>
-                        <div class="column-2 p-l-40 p-t-27 ">Vendeure / 142.50 DA</div>
-                      </div>
-                      <div class="table_row flex-t p-b-10">
-                        <div class="column-1">
-                          <div class="how-itemcart1">
-                            <img src="images/item-cart-03.jpg" alt="IMG">
+                          <div class="row" >
+                            <!--div class=" title" style="margin-left: 20px; margin-top: 40px;">Numero</div>
+                            <div class="title" style="margin-top: 40px; margin-left: 20px;">:</div-->
+                            <div  style="margin-left: 120px; color:black; margin-top: 30px; height: 70px;"><b>@{{ employeuraa.num_tel }}</b></div>
                           </div>
-                        </div>
-                        <div class="column-2 p-l-40 p-r-40 p-t-27">36.00 DA</div>
-                        <div class="column-2 p-l-40 p-t-27">Vendeure / 142.50 DA</div>
                       </div>
-                      <div class="table_row flex-t p-b-10">
-                        <div class="column-1">
-                          <div class="how-itemcart1">
-                            <img src="images/product-06.jpg" alt="IMG">
-                          </div>
-                        </div>
-                        <div class="column-2 p-l-40 p-r-40 p-t-27">36.00 DA</div>
-                        <div class="column-2 p-l-40 p-t-27">Vendeure / 142.50 DA</div>
-                      </div>
-                      <div class="table_row flex-t p-b-10">
-                        <div class="column-1">
-                          <div class="how-itemcart1">
-                            <img src="images/product-05.jpg" alt="IMG">
-                          </div>
-                        </div>
-                        <div class="column-2 p-l-40 p-r-40 p-t-27">36.00 DA</div>
-                        <div class="column-2 p-l-40 p-t-27">Vendeure / 142.50 DA</div>
-                      </div>
-                     </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div class="col-md-6 col-lg-5 p-b-30 m-l-30">
-              <div class=" p-t-5 p-lr-0-lg">
-                
-                <!--  -->
-                <div class="p-t-19">
-                  <div class="p-b-60  p-l-40">
-                    <h4 class="cl13 p-l-50">
-                      Vos Informations
-                    </h4>
-                  </div>
-                  <div class="p-b-10">
-                    <form>
-                      <div class="form-group flex-w p-b-10">
-                        <div class="size-205 cl2 m-r-2" style="font-size: 15px;">
-                          Numero Telephone
-                        </div>
-                        <div class="size-219">
-                          <div class=" bg0 ">
-                            <input class="form-control" id="nom" type="text" placeholder="0540844782" Disabled>
-                          </div>
-                        </div>
-                      </div>
-  
-                      <div class="form-group flex-w p-b-10">
-                        <div class="size-205 cl2 m-r-2" style="font-size: 15px;">
-                          Email
-                        </div>
-                        <div class="size-219 ">
-                          <div class=" bg0">
-                            <input class="form-control m-r-30" id="nom" type="text" placeholder="thralae@gmail.com" Disabled>
-                          </div>
-                        </div>
-                      </div>
-  
-                      <div class="form-group flex-w p-b-10">
-                        <div class="size-205 cl2 m-r-2" style="font-size: 15px;">
-                          Adrrsse
-                        </div>
-                        <div class="size-219">
-                          <div class="bg0">
-                            <input class="form-control m-r-30" id="nom" type="text" placeholder="Tlemcen-bouhanak" Disabled>
-                          </div>
-                        </div>
-                      </div>
-  
-                      <div class="form-group flex-w p-b-10">
-                        <div class="size-205 cl2 m-r-2" style="font-size: 15px;">
-                          code Postale
-                        </div>
-                        <div class="size-219">
-                          <div class="bg0">
-                            <input class="form-control m-r-30" id="nom" type="text" placeholder="13600" Disabled>
-                          </div>
-                        </div>
-                      </div>
-  
-                    </form>
-                  </div>
-                  <!--  -->
-  
-                  <div class="flex-w flex-r-m p-b-10">
-                    <div>
-                      <button class="cl0 size-102 bg10 bor1 trans-04 m-r-5">
-                        Supprimer
-                      </button>
                     </div>
-                  </div>  
-                </div>
-                
-  
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Modal1 for laptob-->
-    
-    <div class="wrap-modal11-sm js-modal1-sm p-t-38 p-b-20 p-l-15 p-r-15 " style="">
-      <div class="overlay-modal11-sm js-hide-modal1"></div>
-  
-      <div class="container">
-        <div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent">
-          <button class="how-pos3 hov3 trans-04 p-t-6 js-hide-modal1">
-            <img src="images/icon-close.png" alt="CLOSE">
-          </button>
-          <div class="p-b-30 p-l-40">
-            <h4 class=" cl2">
-              Commande de Tahraoui Alaâ
-            </h4>
-          </div>
-  
-          <div class="row">
-            <div class="col-md-6 col-lg-6">
-              <div class="p-l-50 p-lr-0-lg">
-                <div class="wrap-slick3 flex-sb flex-w">
-                  <div class="p-t-20 p-b-20 p-l-50">
-                    <h4 class="cl13 p-l-70">
-                      Vos Produits
-                    </h4>
                   </div>
-                  <div class="div1">
-                    <div>
-                      <div class="table_row flex-t p-b-10">
-                        <div class="column-1">
-                          <div class="how-itemcart1">
-                            <img src="images/item-cart-04.jpg" alt="IMG">
-                          </div>
+                  <table>
+                    <tr>
+                      <td>
+                        <div class="title" style="margin-left: 350px; margin-top: -330px;">
+                          Crée Le
+                        </div>  
+                      </td>
+                      <td>
+                        <div class="title" style="margin-left: 20px; margin-top: -330px;">
+                          :
                         </div>
-                        <div class="column-2 p-l-40 p-r-40 p-t-27">36.00 DA</div>
-                        <div class="column-2 p-l-40 p-t-27">DHL / 36.00 DA</div>
-                      </div>
-                      <div class="table_row flex-t p-b-10">
-                        <div class="column-1">
-                          <div class="how-itemcart1">
-                            <img src="images/item-cart-05.jpg" alt="IMG">
-                          </div>
+                      </td>
+                      <td>
+                        <div style="margin-left: 30px; margin-top: -330px; color: red;">
+                          @{{ employeuraa.created_at }}
                         </div>
-                        <div class="column-2 p-l-40 p-r-40 p-t-27">36.00 DA</div>
-                        <div class="column-2 p-l-40 p-t-27">Vendeure / 142.50 DA</div>
-                      </div>
-                      <div class="table_row flex-t p-b-10">
-                        <div class="column-1">
-                          <div class="how-itemcart1">
-                            <img src="images/item-cart-01.jpg" alt="IMG">
-                          </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="title" style="margin-left: 350px; margin-top: -260px;">
+                          Adresse
+                        </div>  
+                      </td>
+                      <td>
+                        <div class="title" style="margin-left: 20px; margin-top: -260px;">
+                          :
                         </div>
-                        <div class="column-2 p-l-40 p-r-40 p-t-27">36.00 DA</div>
-                        <div class="column-2 p-l-40 p-t-27">Vendeure / 142.50 DA</div>
-                      </div>
-                      <div class="table_row flex-t p-b-10">
-                        <div class="column-1">
-                          <div class="how-itemcart1">
-                            <img src="images/item-cart-02.jpg" alt="IMG">
-                          </div>
+                      </td>
+                      <td>
+                        <div style="margin-left: 30px; margin-top: -260px;">
+                          @{{ employeuraa.address }}
                         </div>
-                        <div class="column-2 p-l-40 p-r-40 p-t-27">36.00 DA</div>
-                        <div class="column-2 p-l-40 p-t-27 ">Vendeure / 142.50 DA</div>
-                      </div>
-                      <div class="table_row flex-t p-b-10">
-                        <div class="column-1">
-                          <div class="how-itemcart1">
-                            <img src="images/item-cart-03.jpg" alt="IMG">
-                          </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="title" style="margin-left: 350px; margin-top: -190px;">
+                          Societe
+                        </div>  
+                      </td>
+                      <td>
+                        <div class="title" style="margin-left: 20px; margin-top: -190px;">
+                          :
                         </div>
-                        <div class="column-2 p-l-40 p-r-40 p-t-27">36.00 DA</div>
-                        <div class="column-2 p-l-40 p-t-27">Vendeure / 142.50 DA</div>
-                      </div>
-                      <div class="table_row flex-t p-b-10">
-                        <div class="column-1">
-                          <div class="how-itemcart1">
-                            <img src="images/product-06.jpg" alt="IMG">
-                          </div>
+                      </td>
+                      <td>
+                        <div style="margin-left: 30px; margin-top: -190px;">
+                          @{{ employeuraa.nom_societe }}
                         </div>
-                        <div class="column-2 p-l-40 p-r-40 p-t-27">36.00 DA</div>
-                        <div class="column-2 p-l-40 p-t-27">Vendeure / 142.50 DA</div>
-                      </div>
-                      <div class="table_row flex-t p-b-10">
-                        <div class="column-1">
-                          <div class="how-itemcart1">
-                            <img src="images/product-05.jpg" alt="IMG">
-                          </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="title" style="margin-left: 350px; margin-top: -120px;">
+                          N° Compte BNQ
+                        </div>  
+                      </td>
+                      <td>
+                        <div class="title" style="margin-left: 20px; margin-top: -120px;">
+                          :
                         </div>
-                        <div class="column-2 p-l-40 p-r-40 p-t-27">36.00 DA</div>
-                        <div class="column-2 p-l-40 p-t-27">Vendeure / 142.50 DA</div>
-                      </div>
-                     </div>
-                  </div>
+                      </td>
+                      <td>
+                        <div style="margin-left: 30px; margin-top: -120px;">
+                          @{{ employeuraa.num_compte_banquiare  }}
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
                 </div>
               </div>
             </div>
-            
-       
+          </section>    
         </div>
       </div>
     </div>
-  </div>
  
  @endsection
 
   @push('javascripts')
 
 
-<script src="{{ asset('js/vue.js') }}"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
- 
+
 <script>
         window.Laravel = {!! json_encode([
                'csrfToken' => csrf_token(),
-                  'employeur' => $employeur,  //vendeur connecté
+                  'employeur' => $employeur,  //employeur connecté
                 'url'      => url('/')  
           ]) !!};
 </script>
 
 <script>
+  var app2 = new Vue({
+     el: '#app2',
+     data:{
+        employeuradmin2: [],
+        hideModel: false,
+        detailsE:{
+          idE: 0,
+        },
+     },
+     methods: {
+           details_employeur: function(){
+             axios.post(window.Laravel.url+'/detailsemployeur',this.detailsE)
+
+            .then(response => {
+                 this.employeuradmin2 = response.data;
+            })
+            .catch(error =>{
+                 console.log('errors :' , error);
+            })
+      },
+      CancelEmp: function(){
+        this.hideModel = false;
+      },
+       
+    },
+   });
    var app = new Vue({
 
     el: '#app',
@@ -423,14 +287,52 @@
         axios.get(window.Laravel.url+'/employeur')
 
             .then(response => {
-                 this.employeuradmin = window.Laravel.employeur;
+                 this.employeuradmin = window.Laravel.employeur.data;
             })
             .catch(error =>{
                  console.log('errors :' , error);
             })
-      }
+      },
+      AfficherInfo: function($id){
+        app2.hideModel=true;
+        app2.detailsE.idE= $id;
+        app2.details_employeur();
+      },
+      deleteEmployeur:function(emp){
+
+                Swal.fire({
+                  title: 'Etes vous sure ?',
+                  text: "De supprimer ce employeur ?",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Oui, supprimer!'
+                }).then((result) => {
+                  if (result.value) {
+                    axios.get(window.Laravel.url+'/deleteemployeur/'+emp.id) 
+                     .then(response =>{
+                         if(response.data.etat){   
+                             var position = this.employeuradmin.indexOf(emp);
+                             this.employeuradmin.splice(position,1);   
+                         }
+                         
+                      })
+                     .catch(error => {
+                        console.log('errors : ',error)
+                     })
+                    Swal.fire(
+                      'Deleted!',
+                      'Your file has been deleted.',
+                      'success',
+                    )
+                  }
+                })
+          
+            
+        },
     },
-    mounted:function(){
+    created:function(){
       this.employeur_admin();
     }
   });

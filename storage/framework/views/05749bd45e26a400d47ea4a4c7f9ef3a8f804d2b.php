@@ -18,7 +18,12 @@
   <link href="assetsAdmin/demo/demo.css" rel="stylesheet" />
   <script src="<?php echo e(asset('jss/vue.js')); ?>"></script>
   <script src="<?php echo e(asset('jss/axios.min.js')); ?>"></script>
+<<<<<<< HEAD
   <script src="<?php echo e(asset('jss/sweetalert2.js')); ?>"></script>
+=======
+   <script src="<?php echo e(asset('jss/sweetalert2.js')); ?>"></script>
+ 
+>>>>>>> 2cf601d4a54d0bf239f10eb2a74f225868e171cd
    <?php
 
          $stripeCatego='';

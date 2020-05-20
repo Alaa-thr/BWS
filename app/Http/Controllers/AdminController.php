@@ -13,6 +13,8 @@ use App\Article;
 use App\User;
 use App\Categorie;
 use App\Sous_categorie;
+use App\SousCategorie;
+use App\Typechoisirvendeur;
 use Auth;
 use App\Http\Requests\ArticleRequest;
 use Illuminate\Support\Facades\Storage;
@@ -25,26 +27,44 @@ class AdminController extends Controller
         $admin=Admin::find(Auth::user()->id); 
         return view('profil_admin',['admin'=>$admin]);
     }
-
     public function vendeur_admin(){
-        $vendeur = Vendeur::all(); 
+        $vendeur =Vendeur::where('deletedv',0)->paginate(10);
+
         return view('vendeur_admin',['vendeur'=>$vendeur]);
     }
 
     public function client_admin(){
-        $client = Client::all(); 
+        $client =Client::where('deletedc',0)->paginate(10);
         return view('client_admin',['client'=>$client]);
     }
 
     public function employeur_admin(){
-        $employeur = Employeur::all(); 
+        $employeur = Employeur::where('deletede',0)->paginate(10); 
         return view('employeur_admin',['employeur'=>$employeur]);
     }
 
     public function admin_admin(){
-        $admin = Admin::all(); 
+        $admin = Admin::where('deleteda',0)->paginate(10);  
         return view('admin_admin',['admin'=>$admin]);
     }
+    public function recup_vendeur(){
+        $vendeur_recup = Vendeur::where('deletedv',1)->paginate(10);
+        return view('recup_vendeur',['vendeur_recu'=>$vendeur_recup]);
+    }
+    public function recup_client(){
+        $client_recup = Client::where('deletedc',1)->paginate(10);
+        return view('recup_client',['client_recu'=>$client_recup]);
+   }
+   public function recu_employeur(){
+       $employeur_recup = Employeur::where('deletede',1)->paginate(10);
+        return view('recu_employeur',['employeur_recu'=>$employeur_recup]);
+   
+   }
+   public function recup_admin(){
+       $admin_recup = Admin::where('deleteda',1)->paginate(10);
+        return view('recup_admin',['admin_recu'=>$admin_recup]);
+   
+   }
 
     public function article_admin(){//fcnt qui retourné tout les articles qui sont dans la table "Article" et trie par ordre desc selon son dates de creations
         $c = Admin::find(Auth::user()->id);//recuperé "user_id" de admin qui est connecter       
@@ -183,8 +203,94 @@ class AdminController extends Controller
         $sousCategorie->save();
         return Response()->json(['etat' => true,'sousCategorieAjout' => $sousCategorie]);
     }
-   
-   
+
+    public function detailsVendeur(Request $request){
+        $vendeur_detaills = \DB::table('vendeurs')->where('id', $request->idV)->get();
+        return  $vendeur_detaills;
+    }
+    public function detailsClient(Request $request){
+        $client_detaills = \DB::table('clients')->where('id', $request->idC)->get();
+        return  $client_detaills;
+    }
+    public function detailsEmployeur(Request $request){
+        $employeur_detaills = \DB::table('employeurs')->where('id', $request->idE)->get();
+        return  $employeur_detaills;
+    }
+    public function detailsAdmin(Request $request){
+        $admin_detaills = \DB::table('admins')->where('id', $request->idAD)->get();
+        return  $admin_detaills;
+    }
+
+    public function deleteVendeur($id){
+     
+        $vendeur = Vendeur::where('id',$id)->update(['deletedv' => 1]);
+        return Response()->json(['etat' => true]);
+        
+    }
+    public function deleteClient($id){
+        
+        $client = Client::where('id',$id)->update(['deletedc' => 1]);
+        return Response()->json(['etat' => true]);
+    }
+    public function deleteEmployeur($id){
+        
+        $employeur = Employeur::where('id',$id)->update(['deletede' => 1]);
+        return Response()->json(['etat' => true]);
+    }
+    public function deleteAdmin($id){
+        
+        $admin = Admin::where('id',$id)->update(['deleteda' => 1]);
+        return Response()->json(['etat' => true]);
+    }
+    public function recupConfirmer($id){
+        $vendeur = Vendeur::where('id',$id)->update(['deletedv' => 0]);
+        return Response()->json(['etat' => true]);   
+    }
+    public function recupConfirmerc($id){
+       $client = Client::where('id',$id)->update(['deletedc' => 0]);
+        return Response()->json(['etat' => true]);   
+        
+    }
+    public function recupConfirmere($id){
+        $employeur = Employeur::where('id',$id)->update(['deletede' => 0]);
+        return Response()->json(['etat' => true]);   
+          
+    }
+    public function recupConfirmera($id){
+       $admin = Admin::where('id',$id)->update(['deleteda' => 0]);
+        return Response()->json(['etat' => true]);   
+          
+    }
+    public function addAdmin(Request $request){
+         $exploded = explode(',', $request->image);
+         $decoded = base64_decode($exploded[1]);//Décode une chaîne en MIME base64
+         if(str_contains($exploded[0], 'jpeg')){
+            $extension = 'jpg';
+         }
+         else{
+            $extension = 'png';
+         }
+         $fileName = str_random().'.'.$extension;
+         Storage::put('/public/profil_image/' . $fileName, $decoded);
+         $admin2 = new Admin;
+         $user = new User;
+         $user->numTelephone = $request->numTelephone;
+         $user->email = $request->email;
+         $user->password = $request->password;
+         $user->type_compte = 'a';
+         $admin2->nom = $request->nom;
+         $admin2->prenom = $request->prenom;
+         $admin2->user_id = $request->user_id;
+         $admin2->email = $request->email;
+         //$admin2->big_admin = $request->big_admin;
+         $admin2->numTelephone = $request->numTelephone;
+         $admin2->numCarteBanquaire = $request->numCarteBanquaire;
+         $admin2->image = $fileName;
+         
+         $admin2->save();
+         $user->save();
+         return Response()->json(['etat' => true,'adminAjout' => $admin2]);
+    }
 
 
 }
