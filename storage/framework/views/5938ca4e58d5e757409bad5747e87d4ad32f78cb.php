@@ -25,107 +25,61 @@
 
 	<div class="content" id="pr">
      <div class="row"  >
-        <div class="col-md-8" >
+        <div class="col-md-8" id="app">
           <div class="card"  id="xc" style=" width: 1000px;" >
-            <div class="card-header">
+            <div class="card-header m-b-35">
               <h5 class="titre" >Commande</h5>
             </div>
             <div class="card-body"  >
-				<form class="bg0 p-t-75 p-b-85"  id="cx" style="height: 300px;">
-					<!--commande 1-->
-					<div class="card-head"  id="cmd" >              
-					  <div class="row" >
-						<div class="col-md-4 pr-1" >
-						  <div style="margin-left:22px">
-							<input class="increase" type="checkbox" />         
-							   <p class="" id="t" > Commande 1</p>
-						  </div>
-						</div>
-						<div class="col-md-4 px-1">
-						 
-						</div>
-						<div class="col-md-4 pl-1">
-						  <div class="">
-							<a class="f" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#" id="point">
-							  <i class="fas fa-ellipsis-v"  id="y"></i>
-						   </a>
-						  <div class="dropdown-menu " x-placement="right-start" id="pl">
-						<a  href="#" id="vv"  class=" trans-04 p-lr-11 icon-header-noti  js-show-modal1" >Plus de Détails</a><br>
-						<a href="#" id="vv" style="padding-left:12px">Supprimer</a>
-						   </div><p class=""  id="tt" > 09/04/2020 15:39</p>
-						  </div>
-						</div>
-					  </div>
-					  <div class="row">
-						<div class="col-md-4 pr-1">
-						  <div class="">
-							<label  id="ttt">Addresse : Mansourah-Tlemcen</label>
-						  </div>
-						</div>
-						<div class="col-md-4 px-1">
-						 
-						</div>
-						<div class="col-md-4 pr-3">
-						  <div class="">
-							<label  id="tttt">Prix Total : 2290 Da</label>
-						  </div>
-						</div>
-					  </div>      
-					</div>
-					
-		  
-					   <!--commande 2-->
-					<div class="card-head"  id="cmdd">              
-					  <div class="row" >
-						<div class="col-md-4 pr-1" >
-						  <div style="margin-left:22px">
-							<input class="increase" type="checkbox" />         
-							   <p class="" id="t" > Commande 2</p>
-						  </div>
-						</div>
-						<div class="col-md-4 px-1">
-						 
-						</div>
-						<div class="col-md-4 pl-1">
-						  <div class="">
-							<a class="f" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#" id="point">
-							  <i class="fas fa-ellipsis-v"  id="y"></i>
-						   </a>
-						  <div class="dropdown-menu " x-placement="right-start" id="pl">
-						<a  href="#" id="vv"  class=" trans-04 p-lr-11 icon-header-noti  js-show-modal1" >Plus de Détails</a><br>
-						<a href="#" id="vv" style="padding-left:12px">Supprimer</a>
-						   </div><p class=""  id="tt" > 09/04/2020 15:39</p>
-						  </div>
-						</div>
-					  </div>
-					  <div class="row">
-						<div class="col-md-4 pr-1">
-						  <div class="">
-							<label  id="ttt">Addresse : Mansourah-Tlemcen</label>
-						  </div>
-						</div>
-						<div class="col-md-4 px-1">
-						 
-						</div>
-						<div class="col-md-4 pr-3">
-						  <div class="">
-							<label  id="tttt">Prix Total : 2290 Da</label>
-						  </div>
-						</div>
-					  </div>      
-					</div>
-					
-					  
-				</form>
-				  
-				
-			  
-				
+      				<form class="bg0 p-t-50 " v-for="commande in commandesClient">
+      					<!--commande 1-->
+      					<div class="card-head"  id="cmd" >              
+      					  <div class="row" >
+      						<div class="col-md-4 pr-1" >
+      						  <div style="margin-left:22px">
+      							<input class="increase" type="checkbox" />         
+      							   <p class="" id="t" >Commande {{commande.id}} </p>
+      						  </div>
+      						</div>
+      						<div class="col-md-4 px-1">
+      						 
+      						</div>
+      						<div class="col-md-4 pl-1">
+      						  <div class="">
+      							<a class="f" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#" id="point">
+      							  <i class="fas fa-ellipsis-v"  id="y"></i>
+      						   </a>
+      						  <div class="dropdown-menu " x-placement="right-start" id="pl">
+      						<a  href="#" id="vv"  class=" trans-04 p-lr-11 icon-header-noti  js-show-modal1" >Plus de Détails</a><br>
+      						<a href="#" id="vv" style="padding-left:12px">Supprimer</a>
+      						   </div><p class=""  id="tt" >{{commande.created_at}}</p>
+      						  </div>
+      						</div>
+      					  </div>
+      					  <div class="row">
+      						<div class="col-md-4 pr-1">
+      						  <div class="">
+      							<label  id="ttt">Addresse : {{commande.address}}</label>
+      						  </div>
+      						</div>
+      						<div class="col-md-4 px-1">
+      						 
+      						</div>
+      						<div class="col-md-4 pr-3">
+      						  <div class="">
+      							<label  id="tttt">Prix Total : {{commande.prix_total}}</label>
+      						  </div>
+      						</div>
+      					  </div>      
+      					</div>
+      					
+      					  
+      				</form>
             </div>
           </div>
         </div>
 	   </div>
-      </div>
+  </div>
       <!--***************************************************************************************************
   ****************************************************************************************************-->
   	<!-- Modal1 -->
@@ -303,5 +257,44 @@
   ****************************************************************************************************-->
   
 <?php $__env->stopSection(); ?>
+<?php $__env->startPush('javascripts'); ?>
 
+
+
+  
+
+<script> 
+        window.Laravel = <?php echo json_encode([
+
+               'csrfToken'      => csrf_token(),                                 
+                'url'           => url('/'), 
+          ]); ?>;
+</script>
+<script>
+     var app = new Vue({
+        el: '#app',
+        data:{
+          message:'hello',
+          commandesClient: []
+        },
+        methods:{
+          getCommande: function(){
+            axios.get(window.Laravel.url+'/getcommande')
+              .then(response => {
+                this.commandesClient = response.data;
+          
+               })
+              .catch(error => {
+                  console.log('errors : '  , error);
+             })
+          }
+
+        },
+        created:function(){
+            this.getCommande();
+
+        }
+     })
+</script>
+<?php $__env->stopPush(); ?>
 <?php echo $__env->make('layouts.template_clinet', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\BWS\resources\views/commande_client.blade.php ENDPATH**/ ?>

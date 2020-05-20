@@ -8,7 +8,7 @@ class Client extends Model
 {
 	protected $primaryKey = 'user_id';
     protected $fillable = [
-        'nom','prenom','numeroTelephone', 'email', 'ville','user_id','image'
+        'nom','prenom','numeroTelephone', 'email', 'ville','user_id','image','codePostal',
     ];
 
     public function user()
@@ -16,4 +16,8 @@ class Client extends Model
         return $this->belongsTo('App\User');
     }
     
+    public function commande()
+    {
+        return $this->hasMany('App\Commande');
+    }
 }

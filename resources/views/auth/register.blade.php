@@ -128,7 +128,7 @@ button:hover {
     </div>
     <div class="form-group flex-t m-b-35">
                     <div class=" m-r-30" style="width: 375px">
-                        <input class="form-control form-control-lg   @error('numTelephone') is-invalid @enderror" name="numTelephone" value="{{ old('numTelephone') }}" id="numtlf" type="text" placeholder="Numero Telephone*">
+                        <input class="form-control form-control-lg   @error('numTelephone') is-invalid @enderror" name="numTelephone" value="{{ old('numTelephone') }}" id="numtlf" type="tel" placeholder="Numero Telephone*">
 
                         @error('numTelephone')
                                 <span class="invalid-feedback" role="alert">
@@ -176,7 +176,6 @@ button:hover {
                             <option value="1" {{old('compte') == 1 ? 'selected' : '' }}>Client</option>
                             <option value="2" {{old('compte') == 2 ? 'selected' : '' }}>Vendeur</option>
                             <option value="3" {{old('compte') == 3 ? 'selected' : '' }}>Employeur</option>
-                            <option value="4" {{old('compte') == 4 ? 'selected' : '' }}>Admin</option>
 
                         </select>
                         @error('compte')
@@ -185,6 +184,15 @@ button:hover {
                             </span>
                         @enderror
                     </div>
+    </div>
+    <div class="from-group  m-b-40 openC" style="display: none">
+                    <input type="file" class="form-control @error('photoC') is-invalid @enderror" name="photoC" value="{{old('photoC')}}" style="height: 45px">
+                    @error('photoC')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                    @enderror
+                        
     </div>
      <div class="form-group flex-t m-b-35 openV"  style="display: none">
                     <div class=" m-r-30" style="width: 375px">
@@ -366,7 +374,7 @@ function nextPrev(n,prev) {
     var options = select.getElementsByTagName('option');
     var cmpt = options[select.selectedIndex].value;
     validateForm();
-    if(cmpt==1 || cmpt==3 || cmpt==4 || cmpt=="") {
+    if(cmpt==1 || cmpt==3 || cmpt=="") {
         document.getElementById("regForm").submit();
         return false;
     }
@@ -417,6 +425,7 @@ function onChange() {
     var cmpt = options[select.selectedIndex].value;
     var v = document.getElementsByClassName("openV");
     var e = document.getElementsByClassName("openE");
+    var c = document.getElementsByClassName("openC")
     var v_nextPrevious = document.getElementById("nextPrevious");
     if(cmpt==0){
         document.getElementById("nextBtn").innerHTML = "Creer Compte";
@@ -434,12 +443,14 @@ function onChange() {
         e[0].style.display= "none";
         e[1].style.display= "none";
         e[2].style.display= "none";
+        c[0].style.display= "none";
 
     }
     else if(cmpt==1) {
         document.getElementById("stepp").style.display = "none";
         document.getElementById("nextBtn").innerHTML = "Creer Compte";
         document.getElementById("nextBtn").style.background = "#ca2323";
+        c[0].style.display= "block";
         v[0].style.display= "none";
         v[1].style.display= "none";
         v[2].style.display= "none";
@@ -458,6 +469,7 @@ function onChange() {
         e[0].style.display= "flex";
         e[1].style.display= "block";
         e[2].style.display= "block";
+        c[0].style.display= "none";
 
     }
 

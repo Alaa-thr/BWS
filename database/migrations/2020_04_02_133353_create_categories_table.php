@@ -15,9 +15,10 @@ class CreateCategoriesTable extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->string('libellé');
+            $table->string('libelle')->unique();
             $table->timestamps();
         });
+        DB::table('categories')->insert(array('id'=>'1', 'libelle'=>'Autre','created_at'=>new \dateTime,'updated_at'=>new \dateTime));
     }
 
     /**

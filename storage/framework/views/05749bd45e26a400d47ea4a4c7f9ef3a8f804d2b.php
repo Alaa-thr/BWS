@@ -13,11 +13,12 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
   <!-- CSS Files -->
   <link href="assetsAdmin/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="assetsAdmin/css/now-ui-dashboard.css?v=1.5.0" rel="stylesheet" />
+  <link href="assetsAdmin/css/now-ui-dashboard.css" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="assetsAdmin/demo/demo.css" rel="stylesheet" />
   <script src="<?php echo e(asset('jss/vue.js')); ?>"></script>
   <script src="<?php echo e(asset('jss/axios.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('jss/sweetalert2.js')); ?>"></script>
    <?php
 
          $stripeCatego='';
@@ -238,7 +239,7 @@
   <script src="assetsAdmin/js/core/bootstrap.min.js"></script>
   <script src="assetsAdmin/js/plugins/perfect-scrollbar.jquery.min.js"></script>
   <!--  Google Maps Plugin    -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+
   <!-- Chart JS -->
   <script src="assetsAdmin/js/plugins/chartjs.min.js"></script>
   <!--  Notifications Plugin    -->

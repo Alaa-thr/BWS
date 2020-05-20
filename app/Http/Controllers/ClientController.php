@@ -36,5 +36,11 @@ class ClientController extends Controller
 
         return redirect('profilClient');
     }
+    public function getCommande(){
+        $client = Client::find(Auth::user()->id);
+        $commande = \DB::table('commandes')->where('client_id', $client->id)->get();
+        return $commande;
+
+    }
 
 }

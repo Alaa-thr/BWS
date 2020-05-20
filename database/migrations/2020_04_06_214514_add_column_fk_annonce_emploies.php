@@ -14,7 +14,7 @@ class AddColumnFkAnnonceEmploies extends Migration
     public function up()
     {
         Schema::table('annonce_emploies', function (Blueprint $table) {
-             $table->foreign('sous_categorie_id')->references('id')->on('sousCategories');
+             $table->foreign('sous_categorie_id')->references('id')->on('sous_categories');
             $table->foreign('employeur_id')->references('id')->on('employeurs');
 
         });
@@ -29,7 +29,7 @@ class AddColumnFkAnnonceEmploies extends Migration
     public function down()
     {
         Schema::table('annonce_emploies', function (Blueprint $table) {
-            $table->dropForeign('sousCategories_sous_categorie_id_foreign');
+            $table->dropForeign('sous_categories_sous_categorie_id_foreign');
             $table->dropForeign(['sous_categorie_id']);
             $table->dropForeign('employeurs_employeur_id_foreign');
             $table->dropForeign(['employeur_id']);
