@@ -164,7 +164,7 @@ if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
-unset($__errorArgs, $__bag); ?>" name="numTelephone" value="<?php echo e(old('numTelephone')); ?>" id="numtlf" type="text" placeholder="Numero Telephone*">
+unset($__errorArgs, $__bag); ?>" name="numTelephone" value="<?php echo e(old('numTelephone')); ?>" id="numtlf" type="tel" placeholder="Numero Telephone*">
 
                         <?php $__errorArgs = ['numTelephone'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -284,6 +284,29 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                     </div>
+    </div>
+    <div class="from-group  m-b-40 openC" style="display: none">
+                    <input type="file" class="form-control <?php $__errorArgs = ['photoC'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" name="photoC" value="<?php echo e(old('photoC')); ?>" style="height: 45px">
+                    <?php $__errorArgs = ['photoC'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <span class="invalid-feedback" role="alert">
+                                <strong><?php echo e($message); ?></strong>
+                            </span>
+                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                        
     </div>
      <div class="form-group flex-t m-b-35 openV"  style="display: none">
                     <div class=" m-r-30" style="width: 375px">
@@ -663,6 +686,7 @@ function onChange() {
     var cmpt = options[select.selectedIndex].value;
     var v = document.getElementsByClassName("openV");
     var e = document.getElementsByClassName("openE");
+    var c = document.getElementsByClassName("openC")
     var v_nextPrevious = document.getElementById("nextPrevious");
     if(cmpt==0){
         document.getElementById("nextBtn").innerHTML = "Creer Compte";
@@ -680,12 +704,14 @@ function onChange() {
         e[0].style.display= "none";
         e[1].style.display= "none";
         e[2].style.display= "none";
+        c[0].style.display= "none";
 
     }
     else if(cmpt==1) {
         document.getElementById("stepp").style.display = "none";
         document.getElementById("nextBtn").innerHTML = "Creer Compte";
         document.getElementById("nextBtn").style.background = "#ca2323";
+        c[0].style.display= "block";
         v[0].style.display= "none";
         v[1].style.display= "none";
         v[2].style.display= "none";
@@ -704,6 +730,7 @@ function onChange() {
         e[0].style.display= "flex";
         e[1].style.display= "block";
         e[2].style.display= "block";
+        c[0].style.display= "none";
 
     }
 

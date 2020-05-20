@@ -15,7 +15,7 @@ class AddColumnFkProduits extends Migration
     {
         Schema::table('produits', function (Blueprint $table) {
           
-            $table->foreign('sous_categorie_id')->references('id')->on('sousCategories');
+            $table->foreign('sous_categorie_id')->references('id')->on('sous_categories');
             $table->foreign('vendeur_id')->references('id')->on('vendeurs');
 
         });
@@ -30,7 +30,7 @@ class AddColumnFkProduits extends Migration
     public function down()
     {
         Schema::table('produits', function (Blueprint $table) {
-            $table->dropForeign('sousCategories_sous_categorie_id_foreign');
+            $table->dropForeign('sous_categories_sous_categorie_id_foreign');
             $table->dropForeign(['sous_categorie_id']);
             $table->dropForeign('vendeurs_vendeur_id_foreign');
             $table->dropForeign(['vendeur_id']);

@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Validator;
 use Auth;
 use App\Rules\EmailExist;
 use App\Rules\NumberExist;
+use Illuminate\Support\Facades\Storage;
 class RegisterController extends Controller
 {
     /*
@@ -81,6 +82,7 @@ class RegisterController extends Controller
                     'ville' => ['required'],
                     'numTelephone' => ['required', 'string','regex:/0[5-7]/',"min:10","max:10", new NumberExist($data['compte'])],
                     'compte' => ['required'],
+                    
                     ]);
                 }
                 else if($data['compte'] == 2){
@@ -114,14 +116,6 @@ class RegisterController extends Controller
                     'photoE' => ['required'],
                     ]);
                 }
-                else if($data['compte'] == 4){
-                    return Validator::make($data, [
-                    'nom' => ['required', 'string', 'max:30'],
-                    'prenom' => ['required', 'string', 'max:30'],
-                    'email' => ['required', 'string', 'email', 'max:255'],
-                    'password' => ['required', 'string', 'min:8'],
-                    ]);
-                }
 
     }
 
@@ -133,10 +127,15 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        
+          
        
                 if($data['compte'] == 1){
                
+               /* $request = request();
+                $exploded = explode(',', $request->photoC);
+                $decoded = base64_decode($exploded[0]);
+                
+                Storage::put('/public/profile_image/' . $data['photoC'], $exploded[0]);*/
                         $objet_user = User::create([
                                 
                                 'numTelephone' => $data['numTelephone'],
@@ -145,14 +144,17 @@ class RegisterController extends Controller
                                 'password' => Hash::make($data['password']),
 
                         ]);
+                       
                         Client::create([
                             'nom' => $data['nom'],
                             'user_id' => $objet_user->id,
                             'prenom' => $data['prenom'],
                             'ville' => $data['ville'],
-                            'email' => $data['email'],                    
+                            'email' => $data['email'],
+                           //    'image' => $data['photoC'],                       
                             'numeroTelephone' => $data['numTelephone']            
                         ]);
+                        
                         return $objet_user;
 
                 }
@@ -207,27 +209,6 @@ class RegisterController extends Controller
                             'address' => $data['addrsse_soct'],
                             'nom_societe' => $data['nom_societe'],
                             'num_compte_banquiare' => $data['num_compte_banquiare'],
-                            'image' => $data['photoE'],            
-                        ]);
-                        return $objet_user;
-                }
-                else if($data['compte'] == 4){
-               
-                        $objet_user = User::create([
-                                
-                                'numTelephone' => $data['numTelephone'],
-                                'email' => $data['email'],
-                                'type_compte' => 'a', 
-                                'password' => Hash::make($data['password']),
-
-                        ]);
-                        Admin::create([
-                            'nom' => $data['nom'],
-                            'user_id' => $objet_user->id,
-                            'prenom' => $data['prenom'],
-                            'email' => $data['email'],
-                            'numTelephone' => $data['numTelephone'],
-                            'numCarteBanquaire' => $data['num_compte_banquiare'],
                             'image' => $data['photoE'],            
                         ]);
                         return $objet_user;

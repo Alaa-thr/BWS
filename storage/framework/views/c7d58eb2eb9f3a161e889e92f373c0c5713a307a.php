@@ -25,7 +25,10 @@
   <script src="<?php echo e(asset('jss/vue.js')); ?>"></script>
   <script src="<?php echo e(asset('jss/axios.min.js')); ?>"></script>
   <script src="<?php echo e(asset('jss/sweetalert2.js')); ?>"></script>
+<<<<<<< HEAD
+=======
   
+>>>>>>> 2cf601d4a54d0bf239f10eb2a74f225868e171cd
    <?php
 
             $stripeProfil=$stripeDmnd=$stripeCmd=$stripeNotif=$stripePanier=$stripeHisto=$stripeFavoris='';
@@ -680,6 +683,7 @@
             
             <?php echo $__env->yieldContent('content'); ?>
             <div>
+            
   <footer class="bg3 p-t-75 p-b-32 ">
     <div class="container">
       <div class="row">

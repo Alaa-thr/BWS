@@ -13,9 +13,9 @@ class CreateSousCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('sousCategories', function (Blueprint $table) {
+        Schema::create('sous_categories', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('categorie_id');
+            $table->unsignedBigInteger('categorie_id')->default(1);
             $table->string('libelle')->unique();
             $table->timestamps();
         });
@@ -28,6 +28,6 @@ class CreateSousCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sousCategories');
+        Schema::dropIfExists('sous_categories');
     }
 }

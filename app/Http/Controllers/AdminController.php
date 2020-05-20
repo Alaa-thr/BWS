@@ -12,6 +12,7 @@ use App\Employeur;
 use App\Article;
 use App\User;
 use App\Categorie;
+use App\Sous_categorie;
 use App\SousCategorie;
 use App\Typechoisirvendeur;
 use Auth;
@@ -159,19 +160,18 @@ class AdminController extends Controller
         return redirect('profilAdmin');
     }
     public function categories_admin(){
-        $cat = Categorie::all();
-        $nabil = \DB::table('categories')->orderBy('created_at','desc')->get();
-        return view('categories_admin',['categorie'=>$nabil]);
+        $categorie = \DB::table('categories')->orderBy('created_at','desc')->get();
+        return view('categories_admin',['categorie'=>$categorie]);
     }
         
     public function addCategorie(Request $request){
         $categorie = new Categorie;
 
-        $categorie->libellé = $request->libellé;
+        $categorie->libelle = $request->libelle;
 
         $categorie->save();
 
-        return Response()->json(['etat' => true, 'id' => $categorie]);
+        return Response()->json(['etat' => true, 'categorie' => $categorie]);
     }
     public function updateCategorie(Request $request){
         $categorie = Categorie::find($request->id);
@@ -183,18 +183,25 @@ class AdminController extends Controller
         return Response()->json(['etat' => true]);
     
     }
+
     public function deleteCategorie($id){
-
         $categorie = Categorie::find($id);
-       
         $categorie->delete();
-
-     return Response()->json(['etat' => true, 'id' => $categorie]);
+     return Response()->json(['etat' => true]);
     }
-    public function sousCategories(){
-        $scat = SousCategorie::all();
-        echo "$scat";
-        return $scat;
+
+    public function getSousCategories(){
+        $sousCatego = Sous_categorie::all();
+        return $sousCatego;
+    }
+
+    public function addSousCategorie(Request $request){
+
+        $sousCategorie = new Sous_categorie();
+        $sousCategorie->libelle = $request->libelle;
+        $sousCategorie->categorie_id = $request->categorie_id;
+        $sousCategorie->save();
+        return Response()->json(['etat' => true,'sousCategorieAjout' => $sousCategorie]);
     }
 
     public function detailsVendeur(Request $request){
