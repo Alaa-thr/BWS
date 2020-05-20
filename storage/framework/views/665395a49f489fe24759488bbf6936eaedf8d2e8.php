@@ -255,6 +255,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                     </div>
                     <div class="" style="width: 375px">
+
                         <select class="form-control form-control-lg <?php $__errorArgs = ['compte'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -263,11 +264,12 @@ $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>" id="exampleFormControlSelect1"  name="compte"  onchange="onChange()" style="height: 45px" value="<?php echo e(old('compte')); ?>">
-                            <option value="" selected hidden="hidden">Crée compte tent que</option>
+                            <option value="" selected hidden="hidden">Crée compte tant que</option>
                             <option value="1" <?php echo e(old('compte') == 1 ? 'selected' : ''); ?>>Client</option>
                             <option value="2" <?php echo e(old('compte') == 2 ? 'selected' : ''); ?>>Vendeur</option>
                             <option value="3" <?php echo e(old('compte') == 3 ? 'selected' : ''); ?>>Employeur</option>
                             <option value="4" <?php echo e(old('compte') == 4 ? 'selected' : ''); ?>>Admin</option>
+
                         </select>
                         <?php $__errorArgs = ['compte'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');

@@ -347,7 +347,7 @@
 					</div>	
 
 					<!-- Icon header -->
-					<div class="wrap-icon-header  flex-r-m " style="margin-left: 33%">
+					<div class="wrap-icon-header  flex-r-m " style="margin-left: 28%">
 						<div class="icon-header-item cl2 hov-cl1 trans-04  p-r-11 js-show-modal-search">
 							<i class="zmdi zmdi-search"></i>
 						</div>
@@ -368,7 +368,7 @@
                                 <i class="zmdi zmdi-account"></i>
                               </button>
                               
-                              <div class="dropdown-menu m-r-35" aria-labelledby="dropdownMenuButton">
+                              <div class="dropdown-menu m-r-35" aria-labelledby="dropdownMenuButton" style="margin-right: 60px;">
                                 <div href="{{ route('statistiquesVendeur') }}">
                               		<a class="dropdown-item" href="{{ route('statistiquesVendeur') }}"><b>{{ __('Mon Espace') }}</b></a>
                               	</div>
