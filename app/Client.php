@@ -4,13 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Commande extends Model
+class Client extends Model
 {
 
 	protected $primaryKey = 'user_id';
 
     protected $fillable = [
-        'client_id','vendeur_id','produit_id','prix_total','address','Réponse_vendeur','qte','type_livraison','email','numero_tlf','code_postale','ville','commande_envoyee','commande_traiter','created_at','updated_at'
+
+        'nom','prenom','numeroTelephone', 'email', 'ville','user_id','image','codePostal',
+
     ];
 
     public function client()
@@ -22,4 +24,5 @@ class Commande extends Model
     {
         return $this->hasMany('App\Commande');
     }
+
 }

@@ -185,6 +185,7 @@
           </div>
         </div>
       </footer>
+     
     </div>
  
   <?php $__env->stopSection(); ?>
@@ -192,14 +193,6 @@
 
   <?php $__env->startPush('javascripts'); ?>
 
-
-
-<<<<<<< HEAD
-  <script src="<?php echo e(asset('jss/vue.js')); ?>"></script>
-  <script src="<?php echo e(asset('jss/axios.min.js')); ?>"></script>
-  <script src="<?php echo e(asset('jss/sweetalert2.js')); ?>"></script>
-=======
->>>>>>> 2cf601d4a54d0bf239f10eb2a74f225868e171cd
 
 <script> 
         window.Laravel = <?php echo json_encode([
