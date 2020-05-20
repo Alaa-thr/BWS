@@ -23,9 +23,8 @@
   <link href="assetsClient/css/main.css" rel="stylesheet" />
   <link rel="stylesheet" type="text/css" href="assetsClient/fonts/linearicons-v1.0.0/icon-font.min.css">
   <script src="{{ asset('jss/vue.js') }}"></script>
-  <script src="{{ asset('jss/axios.min.js')}}"></script>
-  <script src="{{ asset('jss/sweetalert2.js')}}"></script>
-  
+  <script src="{{asset('jss/axios.min.js')}}"></script>
+  <script src="{{asset('jss/sweetalert2.js')}}"></script>
    <?php
 
             $stripeProfil=$stripeDmnd=$stripeCmd=$stripeNotif=$stripePanier=$stripeHisto=$stripeFavoris='';
@@ -679,6 +678,7 @@
             
             @yield('content')
             <div>
+            
   <footer class="bg3 p-t-75 p-b-32 ">
     <div class="container">
       <div class="row">
