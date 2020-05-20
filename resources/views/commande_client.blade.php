@@ -32,7 +32,9 @@
              <div class="flex-t">
                         <input type="checkbox" id="" @change="selectAll()" v-model="allSelected">
                         <label for=""></label>
+
                         <h4 class="titre" style="margin-top: -6px;">Commandes</h4>
+
                     </div>
 
                 <div class="txt-right"style="margin-top: -40px; " >
@@ -45,7 +47,9 @@
                    </div>
              
                 
+
                 <hr style="margin-top:42px;">       
+
 
                 
             <div class="card-body"  >
@@ -167,7 +171,9 @@
       </div>
     </div>
 
+
     </div>
+
 
 
       
