@@ -164,9 +164,6 @@
 <?php $__env->startPush('javascripts'); ?>
 
 
-<script src="<?php echo e(asset('js/vue.js')); ?>"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
- 
 <script>
         window.Laravel = <?php echo json_encode([
                'csrfToken' => csrf_token(),

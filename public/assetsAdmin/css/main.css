@@ -3781,4 +3781,26 @@ input.num-product::-webkit-inner-spin-button {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.pagination li { 
+  display: inline-flex;
+  padding: 10px;
+  text-decoration: none;
+}
+.box select{
+  background: #FFA07A;
+  color: #fff;
+  font-weight: 700;
+  font-style: italic;
+  border: none;
+  border-radius: 0.5em;
+  width: 240px;
+  height: 30px;
+  cursor: pointer;
+  box-shadow: 0 5px 25px rgba(0,0,0,.2);
+  -webkit-appearance: button;
+  outline: none;
+}
+
+
+
 

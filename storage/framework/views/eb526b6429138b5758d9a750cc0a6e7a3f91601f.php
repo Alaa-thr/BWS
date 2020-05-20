@@ -23,6 +23,7 @@
   <link href="assetsAdmin/css/main.css" rel="stylesheet" />
   <script src="<?php echo e(asset('jss/vue.js')); ?>"></script>
   <script src="<?php echo e(asset('jss/axios.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('jss/sweetalert2.js')); ?>"></script>
   <?php
 
          $stripeProfil=$stripeStatistique=$stripeEmail=$stripeNotif=$stripeArticle=$stripeCatego=$stripeGererUser='';
@@ -37,7 +38,7 @@
          else if($urlAcctuiel == 'emails'){
              $stripeEmail='active';
          }
-         else if($urlAcctuiel == 'vendeur' || $urlAcctuiel == 'admin' || $urlAcctuiel == 'client' ||$urlAcctuiel == 'employeur'){
+         else if($urlAcctuiel == 'vendeur' || $urlAcctuiel == 'admin' || $urlAcctuiel == 'client' ||$urlAcctuiel == 'employeur' || $urlAcctuiel == 'recupervendeur' || $urlAcctuiel == 'recuperclient' || $urlAcctuiel == 'recupemployeur' ||$urlAcctuiel == 'recuperadmin'){
              $stripeGererUser='active';
          }
          else if($urlAcctuiel == 'notificationsAdmin'){
@@ -140,7 +141,7 @@
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="#pablo">Articles</a>
+            <a class="navbar-brand" href="#pablo"></a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>

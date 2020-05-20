@@ -421,12 +421,12 @@
                               
                               <div class="dropdown-menu m-r-35" aria-labelledby="dropdownMenuButton">
                                 @if(Auth::user()->type_compte == 'c')
-                                <a class="dropdown-item" href="{{ route('profilClient')}}">Profil</a>
+                                <a class="dropdown-item" href="{{ route('profilClient')}}">Mon Espace</a>
                                 @elseif(Auth::user()->type_compte == 'v')
-                                <a class="dropdown-item" href="{{ route('profilVendeur')}}">Profil</a>
+                                <a class="dropdown-item" href="{{ route('statistiquesVendeur')}}">Mon Espace</a>
                                 @elseif(Auth::user()->type_compte == 'e')
-                                <a class="dropdown-item" href="{{route('profilEmployeur')}}">Profil</a>@elseif(Auth::user()->type_compte == 'a')
-                                <a class="dropdown-item" href="{{route('profilAdmin')}}">Profil</a>
+                                <a class="dropdown-item" href="{{route('profilEmployeur')}}">Mon Espace</a>@elseif(Auth::user()->type_compte == 'a')
+                                <a class="dropdown-item" href="{{route('statistiquesAdmin')}}">Mon Espace</a>
                                 @endif
                                 <div class="dropdown-divider"></div>
                                 <div>
@@ -481,12 +481,12 @@
                               
                               <div class="dropdown-menu m-r-35" aria-labelledby="dropdownMenuButton">
                                 @if(Auth::user()->type_compte == 'c')
-                                <a class="dropdown-item" href="{{ route('profilClient')}}">Profil</a>
+                                <a class="dropdown-item" href="{{ route('profilClient')}}">Mon Espace</a>
                                 @elseif(Auth::user()->type_compte == 'v')
-                                <a class="dropdown-item" href="{{ route('profilVendeur')}}">Profil</a>
+                                <a class="dropdown-item" href="{{ route('statistiquesVendeur')}}">Mon Espace</a>
                                 @elseif(Auth::user()->type_compte == 'e')
-                                <a class="dropdown-item" href="{{route('profilEmployeur')}}">Profil</a>@elseif(Auth::user()->type_compte == 'a')
-                                <a class="dropdown-item" href="{{route('profilAdmin')}}">Profil</a>
+                                <a class="dropdown-item" href="{{route('profilEmployeur')}}">Mon Espace</a>@elseif(Auth::user()->type_compte == 'a')
+                                <a class="dropdown-item" href="{{route('statistiquesAdmin')}}">Mon Espace</a>
                                 @endif
                                 <div class="dropdown-divider"></div>
                                 <div>

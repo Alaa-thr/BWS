@@ -19,7 +19,6 @@
                   <div class="row">
                     <div class="col-md-4">
                       <button v-if="suppr" class="btn btn-sm btn-danger  btn-block" style="margin-left: 685px; margin-top: -50px; border-radius: 0.8em; width: 150px; height: 40px; "  v-on:click="deleteCategorie(c)"><b>supprimer</b></button>
-
                       <button v-if="suppr" class="btn btn-sm btn-warning btn-block" style="margin-left: 840px; margin-top: -50px; border-radius: 0.8em; width: 150px; height: 40px; " v-on:click="AnnulerSel" ><b>Annuler</b></button>
 
                       <button v-else class="btn btn-sm   btn-block" style="margin-left: 750px; margin-top: -50px; border-radius: 0.8em; background-color: #00CED1; width: 230px; height: 40px; " v-on:click="ajouterCategorie" ><b>Ajouter une Catégorie</b></button>
@@ -69,7 +68,7 @@
                     </td>
                     <td >
                       <div  style="margin-left: 100px;">
-                        <button v-if="suppr2" class="btn btn-sm  btn-danger btn-block"  style="margin-right: 40px; width: 120px; height: 35px; border-radius: 1.0em;"><b>Supprimer</b>
+                        <button v-if="suppr2" class="btn btn-sm  btn-danger btn-block"  style="margin-right: 40px; width: 120px; height: 35px; border-radius: 1.0em;" ><b>Supprimer</b>
                         </button>
                         <button v-if="suppr2" class="btn btn-sm btn-warning btn-block" style=" width: 120px; height: 35px; border-radius: 1.0em; margin-left:130px; margin-top: -45px;"  v-on:click="AnnulerSel2"><b>Annuler</b>
                         </button>
@@ -188,10 +187,7 @@
   @push('javascripts')
 
 
-<script src="{{ asset('jss/vue.js') }}"></script>
-  <script src="{{asset('jss/axios.min.js')}}"></script>
 
- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.10.7/dist/sweetalert2.all.min.js"></script>
 
 <script> 
         window.Laravel = {!! json_encode([

@@ -22,6 +22,10 @@
   <link href="assetsEmployeur/css/util.css" rel="stylesheet" />
   <link href="assetsEmployeur/css/main.css" rel="stylesheet" />
   <link rel="stylesheet" type="text/css" href="assetsEmployeur/fonts/linearicons-v1.0.0/icon-font.min.css">
+  <script src="{{ asset('jss/vue.js') }}"></script>
+  <script src="{{asset('jss/axios.min.js')}}"></script>
+  <script src="{{asset('jss/sweetalert2.js')}}"></script>
+  
   <?php
 
            $stripeProfil=$stripeAnnonce=$stripeDmndR=$stripeDmndT='';
@@ -365,7 +369,7 @@
                               </button>
                               
                               <div class="dropdown-menu m-r-35" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#"><b>Profil</b></a>
+                                <a class="dropdown-item" href="{{ route('profilEmployeur') }}"><b>Mon Espace</b></a>
                                 <div class="dropdown-divider"></div>
                                 <div>
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
@@ -411,8 +415,8 @@
                               </button>
                               
                               <div class="dropdown-menu m-r-35" aria-labelledby="dropdownMenuButton">
-                              	<div href="{{ route('profilVendeur') }}">
-                              		<a class="dropdown-item" href="{{ route('profilVendeur') }}" >{{ __('Profil') }}</a>
+                              	<div href="{{ route('profilEmployeur') }}">
+                              		<a class="dropdown-item" href="{{ route('profilEmployeur') }}" >{{ __('Mon Espace') }}</a>
                               	</div>
                                 
                                 <div class="dropdown-divider"></div>

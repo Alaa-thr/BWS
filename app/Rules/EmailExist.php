@@ -68,6 +68,6 @@ class EmailExist implements Rule
      */
     public function message()
     {
-        return 'The :attribute is used before';
+        return 'Ce :attribute est déja utilisé';
     }
 }

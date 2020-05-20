@@ -1303,8 +1303,18 @@ fieldset[disabled] .btn-link.active {
   opacity: 1;
   filter: alpha(opacity=100);
 }
+.formm-control::-moz-placeholder {
+  color: #888;
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
 
 .form-control:-moz-placeholder {
+  color: #888;
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
+.formm-control:-moz-placeholder {
   color: #888;
   opacity: 1;
   filter: alpha(opacity=100);
@@ -1315,8 +1325,18 @@ fieldset[disabled] .btn-link.active {
   opacity: 1;
   filter: alpha(opacity=100);
 }
+.formm-control::-webkit-input-placeholder {
+  color: #888;
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
 
 .form-control:-ms-input-placeholder {
+  color: #888;
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
+.formm-control:-ms-input-placeholder {
   color: #888;
   opacity: 1;
   filter: alpha(opacity=100);
@@ -1338,8 +1358,33 @@ fieldset[disabled] .btn-link.active {
   -webkit-box-shadow: none;
   box-shadow: none;
 }
+.formm-control{
+  background-color: transparent;
+  border: 1px solid #E3E3E3;
+  color: #2c2c2c;
+  line-height: normal;
+  height: auto;
+  width: 310px;
+  border-radius: 0.4em;
+  font-size: 0.8571em;
+  -webkit-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  -moz-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  -o-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  -ms-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+
+}
 
 .form-control:focus {
+  border: 1px solid #f96332;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  outline: 0 !important;
+  color: #2c2c2c;
+}
+.formm-control:focus {
   border: 1px solid #f96332;
   -webkit-box-shadow: none;
   box-shadow: none;
@@ -1355,11 +1400,26 @@ fieldset[disabled] .btn-link.active {
   border-left: none;
   background-color: transparent;
 }
+.formm-control:focus+.input-group-append .input-group-text,
+.formm-control:focus~.input-group-append .input-group-text,
+.formm-control:focus+.input-group-prepend .input-group-text,
+.formm-control:focus~.input-group-prepend .input-group-text {
+  border: 1px solid #f96332;
+  border-left: none;
+  background-color: transparent;
+}
 
 .has-success .form-control,
 .has-error .form-control,
 .has-success .form-control:focus,
 .has-error .form-control:focus {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.has-success .formm-control,
+.has-error .formm-control,
+.has-success .formm-control:focus,
+.has-error .formm-control:focus {
   -webkit-box-shadow: none;
   box-shadow: none;
 }
@@ -1370,8 +1430,23 @@ fieldset[disabled] .btn-link.active {
 .has-success .form-control.form-control-danger {
   background-image: none;
 }
+.has-danger .formm-control.formm-control-success,
+.has-danger .formm-control.formm-control-danger,
+.has-success .formm-control.formm-control-success,
+.has-success .formm-control.formm-control-danger {
+  background-image: none;
+}
 
 .form-control+.form-control-feedback {
+  border-radius: 0.25rem;
+  font-size: 14px;
+  margin-top: -7px;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  vertical-align: middle;
+}
+.formm-control+.formm-control-feedback {
   border-radius: 0.25rem;
   font-size: 14px;
   margin-top: -7px;
@@ -1385,9 +1460,17 @@ fieldset[disabled] .btn-link.active {
   border-radius: 0.25rem 0.25rem 0 0;
   border-bottom-color: transparent;
 }
+.open .formm-control {
+  border-radius: 0.25rem 0.25rem 0 0;
+  border-bottom-color: transparent;
+}
 
 .form-control+.input-group-append .input-group-text,
 .form-control+.input-group-prepend .input-group-text {
+  background-color: #FFFFFF;
+}
+.formm-control+.input-group-append .input-group-text,
+.formm-control+.input-group-prepend .input-group-text {
   background-color: #FFFFFF;
 }
 
@@ -1396,8 +1479,18 @@ fieldset[disabled] .btn-link.active {
 .has-success .form-control {
   border-color: #E3E3E3;
 }
+.has-success .input-group-append .input-group-text,
+.has-success .input-group-prepend .input-group-text,
+.has-success .formm-control {
+  border-color: #E3E3E3;
+}
 
 .has-success .form-control:focus,
+.has-success.input-group-focus .input-group-append .input-group-text,
+.has-success.input-group-focus .input-group-prepend .input-group-text {
+  border-color: #1be611;
+}
+.has-success .formm-control:focus,
 .has-success.input-group-focus .input-group-append .input-group-text,
 .has-success.input-group-focus .input-group-prepend .input-group-text {
   border-color: #1be611;
@@ -1412,8 +1505,24 @@ fieldset[disabled] .btn-link.active {
   color: #FF3636;
   background-color: rgba(222, 222, 222, 0.1);
 }
+.has-danger .formm-control,
+.has-danger .input-group-append .input-group-text,
+.has-danger .input-group-prepend .input-group-text,
+.has-danger.input-group-focus .input-group-prepend .input-group-text,
+.has-danger.input-group-focus .input-group-append .input-group-text {
+  border-color: #ffcfcf;
+  color: #FF3636;
+  background-color: rgba(222, 222, 222, 0.1);
+}
 
 .has-danger .form-control:focus,
+.has-danger .input-group-append .input-group-text:focus,
+.has-danger .input-group-prepend .input-group-text:focus,
+.has-danger.input-group-focus .input-group-prepend .input-group-text:focus,
+.has-danger.input-group-focus .input-group-append .input-group-text:focus {
+  background-color: #FFFFFF;
+}
+.has-danger .formm-control:focus,
 .has-danger .input-group-append .input-group-text:focus,
 .has-danger .input-group-prepend .input-group-text:focus,
 .has-danger.input-group-focus .input-group-prepend .input-group-text:focus,
@@ -1438,6 +1547,11 @@ fieldset[disabled] .btn-link.active {
   font-size: 13px;
   top: 24px;
 }
+.has-success.formm-control-lg:after,
+.has-danger.formm-control-lg:after {
+  font-size: 13px;
+  top: 24px;
+}
 
 .has-success.has-label:after,
 .has-danger.has-label:after {
@@ -1448,6 +1562,14 @@ fieldset[disabled] .btn-link.active {
 .has-success.form-check .form-check-label label,
 .has-success.form-check:after,
 .has-danger .form-control+label,
+.has-danger.form-check .form-check-label label,
+.has-danger.form-check:after {
+  display: none !important;
+}
+.has-success .formm-control+label,
+.has-success.form-check .form-check-label label,
+.has-success.form-check:after,
+.has-danger .formm-control+label,
 .has-danger.form-check .form-check-label label,
 .has-danger.form-check:after {
   display: none !important;
@@ -1471,9 +1593,17 @@ fieldset[disabled] .btn-link.active {
 .input-group.no-border.form-control-lg .input-group-append .input-group-text {
   padding: 15px 0 15px 19px;
 }
+.form-group.no-border.formm-control-lg .input-group-append .input-group-text,
+.input-group.no-border.formm-control-lg .input-group-append .input-group-text {
+  padding: 15px 0 15px 19px;
+}
 
 .form-group.no-border.form-control-lg .form-control,
 .input-group.no-border.form-control-lg .form-control {
+  padding: 15px 19px;
+}
+.form-group.no-border.formm-control-lg .formm-control,
+.input-group.no-border.formm-control-lg .formm-control {
   padding: 15px 19px;
 }
 
@@ -1483,9 +1613,19 @@ fieldset[disabled] .btn-link.active {
 .input-group.no-border.form-control-lg .form-control+.input-group-append .input-group-text {
   padding: 15px 19px 15px 0;
 }
+.form-group.no-border.formm-control-lg .formm-control+.input-group-prepend .input-group-text,
+.form-group.no-border.formm-control-lg .formm-control+.input-group-append .input-group-text,
+.input-group.no-border.formm-control-lg .formm-control+.input-group-prepend .input-group-text,
+.input-group.no-border.formm-control-lg .formm-control+.input-group-append .input-group-text {
+  padding: 15px 19px 15px 0;
+}
 
 .form-group.form-control-lg .form-control,
 .input-group.form-control-lg .form-control {
+  padding: 14px 18px;
+}
+.form-group.formm-control-lg .formm-control,
+.input-group.formm-control-lg .formm-control {
   padding: 14px 18px;
 }
 
@@ -1495,11 +1635,23 @@ fieldset[disabled] .btn-link.active {
 .input-group.form-control-lg .form-control+.input-group-append .input-group-text {
   padding: 14px 18px 14px 0;
 }
+.form-group.formm-control-lg .formm-control+.input-group-prepend .input-group-text,
+.form-group.formm-control-lg .formm-control+.input-group-append .input-group-text,
+.input-group.formm-control-lg .formm-control+.input-group-prepend .input-group-text,
+.input-group.formm-control-lg .formm-control+.input-group-append .input-group-text {
+  padding: 14px 18px 14px 0;
+}
 
 .form-group.form-control-lg .input-group-prepend .input-group-text,
 .form-group.form-control-lg .input-group-append .input-group-text,
 .input-group.form-control-lg .input-group-prepend .input-group-text,
 .input-group.form-control-lg .input-group-append .input-group-text {
+  padding: 14px 0 15px 18px;
+}
+.form-group.formm-control-lg .input-group-prepend .input-group-text,
+.form-group.formm-control-lg .input-group-append .input-group-text,
+.input-group.formm-control-lg .input-group-prepend .input-group-text,
+.input-group.formm-control-lg .input-group-append .input-group-text {
   padding: 14px 0 15px 18px;
 }
 
@@ -1509,9 +1661,19 @@ fieldset[disabled] .btn-link.active {
 .input-group.form-control-lg .input-group-append .input-group-text+.form-control {
   padding: 15px 18px 15px 16px;
 }
+.form-group.formm-control-lg .input-group-prepend .input-group-text+.formm-control,
+.form-group.formm-control-lg .input-group-append .input-group-text+.formm-control,
+.input-group.formm-control-lg .input-group-prepend .input-group-text+.formm-control,
+.input-group.formm-control-lg .input-group-append .input-group-text+.formm-control {
+  padding: 15px 18px 15px 16px;
+}
 
 .form-group.no-border .form-control,
 .input-group.no-border .form-control {
+  padding: 11px 19px;
+}
+.form-group.no-border .formm-control,
+.input-group.no-border .formm-control {
   padding: 11px 19px;
 }
 
@@ -1519,6 +1681,12 @@ fieldset[disabled] .btn-link.active {
 .form-group.no-border .form-control+.input-group-append .input-group-text,
 .input-group.no-border .form-control+.input-group-prepend .input-group-text,
 .input-group.no-border .form-control+.input-group-append .input-group-text {
+  padding: 11px 19px 11px 0;
+}
+.form-group.no-border .formm-control+.input-group-prepend .input-group-text,
+.form-group.no-border .formm-control+.input-group-append .input-group-text,
+.input-group.no-border .formm-control+.input-group-prepend .input-group-text,
+.input-group.no-border .formm-control+.input-group-append .input-group-text {
   padding: 11px 19px 11px 0;
 }
 
@@ -1533,11 +1701,21 @@ fieldset[disabled] .btn-link.active {
 .input-group .form-control {
   padding: 10px 18px 10px 18px;
 }
+.form-group .formm-control,
+.input-group .formm-control {
+  padding: 10px 18px 10px 18px;
+}
 
 .form-group .form-control+.input-group-prepend .input-group-text,
 .form-group .form-control+.input-group-append .input-group-text,
 .input-group .form-control+.input-group-prepend .input-group-text,
 .input-group .form-control+.input-group-append .input-group-text {
+  padding: 10px 18px 10px 0;
+}
+.form-group .formm-control+.input-group-prepend .input-group-text,
+.form-group .formm-control+.input-group-append .input-group-text,
+.input-group .formm-control+.input-group-prepend .input-group-text,
+.input-group .formm-control+.input-group-append .input-group-text {
   padding: 10px 18px 10px 0;
 }
 
@@ -1558,6 +1736,16 @@ fieldset[disabled] .btn-link.active {
 .input-group .input-group-append .input-group-text~.form-control {
   padding: 10px 19px 11px 16px;
 }
+.form-group .input-group-prepend .input-group-text+.formm-control,
+.form-group .input-group-prepend .input-group-text~.formm-control,
+.form-group .input-group-append .input-group-text+.formm-control,
+.form-group .input-group-append .input-group-text~.formm-control,
+.input-group .input-group-prepend .input-group-text+.formm-control,
+.input-group .input-group-prepend .input-group-text~.formm-control,
+.input-group .input-group-append .input-group-text+.formm-control,
+.input-group .input-group-append .input-group-text~.formm-control {
+  padding: 10px 19px 11px 16px;
+}
 
 .form-group.no-border .form-control,
 .form-group.no-border .form-control+.input-group-prepend .input-group-text,
@@ -1565,6 +1753,15 @@ fieldset[disabled] .btn-link.active {
 .input-group.no-border .form-control,
 .input-group.no-border .form-control+.input-group-prepend .input-group-text,
 .input-group.no-border .form-control+.input-group-append .input-group-text {
+  background-color: rgba(222, 222, 222, 0.3);
+  border: medium none;
+}
+.form-group.no-border .formm-control,
+.form-group.no-border .formm-control+.input-group-prepend .input-group-text,
+.form-group.no-border .formm-control+.input-group-append .input-group-text,
+.input-group.no-border .formm-control,
+.input-group.no-border .formm-control+.input-group-prepend .input-group-text,
+.input-group.no-border .formm-control+.input-group-append .input-group-text {
   background-color: rgba(222, 222, 222, 0.3);
   border: medium none;
 }
@@ -1590,11 +1787,38 @@ fieldset[disabled] .btn-link.active {
   border: medium none;
   background-color: rgba(222, 222, 222, 0.5);
 }
+.form-group.no-border .formm-control:focus,
+.form-group.no-border .formm-control:active,
+.form-group.no-border .formm-control:active,
+.form-group.no-border .formm-control+.input-group-prepend .input-group-text:focus,
+.form-group.no-border .formm-control+.input-group-prepend .input-group-text:active,
+.form-group.no-border .formm-control+.input-group-prepend .input-group-text:active,
+.form-group.no-border .formm-control+.input-group-append .input-group-text:focus,
+.form-group.no-border .formm-control+.input-group-append .input-group-text:active,
+.form-group.no-border .formm-control+.input-group-append .input-group-text:active,
+.input-group.no-border .formm-control:focus,
+.input-group.no-border .formm-control:active,
+.input-group.no-border .formm-control:active,
+.input-group.no-border .formm-control+.input-group-prepend .input-group-text:focus,
+.input-group.no-border .formm-control+.input-group-prepend .input-group-text:active,
+.input-group.no-border .formm-control+.input-group-prepend .input-group-text:active,
+.input-group.no-border .formm-control+.input-group-append .input-group-text:focus,
+.input-group.no-border .formm-control+.input-group-append .input-group-text:active,
+.input-group.no-border .formm-control+.input-group-append .input-group-text:active {
+  border: medium none;
+  background-color: rgba(222, 222, 222, 0.5);
+}
 
 .form-group.no-border .form-control:focus+.input-group-prepend .input-group-text,
 .form-group.no-border .form-control:focus+.input-group-append .input-group-text,
 .input-group.no-border .form-control:focus+.input-group-prepend .input-group-text,
 .input-group.no-border .form-control:focus+.input-group-append .input-group-text {
+  background-color: rgba(222, 222, 222, 0.5);
+}
+.form-group.no-border .formm-control:focus+.input-group-prepend .input-group-text,
+.form-group.no-border .formm-control:focus+.input-group-append .input-group-text,
+.input-group.no-border .formm-control:focus+.input-group-prepend .input-group-text,
+.input-group.no-border .formm-control:focus+.input-group-append .input-group-text {
   background-color: rgba(222, 222, 222, 0.5);
 }
 
@@ -1610,8 +1834,16 @@ fieldset[disabled] .btn-link.active {
 .has-error .control-label {
   color: #FF3636;
 }
+.has-error .formm-control-feedback,
+.has-error .control-label {
+  color: #FF3636;
+}
 
 .has-success .form-control-feedback,
+.has-success .control-label {
+  color: #18ce0f;
+}
+.has-success .formm-control-feedback,
 .has-success .control-label {
   color: #18ce0f;
 }
@@ -1648,9 +1880,17 @@ fieldset[disabled] .btn-link.active {
 .has-danger .form-control:focus+.input-group-prepend .input-group-text {
   color: #FF3636;
 }
+.has-danger .formm-control:focus+.input-group-append .input-group-text,
+.has-danger .formm-control:focus+.input-group-prepend .input-group-text {
+  color: #FF3636;
+}
 
 .has-success .form-control:focus+.input-group-append .input-group-text,
 .has-success .form-control:focus+.input-group-prepend .input-group-text {
+  color: #18ce0f;
+}
+.has-success .formm-control:focus+.input-group-append .input-group-text,
+.has-success .formm-control:focus+.input-group-prepend .input-group-text {
   color: #18ce0f;
 }
 
@@ -1658,6 +1898,13 @@ fieldset[disabled] .btn-link.active {
 .input-group-append .input-group-text~.form-control,
 .input-group-prepend .input-group-text+.form-control,
 .input-group-prepend .input-group-text~.form-control {
+  padding: -0.5rem 0.7rem;
+  padding-left: 18px;
+}
+.input-group-append .input-group-text+.formm-control,
+.input-group-append .input-group-text~.formm-control,
+.input-group-prepend .input-group-text+.formm-control,
+.input-group-prepend .input-group-text~.formm-control {
   padding: -0.5rem 0.7rem;
   padding-left: 18px;
 }
@@ -1701,6 +1948,10 @@ fieldset[disabled] .btn-link.active {
 .form-group .form-control-static {
   margin-top: 9px;
 }
+.input-group .formm-control-static,
+.form-group .formm-control-static {
+  margin-top: 9px;
+}
 
 .input-group[disabled] .input-group-prepend .input-group-text,
 .input-group[disabled] .input-group-append .input-group-text {
@@ -1714,8 +1965,20 @@ fieldset[disabled] .btn-link.active {
   border-bottom-left-radius: 0;
   border-left: 0 none;
 }
+.input-group .formm-control:not(:first-child):not(:last-child),
+.input-group-btn:not(:first-child):not(:last-child) {
+  border-radius: 30px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-left: 0 none;
+}
 
 .input-group .form-control:first-child,
+.input-group-btn:first-child>.dropdown-toggle,
+.input-group-btn:last-child>.btn:not(:last-child):not(.dropdown-toggle) {
+  border-right: 0 none;
+}
+.input-group .formm-control:first-child,
 .input-group-btn:first-child>.dropdown-toggle,
 .input-group-btn:last-child>.btn:not(:last-child):not(.dropdown-toggle) {
   border-right: 0 none;
@@ -1730,6 +1993,19 @@ fieldset[disabled] .btn-link.active {
 .form-control[disabled],
 .form-control[readonly],
 fieldset[disabled] .form-control {
+  background-color: #E3E3E3;
+  color: #888;
+  cursor: not-allowed;
+}
+.input-group .formm-control:last-child,
+.input-group-btn:last-child>.dropdown-toggle,
+.input-group-btn:first-child>.btn:not(:first-child) {
+  border-left: 0 none;
+}
+
+.formm-control[disabled],
+.formm-control[readonly],
+fieldset[disabled] .formm-control {
   background-color: #E3E3E3;
   color: #888;
   cursor: not-allowed;
@@ -1757,6 +2033,15 @@ textarea.form-control {
   border-radius: 1.0em;
   
 }
+textarea.formm-control {
+  max-width: 100%;
+  max-height: 80px;
+  padding: 10px 10px 0 0;
+  
+  border-bottom: 1px solid #E3E3E3;
+  border-radius: 1.0em;
+  
+}
 
 textarea.form-control:focus,
 textarea.form-control:active {
@@ -1770,6 +2055,20 @@ textarea.form-control:active {
 .has-success.form-group.no-border .form-control,
 .has-danger.form-group .form-control,
 .has-danger.form-group.no-border .form-control {
+  padding-right: 40px;
+}
+textarea.formm-control:focus,
+textarea.formm-control:active {
+  border-left: none;
+  border-top: none;
+  border-right: none;
+
+}
+
+.has-success.form-group .formm-control,
+.has-success.form-group.no-border .formm-control,
+.has-danger.form-group .formm-control,
+.has-danger.form-group.no-border .formm-control {
   padding-right: 40px;
 }
 
@@ -1801,6 +2100,12 @@ textarea.form-control:active {
 }
 
 .form-control-lg {
+  padding: 0;
+  font-size: inherit;
+  line-height: 0;
+  border-radius: 0;
+}
+.formm-control-lg {
   padding: 0;
   font-size: inherit;
   line-height: 0;
@@ -2212,6 +2517,10 @@ a[data-toggle="collapse"][aria-expanded="true"] .caret,
 .checkbox input[type="checkbox"]:disabled+.form-check-sign::after {
   cursor: not-allowed;
 }
+.formm-control input[type="checkbox"]:disabled+.form-check-sign::before,
+.checkbox input[type="checkbox"]:disabled+.form-check-sign::after {
+  cursor: not-allowed;
+}
 
 .form-check input[type="checkbox"]:disabled+.form-check-sign,
 .form-check input[type="radio"]:disabled+.form-check-sign {
@@ -2305,6 +2614,25 @@ a[data-toggle="collapse"][aria-expanded="true"] .caret,
   color: #888;
 }
 
+.navbar .form-group.no-border .formm-control,
+.navbar .input-group.no-border .formm-control {
+  color: #FFFFFF;
+}
+
+.navbar .form-group.no-border .formm-control::-moz-placeholder,
+.navbar .input-group.no-border .formm-control::-moz-placeholder {
+  color: #FFFFFF;
+}
+
+.navbar .form-group.no-border .formm-control:-ms-input-placeholder,
+.navbar .input-group.no-border .formm-control:-ms-input-placeholder {
+  color: #FFFFFF;
+}
+
+.navbar .form-group.no-border .formm-control::-webkit-input-placeholder,
+.navbar .input-group.no-border .formm-control::-webkit-input-placeholder {
+  color: #FFFFFF;
+}
 .navbar.bg-white .input-group-prepend .input-group-text i,
 .navbar.bg-white .input-group-append .input-group-text i {
   color: #888;
@@ -2353,6 +2681,25 @@ a[data-toggle="collapse"][aria-expanded="true"] .caret,
 
 .navbar .form-group.no-border .form-control::-webkit-input-placeholder,
 .navbar .input-group.no-border .form-control::-webkit-input-placeholder {
+  color: #FFFFFF;
+}
+.navbar .form-group.no-border .formm-control,
+.navbar .input-group.no-border .formm-control {
+  color: #FFFFFF;
+}
+
+.navbar .form-group.no-border .formm-control::-moz-placeholder,
+.navbar .input-group.no-border .formm-control::-moz-placeholder {
+  color: #FFFFFF;
+}
+
+.navbar .form-group.no-border .formm-control:-ms-input-placeholder,
+.navbar .input-group.no-border .formm-control:-ms-input-placeholder {
+  color: #FFFFFF;
+}
+
+.navbar .form-group.no-border .formm-control::-webkit-input-placeholder,
+.navbar .input-group.no-border .formm-control::-webkit-input-placeholder {
   color: #FFFFFF;
 }
 

@@ -22,6 +22,10 @@
   <link href="assetsClient/css/util.css" rel="stylesheet" />
   <link href="assetsClient/css/main.css" rel="stylesheet" />
   <link rel="stylesheet" type="text/css" href="assetsClient/fonts/linearicons-v1.0.0/icon-font.min.css">
+  <script src="{{ asset('jss/vue.js') }}"></script>
+  <script src="{{ asset('jss/axios.min.js')}}"></script>
+  <script src="{{ asset('jss/sweetalert2.js')}}"></script>
+  
    <?php
 
             $stripeProfil=$stripeDmnd=$stripeCmd=$stripeNotif=$stripePanier=$stripeHisto=$stripeFavoris='';
@@ -373,7 +377,7 @@
                               </button>
                               
                               <div class="dropdown-menu m-r-35" aria-labelledby="dropdownMenuButton" >
-                                <a class="dropdown-item" href="#" ><b>Profil</b></a>
+                                <a class="dropdown-item" href="{{ route('profilClient') }}"><b>Mon Espace</b></a>
                                 <div class="dropdown-divider"></div>
                                 <div>
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
@@ -419,8 +423,8 @@
                               </button>
                               
                               <div class="dropdown-menu m-r-35" aria-labelledby="dropdownMenuButton">
-                                <div href="{{ route('profilVendeur') }}">
-                                    <a class="dropdown-item" href="{{ route('profilVendeur') }}" >{{ __('Profil') }}</a>
+                                <div href="{{ route('profilClient') }}">
+                                    <a class="dropdown-item" href="{{ route('profilClient') }}" >{{ __('Mon Espace') }}</a>
                                 </div>
                                 
                                 <div class="dropdown-divider"></div>
