@@ -77,6 +77,7 @@ Route::get('/getAllsouscategories/{id}','VendeurController@getSousCategories');
 Route::get('/getAllcategories', 'VendeurController@getCategories');
 Route::get('/getAllcolor', 'VendeurController@getColors');
 /************************************************ Client***********************************************/
+/************************************************ Client***********************************************/
 
 Route::get('/profilClient','ClientController@profil_clinet')->name('profilClient');
 Route::get('/historiqueClient','BwsController@historique_client')->name('historiqueClient');
@@ -88,7 +89,4 @@ Route::put('/updateProfilC/{id}','ClientController@update_profil');
 Route::post('/detaillsacommande', 'ClientController@detaillsCommande'); 
 Route::get('/commandeClient','ClientController@get_commande_client')->name('commandeClient');
 Route::delete('/deletecommande/{id}','ClientController@deleteCommande');
-
-
-
-
+ 
