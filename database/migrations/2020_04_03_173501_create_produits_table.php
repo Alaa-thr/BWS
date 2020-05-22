@@ -18,7 +18,7 @@ class CreateProduitsTable extends Migration
             $table->unsignedBigInteger('vendeur_id');
             $table->unsignedBigInteger('sous_categorie_id');
             $table->string('Libellé');
-            $table->float('prix');
+            $table->double('prix');
             $table->text('description');
             $table->integer('Qte_P');
             $table->integer('Notation')->nullable();

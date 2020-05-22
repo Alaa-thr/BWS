@@ -123,7 +123,6 @@ class BwsController extends Controller
     public function profil_clinet(){
         return view('profil_clinet');
     }
-
     public function commande_client(){
         return view('commande_client');
     }
@@ -157,10 +156,6 @@ class BwsController extends Controller
 
     public function profil_vendeur(){
         return view('profil_vendeur');
-    }
-
-    public function produit_vendeur(){
-        return view('produit_vendeur');
     }
 
     public function commande_traiter_vendeur(){

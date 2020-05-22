@@ -25,10 +25,7 @@
   <script src="<?php echo e(asset('jss/vue.js')); ?>"></script>
   <script src="<?php echo e(asset('jss/axios.min.js')); ?>"></script>
   <script src="<?php echo e(asset('jss/sweetalert2.js')); ?>"></script>
-<<<<<<< HEAD
-=======
-  
->>>>>>> 2cf601d4a54d0bf239f10eb2a74f225868e171cd
+
   <?php
 
         		$stripeProfil=$stripeProduit=$stripeCmdR=$stripeCmdT=$stripeStatistique='';
@@ -87,7 +84,7 @@
 					<!-- Menu desktop -->
 					<div class="menu-desktop">
 						<ul class="main-menu">
-							<li class="active-menu">
+							<li >
 								<a href="<?php echo e(route('accueil')); ?>">Accueil</a>
 							</li>
 							<li class="menu1">

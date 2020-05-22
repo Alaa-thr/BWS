@@ -52,10 +52,9 @@ Route::post('/detaillsarticle', 'AdminController@detaillsArticle');
 Route::post('/addcategorie', 'AdminController@addCategorie');
 Route::put('/updatecategorie','AdminController@updateCategorie');
 Route::delete('/deletecategorie/{id}','AdminController@deleteCategorie');
-Route::get('/articlesAdmin?page=2','AdminController@article_admin');
 Route::delete('/deletearticle/{id}','AdminController@deleteArticle');
 Route::put('/updatearticle','AdminController@updateArticleButton');
-
+Route::post('/addadmin', 'AdminController@addAdmin');
 /*********************************************** Employeur***********************************************/
 
 Route::get('/demandeEmploiRecu', 'BwsController@demande_emploi_reçu_employeur')->name('demandeEmploiRecu');
@@ -69,29 +68,26 @@ Route::put('/updateProfilE/{id}','EmployeurController@update_profil');
 
 Route::get('/statistiquesVendeur', 'BwsController@statistiques_vendeur')->name('statistiquesVendeur');
 Route::get('/profilVendeur', 'VendeurController@profil_vendeur')->name('profilVendeur');
-Route::get('/produitVendeur', 'BwsController@produit_vendeur')->name('produitVendeur');
 Route::get('/commandeTraiterVendeur', 'BwsController@commande_traiter_vendeur')->name('commandeTraiterVendeur');
 Route::get('/commandeRecuVendeur', 'BwsController@commande_recu_vendeur')->name('commandeRecuVendeur');
 Route::put('/updateProfilV/{id}','VendeurController@update_profil');
-Route::get('/getproduit','VendeurController@getProduit');
+Route::get('/produitVendeur', 'VendeurController@getProduit')->name('produitVendeur');
 Route::post('/addproduit', 'VendeurController@addProduit');
 Route::get('/getAllsouscategories/{id}','VendeurController@getSousCategories');
 Route::get('/getAllcategories', 'VendeurController@getCategories');
+Route::get('/getAllcolor', 'VendeurController@getColors');
 /************************************************ Client***********************************************/
 
 Route::get('/profilClient','ClientController@profil_clinet')->name('profilClient');
-Route::get('/commandeClient','BwsController@commande_client')->name('commandeClient');
 Route::get('/historiqueClient','BwsController@historique_client')->name('historiqueClient');
 Route::get('/demandeClient','BwsController@demande_clinet')->name('demandeClient');
 Route::get('/panierClient','BwsController@panier_client')->name('panierClient');
 Route::get('/notificationClient','BwsController@notification_client')->name('notificationClient');
 Route::get('/favorisClient','BwsController@favoris_client')->name('favorisClient');
 Route::put('/updateProfilC/{id}','ClientController@update_profil');
-
-Route::get('/getcommande','ClientController@getCommande');
-Route::delete('/deletearticle/{id}','ClientController@deleteArticle');
-
-Route::post('/detaillscommande', 'ClientController@detaillsCommande');
+Route::post('/detaillsacommande', 'ClientController@detaillsCommande'); 
+Route::get('/commandeClient','ClientController@get_commande_client')->name('commandeClient');
+Route::delete('/deletecommande/{id}','ClientController@deleteCommande');
 
 
 

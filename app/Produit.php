@@ -21,4 +21,9 @@ class Produit extends Model
     {
         return $this->hasMany('App\Imageproduit');
     }
+
+    public function color()
+    {
+        return $this->hasMany('App\Color');
+    }
 }

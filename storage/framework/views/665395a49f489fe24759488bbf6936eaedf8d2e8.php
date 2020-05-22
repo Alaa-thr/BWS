@@ -603,7 +603,7 @@ function showTab(n,perv) {
   var options = select.getElementsByTagName('option');
   var cmpt = options[select.selectedIndex].value;
   x[n].style.display = "block";
-  if (cmpt==2 || cmpt==3){
+  if (cmpt==1 || cmpt==2 || cmpt==3){//ki nersa 3la cree compte w tkoun kayna error ki yredni system f register swalah ghi yetbedlo ye9o3do baynin 3la 7sab typeCompte
       onChange();
   }
   if (n == 0) {
