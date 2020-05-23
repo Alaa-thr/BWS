@@ -19,7 +19,11 @@
   <script src="<?php echo e(asset('jss/vue.js')); ?>"></script>
   <script src="<?php echo e(asset('jss/axios.min.js')); ?>"></script>
   <script src="<?php echo e(asset('jss/sweetalert2.js')); ?>"></script>
+<<<<<<< HEAD
 <?php
+=======
+  <?php
+>>>>>>> fbd4bd2206491efaad28d05cc139da022e628496
 
          $stripeCatego='';
                 

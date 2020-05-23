@@ -268,7 +268,7 @@
 
           },
           selectAll: function() {
-            try{
+
             this.selectall = false;
             if (this.allSelected) {
                 for (user in this.categories) {
@@ -284,10 +284,8 @@
               this.selectall = true;
               this.checkedCategorie = [];
             }
-          }catch(error ){
-                               console.log('errors :' , error);
 
-                             }
+                           
              
         },
           deleteArrayCategorie:function(){

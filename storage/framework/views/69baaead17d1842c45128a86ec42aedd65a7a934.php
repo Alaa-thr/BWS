@@ -38,7 +38,7 @@
               
                <div class="row m-b-10" v-for="articlea in articlesadmin" >
                   <div v-if="selectall">
-                    <input type="checkbox" :id="articlea.id" :value="articlea.id" v-model="checkedArticles" @change="changeButton(articlea)">
+                    <input type="checkbox" :id="articlea.id" :value="articlea.id" v-model="checkedArticles" @change="changeButton(articlea)" >
                     <label :for="articlea.id" style="margin-top: 40px; margin-left: 18px;"></label>
                   </div>
                   <div v-else>

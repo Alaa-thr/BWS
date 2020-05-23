@@ -618,14 +618,21 @@
                         <form method="POST" action="<?php echo e(route('login')); ?>">
                             <?php echo csrf_field(); ?>
                             <div class="form-group">
-                                <input class="form-control form-control-lg <?php $__errorArgs = ['email'];
+                                <input class="form-control form-control-lg
+                                <?php echo e($errors->has('email') || $errors->has('numTelephone') ? ' is-invalid' : ''); ?>" name="numTelephone" value="<?php echo e(old('numTelephone')); ?>" type="text" placeholder="Email ou Telephone"  id="numTelephone">
+                                
+                                <?php $__errorArgs = ['numTelephone'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+$message = $__bag->first($__errorArgs[0]); ?>
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong><?php echo e($message); ?></strong>
+                                    </span>
+                                <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
-unset($__errorArgs, $__bag); ?>" name="email" value="<?php echo e(old('email')); ?>" type="email" placeholder="Email ou Telephone"  id="email">
+unset($__errorArgs, $__bag); ?>
 
                                 <?php $__errorArgs = ['email'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');

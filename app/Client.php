@@ -10,7 +10,7 @@ class Client extends Model
 	protected $primaryKey = 'user_id';
 
     protected $fillable = [
-        
+
         'nom','prenom','numeroTelephone', 'email', 'ville','user_id','image','codePostal',
 
     ];
@@ -24,4 +24,5 @@ class Client extends Model
     {
         return $this->hasMany('App\Commande');
     }
+
 }

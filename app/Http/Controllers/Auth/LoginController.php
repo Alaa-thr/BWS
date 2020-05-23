@@ -64,6 +64,13 @@ class LoginController extends Controller
               return  RouteServiceProvider::ADMIN;
         }
     }
+
+    public function username(){
+        $loginType = request()->input('numTelephone');//return string "phone number" or "email" based on input form user
+        $this->numTelephone = filter_var($loginType,FILTER_VALIDATE_EMAIL)? 'email' : 'numTelephone' ;// if the input is email => retur "email" else "phone number"
+        request()->merge([$this->numTelephone => $loginType]);//merge[key=>value](new value) to request object
+        return property_exists($this, 'numTelephone')? $this->numTelephone :'email' ;// return "phone number" or "email"
+    }
     
     
 

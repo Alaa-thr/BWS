@@ -82,6 +82,7 @@ class RegisterController extends Controller
                     'ville' => ['required'],
                     'numTelephone' => ['required', 'string','regex:/0[5-7]/',"min:10","max:10", new NumberExist($data['compte'])],
                     'compte' => ['required'],
+                    'photoC' => ['required'],
                     
                     ]);
                 }

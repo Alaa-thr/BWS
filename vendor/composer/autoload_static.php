@@ -530,7 +530,7 @@ class ComposerStaticInit6ac30e15a1ee6806079f05ef802d642c
         'App\\Rules\\NumberExist' => __DIR__ . '/../..' . '/app/Rules/NumberExist.php',
         'App\\Rules\\TitreDescriptionExist' => __DIR__ . '/../..' . '/app/Rules/TitreDescriptionExist.php',
         'App\\Signal' => __DIR__ . '/../..' . '/app/Signal.php',
-        'App\\SousCategorie' => __DIR__ . '/../..' . '/app/SousCategorie.php',
+        'App\\Sous_categorie' => __DIR__ . '/../..' . '/app/Sous_categorie.php',
         'App\\Tarif_livraison' => __DIR__ . '/../..' . '/app/Tarif_livraison.php',
         'App\\Typechoisirvendeur' => __DIR__ . '/../..' . '/app/Typechoisirvendeur.php',
         'App\\User' => __DIR__ . '/../..' . '/app/User.php',

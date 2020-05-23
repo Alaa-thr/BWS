@@ -268,7 +268,6 @@ unset($__errorArgs, $__bag); ?>" id="exampleFormControlSelect1"  name="compte"  
                             <option value="1" <?php echo e(old('compte') == 1 ? 'selected' : ''); ?>>Client</option>
                             <option value="2" <?php echo e(old('compte') == 2 ? 'selected' : ''); ?>>Vendeur</option>
                             <option value="3" <?php echo e(old('compte') == 3 ? 'selected' : ''); ?>>Employeur</option>
-                            <option value="4" <?php echo e(old('compte') == 4 ? 'selected' : ''); ?>>Admin</option>
 
                         </select>
                         <?php $__errorArgs = ['compte'];
@@ -604,7 +603,7 @@ function showTab(n,perv) {
   var options = select.getElementsByTagName('option');
   var cmpt = options[select.selectedIndex].value;
   x[n].style.display = "block";
-  if (cmpt==2 || cmpt==3){
+  if (cmpt==1 || cmpt==2 || cmpt==3){//ki nersa 3la cree compte w tkoun kayna error ki yredni system f register swalah ghi yetbedlo ye9o3do baynin 3la 7sab typeCompte
       onChange();
   }
   if (n == 0) {
@@ -635,7 +634,7 @@ function nextPrev(n,prev) {
     var options = select.getElementsByTagName('option');
     var cmpt = options[select.selectedIndex].value;
     validateForm();
-    if(cmpt==1 || cmpt==3 || cmpt==4 || cmpt=="") {
+    if(cmpt==1 || cmpt==3 || cmpt=="") {
         document.getElementById("regForm").submit();
         return false;
     }

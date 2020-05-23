@@ -19,7 +19,9 @@
   <script src="{{ asset('jss/vue.js') }}"></script>
   <script src="{{asset('jss/axios.min.js')}}"></script>
   <script src="{{asset('jss/sweetalert2.js')}}"></script>
-<?php
+
+  <?php
+
 
          $stripeCatego='';
                 

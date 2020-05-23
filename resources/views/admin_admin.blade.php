@@ -224,13 +224,13 @@
                     <div class="col-md-5 pr-2" >
                       <div class="form-group mb-3">
                         <label>Nom</label>
-                        <input  type="text" class="formm-control" placeholder="Nom" style="width: 310px;" v-model="adm.nom">
+                        <input  type="text" class="formm-control" placeholder="Votre nom doit commencer par un Maj" style="width: 310px;" v-model="adm.nom">
                       </div>
                     </div>
                     <div class="col-md-5 pr-2" >
                       <div class="form-group mb-3">
                         <label>Prenom</label>
-                        <input  type="text" class="formm-control" placeholder="Prenom" v-model="adm.prenom">
+                        <input  type="text" class="formm-control" placeholder="Votre prenom doit commencer par un Maj" v-model="adm.prenom">
                       </div>
                     </div>
                   </div>
@@ -238,13 +238,13 @@
                     <div class="col-md-5 pr-2" >
                       <div class="form-group">
                         <label>Numero de telephone</label>
-                        <input type="text" class="formm-control" placeholder="055*******" v-model="adm.numTelephone">
+                        <input type="text" class="formm-control" placeholder="05/07/06********" v-model="adm.numTelephone">
                       </div>
                     </div>
                     <div class="col-md-5 pr-2" >
                       <div class="form-group">
                         <label>Email</label>
-                        <input type="email" class="formm-control" placeholder="***********@gmail.com" v-model="adm.email">
+                        <input type="email" class="formm-control" placeholder="Adresse email" v-model="adm.email">
                       </div>
                     </div>
                   </div>
@@ -252,7 +252,7 @@
                     <div class="col-md-10 pr-2">
                       <div  class="form-group">
                         <label>Password</label>
-                        <input type="Password" id="mtps" class="formm-control" placeholder="mot de passe****"style="width: 640px;">
+                        <input type="Password" id="mtps" class="formm-control" placeholder="mot de passe****"style="width: 640px;" v-model="adm.mtps">
                       </div>
                     </div>
                   </div>
@@ -265,22 +265,23 @@
                    </div>
                   </div>
                   <div class="row" style="margin-top: 20px;">
-                    <!--div class="col-md-5 pr-2">
-                      <div class="form-group" >
-                        <label for="">Type</label>
-                        <select style="width: 310px;  height: 38px; border-radius: 0.3em; border-color: #E0E0E0;">
-                          <option >Choisir un type  :</option>
-                          <option>Big-admin</option>
-                          <option>Admin</option>
-                        </select>
-                      </div>
-                    </div-->
                     <div class="col-md-5 pr-2">
                       <div class="form-group">
                         <label for="">Numero de compte BNQ</label>
                         <input type="text" class="formm-control" placeholder="N° compte BNQ" v-model="adm.numCarteBanquaire">
                       </div>
                     </div>
+                    <div class="col-md-5 pr-2">
+                      <div class="form-group" >
+                        <label for="typeAdmin">Type</label>
+                        <select class="form-control" id="typeAdmin" name ="typeAdmin" style="border-radius: 0.3em;" @change="SaveTypeAdmin($event)">
+                            <option value="" hidden selected>Choisir un type:</option>
+                            <option value="1">Big-admin</option>
+                            <option value="2">Admin simple</option>
+                        </select>
+                      </div>
+                    </div>
+                    
                   </div>
                   <div class="row">
                     <div class="col-md-5">
@@ -322,7 +323,6 @@
           addAdmin: function(){
 
             app2.adm.image = app2.image;
-            console.log("app2.adm",app2.adm);
             axios.post(window.Laravel.url+"/addadmin",app2.adm)
 
             .then(response => {
@@ -331,16 +331,16 @@
                  app2.adm.id = response.data.adminAjout.id;
                  window.location.reload();
                  app.adminadmin.push(app2.adm);
-                 console.log("app.adminadmin",app.adminadmin)
                  app2.adm={
                       id: 0,
                       nom: '',
                       prenom: '',
                       email: '',
-                      
+                      big_admin: 0,
                       numTelephone: '', 
                       numCarteBanquaire: '',
                       image: '',
+                      mtps: '',
                  };
                  app2.hideModel=false;
                  app2.openAjout = false;
@@ -365,10 +365,11 @@
           nom: '',
           prenom: '',
           email: '',
-         
+          big_admin: 0,
           numTelephone: '', 
           numCarteBanquaire: '',
           image: '',
+          mtps: '',
         },
         detailsAD:{
           idAD: 0,
@@ -377,6 +378,11 @@
         image: '',
      },
      methods: {
+           SaveTypeAdmin:function(event){
+
+              this.adm.big_admin = event.target.value;
+
+           },
            details_admin: function(){
              axios.post(window.Laravel.url+'/detailsadmin',this.detailsAD)
 
@@ -430,7 +436,6 @@
 
             .then(response => {
                  this.adminadmin = window.Laravel.admin.data;
-                 console.log("user_id",window.Laravel.admin.data)
             })
             .catch(error =>{
                  console.log('errors :' , error);
@@ -440,8 +445,6 @@
          app2.hideModel = true;
          app2.openAjout = true;
          app2.openInfo = false; 
-         console.log("hideModel",app2.hideModel)
-         console.log("openAjout",app2.openAjout)
       },
       AfficherInfo: function($id){
         app2.hideModel=true;

@@ -57,7 +57,7 @@ return array(
     'App\\Rules\\NumberExist' => $baseDir . '/app/Rules/NumberExist.php',
     'App\\Rules\\TitreDescriptionExist' => $baseDir . '/app/Rules/TitreDescriptionExist.php',
     'App\\Signal' => $baseDir . '/app/Signal.php',
-    'App\\SousCategorie' => $baseDir . '/app/SousCategorie.php',
+    'App\\Sous_categorie' => $baseDir . '/app/Sous_categorie.php',
     'App\\Tarif_livraison' => $baseDir . '/app/Tarif_livraison.php',
     'App\\Typechoisirvendeur' => $baseDir . '/app/Typechoisirvendeur.php',
     'App\\User' => $baseDir . '/app/User.php',

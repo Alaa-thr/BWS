@@ -14,7 +14,7 @@ class AddColumnCategorieIdSousCategories extends Migration
     public function up()
     {
         Schema::table('sous_categories', function (Blueprint $table) {
-            $table->foreign('categorie_id')->references('id')->on('categories')->onDelete('RESTRICT');     
+            $table->foreign('categorie_id')->references('id')->on('categories')->onDelete('SET NULL');     
         });
         DB::unprepared('ALTER TABLE `sous_categories` DROP PRIMARY KEY ,ADD PRIMARY KEY (`id`,`categorie_id`)');
     }
