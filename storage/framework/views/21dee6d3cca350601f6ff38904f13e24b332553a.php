@@ -29,7 +29,7 @@
                 <h4 class="card-title " style="margin-top: -5px; ">Mes produits</h4>
                
                     <div class="txt-right"style="margin-top: -50px; " >
-                            <button  v-if="suppr" class="btn-sm btn-info js-show-modal1 m-r-30" style="height: 35px;" v-on:click="AfficherAjout()" ><b>Ajouter article</b>
+                            <button  v-if="suppr" class="btn-sm btn-info js-show-modal1 m-r-30" style="height: 35px;" v-on:click="AfficherAjout()" ><b>Ajouter produit</b>
                             </button>
                             <button  v-else class="btn-sm btn-danger " style="height: 35px; " v-on:click="deleteArrayArticle()"><b>Supprimer</b>
                             </button>
@@ -233,7 +233,7 @@
                     </div>
                 </div>
             </div>
-            <div class="bg0 p-b-150 p-lr-15-lg how-pos3-parent" v-if="openAjout "style=" width: 1050px; padding-top: 45%">
+            <div class="bg0 p-b-150 p-lr-15-lg how-pos3-parent" v-if="openAjout "style=" width: 985px; padding-top: 45%">
                   <button class="how-pos3 hov3 trans-04 p-t-6" v-on:click="CancelArticle()">
                     <img src="images/icon-close.png" alt="CLOSE">
                   </button>
@@ -328,7 +328,7 @@
                                 </button> 
                                 <button type="submit" v-else class="btn btn-success btn-block m-r-5" style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="addProduit()" >Ajouter
                                 </button> 
-                                <button type="submit"  class="btn btn-danger btn-block " style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="CancelArticle()" >Anuller
+                                <button type="submit"  class="btn btn-danger btn-block " style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="CancelArticle()" >Annuler
                                 </button> 
                           </div>
                         </div>
@@ -371,10 +371,6 @@
                      app2.produitAjout = response.data.produitAjout;
                      app2.imageP = response.data.imageProduitAjout;
                      app2.produitAjout.id = response.data.produitAjout.id;
-<<<<<<< HEAD
-                     window.location.reload();
-=======
->>>>>>> fbd4bd2206491efaad28d05cc139da022e628496
                      app.ProduitsVendeur.unshift(app2.produitAjout);
                      app.imagesproduit.unshift(app2.imageP);
                      app2.produitAjout={
