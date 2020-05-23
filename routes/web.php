@@ -94,13 +94,19 @@ Route::put('/updateProfilV/{id}','VendeurController@update_profil');
 /************************************************ Client***********************************************/
 
 Route::get('/profilClient','ClientController@profil_clinet')->name('profilClient');
-Route::get('/commandeClient','BwsController@commande_client')->name('commandeClient');
 Route::get('/historiqueClient','BwsController@historique_client')->name('historiqueClient');
-Route::get('/demandeClient','BwsController@demande_clinet')->name('demandeClient');
 Route::get('/panierClient','BwsController@panier_client')->name('panierClient');
 Route::get('/notificationClient','BwsController@notification_client')->name('notificationClient');
 Route::get('/favorisClient','BwsController@favoris_client')->name('favorisClient');
 Route::put('/updateProfilC/{id}','ClientController@update_profil');
+/***Commande */
+Route::get('/commandeClient','ClientController@get_commande_client')->name('commandeClient');
+Route::post('/detaillsacommande', 'ClientController@detaillsCommande'); 
+Route::delete('/deletecommande/{id}','ClientController@deleteCommande');
+/*demande*/
+Route::get('/demandeClient','DemandeClientController@get_demande_client')->name('demandeClient');
+Route::post('/detaillsademande', 'DemandeClientController@detaillsDemande'); 
+Route::delete('/deletedemande/{id}','DemandeClientController@deleteDemande');
 
 
 
