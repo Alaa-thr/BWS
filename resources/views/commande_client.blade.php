@@ -17,12 +17,12 @@
           <div class="card-header" >
                 
                 <div class="flex-t">
-                    <input type="checkbox" id="article" @change="selectAll()" v-model="allSelected" style="">
+                    <input type="checkbox" id="article" @change="selectAll()" v-model="allSelected">
                     <label for="article"></label>
                     <h4 style="margin-top: -6px;">Commandes</h4>
                 </div>
 
-            <div class="txt-right" style="margin-top: -40px; " >
+            <div class="txt-right"style="margin-top: -40px; " >
                   <button v-if="suppr" class="btn-sm btn-danger " style="height: 35px; " v-on:click="deleteArrayArticle()"><b>Supprimer</b>
                   </button>
                   
@@ -38,7 +38,7 @@
             <div class="card-body"   v-for="commandec in commandeclient" >
 
 <div v-if="selectall" >
-       <input type="checkbox" :id="commandec.id" :value="commandec.id" v-model="checkedArticles" @change="changeButton(commandec)" >
+       <input type="checkbox" :id="commandec.id" :value="commandec.id" v-model="checkedArticles" @change="changeButton(commandec)">
       <label :for="commandec.id" style="margin-top: 40px; margin-left: 10px;"></label>
     </div>
     <div v-else ><div id="ch1">
@@ -442,6 +442,7 @@ methods: {
         });             
     }
 },  
+
 created:function(){
   this.get_commande_client();
 }
