@@ -120,11 +120,11 @@
       <div class="overlay-modal11 " v-on:click="CancelArticle(art)"></div>
   
       <div class="container">
-<<<<<<< HEAD
-        <div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent" v-if="openInfo "   v-for="articlea in articlesadmin2">
-=======
+
+        <!--<div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent" v-if="openInfo "   v-for="articlea in articlesadmin2">-->
+
         <div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent" v-if="openInfo " style=" width: 985px;"   v-for="articlea in articlesadmin2">
->>>>>>> 2cf601d4a54d0bf239f10eb2a74f225868e171cd
+
           <button class="how-pos3 hov3 trans-04 p-t-6 " v-on:click="hideModel = false">
             <img src="images/icon-close.png" alt="CLOSE">
           </button>
@@ -137,19 +137,7 @@
               </div>
             </div>
           </div>
-<<<<<<< HEAD
-          <div class="col-md-10" >
-                <img :src="'storage/articles_image/'+ articlea.image" style="width: 1500px; height: 350px; margin-left: 80px; " />
-          </div> 
-          <div class="title" style="color: red; margin-top: 30px; margin-left: 90px;" >
-                <h4><b>{{  articlea.titre }}</b></h4>
-          </div>
-          <div class="col-md-10">
-              <div class="description " style="margin-left: 80px; color: black; margin-top: 10px; font-size: 17px;">
- artiererzerzerartiererzerzerartiererzerzerartiererzerzerartiererzerzerartiererzerzerartiererzerzerartiererzerzerartiererzerzerartiererzerzerartiererzerzerartiererzerzerartiererzerzerartiererzerzerartiererzerzerartiererzerzerartiererzerzerartiererzerzerartiererzerzer
-              </div>               
-          </div>
-=======
+
           <div class="row">
             <div class="col-md-10" >
               <img :src="'storage/articles_image/'+ articlea.image" style="width: 1500px; height: 450px; margin-left: 80px; " />
@@ -167,16 +155,15 @@
                <p>{{ articlea.description }}</p>
             </div>               
           </div>  
->>>>>>> 2cf601d4a54d0bf239f10eb2a74f225868e171cd
+
         </div>
 
 <!--********************************************************************************************************************************************************************-->
         
-<<<<<<< HEAD
         <div class="bg0 p-b-150 p-lr-15-lg how-pos3-parent" v-if="openAjout" style=" width: 1047px; padding-top: 45%">
-=======
-        <div class="bg0 p-b-150 p-lr-15-lg how-pos3-parent" v-if="openAjout" style=" width: 985px; padding-top: 45%">
->>>>>>> 2cf601d4a54d0bf239f10eb2a74f225868e171cd
+
+        <!--<div class="bg0 p-b-150 p-lr-15-lg how-pos3-parent" v-if="openAjout" style=" width: 985px; padding-top: 45%">-->
+
           <button class="how-pos3 hov3 trans-04 p-t-6" v-on:click="CancelArticle(art)">
             <img src="images/icon-close.png" alt="CLOSE">
           </button>

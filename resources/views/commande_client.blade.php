@@ -112,7 +112,7 @@
   ****************************************************************************************************-->
     <!-- Modal1 for laptob-->
     <div class="wrap-modal11 js-modal1 p-t-38 p-b-20 p-l-15 p-r-15"  id="app2" v-if="hideModel">
-      <div class="overlay-modal11 " v-on:click="CancelArticle(art)"></div>
+      <div class="overlay-modal11 " v-on:click="CancelArticle()"></div>
   
       <div class="container">
         <div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent" v-if="openInfo " style=" width: 1000px;"   v-for="commande in commandesClient">
@@ -395,8 +395,6 @@ var app2 = new Vue({
                       this.artilcesDelete.splice(position,1);                    
                   } 
             });             
-        }
-
         },
         AfficheInfo: function($id){
         app2.hideModel = true; 
@@ -405,7 +403,7 @@ var app2 = new Vue({
         app2.detaillsCommande();
       },
      
-     
+     },
         created:function(){
             this.getCommande();
 

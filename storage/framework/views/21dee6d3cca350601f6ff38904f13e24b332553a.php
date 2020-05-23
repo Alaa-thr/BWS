@@ -358,7 +358,7 @@
                      app2.produitAjout = response.data.produitAjout;
                      app2.imageP = response.data.imageProduitAjout;
                      app2.produitAjout.id = response.data.produitAjout.id;
-                     //window.location.reload();
+                     window.location.reload();
                      app.ProduitsVendeur.unshift(app2.produitAjout);
                      app.imagesproduit.unshift(app2.imageP);
                      app2.produitAjout={
