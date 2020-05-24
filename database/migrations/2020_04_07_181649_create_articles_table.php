@@ -18,7 +18,7 @@ class CreateArticlesTable extends Migration
             $table->unsignedBigInteger('admin_id');
             $table->string('titre')->unique();
             $table->text('description')->unique();
-            $table->string('image')->unique();
+            $table->string('image');
             $table->timestamps();
             $table->foreign('admin_id')->references('id')->on('admins');
         });

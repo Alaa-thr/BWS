@@ -7,12 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Categorie extends Model
 {
     protected $fillable = [
-        'libellé',
+        'libelle',
     ];
-    /*public function souscategorie()
+
+    public function sous_categorie()
     {
-        return $this->belongsTo('App\SousCategorie');
-    }*/
+        return $this->hasMany('App\Sous_categorie');
+    }
+
+
     
     
     

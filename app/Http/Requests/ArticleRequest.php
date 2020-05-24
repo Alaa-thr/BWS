@@ -23,8 +23,8 @@ class ArticleRequest extends FormRequest {//Request 2asmo "ArticleRequest" ytest
     public function rules()//hadou des ram b yellow houma les regles di ytesti ida ram yrispictiwhom ou nn
     {
         return [
-          'titre' => ['required', 'string', 'max:150', 'min:3','regex:/^[a-z0-9A-Z][a-z0-9A-Z,."_éçè!?$àâ(){}]+/',new TitreDescriptionExist()],
-          'description' => ['required', 'string','regex:/^[a-z0-9A-Z][a-z0-9A-Z,."_éçè!?$àâ(){}]+/',new TitreDescriptionExist()],// ^[a-z0-9A-Z] c a d bedya ta3 titre tbeda b a-z ou A-Z ou 0-9
+          'titre' => ['required', 'string', 'max:150', 'min:3','regex:/^[A-Z0-9][a-z0-9A-Z,."_éçè!?$àâ(){}]+/',new TitreDescriptionExist()],
+          'description' => ['required', 'string','regex:/^[A-Z0-9][a-z0-9A-Z,."_éçè!?$àâ(){}]+/',new TitreDescriptionExist()],// ^[a-z0-9A-Z] c a d bedya ta3 titre tbeda b a-z ou A-Z ou 0-9
           'image' => ['required'],
         ];
         //required => khas ydakhel haja (c a d maykhalich l input vide)

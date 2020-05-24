@@ -4,15 +4,16 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SousCategorie extends Model
+class Sous_categorie extends Model
 {
      protected $fillable = [
-        'libelle',
+        'libelle','categorie_id'
     ];
-    /*public function categorie()
+    
+    public function categorie()
     {
         return $this->belongsTo('App\Categorie');
-    }*/
+    }
       
 
 }

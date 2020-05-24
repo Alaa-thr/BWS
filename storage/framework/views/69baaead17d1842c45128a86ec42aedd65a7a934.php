@@ -191,12 +191,14 @@
                 </div>
                 <div class="row">
                   <div class="col-md-10 flex-t">
-                        <button type="submit"  class="btn btn-danger btn-block " style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="CancelArticle(art)" >Anuller
-                        </button> 
                         <button type="submit" v-if="modifier" class="btn btn-success btn-block " style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="updateArticleButton()" >Modifier
                         </button> 
                         <button type="submit" v-else class="btn btn-success btn-block " style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="addArticle()" >Ajouter
-                        </button>     
+                        </button> 
+                        <button type="submit"  class="btn btn-danger btn-block " style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="CancelArticle(art)" >Anuller
+                        </button> 
+                        
+                            
                   </div>
                 </div>
               </div>

@@ -230,8 +230,7 @@
       </nav>
       <!-- End Navbar -->
       <?php echo $__env->yieldContent('content'); ?>
-       
-</div>
+     </div>
            
       <?php echo $__env->yieldPushContent('javascripts'); ?>
 

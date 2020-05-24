@@ -13,10 +13,10 @@ class AddColumnCategorieIdSousCategories extends Migration
      */
     public function up()
     {
-        Schema::table('souscategories', function (Blueprint $table) {
-            $table->foreign('categorie_id')->references('id')->on('categories');     
+        Schema::table('sous_categories', function (Blueprint $table) {
+            $table->foreign('categorie_id')->references('id')->on('categories')->onDelete('SET NULL');     
         });
-        DB::unprepared('ALTER TABLE `souscategories` DROP PRIMARY KEY ,ADD PRIMARY KEY (`id`,`categorie_id`)');
+        DB::unprepared('ALTER TABLE `sous_categories` DROP PRIMARY KEY ,ADD PRIMARY KEY (`id`,`categorie_id`)');
     }
 
     /**
@@ -26,7 +26,7 @@ class AddColumnCategorieIdSousCategories extends Migration
      */
     public function down()
     {
-        Schema::table('souscategories', function (Blueprint $table) {
+        Schema::table('sous_categories', function (Blueprint $table) {
             $table->dropForeign('categories_categorie_id_foreign');
             $table->dropForeign(['categorie_id']);   
         });
