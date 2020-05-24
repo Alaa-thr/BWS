@@ -332,7 +332,6 @@
           addAdmin: function(){
 
             app2.adm.image = app2.image;
-            console.log("app2.adm",app2.adm);
             axios.post(window.Laravel.url+"/addadmin",app2.adm)
 
             .then(response => {
@@ -427,12 +426,14 @@
           nom: '',
           prenom: '',
           email: '',
-          
+          type: '',
           numTelephone: '', 
           numCarteBanquaire: '',
           image: '',
+          mtps: '',
         };
         this.message={};
+        app2.image = '';
       },
        
     },
