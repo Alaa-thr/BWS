@@ -3,10 +3,11 @@
 namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
-use App\User;
+
 use App\Client;
 use App\Vendeur;
 use App\Employeur; 
+use App\Admin;
 class NumberExist implements Rule
 {
     /**
@@ -30,10 +31,11 @@ class NumberExist implements Rule
      */
     public function passes($attribute, $value)
     {
-        $users = User::All();
+
         $clients = Client::All();
         $vendeurs = Vendeur::All();
         $employeurs = Employeur::All();
+        $admins = Admin::All();
         if($this->data == 1){
             foreach($clients as $client) {
                 if( $client->numeroTelephone == $value){
@@ -51,6 +53,13 @@ class NumberExist implements Rule
         else if($this->data == 3){
             foreach($employeurs as $employeur) {
                 if( $employeur->num_tel == $value){
+                    return false;
+                }
+            }
+        }
+        else if($this->data == 4){
+            foreach($admins as $admin) {
+                if( $admin->numTelephone == $value){
                     return false;
                 }
             }

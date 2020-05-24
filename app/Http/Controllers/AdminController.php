@@ -19,7 +19,10 @@ use App\Http\Requests\ArticleRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Rules\ModifieTextDescriptionArticle;
-
+use Illuminate\Support\Facades\Hash;
+use App\Rules\NumberExist;
+use App\Rules\EmailExist;
+use App\Rules\NumCarteBancaireExist;
 class AdminController extends Controller
 {
      public function profil_admin(){
@@ -255,6 +258,18 @@ class AdminController extends Controller
           
     }
     public function addAdmin(Request $request){
+        
+        $request->validate([
+                'numTelephone' =>  ['required', 'string','regex:/^0[5-7][0-9]+/',"min:10","max:10", new NumberExist(4)],
+                'email' =>['required', 'string', 'email', 'max:40', new EmailExist(4)],
+                'mtps' =>['required', 'string', 'min:8'],
+                'nom' =>['required','regex:/[A-Z-0-9][a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
+                'prenom' =>['required','regex:/[A-Z-0-9][a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
+                'type' =>['required'],
+                'image' =>['required'],
+                'numCarteBanquaire' =>['required', new NumCarteBancaireExist(4)],
+        ]);
+
          $exploded = explode(',', $request->image);
          $decoded = base64_decode($exploded[1]);//Décode une chaîne en MIME base64
          if(str_contains($exploded[0], 'jpeg')){
@@ -269,19 +284,25 @@ class AdminController extends Controller
          $user = new User;
          $user->numTelephone = $request->numTelephone;
          $user->email = $request->email;
-         $user->password = $request->password;
+         $user->password = Hash::make($request->mtps);
          $user->type_compte = 'a';
+         $user->save();
          $admin2->nom = $request->nom;
          $admin2->prenom = $request->prenom;
-         $admin2->user_id = $request->user_id;
+         $admin2->user_id = $user->id;
          $admin2->email = $request->email;
-         //$admin2->big_admin = $request->big_admin;
+         if($request->type == '2'){
+                $admin2->big_admin = 0;
+         }
+         else{
+            $admin2->big_admin = $request->type;
+         }
+         
          $admin2->numTelephone = $request->numTelephone;
          $admin2->numCarteBanquaire = $request->numCarteBanquaire;
          $admin2->image = $fileName;
          
          $admin2->save();
-         $user->save();
          return Response()->json(['etat' => true,'adminAjout' => $admin2]);
     }
 

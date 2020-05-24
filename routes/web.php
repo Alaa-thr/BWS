@@ -88,7 +88,11 @@ Route::get('/produitVendeur', 'BwsController@produit_vendeur')->name('produitVen
 Route::get('/commandeTraiterVendeur', 'BwsController@commande_traiter_vendeur')->name('commandeTraiterVendeur');
 Route::get('/commandeRecuVendeur', 'BwsController@commande_recu_vendeur')->name('commandeRecuVendeur');
 Route::put('/updateProfilV/{id}','VendeurController@update_profil');
-
+Route::get('/produitVendeur', 'VendeurController@getProduit')->name('produitVendeur');
+Route::post('/addproduit', 'VendeurController@addProduit');
+Route::get('/getAllsouscategories/{id}','VendeurController@getSousCategories');
+Route::get('/getAllcategories', 'VendeurController@getCategories');
+Route::get('/getAllcolor', 'VendeurController@getColors');
 
 
 /************************************************ Client***********************************************/

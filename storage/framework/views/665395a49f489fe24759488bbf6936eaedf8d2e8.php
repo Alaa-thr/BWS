@@ -164,7 +164,7 @@ if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
-unset($__errorArgs, $__bag); ?>" name="numTelephone" value="<?php echo e(old('numTelephone')); ?>" id="numtlf" type="text" placeholder="Numero Telephone*">
+unset($__errorArgs, $__bag); ?>" name="numTelephone" value="<?php echo e(old('numTelephone')); ?>" id="numtlf" type="tel" placeholder="Numero Telephone*">
 
                         <?php $__errorArgs = ['numTelephone'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -255,6 +255,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                     </div>
                     <div class="" style="width: 375px">
+
                         <select class="form-control form-control-lg <?php $__errorArgs = ['compte'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -263,11 +264,11 @@ $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>" id="exampleFormControlSelect1"  name="compte"  onchange="onChange()" style="height: 45px" value="<?php echo e(old('compte')); ?>">
-                            <option value="" selected hidden="hidden">Crée compte tent que</option>
+                            <option value="" selected hidden="hidden">Crée compte tant que</option>
                             <option value="1" <?php echo e(old('compte') == 1 ? 'selected' : ''); ?>>Client</option>
                             <option value="2" <?php echo e(old('compte') == 2 ? 'selected' : ''); ?>>Vendeur</option>
                             <option value="3" <?php echo e(old('compte') == 3 ? 'selected' : ''); ?>>Employeur</option>
-                            <option value="4" <?php echo e(old('compte') == 4 ? 'selected' : ''); ?>>Admin</option>
+
                         </select>
                         <?php $__errorArgs = ['compte'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -282,6 +283,29 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                     </div>
+    </div>
+    <div class="from-group  m-b-40 openC" style="display: none">
+                    <input type="file" class="form-control <?php $__errorArgs = ['photoC'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" name="photoC" value="<?php echo e(old('photoC')); ?>" style="height: 45px">
+                    <?php $__errorArgs = ['photoC'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <span class="invalid-feedback" role="alert">
+                                <strong><?php echo e($message); ?></strong>
+                            </span>
+                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                        
     </div>
      <div class="form-group flex-t m-b-35 openV"  style="display: none">
                     <div class=" m-r-30" style="width: 375px">
@@ -579,7 +603,7 @@ function showTab(n,perv) {
   var options = select.getElementsByTagName('option');
   var cmpt = options[select.selectedIndex].value;
   x[n].style.display = "block";
-  if (cmpt==2 || cmpt==3){
+  if (cmpt==1 || cmpt==2 || cmpt==3){//ki nersa 3la cree compte w tkoun kayna error ki yredni system f register swalah ghi yetbedlo ye9o3do baynin 3la 7sab typeCompte
       onChange();
   }
   if (n == 0) {
@@ -610,7 +634,7 @@ function nextPrev(n,prev) {
     var options = select.getElementsByTagName('option');
     var cmpt = options[select.selectedIndex].value;
     validateForm();
-    if(cmpt==1 || cmpt==3 || cmpt==4 || cmpt=="") {
+    if(cmpt==1 || cmpt==3 || cmpt=="") {
         document.getElementById("regForm").submit();
         return false;
     }
@@ -661,6 +685,7 @@ function onChange() {
     var cmpt = options[select.selectedIndex].value;
     var v = document.getElementsByClassName("openV");
     var e = document.getElementsByClassName("openE");
+    var c = document.getElementsByClassName("openC")
     var v_nextPrevious = document.getElementById("nextPrevious");
     if(cmpt==0){
         document.getElementById("nextBtn").innerHTML = "Creer Compte";
@@ -678,12 +703,14 @@ function onChange() {
         e[0].style.display= "none";
         e[1].style.display= "none";
         e[2].style.display= "none";
+        c[0].style.display= "none";
 
     }
     else if(cmpt==1) {
         document.getElementById("stepp").style.display = "none";
         document.getElementById("nextBtn").innerHTML = "Creer Compte";
         document.getElementById("nextBtn").style.background = "#ca2323";
+        c[0].style.display= "block";
         v[0].style.display= "none";
         v[1].style.display= "none";
         v[2].style.display= "none";
@@ -702,6 +729,7 @@ function onChange() {
         e[0].style.display= "flex";
         e[1].style.display= "block";
         e[2].style.display= "block";
+        c[0].style.display= "none";
 
     }
 
