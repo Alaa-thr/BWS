@@ -95,16 +95,20 @@ font-size: 16px;}
   color: rgb(192,4,4);
   font-weight: 800;
   font-style: italic;
-margin-left: 10px;
-padding-top: 10px;
+margin-left: -3 px;}
+ 
+#ch1{
+   width:2%;
+  margin-left: 20px;
 }
+
 
 #t{
 color:black;
 font-size: 15px; 
 font-weight: 600;
 font-style: italic;
-margin-top: -18px;
+margin-top: -5px;
 margin-left: 12px;
 }
 #tt{
@@ -3764,3 +3768,9 @@ input.num-product::-webkit-inner-spin-button {
   }
 
 }
+.pagination li { 
+  display: inline-flex;
+  padding: 10px;
+  text-decoration: none;
+}
+

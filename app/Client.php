@@ -6,16 +6,25 @@ use Illuminate\Database\Eloquent\Model;
 
 class Client extends Model
 {
-	
-	
+
 	protected $primaryKey = 'user_id';
+
     protected $fillable = [
-        'nom','prenom','numeroTelephone', 'email', 'ville','user_id','image'
+        'user_id','nom','prenom','ville','email','codePostal','numeroTelephone','image','nbr_cmd','created_at','updated_at','deletedc',
     ];
 
-    public function user()
+    public function client()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\Client');
     }
     
+    public function commande()
+    {
+        return $this->hasMany('App\Commande');
+    }
+
+    public function demande_emploie()
+    {
+        return $this->hasMany('App\Demande_emploie');
+    }
 }
