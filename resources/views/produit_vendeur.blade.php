@@ -30,7 +30,6 @@
                
                     <div class="txt-right"style="margin-top: -50px; " >
                             <button  v-if="suppr" class="btn-sm btn-info js-show-modal1 m-r-30" style="height: 35px;" v-on:click="AfficherAjout()" ><b>Ajouter produit</b>
-                            </button>
                             <button  v-else class="btn-sm btn-danger " style="height: 35px; " v-on:click="deleteArrayArticle()"><b>Supprimer</b>
                             </button>
                             <button v-else v-on:click="AnnulerSel()"  class="btn-sm btn-warning " style="height: 35px; " ><b>Annuler</b>
@@ -242,7 +241,7 @@
                           <div class="col-md-10 pr-2" >
                             <div class="form-group mb-3">
                               <label>Nom de Poduit</label>
-                              <input  type="text" class="form-control" placeholder="Nom de Poduit*" v-model="produitAjout.Libellé" :class="{'is-invalid' : message.Libellé}"/>
+                              <input  type="text" class="form-control" placeholder="Le nom doit commencer par un Maj" v-model="produitAjout.Libellé" :class="{'is-invalid' : message.Libellé}"/>
                               <span class="px-3 cl13" v-if="message.Libellé" v-text="message.Libellé[0]">
                               </span>
                               
@@ -253,7 +252,7 @@
                           <div class="col-md-10 pr-2" >
                             <div class="form-group ">
                               <label>Description de Produit</label>
-                              <textarea class="form-control" placeholder="Description*" v-model="produitAjout.description" :class="{'is-invalid' : message.description}"></textarea>
+                              <textarea class="form-control" placeholder="La description doit commencer par un Maj" v-model="produitAjout.description" :class="{'is-invalid' : message.description}"></textarea>
                                <span class="px-3 cl13" v-if="message.description" v-text="message.description[0]">
                               </span>
                             </div>
@@ -278,7 +277,7 @@
                           <div class="col-md-10 pr-2" >
                             <div class="form-group">
                               <label>Prix</label>
-                              <input type="number" name="" class="form-control" placeholder="0.00/DA*" v-model="produitAjout.prix" :class="{'is-invalid' : message.prix}" />
+                              <input type="number" name="prix" class="form-control" placeholder="0.00/DA*" v-model="produitAjout.prix" :class="{'is-invalid' : message.prix}" />
                               <span class="px-3 cl13" v-if="message.prix" v-text="message.prix[0]">
                               </span>
                             </div>
@@ -288,24 +287,23 @@
                          
                             <div class="form-group m-r-45" style="width: 320px">
                               <label>Quantité de Produit</label>
-                              <input type="number" name="" class="form-control" placeholder="0.00/Piece*" v-model="produitAjout.Qte_P" :class="{'is-invalid' : message.Qte_P}"/>
+                              <input type="number" name="Qte_P" class="form-control" placeholder="0.00/Piece*" v-model="produitAjout.Qte_P" :class="{'is-invalid' : message.Qte_P}"/>
                               <span class="px-3 cl13" v-if="message.Qte_P" v-text="message.Qte_P[0]"></span>
                             </div>
                             <div class="form-group  " style="width: 320px">
                               <label>Poid de Produit</label>
-                              <input type="number" name="" class="form-control" placeholder="0.00Kg/g*" v-model="produitAjout.poid" :class="{'is-invalid' : message.poid}" />
+                              <input type="number" name="poid" class="form-control" placeholder="0.00Kg/g*" v-model="produitAjout.poid" :class="{'is-invalid' : message.poid}" />
                               <span class="px-3 cl13" v-if="message.poid" v-text="message.poid[0]"></span>
                             </div>
                          
                         </div>
                         <div class="row col-md-12 pr-2 flex-t m-b-35">
-                            <select class="form-control form-control-lg m-r-45" id="categoSelect" name="ville" style="height: 40px; width: 320px ;border-radius: 1em;" v-on:change="activeSousCatego($event)" :class="{'is-invalid' : message.catego}">
+                            <select class="form-control form-control-lg m-r-45" id="categoSelect" name="catego" style="height: 40px; width: 320px ;border-radius: 1em;" v-on:change="activeSousCatego($event)" :class="{'is-invalid' : message.catego}">
                               <option value="" hidden="hidden" selected>&nbsp&nbspSélectionner une Ctegorie</option> 
                               <option v-for="catego in categories" :value="catego.id" >&nbsp&nbsp@{{catego.libelle}}</option> 
                             </select>
                             <span class="px-3 cl13" v-if="message.catego" v-text="message.catego[0]"></span>
-
-                            <select class="form-control form-control-lg " id="sousCtagoSelect" name="ville" style="height: 40px;width: 320px;border-radius: 1em; " disabled= "true" v-on:change="getIdSousCatego($event)" :class="{'is-invalid' : message.sous_categorie_id}">
+                            <select class="form-control form-control-lg " id="sousCtagoSelect" name="sous_categorie_id" style="height: 40px;width: 320px;border-radius: 1em; " disabled= "true" v-on:change="getIdSousCatego($event)" :class="{'is-invalid' : message.sous_categorie_id}">
                               <option value="" hidden="hidden" selected>&nbsp&nbspSélectionner une Sous Categorie</option> 
                               <option v-for="Scatego in sousCategories" :value="Scatego.id" >&nbsp&nbsp@{{Scatego.libelle}}</option> 
                             </select>
@@ -374,13 +372,13 @@
                      app.imagesproduit.unshift(app2.imageP);
                      app2.produitAjout={
                             id: 0,
-                            sous_categorie_id: 0,
-                            catego: 0,
+                            sous_categorie_id: '',
+                            catego: '',
                             Libellé: '',
-                            prix: 0,
+                            prix: '',
                             description: '',
-                            Qte_P: 0,
-                            poid: 0,
+                            Qte_P: '',
+                            poid: '',
                             image: '',
                             images: [],
                             colors: [],
@@ -415,13 +413,13 @@
           modifier: false,
           produitAjout: {
             id: 0,
-            sous_categorie_id: 0,
-            catego: 0,
+            sous_categorie_id: '',
+            catego: '',
             Libellé: '',
-            prix: 0,
+            prix: '',
             description: '',
-            Qte_P: 0,
-            poid: 0,
+            Qte_P: '',
+            poid: '',
             image: '',
             images: [],
             colors: [],

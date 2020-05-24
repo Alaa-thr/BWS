@@ -22,4 +22,9 @@ class Client extends Model
     {
         return $this->hasMany('App\Commande');
     }
+
+    public function demande_emploie()
+    {
+        return $this->hasMany('App\Demande_emploie');
+    }
 }

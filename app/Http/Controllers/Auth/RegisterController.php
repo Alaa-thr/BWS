@@ -77,7 +77,7 @@ class RegisterController extends Controller
                     return Validator::make($data, [
                     'nom' => ['required', 'string', 'max:30'],
                     'prenom' => ['required', 'string', 'max:30'],
-                    'email' => ['required', 'string', 'email', 'max:255', new EmailExist($data['compte']),'regex:/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/'],
+                    'email' => ['required', 'string', 'email', 'max:255', new EmailExist($data['compte'])],
                     'password' => ['required', 'string', 'min:8'],
                     'ville' => ['required'],
                     'numTelephone' => ['required', 'string','regex:/0[5-7]/',"min:10","max:10", new NumberExist($data['compte'])],
@@ -90,12 +90,12 @@ class RegisterController extends Controller
                     return Validator::make($data, [
                     'nom' => ['required', 'string', 'max:30'],
                     'prenom' => ['required', 'string', 'max:30'],
-                    'email' => ['required', 'string', 'email', 'max:255' , new EmailExist($data['compte']),'regex:/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/'],
+                    'email' => ['required', 'string', 'email', 'max:255' , new EmailExist($data['compte'])],
                     'password' => ['required', 'string', 'min:8'],
                     'ville' => ['required'],
                     'numTelephone' => ['required', 'string','regex:/0[5-7]/',"min:10","max:10", new NumberExist($data['compte'])],
                     //'regex:/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/' => characters@characters.domain (characters followed by an @ sign, followed by more characters, and then a "." After the "." sign, add at least 2 letters from a to z
-                    'Num_Compte_Banquaire' => ['required'], 
+                    'Num_Compte_Banquaire' => ['required',  new NumCarteBancaireExist(2)], 
                     'addrsse_boutique'=> ['required'],
                     'compte' => ['required'],
                     'photoV' => ['required'],
@@ -110,7 +110,7 @@ class RegisterController extends Controller
                     'password' => ['required', 'string', 'min:8'],
                     'ville' => ['required'],
                     'numTelephone' => ['required', 'string','regex:/0[5-7]/',"min:10","max:10", new NumberExist($data['compte'])],
-                    'num_compte_banquiare' => ['required'],
+                    'num_compte_banquiare' => ['required', new NumCarteBancaireExist(3)],
                     'addrsse_soct' => ['required'],
                     'compte' => ['required'],
                     'nom_societe'=> ['required'],

@@ -85,9 +85,6 @@
     </div>
     </div>      
   </div>
-
-  
-    
 </div>                   {{$article->links()}}
               </div>
 
@@ -423,30 +420,17 @@ methods: {
                 this.articleIds.push(this.commandeclient[user].id);
                 this.artilcesDelete.push(this.commandeclient[user]);
             }
-<<<<<<< HEAD
              
-        },
-        deselectArticle: function(article){
+        }
+      },
+      deselectArticle: function(article){
              this.artilcesDelete.forEach(key => {
                   if(key.id == article){
                       var position = this.artilcesDelete.indexOf(key);
                       this.artilcesDelete.splice(position,1);                    
                   } 
             });             
-        },
-        AfficheInfo: function($id){
-        app2.hideModel = true; 
-        app2.openInfo = true;
-        app2.detaillsC.idC= $id;
-        app2.detaillsCommande();
-      },
-     
-     },
-        created:function(){
-            this.getCommande();
-=======
-            this.suppr=true;
-         }
+        
          else{
           this.articleIds = [];
           this.artilcesDelete= [];
@@ -454,24 +438,14 @@ methods: {
           this.selectall = true;
           this.checkedArticles = [];
         }
-         
-    },
-    deselectArticle: function(article){
-         this.artilcesDelete.forEach(key => {
-              if(key.id == article){
-                  var position = this.artilcesDelete.indexOf(key);
-                  this.artilcesDelete.splice(position,1);                    
-              } 
-        });             
-    }
-},  
-
+      }, 
+    
+  },  
 created:function(){
   this.get_commande_client();
 }
 });
 
->>>>>>> fbd4bd2206491efaad28d05cc139da022e628496
 
 </script>
 

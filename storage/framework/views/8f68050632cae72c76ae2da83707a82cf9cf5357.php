@@ -64,17 +64,17 @@
                           {{admina.numTelephone}} 
                         </td>
                         <td>
-                        	{{admina.email}} 
+                          {{admina.email}} 
 
                         </td>
                         <td  class="dropdown " id="k">
-                        	<a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
-                        	      <img src="assetsAdmin/img/menu.png" alt="..."/ id="k1">
+                          <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
+                                <img src="assetsAdmin/img/menu.png" alt="..."/ id="k1">
                              </a>
                             <div class="dropdown-menu dropdown-menu-right" style="margin-top: -10px; margin-right: -10px;">
-                            	<a class="dropdown-item js-show-modal1" href="#" id="k2" v-on:click="AfficherInfo(admina.id)">Details</a>
-				                      <a class="dropdown-item" href="#" id="k2" v-on:click="deleteAdmin(admina)">Supprimer</a>
-				                    </div>
+                              <a class="dropdown-item js-show-modal1" href="#" id="k2" v-on:click="AfficherInfo(admina.id)">Details</a>
+                              <a class="dropdown-item" href="#" id="k2" v-on:click="deleteAdmin(admina)">Supprimer</a>
+                            </div>
                         </td>
                         <td>
                         </td>
@@ -221,17 +221,32 @@
           <section class=" creat-article ">     
             <div  class=" container-creat-article" style="margin-top: -55px;">
                 <?php echo csrf_field(); ?>
+<<<<<<< HEAD
                   <div class="row">
                     <div class="col-md-5 pr-2" >
                       <div class="form-group mb-3">
                         <label>Nom</label>
                         <input  type="text" class="formm-control" placeholder="Votre nom doit commencer par un Maj" style="width: 310px;" v-model="adm.nom">
+=======
+                  <div class="row m-t-20">
+                    <div class="col-md-5 pr-2" >
+                      <div class="form-group mb-3">
+                        <label>Nom</label>
+                        <input  type="text" class="formm-control " placeholder="Votre nom doit commencer par un Maj" style="width: 310px;" v-model="adm.nom" :class="{'is-invalid' : message.nom}">
+                        <span class="px-3 cl13" v-if="message.nom" v-text="message.nom[0]"></span>
+                       
+>>>>>>> 36f9fd2f3b4d7854deaf97da4195c3f9a79ef164
                       </div>
                     </div>
                     <div class="col-md-5 pr-2" >
                       <div class="form-group mb-3">
                         <label>Prenom</label>
+<<<<<<< HEAD
                         <input  type="text" class="formm-control" placeholder="Votre prenom doit commencer par un Maj" v-model="adm.prenom">
+=======
+                        <input  type="text" class="formm-control" placeholder="Votre prenom doit commencer par un Maj" v-model="adm.prenom" :class="{'is-invalid' : message.prenom}">
+                        <span class="px-3 cl13" v-if="message.prenom" v-text="message.prenom[0]"></span>
+>>>>>>> 36f9fd2f3b4d7854deaf97da4195c3f9a79ef164
                       </div>
                     </div>
                   </div>
@@ -239,13 +254,23 @@
                     <div class="col-md-5 pr-2" >
                       <div class="form-group">
                         <label>Numero de telephone</label>
+<<<<<<< HEAD
                         <input type="text" class="formm-control" placeholder="05/07/06********" v-model="adm.numTelephone">
+=======
+                        <input type="text" class="formm-control" placeholder="05/07/06********" v-model="adm.numTelephone" :class="{'is-invalid' : message.numTelephone}">
+                        <span class="px-3 cl13" v-if="message.numTelephone" v-text="message.numTelephone[0]"></span>
+>>>>>>> 36f9fd2f3b4d7854deaf97da4195c3f9a79ef164
                       </div>
                     </div>
                     <div class="col-md-5 pr-2" >
                       <div class="form-group">
                         <label>Email</label>
+<<<<<<< HEAD
                         <input type="email" class="formm-control" placeholder="Adresse email" v-model="adm.email">
+=======
+                        <input type="email" class="formm-control" placeholder="Adresse email" v-model="adm.email" :class="{'is-invalid' : message.email}">
+                        <span class="px-3 cl13" v-if="message.email" v-text="message.email[0]"></span>
+>>>>>>> 36f9fd2f3b4d7854deaf97da4195c3f9a79ef164
                       </div>
                     </div>
                   </div>
@@ -253,7 +278,12 @@
                     <div class="col-md-10 pr-2">
                       <div  class="form-group">
                         <label>Password</label>
+<<<<<<< HEAD
                         <input type="Password" id="mtps" class="formm-control" placeholder="mot de passe****"style="width: 640px;" v-model="adm.mtps">
+=======
+                        <input type="Password" id="mtps" class="formm-control" placeholder="mot de passe****"style="width: 640px;" v-model="adm.mtps" :class="{'is-invalid' : message.mtps}">
+                        <span class="px-3 cl13" v-if="message.mtps" v-text="message.mtps[0]"></span>
+>>>>>>> 36f9fd2f3b4d7854deaf97da4195c3f9a79ef164
                       </div>
                     </div>
                   </div>
@@ -261,7 +291,8 @@
                     <div class="col-md-10 pr-2" >
                       <div class="form-group" >
                         <label for="image" >image</label>
-                        <input type="file" class="formm-control" v-on:change="imagePreview">
+                        <input type="file" class="formm-control" v-on:change="imagePreview" :class="{'is-invalid' : message.image}">
+                        <span class="px-3 cl13" v-if="message.image" v-text="message.image[0]"></span>
                       </div>
                    </div>
                   </div>
@@ -269,17 +300,26 @@
                     <div class="col-md-5 pr-2">
                       <div class="form-group">
                         <label for="">Numero de compte BNQ</label>
-                        <input type="text" class="formm-control" placeholder="N° compte BNQ" v-model="adm.numCarteBanquaire">
+                        <input type="text" class="formm-control" placeholder="N° compte BNQ" v-model="adm.numCarteBanquaire" :class="{'is-invalid' : message.numCarteBanquaire}">
+                        <span class="px-3 cl13" v-if="message.numCarteBanquaire" v-text="message.numCarteBanquaire[0]"></span>
                       </div>
                     </div>
                     <div class="col-md-5 pr-2">
                       <div class="form-group" >
                         <label for="typeAdmin">Type</label>
+<<<<<<< HEAD
                         <select class="form-control" id="typeAdmin" name ="typeAdmin" style="border-radius: 0.3em;" @change="SaveTypeAdmin($event)">
+=======
+                        <select class="form-control" id="typeAdmin" name ="typeAdmin" style="border-radius: 0.3em;" @change="SaveTypeAdmin($event)" :class="{'is-invalid' : message.type}">
+>>>>>>> 36f9fd2f3b4d7854deaf97da4195c3f9a79ef164
                             <option value="" hidden selected>Choisir un type:</option>
                             <option value="1">Big-admin</option>
                             <option value="2">Admin simple</option>
                         </select>
+<<<<<<< HEAD
+=======
+                        <span class="px-3 cl13" v-if="message.type" v-text="message.type[0]"></span>
+>>>>>>> 36f9fd2f3b4d7854deaf97da4195c3f9a79ef164
                       </div>
                     </div>
                     
@@ -333,13 +373,16 @@
                  app2.adm.id = response.data.adminAjout.id;
                  window.location.reload();
                  app.adminadmin.push(app2.adm);
-                 console.log("app.adminadmin",app.adminadmin)
                  app2.adm={
                       id: 0,
                       nom: '',
                       prenom: '',
                       email: '',
+<<<<<<< HEAD
                       big_admin: 0,
+=======
+                      type: 0,
+>>>>>>> 36f9fd2f3b4d7854deaf97da4195c3f9a79ef164
                       numTelephone: '', 
                       numCarteBanquaire: '',
                       image: '',
@@ -348,10 +391,12 @@
                  app2.hideModel=false;
                  app2.openAjout = false;
                  app2.image = '';
+                 app2.message  = {};
               }          
             })
             .catch(error =>{
-                console.log('errors :' , error);
+                app2.message = error.response.data.errors;
+                console.log('errors :' , app2.message);
             })
       },         
     }                     
@@ -368,7 +413,11 @@
           nom: '',
           prenom: '',
           email: '',
+<<<<<<< HEAD
           big_admin: 0,
+=======
+          type: '',
+>>>>>>> 36f9fd2f3b4d7854deaf97da4195c3f9a79ef164
           numTelephone: '', 
           numCarteBanquaire: '',
           image: '',
@@ -379,11 +428,16 @@
           
         },
         image: '',
+        message: {},
      },
      methods: {
            SaveTypeAdmin:function(event){
 
+<<<<<<< HEAD
               this.adm.big_admin = event.target.value;
+=======
+              this.adm.type = event.target.value;
+>>>>>>> 36f9fd2f3b4d7854deaf97da4195c3f9a79ef164
 
            },
            details_admin: function(){
@@ -422,6 +476,7 @@
           numCarteBanquaire: '',
           image: '',
         };
+        this.message={};
       },
        
     },

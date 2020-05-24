@@ -62,8 +62,8 @@ class VendeurController extends Controller
      }
     public function addProduit(Request $request){
             $request->validate([
-                'Libellé' => ['required','regex:/[A-Z0-9][a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
-                'description' => ['required','regex:/[A-Z0-9][a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
+                'Libellé' => ['required','regex:/^[A-Z0-9][a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
+                'description' => ['required','regex:/^[A-Z0-9][a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
                 'prix' =>['required'],
                 'sous_categorie_id' =>['required'],
                 'Qte_P' =>['required'],

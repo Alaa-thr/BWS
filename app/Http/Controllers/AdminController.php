@@ -21,7 +21,10 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Rules\ModifieTextDescriptionArticle;
 use Illuminate\Support\Facades\Hash;
-
+use App\Rules\NumberExist;
+use App\Rules\EmailExist;
+use App\Rules\NumCarteBancaireExist;
+>>>>>>> 36f9fd2f3b4d7854deaf97da4195c3f9a79ef164
 class AdminController extends Controller
 {
      public function profil_admin(){
@@ -263,16 +266,15 @@ class AdminController extends Controller
           
     }
     public function addAdmin(Request $request){
-
         $request->validate([
-                'numTelephone' => ['required','regex:/[A-Z][a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
-                'email' => ['required','regex:/[A-Z][a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
-                'password' =>['required'],
-                'nom' =>['required'],
-                'prenom' =>['required'],
-                'big_admin' =>['required'],
+                'numTelephone' =>  ['required', 'string','regex:/^0[5-7][0-9]+/',"min:10","max:10", new NumberExist(4)],
+                'email' =>['required', 'string', 'email', 'max:40', new EmailExist(4)],
+                'mtps' =>['required', 'string', 'min:8'],
+                'nom' =>['required','regex:/[A-Z-0-9][a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
+                'prenom' =>['required','regex:/[A-Z-0-9][a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
+                'type' =>['required'],
                 'image' =>['required'],
-                'numCarteBanquaire' =>['required'],
+                'numCarteBanquaire' =>['required', new NumCarteBancaireExist(4)],
         ]);
 
          $exploded = explode(',', $request->image);
@@ -289,18 +291,18 @@ class AdminController extends Controller
          $user = new User;
          $user->numTelephone = $request->numTelephone;
          $user->email = $request->email;
-         $user->password = Hash::make($request->password);
+         $user->password = Hash::make($request->mtps);
          $user->type_compte = 'a';
          $user->save();
          $admin2->nom = $request->nom;
          $admin2->prenom = $request->prenom;
          $admin2->user_id = $user->id;
          $admin2->email = $request->email;
-         if($request->big_admin == 2){
+         if($request->type == '2'){
                 $admin2->big_admin = 0;
          }
          else{
-            $admin2->big_admin = $request->big_admin;
+            $admin2->big_admin = $request->type;
          }
          
          $admin2->numTelephone = $request->numTelephone;
