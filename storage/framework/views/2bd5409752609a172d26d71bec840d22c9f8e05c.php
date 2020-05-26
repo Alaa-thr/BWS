@@ -128,7 +128,7 @@
         </div>
       </footer>
     </div>
-  </div>
+  
   
   <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.template_admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\BWS\resources\views/emails_admin.blade.php ENDPATH**/ ?>

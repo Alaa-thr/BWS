@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Validator;
 use Auth;
 use App\Rules\EmailExist;
 use App\Rules\NumberExist;
+use App\Rules\NumCarteBancaireExist;
 use Illuminate\Support\Facades\Storage;
 class RegisterController extends Controller
 {

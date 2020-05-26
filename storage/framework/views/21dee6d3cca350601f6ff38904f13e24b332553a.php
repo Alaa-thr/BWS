@@ -543,7 +543,6 @@
             axios.get(window.Laravel.url+'/produitVendeur')
               .then(response => {
                 this.ProduitsVendeur = window.Laravel.produit.data;
-                console.log("response.data.produit.data",this.ProduitsVendeur);
                 this.imagesproduit = window.Laravel.ImageP;
                })
               .catch(error => {

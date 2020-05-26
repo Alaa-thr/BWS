@@ -11,7 +11,7 @@
       <div class="panel-header panel-header-sm">
       </div>
       <div class="content" id="app">
-        <!--<div class="row">
+        <div class="row">
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
@@ -40,14 +40,14 @@
                   </div>
                   <div class="col-md-2 " style="margin-left: 20px;">
                     <div  style="margin-left: 120px; width: 120px; margin-top: 23px; border:0; ">
-                      <button v-if="edit" type="submit" class="btn btn-block" style="font-size: 12px; border-radius: 1.3em; font-weight: 900;" v-on:click="updateCategorie">Modifier</button>
+                      <button v-if="edit" type="submit" class="btn btn-block" style="font-size: 12px; border-radius: 1.3em; font-weight: 900;" v-on:click="updateCategorieButton">Modifier</button>
 
                       <button v-else type="submit" class="btn btn-success btn-block" style="font-size: 12px; border-radius: 1.3em; font-weight: 900;" v-on:click="addCategorie" >Ajouter</button>
                    </div>
                   </div>
                   <div >
                    <div  style="margin-left: 100px; width: 120px; height: 30px; margin-top: 23px;  border:0; margin-left: 110px;">
-                        <button type="submit" class="btn btn-danger btn-block" style="font-size: 12px; border-radius: 1.3em; font-weight: 900;" v-on:click="open=false">Annuler </button>
+                        <button type="submit" class="btn btn-danger btn-block" style="font-size: 12px; border-radius: 1.3em; font-weight: 900;" v-on:click="CancelCatego(ccategorie)">Annuler </button>
                    </div>
                   </div>
                 </div>
@@ -55,7 +55,7 @@
               </div>
             </div>
           </div>
-        </div>-->
+        </div>
       
       
         <div class="row" style="margin-top: 20px;" v-for="c in categories">
@@ -99,7 +99,7 @@
                         </a>
                         <div  class="dropdown-menu dropdown-menu-right" style="margin-top: 15px;" >
                           <div class="account-item clearfix js-item-menu">
-                            <a class="dropdown-item"  style="color: blue; font-style: italic; cursor: pointer;" v-on:click="editCategorie(c)"><b>Modifier</b>
+                            <a class="dropdown-item"  style="color: blue; font-style: italic; cursor: pointer;" v-on:click="updateCategorie(c)"><b>Modifier</b>
                             </a>
                             <a class="dropdown-item"  v-on:click="deleteCategorie(c)" style="color: blue; font-style: italic; cursor: pointer;"><b>Supprimer</b>
                             </a>
@@ -110,7 +110,23 @@
                   </tr>
                 </table> 
 <!--*********************************************************************************-->
-               
+               <div class="row" v-if="open2 && c.id === idSousCatego" style="margin-top: -5px; margin-left: 30px;">
+                      <div class="col-md-6 ">
+                        <div class="form-group" style="width: 600px;">
+                          <label ><b>Nom</b></label>
+                          <input name="nom" type="text" class="form-control" placeholder="Le nom de sous catégorie" v-model="SousCAjout.libelle" >
+                        </div>
+                      </div>
+                      <div class="col-md-2 ">
+                        <button v-if="edit" type="submit" class="btn btn-block" style="font-size: 12px; border-radius: 1.3em; font-weight: 900;" v-on:click="updateCategorieButton">Modifier</button>
+                        <div v-else style="margin-left: 140px; width: 120px; margin-top: 23px; border:0; ">
+                         <button type="submit" class="btn btn-success btn-block" style="font-size: 12px; border-radius: 1.3em; font-weight: 900;" v-on:click="addSousCategorie(c.id)">Ajouter</button>
+                        </div>
+                      </div>
+                      <div  style="margin-left: 130px; width: 120px; height: 30px; margin-top: 14px;  border:0; ">
+                        <button type="submit" class="btn btn-danger btn-block" style="font-size: 12px; border-radius: 1.3em; font-weight: 900;" v-on:click="open2=false">Annuler</button>
+                      </div>
+                  </div>
 <!--*********************************************************************************-->                 
                   <div style="margin-top: -10px;">               
                      <hr> 
@@ -120,15 +136,15 @@
                           <div  style="display: inline-flex;" >                    
                             <input type="checkbox"  :id="sousCatego.libelle" :value="sousCatego.id" v-model="checkedSouscategorie" @change="changeButtonSousCatego(sousCatego, c.id)">
                             <label :for="sousCatego.libelle" ></label>
-                            <p style="width: 90px">{{sousCatego.libelle}}</p>
+                            <p style="width: 88px">{{sousCatego.libelle}}</p>
                           </div>
                             <div class="dropdown">
                               <a href="#"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img  src="assetsAdmin/img/menu.png" alt="..." style=" margin-left: 60px;"/>
+                                <img  src="assetsAdmin/img/menu.png" alt="..." style=" margin-left: 55px;"/>
                               </a>
-                              <div  class="dropdown-menu dropdown-menu-left" >
+                              <div  class="dropdown-menu dropdown-menu-center"  >
                                 <div class="account-item clearfix js-item-menu">
-                                  <a class="dropdown-item" href="#" style="color: blue; font-style: italic;"><b>Modifier</b></a>
+                                  <a class="dropdown-item" href="" style="color: blue; font-style: italic;" v-on:click="updateSousCategorie(sousCatego)"><b>Modifier</b></a>
                                   <a class="dropdown-item" href="#" style="color: blue; font-style: italic;"><b>Supprimer</b></a>
                                 </div>
                               </div>
@@ -141,7 +157,7 @@
         </div>
       </div>
 
-      <!--<footer class="footer">
+      <footer class="footer">
         <div class=" container-fluid ">
           <nav>
             <ul>
@@ -168,7 +184,7 @@
             </script>, Desinger par <a href="https://www.invisionapp.com" target="_blank">BS</a>. Codé par <a href="https://www.creative-tim.com" target="_blank">BASMAHW&S</a>.
           </div>
         </div>
-      </footer>-->
+      </footer>
      
     </div>
 
@@ -216,12 +232,75 @@
           libelle :'',
         },
         SousCategoriesDelete: [],
-
+        oldCatego: {
+          libelle: '', 
+        },
+        message: {},
 
                  
       },
 
-    methods: { 
+    methods: {
+      CancelCatego(categorie){
+        this.edit = false;
+        this.open = false;
+        this.ccategorie= {
+          id: 0,
+          libelle :'',
+        };
+        this.message = {};
+        categorie.libelle = this.oldCatego.libelle;
+      },
+      updateCategorie: function(categorie){
+         this.edit = true;
+         this.open = true;
+         this.open2 = false;
+         this.ccategorie = categorie;
+         this.oldCatego.libelle = categorie.libelle;
+         
+      },
+      updateSousCategorie: function(souscategorie){
+         this.edit = true;
+         this.open = false;
+         this.open2 = true;
+         this.idSousCatego = souscategorie.id;
+         this.SousCAjout = souscategorie;
+         this.oldCatego.libelle = categorie.libelle;
+         
+      },
+      updateCategorieButton: function(){
+         if(this.SousCAjout.libelle == ''){
+
+            this.SousCAjout.libelle =  this.oldArt.libelle;
+         }
+      
+         axios.put(window.Laravel.url+"/updatecategorie",this.SousCAjout)
+
+            .then(response => {
+              if(response.data.etat){
+                 this.SousCAjout = response.data.articleAjout;
+                 this.hideModel = false;
+                 this.SousCAjout={
+                      id: 0,
+                      categorie_id:0 ,
+                      libelle :'',
+                 };
+
+              } 
+              this.modifier = false;
+              this.message = {};
+              this.image = '';
+              this.oldArt = {
+                    libelle: '', 
+                    
+              };     
+            })
+            .catch(error =>{
+                this.message = error.response.data.errors;
+                console.log('errors :' , this.message);
+            })
+
+      }, 
       getSousCategories: function(){
               axios.get(window.Laravel.url+'/getsouscategories')
               .then(response => {
@@ -389,15 +468,11 @@
           
             
         },
-          editCategorie: function(c){
-            this.open = true;
-            this.edit = true;
-            this.ccategorie = c;
-            
-          },
+
           ajouterCategorie: function(){
             this.open = true;
             this.edit = false;
+            this.open2 = false;
             this.ccategorie = {
                         id: 0,
                         libelle :'',
@@ -406,6 +481,7 @@
           },
           ajouterSouscategorie: function(id){
             this.open2 = true;
+            this.open = false;
             this.idSousCatego = id; 
 
           },
@@ -445,23 +521,6 @@
           AnnulerSel2: function(){
             this.checkedSouscategorie.length = [];
             this.changeButtonSousCatego();
-          }, 
-          updateCategorie:function(){
-              axios.put(window.Laravel.url+'/updatecategorie',this.ccategorie)
-              .then(response => {
-                if(response.data.etat){
-                  this.open = false;
-
-                   this.ccategorie = {
-                        id: 0,
-                        libelle :'',
-                   };
-                }
-                this.edit = false;
-              })
-              .catch(error => {
-                console.log('errors' ,error)
-              })
           },   
      
      },
