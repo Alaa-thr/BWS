@@ -16,7 +16,8 @@ class CreateSousCategoriesTable extends Migration
         Schema::create('sous_categories', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('categorie_id')->nullable();
-            $table->string('libelle')->unique();
+            $table->string('libelle');
+            $table->unique(['libelle', 'categorie_id']);
             $table->timestamps();
         });
     }

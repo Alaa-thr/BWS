@@ -14,6 +14,7 @@ use App\User;
 use App\Categorie;
 use App\Sous_categorie;
 use App\Typechoisirvendeur;
+use App\Notification;
 use Auth;
 use App\Http\Requests\ArticleRequest;
 use Illuminate\Support\Facades\Storage;
@@ -23,6 +24,10 @@ use Illuminate\Support\Facades\Hash;
 use App\Rules\NumberExist;
 use App\Rules\EmailExist;
 use App\Rules\NumCarteBancaireExist;
+use App\Rules\CategorieExiste;
+use App\Rules\SousCategorieExiste;
+use App\Rules\ModifieSousCategorieExiste;
+use App\Rules\ModifieCategorieExiste;
 class AdminController extends Controller
 {
      public function profil_admin(){
@@ -164,56 +169,122 @@ class AdminController extends Controller
     public function categories_admin(){
 
         $autre = \DB::table('sous_categories')->where('categorie_id',null)->get();
-        if(count($autre) == 0){
-            $categorie = \DB::table('categories')->where('libelle','<>','Autre')->orderBy('libelle','asc')->get();
-            return view('categories_admin',['categorie'=>$categorie]);
+        $autreProduit = \DB::table('produits')->where('sous_categorie_id',null)->get();
+        if(count($autre) == 0 && count($autreProduit) == 0 ){
+            $categorie = \DB::table('categories')->where('libelle','<>','Autre')->orderBy('libelle','asc')->paginate(5);
+            return view('categories_admin',['categorie'=>$categorie , 'var'=> 0 ]);
         }
         else{
-            $categorie = \DB::table('categories')->orderBy('libelle','asc')->get();
-            return view('categories_admin',['categorie'=>$categorie]);
+            $categorie = \DB::table('categories')->orderBy('libelle','asc')->paginate(5);
+            return view('categories_admin',['categorie'=>$categorie , 'var'=> 1]);
         }
         
+    }
+
+    public function Shopcategories_admin(){
+        $autre = \DB::table('sous_categories')->where('categorie_id',null)->get();
+        $autreProduit = \DB::table('produits')->where('sous_categorie_id',null)->get();
+        if(count($autre) == 0 && count($autreProduit) == 0 ){
+            $categoShop = \DB::table('categories')->where([['libelle','<>','Autre'],['typeCategorie','shop']])->orderBy('libelle','asc')->paginate(5);
+            return view('shop_categorie_admin',['categoShop'=>$categoShop, 'var'=> 0]);
+        }
+        else{
+            $categoShop = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->paginate(5);
+            return view('shop_categorie_admin',['categoShop'=>$categoShop, 'var'=> 1]);
+        }
+    }
+
+    public function Emploicategories_admin(){
+        $autre = \DB::table('sous_categories')->where('categorie_id',null)->get();
+        $autreProduit = \DB::table('produits')->where('sous_categorie_id',null)->get();
+        if(count($autre) == 0 && count($autreProduit) == 0 ){
+            $categoEpmloi = \DB::table('categories')->where([['libelle','<>','Autre'],['typeCategorie','emploi']])->orderBy('libelle','asc')->paginate(5);;
+            return view('emploi_categorie_admin',['categoEpmloi'=>$categoEpmloi, 'var'=> 0]);
+        }
+        else{
+            $categoEpmloi = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->paginate(5);
+            return view('emploi_categorie_admin',['categoEpmloi'=>$categoEpmloi, 'var'=> 1]);
+        }
     }
         
     public function addCategorie(Request $request){
+        
+        $request->validate([
+             'libelle' => ['required',new CategorieExiste($request->typeCategorie),'regex:/^[A-Z0-9][a-z0-9A-Z,_-éçèàâ]+/'],
+             'typeCategorie' => ['required'],
+         ]);
         $categorie = new Categorie;
-
-        $categorie->libellé = $request->libellé;
-
+        $categorie->libelle = $request->libelle;
+        $categorie->typeCategorie = $request->typeCategorie;
         $categorie->save();
 
-        return Response()->json(['etat' => true, 'id' => $categorie]);
+        return Response()->json(['etat' => true, 'categorie' => $categorie]);
     }
+
     public function updateCategorie(Request $request){
+
+        $request->validate([
+             'libelle' => [new ModifieCategorieExiste($request->id,$request->typeCategorie),'regex:/^[A-Z0-9][a-z0-9A-Z,_-éçèàâ]+/'],
+        ]);
         $categorie = Categorie::find($request->id);
-
-        $categorie->libellé = $request->libellé;
-
+        $categorie->libelle = $request->libelle;
         $categorie->save();
-
         return Response()->json(['etat' => true]);
     
     }
+
     public function deleteCategorie($id){
 
         $categorie = Categorie::find($id);
-       
+        $notification = new Notification;
+        $notification->admin_id =  Admin::find(Auth::user()->id)->id;
+        $notification->categorie_libelle =  $categorie->libelle; 
+        $notification->typeCategoSousCatego =  $categorie->typeCategorie;
+        $notification->save(); 
         $categorie->delete();
 
-     return Response()->json(['etat' => true, 'id' => $categorie]);
+     return Response()->json(['etat' => true]);
     }
+
     public function getSousCategories(){
+        $sousCategoNull = \DB::table('sous_categories')->where('categorie_id',null)->orderBy('libelle','asc')->get();
         $sousCatego = \DB::table('sous_categories')->orderBy('libelle','asc')->get();
-        return $sousCatego;
+        return ['sousCatego' => $sousCatego,'sousCategoNull' => $sousCategoNull];
     }
 
     public function addSousCategorie(Request $request){
 
+        $request->validate([
+             'libelle' => ['required',new SousCategorieExiste($request->categorie_id),'regex:/^[A-Z0-9][a-z-0-9A-Z,_éçèàâ]+/'],
+        ]);
         $sousCategorie = new Sous_categorie();
         $sousCategorie->libelle = $request->libelle;
         $sousCategorie->categorie_id = $request->categorie_id;
         $sousCategorie->save();
         return Response()->json(['etat' => true,'sousCategorieAjout' => $sousCategorie]);
+    }
+
+    public function updateSousCategorieButton(Request $request){
+
+        $request->validate([
+             'libelle' => [new ModifieSousCategorieExiste($request->id,$request->categorie_id),'regex:/^[A-Z0-9][a-z0-9A-Z,_-éçèàâ]+/'],
+        ]);
+        $Souscategorie = Sous_categorie::find($request->id);
+        $Souscategorie->libelle = $request->libelle;
+        $Souscategorie->save();
+        return Response()->json(['etat' => true]);
+    
+    }
+
+    public function deleteSousCategorie($id){
+        $Souscategorie = Sous_categorie::find($id);
+        $notification =  new Notification;
+        $notification->admin_id = Admin::find(Auth::user()->id)->id; 
+        $notification->sous_categorie_libelle =  $Souscategorie->libelle; 
+        $notification->typeCategoSousCatego =  Categorie::where('id',$Souscategorie->categorie_id)->value('typeCategorie');     
+        $notification->save();
+        $Souscategorie->delete();
+     return Response()->json(['etat' => true]);
     }
 
     public function detailsVendeur(Request $request){

@@ -18,6 +18,11 @@ class Admin extends Model
     public function article(){
     	return $this->hasMany('App\Article');
     }
+
+    public function notification()
+    {
+        return $this->hasMany('App\Notification');
+    }
      
 
     

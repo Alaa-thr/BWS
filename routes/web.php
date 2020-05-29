@@ -36,9 +36,13 @@ Route::get('/getville', 'BwsController@get_ville');
 Route::get('/admin', 'AdminController@admin_admin')->name('admin');
 Route::get('/articlesAdmin', 'AdminController@article_admin')->name('articlesAdmin');
 Route::get('/categoriesAdmin', 'AdminController@categories_admin')->name('categoriesAdmin');
+Route::get('/shopCategories', 'AdminController@Shopcategories_admin');
+Route::get('/emploiCategories', 'AdminController@Emploicategories_admin');
+
 Route::get('/getsouscategories','AdminController@getSousCategories');
 Route::post('/addsouscategorie','AdminController@addSousCategorie');
-
+Route::put('/updatesouscategorie','AdminController@updateSousCategorieButton');
+Route::delete('/deletesouscategorie/{id}','AdminController@deleteSousCategorie');
 Route::get('/client', 'AdminController@client_admin')->name('client');
 Route::get('/emails', 'BwsController@emails_admin')->name('emails');
 Route::get('/employeur', 'AdminController@employeur_admin')->name('employeur');
@@ -52,7 +56,6 @@ Route::post('/detaillsarticle', 'AdminController@detaillsArticle');
 Route::post('/addcategorie', 'AdminController@addCategorie');
 Route::put('/updatecategorie','AdminController@updateCategorie');
 Route::delete('/deletecategorie/{id}','AdminController@deleteCategorie');
-Route::get('/articlesAdmin?page=2','AdminController@article_admin');
 Route::delete('/deletearticle/{id}','AdminController@deleteArticle');
 Route::put('/updatearticle','AdminController@updateArticleButton');
 Route::get('/deletvendeur/{id}','AdminController@deleteVendeur');
