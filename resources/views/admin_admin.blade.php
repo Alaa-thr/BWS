@@ -22,11 +22,11 @@
                 </div>
                 <div class="box " style="margin-left: 730px; margin-top: -40px;">
                     <select onchange="window.location.href=this.value">
-                      <option>Recuperer les utilisateurs   :</option>
-                      <option value="recupervendeur">Recuperer vendeurs</option>
-                      <option value="recuperclient">Recuperer clients</option>
-                      <option value="recupemployeur">Recuperer employeurs</option>
-                      <option value="recuperadmin">Recuperer admins</option>
+                      <option  style="border:none;">Recuperer les utilisateurs   :</option>
+                      <option value="recupervendeur"  style="border:none;">Recuperer vendeurs</option>
+                      <option value="recuperclient"  style="border:none;">Recuperer clients</option>
+                      <option value="recuemployeur"  style="border:none;">Recuperer employeurs</option>
+                      <option value="recuperadmin"  style="border:none;">Recuperer admins</option>
                     </select>
                 </div>
               </div>
@@ -287,16 +287,6 @@
                             <option value="2">Admin simple</option>
                         </select>
                         <span class="px-3 cl13" v-if="message.type" v-text="message.type[0]"></span>
-                      </div>
-                    </div>
-                    <div class="col-md-5 pr-2">
-                      <div class="form-group" >
-                        <label for="typeAdmin">Type</label>
-                        <select class="form-control" id="typeAdmin" name ="typeAdmin" style="border-radius: 0.3em;" @change="SaveTypeAdmin($event)">
-                            <option value="" hidden selected>Choisir un type:</option>
-                            <option value="1">Big-admin</option>
-                            <option value="2">Admin simple</option>
-                        </select>
                       </div>
                     </div>
                     

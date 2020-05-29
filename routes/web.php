@@ -55,6 +55,26 @@ Route::delete('/deletecategorie/{id}','AdminController@deleteCategorie');
 Route::delete('/deletearticle/{id}','AdminController@deleteArticle');
 Route::put('/updatearticle','AdminController@updateArticleButton');
 Route::post('/addadmin', 'AdminController@addAdmin');
+Route::post('detailsvendeur','AdminController@detailsVendeur');
+Route::post('detailsemployeur','AdminController@detailsEmployeur');
+Route::post('detailsclient','AdminController@detailsClient');
+Route::post('detailsadmin','AdminController@detailsadmin');
+Route::get('deleteclient/{id}','AdminController@deleteClient');
+Route::get('deleteemployeur/{id}','AdminController@deleteEmployeur');
+Route::get('deletvendeur/{id}','AdminController@deleteVendeur');
+Route::get('deleteadmin/{id}','AdminController@deleteAdmin');
+Route::get('recupervendeur','AdminController@recup_vendeur');
+Route::get('recupconfirmer/{id}','AdminController@recupConfirmer');
+Route::get('recuperclient','AdminController@recup_client');
+Route::get('recupconfirmerc/{id}','AdminController@recupConfirmerc');
+Route::get('recupemployeur','AdminController@recup_employeur');
+Route::get('recupconfirmere/{id}','AdminController@recupConfirmerE');
+Route::get('recuperadmin','AdminController@recup_admin');
+Route::get('recupconfirmera/{id}','AdminController@recupConfirmerA');
+
+
+
+
 /*********************************************** Employeur***********************************************/
 
 Route::get('/demandeEmploiRecu', 'BwsController@demande_emploi_reçu_employeur')->name('demandeEmploiRecu');

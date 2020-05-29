@@ -1,11 +1,11 @@
 
-@extends('layouts.template_admin')
 
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 
 
     <head>
-    <title>{{ ( 'Notification') }}</title>
+    <title><?php echo e(( 'Notification')); ?></title>
   </head>
       <div class="main-panel" id="main-panel">
       
@@ -29,7 +29,7 @@
                         <td  class="text-left" >Nabil a signaler le produit n1</td>
   
                         <td  class="dropdown "  id="k">
-                          <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#"> 
+                          <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
                                 <img src="assetsAdmin/img/menu.png" alt="..."/ id="f">
                              </a>
                             <div class="dropdown-menu dropdown-menu-right "  style="margin-top: -10px;">
@@ -38,12 +38,16 @@
                             </div>
                         </td>
                       </tr>
+                      
+                      
                     </tbody>
                   </table>
                 </div>
               </div>
             </div>
           </div>
+          
+          
         </div>
       </div>
       <footer class="footer">
@@ -354,4 +358,5 @@
     </div>
   </div>
 
- @endsection
+ <?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.template_admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\BWS\resources\views/notifications_admin.blade.php ENDPATH**/ ?>

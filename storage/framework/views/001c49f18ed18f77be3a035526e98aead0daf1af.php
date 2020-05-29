@@ -85,7 +85,7 @@
                           </div>
                         </td>
                         <td>
-                          <button class="btn btn-sm btn-block btn-warning" style="margin-left: 90px; width: 120px; border-radius: 0.5em;" v-on:click="recupConfirmerC(cl)">
+                          <button class="btn btn-sm btn-block btn-warning" style="margin-left: 80px; width: 120px; border-radius: 0.5em;" v-on:click="recupConfirmerC(cl)">
                             <b> Recuperer </b>
                           </button>
                         </td>

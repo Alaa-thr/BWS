@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Rules\NumberExist;
 use App\Rules\EmailExist;
 use App\Rules\NumCarteBancaireExist;
->>>>>>> 36f9fd2f3b4d7854deaf97da4195c3f9a79ef164
+
 class AdminController extends Controller
 {
      public function profil_admin(){
@@ -59,7 +59,7 @@ class AdminController extends Controller
         $client_recup = Client::where('deletedc',1)->paginate(10);
         return view('recup_client',['client_recu'=>$client_recup]);
    }
-   public function recu_employeur(){
+   public function recup_employeur(){
        $employeur_recup = Employeur::where('deletede',1)->paginate(10);
         return view('recu_employeur',['employeur_recu'=>$employeur_recup]);
    
