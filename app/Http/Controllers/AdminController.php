@@ -13,7 +13,10 @@ use App\Article;
 use App\User;
 use App\Categorie;
 use App\Sous_categorie;
+<<<<<<< HEAD
 use App\SousCategorie;
+=======
+>>>>>>> 7d635c23c5f4b5a14ad4dd156fa9cf92df97ed22
 use App\Typechoisirvendeur;
 use Auth;
 use App\Http\Requests\ArticleRequest;
@@ -114,8 +117,8 @@ class AdminController extends Controller
     public function updateArticleButton(Request $request){//fct pour modifie un article, 3andha un parametre di fih les info modifier ta3 article di rena 7abin nmodifiwah, w tretouni 2 attributs "etat" et "articleAjout"(article di modifyinah) 
 
         $request->validate([//hna nvirifyiw ida les info di dakhelhom f les inputs w ra hab Aybedelhom f article yrespictiw les regles tawa3na ou nn(si oui yakhdem nichan, sinon yred des erreur di yenstokaw f tableau 'message')
-             'titre' => [new ModifieTextDescriptionArticle($request->id),'regex:/^[a-z0-9A-Z][a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],//"new ModifieTextDescriptionArticle($request->id)"(appele l constructeur de Rule "ModifieTextDescriptionArticle" di tejebrouha f "app/Rules" w ta3tilo un parametre di fih id ta3 article)
-             'description' => [new ModifieTextDescriptionArticle($request->id),'regex:/^[a-z0-9A-Z][a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
+             'titre' => [new ModifieTextDescriptionArticle($request->id),'regex:/^[A-Z0-9][a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],//"new ModifieTextDescriptionArticle($request->id)"(appele l constructeur de Rule "ModifieTextDescriptionArticle" di tejebrouha f "app/Rules" w ta3tilo un parametre di fih id ta3 article)
+             'description' => [new ModifieTextDescriptionArticle($request->id),'regex:/^[A-Z0-9][a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
          ]);
         $article2 = Article::find($request->id);
             
@@ -164,8 +167,22 @@ class AdminController extends Controller
         return redirect('profilAdmin');
     }
     public function categories_admin(){
+<<<<<<< HEAD
         $categorie = \DB::table('categories')->orderBy('created_at','desc')->get();
         return view('categories_admin',['categorie'=>$categorie]);
+=======
+
+        $autre = \DB::table('sous_categories')->where('categorie_id',null)->get();
+        if(count($autre) == 0){
+            $categorie = \DB::table('categories')->where('libelle','<>','Autre')->orderBy('libelle','asc')->get();
+            return view('categories_admin',['categorie'=>$categorie]);
+        }
+        else{
+            $categorie = \DB::table('categories')->orderBy('libelle','asc')->get();
+            return view('categories_admin',['categorie'=>$categorie]);
+        }
+        
+>>>>>>> 7d635c23c5f4b5a14ad4dd156fa9cf92df97ed22
     }
         
     public function addCategorie(Request $request){
@@ -198,6 +215,13 @@ class AdminController extends Controller
         $sousCatego = Sous_categorie::all();
         return $sousCatego;
     }
+<<<<<<< HEAD
+=======
+    public function getSousCategories(){
+        $sousCatego = \DB::table('sous_categories')->orderBy('libelle','asc')->get();
+        return $sousCatego;
+    }
+>>>>>>> 7d635c23c5f4b5a14ad4dd156fa9cf92df97ed22
 
     public function addSousCategorie(Request $request){
 

@@ -173,7 +173,7 @@
                   <div class="col-md-10 pr-2" >
                     <div class="form-group mb-3">
                       <label>Titre</label>
-                      <input  type="text" class="form-control" placeholder="Titre" v-model="art.titre" :class="{'is-invalid' : message.titre}" >
+                      <input  type="text" class="form-control" placeholder="Le titre doit commencer avec un Maj ou un nombre" v-model="art.titre" :class="{'is-invalid' : message.titre}" >
                       <span class="px-3 cl13" v-if="message.titre" v-text="message.titre[0]">
                       </span>
                     </div>
@@ -183,7 +183,7 @@
                   <div class="col-md-10 pr-2" >
                     <div class="form-group">
                       <label>description</label>
-                      <textarea class="form-control" placeholder="Description" v-model="art.description" :class="{'is-invalid' : message.description}"></textarea>
+                      <textarea class="form-control" placeholder="La description doit commencer avec un Maj ou un nombre" v-model="art.description" :class="{'is-invalid' : message.description}"></textarea>
                       <span class="px-3 cl13" v-if="message.description" v-text="message.description[0]">
                       </span>
                     </div>
@@ -200,12 +200,14 @@
                 </div>
                 <div class="row">
                   <div class="col-md-10 flex-t">
-                        <button type="submit"  class="btn btn-danger btn-block " style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="CancelArticle(art)" >Anuller
-                        </button> 
                         <button type="submit" v-if="modifier" class="btn btn-success btn-block " style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="updateArticleButton()" >Modifier
                         </button> 
                         <button type="submit" v-else class="btn btn-success btn-block " style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="addArticle()" >Ajouter
-                        </button>     
+                        </button> 
+                        <button type="submit"  class="btn btn-danger btn-block " style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="CancelArticle(art)" >Anuller
+                        </button> 
+                        
+                            
                   </div>
                 </div>
               </div>

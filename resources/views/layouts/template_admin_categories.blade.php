@@ -231,8 +231,7 @@
       </nav>
       <!-- End Navbar -->
       @yield('content')
-       
-</div>
+     </div>
            
       @stack('javascripts')
 
