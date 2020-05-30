@@ -13,10 +13,7 @@ use App\Article;
 use App\User;
 use App\Categorie;
 use App\Sous_categorie;
-<<<<<<< HEAD
 use App\SousCategorie;
-=======
->>>>>>> 7d635c23c5f4b5a14ad4dd156fa9cf92df97ed22
 use App\Typechoisirvendeur;
 use Auth;
 use App\Http\Requests\ArticleRequest;
@@ -167,11 +164,8 @@ class AdminController extends Controller
         return redirect('profilAdmin');
     }
     public function categories_admin(){
-<<<<<<< HEAD
         $categorie = \DB::table('categories')->orderBy('created_at','desc')->get();
         return view('categories_admin',['categorie'=>$categorie]);
-=======
-
         $autre = \DB::table('sous_categories')->where('categorie_id',null)->get();
         if(count($autre) == 0){
             $categorie = \DB::table('categories')->where('libelle','<>','Autre')->orderBy('libelle','asc')->get();
@@ -182,7 +176,6 @@ class AdminController extends Controller
             return view('categories_admin',['categorie'=>$categorie]);
         }
         
->>>>>>> 7d635c23c5f4b5a14ad4dd156fa9cf92df97ed22
     }
         
     public function addCategorie(Request $request){
@@ -211,17 +204,11 @@ class AdminController extends Controller
      return Response()->json(['etat' => true]);
     }
 
-    public function getSousCategories(){
-        $sousCatego = Sous_categorie::all();
-        return $sousCatego;
-    }
-<<<<<<< HEAD
-=======
+    
     public function getSousCategories(){
         $sousCatego = \DB::table('sous_categories')->orderBy('libelle','asc')->get();
         return $sousCatego;
     }
->>>>>>> 7d635c23c5f4b5a14ad4dd156fa9cf92df97ed22
 
     public function addSousCategorie(Request $request){
 

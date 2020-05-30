@@ -29,7 +29,7 @@
                         <td  class="text-left" >Nabil a signaler le produit n1</td>
   
                         <td  class="dropdown "  id="k">
-                          <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
+                          <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#"> 
                                 <img src="assetsAdmin/img/menu.png" alt="..."/ id="f">
                              </a>
                             <div class="dropdown-menu dropdown-menu-right "  style="margin-top: -10px;">
@@ -38,28 +38,12 @@
                             </div>
                         </td>
                       </tr>
-                      
-                      
                     </tbody>
                   </table>
-<<<<<<< HEAD
-=======
-                  <div class="pagination" >
-                        <a href="#"> &laquo; </a>
-                        <a href="#" class="active" id="f3"> 1 </a>
-                        <a href="#"> 2 </a>
-                        <a href="#"> 3 </a>
-                        <a href="#"> 4 </a>
-                        <a href="#"> 5 </a>
-                        <a href="#"> &raquo; </a>
-                  </div>
->>>>>>> 7d635c23c5f4b5a14ad4dd156fa9cf92df97ed22
                 </div>
               </div>
             </div>
           </div>
-          
-          
         </div>
       </div>
       <footer class="footer">

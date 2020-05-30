@@ -338,24 +338,6 @@
               .catch(error => {
                   console.log('errors : '  , error);
              })
-          },
-          addSousCategorie: function(categorieId){
-            this.SousCAjout.categorie_id = categorieId;
-            console.log("aaa",this.SousCAjout)
-            axios.post(window.Laravel.url+'/addsouscategorie',this.SousCAjout)
-              .then(response => {
-                if(response.data.etat){
-                 this.SousCAjout = response.data.sousCategorieAjout;
-                 this.SousCAjout.id = response.data.sousCategorieAjout.id;
-
-                 app.sousCategories.unshift(this.SousCAjout);
-                  console.log('successeee :' ,response.data);
-                  console.log('this.SousCAjout :' ,this.SousCAjout);
-                }
-               })
-              .catch(error => {
-                  console.log('errors : '  , error);
-             })
 
           },
           selectAll: function() {
