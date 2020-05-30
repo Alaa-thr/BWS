@@ -21,30 +21,57 @@
                         <label for="categorie"></label>
                         <h4 style="margin-top: -6px;">Categories</h4>
                 </div>
-
+                  
                   <div class="row">
                     <div class="col-md-4">
-                      <button v-if="suppr" class="btn btn-sm btn-danger  btn-block" style="margin-left: 685px; margin-top: -50px; border-radius: 0.8em; width: 150px; height: 40px; "  v-on:click="deleteArrayCategorie()"><b>supprimer</b></button>
-                      <button v-if="suppr" class="btn btn-sm btn-warning btn-block" style="margin-left: 840px; margin-top: -50px; border-radius: 0.8em; width: 150px; height: 40px; " v-on:click="AnnulerSel" ><b>Annuler</b></button>
+                      <select  class="form-control" onchange="window.location.href=this.value" style="margin-left: 470px; margin-top: -45px; border-radius: 0.8em; width: 230px; height: 40px;">
+                      <option value="0" selected disabled>Choisie le type de Categories :</option>
+                      <option value="shopCategories">Shop Categories</option>
+                      <option value="emploiCategories">Emploi Categories</option>
+                    </select>
+                      <button v-if="suppr" class="btn btn-sm btn-danger  btn-block" style="margin-left: 710px; margin-top: -40px; border-radius: 0.8em; width: 150px; height: 40px; "  v-on:click="deleteArrayCategorie()"><b>supprimer</b></button>
+                      <button v-if="suppr" class="btn btn-sm btn-warning btn-block" style="margin-left: 868px; margin-top: -50px; border-radius: 0.8em; width: 150px; height: 40px; " v-on:click="AnnulerSel" ><b>Annuler</b></button>
 
-                      <button v-else class="btn btn-sm   btn-block" style="margin-left: 750px; margin-top: -50px; border-radius: 0.8em; background-color: #00CED1; width: 230px; height: 40px; " v-on:click="ajouterCategorie" ><b>Ajouter une Catégorie</b></button>
+                      <button v-else class="btn btn-sm   btn-block" style="margin-left: 790px; margin-top: -40px; border-radius: 0.8em; background-color: #00CED1; width: 230px; height: 40px; " v-on:click="ajouterCategorie" ><b>Ajouter une Catégorie</b></button>
                     </div>
                   </div>
-                <div class="row" v-if="open" style="margin-top: -5px; margin-left: 30px; ">
+
+                
+                <div class="row" v-if="open" style=" margin-left: 30px; ">
                   <div class="col-md-6 ">
                     <div class="form-group" style="width: 600px;">
-                      <input name="nom" type="text" class="form-control" placeholder="Le nom de catégorie" required="required" v-model="ccategorie.libelle" style="color: black;" >
+                      <label ><b>Nom</b></label>
+                      <input name="nom" type="text" class="form-control" placeholder="Entrez le nom de catégorie (Le nom doit être commencé avec un Maj ou un Numero)" v-model="ccategorie.libelle" style="color: black;" :class="{'is-invalid' : message.libelle}"/>
+                      <span class="px-3" style="color: #ca2323" v-if="message.libelle" v-text="message.libelle[0]"></span>
+                      <select v-if="edit === false" class="form-control" id="typeCategorie" name ="typeCategorie" @change="SavetTypeCategorie($event)" :class="{'is-invalid' : message.typeCategorie}" style="margin-top: 10px">
+                      <option value="0" selected disabled>Choisie le type de Categories :</option>
+                      <option value="shop">Shop Categories</option>
+                      <option value="emploi">Emploi Categories</option>
+                    </select>
+                    <span class="px-3" v-if="message.typeCategorie" v-text="message.typeCategorie[0]" style="color: #ca2323"></span>
                     </div>
                   </div>
-                  <div class="col-md-2 " style="margin-left: 20px;">
-                    <div  style="margin-left: 120px; width: 120px; margin-top: 23px; border:0; ">
-                      <button v-if="edit" type="submit" class="btn btn-block" style="font-size: 12px; border-radius: 1.3em; font-weight: 900;" v-on:click="updateCategorieButton">Modifier</button>
+                  <div v-if="edit === false" class="col-md-2 " style="margin-left: 20px;">
+                    <div  style="margin-left: 120px; width: 120px; margin-top: 40px; border:0; ">
+                      <button v-if="edit" type="submit" class="btn btn-block" style="font-size: 12px; border-radius: 1.3em; font-weight: 900;" v-on:click="updateCategorieButton()">Modifier</button>
 
                       <button v-else type="submit" class="btn btn-success btn-block" style="font-size: 12px; border-radius: 1.3em; font-weight: 900;" v-on:click="addCategorie" >Ajouter</button>
                    </div>
                   </div>
-                  <div >
-                   <div  style="margin-left: 100px; width: 120px; height: 30px; margin-top: 23px;  border:0; margin-left: 110px;">
+                  <div v-if="edit === false">
+                   <div  style="margin-left: 100px; width: 120px; height: 30px; margin-top: 40px;  border:0; margin-left: 110px;">
+                        <button type="submit" class="btn btn-danger btn-block" style="font-size: 12px; border-radius: 1.3em; font-weight: 900;" v-on:click="CancelCatego(ccategorie)">Annuler </button>
+                   </div>
+                  </div>
+                  <div v-if="edit" class="col-md-2 " style="margin-left: 20px;">
+                    <div  style="margin-left: 120px; width: 120px; margin-top: 20px; border:0; ">
+                      <button v-if="edit" type="submit" class="btn btn-block" style="font-size: 12px; border-radius: 1.3em; font-weight: 900;" v-on:click="updateCategorieButton()">Modifier</button>
+
+                      <button v-else type="submit" class="btn btn-success btn-block" style="font-size: 12px; border-radius: 1.3em; font-weight: 900;" v-on:click="addCategorie" >Ajouter</button>
+                   </div>
+                  </div>
+                  <div v-if="edit">
+                   <div  style="margin-left: 100px; width: 120px; height: 30px; margin-top: 20px;  border:0; margin-left: 110px;">
                         <button type="submit" class="btn btn-danger btn-block" style="font-size: 12px; border-radius: 1.3em; font-weight: 900;" v-on:click="CancelCatego(ccategorie)">Annuler </button>
                    </div>
                   </div>
@@ -54,6 +81,39 @@
           </div>
         </div>
             
+
+      
+<!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+          <div v-if="AutreExiste" class="row" style="margin-top: 20px;">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <table width="100%" id="c.id">
+                  <tr>
+                    <td style="width: 99%;">
+                        <div> 
+                           <h4 class="card-title" style="font-weight: 500px;"><b>Autre
+                           </b></h4>
+                        </div>
+                    </td>
+                  </tr>
+                </table>                  
+                <div style="margin-top: -10px;">               
+                     <hr> 
+                </div>
+                  
+                <div  v-for="sousCatego in sousCategoriesNull" style="display: inline-flex; margin-right:10px " > 
+                          <div style="display: inline-flex;">
+                            <p style="width: 88px">@{{sousCatego.libelle}}</p>
+                          </div>
+                  </div>
+                                                    
+              </div>
+            </div>
+          </div>
+        </div>
+<!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+ 
         <div class="row" style="margin-top: 20px;" v-for="c in categories">
           <div class="col-md-12">
             <div class="card">
@@ -61,26 +121,27 @@
                 <table width="100%" id="c.id">
                   <tr>
                     <td style=" width: 4%;">  
-                        <div v-if="selectall" style="">
+                        <div v-if="selectall">
                           <input type="checkbox" :id="c.id" :value="c.id" v-model="checkedCategorie" @change="changeButton(c)">
                           <label :for="c.id" style=""></label>
                         </div>
-                        <div v-else style="">
-                          <input type="checkbox" :id="c.id" :value="c.id" v-model="categorieIds" @click="deselectArticle(c.id)">
+                        <div v-else>
+                          <input type="checkbox" :id="c.id" :value="c.id" v-model="categorieIds" @change="deselectCategorie(c.id)">
                           <label :for="c.id" style=" "></label>
                         </div>
                         
                     </td>
-                    <td style="width: 30%;">
+                    <td style="width: 34%;">
                         <div> 
-                           <h4 class="card-title" style="font-weight: 500px;"><b>@{{ c.libelle }}
+                           <h4 class="card-title" style="font-weight: 500px;"><b>@{{ c.libelle }} 
+                            <small style="font-size: 13px;">(Categorie dans @{{c.typeCategorie}})</small>
                            </b></h4>
                         </div>
                     </td>
-                    <td  style="width: 63%;">
+                    <td  style="width: 60%;">
                       <div class="" style="float:right">
                         <div v-if="suppr2 && c.id === idSousCatego">
-                        <button class="btn btn-sm  btn-danger btn-block"  style="margin-right: 40px; width: 120px; height: 35px; border-radius: 1.0em;" ><b>Supprimer</b>
+                        <button class="btn btn-sm  btn-danger btn-block"  style="margin-right: 40px; width: 120px; height: 35px; border-radius: 1.0em;" v-on:click="deleteArraySousCategorie()" ><b>Supprimer</b>
                         </button>
                         <button class="btn btn-sm btn-warning btn-block" style=" width: 120px; height: 35px; border-radius: 1.0em; margin-left:130px; margin-top: -45px;"  v-on:click="AnnulerSel2"><b>Annuler</b>
                         </button>
@@ -109,18 +170,20 @@
                       <div class="col-md-6 ">
                         <div class="form-group" style="width: 600px;">
                           <label ><b>Nom</b></label>
-                          <input name="nom" type="text" class="form-control" placeholder="Le nom de sous catégorie" v-model="SousCAjout.libelle" >
+                          <input name="nom" type="text" class="form-control" placeholder="Entrez le nom de sous-catégorie (Le nom doit être commencé avec un Maj ou un Numero)" v-model="SousCategoAjout.libelle" :class="{'is-invalid' : message.libelle}"/>
+                      <span class="px-3" style="color: #ca2323" v-if="message.libelle" v-text="message.libelle[0]"></span>
                         </div>
                       </div>
                       <div class="col-md-2 ">
-                       <div  style="margin-left: 140px; width: 120px; margin-top: 23px; border:0; ">
-                        <button v-if="edit" type="submit" class="btn btn-block" style="font-size: 12px; border-radius: 1.3em; font-weight: 900;" v-on:click="updateCategorieButton">Modifier</button>
+                        <div v-if="edit" style="margin-left: 140px; width: 120px; margin-top: 23px; border:0; ">
+                          <button  type="submit" class="btn btn-block" style="font-size: 12px; border-radius: 1.3em; font-weight: 900;" v-on:click="updateSousCategorieButton()">Modifier</button>
+                        </div>
                         <div v-else style="margin-left: 140px; width: 120px; margin-top: 23px; border:0; ">
                          <button type="submit" class="btn btn-success btn-block" style="font-size: 12px; border-radius: 1.3em; font-weight: 900;" v-on:click="addSousCategorie(c.id)">Ajouter</button>
                         </div>
                       </div>
                       <div  style="margin-left: 130px; width: 120px; height: 30px; margin-top: 14px;  border:0; ">
-                        <button type="submit" class="btn btn-danger btn-block" style="font-size: 12px; border-radius: 1.3em; font-weight: 900;" v-on:click="open2=false">Annuler</button>
+                        <button type="submit" class="btn btn-danger btn-block" style="font-size: 12px; border-radius: 1.3em; font-weight: 900;" v-on:click="CancelSousCatego(SousCategoAjout)">Annuler</button>
                       </div>
                   </div>
 <!--*********************************************************************************-->                 
@@ -144,9 +207,10 @@
                               <a class="dropdown-item" href="#" style="color: blue; font-style: italic;"><b>Supprimer</b></a>
                   
                       <div  v-for="sousCatego in sousCategories" v-if="sousCategories.length > 0 && sousCatego.categorie_id === c.id" style="display: inline-flex; margin-right:10px " ><!--sousCategories.length > 0 le cas de catego maykoun 3andha sous catego -->  
-                          <div  style="display: inline-flex;" >                    
-                            <input type="checkbox"  :id="sousCatego.libelle" :value="sousCatego.id" v-model="checkedSouscategorie" @change="changeButtonSousCatego(sousCatego, c.id)">
-                            <label :for="sousCatego.libelle" ></label>
+
+                          <div style="display: inline-flex;"><!--normal-->                    
+                            <input type="checkbox"  :id="sousCatego.libelle && sousCatego.id" :value="sousCatego.id" v-model="checkedSouscategorie" @change="changeButtonSousCatego(sousCatego, c.id)">
+                            <label :for="sousCatego.libelle && sousCatego.id" ></label>
                             <p style="width: 88px">@{{sousCatego.libelle}}</p>
                           </div>
                             <div class="dropdown">
@@ -155,8 +219,8 @@
                               </a>
                               <div  class="dropdown-menu dropdown-menu-center"  >
                                 <div class="account-item clearfix js-item-menu">
-                                  <a class="dropdown-item" href="" style="color: blue; font-style: italic;" v-on:click="updateSousCategorie(sousCatego)"><b>Modifier</b></a>
-                                  <a class="dropdown-item" href="#" style="color: blue; font-style: italic;"><b>Supprimer</b></a>
+                                  <a class="dropdown-item" style="color: blue; font-style: italic; cursor: pointer;" v-on:click="updateSousCategorie(sousCatego)"><b>Modifier</b></a>
+                                  <a class="dropdown-item" style="color: blue; font-style: italic; cursor: pointer;" v-on:click="deleteSousCategorie(sousCatego)"><b>Supprimer</b></a>
                                 </div>
                               </div>
                             </div>
@@ -165,7 +229,10 @@
               </div>
             </div>
           </div>
+
         </div>
+                  {{$categorie->links()}}
+              <br><br>
       </div>
 
       <footer class="footer">
@@ -209,7 +276,8 @@
         window.Laravel = {!! json_encode([
 
                'csrfToken'      => csrf_token(),
-               'categorie'      => $categorie,                                  
+               'categorie'      => $categorie,
+               'var'            => $var,                                  
                 'url'           => url('/'), 
           ]) !!};
 </script>
@@ -230,6 +298,12 @@
         ccategorie: {
           id: 0,
           libelle :'',
+          typeCategorie: '',
+        },
+        sousccategorie: {
+          id: 0,
+          categorie_id:0 ,
+          libelle :'',
         },
         edit: false, 
         idSousCatego: '',
@@ -237,7 +311,7 @@
         allSelected: false,
         categorieIds: [],
         selectall: true,
-        SousCAjout:{
+        SousCategoAjout:{
           id: 0,
           categorie_id:0 ,
           libelle :'',
@@ -246,11 +320,35 @@
         oldCatego: {
           libelle: '', 
         },
+        oldSousCatego: {
+          libelle: '', 
+        },
         message: {},
+
+        AutreExiste: false,
+        sousCategoriesNull: [],
+        
+
                  
       },
 
     methods: {
+      SavetTypeCategorie:function(event){
+
+              this.ccategorie.typeCategorie = event.target.value;
+
+      },
+      CancelSousCatego(souscategorie){
+        this.edit = false;
+        this.open2 = false;
+        this.SousCategoAjout= {
+          id: 0,
+          categorie_id:0 ,
+          libelle :'',
+        };
+        this.message = {};
+        souscategorie.libelle = this.oldSousCatego.libelle;
+      },
       CancelCatego(categorie){
         this.edit = false;
         this.open = false;
@@ -265,6 +363,9 @@
          this.edit = true;
          this.open = true;
          this.open2 = false;
+         this.suppr = false;
+         this.checkedCategorie = [];
+         this.deletecategorie = [];
          this.ccategorie = categorie;
          this.oldCatego.libelle = categorie.libelle;
          
@@ -273,37 +374,69 @@
          this.edit = true;
          this.open = false;
          this.open2 = true;
-         this.idSousCatego = souscategorie.id;
-         this.SousCAjout = souscategorie;
-         this.oldCatego.libelle = categorie.libelle;
+         this.suppr2 = false;
+         this.suppr = false;
+         this.checkedSouscategorie = [];
+         this.deletesouscategorie = [];
+         this.idSousCatego = souscategorie.categorie_id;
+         this.SousCategoAjout = souscategorie;
+         this.oldSousCatego.libelle = souscategorie.libelle;
          
       },
-      updateCategorieButton: function(){
-         if(this.SousCAjout.libelle == ''){
+      updateSousCategorieButton: function(){
+         if(this.SousCategoAjout.libelle == ''){
 
-            this.SousCAjout.libelle =  this.oldArt.libelle;
+            this.SousCategoAjout.libelle =  this.oldSousCatego.libelle;
          }
       
-         axios.put(window.Laravel.url+"/updatecategorie",this.SousCAjout)
+         axios.put(window.Laravel.url+"/updatesouscategorie",this.SousCategoAjout)
 
             .then(response => {
               if(response.data.etat){
-                 this.SousCAjout = response.data.articleAjout;
-                 this.hideModel = false;
-                 this.SousCAjout={
-                      id: 0,
-                      categorie_id:0 ,
-                      libelle :'',
-                 };
+                 this.edit = false;
+                 this.open2 = false;
+                 this.SousCategoAjout= {
+                   id: 0,
+                   categorie_id:0 ,
+                   libelle :'',
+                };
+                this.message = {};
+                this.oldSousCatego= {
+                  libelle: '', 
+                };
 
               } 
-              this.modifier = false;
-              this.message = {};
-              this.image = '';
-              this.oldArt = {
-                    libelle: '', 
-                    
-              };     
+                 
+            })
+            .catch(error =>{
+                this.message = error.response.data.errors;
+                console.log('errors :' , this.message);
+            })
+
+      }, 
+      updateCategorieButton: function(){
+         if(this.ccategorie.libelle == ''){
+
+            this.ccategorie.libelle =  this.oldCatego.libelle;
+         }
+      
+         axios.put(window.Laravel.url+"/updatecategorie",this.ccategorie)
+
+            .then(response => {
+              if(response.data.etat){
+                 this.edit = false;
+                 this.open = false;
+                 this.ccategorie= {
+                   id: 0,
+                   libelle :'',
+                };
+                this.message = {};
+                this.oldCatego= {
+                  libelle: '', 
+                };
+
+              } 
+                 
             })
             .catch(error =>{
                 this.message = error.response.data.errors;
@@ -314,34 +447,40 @@
       getSousCategories: function(){
               axios.get(window.Laravel.url+'/getsouscategories')
               .then(response => {
-                this.sousCategories = response.data;
+                this.sousCategories = response.data.sousCatego;
+                this.sousCategoriesNull = response.data.sousCategoNull;
           
                })
               .catch(error => {
                   console.log('errors : '  , error);
              })
           },
-          addSousCategorie: function(categorieId){
-            this.SousCAjout.categorie_id = categorieId;
-            console.log("aaa",this.SousCAjout)
-            axios.post(window.Laravel.url+'/addsouscategorie',this.SousCAjout)
+      addSousCategorie: function(categorieId){
+            this.SousCategoAjout.categorie_id = categorieId;
+            axios.post(window.Laravel.url+'/addsouscategorie',this.SousCategoAjout)
               .then(response => {
                 if(response.data.etat){
-                 this.SousCAjout = response.data.sousCategorieAjout;
-                 this.SousCAjout.id = response.data.sousCategorieAjout.id;
-
-                 app.sousCategories.unshift(this.SousCAjout);
-                  console.log('successeee :' ,response.data);
-                  console.log('this.SousCAjout :' ,this.SousCAjout);
+                 this.SousCategoAjout = response.data.sousCategorieAjout;
+                 this.SousCategoAjout.id = response.data.sousCategorieAjout.id;
+                 this.sousCategories.unshift(this.SousCategoAjout);
+                 this.open2 = false;
+                 this.message = {};
+                 this.SousCategoAjout={
+                    id: 0,
+                    categorie_id:0 ,
+                    libelle :'',
+                  };
                 }
                })
               .catch(error => {
-                  console.log('errors : '  , error);
+                  this.message = error.response.data.errors;
+                  console.log('errors :' , this.message);
              })
 
-          },
-          selectAll: function() {
-
+      },
+      selectAll: function() {
+            this.open2 = false;
+            this.open = false;
             this.selectall = false;
             if (this.allSelected) {
                 for (user in this.categories) {
@@ -360,13 +499,114 @@
 
                            
              
-        },
-          deleteArrayCategorie:function(){
+      },
+      deleteArraySousCategorie:function(){
+
+             if(this.SousCategoriesDelete.length == 1){
+                  Swal.fire({
+                  title: 'Etes vous sure de supprimer cette sous-categorie ??',
+                  html: "<smal style='font-size:15px; display:flex'><h6 style='color: red'>ATTENTION!</h6>Toutes les produits appartenant à cette sous-catégorie seront perdues .</smal>",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Oui, Supprimer!'
+                }).then((result) => {
+                    if (result.value) {
+                      this.SousCategoriesDelete.forEach(key => {
+                        axios.delete(window.Laravel.url+'/deletesouscategorie/'+key.id) 
+                           .then(response =>{
+                               if(response.data.etat){
+                                   window.location.reload();    
+                                   var position = this.sousCategories.indexOf(key);
+                                   this.sousCategories.splice(position,1);
+                                   this.suppr2 = false;   
+                               }
+                               
+                            })
+                           .catch(error =>{
+                                     console.log('errors :' , error);
+                            })
+                      })
+                          this.allSelected = false;
+                          this.checkedSouscategorie.length = [];
+                          this.suppr=false;
+                          this.SousCategoriesDelete = [];
+                          this.selectall = true;
+                    Swal.fire(
+                      'Effacé!',
+                      'Votre Sous-Categorie a été supprimé.',
+                      'success'
+                    )
+                  }
+                  
+                  
+                  })
+
+            }
+            else{
+                Swal.fire({
+              title: 'Etes vous sure de supprimer ces sous-categories ??',
+              html: "<smal style='font-size:15px; display:flex'><h6 style='color: red'>ATTENTION!</h6>Toutes les produits appartenant à cette sous-catégorie seront perdues .</smal>",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Oui, Supprimer!'
+            }).then((result) => {
+                if (result.value) {
+                  this.SousCategoriesDelete.forEach(key => {
+                    axios.delete(window.Laravel.url+'/deletesouscategorie/'+key.id) 
+                       .then(response =>{
+                           if(response.data.etat){
+                               window.location.reload();    
+                               var position = this.sousCategories.indexOf(key);
+                               this.sousCategories.splice(position,1);
+                               this.suppr2 = false;   
+                           }
+                           
+                        })
+                       .catch(error =>{
+                                 console.log('errors :' , error);
+                        })
+                  })
+                      this.allSelected = false;
+                      this.checkedSouscategorie.length = [];
+                      this.suppr=false;
+                      this.SousCategoriesDelete = [];
+                      this.selectall = true;
+                Swal.fire(
+                  'Effacé!',
+                  'Vos sous-catégories ont été supprimées.',
+                  'success'
+                )
+              }
+              
+              })
+            }
+            
+      },
+      getCategories:function(){
+             axios.get(window.Laravel.url+'/categoriesAdmin')
+             .then(response => {
+                  this.categories = window.Laravel.categorie.data;
+                  if(window.Laravel.var == 1){
+                        this.AutreExiste = true;
+                  }
+                  
+                  
+             })
+             .catch(error => {
+                  console.log('errors : '  ,error);
+             })
+             
+      },
+      deleteArrayCategorie:function(){
             if(this.CategoriesDelete.length == 0){
                 Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Il ya aucun Article a supprimer!',
+                text: 'Il ya aucun Categorie a supprimer!',
 
               }).then((result) => {
                 this.allSelected = false;
@@ -374,58 +614,95 @@
                 this.selectall = true;
                
              })
-              return;
+              
             }
-            Swal.fire({
-            title: 'Etes vous?',
-            text: "De supprimer cette Atricle?",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Oui, Supprimer!'
-          }).then((result) => {
-              if (result.value) {
-                this.CategoriesDelete.forEach(key => {
-                  axios.delete(window.Laravel.url+'/deletecategorie/'+key.id)
-                    .then(response => {
-                      if(response.data.etat){
-                                            
-                                var position = this.categories.indexOf(key);
-                                this.categories.splice(position,1);      
-                      }                    
-                    })
-                    .catch(error =>{
-                               console.log('errors :' , error);
-                    })
-                })
-                    this.allSelected = false;
-                    this.checkedCategorie.length = [];
-                    this.suppr=false;
-                    this.CategoriesDelete = [];
-                    this.selectall = true;
-              Swal.fire(
-                'Effacé!',
-                'Votre article a été supprimé.',
-                'success'
-              )
+            else if(this.CategoriesDelete.length == 1){
+                Swal.fire({
+                  title: 'Etes vous de supprimer cette Categorie?',
+                  html: "<smal style='font-size:15px; display:flex'><h6 style='color: red'>ATTENTION!</h6>Toutes les sous-catégories appartenant à cette catégorie seront perdues.</smal>",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Oui, Supprimer!'
+                }).then((result) => {
+                    if (result.value) {
+                      this.CategoriesDelete.forEach(key => {
+                        axios.delete(window.Laravel.url+'/deletecategorie/'+key.id)
+                          .then(response => {
+                            if(response.data.etat){
+                                     window.location.reload();             
+                                      var position = this.categories.indexOf(key);
+                                      this.categories.splice(position,1);      
+                            }                    
+                          })
+                          .catch(error =>{
+                                     console.log('errors :' , error);
+                          })
+                      })
+                      
+                          this.allSelected = false;
+                          this.checkedCategorie.length = [];
+                          this.suppr=false;
+                          this.CategoriesDelete = [];
+                          this.selectall = true;
+
+                    Swal.fire(
+                      'Effacé!',
+                      'Votre Categorie a été supprimé.',
+                      'success'
+                    )
+                  }
+                  
+                  })
+
+            }
+            else{
+                Swal.fire({
+                  title: 'Etes vous de supprimer ces Categories?',
+                  html: "<smal style='font-size:15px; display:flex'><h6 style='color: red'>ATTENTION!</h6>Toutes les sous-catégories appartenant à ces catégories seront perdues.</smal>",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Oui, Supprimer!'
+                }).then((result) => {
+                    if (result.value) {
+                      this.CategoriesDelete.forEach(key => {
+                        axios.delete(window.Laravel.url+'/deletecategorie/'+key.id)
+                          .then(response => {
+                            if(response.data.etat){
+                                     window.location.reload();             
+                                      var position = this.categories.indexOf(key);
+                                      this.categories.splice(position,1);      
+                            }                    
+                          })
+                          .catch(error =>{
+                                     console.log('errors :' , error);
+                          })
+                      })
+                      
+                          this.allSelected = false;
+                          this.checkedCategorie.length = [];
+                          this.suppr=false;
+                          this.CategoriesDelete = [];
+                          this.selectall = true;
+
+                    Swal.fire(
+                      'Effacé!',
+                      'Vos Categories ont été supprimé.',
+                      'success'
+                    )
+                  }
+                  
+                  })
+
             }
             
-            })
-       },
-           getCategories:function(){
-             axios.get(window.Laravel.url+'/categoriesAdmin')
-             .then(response => {
-                  this.categories = window.Laravel.categorie;
-                  
-             })
-             .catch(error => {
-                  console.log('errors : '  ,error);
-             })
-             
-          },
+      },
+      
 
-          addCategorie:function(){
+      addCategorie:function(){
               axios.post(window.Laravel.url+'/addcategorie',this.ccategorie)
               .then(response => {
                 if(response.data.etat){
@@ -436,30 +713,71 @@
                   this.ccategorie = {
                         id: 0,
                         libelle :'',
-                   };
+                  };
+                  this.message={};
                  
                 }
+                
               })
               .catch(error => {
-                console.log('errors' ,error)
+                this.message = error.response.data.errors;
+                console.log('errors :' , this.message);
               })
-          },
-           deleteCategorie:function(c){
-
+      },
+      deleteSousCategorie:function(souscategorie){
+                this.open2 = false;
+                this.open = false;
                 Swal.fire({
-                  title: 'Etes vous sure ?',
-                  text: "De supprimer cette categorie ?",
+                  title: 'Etes vous sure de supprimer cette sous-categorie ??',
+                  html: "<smal style='font-size:15px; display:flex'><h6 style='color: red'>ATTENTION!</h6>Toutes les produits appartenant à cette sous-catégorie seront ajouter a une categorie 'Autre' .</smal>",
                   icon: 'warning',
                   showCancelButton: true,
                   confirmButtonColor: '#3085d6',
                   cancelButtonColor: '#d33',
                   confirmButtonText: 'Oui, supprimer!'
                 }).then((result) => {
+
+                  if (result.value) {
+                    axios.delete(window.Laravel.url+'/deletesouscategorie/'+souscategorie.id) 
+                     .then(response =>{
+                         if(response.data.etat){
+                             window.location.reload();    
+                             var position = this.sousCategories.indexOf(souscategorie);
+                             this.sousCategories.splice(position,1);   
+                         }
+                         
+                      })
+                     .catch(error => {
+                        console.log(error)
+                     })
+                    Swal.fire(
+                      'Effacé!',
+                      'Votre Sous-Categorie a été supprimé.',
+                      'success'
+                    )
+                  }
+                })
+          
+            
+      },
+      deleteCategorie:function(c){
+                this.open2 = false;
+                this.open = false;
+                Swal.fire({
+                  title: 'Etes vous sure de supprimer cette categorie ??',
+                  html: "<smal style='font-size:15px; display:flex'><h6 style='color: red'>ATTENTION!</h6>Toutes les sous-catégories appartenant à cette catégorie seront perdues.</smal>",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Oui, supprimer!'
+                }).then((result) => {
+
                   if (result.value) {
                     axios.delete(window.Laravel.url+'/deletecategorie/'+c.id) 
                      .then(response =>{
                          if(response.data.etat){
-                                 
+                             window.location.reload();    
                              var position = this.categories.indexOf(c);
                              this.categories.splice(position,1);   
                          }
@@ -469,17 +787,18 @@
                         console.log(error)
                      })
                     Swal.fire(
-                      'Deleted!',
-                      'Your file has been deleted.',
-                      'success',
+                      'Effacé!',
+                      'Votre Sous-Categorie a été supprimé.',
+                      'success'
                     )
                   }
+
                 })
           
             
-        },
+      },
 
-          ajouterCategorie: function(){
+      ajouterCategorie: function(){
             this.open = true;
             this.edit = false;
             this.open2 = false;
@@ -488,48 +807,78 @@
                         libelle :'',
                    };
             
-          },
-          ajouterSouscategorie: function(id){
+      },
+      ajouterSouscategorie: function(id){
+            this.edit = false;
             this.open2 = true;
             this.open = false;
             this.idSousCatego = id; 
+            this.SousCategoAjout = {
+                id: 0,
+                categorie_id:0 ,
+                libelle :'',
+            };
 
-          },
-          changeButton: function(a){
-             this.CategoriesDelete.unshift(a);
-              if(this.checkedCategorie.length > 0){
-                this.suppr=true;
-              }
-              else{
-                this.CategoriesDelete = [];
-                this.suppr=false;
-              }  
-          },
-          deselectArticle: function(categorie){
+      },
+      deselectCategorie: function(categorieId){
              this.CategoriesDelete.forEach(key => {
-                  if(key.id == categorie){
+                  if(key.id == categorieId){
                       var position = this.CategoriesDelete.indexOf(key);
                       this.CategoriesDelete.splice(position,1);                    
                   } 
             });             
-        },
-          AnnulerSel: function(){
-            this.checkedCategorie.length = [];
-            this.changeButton();
-          },
-          changeButtonSousCatego: function(a,idCatego){
-            this.idSousCatego = idCatego;
-            this.SousCategoriesDelete.unshift(a);
-              if(this.checkedSouscategorie.length > 0){
-                this.suppr2=true;
+      },
+
+      changeButton: function(a){
+             this.open2 = false;
+             this.open = false;
+              if(this.checkedCategorie.length > 0){
+                this.suppr=true;
+                this.CategoriesDelete.unshift(a);
               }
               else{
-                this.SousCategoriesDelete = [];
+                this.CategoriesDelete = [];
+                this.suppr=false;
+                
+              } 
+              if(this.checkedCategorie.length < this.CategoriesDelete.length){
+                this.deselectCategorie(a.id)
+              } 
+      },
+      AnnulerSel: function(){
+            this.categorieIds.length = [];
+            this.checkedCategorie.length = [];
+            this.changeButton(null);
+            this.selectall = true;
+            this.allSelected = false;
+            this.message={};
+      },
+      changeButtonSousCatego: function(a,idCatego){
+              if(this.checkedSouscategorie.length > 0 ){
+                  this.SousCategoriesDelete.forEach(key => {
+                      if(key.categorie_id != a.categorie_id){
+                        var position = this.SousCategoriesDelete.indexOf(key);
+                          this.SousCategoriesDelete.splice(position,1);
+                          this.checkedSouscategorie.splice(position,1)
+                      }
+                  });
+                this.suppr2=true;
+                this.open2 = false;
+                this.open = false;
+                this.idSousCatego = idCatego;
+                this.SousCategoriesDelete.push(a);
+              }
+              else{
+                this.SousCategoriesDelete.length = 0;
                 this.suppr2=false;
               }  
-          },
-          AnnulerSel2: function(){
+              if(this.checkedSouscategorie.length < this.SousCategoriesDelete.length){
+                  this.SousCategoriesDelete = this.SousCategoriesDelete.filter(function(item) { return item != a; });
+              }
+      },
+      AnnulerSel2: function(){
             this.checkedSouscategorie.length = [];
+<<<<<<< HEAD
             this.changeButtonSousCatego();
           }, 
           updateCategorie:function(){
@@ -549,6 +898,12 @@
                 console.log('errors' ,error)
               })
           },   
+=======
+            this.SousCategoriesDelete = [];
+            this.changeButtonSousCatego(null,null);
+            this.message={};
+      },   
+>>>>>>> 3d37dd6b49b5179c8c968b47fa1bd26eaae208c3
      
      },
     created: function(){

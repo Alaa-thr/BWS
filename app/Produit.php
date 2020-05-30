@@ -26,4 +26,9 @@ class Produit extends Model
     {
         return $this->hasMany('App\Color');
     }
+
+    public function sous_categorie()
+    {
+        return $this->belongsTo('App\Sous_categorie');
+    }
 }

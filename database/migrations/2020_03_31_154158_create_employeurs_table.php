@@ -24,6 +24,7 @@ class CreateEmployeursTable extends Migration
             $table->string('num_compte_banquiare')->unique();
             $table->string('nom_societe')->nullable();
             $table->string('image')->nullable();
+            $table->integer('Nbre_signal')->default(0);
             $table->timestamps();
         });
     }

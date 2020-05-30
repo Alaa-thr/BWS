@@ -15,7 +15,7 @@ class AddColumnFkProduits extends Migration
     {
         Schema::table('produits', function (Blueprint $table) {
           
-            $table->foreign('sous_categorie_id')->references('id')->on('sous_categories');
+            $table->foreign('sous_categorie_id')->references('id')->on('sous_categories')->ondelete("SET NULL");
             $table->foreign('vendeur_id')->references('id')->on('vendeurs');
 
         });

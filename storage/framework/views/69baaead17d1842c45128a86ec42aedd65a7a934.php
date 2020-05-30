@@ -546,9 +546,10 @@
                     })
       },
       changeButton: function(a){//ki nselectioniw un checkbox de chaque article tetéxucita (khati checkbow di godam article) (zednaha 3la le cas di nsélictioniw 1 ou 2 ou 3 ... ta3 les articles, ida habit tssuprimer kml les articles ya takhdem b hadi ta ta3ml checkbox di godem "Article" la diff binathom hiya => checkbox di godem "Article" yetsilictionaw kml derba wahda w lokhra khas tfout 3lihom wa7da b wa7da)
-        this.artilcesDelete.unshift(a);//bach n ajoutiw les articles di selictioninahow f tableau "artilcesDelete" bach nsuprimiwhom
+        
         if(this.checkedArticles.length > 0){//nchofo ida ra kayen des articles selictioninahom (khati checkbox di godem "Article") f tableau "checkedArticles" ou nn 
           this.suppr=true;//afficher les 2 button "supprimer" et "annuler" f blaset button "ajouter article"
+          this.artilcesDelete.unshift(a);//bach n ajoutiw les articles di selictioninahow f tableau "artilcesDelete" bach nsuprimiwhom
         }
         else{//sinon c a d makanch ta checkbox ra mselictionya (le cas di nkoun 3mlna selection awed na7inaha)
           this.artilcesDelete = [];//nkhawiw tableau "artilcesDelete" di kona 3amerna fih les articles bach nsuprimiwhom
@@ -557,7 +558,7 @@
       }, 
       AnnulerSel: function(){//ki nersaw 3la button Annuler
         this.checkedArticles.length = [];//kml les articles di kona mselictioniwhm (bla manersaw 3la chechbox di godam article) na7iwlhom hadak selectionnement w nkhawiw tableau "checkedArticles"
-        this.changeButton();//appelle fct changeButton bach nredo l button "ajouter article" (yedkhol l else psq "this.checkedArticles.length = 0" welat = 0 bhadi "this.checkedArticles.length = [];")
+        this.changeButton(null);//appelle fct changeButton bach nredo l button "ajouter article" (yedkhol l else psq "this.checkedArticles.length = 0" welat = 0 bhadi "this.checkedArticles.length = [];")
         this.selectall = true;//bach nredo les <input type="checkbox"> ta3 chaque article (bach ki nsélictioniwhom w nersaw 3la 3 point => supprimer takhdem la supprition ou bien 3la button "supprilmer" di tban f blaset "ajouter article")
         this.allSelected = false;//bach hadik checkbox di godam "Article" l foug tetna7a menha selection
       },

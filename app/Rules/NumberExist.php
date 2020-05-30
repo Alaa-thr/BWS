@@ -76,6 +76,6 @@ class NumberExist implements Rule
      */
     public function message()
     {
-        return 'Ce :attribute est déja utilisé';
+        return 'Ce :attribute est déja utilisé.';
     }
 }

@@ -26,7 +26,7 @@
          $stripeCatego='';
                 
          $urlAcctuiel = Route::getCurrentRoute()->uri();
-         if($urlAcctuiel == 'categoriesAdmin'){
+         if($urlAcctuiel == 'categoriesAdmin' || $urlAcctuiel == 'shopCategories' || $urlAcctuiel == 'emploiCategories'){
              $stripeCatego='active';
          }
   ?>

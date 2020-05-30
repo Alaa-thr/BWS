@@ -53,6 +53,6 @@ class TitreDescriptionExist implements Rule// rule di n3aytoulha f "ArticleReque
      */
     public function message()//cette method tetéxecuta ki la fcnt passes() treturni false, cette fcnt return un message di yen7at f tableau message di f la vue
     {
-        return 'Ce :attribute est déja utilisé';// ida kant kayna erreur f titre ":attribute" ykoun egale a "titre"(méme choose pour description)
+        return 'Ce :attribute est déja utilisé.';// ida kant kayna erreur f titre ":attribute" ykoun egale a "titre"(méme choose pour description)
     }
 }
