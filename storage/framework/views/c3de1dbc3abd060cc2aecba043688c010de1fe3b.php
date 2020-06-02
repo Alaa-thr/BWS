@@ -521,13 +521,6 @@
                       'Votre Sous-Categorie a été supprimé.',
                       'success'
                     )
-                  }else{
-                    console.log("hello");
-                    this.allSelected = false;
-                          this.checkedSouscategorie.length = [];
-                          this.suppr=false;
-                          this.SousCategoriesDelete = [];
-                          this.selectall = true;
                   }
                   
                   
@@ -570,13 +563,6 @@
                   'Vos sous-catégories ont été supprimées.',
                   'success'
                 )
-              }
-              else{
-                      this.allSelected = false;
-                      this.checkedSouscategorie.length = [];
-                      this.suppr=false;
-                      this.SousCategoriesDelete = [];
-                      this.selectall = true;
               }
               
               })
@@ -650,13 +636,6 @@
                       'success'
                     )
                   }
-                  else{
-                          this.allSelected = false;
-                          this.checkedCategorie.length = [];
-                          this.suppr=false;
-                          this.CategoriesDelete = [];
-                          this.selectall = true;
-                  }
                   
                   })
 
@@ -697,13 +676,6 @@
                       'Vos Categories ont été supprimé.',
                       'success'
                     )
-                  }
-                  else{
-                          this.allSelected = false;
-                          this.checkedCategorie.length = [];
-                          this.suppr=false;
-                          this.CategoriesDelete = [];
-                          this.selectall = true;
                   }
                   
                   })

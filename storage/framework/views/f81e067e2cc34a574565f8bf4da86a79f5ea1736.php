@@ -28,6 +28,9 @@
     <link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
     <link rel="stylesheet" type="text/css" href="css/util.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
+    <script src="<?php echo e(asset('jss/vue.js')); ?>"></script>
+    <script src="<?php echo e(asset('jss/axios.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('jss/sweetalert2.js')); ?>"></script>
  
   
 
@@ -923,7 +926,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         </span>
     </div>
 
-     <!-- Modal1 -->
+     <!-- Modal1
     <div class="wrap-modal1 js-modal1 p-t-60 p-b-20">
         <div class="overlay-modal1 js-hide-modal1"></div>
 
@@ -989,7 +992,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                                 Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus ligula. Mauris consequat ornare feugiat.
                             </p>
                             
-                            <!--  -->
+                            
                             <div class="p-t-33">
                                 <div class="flex-w flex-r-m p-b-10">
                                     <div class="size-203 flex-c-m respon6">
@@ -1029,7 +1032,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                                     </div>
                                 </div>
 
-                                <!--  -->
                             
                                 <div class="flex-w flex-r-m p-b-10">
                                     <div class="size-203 flex-c-m respon6">
@@ -1076,7 +1078,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
+<?php echo $__env->yieldPushContent('javascripts'); ?>
 
    <!--<script src="vendor/jquery/jquery-3.2.1.min.js"></script>-->  
     <script src="vendor/animsition/js/animsition.min.js"></script>

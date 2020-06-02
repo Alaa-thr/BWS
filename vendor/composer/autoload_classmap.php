@@ -46,6 +46,7 @@ return array(
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
     'App\\Http\\Requests\\ArticleRequest' => $baseDir . '/app/Http/Requests/ArticleRequest.php',
     'App\\Imageproduit' => $baseDir . '/app/Imageproduit.php',
+    'App\\Notification' => $baseDir . '/app/Notification.php',
     'App\\Paiement_employeur' => $baseDir . '/app/Paiement_employeur.php',
     'App\\Paiement_vendeur' => $baseDir . '/app/Paiement_vendeur.php',
     'App\\Panier' => $baseDir . '/app/Panier.php',

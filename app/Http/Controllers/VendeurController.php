@@ -9,8 +9,10 @@ use App\User;
 use App\Produit;
 use App\Imageproduit;
 use App\ColorProduit;
+use App\TailleProduit;
 use Illuminate\Support\Facades\Storage;
 use Auth;
+use Validator;
 
 class VendeurController extends Controller
 {
@@ -53,7 +55,7 @@ class VendeurController extends Controller
     }
 
     public function getCategories(){
-        $categorie = \DB::table('categories')->where('id', '<>', 1)->orderBy('libelle','asc')->get();
+        $categorie = \DB::table('categories')->where([['id', '<>', 1],['typeCategorie','shop']])->orderBy('libelle','asc')->get();
         return $categorie;
     }
     public function getColors(){
@@ -61,7 +63,9 @@ class VendeurController extends Controller
         return $color;
      }
     public function addProduit(Request $request){
-            $request->validate([
+       
+            if( $request->typet == 2){
+                 $request->validate([
                 'Libellé' => ['required','regex:/^[A-Z0-9][a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
                 'description' => ['required','regex:/^[A-Z0-9][a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
                 'prix' =>['required'],
@@ -70,7 +74,37 @@ class VendeurController extends Controller
                 'poid' =>['required'],
                 'image' =>['required'],
                 'colors' =>['required'],
-            ]);
+                'pointures' =>['required']
+                 ]);
+            }
+             if( $request->typet == 1){               
+                $request->validate([
+                'Libellé' => ['required','regex:/^[A-Z0-9][a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
+                'description' => ['required','regex:/^[A-Z0-9][a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
+                'prix' =>['required'],
+                'sous_categorie_id' =>['required'],
+                'Qte_P' =>['required'],
+                'poid' =>['required'],
+                'image' =>['required'],
+                'colors' =>['required'],
+                'tailles' =>['required']
+                ]);
+            }
+            else{
+                $request->validate([
+                'Libellé' => ['required','regex:/^[A-Z0-9][a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
+                'description' => ['required','regex:/^[A-Z0-9][a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
+                'prix' =>['required'],
+                'sous_categorie_id' =>['required'],
+                'Qte_P' =>['required'],
+                'poid' =>['required'],
+                'image' =>['required'],
+                'colors' =>['required']
+                ]);
+               
+            }
+            
+            
                 $vendeur = Vendeur::find(Auth::user()->id);               
                 $produit = new Produit;
                 $produit->Libellé = $request->Libellé;
@@ -81,6 +115,23 @@ class VendeurController extends Controller
                 $produit->vendeur_id = $vendeur->id;
                 $produit->sous_categorie_id = $request->sous_categorie_id;
                 $produit->save();
+
+                if(count($request->pointures) != 0){
+                        foreach ($request->pointures as $pointure) {
+                            $Pointure = new TailleProduit;
+                            $Pointure->nom = $pointure;
+                            $Pointure->produit_id = $produit->id;
+                            $Pointure->save();
+                        }
+                }
+                else if(count($request->tailles) != 0){
+                        foreach ($request->tailles as $taille) {
+                            $Taille = new TailleProduit;
+                            $Taille->nom = $taille;
+                            $Taille->produit_id = $produit->id;
+                            $Taille->save();
+                        }
+                }
                 foreach ($request->colors as $clr) {
                     $color = new ColorProduit;
                     $color->color_id = $clr;

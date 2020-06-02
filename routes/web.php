@@ -24,13 +24,14 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/accueil', 'BwsController@accueil')->name('accueil');
 Route::get('/apropos', 'BwsController@apropos')->name('apropos');
-Route::get('/shop', 'BwsController@shop')->name('shop');
+Route::get('/shop', 'BwsController@produitVisiteur')->name('shop');
 Route::get('/emploi', 'BwsController@emploi')->name('emploi');
 Route::get('/article', 'BwsController@article')->name('article');
 Route::get('/contact', 'BwsController@contact')->name('contact');
 Route::get('/article_detaillé', 'BwsController@article_D')->name('article_D');
 Route::get('/panierVisiteur', 'BwsController@panier_visiteur')->name('panierVisiteur');
 Route::get('/getville', 'BwsController@get_ville');
+
 /************************************************ Admin***********************************************/
 
 Route::get('/admin', 'AdminController@admin_admin')->name('admin');
@@ -115,7 +116,7 @@ Route::delete('/deletecommande/{id}','ClientController@deleteCommande');
 Route::get('/demandeClient','DemandeClientController@get_demande_client')->name('demandeClient');
 Route::post('/detaillsademande', 'DemandeClientController@detaillsDemande'); 
 Route::delete('/deletedemande/{id}','DemandeClientController@deleteDemande');
-
+Route::post('/addpanier','ClientController@addPanier');
 
 
 
