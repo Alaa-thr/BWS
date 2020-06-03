@@ -31,4 +31,10 @@ class Produit extends Model
     {
         return $this->belongsTo('App\Sous_categorie');
     }
+
+    public function tailleProduit()
+    {
+        return $this->hasMany('App\TailleProduit');
+    }
+    
 }

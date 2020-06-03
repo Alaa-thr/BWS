@@ -55,5 +55,30 @@ class ClientController extends Controller
         $commande->delete();
         return Response()->json(['etat' => true]);
     }
+
+     public function addPanier(Request $request){
+
+        $request->validate([
+                'taille' =>['required'],
+                'couleur_id' =>['required'],
+                'type_livraison' =>['required'],
+                'qte' =>['required'],
+                 ]);
+         $client =  Client::find(Auth::user()->id);
+        foreach (array_combine($request->couleur_id, $request->couleur_id) as $cmdC => $cmdT) {
+            $commande = new Commande();         
+            $commande->id = $client->nbr_cmd;
+            $commande->client_id = $client->id;
+            $commande->vendeur_id = $request->vendeur_id;
+            $commande->produit_id = $request->produit_id; 
+            $commande->prix_total = $request->
+            $commande->qte = $request->qte;
+            $commande->type_livraison = $request->type_livraison;
+            $commande->couleur_id = $cmdC;
+            $commande->taille = $cmdT;
+            $commande->save();
+        }
+        return Response()->json(['etat' => true,'commande' => $commande]);
+    }
  
 }

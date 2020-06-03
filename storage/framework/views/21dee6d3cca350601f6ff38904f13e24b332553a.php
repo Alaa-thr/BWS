@@ -30,10 +30,14 @@
                
                     <div class="txt-right"style="margin-top: -50px; " >
 <<<<<<< HEAD
+<<<<<<< HEAD
                             <button  v-if="suppr" class="btn-sm btn-info js-show-modal1 m-r-30" style="height: 35px;" v-on:click="AfficherAjout()" ><b>Ajouter produit</b>
 =======
                             <button  v-if="suppr" class="btn-sm btn-info js-show-modal1 m-r-30" style="height: 35px;" v-on:click="AfficherAjout()" ><b>Ajouter article</b>
 >>>>>>> 36f9fd2f3b4d7854deaf97da4195c3f9a79ef164
+=======
+                            <button  v-if="suppr" class="btn-sm btn-info js-show-modal1 m-r-30" style="height: 35px;" v-on:click="AfficherAjout()" ><b>Ajouter Produit</b>
+>>>>>>> 0fedb69ccbc27a8c2c9e8661a49dd18eaefa27b5
                             </button>
                             <button  v-else class="btn-sm btn-danger " style="height: 35px; " v-on:click="deleteArrayArticle()"><b>Supprimer</b>
                             </button>
@@ -140,7 +144,7 @@
                     <div class="col-md-6 col-lg-5 p-b-30">
                         <div class="p-r-50 p-t-5 p-lr-0-lg">
                             <h4 class="mtext-105 cl2 js-name-detail p-b-14">
-                                Lightweight Jacket {{message}}
+                                Lightweight Jacket
                             </h4>
 
                             <span class="mtext-106 cl2">
@@ -252,10 +256,14 @@
                             <div class="form-group mb-3">
                               <label>Nom de Poduit</label>
 <<<<<<< HEAD
+<<<<<<< HEAD
                               <input  type="text" class="form-control" placeholder="Nom de Poduit*" v-model="produitAjout.Libellé" :class="{'is-invalid' : message.Libellé}"/>
 =======
                               <input  type="text" class="form-control" placeholder="Le nom doit commencer par un Maj" v-model="produitAjout.Libellé" :class="{'is-invalid' : message.Libellé}"/>
 >>>>>>> 36f9fd2f3b4d7854deaf97da4195c3f9a79ef164
+=======
+                              <input  type="text" class="form-control" placeholder="Le nom doit commencer par un Maj ou Numero" v-model="produitAjout.Libellé" :class="{'is-invalid' : message.Libellé}"/>
+>>>>>>> 0fedb69ccbc27a8c2c9e8661a49dd18eaefa27b5
                               <span class="px-3 cl13" v-if="message.Libellé" v-text="message.Libellé[0]">
                               </span>
                               
@@ -267,10 +275,14 @@
                             <div class="form-group ">
                               <label>Description de Produit</label>
 <<<<<<< HEAD
+<<<<<<< HEAD
                               <textarea class="form-control" placeholder="Description*" v-model="produitAjout.description" :class="{'is-invalid' : message.description}"></textarea>
 =======
                               <textarea class="form-control" placeholder="La description doit commencer par un Maj" v-model="produitAjout.description" :class="{'is-invalid' : message.description}"></textarea>
 >>>>>>> 36f9fd2f3b4d7854deaf97da4195c3f9a79ef164
+=======
+                              <textarea class="form-control" placeholder="La description doit commencer par un Maj ou Numero" v-model="produitAjout.description" :class="{'is-invalid' : message.description}"></textarea>
+>>>>>>> 0fedb69ccbc27a8c2c9e8661a49dd18eaefa27b5
                                <span class="px-3 cl13" v-if="message.description" v-text="message.description[0]">
                               </span>
                             </div>
@@ -327,10 +339,14 @@
                             </div>
                          
                         </div>
+<<<<<<< HEAD
                         <div class="row col-md-12 pr-2 flex-t m-b-35">
 <<<<<<< HEAD
                             <select class="form-control form-control-lg m-r-45" id="categoSelect" name="ville" style="height: 40px; width: 320px ;border-radius: 1em;" v-on:change="activeSousCatego($event)" :class="{'is-invalid' : message.catego}">
 =======
+=======
+                        <div class="row col-md-12 pr-2 flex-t m-b-30">
+>>>>>>> 0fedb69ccbc27a8c2c9e8661a49dd18eaefa27b5
                             <select class="form-control form-control-lg m-r-45" id="categoSelect" name="catego" style="height: 40px; width: 320px ;border-radius: 1em;" v-on:change="activeSousCatego($event)" :class="{'is-invalid' : message.catego}">
 >>>>>>> 36f9fd2f3b4d7854deaf97da4195c3f9a79ef164
                               <option value="" hidden="hidden" selected>&nbsp&nbspSélectionner une Ctegorie</option> 
@@ -348,13 +364,45 @@
                             </select>
                             <span class="px-3 cl13" v-if="message.sous_categorie_id" v-text="message.sous_categorie_id[0]"></span>
                         </div>
-                        <div class="row">
+                        <div class="row m-b-30">
                             <div class="col-md-10 pr-2" >
-                                <select class="form-control form-control-lg" id="colorSelect" name ="clr[]" v-model="colorsP" style="border-radius: 1em;" multiple :class="{'is-invalid' : message.colors}">
-                                  <option value="" hidden="hidden" selected>&nbsp&nbspSélectionner une/plusieur Couleur(s)</option> 
+                                <label>Sélectionner une/plusieurs Couleur(s) pour votre produit</label>
+                                <select class="form-control form-control-lg" id="colorSelect" name ="clr[]" v-model="colorsP" style="border-radius: 1em;" multiple :class="{'is-invalid' : message.colors}"> 
                                   <option v-for="color in colors" :value="color.id" >&nbsp&nbsp{{color.nom}}</option> 
                                 </select>
                                 <span class="px-3 cl13" v-if="message.colors" v-text="message.colors[0]"></span>
+                            </div>
+                        </div>
+                        <div class="row m-b-30">
+                            <div class="col-md-10 pr-2 "> 
+                                <label>Sélectionner le type de Taille produit</label>
+                                <select class="form-control form-control-lg m-b-25" id="typetpSelect" name="typetp" v-model="Type" style="height: 40px; width: 320px ;border-radius: 1em;" @change="activeTaille()">
+                                  <option value="0" >&nbsp&nbspAucune</option> 
+                                  <option value="1">&nbsp&nbspTaille pour les vêtements</option>
+                                  <option value="2">&nbsp&nbspPointure pour les chaussures</option>
+                                </select>
+                                
+                                <div v-if="typeTaille">
+                                    <label>Sélectionner Taille(s) disponible pour votre produit</label>
+                                    <select class="form-control form-control-lg" id="tailleSelect" name ="tal[]" v-model="tailleP" style="border-radius: 1em;" multiple :class="{'is-invalid' : message.tailles}">
+                                        <option value="S">&nbsp&nbspTaille S</option>
+                                        <option value="M">&nbsp&nbspTaille M</option>
+                                        <option value="L">&nbsp&nbspTaille L</option>
+                                        <option value="XL">&nbsp&nbspTaille XL</option>
+                                        <option value="XXL">&nbsp&nbspTaille XXL</option>
+                                        <option value="XXXL">&nbsp&nbspTaille XXXL</option> 
+                                    </select>
+                                    <span class="px-3 cl13" v-if="message.tailles" v-text="message.tailles[0]"></span>
+                                </div>
+                                <div v-if="typePointure">
+                                    <label>Sélectionner Pointure(s) disponible pour votre produit</label>
+                                    <select class="form-control form-control-lg" id="PointureSelect" name ="pntr[]" v-model="PointureP" style="border-radius: 1em;" multiple :class="{'is-invalid' : message.pointures}">
+                                        <?php for($i = 19; $i <= 50; $i++): ?>
+                                            <option value="<?php echo e($i); ?>">&nbsp&nbspPointure <?php echo e($i); ?></option>
+                                        <?php endfor; ?>
+                                    </select>
+                                    <span class="px-3 cl13" v-if="message.pointures" v-text="message.pointures[0]"></span>
+                                </div>
                             </div>
                         </div>
                         
@@ -403,7 +451,11 @@
                 app2.produitAjout.image = app2.image;
                 app2.produitAjout.images = app2.imagesP;
                 app2.produitAjout.colors = app2.colorsP;
-                //console.log("app2.produitAjout",app2.produitAjout.colors.length);
+                app2.produitAjout.tailles = app2.tailleP;
+                app2.produitAjout.pointures = app2.PointureP;
+                app2.produitAjout.typet = app2.Type;
+                /*console.log("app2.produitAjout.tailles",app2.produitAjout.tailles);
+                console.log("app2.produitAjout.pointures",app2.produitAjout);*/
                 axios.post(window.Laravel.url+"/addproduit",app2.produitAjout)
                 .then(response => {
                   if(response.data.etat){
@@ -435,6 +487,9 @@
                             image: '',
                             images: [],
                             colors: [],
+                            tailles: [],
+                            pointures: [],
+                            typet: 0,
                      };
                      app2.imageP= {
                         produit_id: 0,
@@ -442,15 +497,18 @@
                      };
                      app2.imagesP= [];
                      app2.colorsP= [];
+                     app2.tailleP= [];
+                     app2.PointureP= [];
                      app2.hideModel=false;
                      app2.openAjout = false;
                      app2.message = {};
                      app2.image = '';
+                     app2.Type = '';
                   }          
                 })
                 .catch(error =>{
                     app2.message = error.response.data.errors;
-                    console.log('errors :' , app2.message);
+                    console.log('errors :' , error.response.data.errors);
                 })
           },         
         }                     
@@ -459,7 +517,6 @@
      var app2 = new Vue({
         el: '#app2',
         data:{
-          message:'hi',
           hideModel: false,
           openAjout: false,
           openInfo: false,
@@ -486,6 +543,9 @@
             image: '',
             images: [],
             colors: [],
+            tailles: [],
+            pointures: [],
+            typet: 0,
           },
           image: '',
           message: {},
@@ -498,6 +558,11 @@
           },
           imagesP: [],
           colorsP: [],
+          tailleP: [],
+          PointureP: [],
+          typeTaille: false ,
+          typePointure: false,
+          Type: 0,
 
           
         },
@@ -515,9 +580,16 @@
                             description: '',
                             Qte_P: 0,
                             poid: 0,
-                            image: ''
+                            image: '',
+                            images: [],
+                            colors: [],
+                            tailles: [],
+                            pointures: [],
                 };
                 this.message = {};
+                this.tailleP= [];
+                this.PointureP= [];
+                this.Type = '';
             },
             imagePreview(event) {
                var fileR = new FileReader();
@@ -571,6 +643,29 @@
                 document.getElementById('sousCtagoSelect').disabled = false;
                 this.produitAjout.catego = event.target.value;
                 this.getSousCategories(event.target.value);
+
+            },
+            activeTaille: function(){
+                if(this.Type == 1){
+                    this.typeTaille = true;
+                    this.typePointure = false;
+                    this.PointureP = [];
+                    
+                }
+                else if(this.Type == 2){
+                    this.typePointure = true;
+                    this.typeTaille = false;
+                    this.tailleP = [];
+                  
+                }
+                else if(this.Type == 0){
+                    this.typePointure = false;
+                    this.typeTaille = false;
+                    this.PointureP = [];
+                    this.tailleP = [];
+                    
+                   
+                }
 
             },
             getIdSousCatego: function(event){

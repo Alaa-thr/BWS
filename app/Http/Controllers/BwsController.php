@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Ville;
 use App\Vendeur;
 use App\Client;
+use App\Commande;
 use Auth;
 
 class BwsController extends Controller
@@ -18,10 +19,17 @@ class BwsController extends Controller
         return view('apropos');
     }
 
-     public function shop()
+     public function produitVisiteur()
     {
-        return view('shop');
+        $produit = \DB::table('produits')->get();       
+        $imageproduit = \DB::table('imageproduits')->get();
+        $color = \DB::table('colors')->join('color_produits', 'colors.id', '=', 'color_produits.color_id')->get();
+        $taille = \DB::table('taille_produits')->get();
+        $typeLivraison = \DB::table('typechoisirvendeurs')->get();
+        return view('shop',['produit'=>$produit, 'ImageP' => $imageproduit, 'color' => $color, 'typeLivraison' => $typeLivraison, 'taille' => $taille ]);
     }
+
+   
 
      public function emploi()
     {

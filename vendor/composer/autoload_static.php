@@ -519,6 +519,7 @@ class ComposerStaticInit6ac30e15a1ee6806079f05ef802d642c
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Http\\Requests\\ArticleRequest' => __DIR__ . '/../..' . '/app/Http/Requests/ArticleRequest.php',
         'App\\Imageproduit' => __DIR__ . '/../..' . '/app/Imageproduit.php',
+        'App\\Notification' => __DIR__ . '/../..' . '/app/Notification.php',
         'App\\Paiement_employeur' => __DIR__ . '/../..' . '/app/Paiement_employeur.php',
         'App\\Paiement_vendeur' => __DIR__ . '/../..' . '/app/Paiement_vendeur.php',
         'App\\Panier' => __DIR__ . '/../..' . '/app/Panier.php',
