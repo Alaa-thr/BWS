@@ -24,18 +24,17 @@
                   
                   <div class="row">
                     <div class="col-md-4">
-                      <select  class="form-control" onchange="window.location.href=this.value" style="margin-left: 470px; margin-top: -45px; border-radius: 0.8em; width: 230px; height: 40px;">
+                      <select  class="form-control" onchange="window.location.href=this.value" style="margin-left: 450px; margin-top: -45px; border-radius: 0.8em; width: 230px; height: 40px; cursor: pointer;">
                       <option value="0" selected disabled>Choisie le type de Categories :</option>
                       <option value="shopCategories">Shop Categories</option>
                       <option value="emploiCategories">Emploi Categories</option>
                     </select>
-                      <button v-if="suppr" class="btn btn-sm btn-danger  btn-block" style="margin-left: 710px; margin-top: -40px; border-radius: 0.8em; width: 150px; height: 40px; "  v-on:click="deleteArrayCategorie()"><b>supprimer</b></button>
-                      <button v-if="suppr" class="btn btn-sm btn-warning btn-block" style="margin-left: 868px; margin-top: -50px; border-radius: 0.8em; width: 150px; height: 40px; " v-on:click="AnnulerSel" ><b>Annuler</b></button>
+                      <button v-if="suppr" class="btn btn-sm btn-danger  btn-block" style="margin-left: 700px; margin-top: -40px; border-radius: 0.8em; width: 130px; height: 40px; "  v-on:click="deleteArrayCategorie()"><b>supprimer</b></button>
+                      <button v-if="suppr" class="btn btn-sm btn-warning btn-block" style="margin-left: 850px; margin-top: -50px; border-radius: 0.8em; width: 130px; height: 40px; " v-on:click="AnnulerSel" ><b>Annuler</b></button>
 
-                      <button v-else class="btn btn-sm   btn-block" style="margin-left: 790px; margin-top: -40px; border-radius: 0.8em; background-color: #00CED1; width: 230px; height: 40px; " v-on:click="ajouterCategorie" ><b>Ajouter une Catégorie</b></button>
+                      <button v-else class="btn btn-sm   btn-block" style="margin-left: 730px; margin-top: -40px; border-radius: 0.8em; background-color: #00CED1; width: 230px; height: 40px; " v-on:click="ajouterCategorie" ><b>Ajouter une Catégorie</b></button>
                     </div>
                   </div>
-
                 
                 <div class="row" v-if="open" style=" margin-left: 30px; ">
                   <div class="col-md-6 ">
@@ -76,12 +75,11 @@
                    </div>
                   </div>
                 </div>
+
               </div>
             </div>
           </div>
         </div>
-            
-
       
 <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
           <div v-if="AutreExiste" class="row" style="margin-top: 20px;">
@@ -113,7 +111,6 @@
           </div>
         </div>
 <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
- 
         <div class="row" style="margin-top: 20px;" v-for="c in categories">
           <div class="col-md-12">
             <div class="card">
@@ -166,6 +163,7 @@
                     </td>
                   </tr>
                 </table> 
+<!--***************************Sous Catego******************************************************-->
                <div class="row" v-if="open2 && c.id === idSousCatego" style="margin-top: -5px; margin-left: 30px;">
                       <div class="col-md-6 ">
                         <div class="form-group" style="width: 600px;">
@@ -190,21 +188,6 @@
                   <div style="margin-top: -10px;">               
                      <hr> 
                   </div>
-                  <table width="100%" >
-                    <tr v-for="sousCatego in sousCategories" >
-                      <td v-if="sousCategories.length > 0 && sousCatego.categorie_id === c.id">                      
-                        <input type="checkbox"  :id="sousCatego.id" :value="sousCatego.id" v-model="checkedSouscategorie" @change="changeButtonSousCatego(sousCatego, c.id)">
-                        <label :for="sousCatego.id" ></label>
-                        @{{sousCatego.libelle}}
-
-                        <div class="dropdown">
-                          <a href="#"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img  src="assetsAdmin/img/menu.png" alt="..."/  style="margin-top: -48px; margin-left: 90px;">
-                          </a>
-                          <div  class="dropdown-menu dropdown-menu-left" style="margin-top: -20px;  margin-left: 85px;" >
-                            <div class="account-item clearfix js-item-menu">
-                              <a class="dropdown-item" href="#" style="color: blue; font-style: italic;"><b>Modifier</b></a>
-                              <a class="dropdown-item" href="#" style="color: blue; font-style: italic;"><b>Supprimer</b></a>
                   
                       <div  v-for="sousCatego in sousCategories" v-if="sousCategories.length > 0 && sousCatego.categorie_id === c.id" style="display: inline-flex; margin-right:10px " ><!--sousCategories.length > 0 le cas de catego maykoun 3andha sous catego -->  
 
@@ -324,7 +307,6 @@
           libelle: '', 
         },
         message: {},
-
         AutreExiste: false,
         sousCategoriesNull: [],
         
@@ -878,32 +860,10 @@
       },
       AnnulerSel2: function(){
             this.checkedSouscategorie.length = [];
-<<<<<<< HEAD
-            this.changeButtonSousCatego();
-          }, 
-          updateCategorie:function(){
-              axios.put(window.Laravel.url+'/updatecategorie',this.ccategorie)
-              .then(response => {
-                if(response.data.etat){
-                  this.open = false;
-
-                   this.ccategorie = {
-                        id: 0,
-                        libelle :'',
-                   };
-                }
-                this.edit = false;
-              })
-              .catch(error => {
-                console.log('errors' ,error)
-              })
-          },   
-=======
             this.SousCategoriesDelete = [];
             this.changeButtonSousCatego(null,null);
             this.message={};
       },   
->>>>>>> 3d37dd6b49b5179c8c968b47fa1bd26eaae208c3
      
      },
     created: function(){

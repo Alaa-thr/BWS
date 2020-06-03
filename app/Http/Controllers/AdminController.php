@@ -13,7 +13,6 @@ use App\Article;
 use App\User;
 use App\Categorie;
 use App\Sous_categorie;
-use App\SousCategorie;
 use App\Typechoisirvendeur;
 use App\Notification;
 use Auth;
@@ -168,8 +167,7 @@ class AdminController extends Controller
         return redirect('profilAdmin');
     }
     public function categories_admin(){
-        $categorie = \DB::table('categories')->orderBy('created_at','desc')->get();
-        return view('categories_admin',['categorie'=>$categorie]);
+
         $autre = \DB::table('sous_categories')->where('categorie_id',null)->get();
         $autreProduit = \DB::table('produits')->where('sous_categorie_id',null)->get();
         if(count($autre) == 0 && count($autreProduit) == 0 ){
@@ -211,7 +209,7 @@ class AdminController extends Controller
         
     public function addCategorie(Request $request){
         
-       $request->validate([
+        $request->validate([
              'libelle' => ['required',new CategorieExiste($request->typeCategorie),'regex:/^[A-Z0-9][a-z0-9A-Z,_-éçèàâ]+/'],
              'typeCategorie' => ['required'],
          ]);
@@ -233,6 +231,8 @@ class AdminController extends Controller
         $categorie->save();
         return Response()->json(['etat' => true]);
     
+    }
+
     public function deleteCategorie($id){
 
         $categorie = Categorie::find($id);
@@ -345,6 +345,7 @@ class AdminController extends Controller
           
     }
     public function addAdmin(Request $request){
+        
         $request->validate([
                 'numTelephone' =>  ['required', 'string','regex:/^0[5-7][0-9]+/',"min:10","max:10", new NumberExist(4)],
                 'email' =>['required', 'string', 'email', 'max:40', new EmailExist(4)],

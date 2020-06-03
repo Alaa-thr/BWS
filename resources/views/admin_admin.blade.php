@@ -20,19 +20,19 @@
                     <b> Ajouter Admin</b>
                   </button>
                 </div>
-                <div class="box " style="margin-left: 730px; margin-top: -40px;">
-                    <select onchange="window.location.href=this.value">
-                      <option  style="border:none;">Recuperer les utilisateurs   :</option>
-                      <option value="recupervendeur"  style="border:none;">Recuperer vendeurs</option>
-                      <option value="recuperclient"  style="border:none;">Recuperer clients</option>
-                      <option value="recuemployeur"  style="border:none;">Recuperer employeurs</option>
-                      <option value="recuperadmin"  style="border:none;">Recuperer admins</option>
+                <div  style="margin-left: 730px; margin-top: -40px; ">
+                    <select class="formm-control" onchange="window.location.href=this.value" style=" width: 250px; height: 30px; border-radius: 0.8em; cursor: pointer;">
+                      <option  style="border:none;" value="0" selected="selected" disabled="disabled">Recuperer les utilisateurs   :</option>
+                      <option value="recupervendeur">Recuperer vendeurs</option>
+                      <option value="recuperclient">Recuperer clients</option>
+                      <option value="recupemployeur">Recuperer employeurs</option>
+                      <option value="recuperadmin">Recuperer admins</option>
                     </select>
                 </div>
               </div>
               
               <div class="card-body">
-                <div class="table-responsive" style="height: 420px; margin-top: 40px;">
+                <div class="table-responsive" style="height: 420px; margin-top: 65px;">
                   <table class="table">
                     <thead class=" text-primary">
                       <th >

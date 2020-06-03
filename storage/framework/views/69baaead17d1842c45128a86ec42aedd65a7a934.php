@@ -160,7 +160,7 @@
 
 <!--********************************************************************************************************************************************************************-->
         
-        <div class="bg0 p-b-150 p-lr-15-lg how-pos3-parent" v-if="openAjout" style=" width: 1047px; padding-top: 45%">
+        <div class="bg0 p-b-150 p-lr-15-lg how-pos3-parent" v-if="openAjout" style=" width: 985px; padding-top: 45%">
 
         <!--<div class="bg0 p-b-150 p-lr-15-lg how-pos3-parent" v-if="openAjout" style=" width: 985px; padding-top: 45%">-->
 
