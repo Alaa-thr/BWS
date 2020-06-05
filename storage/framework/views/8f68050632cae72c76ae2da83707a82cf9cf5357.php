@@ -15,19 +15,19 @@
             <div class="card">
               <div class="card-header">
                 <h4 class="card-title"> Admin</h4>
-                <div style="margin-left: 550px ; margin-top: -50px;">
-                  <button class="btn btn-sm btn-block btn-info js-show-modal1" style="width: 160px; border-radius: 0.5em; height: 30px; box-shadow: 0 5px 25px rgba(0,0,0,.2);" v-on:click="AfficherAjout()">
-                    <b> Ajouter Admin</b>
-                  </button>
-                </div>
-                <div  style="margin-left: 730px; margin-top: -40px; ">
-                    <select class="formm-control" onchange="window.location.href=this.value" style=" width: 250px; height: 30px; border-radius: 0.8em; cursor: pointer;">
+                <div  style="margin-left: 550px; margin-top: -45px; ">
+                    <select class="formm-control" onchange="window.location.href=this.value" style=" width: 250px; height: 40px; border-radius: 0.8em; cursor: pointer;">
                       <option  style="border:none;" value="0" selected="selected" disabled="disabled">Recuperer les utilisateurs   :</option>
                       <option value="recupervendeur">Recuperer vendeurs</option>
                       <option value="recuperclient">Recuperer clients</option>
                       <option value="recupemployeur">Recuperer employeurs</option>
                       <option value="recuperadmin">Recuperer admins</option>
                     </select>
+                </div>
+                <div style="margin-left: 830px ; margin-top: -48px;">
+                  <button class="btn btn-sm btn-block btn-info js-show-modal1" style="width: 160px; border-radius: 0.5em; height: 35px; box-shadow: 0 5px 25px rgba(0,0,0,.2);" v-on:click="AfficherAjout()">
+                    <b> Ajouter Admin</b>
+                  </button>
                 </div>
               </div>
               
@@ -48,6 +48,7 @@
                         <b >Email</b>
                       </th>
                       <th>
+                        <b> Type </b>
                       </th>
                       <th>
                       </th>
@@ -66,6 +67,12 @@
                         <td>
                           {{admina.email}} 
 
+                        </td>
+                        <td v-if="admina.big_admin === '1' ">
+                           Admin Supèrieure
+                        </td>
+                        <td v-else>
+                          Admin Simple
                         </td>
                         <td  class="dropdown " id="k">
                           <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">

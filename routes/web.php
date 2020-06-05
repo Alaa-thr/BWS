@@ -104,7 +104,6 @@ Route::get('/getAllcolor', 'VendeurController@getColors');
 
 /************************************************ Client***********************************************/
 Route::get('/profilClient','ClientController@profil_clinet')->name('profilClient');
-Route::get('/historiqueClient','BwsController@historique_client')->name('historiqueClient');
 Route::get('/panierClient','BwsController@panier_client')->name('panierClient');
 Route::get('/notificationClient','BwsController@notification_client')->name('notificationClient');
 Route::get('/favorisClient','BwsController@favoris_client')->name('favorisClient');
@@ -122,7 +121,9 @@ Route::post('/detaillsademande', 'DemandeClientController@detaillsDemande');
 Route::delete('/deletedemande/{id}','DemandeClientController@deleteDemande');
 Route::post('/addpanier','ClientController@addPanier');
 
-
+/*historique*/
+Route::get('/historiqueClient','HistoriqurController@get_historique_client')->name('historiqueClient');
+Route::delete('/deletehistorique/{id}','HistoriqurController@deleteHistorique');
 
 
 

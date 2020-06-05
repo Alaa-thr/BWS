@@ -51,7 +51,7 @@ class AdminController extends Controller
     }
 
     public function admin_admin(){
-        $admin = Admin::where('deleteda',0)->paginate(10);  
+        $admin = Admin::where('deleteda',0)->paginate(10); 
         return view('admin_admin',['admin'=>$admin]);
     }
     public function recup_vendeur(){
