@@ -418,7 +418,6 @@
 			                                        <button class="flex-c-m stext-101 cl0 size-101 bg10 bor1 p-lr-15 trans-04" v-on:click="addPanier()">
 			                                            Add to cart
 			                                        </button>
-			                                        <input type="text" id="test"> 
 			                                    </div>
 			                                </div>  
 			                            </div>

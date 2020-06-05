@@ -51,7 +51,7 @@ class AdminController extends Controller
     }
 
     public function admin_admin(){
-        $admin = Admin::where('deleteda',0)->paginate(10);  
+        $admin = Admin::where('deleteda',0)->paginate(10); 
         return view('admin_admin',['admin'=>$admin]);
     }
     public function recup_vendeur(){
@@ -62,7 +62,7 @@ class AdminController extends Controller
         $client_recup = Client::where('deletedc',1)->paginate(10);
         return view('recup_client',['client_recu'=>$client_recup]);
    }
-   public function recu_employeur(){
+   public function recup_employeur(){
        $employeur_recup = Employeur::where('deletede',1)->paginate(10);
         return view('recu_employeur',['employeur_recu'=>$employeur_recup]);
    

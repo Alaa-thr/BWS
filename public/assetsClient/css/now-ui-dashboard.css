@@ -3090,7 +3090,7 @@ Created using IcoMoon - icomoon.io
 }
 
 /*------------------------
-	base class definition
+  base class definition
 -------------------------*/
 .now-ui-icons {
   display: inline-block;
@@ -3195,7 +3195,7 @@ Created using IcoMoon - icomoon.io
   rotated/flipped icons
 -------------------------*/
 /*------------------------
-	font icons
+  font icons
 -------------------------*/
 .now-ui-icons.ui-1_check:before {
   content: "\ea22";
@@ -6140,7 +6140,7 @@ Created using IcoMoon - icomoon.io
 .div1 > div{
   width: 100%;
   height: 100%;
-	overflow: auto;
+  overflow: auto;
 }
 
 .size-1044 {
@@ -6250,6 +6250,8 @@ Created using IcoMoon - icomoon.io
 input[type=checkbox]{
   margin: 0.2em;
   cursor: pointer;
+  width: 18px;
+  height: 18px;
 }
 
 input[type=checkbox] + label:before{

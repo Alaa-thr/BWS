@@ -15,9 +15,9 @@
             <div class="card">
               <div class="card-header">
                 <h4 class="card-title">Clients Recuperer</h4>
-                <div class="box " style="margin-left: 730px; margin-top: -40px;">
-                    <select onchange="window.location.href=this.value">
-                      <option>Recuperer les utilisateurs   :</option>
+                <div  style="margin-left: 730px; margin-top: -40px;">
+                    <select class="form-control" onchange="window.location.href=this.value" style="border-radius: 0.8em; cursor: pointer;">
+                      <option value="0" selected="selected" disabled="disabled">Recuperer les utilisateurs   :</option>
                       <option value="recupervendeur">Recuperer vendeurs</option>
                       <option value="recuperclient">Recuperer clients</option>
                       <option value="recupemployeur">Recuperer employeurs</option>
@@ -28,7 +28,7 @@
               </div>
               
               <div class="card-body">
-                <div class="table-responsive" style="height: 420px; margin-top: 55px;">
+                <div class="table-responsive" style="height: 420px; margin-top: 75px;">
                   <table class="table">
                     <thead class=" text-primary">
                       <th >
@@ -85,7 +85,7 @@
                           </div>
                         </td>
                         <td>
-                          <button class="btn btn-sm btn-block btn-warning" style="margin-left: 90px; width: 120px; border-radius: 0.5em;" v-on:click="recupConfirmerC(cl)">
+                          <button class="btn btn-sm btn-block btn-warning" style="margin-left: 80px; width: 120px; border-radius: 0.5em;" v-on:click="recupConfirmerC(cl)">
                             <b> Recuperer </b>
                           </button>
                         </td>
