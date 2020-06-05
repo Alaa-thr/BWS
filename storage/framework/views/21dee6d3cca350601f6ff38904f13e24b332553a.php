@@ -29,15 +29,7 @@
                 <h4 class="card-title " style="margin-top: -5px; ">Mes produits</h4>
                
                     <div class="txt-right"style="margin-top: -50px; " >
-<<<<<<< HEAD
-<<<<<<< HEAD
-                            <button  v-if="suppr" class="btn-sm btn-info js-show-modal1 m-r-30" style="height: 35px;" v-on:click="AfficherAjout()" ><b>Ajouter produit</b>
-=======
-                            <button  v-if="suppr" class="btn-sm btn-info js-show-modal1 m-r-30" style="height: 35px;" v-on:click="AfficherAjout()" ><b>Ajouter article</b>
->>>>>>> 36f9fd2f3b4d7854deaf97da4195c3f9a79ef164
-=======
                             <button  v-if="suppr" class="btn-sm btn-info js-show-modal1 m-r-30" style="height: 35px;" v-on:click="AfficherAjout()" ><b>Ajouter Produit</b>
->>>>>>> 0fedb69ccbc27a8c2c9e8661a49dd18eaefa27b5
                             </button>
                             <button  v-else class="btn-sm btn-danger " style="height: 35px; " v-on:click="deleteArrayArticle()"><b>Supprimer</b>
                             </button>
@@ -241,11 +233,7 @@
                     </div>
                 </div>
             </div>
-<<<<<<< HEAD
-            <div class="bg0 p-b-150 p-lr-15-lg how-pos3-parent" v-if="openAjout "style=" width: 985px; padding-top: 45%">
-=======
             <div class="bg0 p-b-150 p-lr-15-lg how-pos3-parent" v-if="openAjout "style=" width: 1050px; padding-top: 45%">
->>>>>>> 36f9fd2f3b4d7854deaf97da4195c3f9a79ef164
                   <button class="how-pos3 hov3 trans-04 p-t-6" v-on:click="CancelArticle()">
                     <img src="images/icon-close.png" alt="CLOSE">
                   </button>
@@ -255,15 +243,7 @@
                           <div class="col-md-10 pr-2" >
                             <div class="form-group mb-3">
                               <label>Nom de Poduit</label>
-<<<<<<< HEAD
-<<<<<<< HEAD
-                              <input  type="text" class="form-control" placeholder="Nom de Poduit*" v-model="produitAjout.Libellé" :class="{'is-invalid' : message.Libellé}"/>
-=======
-                              <input  type="text" class="form-control" placeholder="Le nom doit commencer par un Maj" v-model="produitAjout.Libellé" :class="{'is-invalid' : message.Libellé}"/>
->>>>>>> 36f9fd2f3b4d7854deaf97da4195c3f9a79ef164
-=======
                               <input  type="text" class="form-control" placeholder="Le nom doit commencer par un Maj ou Numero" v-model="produitAjout.Libellé" :class="{'is-invalid' : message.Libellé}"/>
->>>>>>> 0fedb69ccbc27a8c2c9e8661a49dd18eaefa27b5
                               <span class="px-3 cl13" v-if="message.Libellé" v-text="message.Libellé[0]">
                               </span>
                               
@@ -274,15 +254,7 @@
                           <div class="col-md-10 pr-2" >
                             <div class="form-group ">
                               <label>Description de Produit</label>
-<<<<<<< HEAD
-<<<<<<< HEAD
-                              <textarea class="form-control" placeholder="Description*" v-model="produitAjout.description" :class="{'is-invalid' : message.description}"></textarea>
-=======
-                              <textarea class="form-control" placeholder="La description doit commencer par un Maj" v-model="produitAjout.description" :class="{'is-invalid' : message.description}"></textarea>
->>>>>>> 36f9fd2f3b4d7854deaf97da4195c3f9a79ef164
-=======
                               <textarea class="form-control" placeholder="La description doit commencer par un Maj ou Numero" v-model="produitAjout.description" :class="{'is-invalid' : message.description}"></textarea>
->>>>>>> 0fedb69ccbc27a8c2c9e8661a49dd18eaefa27b5
                                <span class="px-3 cl13" v-if="message.description" v-text="message.description[0]">
                               </span>
                             </div>
@@ -307,11 +279,7 @@
                           <div class="col-md-10 pr-2" >
                             <div class="form-group">
                               <label>Prix</label>
-<<<<<<< HEAD
-                              <input type="number" name="" class="form-control" placeholder="0.00/DA*" v-model="produitAjout.prix" :class="{'is-invalid' : message.prix}" />
-=======
                               <input type="number" name="prix" class="form-control" placeholder="0.00/DA*" v-model="produitAjout.prix" :class="{'is-invalid' : message.prix}" />
->>>>>>> 36f9fd2f3b4d7854deaf97da4195c3f9a79ef164
                               <span class="px-3 cl13" v-if="message.prix" v-text="message.prix[0]">
                               </span>
                             </div>
@@ -321,44 +289,24 @@
                          
                             <div class="form-group m-r-45" style="width: 320px">
                               <label>Quantité de Produit</label>
-<<<<<<< HEAD
-                              <input type="number" name="" class="form-control" placeholder="0.00/Piece*" v-model="produitAjout.Qte_P" :class="{'is-invalid' : message.Qte_P}"/>
-=======
                               <input type="number" name="Qte_P" class="form-control" placeholder="0.00/Piece*" v-model="produitAjout.Qte_P" :class="{'is-invalid' : message.Qte_P}"/>
->>>>>>> 36f9fd2f3b4d7854deaf97da4195c3f9a79ef164
                               <span class="px-3 cl13" v-if="message.Qte_P" v-text="message.Qte_P[0]"></span>
                             </div>
                             <div class="form-group  " style="width: 320px">
                               <label>Poid de Produit</label>
-<<<<<<< HEAD
-                              <input type="number" name="" class="form-control" placeholder="0.00Kg/g*" v-model="produitAjout.poid" :class="{'is-invalid' : message.poid}" />
-=======
                               <input type="number" name="poid" class="form-control" placeholder="0.00Kg/g*" v-model="produitAjout.poid" :class="{'is-invalid' : message.poid}" />
->>>>>>> 36f9fd2f3b4d7854deaf97da4195c3f9a79ef164
                               <span class="px-3 cl13" v-if="message.poid" v-text="message.poid[0]"></span>
                             </div>
                          
                         </div>
-<<<<<<< HEAD
-                        <div class="row col-md-12 pr-2 flex-t m-b-35">
-<<<<<<< HEAD
-                            <select class="form-control form-control-lg m-r-45" id="categoSelect" name="ville" style="height: 40px; width: 320px ;border-radius: 1em;" v-on:change="activeSousCatego($event)" :class="{'is-invalid' : message.catego}">
-=======
-=======
                         <div class="row col-md-12 pr-2 flex-t m-b-30">
->>>>>>> 0fedb69ccbc27a8c2c9e8661a49dd18eaefa27b5
                             <select class="form-control form-control-lg m-r-45" id="categoSelect" name="catego" style="height: 40px; width: 320px ;border-radius: 1em;" v-on:change="activeSousCatego($event)" :class="{'is-invalid' : message.catego}">
->>>>>>> 36f9fd2f3b4d7854deaf97da4195c3f9a79ef164
                               <option value="" hidden="hidden" selected>&nbsp&nbspSélectionner une Ctegorie</option> 
                               <option v-for="catego in categories" :value="catego.id" >&nbsp&nbsp{{catego.libelle}}</option> 
                             </select>
                             <span class="px-3 cl13" v-if="message.catego" v-text="message.catego[0]"></span>
 
-<<<<<<< HEAD
-                            <select class="form-control form-control-lg " id="sousCtagoSelect" name="ville" style="height: 40px;width: 320px;border-radius: 1em; " disabled= "true" v-on:change="getIdSousCatego($event)" :class="{'is-invalid' : message.sous_categorie_id}">
-=======
                             <select class="form-control form-control-lg " id="sousCtagoSelect" name="sous_categorie_id" style="height: 40px;width: 320px;border-radius: 1em; " disabled= "true" v-on:change="getIdSousCatego($event)" :class="{'is-invalid' : message.sous_categorie_id}">
->>>>>>> 36f9fd2f3b4d7854deaf97da4195c3f9a79ef164
                               <option value="" hidden="hidden" selected>&nbsp&nbspSélectionner une Sous Categorie</option> 
                               <option v-for="Scatego in sousCategories" :value="Scatego.id" >&nbsp&nbsp{{Scatego.libelle}}</option> 
                             </select>
@@ -412,11 +360,7 @@
                                 </button> 
                                 <button type="submit" v-else class="btn btn-success btn-block m-r-5" style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="addProduit()" >Ajouter
                                 </button> 
-<<<<<<< HEAD
-                                <button type="submit"  class="btn btn-danger btn-block " style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="CancelArticle()" >Annuler
-=======
                                 <button type="submit"  class="btn btn-danger btn-block " style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="CancelArticle()" >Anuller
->>>>>>> 36f9fd2f3b4d7854deaf97da4195c3f9a79ef164
                                 </button> 
                           </div>
                         </div>
@@ -467,15 +411,6 @@
                      app.imagesproduit.unshift(app2.imageP);
                      app2.produitAjout={
                             id: 0,
-<<<<<<< HEAD
-                            sous_categorie_id: 0,
-                            catego: 0,
-                            Libellé: '',
-                            prix: 0,
-                            description: '',
-                            Qte_P: 0,
-                            poid: 0,
-=======
                             sous_categorie_id: '',
                             catego: '',
                             Libellé: '',
@@ -483,7 +418,6 @@
                             description: '',
                             Qte_P: '',
                             poid: '',
->>>>>>> 36f9fd2f3b4d7854deaf97da4195c3f9a79ef164
                             image: '',
                             images: [],
                             colors: [],
@@ -508,7 +442,7 @@
                 })
                 .catch(error =>{
                     app2.message = error.response.data.errors;
-                    console.log('errors :' , error.response.data.errors);
+                    console.log('errors :' , app2.message);
                 })
           },         
         }                     
@@ -523,15 +457,6 @@
           modifier: false,
           produitAjout: {
             id: 0,
-<<<<<<< HEAD
-            sous_categorie_id: 0,
-            catego: 0,
-            Libellé: '',
-            prix: 0,
-            description: '',
-            Qte_P: 0,
-            poid: 0,
-=======
             sous_categorie_id: '',
             catego: '',
             Libellé: '',
@@ -539,7 +464,6 @@
             description: '',
             Qte_P: '',
             poid: '',
->>>>>>> 36f9fd2f3b4d7854deaf97da4195c3f9a79ef164
             image: '',
             images: [],
             colors: [],
