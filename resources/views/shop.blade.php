@@ -350,10 +350,11 @@
 
 			                                    <div class="size-204 respon6-next">
 			                                        <div class="rs1-select2 bor8 bg0" :class="{'is-invalid' : message.taille}">
-			                                            <select class="form-control form-control-lg js-select2" name="t[]"  multiple v-on:change=" selectTaille('hello')" v-model="tale">
-			                                                <option  disabled>Choisir la taille</option>
+			                                            <select class="js-select2" name="t" onchange="selectTaille(this.options[this.selectedIndex].value)">
+			                                                <option  disabled selected>Choisir la taille</option>
 			                                                <option v-for="taille in tailles" v-if="taille.produit_id  === detaillproduit.id" :value="taille.nom">@{{taille.nom}}</option>
-			                                            </select>                                        
+			                                            </select>
+			                                                                                 
 			                                            <div class="dropDownSelect2"></div>
 			                                        </div>
 			                                        <span class=" cl13" v-if="message.taille" v-text="message.taille[0]"></span>
@@ -368,7 +369,7 @@
 
 			                                    <div class="size-204 respon6-next">
 			                                        <div class="rs1-select2 bor8 bg0"  :class="{'is-invalid' : message.couleur_id}">
-			                                            <select class="js-select2" name="c[]" v-model='clr' multiple>
+			                                            <select class="js-select2" name="c" onchange="selectColor(this.options[this.selectedIndex].value)">
 			                                                <option  selected disabled>Choisir la couleur</option>
 			                                                <option v-for="color in colors" :value="color.color_id" v-if="color.produit_id === detaillproduit.id">@{{color.nom}}</option>
 			                                            </select>
@@ -387,12 +388,12 @@
 
 			                                    <div class="size-204 respon6-next">
 			                                        <div class="rs1-select2 bor8 bg0" :class="{'is-invalid' : message.type_livraison}">
-			                                            <select class="js-select2" name="time" v-model="ajoutPanier.type_livraison" >
+			                                            <select class="js-select2" name="TL" onchange="selectLivraisen(this.options[this.selectedIndex].value)">
 			                                                <option selected disabled>Choisir le type de livraison</option>
 			                                                
-			                                                <option v-for="typeLivraison in typeLivraisons" :value="typeLivraison.id" v-if="typeLivraison.vendeur_id === detaillproduit.vendeur_id && typeLivraison.type_livraison === 'vc'">Le vendeur effectuer la livraison</option>
-			                                                <option v-for="typeLivraison in typeLivraisons" :value="typeLivraison.id" v-if="typeLivraison.vendeur_id === detaillproduit.vendeur_id && typeLivraison.type_livraison === 'cv'">Vous apportez votre produit</option>
-			                                                <option v-for="typeLivraison in typeLivraisons" :value="typeLivraison.id" v-if="typeLivraison.vendeur_id === detaillproduit.vendeur_id && typeLivraison.type_livraison === 'dhl'">DHL(Poste)</option>
+			                                                <option v-for="typeLivraison in typeLivraisons" value="vc" v-if="typeLivraison.vendeur_id === detaillproduit.vendeur_id && typeLivraison.type_livraison === 'vc'">Le vendeur effectuer la livraison</option>
+			                                                <option v-for="typeLivraison in typeLivraisons" value="cv" v-if="typeLivraison.vendeur_id === detaillproduit.vendeur_id && typeLivraison.type_livraison === 'cv'">Vous apportez votre produit</option>
+			                                                <option v-for="typeLivraison in typeLivraisons" value="dhl" v-if="typeLivraison.vendeur_id === detaillproduit.vendeur_id && typeLivraison.type_livraison === 'dhl'">DHL(Poste)</option>
 			                                            </select>
 			                                            <div class="dropDownSelect2"></div>
 			                                        </div>
@@ -407,7 +408,7 @@
 			                                                <i class="fs-16 zmdi zmdi-minus"></i>
 			                                            </div>
 
-			                                            <input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product" value="1" v-model="ajoutPanier.qte" placeholder="0">
+			                                            <input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product" value="0" placeholder="0">
 
 			                                            <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
 			                                                <i class="fs-16 zmdi zmdi-plus"></i>
@@ -446,7 +447,9 @@
 	
 @endsection
 @push('javascripts')
+
 <script>
+	
         window.Laravel = {!! json_encode([
                "csrfToken"  => csrf_token(),
                'produit'        => $produit,
@@ -456,6 +459,8 @@
                'typeLivraison'         => $typeLivraison,
                "url"      => url("/")  
           ]) !!};
+	
+
 </script>
 
 
@@ -463,6 +468,7 @@
 	 var app1 = new Vue({
       el: '#app1',
       data:{
+      	msg: 'welcome',
       	produits: [],
       	imagesproduit:[],
       	colors: [],
@@ -472,32 +478,29 @@
       	ajoutPanier: {
       		vendeur_id: 0,
       		produit_id: 0,
-      		couleur_id: [],
+      		couleur_id: '',
       		qte: null,
       		type_livraison: '',
-      		taille: [],
+      		taille: '',
+      		prix: 0,
 
       	},
       	tailleExiste: false,
-      	tale: [],
-      	clr: [],
       	message: {},
 
       },
       methods:{
-      	selectTaille: function(str){
-      		console.log('str '  , str);
-      		//this.ajoutPanier.taille.push(event.target.value);
-      	},
+      	
       	addPanier: function(){
       		console.log('this.tale : '  , this.tale);
-      		//this.ajoutPanier.taille = this.tale;
-      		this.ajoutPanier.couleur_id = this.clr;
       		console.log('this.ajoutPanier : '  , this.ajoutPanier);
       		axios.post(window.Laravel.url+'/addpanier',this.ajoutPanier)
               .then(response => {
               	if(response.data.etat){
                 	console.log('response : '  , response.data);
+                }
+                else{
+                	
                 }
                })
               .catch(error => {
@@ -508,6 +511,8 @@
       	detaillProduit:function(produit){
       		var position = this.produits.indexOf(produit);
       		var i = 0;
+      		this.ajoutPanier.vendeur_id = produit.vendeur_id;
+      		this.ajoutPanier.prix = produit.prix;
       		this.detaillproduit = this.produits[position];
       		this.ajoutPanier.produit_id = this.detaillproduit.id;
       		this.tailles.forEach(key => {
@@ -541,11 +546,18 @@
       	this.getProduit();
       }
   });
+  function selectTaille(taille){
+  	app1.ajoutPanier.taille = taille;     		
+  }
+  function selectColor(color){
+  	app1.ajoutPanier.couleur_id = color;     		
+  }
+  function selectLivraisen(livraisen){
+  	app1.ajoutPanier.type_livraison = livraisen;     		
+  }
+  function seletQte(qte){
+  	app1.ajoutPanier.qte = qte; 
+  }
 </script>
-<script>
-     
 
-
-
-    </script>
 @endpush

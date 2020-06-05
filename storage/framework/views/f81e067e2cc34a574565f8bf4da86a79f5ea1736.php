@@ -31,8 +31,10 @@
     <script src="<?php echo e(asset('jss/vue.js')); ?>"></script>
     <script src="<?php echo e(asset('jss/axios.min.js')); ?>"></script>
     <script src="<?php echo e(asset('jss/sweetalert2.js')); ?>"></script>
- 
-  
+
+
+
+</script>
 
     
 
