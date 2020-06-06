@@ -17,9 +17,9 @@
           <div class="card-header" >
                 
                 <div class="flex-t">
-                    <input type="checkbox" id="article" @change="selectAll()" v-model="allSelected">
+                    <input type="checkbox" id="article" @change="selectAll()" v-model="allSelected" style="margin-top: 5px;">
                     <label for="article"></label>
-                    <h4 style="margin-top: -6px;">Demandes</h4>
+                    <h4 style="margin-top: -6px;margin-left: 10px;">Demandes</h4>
                 </div>
 
             <div class="txt-right"style="margin-top: -40px; " >
@@ -38,7 +38,7 @@
             <div class="card-body"   v-for="demandec in demandeclient" >
 
 <div v-if="selectall" >
-       <input type="checkbox" :id="demandec.id" :value="demandec.id" v-model="checkedArticles" @change="changeButton(demandec)">
+       <input type="checkbox" style=" margin-left: 10px;" :id="demandec.id" :value="demandec.id" v-model="checkedArticles" @change="changeButton(demandec)">
       <label :for="demandec.id" style="margin-top: 40px; margin-left: 10px;"></label>
     </div>
     <div v-else ><div id="ch1">
