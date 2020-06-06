@@ -264,7 +264,7 @@
 						</div>
 					</div>
 					<!-- Modal1 -->
-			<div class="wrap-modal1 js-modal1 p-t-60 p-b-20">
+			<div class="wrap-modal1 js-modal1 p-t-60 p-b-20" id="Modal1" >
 			        <div class="overlay-modal1 js-hide-modal1"></div>
 
 			        <div class="container">
@@ -475,25 +475,36 @@
       	},
       	tailleExiste: false,
       	message: {},
+      	hideModel: false,
 
       },
       methods:{
       	
       	addPanier: function(){
-      		console.log('this.tale : '  , this.tale);
-      		console.log('this.ajoutPanier : '  , this.ajoutPanier);
       		axios.post(window.Laravel.url+'/addpanier',this.ajoutPanier)
               .then(response => {
               	if(response.data.etat){
                 	console.log('response : '  , response.data);
                 }
                 else{
-                	
-                }
+                	$('.js-modal1').removeClass('show-modal1');
+                	Swal.fire({
+					  icon: 'error',
+					  title: 'Oops...',
+					  text: 'Vous devez connecter tant que CLIENT',
+					  footer: '<form method="POST" action="{{ route("logout") }}">@csrf<a href="{{ route("logout") }}">Créer Compte</a></form>',
+					  confirmButtonColor: '#d33',
+					  confirmButtonText:
+					    'Se Connecter',
+					});
+            	}
                })
               .catch(error => {
+              	
                   this.message = error.response.data.errors;
                     console.log('errors :' , this.message);
+
+                
              })
       	},
       	detaillProduit:function(produit){

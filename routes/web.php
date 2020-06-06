@@ -21,6 +21,7 @@ Auth::routes();
 
 /************************************************ Visiteur***********************************************/
 
+Route::get('/logout', 'Auth\LoginController@logout');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/accueil', 'BwsController@accueil')->name('accueil');
 Route::get('/apropos', 'BwsController@apropos')->name('apropos');

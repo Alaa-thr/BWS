@@ -367,7 +367,7 @@
                             
                          @guest
                             
-                            <div class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-22 js-show-connect">
+                            <div class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-22 js-show-connect" id="connectCart">
                                 <i class="zmdi zmdi-account"></i>
                              </div>
                         @else

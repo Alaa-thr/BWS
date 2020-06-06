@@ -49,6 +49,7 @@ class LoginController extends Controller
             return redirect('/accueil');
         
     }
+
     protected function redirectTo()
     {
        if(Auth::user()->type_compte == "c"){
