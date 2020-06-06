@@ -3793,3 +3793,6 @@ input.num-product::-webkit-inner-spin-button {
   margin-left: 40px; 
   
   }
+  #noti{
+    width: 3%;
+    padding-bottom: 18px;  }
