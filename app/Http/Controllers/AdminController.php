@@ -235,6 +235,7 @@ class AdminController extends Controller
 
     public function deleteCategorie($id){
 
+
         $categorie = Categorie::find($id);
         $notification = new Notification;
         $notification->admin_id =  Admin::find(Auth::user()->id)->id;
@@ -392,6 +393,10 @@ class AdminController extends Controller
          $admin2->save();
          return Response()->json(['etat' => true,'adminAjout' => $admin2]);
     }
+    /*public function getNotifcations(){
+        $notif = Categorie::where('deletedcat',1)->paginate(10);
+        return view('notifications_admin',['notif'=>$notif]);
+    }*/
 
 
 }

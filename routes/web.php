@@ -76,6 +76,7 @@ Route::get('recupemployeur','AdminController@recup_employeur');
 Route::get('recupconfirmere/{id}','AdminController@recupConfirmerE');
 Route::get('recuperadmin','AdminController@recup_admin');
 Route::get('recupconfirmera/{id}','AdminController@recupConfirmerA');
+/*Route::get('getnotif','AdminController@getNotifcations');
 
 
 
