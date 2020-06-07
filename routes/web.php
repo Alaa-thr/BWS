@@ -47,7 +47,7 @@ Route::delete('/deletesouscategorie/{id}','AdminController@deleteSousCategorie')
 Route::get('/client', 'AdminController@client_admin')->name('client');
 Route::get('/emails', 'BwsController@emails_admin')->name('emails');
 Route::get('/employeur', 'AdminController@employeur_admin')->name('employeur');
-Route::get('/notificationsAdmin', 'BwsController@notifications_admin')->name('notificationsAdmin');
+Route::get('/notificationsAdmin', 'AdminController@notifications_admin')->name('notificationsAdmin');
 Route::get('/profilAdmin', 'AdminController@profil_admin')->name('profilAdmin');
 Route::get('/statistiquesAdmin', 'BwsController@statistiques_admin')->name('statistiquesAdmin');
 Route::get('/vendeur', 'AdminController@vendeur_admin')->name('vendeur');
@@ -76,6 +76,7 @@ Route::get('recupemployeur','AdminController@recup_employeur');
 Route::get('recupconfirmere/{id}','AdminController@recupConfirmerE');
 Route::get('recuperadmin','AdminController@recup_admin');
 Route::get('recupconfirmera/{id}','AdminController@recupConfirmerA');
+Route::delete('/deletenotification/{id}','AdminController@deleteNotif');
 
 
 
@@ -124,9 +125,7 @@ Route::post('/addpanier','ClientController@addPanier');
 /*historique*/
 Route::get('/historiqueClient','HistoriqurController@get_historique_client')->name('historiqueClient');
 Route::delete('/deletehistorique/{id}','HistoriqurController@deleteHistorique');
-/*Notification*/
-Route::get('/notificationClient','NotificationController@get_notification_client')->name('notificationClient');
-Route::delete('/deletenotificationclient/{id}','NotificationController@deleteNotificationClient');
+
 
 
 

@@ -145,14 +145,14 @@
                             <hr>
                           </div>
                            <div class="row">
-                            <!--div class=" title" style="margin-left: 20px; margin-top: 50px;">Email</div>
-                            <div class="title" style="margin-top: 50px; margin-left: 35px;">:</div-->
-                            <div class="author" style="margin-left: 85px; color:black; margin-top: 30px;"><b>@{{ clientaa.email }}</b></div>
+                            <div class=" title" style="margin-left: 20px; margin-top: 50px;">Email</div>
+                            <div class="title" style="margin-top: 50px; margin-left: 35px;">:</div>
+                            <div class="author" style="margin-left: 10px; color:black; margin-top: 50px;"><b>@{{ clientaa.email }}</b></div>
                           </div>
                           <div class="row" >
-                            <!--div class=" title" style="margin-left: 20px; margin-top: 40px;">Numero</div>
-                            <div class="title" style="margin-top: 40px; margin-left: 20px;">:</div-->
-                            <div  style="margin-left: 120px; color:black; margin-top: 30px; height: 70px;"><b>@{{ clientaa.numeroTelephone }}</b></div>
+                            <div class=" title" style="margin-left: 20px; margin-top: 40px;">Numero</div>
+                            <div class="title" style="margin-top: 40px; margin-left: 20px;">:</div>
+                            <div  style="margin-left: 10px; color:black; margin-top: 40px; height: 70px;"><b>@{{ clientaa.numeroTelephone }}</b></div>
                           </div>
                       </div>
                     </div>

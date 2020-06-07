@@ -771,7 +771,7 @@
                      })
                     Swal.fire(
                       'Effacé!',
-                      'Votre Sous-Categorie a été supprimé.',
+                      'Votre Categorie a été supprimé.',
                       'success'
                     )
                   }
