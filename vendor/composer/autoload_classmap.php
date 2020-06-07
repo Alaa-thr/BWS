@@ -36,6 +36,7 @@ return array(
     'App\\Http\\Controllers\\EmployeurController' => $baseDir . '/app/Http/Controllers/EmployeurController.php',
     'App\\Http\\Controllers\\HistoriqurController' => $baseDir . '/app/Http/Controllers/HistoriqurController.php',
     'App\\Http\\Controllers\\HomeController' => $baseDir . '/app/Http/Controllers/HomeController.php',
+    'App\\Http\\Controllers\\NotificationController' => $baseDir . '/app/Http/Controllers/NotificationController.php',
     'App\\Http\\Controllers\\VendeurController' => $baseDir . '/app/Http/Controllers/VendeurController.php',
     'App\\Http\\Kernel' => $baseDir . '/app/Http/Kernel.php',
     'App\\Http\\Middleware\\Authenticate' => $baseDir . '/app/Http/Middleware/Authenticate.php',

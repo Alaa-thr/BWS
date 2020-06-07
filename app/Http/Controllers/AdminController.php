@@ -164,7 +164,7 @@ class AdminController extends Controller
         $admin->save();
         $user->save();
        
-        return redirect('profilAdmin');
+        return Response()->json(['etat' => true]);
     }
     public function categories_admin(){
 
@@ -239,7 +239,7 @@ class AdminController extends Controller
         $categorie = Categorie::find($id);
         $notification = new Notification;
         $notification->admin_id =  Admin::find(Auth::user()->id)->id;
-        $notification->categorie_libelle =  $categorie->libelle; 
+        $notification->categorie_libelle =  $categorie->libelle;
         $notification->typeCategoSousCatego =  $categorie->typeCategorie;
         $notification->save(); 
         $categorie->delete();
@@ -281,7 +281,7 @@ class AdminController extends Controller
         $Souscategorie = Sous_categorie::find($id);
         $notification =  new Notification;
         $notification->admin_id = Admin::find(Auth::user()->id)->id; 
-        $notification->sous_categorie_libelle =  $Souscategorie->libelle; 
+        $notification->sous_categorie_libelle =  $Souscategorie->libelle;
         $notification->typeCategoSousCatego =  Categorie::where('id',$Souscategorie->categorie_id)->value('typeCategorie');     
         $notification->save();
         $Souscategorie->delete();
@@ -393,10 +393,19 @@ class AdminController extends Controller
          $admin2->save();
          return Response()->json(['etat' => true,'adminAjout' => $admin2]);
     }
-    /*public function getNotifcations(){
-        $notif = Categorie::where('deletedcat',1)->paginate(10);
+    public function notifications_admin(){
+      
+        $notif = \DB::table('admins')->join('notifications','admins.id','=','notifications.admin_id')->orderBy('notifications.created_at','desc')->paginate(1);
         return view('notifications_admin',['notif'=>$notif]);
-    }*/
+    }
+    public function deleteNotif($id){
+       
+       $notification = Notification::find($id);
+       $notification->delete();
+       return Response()->json(['etat' => true]);
+    }
+
+    
 
 
 }
