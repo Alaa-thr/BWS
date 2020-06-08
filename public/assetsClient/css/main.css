@@ -3761,7 +3761,8 @@ input.num-product::-webkit-inner-spin-button {
   .p-r-15-ssm {padding-right: 15px;}
 
   .w-full-ssm {width: 100%;}
-
+ 
+  
   /*---------------------------------------------*/
   .respon3 {
     padding: 20px;
@@ -3792,3 +3793,6 @@ input.num-product::-webkit-inner-spin-button {
   margin-left: 40px; 
   
   }
+  #noti{
+    width: 3%;
+    padding-bottom: 18px;  }

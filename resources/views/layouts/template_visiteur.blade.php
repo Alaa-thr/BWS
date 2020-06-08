@@ -410,10 +410,15 @@
                             <i class="zmdi zmdi-search"></i>
                         </div>
 
-                        <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11  js-show-cart <?php echo $stripePanier ?>">
+                     @guest
+                        <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-22 <?php echo $stripePanier ?>" onclick="connecterAvant()" >
                             <i class="zmdi zmdi-shopping-cart"></i>
-                        
                         </div>
+                    @else
+                        <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-22   <?php echo $stripePanier ?>" onclick="Estconnecter()" >
+                            <i class="zmdi zmdi-shopping-cart"></i>
+                        </div>
+                    @endguest
                         
                         @guest
                             
@@ -470,11 +475,15 @@
                 <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 js-show-modal-search">
                     <i class="zmdi zmdi-search"></i>
                 </div>
-
-                <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-22  js-show-cart <?php echo $stripePanier ?>" >
-                    <i class="zmdi zmdi-shopping-cart"></i>
-                </div>
-
+            @guest
+                <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-22 <?php echo $stripePanier ?>" onclick="connecterAvant()" >
+                            <i class="zmdi zmdi-shopping-cart"></i>
+                    </div>
+            @else
+                    <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-22   <?php echo $stripePanier ?>" onclick="Estconnecter()" >
+                            <i class="zmdi zmdi-shopping-cart"></i>
+                    </div>
+            @endguest
                 @guest
                             
                     <div class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-22 js-show-connect">
@@ -755,11 +764,11 @@
                     </div>
 
                     <div class="header-cart-buttons flex-w w-full">
-                        <a  href="{{route('panierVisiteur')}}" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+                        <a  href="{{route('panier')}}" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
                             View Cart
                         </a>
 
-                        <a  href="{{route('panierVisiteur')}}" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
+                        <a  href="{{route('panier')}}" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
                             Check Out
                         </a>
                     </div>
@@ -1051,7 +1060,31 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     </div>-->
 @stack('javascripts')
 
-   <!--<script src="vendor/jquery/jquery-3.2.1.min.js"></script>-->  
+   <!--<script src="vendor/jquery/jquery-3.2.1.min.js"></script>-->
+   <script>
+       function connecterAvant(){
+            Swal.fire({
+                          icon: 'error',
+                          title: 'Oops...',
+                          text: 'Vous devez être connecté tent que Client pour pouvez accedé a votre panier.',
+                          footer: '<form method="GET" action="{{ route("logoutregister") }}">@csrf<a href="{{ route("logoutregister") }}">Créer Compte</a></form>',
+                          showCancelButton: true,
+                          cancelButtonColor: '#d33',
+                          confirmButtonColor: '#13c940',
+                          confirmButtonText:
+                            'Se Connecter',
+            }).then((result) => {
+                if (result.value){
+                    $('.js-panel-connect').addClass('show-header-cart');
+                }
+                             
+            });
+       }
+       function Estconnecter(){
+
+            
+       }
+   </script>  
     <script src="vendor/animsition/js/animsition.min.js"></script>
     <script src="vendor/bootstrap/js/popper.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.min.js"></script>

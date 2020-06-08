@@ -22,7 +22,7 @@
 		
 
 	<!-- Shoping Cart -->
-	<form class="bg0 p-t-75 p-b-85">
+	<form class="bg0 p-t-75 p-b-85" id='app'>
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-10 m-l-80 m-b-50">
@@ -38,21 +38,21 @@
 									<th class="column-5 p-l-100">Prix Total</th>
 								</tr>
 
-								<tr class="table_row">
+								<tr class="table_row" v-for="produit in produitCommandes">
 									<td class="column-1">
 										<div class="how-itemcart1">
-											<img src="images/item-cart-04.jpg" alt="IMG">
+											<img :src="'storage/produits_image/'+ produit.image" alt="IMG">
 										</div>
 									</td>
-									<td class="column-2">Fresh Strawberries</td>
-									<td class="column-3">36.00 DA</td>
+									<td class="column-2">@{{produit.Libellé}}</td>
+									<td class="column-3">@{{produit.prix}}</td>
 									<td class="column-4">
 										<div class="wrap-num-product flex-w m-l-auto m-r-0">
 											<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
 												<i class="fs-16 zmdi zmdi-minus"></i>
 											</div>
 
-											<input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product1" value="1">
+											<input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product1" :value="produit.qte">
 
 											<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
 												<i class="fs-16 zmdi zmdi-plus"></i>
@@ -62,112 +62,19 @@
 									<td class="column-6">
 										<div class="input-group mb-3">
 											<select class="custom-select" id="inputGroupSelect01">
-											  <option value="1">DHL / 36.00 DA</option>
-											  <option value="2">Vendeure / 142.50 DA</option>
-											  <option value="3">Client / 142.50 DA</option>
+											  <option  value="vc" v-if="produit.type_livraison === 'vc'">Le vendeur effectuer la livraison</option>
+			                                  <option value="cv" v-if="produit.type_livraison === 'cv'">Vous apportez votre produit</option>
+			                                  <option value="dhl" v-if="produit.type_livraison === 'dhl'">DHL(Poste)</option>
 											</select>
 										</div>
 									</td>
-									<td class="column-5">72000.00 DA</td>
+									<td class="column-5">@{{produit.prix}} DA</td>
 								</tr>
 
-								<tr class="table_row">
-									<td class="column-1">
-										<div class="how-itemcart1">
-											<img src="images/item-cart-05.jpg" alt="IMG">
-										</div>
-									</td>
-									<td class="column-2">Lightweight Jacket</td>
-									<td class="column-3">16.00 DA</td>
-									<td class="column-4">
-										<div class="wrap-num-product flex-w m-l-auto m-r-0">
-											<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-												<i class="fs-16 zmdi zmdi-minus"></i>
-											</div>
+								
 
-											<input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product2" value="1">
-
-											<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-												<i class="fs-16 zmdi zmdi-plus"></i>
-											</div>
-										</div>
-									</td>
-									<td class="column-6">
-										<div class="input-group mb-3">
-											<select class="custom-select" id="inputGroupSelect01">
-											  <option value="1">DHL / 36.00 DA</option>
-											  <option value="2">Vendeure / 142.50 DA</option>
-											  <option value="3">Client / 142.50 DA</option>
-											</select>
-										</div>
-									</td>
-									<td class="column-5">158.50 DA</td>
-								</tr>
-
-								<tr class="table_row">
-									<td class="column-1">
-										<div class="how-itemcart1">
-											<img src="images/product-06.jpg" alt="IMG">
-										</div>
-									</td>
-									<td class="column-2">Lightweight Jacket</td>
-									<td class="column-3">16.00 DA</td>
-									<td class="column-4">
-										<div class="wrap-num-product flex-w m-l-auto m-r-0">
-											<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-												<i class="fs-16 zmdi zmdi-minus"></i>
-											</div>
-
-											<input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product2" value="1">
-
-											<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-												<i class="fs-16 zmdi zmdi-plus"></i>
-											</div>
-										</div>
-									</td>
-									<td class="column-6">
-										<div class="input-group mb-3">
-											<select class="custom-select" id="inputGroupSelect01">
-											  <option value="1">DHL / 36.00 DA</option>
-											  <option value="2">Vendeure / 142.50 DA</option>
-											  <option value="3">Client / 142.50 DA</option>
-											</select>
-										</div>
-									</td>
-									<td class="column-5">158.50 DA</td>
-								</tr>
-								<tr class="table_row">
-									<td class="column-1">
-										<div class="how-itemcart1">
-											<img src="images/about-02.jpg" alt="IMG">
-										</div>
-									</td>
-									<td class="column-2">Lightweight Jacket</td>
-									<td class="column-3">16.00 DA</td>
-									<td class="column-4">
-										<div class="wrap-num-product flex-w m-l-auto m-r-0">
-											<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-												<i class="fs-16 zmdi zmdi-minus"></i>
-											</div>
-
-											<input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product2" value="1">
-
-											<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-												<i class="fs-16 zmdi zmdi-plus"></i>
-											</div>
-										</div>
-									</td>
-									<td class="column-6">
-										<div class="input-group mb-3">
-											<select class="custom-select" id="inputGroupSelect01">
-											  <option value="1">DHL / 36.00 DA</option>
-											  <option value="2">Vendeure / 142.50 DA</option>
-											  <option value="3">Client / 142.50 DA</option>
-											</select>
-										</div>
-									</td>
-									<td class="column-5">158.50 DA</td>
-								</tr>
+								
+								
 							</table>
 						</div>
 
@@ -188,3 +95,37 @@
 		
 
 @endsection
+@push("javascripts")
+ 
+<script>
+        window.Laravel = {!! json_encode([
+               "csrfToken"  => csrf_token(),
+               "produitCmds"   => $produitCmds,
+               "url"      => url("/")  
+          ]) !!};
+</script>
+<script>
+	var app = new Vue({
+	    el: '#app',
+	    data:{
+	      produitCommandes: [],
+
+	    },
+	    methods: {
+	    	ProduitCommande:function(){
+	    	    axios.get(window.Laravel.url+'/panier')
+                .then(response => {
+                	this.produitCommandes = window.Laravel.produitCmds;
+                  console.log("response", this.produitCommandes)
+                })                     
+                .catch(error =>{
+                           console.log('errors :' , error);
+                })
+	    	},
+	    },
+	    mounted:function(){
+	    	this.ProduitCommande();
+	    }
+	});
+</script>
+@endpush

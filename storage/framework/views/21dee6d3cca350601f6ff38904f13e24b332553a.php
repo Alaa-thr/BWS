@@ -442,7 +442,7 @@
                 })
                 .catch(error =>{
                     app2.message = error.response.data.errors;
-                    console.log('errors :' , error.response.data.errors);
+                    console.log('errors :' , app2.message);
                 })
           },         
         }                     

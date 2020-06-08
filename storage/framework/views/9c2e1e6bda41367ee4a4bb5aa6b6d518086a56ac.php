@@ -1,6 +1,12 @@
 
 
 <?php $__env->startSection('content'); ?>
+<!--select  class="form-control" onchange="window.location.href=this.value" style="margin-left: 470px; margin-top: -45px; border-radius: 0.8em; width: 230px; height: 40px;">
+                      <option value="0" selected disabled>Choisie le type de Categories :</option>
+                      <option value="shopCategories">Shop Categories</option>
+                      <option value="emploiCategories">Emploi Categories</option>
+                    </select-->
+
   
     <head>
           <title><?php echo e(( 'Employeur_Recuperer ')); ?></title>
@@ -15,9 +21,9 @@
             <div class="card">
               <div class="card-header">
                 <h4 class="card-title">Employeur recuperer</h4>
-                <div class="box " style="margin-left: 730px; margin-top: -40px; ">
-                    <select onchange="window.location.href=this.value">
-                      <option>Recuperer les utilisateurs   :</option>
+                <div  style="margin-left: 730px; margin-top: -40px; ">
+                    <select class="form-control" onchange="window.location.href=this.value" style="border-radius: 0.8em; cursor: pointer; ">
+                      <option value="0" selected="selected" disabled="disabled">Recuperer les utilisateurs   :</option>
                       <option value="recupervendeur">Recuperer vendeurs</option>
                       <option value="recuperclient">Recuperer clients</option>
                       <option value="recupemployeur">Recuperer employeurs</option>
@@ -28,7 +34,7 @@
               </div>
               
               <div class="card-body">
-                <div class="table-responsive" style="height: 420px; margin-top: 55px;">
+                <div class="table-responsive" style="height: 420px; margin-top: 75px;">
                   <table class="table">
                     <thead class=" text-primary">
                       <th >

@@ -19,7 +19,7 @@
                 <h4 class="card-title"> Notifications </h4>
               </div>
               <div class="card-body">
-                <div class="table-responsive">
+                <div class="table-responsive" style="height: 500px;">
                   <table class="table" width="100%">
                     <tbody>
                       <tr>
@@ -29,97 +29,21 @@
                         <td  class="text-left" >Nabil a signaler le produit n1</td>
   
                         <td  class="dropdown "  id="k">
-                          <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
+                          <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#"> 
                                 <img src="assetsAdmin/img/menu.png" alt="..."/ id="f">
                              </a>
-                            <div class="dropdown-menu dropdown-menu-right "  >
+                            <div class="dropdown-menu dropdown-menu-right "  style="margin-top: -10px;">
                                 <a class="dropdown-item js-show-modal1" href="#"  id="f1">Voir plus</a>
-                                <a class="dropdown-item" href="#" id="f1">Supprimer</a>
-                            </div>
-                        </td>
-                      </tr>
-                      
-                      <tr>
-                        <td>
-                          <i class="now-ui-icons ui-1_bell-53"></i>
-                        </td>
-                        <td  class="text-left"></td>
-  
-                        <td  class="dropdown "  id="k">
-                          <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
-                                <img src="assetsAdmin/img/menu.png" alt="..."/ id="f">
-                             </a>
-                            <div class="dropdown-menu dropdown-menu-right "  >
-                                <a class="dropdown-item js-show-modal1" href="#" id="f1">Voir plus</a>
-                                <a class="dropdown-item" href="#" id="f1">Supprimer</a>
-                            </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <i class="now-ui-icons ui-1_bell-53"></i>
-                        </td>
-                        <td class="text-left"></td>
-  
-                        <td  class="dropdown "  id="k">
-                          <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
-                                <img src="assetsAdmin/img/menu.png" alt="..."/ id="f">
-                             </a>
-                            <div class="dropdown-menu dropdown-menu-right "  >
-                                <a class="dropdown-item js-show-modal1" href="#" id="f1">Voir plus</a>
-                                <a class="dropdown-item" href="#" id="f1">Supprimer</a>
-                            </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <i class="now-ui-icons ui-1_bell-53"></i>
-                        </td>
-                        <td  class="text-left"></td>
-  
-                        <td  class="dropdown "  id="k">
-                          <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
-                                <img src="assetsAdmin/img/menu.png" alt="..."/ id="f">
-                             </a>
-                            <div class="dropdown-menu dropdown-menu-right "  >
-                                <a class="dropdown-item js-show-modal1" href="#" id="f1">Voir plus</a>
-                                <a class="dropdown-item" href="#" id="f1">Supprimer</a>
-                            </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <i class="now-ui-icons ui-1_bell-53"></i>
-                        </td>
-                        <td class="text-left"></td>
-  
-                        <td  class="dropdown "  id="k">
-                          <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
-                                <img src="assetsAdmin/img/menu.png" alt="..."/ id="f">
-                             </a>
-                            <div class="dropdown-menu dropdown-menu-right "  >
-                                <a class="dropdown-item js-show-modal1" href="#" id="f1">Voir plus</a>
                                 <a class="dropdown-item" href="#" id="f1">Supprimer</a>
                             </div>
                         </td>
                       </tr>
                     </tbody>
                   </table>
-                  <div class="pagination" >
-                        <a href="#"> &laquo; </a>
-                        <a href="#" class="active" id="f3"> 1 </a>
-                        <a href="#"> 2 </a>
-                        <a href="#"> 3 </a>
-                        <a href="#"> 4 </a>
-                        <a href="#"> 5 </a>
-                        <a href="#"> &raquo; </a>
-                  </div>
                 </div>
               </div>
             </div>
           </div>
-          
-          
         </div>
       </div>
       <footer class="footer">

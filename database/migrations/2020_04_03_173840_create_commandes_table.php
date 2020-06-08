@@ -18,7 +18,7 @@ class CreateCommandesTable extends Migration
             $table->unsignedBigInteger('client_id');
             $table->unsignedBigInteger('vendeur_id');
             $table->unsignedBigInteger('produit_id');
-            $table->float('prix_total');/* le prix de deplacement * le poids de produit + prix de produit*/
+            $table->double('prix_total',20, 2);/* le prix de deplacement * le poids de produit + prix de produit*/
             $table->string('address')->nullable();
             $table->boolean('Réponse_vendeur')->default(0);
             $table->integer('qte');

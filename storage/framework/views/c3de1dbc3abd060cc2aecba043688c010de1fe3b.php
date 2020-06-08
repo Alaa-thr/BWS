@@ -24,15 +24,15 @@
                   
                   <div class="row">
                     <div class="col-md-4">
-                      <select  class="form-control" onchange="window.location.href=this.value" style="margin-left: 470px; margin-top: -45px; border-radius: 0.8em; width: 230px; height: 40px;">
+                      <select  class="form-control" onchange="window.location.href=this.value" style="margin-left: 450px; margin-top: -45px; border-radius: 0.8em; width: 230px; height: 40px; cursor: pointer;">
                       <option value="0" selected disabled>Choisie le type de Categories :</option>
                       <option value="shopCategories">Shop Categories</option>
                       <option value="emploiCategories">Emploi Categories</option>
                     </select>
-                      <button v-if="suppr" class="btn btn-sm btn-danger  btn-block" style="margin-left: 710px; margin-top: -40px; border-radius: 0.8em; width: 150px; height: 40px; "  v-on:click="deleteArrayCategorie()"><b>supprimer</b></button>
-                      <button v-if="suppr" class="btn btn-sm btn-warning btn-block" style="margin-left: 868px; margin-top: -50px; border-radius: 0.8em; width: 150px; height: 40px; " v-on:click="AnnulerSel" ><b>Annuler</b></button>
+                      <button v-if="suppr" class="btn btn-sm btn-danger  btn-block" style="margin-left: 700px; margin-top: -40px; border-radius: 0.8em; width: 130px; height: 40px; "  v-on:click="deleteArrayCategorie()"><b>supprimer</b></button>
+                      <button v-if="suppr" class="btn btn-sm btn-warning btn-block" style="margin-left: 850px; margin-top: -50px; border-radius: 0.8em; width: 130px; height: 40px; " v-on:click="AnnulerSel" ><b>Annuler</b></button>
 
-                      <button v-else class="btn btn-sm   btn-block" style="margin-left: 790px; margin-top: -40px; border-radius: 0.8em; background-color: #00CED1; width: 230px; height: 40px; " v-on:click="ajouterCategorie" ><b>Ajouter une Catégorie</b></button>
+                      <button v-else class="btn btn-sm   btn-block" style="margin-left: 730px; margin-top: -40px; border-radius: 0.8em; background-color: #00CED1; width: 230px; height: 40px; " v-on:click="ajouterCategorie" ><b>Ajouter une Catégorie</b></button>
                     </div>
                   </div>
                 

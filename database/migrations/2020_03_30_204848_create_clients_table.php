@@ -22,7 +22,7 @@ class CreateClientsTable extends Migration
             $table->string('email')->unique();
             $table->string('numeroTelephone')->unique();
             $table->string('image')->default('NULL');
-            $table->integer('nbr_cmd')->default(1);
+            $table->integer('nbr_cmd')->default(0);
             $table->integer('Nbre_signal')->default(0);
             $table->timestamps();
         });
