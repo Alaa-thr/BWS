@@ -41,19 +41,19 @@
                   <div class="col-md-4 pl-2">
                     <div class="form-group">
                       <label>Nom</label>
-                      <input name="nom" type="text" class="form-control" v-model="profilvendeur.Nom" value="{{old('Nom')}}">
+                      <input name="nom" type="text" class="form-control" v-model="profilvendeur.Nom" value="{{old('Nom')}}" v-on:click="modif = true">
                     </div>
                   </div>
                   <div class="col-md-4 pl-1">
                     <div class="form-group">
                       <label>Prénom</label>
-                      <input name="prenom" type="text" class="form-control" v-model="profilvendeur.Prenom" value="{{old('Prenom')}}">
+                      <input name="prenom" type="text" class="form-control" v-model="profilvendeur.Prenom" value="{{old('Prenom')}}" v-on:click="modif = true">
                    </div>
                  </div>
                   <div class="col-md-4 pl-1">
                     <div class="form-group">
                       <label>Numero Telephone</label>
-                      <input name="num" type="text" class="form-control" v-model="profilvendeur.numTelephone" value="{{old('numTelephone')}}">
+                      <input name="num" type="text" class="form-control" v-model="profilvendeur.numTelephone" value="{{old('numTelephone')}}" v-on:click="modif = true">
                     </div>
                   </div>
                 </div>
@@ -61,13 +61,13 @@
                   <div class="col-md-8 pl-2">
                     <div class="form-group">
                       <label for="exampleInputEmail1" >Adresse Email</label>
-                      <input name="adresse_email" type="email" class="form-control" v-model="profilvendeur.email" value="{{old('email')}}">
+                      <input name="adresse_email" type="email" class="form-control" v-model="profilvendeur.email" value="{{old('email')}}" v-on:click="modif = true">
                     </div>
                   </div>
                   <div class="col-md-4 pl-1">
                     <div class="form-group">
                       <label>Numero compte BNQ</label>
-                      <input name="bnq" type="text" class="form-control" v-model="profilvendeur.Num_Compte_Banquaire " value="{{old('Num_Compte_Banquaire ')}}">
+                      <input name="bnq" type="text" class="form-control" v-model="profilvendeur.Num_Compte_Banquaire " value="{{old('Num_Compte_Banquaire ')}}" v-on:click="modif = true">
                     </div>
                   </div>
                 </div>
@@ -75,7 +75,7 @@
                   <div class="col-md-12 pl-2">
                     <div class="form-group">
                       <label >Adresse</label>
-                      <input type="text" class="form-control" placeholder="Home Address" >
+                      <input type="text" class="form-control" placeholder="Home Address" v-on:click="modif = true">
                     </div>
                  </div>
                 </div>
@@ -83,23 +83,23 @@
                   <div class="col-md-6 pl-2">
                     <div class="form-group">
                       <label >Boutique</label>
-                      <input name="boutique" type="text" class="form-control" v-model="profilvendeur.Nom_boutique" value="{{old('Nom_boutique')}}">
+                      <input name="boutique" type="text" class="form-control" v-model="profilvendeur.Nom_boutique" value="{{old('Nom_boutique')}}" v-on:click="modif = true">
                     </div>
                   </div>
                   <div class="col-md-4 px-2">
                     <div class="form-group">
                       <label>pays</label>
-                      <input type="" class="form-control" placeholder="pays" value="Algerie" disabled="">
+                      <input type="" class="form-control" placeholder="pays" value="Algerie" disabled="disabled">
                     </div>
                   </div>
                 </div>
                   
                 <div class="row">
                   <div class="col-md-6">
-                        <button type="submit"  value="Modifier" class="btn btn-warning btn-block" style="margin-top: 40px;  border: 0;  border-radius: 2em; font-size: 12px; font-weight: 700;" >Modifier</button>     
+                    <button v-if="modif" type="submit"  value="Modifier" class="btn btn-warning btn-block" style="margin-top: 40px;  border: 0;  border-radius: 2em; font-size: 12px; font-weight: 700;" >Modifier</button>     
                   </div>
                   <div class="col-md-6">
-                    <a class=" btn btn-danger btn-block" type="submit" style="margin-top: 40px;  border: 0;  border-radius: 2em; font-size: 12px; font-weight: 900;" href="{{ route('profilVendeur') }}">Annuler</a>
+                    <button v-if="modif" class=" btn btn-danger btn-block" style="margin-top: 40px;  border: 0;  border-radius: 2em; font-size: 12px; font-weight: 900;" v-on:click="modif = false">Annuler</button>
                   </div>
                 </div>
               </form>
@@ -116,7 +116,7 @@
                 <a href="#">
                   <img class="avatar border-gray" src="assetsClient/img/input/profil_img.jpg" alt="...">
                 </a>
-                 <h5 class="title cl13">@{{ profilvendeur.nom }} @{{ profilvendeur.prenom }}</h5>
+                 <h5 class="title cl13">@{{ profilvendeur.Nom }} @{{ profilvendeur.Prenom }}</h5>
               </div>
               <div style=" margin-top: 20px;">
                 <div class="row">
@@ -169,6 +169,7 @@
     data:{
         
         profilvendeur:[],           
+        modif: false,
       },
     methods: {
       profil_vendeur: function(){
