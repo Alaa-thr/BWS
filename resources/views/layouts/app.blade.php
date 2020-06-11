@@ -35,7 +35,9 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/util.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/main.css')}}">
  
-  
+   <script src="{{ asset('jss/vue.js') }}"></script>
+    <script src="{{asset('jss/axios.min.js')}}"></script>
+    <script src="{{asset('jss/sweetalert2.js')}}"></script>
 
     
 
@@ -96,7 +98,7 @@
         <!-- Header desktop -->
         <?php
 
-                $stripeAccueil=$stripeShop=$stripeEmploi=$stripeArticle=$stripeAPropos=$stripeContact='';
+                $stripeAccueil=$stripeShop=$stripeEmploi=$stripeArticle=$stripeAPropos=$stripeContact=$stripePanier='';
                 
                 $urlAcctuiel = Route::getCurrentRoute()->uri();
                 if($urlAcctuiel == 'accueil' || $urlAcctuiel == '/'){
@@ -403,10 +405,15 @@
                             <i class="zmdi zmdi-search"></i>
                         </div>
 
-                        <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11  js-show-cart" >
+                        @guest
+                        <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-22 <?php echo $stripePanier ?>" onclick="connecterAvant()" >
                             <i class="zmdi zmdi-shopping-cart"></i>
-                        
                         </div>
+                        @else
+                            <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-22   <?php echo $stripePanier ?>" onclick="Estconnecter()" >
+                                <i class="zmdi zmdi-shopping-cart"></i>
+                            </div>
+                        @endguest
                         
                         @guest
                             
@@ -464,9 +471,15 @@
                     <i class="zmdi zmdi-search"></i>
                 </div>
 
-                <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-22  js-show-cart" >
-                    <i class="zmdi zmdi-shopping-cart"></i>
-                </div>
+                @guest
+                    <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-22 <?php echo $stripePanier ?>" onclick="connecterAvant()" >
+                            <i class="zmdi zmdi-shopping-cart"></i>
+                    </div>
+                @else
+                    <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-22   <?php echo $stripePanier ?>" onclick="Estconnecter()" >
+                            <i class="zmdi zmdi-shopping-cart"></i>
+                    </div>
+                @endguest
 
                 @guest
                             
@@ -748,7 +761,7 @@
                     </div>
 
                     <div class="header-cart-buttons flex-w w-full">
-                        <a href="shoping-cart.html" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+                        <a href="{{route('panier')}}" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
                             View Cart
                         </a>
 
@@ -1044,7 +1057,42 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         </div>
     </div>
     @stack('javascript')
-   <!--<script src="vendor/jquery/jquery-3.2.1.min.js"></script>-->  
+   <!--<script src="vendor/jquery/jquery-3.2.1.min.js"></script>--> 
+   <script>
+    
+        window.Laravel = {!! json_encode([
+               "csrfToken"  => csrf_token(),
+               "url"      => url("/")  
+          ]) !!};
+    
+
+    </script>
+   <script>
+       function connecterAvant(){
+        
+            Swal.fire({
+                          icon: 'error',
+                          title: 'Oops...',
+                          text: 'Vous devez être connecté tent que Client pour pouvez accedé a votre panier.',
+                          footer: '<form method="GET" action="{{ route("logoutregister") }}">@csrf<a href="{{ route("logoutregister") }}">Créer Compte</a></form>',
+                          showCancelButton: true,
+                          cancelButtonColor: '#d33',
+                          confirmButtonColor: '#13c940',
+                          confirmButtonText:
+                            'Se Connecter',
+            }).then((result) => {
+                if (result.value){
+                    $('.js-panel-connect').addClass('show-header-cart');
+                }
+                             
+            });
+       }
+       function Estconnecter(){
+
+             $('.js-panel-cart').addClass('show-header-cart'); 
+          
+       }
+   </script>  
     <script src="{{ asset('vendor/animsition/js/animsition.min.js')}}"></script>
     <script src="{{ asset('vendor/bootstrap/js/popper.js')}}"></script>
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.min.js')}}"></script>
@@ -1076,7 +1124,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         $('.js-addwish-b2').each(function(){
             var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
             $(this).on('click', function(){
-                swal(nameProduct, "is added to wishlist !", "success");
+                swal(nameProduct, "A été ajouté a votre liste de favoris.", "success");
 
                 $(this).addClass('js-addedwish-b2');
                 $(this).off('click');
