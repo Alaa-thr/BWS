@@ -28,10 +28,9 @@
     <link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
     <link rel="stylesheet" type="text/css" href="css/util.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
-    <script src="{{ asset('jss/vue.js') }}"></script>
-    <script src="{{asset('jss/axios.min.js')}}"></script>
-    <script src="{{asset('jss/sweetalert2.js')}}"></script>
-   
+ 
+  
+
     
 
 </head>
@@ -424,12 +423,12 @@
                               
                               <div class="dropdown-menu m-r-35" aria-labelledby="dropdownMenuButton">
                                 @if(Auth::user()->type_compte == 'c')
-                                <a class="dropdown-item" href="{{ route('profilClient')}}">Mon Espace</a>
+                                <a class="dropdown-item" href="{{ route('profilClient')}}">Profil</a>
                                 @elseif(Auth::user()->type_compte == 'v')
-                                <a class="dropdown-item" href="{{ route('statistiquesVendeur')}}">Mon Espace</a>
+                                <a class="dropdown-item" href="{{ route('profilVendeur')}}">Profil</a>
                                 @elseif(Auth::user()->type_compte == 'e')
-                                <a class="dropdown-item" href="{{route('profilEmployeur')}}">Mon Espace</a>@elseif(Auth::user()->type_compte == 'a')
-                                <a class="dropdown-item" href="{{route('statistiquesAdmin')}}">Mon Espace</a>
+                                <a class="dropdown-item" href="{{route('profilEmployeur')}}">Profil</a>@elseif(Auth::user()->type_compte == 'a')
+                                <a class="dropdown-item" href="{{route('profilAdmin')}}">Profil</a>
                                 @endif
                                 <div class="dropdown-divider"></div>
                                 <div>
@@ -484,12 +483,12 @@
                               
                               <div class="dropdown-menu m-r-35" aria-labelledby="dropdownMenuButton">
                                  @if(Auth::user()->type_compte == 'c')
-                                <a class="dropdown-item" href="{{ route('profilClient')}}">Mon Espace</a>
+                                <a class="dropdown-item" href="{{ route('profilClient')}}">Profil</a>
                                 @elseif(Auth::user()->type_compte == 'v')
-                                <a class="dropdown-item" href="{{ route('statistiquesVendeur')}}">Mon Espace</a>
+                                <a class="dropdown-item" href="{{ route('profilVendeur')}}">Profil</a>
                                 @elseif(Auth::user()->type_compte == 'e')
-                                <a class="dropdown-item" href="{{route('profilEmployeur')}}">Mon Espace</a>@elseif(Auth::user()->type_compte == 'a')
-                                <a class="dropdown-item" href="{{route('statistiquesAdmin')}}">Mon Espace</a>
+                                <a class="dropdown-item" href="{{route('profilEmployeur')}}">Profil</a>@elseif(Auth::user()->type_compte == 'a')
+                                <a class="dropdown-item" href="{{route('profilAdmin')}}">Profil</a>
                                 @endif
                                 <div class="dropdown-divider"></div>
                                 <div>
@@ -617,14 +616,7 @@
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
                             <div class="form-group">
-                                <input class="form-control form-control-lg
-                                {{ $errors->has('email') || $errors->has('numTelephone') ? ' is-invalid' : '' }}" name="numTelephone" value="{{ old('numTelephone') }}" type="text" placeholder="Email ou Telephone"  id="numTelephone">
-                                
-                                @error('numTelephone')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input class="form-control form-control-lg @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" type="email" placeholder="Email ou Telephone"  id="email">
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -892,7 +884,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         </span>
     </div>
 
-     <!-- Modal1
+     <!-- Modal1 -->
     <div class="wrap-modal1 js-modal1 p-t-60 p-b-20">
         <div class="overlay-modal1 js-hide-modal1"></div>
 
@@ -958,7 +950,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                                 Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus ligula. Mauris consequat ornare feugiat.
                             </p>
                             
-                            
+                            <!--  -->
                             <div class="p-t-33">
                                 <div class="flex-w flex-r-m p-b-10">
                                     <div class="size-203 flex-c-m respon6">
@@ -998,6 +990,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                                     </div>
                                 </div>
 
+                                <!--  -->
                             
                                 <div class="flex-w flex-r-m p-b-10">
                                     <div class="size-203 flex-c-m respon6">
@@ -1044,8 +1037,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                 </div>
             </div>
         </div>
-    </div>-->
-@stack('javascripts')
+    </div>
 
    <!--<script src="vendor/jquery/jquery-3.2.1.min.js"></script>-->  
     <script src="vendor/animsition/js/animsition.min.js"></script>

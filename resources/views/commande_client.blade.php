@@ -42,7 +42,7 @@
       <label :for="commandec.id" style="margin-top: 40px; margin-left: 10px;"></label>
     </div>
     <div v-else ><div id="ch1">
-      <input type="checkbox" :id="commandec.id" :value="commandec.id" v-model="articleIds" @click="deselectArticle(commandec.id)"></div>
+      <input type="checkbox" :id="commandec.id" :value="commandec.id" style="margin-left: -10px;" v-model="articleIds" @click="deselectArticle(commandec.id)"></div>
       <label :for="commandec.id" style="margin-top: 40px; margin-left: 10px;"></label>
     </div>
 
