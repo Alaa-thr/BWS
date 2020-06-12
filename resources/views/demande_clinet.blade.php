@@ -42,7 +42,7 @@
       <label :for="demandec.id" style="margin-top: 40px; margin-left: 10px;"></label>
     </div>
     <div v-else ><div id="ch1">
-      <input type="checkbox" :id="demandec.id" :value="demandec.id" v-model="articleIds" @click="deselectArticle(demandec.id)"></div>
+      <input type="checkbox" :id="demandec.id" :value="demandec.id" style="margin-left: -10px;" v-model="articleIds" @click="deselectArticle(demandec.id)"></div>
       <label :for="demandec.id" style="margin-top: 40px; margin-left: 10px;"></label>
     </div>
 
@@ -90,40 +90,14 @@
 </div>                   {{$article->links()}}
               </div>
 
-            </div>      
+              </div>      
           </div>
-        </div>      
-      </div>
-    </div>
+        
+          </div>
+          </div>
 
-  <footer class="footer">
-    <div class=" container-fluid ">
-      <nav>
-        <ul>
-          <li>
-            <a href="https://www.creative-tim.com">
-              BASMAHW&S
-            </a>
-          </li>
-          <li>
-            <a href="http://presentation.creative-tim.com">
-              A Propos
-            </a>
-          </li>
-          <li>
-            <a href="http://blog.creative-tim.com">
-              Blog
-            </a>
-          </li>
-        </ul>
-      </nav>
-      <div class="copyright" id="copyright">
-        &copy; <script>
-          document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))
-        </script>, Designer par <a href="https://www.invisionapp.com" target="_blank">BS</a>. Codé par <a href="https://www.creative-tim.com" target="_blank">BASMAHW&S</a>.
-      </div>
-    </div>
-  </footer>
+
+  
 </div>
 <!-- Modal1 for laptob-->
 <div class="wrap-modal11 js-modal1 p-t-38 p-b-20 p-l-15 p-r-15"  id="app2" v-if="hideModel" style="margin-top:122px;">
