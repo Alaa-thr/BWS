@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 
 use App\Ville;
 use App\Vendeur;
 use App\Client;
+use App\Employeur;
 use App\Commande;
+use App\Email;
 use Auth;
 
 class BwsController extends Controller
@@ -40,10 +44,27 @@ class BwsController extends Controller
     {
         return view('article');
     }
-
-     public function contact()
+    public function contact()
     {
         return view('contact');
+    }
+
+     public function addEmail(Request $request)
+    {
+        $request->validate([
+             'adresse_email' => ['required','string', 'max:50', 'min:5','email'],
+             'message' => ['required','string','max:500','min:5','regex:/^[a-zA-Z0-9][a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
+         ]);
+         
+        $email = new Email;
+        
+        $email->adresse_email = $request->adresse_email;
+        $email->message = $request->message;
+        
+        $email->save();
+        
+        
+        return Response()->json(['etat' => true, 'email' => $email]);
     }
 
      public function accueil()

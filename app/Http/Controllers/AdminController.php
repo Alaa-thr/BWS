@@ -10,6 +10,7 @@ use App\Vendeur;
 use App\Client;
 use App\Employeur;
 use App\Article;
+use App\Email;
 use App\User;
 use App\Categorie;
 use App\Sous_categorie;
@@ -405,7 +406,27 @@ class AdminController extends Controller
        return Response()->json(['etat' => true]);
     }
 
-    
+    public function emails_admin(){
+
+        $email = \DB::table('emails')->orderBy('created_at','desc')->get();
+        return view('emails_admin',['em' =>$email]);
+    }
+    public function detailsEmail(Request $request){
+        $email_details = \DB::table('emails')->where('id',$request->idEM)->get();
+        return $email_details;
+    }
+    public function deleteEmail($id){
+        $email = Email::find($id);
+        $email->delete();
+        return Response()->json(['etat' => true]);
+    }
+    public function emailRependu($id){
+        $admin = Admin::find(Auth::user()->id);
+        $email = Email::find($id);
+        $email->admin_id = $admin->id;
+        $email->reponse =1;
+        $email->save();
+    }
 
 
 }

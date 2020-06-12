@@ -1,9 +1,9 @@
-@extends('layouts.template_visiteur')
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 
 	
 	<head>
-		<title>{{ ( 'Contact') }}</title>
+		<title><?php echo e(( 'Contact')); ?></title>
 	</head>
 
 		<!-- Title page -->
@@ -93,16 +93,16 @@
 		</div>
 	</section>	
 	
-@endsection
+<?php $__env->stopSection(); ?>
 
-@push('javascripts')
+<?php $__env->startPush('javascripts'); ?>
 
 <script> 
-        window.Laravel = {!! json_encode([
+        window.Laravel = <?php echo json_encode([
 
                'csrfToken' => csrf_token(),
                'url'       => url('/'), 
-          ]) !!};
+          ]); ?>;
 </script>
 <script>
 	var app = new Vue({
@@ -152,4 +152,6 @@
     
   });
 </script>
-@endpush
+<?php $__env->stopPush(); ?>
+
+<?php echo $__env->make('layouts.template_visiteur', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\BWS\resources\views/contact.blade.php ENDPATH**/ ?>

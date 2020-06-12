@@ -96,7 +96,7 @@
         </div>
       </footer>
     </div>
-  </div>
+  
   <!--***************************************************************************************************************
   
   **************************************************************************************************************-->
@@ -195,7 +195,7 @@
                 
               } 
               if(this.checkedNotif.length < this.NotificationsDelete.length){
-                this.deselectCategorie(n.id)
+                this.deselectNotif(n.id)
               } 
       },
       deleteArrayNotif:function(){
