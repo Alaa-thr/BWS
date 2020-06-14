@@ -123,8 +123,8 @@
            "csrfToken"  => csrf_token(),
            "article"   => $article,
            "idAdmin" => $idAdmin,
-           'ImageP'         => $ImageP,
-           'ImageA'         => $ImageA,
+           'produitCL'         => $produitCL,
+           'annoncemploiesCL'         => $annoncemploiesCL,
            "url"      => url("/")  
       ]) !!};
 </script>
@@ -289,8 +289,8 @@ methods: {
 
                 .then(response => {
                      this.historiqueclient = window.Laravel.article.data;
-                     this.imagesproduit = window.Laravel.ImageP;
-                     this.imagesannonce = window.Laravel.ImageA;
+                     this.imagesproduit = window.Laravel.produitCL;
+                     this.imagesannonce = window.Laravel.annoncemploiesCL;
                 })
                 .catch(error =>{
                      console.log('errors :' , error);

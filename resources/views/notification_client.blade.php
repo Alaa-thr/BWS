@@ -126,8 +126,8 @@
            "csrfToken"  => csrf_token(),
            "article"   => $article,
            "idAdmin" => $idAdmin,
-           'notificC'         => $notificC,
-           'ImageA'         => $ImageA,
+           'emploC'         => $emploC,
+           'vendeurC'         => $vendeurC,
 
            "url"      => url("/")  
       ]) !!};
@@ -289,8 +289,8 @@ methods: {
 
                 .then(response => {
                      this.notificationclient = window.Laravel.article.data;
-                     this.employeur = window.Laravel.notificC;
-                     this.imagesannonce = window.Laravel.ImageA;
+                     this.employeur = window.Laravel.emploC;
+                     this.imagesannonce = window.Laravel.vendeurC;
 
                 })
                 .catch(error =>{

@@ -33,6 +33,7 @@ Route::get('/article_detaillé', 'BwsController@article_D')->name('article_D');
 Route::get('/getville', 'BwsController@get_ville');
 Route::get('/panierVisiteur', 'BwsController@panier_visiteur')->name('panierVisiteur');
 
+
 /************************************************ Admin***********************************************/
 
 Route::get('/admin', 'AdminController@admin_admin')->name('admin');
@@ -133,5 +134,6 @@ Route::delete('/deletenotificationclient/{id}','NotificationController@deleteNot
 /*Favoris*/
 Route::post('/ajoutaufavoris/{id}','ClientController@AjoutAuFavoris');
 Route::get('/favorisClient','FavorisController@get_favoris_client')->name('favorisClient');
-Route::delete('/deletefavorisclient/{id}','FavorisController@deleteFavorisClient');
+Route::delete('/deletefavorisclient/{id}','FavorisController@deletefavorisClient');
+
 
