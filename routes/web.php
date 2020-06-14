@@ -31,6 +31,7 @@ Route::get('/article', 'BwsController@article')->name('article');
 Route::get('/contact', 'BwsController@contact')->name('contact');
 Route::get('/article_detaillé', 'BwsController@article_D')->name('article_D');
 Route::get('/getville', 'BwsController@get_ville');
+Route::get('/panierVisiteur', 'BwsController@panier_visiteur')->name('panierVisiteur');
 
 /************************************************ Admin***********************************************/
 
@@ -106,8 +107,6 @@ Route::get('/getAllcolor', 'VendeurController@getColors');
 /************************************************ Client***********************************************/
 Route::get('/profilClient','ClientController@profil_clinet')->name('profilClient');
 Route::get('/panierClient','BwsController@panier_client')->name('panierClient');
-Route::get('/notificationClient','BwsController@notification_client')->name('notificationClient');
-Route::get('/favorisClient','BwsController@favoris_client')->name('favorisClient');
 Route::put('/updateProfilC/{id}','ClientController@update_profil');
 Route::post('/detaillsacommande', 'ClientController@detaillsCommande'); 
 Route::get('/commandeClient','ClientController@get_commande_client')->name('commandeClient');
@@ -127,6 +126,12 @@ Route::get('/panier','ClientController@ProduitCommande')->name('panier');
 Route::get('/historiqueClient','HistoriqurController@get_historique_client')->name('historiqueClient');
 Route::delete('/deletehistorique/{id}','HistoriqurController@deleteHistorique');
 
+/*Notification*/
+Route::get('/notificationClient','NotificationController@get_notification_client')->name('notificationClient');
+Route::delete('/deletenotificationclient/{id}','NotificationController@deleteNotificationClient');
+
 /*Favoris*/
 Route::post('/ajoutaufavoris/{id}','ClientController@AjoutAuFavoris');
+Route::get('/favorisClient','FavorisController@get_favoris_client')->name('favorisClient');
+Route::delete('/deletefavorisclient/{id}','FavorisController@deleteFavorisClient');
 
