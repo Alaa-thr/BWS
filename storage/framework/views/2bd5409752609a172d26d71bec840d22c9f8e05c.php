@@ -41,15 +41,21 @@
                   <div class="col-md-1">
                     <i class="now-ui-icons ui-1_send" style="font-size: 25px; color: gray; margin-left: 20px;"></i>
                   </div>
-                  <a href="#" class="col-md-7 js-show-modal1" style="cursor: pointer; ">
+                  <a v-if="rep && ema.reponse === 0" href="#" class="col-md-7 js-show-modal1" style="cursor: pointer; ">
                     <div><p style=" color: black; margin-top: -1px; margin-left: -25px;" v-on:click="AfficherInfo(ema.id)">Message a la part de  <b>{{ ema.adresse_email }}</b></p>
                     </div>
                   </a>
+                  <a v-else href="#" class="col-md-7 js-show-modal1" style="cursor: pointer; ">
+                    <div><p style=" color: black; margin-top: -1px; margin-left: -25px;" v-on:click="AfficherInfo(ema.id)">Message a la part de  <b>{{ ema.adresse_email }}</b></p><br><p style="margin-top: -20px; color: green; margin-left: -22px;">Répondu par l'admin {{ ema.admin_nom }}</p>
+                    </div>
+                  </a>
                   <div class="col-md-2 js-show-modal1">
-                      <button  v-if="rep && ema.reponse === 0" class="btn btn-sm btn-danger btn-block" style="border-radius: 0.8em; width: 180px; height: 35px; margin-top: -5px;margin-left: -30px;" v-on:click="AfficherInfo(ema.id)"><b>Pas encors répondu</b>
-                      </button>
-                      <button v-else  class="btn btn-sm btn-success btn-block" style="border-radius: 0.8em; width: 130px; height: 35px; margin-top: -5px;" disabled="disabled"><b>répondu</b>
-                      </button>
+                    <ul>
+                      <li  v-if="rep && ema.reponse === 0" class="label11" data-label11="Pas encors répondu">
+                      </li>
+                      <li v-else  class="label12" data-label12="Répondu">
+                      </li>
+                    </ul>
                   </div>
                   <div class="col-md-1">
                     <a ><i class="now-ui-icons ui-1_simple-remove" style="font-size: 25px; cursor: pointer; color: red; margin-left: 20px;" v-on:click="deleteEmail(ema)"></i></a>
@@ -115,9 +121,9 @@
               </textarea>
             </div> 
               <a href="https://www.gmail.com" target=_blank>       
-                <button class=" flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer " v-on:click="repond(emaa.id)" style="width: 250px;  background-color: #FF0000; height: 40px; box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);">                     
+                <button  class=" flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer " v-on:click="repond(emaa.id)" style="width: 250px;  background-color: #FF0000; height: 40px; box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);">                     
                   Repondre
-                </button>
+                </button>                     
               </a>
               <button class="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer " style="margin-top: 10px; margin-left: 270px; margin-top: -40px; width: 240px; background-color: #32CD32; height: 40px; box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);" v-on:click="hideModel = false">
               Annuler
@@ -168,7 +174,6 @@
         this.hideModel = false;
       },
       repond:function(id){
-        console.log("id",id);
         axios.put(window.Laravel.url+'/emailrependu/'+id)
 
             .then(response => {
@@ -204,6 +209,7 @@
 
             .then(response => {
                  this.emails = window.Laravel.em;
+                 console.log("window.Laravel.em",window.Laravel.em);
             })
             .catch(error =>{
                  console.log('errors :' , error);

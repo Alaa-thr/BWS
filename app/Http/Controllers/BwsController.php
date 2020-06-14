@@ -10,6 +10,7 @@ use App\Ville;
 use App\Vendeur;
 use App\Client;
 use App\Employeur;
+use App\Admin;
 use App\Commande;
 use App\Email;
 use Auth;

@@ -422,9 +422,13 @@ class AdminController extends Controller
     }
     public function emailRependu($id){
         $admin = Admin::find(Auth::user()->id);
+        //$admin2 =  Admin::find($id);
         $email = Email::find($id);
         $email->admin_id = $admin->id;
         $email->reponse =1;
+        if($email->reponse == 1){
+            $email->admin_nom = $admin->nom;
+        }
         $email->save();
     }
 

@@ -35,6 +35,7 @@ return array(
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
     'App\\Http\\Controllers\\DemandeClientController' => $baseDir . '/app/Http/Controllers/DemandeClientController.php',
     'App\\Http\\Controllers\\EmployeurController' => $baseDir . '/app/Http/Controllers/EmployeurController.php',
+    'App\\Http\\Controllers\\FavorisController' => $baseDir . '/app/Http/Controllers/FavorisController.php',
     'App\\Http\\Controllers\\HistoriqurController' => $baseDir . '/app/Http/Controllers/HistoriqurController.php',
     'App\\Http\\Controllers\\HomeController' => $baseDir . '/app/Http/Controllers/HomeController.php',
     'App\\Http\\Controllers\\NotificationController' => $baseDir . '/app/Http/Controllers/NotificationController.php',

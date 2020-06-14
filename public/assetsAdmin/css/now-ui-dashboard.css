@@ -6648,6 +6648,48 @@ input[type=checkbox]:checked + label:before{
   padding: 10px;
   text-decoration: none;
 }
+.label11{
+  position: relative;
+}
+.label11::after{
+  content: attr(data-label11);
+  font-family: Poppins-Regular;
+  font-size: 16px;
+  line-height: 22px;
+  color: #fff;
+  text-transform: uppercase;
+  text-align: center;
+  display: block;
+  position: absolute;
+  top: 3px;
+  right: -9px;
+  height: 25px;
+  min-width: 220px;
+  border-radius: 15px;
+  padding: 0 4px;
+  background-color: red;
+}
+.label12{
+  position: relative;
+}
+.label12::after{
+  content: attr(data-label12);
+  font-family: Poppins-Regular;
+  font-size: 16px;
+  line-height: 22px;
+  color: #fff;
+  text-transform: uppercase;
+  text-align: center;
+  display: block;
+  position: absolute;
+  top: 3px;
+  right: -9px;
+  height: 25px;
+  min-width: 150px;
+  border-radius: 15px;
+  padding: 0 4px;
+  background-color: green;
+}
 
 
 

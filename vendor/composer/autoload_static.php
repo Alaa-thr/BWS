@@ -508,6 +508,7 @@ class ComposerStaticInit6ac30e15a1ee6806079f05ef802d642c
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\DemandeClientController' => __DIR__ . '/../..' . '/app/Http/Controllers/DemandeClientController.php',
         'App\\Http\\Controllers\\EmployeurController' => __DIR__ . '/../..' . '/app/Http/Controllers/EmployeurController.php',
+        'App\\Http\\Controllers\\FavorisController' => __DIR__ . '/../..' . '/app/Http/Controllers/FavorisController.php',
         'App\\Http\\Controllers\\HistoriqurController' => __DIR__ . '/../..' . '/app/Http/Controllers/HistoriqurController.php',
         'App\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
         'App\\Http\\Controllers\\NotificationController' => __DIR__ . '/../..' . '/app/Http/Controllers/NotificationController.php',
