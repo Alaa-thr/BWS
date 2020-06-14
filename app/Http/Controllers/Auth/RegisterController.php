@@ -40,20 +40,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-     public function redirectTo(){
-        if(Auth::user()->type_compte == "c"){
-                return RouteServiceProvider::CLIENT;
-        }
-        else if(Auth::user()->type_compte == "v"){
-               return RouteServiceProvider::VENDEUR;
-        }
-        else if(Auth::user()->type_compte == "e"){
-              return  RouteServiceProvider::EMPLOYEUR;
-        }
-        else if(Auth::user()->type_compte == "a"){
-              return  RouteServiceProvider::ADMIN;
-        }
-    }
+   
 
     /**
      * Create a new controller instance.
@@ -71,6 +58,20 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
+      public function redirectTo(){
+        if(Auth::user()->type_compte == "c"){
+                return RouteServiceProvider::CLIENT;
+        }
+        else if(Auth::user()->type_compte == "v"){
+               return RouteServiceProvider::VENDEUR;
+        }
+        else if(Auth::user()->type_compte == "e"){
+              return  RouteServiceProvider::EMPLOYEUR;
+        }
+        else if(Auth::user()->type_compte == "a"){
+              return  RouteServiceProvider::ADMIN;
+        }
+    } 
     protected function validator(array $data)
     {
         

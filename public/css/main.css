@@ -2083,7 +2083,7 @@ input.num-product::-webkit-inner-spin-button {
   height: 20px;
   padding: 0px 8px;
   top: -35px;
-  left: 50%;
+  left: 30%;
   -webkit-transform: translateX(-50%);
   -moz-transform: translateX(-50%);
   -ms-transform: translateX(-50%);
@@ -2169,7 +2169,7 @@ input.num-product::-webkit-inner-spin-button {
 
 .table-shopping-cart {
   border-collapse: collapse;
-  width: 100%;
+  width: 140%;
   min-width: 680px;
 }
 
@@ -2939,7 +2939,7 @@ input.num-product::-webkit-inner-spin-button {
 .bg8 {background-color: #f3f3f3;}
 .bg9 {background-color: rgba(255,255,255,0.9);}
 .bg10 {background-color: #db1313;}
-.bg11 {background-color: #13db45;}
+.bg11 {background-color: #13c940;}
 /*********************************************************************************************************/
 .bg-overlay1::before {
   content: "";

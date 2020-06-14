@@ -134,6 +134,8 @@ class ClientController extends Controller
         ->join('clients','clients.id', '=', 'commandes.client_id')
         ->join('imageproduits','imageproduits.produit_id', '=', 'commandes.produit_id')
         ->join('colors','colors.id', '=', 'commandes.couleur_id')
+        ->join('vendeurs','vendeurs.id', '=', 'commandes.vendeur_id')
+        ->select('colors.nom', 'imageproduits.produit_id', 'imageproduits.image', 'imageproduits.profile', 'clients.email', 'clients.codePostal', 'clients.numeroTelephone', 'clients.ville', 'produits.Libellé', 'produits.prix', 'produits.vendeur_id', 'commandes.*', 'vendeurs.Nom as nom_vendeur', 'vendeurs.Prenom as prenom_vendeur')
         ->select('colors.nom', 'imageproduits.produit_id', 'imageproduits.image', 'imageproduits.profile', 'clients.email', 'clients.codePostal', 'clients.numeroTelephone', 'clients.ville', 'produits.Libellé', 'produits.prix', 'produits.vendeur_id', 'commandes.*')
         ->where([['commandes.client_id', $clientCnncte->id],['commandes.id', $clientCnncte->nbr_cmd+1],['imageproduits.profile',1]])
         ->get();

@@ -1124,7 +1124,12 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
              $('.js-panel-cart').addClass('show-header-cart'); 
           
        }
+<<<<<<< HEAD
    </script>  
+=======
+   </script> 
+   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChnAfNPjSPo76qR3c9yR5IOWkA9BRlpf0"type="text/javascript"></script> 
+>>>>>>> c39093c6df55c2af659066241f4384f6a066669c
     <script src="<?php echo e(asset('vendor/animsition/js/animsition.min.js')); ?>"></script>
     <script src="<?php echo e(asset('vendor/bootstrap/js/popper.js')); ?>"></script>
     <script src="<?php echo e(asset('vendor/bootstrap/js/bootstrap.min.js')); ?>"></script>

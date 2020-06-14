@@ -22,7 +22,6 @@ class LoginController extends Controller
     */
 
     use AuthenticatesUsers;
-
     /**
      * Where to redirect users after login.
      *
@@ -36,18 +35,23 @@ class LoginController extends Controller
      * @return void
      */
     public function __construct()
-    {
-        
-        $this->middleware('guest')->except('logout');
-
+    {        
+        $this->middleware('guest')->except(['logout', 'logoutRegister']);
     }
+
     public function logout()
-    {
-        
+    {        
             Auth::logout();
             Session::flush();
-            return redirect('/accueil');
-        
+            return redirect('/accueil');       
+    }
+    
+    public function logoutRegister(){
+       //$typeCompte = Auth::user()->type_compte;
+            Auth::logout();
+            Session::flush();
+            return redirect('/register');
+     
     }
     protected function redirectTo()
     {

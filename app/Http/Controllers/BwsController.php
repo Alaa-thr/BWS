@@ -15,6 +15,7 @@ use App\Commande;
 use App\Email;
 use Auth;
 
+
 class BwsController extends Controller
 {
 
@@ -26,7 +27,10 @@ class BwsController extends Controller
 
      public function produitVisiteur()
     {
-        $produit = \DB::table('produits')->get();       
+        $produit = \DB::table('produits')
+         ->join('vendeurs','vendeurs.id', '=', 'produits.vendeur_id')
+         ->select('vendeurs.Nom', 'vendeurs.Prenom', 'produits.*')
+         ->get();       
         $imageproduit = \DB::table('imageproduits')->get();
         $color = \DB::table('colors')->join('color_produits', 'colors.id', '=', 'color_produits.color_id')->get();
         $taille = \DB::table('taille_produits')->get();
@@ -34,7 +38,7 @@ class BwsController extends Controller
         return view('shop',['produit'=>$produit, 'ImageP' => $imageproduit, 'color' => $color, 'typeLivraison' => $typeLivraison, 'taille' => $taille ]);
     }
 
-   
+    
 
      public function emploi()
     {
@@ -78,10 +82,6 @@ class BwsController extends Controller
         return view('article_detaille');
     }
 
-    public function panier_visiteur()
-    {
-        return view('panier_visiteur');
-    }
 
     public function get_ville(){
         $ville = Ville::all();

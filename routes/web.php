@@ -127,6 +127,7 @@ Route::get('/panier','ClientController@ProduitCommande')->name('panier');
 /*historique*/
 Route::get('/historiqueClient','HistoriqurController@get_historique_client')->name('historiqueClient');
 Route::delete('/deletehistorique/{id}','HistoriqurController@deleteHistorique');
+
 /*Notification*/
 Route::get('/notificationClient','NotificationController@get_notification_client')->name('notificationClient');
 Route::delete('/deletenotificationclient/{id}','NotificationController@deleteNotificationClient');

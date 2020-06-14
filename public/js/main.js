@@ -259,12 +259,22 @@
     [ +/- num product ]*/
     $('.btn-num-product-down').on('click', function(){
         var numProduct = Number($(this).next().val());
-        if(numProduct > 1) $(this).next().val(numProduct - 1);
+        if(numProduct >= 0){
+            if(numProduct == 0){
+                seletQte(null);
+            }
+            else{
+                $(this).next().val(numProduct - 1);
+                seletQte($(this).next().val(numProduct - 1)[0].value);
+            }
+            
+        }
     });
 
     $('.btn-num-product-up').on('click', function(){
         var numProduct = Number($(this).prev().val());
-        $(this).prev().val(numProduct + 1);
+            $(this).prev().val(numProduct + 1);
+            seletQte($(this).prev().val(numProduct + 1)[0].value);
     });
     /*==================================================================
     [ type livraison ]*/

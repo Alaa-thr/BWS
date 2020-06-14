@@ -7,18 +7,6 @@
 	</head>
 
 
-	<div class="container">
-		<div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
-			<a href="index.html" class="stext-109 cl8 hov-cl1 trans-04">
-				Accueil
-				<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
-			</a>
-
-			<span class="stext-109 cl4">
-				Shop
-			</span>
-		</div>
-	</div>
 
 	<!-- Product -->
 	<div class="bg0 m-t-23 p-b-140">
@@ -268,20 +256,20 @@
 							</div>
 
 							<div class="block2-txt-child2 flex-r p-t-3">
-								<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-									<img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON">
+								<a href="" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2" v-on:click="AjoutAuFavoris(produit.id)">
+									<img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON" >
 									<img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON">
 								</a>
 							</div>
 						</div>
 					</div>
 					<!-- Modal1 -->
-			<div class="wrap-modal1 js-modal1 p-t-60 p-b-20">
-			        <div class="overlay-modal1 js-hide-modal1"></div>
+			<div class="wrap-modal1 js-modal1 p-t-60 p-b-20" >
+			        <div class="overlay-modal1" v-on:click="CancelArticle()" ></div>
 
 			        <div class="container">
 			            <div class="bg0 p-t-60 p-b-30 p-lr-15-lg how-pos3-parent">
-			                <button class="how-pos3 hov3 trans-04 js-hide-modal1">
+			                <button class="how-pos3 hov3 trans-04 " v-on:click="CancelArticle()" >
 			                    <img src="images/icons/icon-close.png" alt="CLOSE">
 			                </button>
 
@@ -340,7 +328,11 @@
 			                            <p class="stext-102 cl3 p-t-23">
 			                                {{detaillproduit.description}}.
 			                            </p>
-			                            
+			                            <p class="stext-102 cl3 p-t-23 " >
+			                            	<span :data-toggle="!!detaillproduit.Nom ? 'tooltip' : false" data-html="true" :title="detaillproduit.Nom " >
+			                               Vendeur&nbsp:<b>&nbsp&nbsp{{detaillproduit.Nom}} &nbsp{{detaillproduit.Prenom}}</b>.</span>
+			                           		
+			                            </p>
 			                            <!--  -->
 			                            <div class="p-t-33">
 			                                <div v-show="tailleExiste" class="flex-w flex-r-m p-b-10">
@@ -350,10 +342,11 @@
 
 			                                    <div class="size-204 respon6-next">
 			                                        <div class="rs1-select2 bor8 bg0" :class="{'is-invalid' : message.taille}">
-			                                            <select class="form-control form-control-lg js-select2" name="t[]"  multiple v-on:change=" selectTaille('hello')" v-model="tale">
-			                                                <option  disabled>Choisir la taille</option>
+			                                            <select class="js-select2" name="t" onchange="selectTaille(this.options[this.selectedIndex].value)">
+			                                                <option value="0" disabled selected>Choisir la taille</option>
 			                                                <option v-for="taille in tailles" v-if="taille.produit_id  === detaillproduit.id" :value="taille.nom">{{taille.nom}}</option>
-			                                            </select>                                        
+			                                            </select>
+			                                                                                 
 			                                            <div class="dropDownSelect2"></div>
 			                                        </div>
 			                                        <span class=" cl13" v-if="message.taille" v-text="message.taille[0]"></span>
@@ -368,8 +361,8 @@
 
 			                                    <div class="size-204 respon6-next">
 			                                        <div class="rs1-select2 bor8 bg0"  :class="{'is-invalid' : message.couleur_id}">
-			                                            <select class="js-select2" name="c[]" v-model='clr' multiple>
-			                                                <option  selected disabled>Choisir la couleur</option>
+			                                            <select class="js-select2" name="c" onchange="selectColor(this.options[this.selectedIndex].value)">
+			                                                <option value="0" disabled selected="true">Choisir la couleur</option>
 			                                                <option v-for="color in colors" :value="color.color_id" v-if="color.produit_id === detaillproduit.id">{{color.nom}}</option>
 			                                            </select>
 			                                            <div class="dropDownSelect2"></div>
@@ -387,12 +380,12 @@
 
 			                                    <div class="size-204 respon6-next">
 			                                        <div class="rs1-select2 bor8 bg0" :class="{'is-invalid' : message.type_livraison}">
-			                                            <select class="js-select2" name="time" v-model="ajoutPanier.type_livraison" >
-			                                                <option selected disabled>Choisir le type de livraison</option>
+			                                            <select  class="js-select2" name="TL" onchange="selectLivraisen(this.options[this.selectedIndex].value)">
+			                                                <option value="0" selected disabled>Choisir le type de livraison</option>
 			                                                
-			                                                <option v-for="typeLivraison in typeLivraisons" :value="typeLivraison.id" v-if="typeLivraison.vendeur_id === detaillproduit.vendeur_id && typeLivraison.type_livraison === 'vc'">Le vendeur effectuer la livraison</option>
-			                                                <option v-for="typeLivraison in typeLivraisons" :value="typeLivraison.id" v-if="typeLivraison.vendeur_id === detaillproduit.vendeur_id && typeLivraison.type_livraison === 'cv'">Vous apportez votre produit</option>
-			                                                <option v-for="typeLivraison in typeLivraisons" :value="typeLivraison.id" v-if="typeLivraison.vendeur_id === detaillproduit.vendeur_id && typeLivraison.type_livraison === 'dhl'">DHL(Poste)</option>
+			                                                <option v-for="typeLivraison in typeLivraisons" value="vc" v-if="typeLivraison.vendeur_id === detaillproduit.vendeur_id && typeLivraison.type_livraison === 'vc'">Le vendeur effectuer la livraison</option>
+			                                                <option v-for="typeLivraison in typeLivraisons" value="cv" v-if="typeLivraison.vendeur_id === detaillproduit.vendeur_id && typeLivraison.type_livraison === 'cv'">Vous apportez votre produit</option>
+			                                                <option v-for="typeLivraison in typeLivraisons" value="dhl" v-if="typeLivraison.vendeur_id === detaillproduit.vendeur_id && typeLivraison.type_livraison === 'dhl'">DHL(Poste)</option>
 			                                            </select>
 			                                            <div class="dropDownSelect2"></div>
 			                                        </div>
@@ -402,22 +395,26 @@
 			    
 			                                <div class="flex-w flex-r-m p-b-10">
 			                                    <div class="size-204 flex-w flex-m respon6-next">
-			                                        <div class="wrap-num-product flex-w m-r-20 m-tb-10" :class="{'is-invalid' : message.qte}">
+			                                        <div class="wrap-num-product flex-w m-r-20 m-tb-15" :class="{'is-invalid' : message.qte}">
 			                                            <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
 			                                                <i class="fs-16 zmdi zmdi-minus"></i>
 			                                            </div>
 
-			                                            <input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product" value="1" v-model="ajoutPanier.qte" placeholder="0">
+			                                            <input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product" value="0" placeholder="0">
 
 			                                            <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
 			                                                <i class="fs-16 zmdi zmdi-plus"></i>
 			                                            </div>
-			                                        </div>
+			                                        </div >
 			                                        <span class="m-b-10 cl13" v-if="message.qte" v-text="message.qte[0]" style="margin-top: -10px"></span>
-
-			                                        <button class="flex-c-m stext-101 cl0 size-101 bg10 bor1 p-lr-15 trans-04" v-on:click="addPanier()">
-			                                            Add to cart
-			                                        </button>
+													<div class="flex-t">
+				                                        <button class="flex-c-m m-r-20 stext-102 cl0 size-102 bg11 bor1 p-lr-15 trans-04" v-on:click="addPanier()">
+				                                            Ajouter au panier
+				                                        </button>
+				                                        <button class="flex-c-m stext-102 cl0 size-102 bg10 bor1 p-lr-15 trans-04" v-on:click="CancelArticle()" >
+				                                            Annuler
+				                                        </button>
+			                                        </div>
 			                                    </div>
 			                                </div>  
 			                            </div>
@@ -443,10 +440,15 @@
 			</div>
 		</div>
 	</div>
+
+	
+
 	
 <?php $__env->stopSection(); ?>
 <?php $__env->startPush('javascripts'); ?>
+
 <script>
+	
         window.Laravel = <?php echo json_encode([
                "csrfToken"  => csrf_token(),
                'produit'        => $produit,
@@ -456,13 +458,17 @@
                'typeLivraison'         => $typeLivraison,
                "url"      => url("/")  
           ]); ?>;
+	
+
 </script>
 
 
 <script>
+
 	 var app1 = new Vue({
       el: '#app1',
       data:{
+      	msg: 'welcome',
       	produits: [],
       	imagesproduit:[],
       	colors: [],
@@ -472,43 +478,143 @@
       	ajoutPanier: {
       		vendeur_id: 0,
       		produit_id: 0,
-      		couleur_id: [],
+      		couleur_id: '',
       		qte: null,
       		type_livraison: '',
-      		taille: [],
+      		taille: '',
+      		prix: 0,
+      		tailExst : 0,
 
       	},
       	tailleExiste: false,
-      	tale: [],
-      	clr: [],
       	message: {},
+      	hideModel: false,
 
       },
       methods:{
-      	selectTaille: function(str){
-      		console.log('str '  , str);
-      		//this.ajoutPanier.taille.push(event.target.value);
+      	CancelArticle(){
+      		$('.js-modal1').removeClass('show-modal1');
+      		this.ajoutPanier= {
+			      		vendeur_id: 0,
+			      		produit_id: 0,
+			      		couleur_id: '',
+			      		qte: null,
+			      		type_livraison: '',
+			      		taille: '',
+			      		prix: 0,
+			      		tailExst : 0,
+
+			      	};
+			this.message= {};
+			 	
       	},
       	addPanier: function(){
-      		console.log('this.tale : '  , this.tale);
-      		//this.ajoutPanier.taille = this.tale;
-      		this.ajoutPanier.couleur_id = this.clr;
-      		console.log('this.ajoutPanier : '  , this.ajoutPanier);
       		axios.post(window.Laravel.url+'/addpanier',this.ajoutPanier)
               .then(response => {
-              	if(response.data.etat){
-                	console.log('response : '  , response.data);
-                }
+              	if(response.data.etat && !response.data.produitExister){
+              		Swal.fire(
+					  "L'ajout est fait avec success!",
+					  'Votre produit a bien ajouter a votre panier.',
+					  'success'
+					);
+              		$('.js-modal1').removeClass('show-modal1');
+              		this.ajoutPanier= {
+			      		vendeur_id: 0,
+			      		produit_id: 0,
+			      		couleur_id: '',
+			      		qte: null,
+			      		type_livraison: '',
+			      		taille: '',
+			      		prix: 0,
+			      		tailExst : 0,
+
+			      	};
+			      	this.message= {};
+			      	document.getElementByname("t").value = 0;
+			      	document.getElementByname("c").value = 0;
+			      	document.getElementByname("TL").value = 0;			      	
+              	}
+              	else if(response.data.etat && response.data.produitExister){
+              		$('.js-modal1').removeClass('show-modal1');
+              		this.ajoutPanier= {
+				      		vendeur_id: 0,
+				      		produit_id: 0,
+				      		couleur_id: '',
+				      		qte: null,
+				      		type_livraison: '',
+				      		taille: '',
+				      		prix: 0,
+				      		tailExst : 0,
+
+				      	};
+				    this.message= {};
+              		Swal.fire({
+					  icon: 'error',
+					  title: 'Oops...',
+					  text: 'Le produit est dija existé dans votre panier.',		  
+					});
+              	}
+                else if(!response.data.etat && response.data.cnncte){
+                	$('.js-modal1').removeClass('show-modal1');
+                	Swal.fire({
+					  icon: 'error',
+					  title: 'Oops...',
+					  text: 'Vous devez être connecté tent que Client pour ajouter ce produit au panier.',
+					  footer: '<form method="GET" action="<?php echo e(route("logoutregister")); ?>"><?php echo csrf_field(); ?><a href="<?php echo e(route("logoutregister")); ?>">Créer Compte</a></form>',
+					  showCancelButton: true,
+					  cancelButtonColor: '#d33',
+					  confirmButtonColor: '#13c940',
+					  confirmButtonText:
+					    'Se Connecter',
+					}).then((result) => {
+						if (result.value){							
+							axios.post(window.Laravel.url+'/logout')
+              				.then(response => {
+              						  window.location.href = '/accueil';
+              				})
+              				.catch(error => {console.log("error",error)})
+						}
+					 
+					});
+					
+            	}
+            	else if(!response.data.etat && !response.data.cnncte){
+            			$('.js-modal1').removeClass('show-modal1');
+            			Swal.fire({
+						  icon: 'error',
+						  title: 'Oops...',
+						  text: 'Vous devez être connecté tent que Client pour ajouter ce produit au panier.',
+						  footer: '<form method="GET" action="<?php echo e(route("logoutregister")); ?>"><?php echo csrf_field(); ?><a href="<?php echo e(route("logoutregister")); ?>">Créer Compte</a></form>',
+						  showCancelButton: true,
+					  	  cancelButtonColor: '#d33',
+						  confirmButtonColor: '#13c940',
+						  confirmButtonText:
+						    'Se Connecter',
+						}).then((result) => {
+							if (result.value){
+									$('.js-panel-connect').addClass('show-header-cart');
+							}
+							 
+						});
+            	}
                })
               .catch(error => {
+              	
                   this.message = error.response.data.errors;
                     console.log('errors :' , this.message);
+
+                
              })
       	},
       	detaillProduit:function(produit){
+      		
       		var position = this.produits.indexOf(produit);
       		var i = 0;
+      		this.ajoutPanier.vendeur_id = produit.vendeur_id;
+      		this.ajoutPanier.prix = produit.prix;
       		this.detaillproduit = this.produits[position];
+      		this.detaillproduit.Nom = this.detaillproduit.Nom.toUpperCase();
+      		this.detaillproduit.Prenom = this.detaillproduit.Prenom.toUpperCase();
       		this.ajoutPanier.produit_id = this.detaillproduit.id;
       		this.tailles.forEach(key => {
       			if(this.detaillproduit.id == key.produit_id ){
@@ -517,9 +623,11 @@
       		});
       		if(i != 0){
       		    this.tailleExiste = true;
+      		    app1.ajoutPanier.tailExst = 1;
       		}
       		else{
       			this.tailleExiste = false;
+      			app1.ajoutPanier.tailExst = 0;
       		}
       	},
       	 getProduit: function(){
@@ -530,23 +638,56 @@
                 this.colors = window.Laravel.color;
                 this.typeLivraisons = window.Laravel.typeLivraison;
                 this.tailles = window.Laravel.taille;
+                console.log("window.Laravel.produit",window.Laravel.produit);
                })
               .catch(error => {
                   console.log('errors : '  , error);
              })
           },
+          AjoutAuFavoris: function(id){//jebna l id ta3 l produit bach nzaftouh l la method AjoutAuFavoris di ra f controller clientController
+          	axios.post(window.Laravel.url+'/ajoutaufavoris/'+id)
+              .then(response => {
+                	console.log("response",response.data)
+               })
+              .catch(error => {
+                  console.log('errors : '  , error);
+             })
+          }
 
       },
       created:function(){
       	this.getProduit();
       }
   });
+  function selectTaille(taille){
+  	app1.ajoutPanier.taille = taille;
+  	     		
+  }
+  function selectColor(color){
+  	app1.ajoutPanier.couleur_id = color;     		
+  }
+  function selectLivraisen(livraisen){
+  	app1.ajoutPanier.type_livraison = livraisen;     		
+  }
+  function seletQte(qte){
+  	app1.ajoutPanier.qte = qte; 
+  }
+
+
 </script>
-<script>
-     
+<script type="text/javascript">
+	$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+});
+/*function myMap() {
+var mapProp= {
+  center:new google.maps.LatLng(51.508742,-0.120850),
+  zoom:5,
+};
+var map = new google.maps.Map(document.getElementById("adrrsse"),mapProp);
+}*/
 
 
-
-    </script>
+</script>
 <?php $__env->stopPush(); ?>
 <?php echo $__env->make('layouts.template_visiteur', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\BWS\resources\views/shop.blade.php ENDPATH**/ ?>
