@@ -1101,6 +1101,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     </script>
    <script>
        function connecterAvant(){
+        
             Swal.fire({
                           icon: 'error',
                           title: 'Oops...',
@@ -1120,10 +1121,11 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
        }
        function Estconnecter(){
 
-           
+             $('.js-panel-cart').addClass('show-header-cart'); 
           
        }
-   </script>  
+   </script> 
+   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChnAfNPjSPo76qR3c9yR5IOWkA9BRlpf0"type="text/javascript"></script> 
     <script src="<?php echo e(asset('vendor/animsition/js/animsition.min.js')); ?>"></script>
     <script src="<?php echo e(asset('vendor/bootstrap/js/popper.js')); ?>"></script>
     <script src="<?php echo e(asset('vendor/bootstrap/js/bootstrap.min.js')); ?>"></script>
@@ -1155,7 +1157,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         $('.js-addwish-b2').each(function(){
             var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
             $(this).on('click', function(){
-                swal(nameProduct, "is added to wishlist !", "success");
+                swal(nameProduct, "A été ajouté a votre liste de favoris.", "success");
 
                 $(this).addClass('js-addedwish-b2');
                 $(this).off('click');

@@ -127,6 +127,6 @@ Route::get('/panier','ClientController@ProduitCommande')->name('panier');
 Route::get('/historiqueClient','HistoriqurController@get_historique_client')->name('historiqueClient');
 Route::delete('/deletehistorique/{id}','HistoriqurController@deleteHistorique');
 
-
-
+/*Favoris*/
+Route::post('/ajoutaufavoris/{id}','ClientController@AjoutAuFavoris');
 

@@ -256,8 +256,8 @@
 							</div>
 
 							<div class="block2-txt-child2 flex-r p-t-3">
-								<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-									<img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON">
+								<a href="" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2" v-on:click="AjoutAuFavoris(produit.id)">
+									<img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON" >
 									<img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON">
 								</a>
 							</div>
@@ -328,7 +328,11 @@
 			                            <p class="stext-102 cl3 p-t-23">
 			                                {{detaillproduit.description}}.
 			                            </p>
-			                            
+			                            <p class="stext-102 cl3 p-t-23 " >
+			                            	<span :data-toggle="!!detaillproduit.Nom ? 'tooltip' : false" data-html="true" :title="detaillproduit.Nom " >
+			                               Vendeur&nbsp:<b>&nbsp&nbsp{{detaillproduit.Nom}} &nbsp{{detaillproduit.Prenom}}</b>.</span>
+			                           		
+			                            </p>
 			                            <!--  -->
 			                            <div class="p-t-33">
 			                                <div v-show="tailleExiste" class="flex-w flex-r-m p-b-10">
@@ -436,6 +440,9 @@
 			</div>
 		</div>
 	</div>
+
+	
+
 	
 <?php $__env->stopSection(); ?>
 <?php $__env->startPush('javascripts'); ?>
@@ -606,6 +613,8 @@
       		this.ajoutPanier.vendeur_id = produit.vendeur_id;
       		this.ajoutPanier.prix = produit.prix;
       		this.detaillproduit = this.produits[position];
+      		this.detaillproduit.Nom = this.detaillproduit.Nom.toUpperCase();
+      		this.detaillproduit.Prenom = this.detaillproduit.Prenom.toUpperCase();
       		this.ajoutPanier.produit_id = this.detaillproduit.id;
       		this.tailles.forEach(key => {
       			if(this.detaillproduit.id == key.produit_id ){
@@ -629,11 +638,21 @@
                 this.colors = window.Laravel.color;
                 this.typeLivraisons = window.Laravel.typeLivraison;
                 this.tailles = window.Laravel.taille;
+                console.log("window.Laravel.produit",window.Laravel.produit);
                })
               .catch(error => {
                   console.log('errors : '  , error);
              })
           },
+          AjoutAuFavoris: function(id){//jebna l id ta3 l produit bach nzaftouh l la method AjoutAuFavoris di ra f controller clientController
+          	axios.post(window.Laravel.url+'/ajoutaufavoris/'+id)
+              .then(response => {
+                	console.log("response",response.data)
+               })
+              .catch(error => {
+                  console.log('errors : '  , error);
+             })
+          }
 
       },
       created:function(){
@@ -653,7 +672,22 @@
   function seletQte(qte){
   	app1.ajoutPanier.qte = qte; 
   }
-</script>
 
+
+</script>
+<script type="text/javascript">
+	$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+});
+/*function myMap() {
+var mapProp= {
+  center:new google.maps.LatLng(51.508742,-0.120850),
+  zoom:5,
+};
+var map = new google.maps.Map(document.getElementById("adrrsse"),mapProp);
+}*/
+
+
+</script>
 <?php $__env->stopPush(); ?>
 <?php echo $__env->make('layouts.template_visiteur', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\BWS\resources\views/shop.blade.php ENDPATH**/ ?>

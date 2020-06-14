@@ -22,7 +22,10 @@ class BwsController extends Controller
 
      public function produitVisiteur()
     {
-        $produit = \DB::table('produits')->get();       
+        $produit = \DB::table('produits')
+         ->join('vendeurs','vendeurs.id', '=', 'produits.vendeur_id')
+         ->select('vendeurs.Nom', 'vendeurs.Prenom', 'produits.*')
+         ->get();       
         $imageproduit = \DB::table('imageproduits')->get();
         $color = \DB::table('colors')->join('color_produits', 'colors.id', '=', 'color_produits.color_id')->get();
         $taille = \DB::table('taille_produits')->get();
