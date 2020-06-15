@@ -96,14 +96,21 @@ Route::put('/updateProfilE/{id}','EmployeurController@update_profil');
 
 Route::get('/statistiquesVendeur', 'BwsController@statistiques_vendeur')->name('statistiquesVendeur');
 Route::get('/profilVendeur', 'VendeurController@profil_vendeur')->name('profilVendeur');
-Route::get('/commandeTraiterVendeur', 'BwsController@commande_traiter_vendeur')->name('commandeTraiterVendeur');
-Route::get('/commandeRecuVendeur', 'BwsController@commande_recu_vendeur')->name('commandeRecuVendeur');
 Route::put('/updateProfilV/{id}','VendeurController@update_profil');
 Route::get('/produitVendeur', 'VendeurController@getProduit')->name('produitVendeur');
 Route::post('/addproduit', 'VendeurController@addProduit');
 Route::get('/getAllsouscategories/{id}','VendeurController@getSousCategories');
 Route::get('/getAllcategories', 'VendeurController@getCategories');
 Route::get('/getAllcolor', 'VendeurController@getColors');
+/*commande reçu vendeur*/
+Route::get('/commandeRecuVendeur','VendeurController@get_commande_vendeur')->name('commandeRecuVendeur');
+Route::post('/detaillsacommandevendeur', 'VendeurController@detaillsacommandeVendeur'); 
+Route::delete('/deletecommandevendeur/{id}','VendeurController@deleteCommandeVendeur');
+
+/*commande traiter vendeur*/
+Route::get('/commandeTraiterVendeur','VendeurCommandeController@get_commande_traiter_vendeur')->name('commandeTraiterVendeur');
+Route::post('/detaillsacommandetraitervendeur', 'VendeurCommandeController@detaillsacommandeTraiterVendeur'); 
+Route::delete('/deletecommandetraitervendeur/{id}','VendeurCommandeController@deleteCommandeTraiterVendeur');
 
 /************************************************ Client***********************************************/
 Route::get('/profilClient','ClientController@profil_clinet')->name('profilClient');
