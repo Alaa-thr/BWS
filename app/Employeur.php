@@ -16,4 +16,9 @@ class Employeur extends Model
     {
         return $this->belongsTo('App\User');
     }
+
+    public function demande_emploie()
+    {
+        return $this->hasMany('App\Demande_emploie');
+    }
 }

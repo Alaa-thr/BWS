@@ -85,13 +85,19 @@ Route::delete('/deletenotification/{id}','AdminController@deleteNotif');
 
 /*********************************************** Employeur***********************************************/
 
-Route::get('/demandeEmploiRecu', 'BwsController@demande_emploi_reçu_employeur')->name('demandeEmploiRecu');
 Route::get('/profilEmployeur', 'EmployeurController@profil_employeur')->name('profilEmployeur');
 Route::get('/annonceEmploi', 'BwsController@annonce_emploi_employeur')->name('annonceEmploi');
-Route::get('/demandeEmploiTraite', 'BwsController@demande_emploi_traite_employeur')->name('demandeEmploiTraite');
 Route::put('/updateProfilE/{id}','EmployeurController@update_profil');
 
+/*Demande traiter*/
+Route::get('/demandeEmploiTraite','EmployeurController@get_commande_traiter_emplyeur')->name('demandeEmploiTraite');
+Route::post('/detaillsacommandetraiteremplyeur', 'EmployeurController@detaillsacommandeTraiterEmplyeur'); 
+Route::delete('/deletecommandetraiteremplyeur/{id}','EmployeurController@deleteCommandeTraiterEmployeur');
 
+/*Demande Reçu*/
+Route::get('/demandeEmploiRecu','EmployeurDemandeController@get_demande_reçu_emplyeur')->name('demandeEmploiRecu');
+Route::post('/detaillsdemandereçuemplyeur', 'EmployeurDemandeController@detaillsdemandeReçuEmplyeur'); 
+Route::delete('/deletedemandereçuemplyeur/{id}','EmployeurDemandeController@deleteDemandeReçuEmployeur');
 /************************************************ Vendeur***********************************************/
 
 Route::get('/statistiquesVendeur', 'BwsController@statistiques_vendeur')->name('statistiquesVendeur');
