@@ -31,15 +31,11 @@
     <script src="<?php echo e(asset('jss/vue.js')); ?>"></script>
     <script src="<?php echo e(asset('jss/axios.min.js')); ?>"></script>
     <script src="<?php echo e(asset('jss/sweetalert2.js')); ?>"></script>
-<<<<<<< HEAD
-   
-=======
 
 
 
 </script>
 
->>>>>>> c39093c6df55c2af659066241f4384f6a066669c
     
 
 </head>
@@ -1121,6 +1117,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
              $('.js-panel-cart').addClass('show-header-cart');
        }
    </script>  
+
    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChnAfNPjSPo76qR3c9yR5IOWkA9BRlpf0" type="text/javascript"></script>
     <script src="vendor/animsition/js/animsition.min.js"></script>
     <script src="vendor/bootstrap/js/popper.js"></script>

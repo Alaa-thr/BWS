@@ -348,7 +348,13 @@ var mapProp= {
 };
 var map = new google.maps.Map(document.getElementById("adrrsse"),mapProp);
 }*/
-
+Vue.directive('tooltip', function(el, binding){
+    $(el).tooltip({
+             title: binding.value,
+             placement: binding.arg,
+             trigger: 'hover'             
+         })
+})
 </script>
 <?php $__env->stopPush(); ?>
 <?php echo $__env->make('layouts.template_visiteur', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\BWS\resources\views/panier_visiteur.blade.php ENDPATH**/ ?>
