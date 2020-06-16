@@ -34,6 +34,7 @@ Route::get('/article_detaillé', 'BwsController@article_D')->name('article_D');
 Route::get('/getville', 'BwsController@get_ville');
 Route::get('/panierVisiteur', 'BwsController@panier_visiteur')->name('panierVisiteur');
 
+
 /************************************************ Admin***********************************************/
 
 Route::get('/admin', 'AdminController@admin_admin')->name('admin');
@@ -86,25 +87,38 @@ Route::put('/emailrependu/{id}','AdminController@emailRependu');
 
 /*********************************************** Employeur***********************************************/
 
-Route::get('/demandeEmploiRecu', 'BwsController@demande_emploi_reçu_employeur')->name('demandeEmploiRecu');
 Route::get('/profilEmployeur', 'EmployeurController@profil_employeur')->name('profilEmployeur');
 Route::get('/annonceEmploi', 'BwsController@annonce_emploi_employeur')->name('annonceEmploi');
-Route::get('/demandeEmploiTraite', 'BwsController@demande_emploi_traite_employeur')->name('demandeEmploiTraite');
 Route::put('/updateProfilE/{id}','EmployeurController@update_profil');
 
+/*Demande traiter*/
+Route::get('/demandeEmploiTraite','EmployeurController@get_commande_traiter_emplyeur')->name('demandeEmploiTraite');
+Route::post('/detaillsacommandetraiteremplyeur', 'EmployeurController@detaillsacommandeTraiterEmplyeur'); 
+Route::delete('/deletecommandetraiteremplyeur/{id}','EmployeurController@deleteCommandeTraiterEmployeur');
 
+/*Demande Reçu*/
+Route::get('/demandeEmploiRecu','EmployeurDemandeController@get_demande_reçu_emplyeur')->name('demandeEmploiRecu');
+Route::post('/detaillsdemandereçuemplyeur', 'EmployeurDemandeController@detaillsdemandeReçuEmplyeur'); 
+Route::delete('/deletedemandereçuemplyeur/{id}','EmployeurDemandeController@deleteDemandeReçuEmployeur');
 /************************************************ Vendeur***********************************************/
 
 Route::get('/statistiquesVendeur', 'BwsController@statistiques_vendeur')->name('statistiquesVendeur');
 Route::get('/profilVendeur', 'VendeurController@profil_vendeur')->name('profilVendeur');
-Route::get('/commandeTraiterVendeur', 'BwsController@commande_traiter_vendeur')->name('commandeTraiterVendeur');
-Route::get('/commandeRecuVendeur', 'BwsController@commande_recu_vendeur')->name('commandeRecuVendeur');
 Route::put('/updateProfilV/{id}','VendeurController@update_profil');
 Route::get('/produitVendeur', 'VendeurController@getProduit')->name('produitVendeur');
 Route::post('/addproduit', 'VendeurController@addProduit');
 Route::get('/getAllsouscategories/{id}','VendeurController@getSousCategories');
 Route::get('/getAllcategories', 'VendeurController@getCategories');
 Route::get('/getAllcolor', 'VendeurController@getColors');
+/*commande reçu vendeur*/
+Route::get('/commandeRecuVendeur','VendeurController@get_commande_vendeur')->name('commandeRecuVendeur');
+Route::post('/detaillsacommandevendeur', 'VendeurController@detaillsacommandeVendeur'); 
+Route::delete('/deletecommandevendeur/{id}','VendeurController@deleteCommandeVendeur');
+
+/*commande traiter vendeur*/
+Route::get('/commandeTraiterVendeur','VendeurCommandeController@get_commande_traiter_vendeur')->name('commandeTraiterVendeur');
+Route::post('/detaillsacommandetraitervendeur', 'VendeurCommandeController@detaillsacommandeTraiterVendeur'); 
+Route::delete('/deletecommandetraitervendeur/{id}','VendeurCommandeController@deleteCommandeTraiterVendeur');
 
 /************************************************ Client***********************************************/
 Route::get('/profilClient','ClientController@profil_clinet')->name('profilClient');
@@ -135,5 +149,6 @@ Route::delete('/deletenotificationclient/{id}','NotificationController@deleteNot
 /*Favoris*/
 Route::post('/ajoutaufavoris/{id}','ClientController@AjoutAuFavoris');
 Route::get('/favorisClient','FavorisController@get_favoris_client')->name('favorisClient');
-Route::delete('/deletefavorisclient/{id}','FavorisController@deleteFavorisClient');
+Route::delete('/deletefavorisclient/{id}','FavorisController@deletefavorisClient');
+
 

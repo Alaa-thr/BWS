@@ -32,7 +32,7 @@
             $stripeProfil=$stripeDmnd=$stripeCmd=$stripeNotif=$stripePanier=$stripeHisto=$stripeFavoris='';
                 
             $urlAcctuiel = Route::getCurrentRoute()->uri();
-            if($urlAcctuiel == 'panierClient'){
+            if($urlAcctuiel == 'panier'){
                 $stripePanier='active';
             }
             else if($urlAcctuiel == 'profilClient'){
@@ -602,11 +602,11 @@
                     </div>
 
                     <div class="header-cart-buttons flex-w w-full">
-                        <a href="shoping-cart.html" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+                        <a href="{{route('panier')}}" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
                             View Cart
                         </a>
 
-                        <a href="shoping-cart.html" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
+                        <a href="{{route('panier')}}" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
                             Check Out
                         </a>
                     </div>
@@ -634,7 +634,7 @@
          </a>
        </li>
        <li class="<?php echo $stripePanier ?>" >
-         <a href="{{route('panierVisiteur')}}">
+         <a href="{{route('panier')}}">
            <i class="now-ui-icons shopping_cart-simple" id="y"></i>
            <div class="m-t-5" id="x">Panier</div>
          </a>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Vendeur;
+use App\Client;
 use App\User;
 use App\Produit;
 use App\Imageproduit;
@@ -174,6 +175,26 @@ class VendeurController extends Controller
                 return Response()->json(['etat' => true,'produitAjout' => $produit,'imageProduitAjout' => $imageproduit]);
     }
 
+
+    public function get_commande_vendeur(){
+        $c = Vendeur::find(Auth::user()->id);
+        $article = \DB::table('commandes')->where('vendeur_id', $c->id)->orderBy('created_at','desc')->paginate(5);
+        $employeur = \DB::table('clients')->get(); 
+        $produit = \DB::table('produits')->get(); 
+
+        
+        return view('commande_recu_vendeur',['article'=>$article, 'idAdmin' => $c->id,'emploC' => $employeur,'prV' => $produit]);
+    } 
+    public function detaillsacommandeVendeur(Request $request){
+        $commande_detaills = \DB::table('commandes')->where('id', $request->idA)->get();
+        return  $commande_detaills;
+    }
+
+    public function deleteCommandeVendeur($id){
+        $commande = Commande::find($id);
+        $commande->delete();
+        return Response()->json(['etat' => true]);
+    }
 
 
 }
