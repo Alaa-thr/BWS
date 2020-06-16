@@ -19,6 +19,10 @@ class Sous_categorie extends Model
     {
         return $this->hasMany('App\Produit');
     }
+    public function annonce_emploie()
+    {
+        return $this->hasMany('App\Annonce_emploie');
+    }
       
 
 }

@@ -80,9 +80,22 @@ Route::post('/addadmin','AdminController@addAdmin');
 
 Route::get('/demandeEmploiRecu', 'BwsController@demande_emploi_reçu_employeur')->name('demandeEmploiRecu');
 Route::get('/profilEmployeur', 'EmployeurController@profil_employeur')->name('profilEmployeur');
-Route::get('/annonceEmploi', 'BwsController@annonce_emploi_employeur')->name('annonceEmploi');
+Route::get('/annonceEmploi', 'EmployeurController@annonce_emploi')->name('annonceEmploi');
 Route::get('/demandeEmploiTraite', 'BwsController@demande_emploi_traite_employeur')->name('demandeEmploiTraite');
 Route::put('/updateProfilE/{id}','EmployeurController@update_profil');
+Route::post('/addannonce', 'EmployeurController@addAnnonce');
+Route::post('/detaillsannonces', 'EmployeurController@detaillsAnnonce');
+Route::put('/updateannonce','EmployeurController@updateAnnonceButton');
+Route::delete('/deleteannonce/{id}','EmployeurController@deleteAnnonce');
+Route::get('/getAllSouscategories/{id}','EmployeurController@getSousCategories');
+Route::get('/getAllCategories', 'EmployeurController@getCategories');
+Route::get('/annoncesemploi', 'EmployeurController@annonce_emploi');
+Route::post('/detaillsdemandereçu', 'DemandeReçuController@detaillsDemandeReçu');
+Route::delete('/deletedemandereçu/{id}','DemandeReçuController@deleteDemandeReçu');
+Route::get('/demandeemploireçu', 'DemandeReçuController@demandeReçu')->name('DemmandeEmploieReçu');
+
+
+
 
 
 /************************************************ Vendeur***********************************************/
