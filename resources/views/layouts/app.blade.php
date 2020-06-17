@@ -35,7 +35,9 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/util.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/main.css')}}">
  
-  
+   <script src="{{ asset('jss/vue.js') }}"></script>
+    <script src="{{asset('jss/axios.min.js')}}"></script>
+    <script src="{{asset('jss/sweetalert2.js')}}"></script>
 
     
 
@@ -96,7 +98,7 @@
         <!-- Header desktop -->
         <?php
 
-                $stripeAccueil=$stripeShop=$stripeEmploi=$stripeArticle=$stripeAPropos=$stripeContact='';
+                $stripeAccueil=$stripeShop=$stripeEmploi=$stripeArticle=$stripeAPropos=$stripeContact=$stripePanier='';
                 
                 $urlAcctuiel = Route::getCurrentRoute()->uri();
                 if($urlAcctuiel == 'accueil' || $urlAcctuiel == '/'){
@@ -403,10 +405,15 @@
                             <i class="zmdi zmdi-search"></i>
                         </div>
 
-                        <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11  js-show-cart" >
+                        @guest
+                        <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-22 <?php echo $stripePanier ?>" onclick="connecterAvant()" >
                             <i class="zmdi zmdi-shopping-cart"></i>
-                        
                         </div>
+                        @else
+                            <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-22   <?php echo $stripePanier ?>" onclick="Estconnecter()" >
+                                <i class="zmdi zmdi-shopping-cart"></i>
+                            </div>
+                        @endguest
                         
                         @guest
                             
@@ -464,9 +471,15 @@
                     <i class="zmdi zmdi-search"></i>
                 </div>
 
-                <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-22  js-show-cart" >
-                    <i class="zmdi zmdi-shopping-cart"></i>
-                </div>
+                @guest
+                    <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-22 <?php echo $stripePanier ?>" onclick="connecterAvant()" >
+                            <i class="zmdi zmdi-shopping-cart"></i>
+                    </div>
+                @else
+                    <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-22   <?php echo $stripePanier ?>" onclick="Estconnecter()" >
+                            <i class="zmdi zmdi-shopping-cart"></i>
+                    </div>
+                @endguest
 
                 @guest
                             
@@ -589,7 +602,7 @@
         </div>
 
 <!--Cart Connect--><!--**************************************************************************-->
-    <div class="wrap-header-cart js-panel-connect">
+    <div class="wrap-header-cart js-panel-connect" id="app3">
         <div class="s-full js-hide-connect"></div>
 
         <div class="header-cart flex-col-l p-l-40 p-r-25">
@@ -605,8 +618,8 @@
             <div class="splash-container js-pscroll" >
                 <div class="card " >
                     <div class="card-header">
-                        <a href="index.html" class="logo p-l-50" >
-                            <img src="{{ asset('images/icons/LogoFinal2.png')}}" alt="IMG-LOGO" >
+                        <a href="{{route('accueil')}}" class="logo p-l-50" >
+                            <img src="images/icons/LogoFinal2.png" alt="IMG-LOGO" />
                         </a>
                         <span class="splash-description">Please enter your user information.</span>
                     </div>
@@ -615,7 +628,7 @@
                             @csrf
                             <div class="form-group">
                                 <input class="form-control form-control-lg
-                                {{ $errors->has('email') || $errors->has('numTelephone') ? ' is-invalid' : '' }}" name="numTelephone" value="{{ old('numTelephone') }}" type="text" placeholder="Email ou Telephone"  id="numTelephone">
+                                {{ $errors->has('email') || $errors->has('numTelephone') ? ' is-invalid' : '' }}" name="numTelephone" value="{{ old('numTelephone') }}" type="text" placeholder="Email ou Telephone"  id="numTelephone" v-on:keyup='Connect()'>
                                 
                                 @error('numTelephone')
                                     <span class="invalid-feedback" role="alert">
@@ -640,11 +653,30 @@
                                 @enderror
 
                             </div>
+                            <div class="form-group m-t--10 " v-if="hideSelect">
+                                <span class="stext-109">Vous avez 2 compte avec ce "@{{ eventss.value}}" :</span>
+                                <select class="form-control form-control-lg @error('type_compte') is-invalid @enderror stext-104 m-t-5" id="type_compte"  name="type_compte"   style="height: 45px" value="{{ old('type_compte') }}">
+
+                                    <option value="0" disabled selected >Souhaitez vous connecter avec</option>
+                                    <option v-for="typ in types" value="c" v-if="typ === 'c'">Compte Client</option>
+                                    <option v-for="typ in types" value="v" v-if="typ === 'v'">Compte Vendeur</option>
+                                    <option v-for="typ in types" value="e" v-if="typ === 'e'">Compte Employeur</option>
+                                    <option v-for="typ in types" value="a" v-if="typ === 'a'">Compte Admin</option>
+
+                                </select>
+
+                                @error('type_compte')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+
+                            </div>
                             <div class=" custom-checkbox p-b-10">
                                     <input type="checkbox" class="custom-control-input" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
                                     <label class="custom-control-label p-t-4 p-l-24 " for="remember">Remeber me</label>
                             </div>
-                            <button type="submit" class="btn-lg btn-block bg10 cl0">Connexion</button>
+                            <button type="submit" class="btn-lg btn-block bg10 cl0" >Connexion</button>
                         
                     </div>
                     <div class="card-footer" >
@@ -675,7 +707,7 @@
 
 <!--**********************************************************************************************-->
     <!-- Cart -->
-    <div class="wrap-header-cart js-panel-cart">
+    <div class="wrap-header-cart js-panel-cart" >
         <div class="s-full js-hide-cart"></div>
         
         <div class="header-cart flex-col-l p-l-55 p-r-25">
@@ -748,7 +780,7 @@
                     </div>
 
                     <div class="header-cart-buttons flex-w w-full">
-                        <a href="shoping-cart.html" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+                        <a href="{{route('panier')}}" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
                             View Cart
                         </a>
 
@@ -890,161 +922,94 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     </div>
 
  <!-- Modal1 -->
-    <div class="wrap-modal1 js-modal1 p-t-60 p-b-20">
-        <div class="overlay-modal1 js-hide-modal1"></div>
-
-        <div class="container">
-            <div class="bg0 p-t-60 p-b-30 p-lr-15-lg how-pos3-parent">
-                <button class="how-pos3 hov3 trans-04 js-hide-modal1">
-                    <img src="{{ asset('images/icons/icon-close.png')}}" alt="CLOSE">
-                </button>
-
-                <div class="row">
-                    <div class="col-md-6 col-lg-7 p-b-30">
-                        <div class="p-l-25 p-r-30 p-lr-0-lg">
-                            <div class="wrap-slick3 flex-sb flex-w">
-                                <div class="wrap-slick3-dots"></div>
-                                <div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
-
-                                <div class="slick3 gallery-lb">
-                                    <div class="item-slick3" data-thumb="images/product-detail-01.jpg">
-                                        <div class="wrap-pic-w pos-relative">
-                                            <img src="{{ asset('images/product-detail-01.jpg')}}" alt="IMG-PRODUCT">
-
-                                            <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="images/product-detail-01.jpg">
-                                                <i class="fa fa-expand"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-
-                                    <div class="item-slick3" data-thumb="images/product-detail-02.jpg">
-                                        <div class="wrap-pic-w pos-relative">
-                                            <img src="{{ asset('images/product-detail-02.jpg')}}" alt="IMG-PRODUCT">
-
-                                            <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="images/product-detail-02.jpg">
-                                                <i class="fa fa-expand"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-
-                                    <div class="item-slick3" data-thumb="images/product-detail-03.jpg">
-                                        <div class="wrap-pic-w pos-relative">
-                                            <img src="{{ asset('images/product-detail-03.jpg')}}" alt="IMG-PRODUCT">
-
-                                            <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="images/product-detail-03.jpg">
-                                                <i class="fa fa-expand"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-6 col-lg-5 p-b-30">
-                        <div class="p-r-50 p-t-5 p-lr-0-lg">
-                            <h4 class="mtext-105 cl2 js-name-detail p-b-14">
-                                Lightweight Jacket
-                            </h4>
-
-                            <span class="mtext-106 cl2">
-                                $58.79
-                            </span>
-
-                            <p class="stext-102 cl3 p-t-23">
-                                Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus ligula. Mauris consequat ornare feugiat.
-                            </p>
-                            
-                            <!--  -->
-                            <div class="p-t-33">
-                                <div class="flex-w flex-r-m p-b-10">
-                                    <div class="size-203 flex-c-m respon6">
-                                        Size
-                                    </div>
-
-                                    <div class="size-204 respon6-next">
-                                        <div class="rs1-select2 bor8 bg0">
-                                            <select class="js-select2" name="time">
-                                                <option>Choose an option</option>
-                                                <option>Size S</option>
-                                                <option>Size M</option>
-                                                <option>Size L</option>
-                                                <option>Size XL</option>
-                                            </select>
-                                            <div class="dropDownSelect2"></div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="flex-w flex-r-m p-b-10">
-                                    <div class="size-203 flex-c-m respon6">
-                                        Color
-                                    </div>
-
-                                    <div class="size-204 respon6-next">
-                                        <div class="rs1-select2 bor8 bg0">
-                                            <select class="js-select2" name="time">
-                                                <option>Choose an option</option>
-                                                <option>Red</option>
-                                                <option>Blue</option>
-                                                <option>White</option>
-                                                <option>Grey</option>
-                                            </select>
-                                            <div class="dropDownSelect2"></div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!--  -->
-                            
-                                <div class="flex-w flex-r-m p-b-10">
-                                    <div class="size-203 flex-c-m respon6">
-                                        Type Livraison
-                                    </div>
-
-                                    <div class="size-204 respon6-next">
-                                        <div class="rs1-select2 bor8 bg0">
-                                            <select class="js-select2" name="time">
-                                                <option>Choose an option</option>
-                                                <option value="1">DHL / 36.00 DA</option>
-                                                <option value="2">Vendeure / 142.50 DA</option>
-                                                <option value="3">Client / 142.50 DA</option>
-                                            </select>
-                                            <div class="dropDownSelect2"></div>
-                                        </div>
-                                    </div>
-                                </div>
-    
-                                <div class="flex-w flex-r-m p-b-10">
-                                    <div class="size-204 flex-w flex-m respon6-next">
-                                        <div class="wrap-num-product flex-w m-r-20 m-tb-10">
-                                            <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-                                                <i class="fs-16 zmdi zmdi-minus"></i>
-                                            </div>
-
-                                            <input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product" value="1">
-
-                                            <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-                                                <i class="fs-16 zmdi zmdi-plus"></i>
-                                            </div>
-                                        </div>
-
-                                        <button class="flex-c-m stext-101 cl0 size-101 bg10 bor1 p-lr-15 trans-04 js-addcart-detail">
-                                            Add to cart
-                                        </button>
-                                    </div>
-                                </div>  
-                            </div>
-                            
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+   
     @stack('javascript')
-   <!--<script src="vendor/jquery/jquery-3.2.1.min.js"></script>-->  
+   <!--<script src="vendor/jquery/jquery-3.2.1.min.js"></script>--> 
+   <script>
+    
+        window.Laravel = {!! json_encode([
+               "csrfToken"  => csrf_token(),
+               "url"      => url("/")  
+          ]) !!};
+    
+
+    </script>
+   <script>
+       var app3 = new Vue({
+         el : "#app3",
+         data:{
+            timer: null,
+            eventss: {
+                value: '',
+            },
+            hideSelect: false,
+            types: [],
+         },
+         methods:{
+            Connect: function(){
+
+                clearTimeout(this.timer); 
+                this.timer = setTimeout(function () {
+
+                        app3.eventss.value = document.getElementById('numTelephone').value;
+                        axios.post(window.Laravel.url+"/getconnect",app3.eventss)
+                        .then(response => {
+                            if(response.data.etat ){
+                                app3.hideSelect = true;
+                                app3.types = response.data.typeCompte;
+                                console.log("true",response)
+                                
+                            }
+                            else{
+                                app3.hideSelect = false;
+                                console.log("false",response)
+                            }
+                            
+
+                        })
+                        .catch(error =>{
+                            console.log("errors",error)
+                        })
+                        
+                        
+                     }, 1000)
+                
+            },
+            showww(t){
+                console.log('t',t);
+            }
+         }
+       })
+       function connecterAvant(){
+        
+            Swal.fire({
+                          icon: 'error',
+                          title: 'Oops...',
+                          text: 'Vous devez être connecté tent que Client pour pouvez accedé a votre panier.',
+                          footer: '<form method="GET" action="{{ route("logoutregister") }}">@csrf<a href="{{ route("logoutregister") }}">Créer Compte</a></form>',
+                          showCancelButton: true,
+                          cancelButtonColor: '#d33',
+                          confirmButtonColor: '#13c940',
+                          confirmButtonText:
+                            'Se Connecter',
+            }).then((result) => {
+                if (result.value){
+                    $('.js-panel-connect').addClass('show-header-cart');
+                }
+                             
+            });
+       }
+       function Estconnecter(){
+
+             $('.js-panel-cart').addClass('show-header-cart'); 
+          
+       }
+
+   </script> 
+   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChnAfNPjSPo76qR3c9yR5IOWkA9BRlpf0"type="text/javascript"></script> 
+
+
+
     <script src="{{ asset('vendor/animsition/js/animsition.min.js')}}"></script>
     <script src="{{ asset('vendor/bootstrap/js/popper.js')}}"></script>
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.min.js')}}"></script>
@@ -1066,7 +1031,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <script>
         $('.parallax100').parallax100();
     </script>
-    <script src="vendor/isotope/isotope.pkgd.min.js')}}"></script>
+    <script src="{{ asset('vendor/isotope/isotope.pkgd.min.js')}}"></script>
     <script src="{{ asset('vendor/sweetalert/sweetalert.min.js')}}"></script>
     <script>
         $('.js-addwish-b2').on('click', function(e){
@@ -1076,7 +1041,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         $('.js-addwish-b2').each(function(){
             var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
             $(this).on('click', function(){
-                swal(nameProduct, "is added to wishlist !", "success");
+                swal(nameProduct, "A été ajouté a votre liste de favoris.", "success");
 
                 $(this).addClass('js-addedwish-b2');
                 $(this).off('click');

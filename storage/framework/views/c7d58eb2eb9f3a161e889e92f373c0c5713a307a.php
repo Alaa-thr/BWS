@@ -25,7 +25,6 @@
   <script src="<?php echo e(asset('jss/vue.js')); ?>"></script>
   <script src="<?php echo e(asset('jss/axios.min.js')); ?>"></script>
   <script src="<?php echo e(asset('jss/sweetalert2.js')); ?>"></script>
-  
    <?php
 
             $stripeProfil=$stripeDmnd=$stripeCmd=$stripeNotif=$stripePanier=$stripeHisto=$stripeFavoris='';
@@ -367,7 +366,7 @@
                             
                          <?php if(auth()->guard()->guest()): ?>
                             
-                            <div class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-22 js-show-connect">
+                            <div class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-22 js-show-connect" id="connectCart">
                                 <i class="zmdi zmdi-account"></i>
                              </div>
                         <?php else: ?>
@@ -680,6 +679,7 @@
             
             <?php echo $__env->yieldContent('content'); ?>
             <div>
+            
   <footer class="bg3 p-t-75 p-b-32 ">
     <div class="container">
       <div class="row">

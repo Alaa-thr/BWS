@@ -3976,6 +3976,7 @@ background-color: chartreuse;
 	padding-top: 25px;
 	padding-bottom: 15px;
   }
+   
   
   .table-shopping-cart td {
 	font-family: Poppins-Regular;
@@ -3984,3 +3985,23 @@ background-color: chartreuse;
   }
   #in{
 float: right;  }
+
+#hmd{
+
+	margin-top: -79px;
+   padding-top: -12px;
+   margin-bottom: -10px;
+}
+#hmdd{
+	margin-top: -49px;
+   padding-top: -12px;
+   margin-bottom: -10px;
+}
+
+
+#fav{
+	margin-top: -70px;
+	padding-top: 12px;
+	margin-bottom: 20px;
+	 
+}

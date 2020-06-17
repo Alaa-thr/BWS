@@ -23,15 +23,14 @@
   <link href="assetsClient/css/main.css" rel="stylesheet" />
   <link rel="stylesheet" type="text/css" href="assetsClient/fonts/linearicons-v1.0.0/icon-font.min.css">
   <script src="{{ asset('jss/vue.js') }}"></script>
-  <script src="{{ asset('jss/axios.min.js')}}"></script>
-  <script src="{{ asset('jss/sweetalert2.js')}}"></script>
-  
+  <script src="{{asset('jss/axios.min.js')}}"></script>
+  <script src="{{asset('jss/sweetalert2.js')}}"></script>
    <?php
 
             $stripeProfil=$stripeDmnd=$stripeCmd=$stripeNotif=$stripePanier=$stripeHisto=$stripeFavoris='';
                 
             $urlAcctuiel = Route::getCurrentRoute()->uri();
-            if($urlAcctuiel == 'panierClient'){
+            if($urlAcctuiel == 'panier'){
                 $stripePanier='active';
             }
             else if($urlAcctuiel == 'profilClient'){
@@ -367,7 +366,7 @@
                             
                          @guest
                             
-                            <div class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-22 js-show-connect">
+                            <div class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-22 js-show-connect" id="connectCart">
                                 <i class="zmdi zmdi-account"></i>
                              </div>
                         @else
@@ -601,11 +600,11 @@
                     </div>
 
                     <div class="header-cart-buttons flex-w w-full">
-                        <a href="shoping-cart.html" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+                        <a href="{{route('panier')}}" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
                             View Cart
                         </a>
 
-                        <a href="shoping-cart.html" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
+                        <a href="{{route('panier')}}" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
                             Check Out
                         </a>
                     </div>
@@ -633,7 +632,7 @@
          </a>
        </li>
        <li class="<?php echo $stripePanier ?>" >
-         <a href="{{route('panierVisiteur')}}">
+         <a href="{{route('panier')}}">
            <i class="now-ui-icons shopping_cart-simple" id="y"></i>
            <div class="m-t-5" id="x">Panier</div>
          </a>
@@ -679,6 +678,7 @@
             
             @yield('content')
             <div>
+            
   <footer class="bg3 p-t-75 p-b-32 ">
     <div class="container">
       <div class="row">

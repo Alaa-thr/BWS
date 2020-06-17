@@ -24,15 +24,15 @@
                   
                   <div class="row">
                     <div class="col-md-4">
-                      <select  class="form-control" onchange="window.location.href=this.value" style="margin-left: 470px; margin-top: -45px; border-radius: 0.8em; width: 230px; height: 40px;">
+                      <select  class="form-control" onchange="window.location.href=this.value" style="margin-left: 450px; margin-top: -45px; border-radius: 0.8em; width: 230px; height: 40px; cursor: pointer;">
                       <option value="0" selected disabled>Choisie le type de Categories :</option>
                       <option value="shopCategories">Shop Categories</option>
                       <option value="emploiCategories">Emploi Categories</option>
                     </select>
-                      <button v-if="suppr" class="btn btn-sm btn-danger  btn-block" style="margin-left: 710px; margin-top: -40px; border-radius: 0.8em; width: 150px; height: 40px; "  v-on:click="deleteArrayCategorie()"><b>supprimer</b></button>
-                      <button v-if="suppr" class="btn btn-sm btn-warning btn-block" style="margin-left: 868px; margin-top: -50px; border-radius: 0.8em; width: 150px; height: 40px; " v-on:click="AnnulerSel" ><b>Annuler</b></button>
+                      <button v-if="suppr" class="btn btn-sm btn-danger  btn-block" style="margin-left: 700px; margin-top: -40px; border-radius: 0.8em; width: 130px; height: 40px; "  v-on:click="deleteArrayCategorie()"><b>supprimer</b></button>
+                      <button v-if="suppr" class="btn btn-sm btn-warning btn-block" style="margin-left: 850px; margin-top: -50px; border-radius: 0.8em; width: 130px; height: 40px; " v-on:click="AnnulerSel" ><b>Annuler</b></button>
 
-                      <button v-else class="btn btn-sm   btn-block" style="margin-left: 790px; margin-top: -40px; border-radius: 0.8em; background-color: #00CED1; width: 230px; height: 40px; " v-on:click="ajouterCategorie" ><b>Ajouter une Catégorie</b></button>
+                      <button v-else class="btn btn-sm   btn-block" style="margin-left: 730px; margin-top: -40px; border-radius: 0.8em; background-color: #00CED1; width: 230px; height: 40px; " v-on:click="ajouterCategorie" ><b>Ajouter une Catégorie</b></button>
                     </div>
                   </div>
                 
@@ -454,6 +454,21 @@
                     libelle :'',
                   };
                 }
+                else{
+                  this.SousCategoAjout = response.data.sousCategorieAjout;
+                  this.SousCategoAjout.id = response.data.sousCategorieAjout.id;
+                  this.sousCategories.unshift(this.SousCategoAjout);
+
+                  var position = this.sousCategoriesNull.indexOf(response.data.sousCategorieAjout);
+                  this.sousCategoriesNull.splice(position,1);
+                  this.open2 = false;
+                  this.message = {};
+                  this.SousCategoAjout={
+                    id: 0,
+                    categorie_id:0 ,
+                    libelle :'',
+                  };
+                }
                })
               .catch(error => {
                   this.message = error.response.data.errors;
@@ -500,7 +515,7 @@
                         axios.delete(window.Laravel.url+'/deletesouscategorie/'+key.id) 
                            .then(response =>{
                                if(response.data.etat){
-                                   window.location.reload();    
+                                       
                                    var position = this.sousCategories.indexOf(key);
                                    this.sousCategories.splice(position,1);
                                    this.suppr2 = false;   
@@ -542,7 +557,7 @@
                     axios.delete(window.Laravel.url+'/deletesouscategorie/'+key.id) 
                        .then(response =>{
                            if(response.data.etat){
-                               window.location.reload();    
+                                  
                                var position = this.sousCategories.indexOf(key);
                                this.sousCategories.splice(position,1);
                                this.suppr2 = false;   
@@ -570,7 +585,7 @@
             
       },
       getCategories:function(){
-             axios.get(window.Laravel.url+'/categoriesAdmin')
+             axios.get(window.Laravel.url+'/categories')
              .then(response => {
                   this.categories = window.Laravel.categorie.data;
                   if(window.Laravel.var == 1){
@@ -614,9 +629,9 @@
                         axios.delete(window.Laravel.url+'/deletecategorie/'+key.id)
                           .then(response => {
                             if(response.data.etat){
-                                     window.location.reload();             
-                                      var position = this.categories.indexOf(key);
-                                      this.categories.splice(position,1);      
+                                    window.location.reload();             
+                                    var position = this.categories.indexOf(key);
+                                    this.categories.splice(position,1);      
                             }                    
                           })
                           .catch(error =>{
@@ -771,7 +786,7 @@
                      })
                     Swal.fire(
                       'Effacé!',
-                      'Votre Sous-Categorie a été supprimé.',
+                      'Votre Categorie a été supprimé.',
                       'success'
                     )
                   }

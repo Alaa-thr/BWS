@@ -38,12 +38,12 @@
               
                <div class="row m-b-10" v-for="articlea in articlesadmin" >
                   <div v-if="selectall">
-                    <input type="checkbox" :id="articlea.id" :value="articlea.id" v-model="checkedArticles" @change="changeButton(articlea)">
-                    <label :for="articlea.id" style="margin-top: 40px; margin-left: 10px;"></label>
+                    <input type="checkbox" :id="articlea.id" :value="articlea.id" v-model="checkedArticles" @change="changeButton(articlea)" >
+                    <label :for="articlea.id" style="margin-top: 40px; margin-left: 18px;"></label>
                   </div>
                   <div v-else>
                     <input type="checkbox" :id="articlea.id" :value="articlea.id" v-model="articleIds" @click="deselectArticle(articlea.id)">
-                    <label :for="articlea.id" style="margin-top: 40px; margin-left: 10px;"></label>
+                    <label :for="articlea.id" style="margin-top: 40px; margin-left: 18px;"></label>
                   </div>
                     <div class="col-md-3 " style="padding-right: 20px; " >
                       <img  :src="'storage/articles_image/'+ articlea.image" style="height: 130px;width: 800px; margin-bottom: 20px">
@@ -53,7 +53,7 @@
                       <h5 class="title" style="margin-top: -8px; margin-left: 20px; color: red;" >@{{ articlea.titre }}</h5><br>
                         <div class="description" style="margin-top: -10px; font-size: 17px; margin-left: 20px;">
                           @{{ MoitieDescription(articlea.description,100, '...') }}
-
+                        
                          
                           <div class="txt-right m-t-20">
                            <a class="js-show-modal1 " style=" color: black; font-style: italic; font-weight: 500; cursor: pointer;" v-on:click="AfficheInfo(articlea.id)"><b> Afficher Plus </b>
@@ -120,7 +120,11 @@
       <div class="overlay-modal11 " v-on:click="CancelArticle(art)"></div>
   
       <div class="container">
+
+        <!--<div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent" v-if="openInfo "   v-for="articlea in articlesadmin2">-->
+
         <div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent" v-if="openInfo " style=" width: 985px;"   v-for="articlea in articlesadmin2">
+
           <button class="how-pos3 hov3 trans-04 p-t-6 " v-on:click="hideModel = false">
             <img src="images/icon-close.png" alt="CLOSE">
           </button>
@@ -133,6 +137,7 @@
               </div>
             </div>
           </div>
+
           <div class="row">
             <div class="col-md-10" >
               <img :src="'storage/articles_image/'+ articlea.image" style="width: 1500px; height: 450px; margin-left: 80px; " />
@@ -150,11 +155,15 @@
                <p>@{{ articlea.description }}</p>
             </div>               
           </div>  
+
         </div>
 
 <!--********************************************************************************************************************************************************************-->
         
         <div class="bg0 p-b-150 p-lr-15-lg how-pos3-parent" v-if="openAjout" style=" width: 985px; padding-top: 45%">
+
+        <!--<div class="bg0 p-b-150 p-lr-15-lg how-pos3-parent" v-if="openAjout" style=" width: 985px; padding-top: 45%">-->
+
           <button class="how-pos3 hov3 trans-04 p-t-6" v-on:click="CancelArticle(art)">
             <img src="images/icon-close.png" alt="CLOSE">
           </button>
@@ -184,7 +193,7 @@
                   <div class="col-md-10 pr-2" >
                     <div class="form-group">
                       <label for="image" >image</label>
-                      <input type="file" class="form-control"  v-on:change="imagePreview" :class="{'is-invalid' : message.image}">
+                      <input type="file" class="form-control"  v-on:change="imagePreview" :class="{'is-invalid' : message.image}" accept="image/png, image/jpeg">
                       <span class="px-3 cl13" v-if="message.image" v-text="message.image[0]"></span>
                     </div>
                  </div>
@@ -195,7 +204,7 @@
                         </button> 
                         <button type="submit" v-else class="btn btn-success btn-block " style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="addArticle()" >Ajouter
                         </button> 
-                        <button type="submit"  class="btn btn-danger btn-block " style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="CancelArticle(art)" >Anuller
+                        <button type="submit"  class="btn btn-danger btn-block " style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="CancelArticle(art)" >Annuler
                         </button> 
                         
                             
@@ -252,7 +261,6 @@
                  app2.art.id = response.data.articleAjout.id;//stoké id de article di criyinah
                  window.location.reload();//pour actualiser la page
                  app.articlesadmin.unshift(app2.art);//n ajoutiw l'aricle jdid f debut ta3  tableau "articlesadmin"(di y affichilna les article f la page "Article")(bach fawek ma najoutiw article yet2aficha f lwl)
-                 console.log("app.articlesadmin",app.articlesadmin)
                  app2.art={//vider tableau "art"
                       id: 0,
                       admin_id: window.Laravel.idAdmin,
@@ -522,6 +530,7 @@
       },
       AfficheInfo: function($id){//ki nersaw 3la "Continue la lecture" w 3andha un parametre di howa id ta3 article di rena habin n affichiw les info te3o
         app2.hideModel = true; //n'affichiw le Modal 1
+        app2.openAjout = false ;
         app2.openInfo = true;// nbeyno div l blanc di fih les info ta3 l'article
         app2.detaillsA.idA= $id;//n7ato f tableau "detaillsA" l id ta3 article di rena habin nbeyno les info ta3o
         app2.detaillsArticle();//n3ayto la fcnt "detaillsArticle"

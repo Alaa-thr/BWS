@@ -15,24 +15,24 @@
             <div class="card">
               <div class="card-header">
                 <h4 class="card-title"> Admin</h4>
-                <div style="margin-left: 550px ; margin-top: -50px;">
-                  <button class="btn btn-sm btn-block btn-info js-show-modal1" style="width: 160px; border-radius: 0.5em; height: 30px; box-shadow: 0 5px 25px rgba(0,0,0,.2);" v-on:click="AfficherAjout()">
-                    <b> Ajouter Admin</b>
-                  </button>
-                </div>
-                <div class="box " style="margin-left: 730px; margin-top: -40px;">
-                    <select onchange="window.location.href=this.value">
-                      <option>Recuperer les utilisateurs   :</option>
+                <div  style="margin-left: 550px; margin-top: -45px; ">
+                    <select class="formm-control" onchange="window.location.href=this.value" style=" width: 250px; height: 40px; border-radius: 0.8em; cursor: pointer;">
+                      <option  style="border:none;" value="0" selected="selected" disabled="disabled">Recuperer les utilisateurs   :</option>
                       <option value="recupervendeur">Recuperer vendeurs</option>
                       <option value="recuperclient">Recuperer clients</option>
                       <option value="recupemployeur">Recuperer employeurs</option>
                       <option value="recuperadmin">Recuperer admins</option>
                     </select>
                 </div>
+                <div style="margin-left: 830px ; margin-top: -48px;">
+                  <button class="btn btn-sm btn-block btn-info js-show-modal1" style="width: 160px; border-radius: 0.5em; height: 35px; box-shadow: 0 5px 25px rgba(0,0,0,.2);" v-on:click="AfficherAjout()">
+                    <b> Ajouter Admin</b>
+                  </button>
+                </div>
               </div>
               
               <div class="card-body">
-                <div class="table-responsive" style="height: 420px; margin-top: 40px;">
+                <div class="table-responsive" style="height: 420px; margin-top: 65px;">
                   <table class="table">
                     <thead class=" text-primary">
                       <th >
@@ -48,6 +48,7 @@
                         <b >Email</b>
                       </th>
                       <th>
+                        <b> Type </b>
                       </th>
                       <th>
                       </th>
@@ -66,6 +67,12 @@
                         <td>
                           {{admina.email}} 
 
+                        </td>
+                        <td v-if="admina.big_admin === '1' ">
+                           Admin Supèrieure
+                        </td>
+                        <td v-else>
+                          Admin Simple
                         </td>
                         <td  class="dropdown " id="k">
                           <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
@@ -157,14 +164,14 @@
                             <hr>
                           </div>
                            <div class="row">
-                            <!--div class=" title" style="margin-left: 20px; margin-top: 50px;">Email</div>
-                            <div class="title" style="margin-top: 50px; margin-left: 35px;">:</div-->
-                            <div class="author" style="margin-left: 85px; color:black; margin-top: 30px;"><b>{{ adminaa.email }}</b></div>
+                            <div class=" title" style="margin-left: 20px; margin-top: 50px;">Email</div>
+                            <div class="title" style="margin-top: 50px; margin-left: 35px;">:</div>
+                            <div class="author" style="margin-left: 10px; color:black; margin-top: 50px;"><b>{{ adminaa.email }}</b></div>
                           </div>
                           <div class="row" >
-                            <!--div class=" title" style="margin-left: 20px; margin-top: 40px;">Numero</div>
-                            <div class="title" style="margin-top: 40px; margin-left: 20px;">:</div-->
-                            <div  style="margin-left: 120px; color:black; margin-top: 30px; height: 70px;"><b>{{ adminaa.numTelephone }}</b></div>
+                            <div class=" title" style="margin-left: 20px; margin-top: 40px;">Numero</div>
+                            <div class="title" style="margin-top: 40px; margin-left: 20px;">:</div>
+                            <div  style="margin-left: 10px; color:black; margin-top: 40px; height: 70px;"><b>{{ adminaa.numTelephone }}</b></div>
                           </div>
                       </div>
                     </div>
@@ -227,7 +234,6 @@
                         <label>Nom</label>
                         <input  type="text" class="formm-control " placeholder="Votre nom doit commencer par un Maj" style="width: 310px;" v-model="adm.nom" :class="{'is-invalid' : message.nom}">
                         <span class="px-3 cl13" v-if="message.nom" v-text="message.nom[0]"></span>
-                       
                       </div>
                     </div>
                     <div class="col-md-5 pr-2" >
@@ -346,6 +352,7 @@
                       nom: '',
                       prenom: '',
                       email: '',
+                      big_admin: 0,
                       type: 0,
                       numTelephone: '', 
                       numCarteBanquaire: '',
@@ -377,6 +384,7 @@
           nom: '',
           prenom: '',
           email: '',
+          big_admin: 0,
           type: '',
           numTelephone: '', 
           numCarteBanquaire: '',
@@ -392,9 +400,8 @@
      },
      methods: {
            SaveTypeAdmin:function(event){
-
+              this.adm.big_admin = event.target.value;
               this.adm.type = event.target.value;
-
            },
            details_admin: function(){
              axios.post(window.Laravel.url+'/detailsadmin',this.detailsAD)

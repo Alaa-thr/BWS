@@ -21,6 +21,8 @@ Auth::routes();
 
 /************************************************ Visiteur***********************************************/
 
+Route::get('/logoutregister', 'Auth\LoginController@logoutRegister')->name("logoutregister");
+Route::post('/authenticate', 'Auth\LoginController@authenticate')->name("authenticate");
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/accueil', 'BwsController@accueil')->name('accueil');
 Route::get('/apropos', 'BwsController@apropos')->name('apropos');
@@ -29,14 +31,16 @@ Route::get('/emploi', 'BwsController@emploi')->name('emploi');
 Route::get('/article', 'BwsController@article')->name('article');
 Route::get('/contact', 'BwsController@contact')->name('contact');
 Route::get('/article_detaillé', 'BwsController@article_D')->name('article_D');
-Route::get('/panierVisiteur', 'BwsController@panier_visiteur')->name('panierVisiteur');
 Route::get('/getville', 'BwsController@get_ville');
+Route::get('/panierVisiteur', 'BwsController@panier_visiteur')->name('panierVisiteur');
+Route::post('/getconnect', 'BwsController@Connect');
+
 
 /************************************************ Admin***********************************************/
 
 Route::get('/admin', 'AdminController@admin_admin')->name('admin');
 Route::get('/articlesAdmin', 'AdminController@article_admin')->name('articlesAdmin');
-Route::get('/categoriesAdmin', 'AdminController@categories_admin')->name('categoriesAdmin');
+Route::get('/categories', 'AdminController@categories_admin')->name('categories');
 Route::get('/shopCategories', 'AdminController@Shopcategories_admin');
 Route::get('/emploiCategories', 'AdminController@Emploicategories_admin');
 
@@ -47,7 +51,7 @@ Route::delete('/deletesouscategorie/{id}','AdminController@deleteSousCategorie')
 Route::get('/client', 'AdminController@client_admin')->name('client');
 Route::get('/emails', 'BwsController@emails_admin')->name('emails');
 Route::get('/employeur', 'AdminController@employeur_admin')->name('employeur');
-Route::get('/notificationsAdmin', 'BwsController@notifications_admin')->name('notificationsAdmin');
+Route::get('/notificationsAdmin', 'AdminController@notifications_admin')->name('notificationsAdmin');
 Route::get('/profilAdmin', 'AdminController@profil_admin')->name('profilAdmin');
 Route::get('/statistiquesAdmin', 'BwsController@statistiques_admin')->name('statistiquesAdmin');
 Route::get('/vendeur', 'AdminController@vendeur_admin')->name('vendeur');
@@ -59,29 +63,35 @@ Route::put('/updatecategorie','AdminController@updateCategorie');
 Route::delete('/deletecategorie/{id}','AdminController@deleteCategorie');
 Route::delete('/deletearticle/{id}','AdminController@deleteArticle');
 Route::put('/updatearticle','AdminController@updateArticleButton');
-Route::get('/deletvendeur/{id}','AdminController@deleteVendeur');
-Route::post('/detailsvendeur','AdminController@detailsVendeur');
-Route::get('/deleteclient/{id}','AdminController@deleteClient');
-Route::post('/detailsclient','AdminController@detailsClient');
-Route::get('/deleteemployeur/{id}','AdminController@deleteEmployeur');
-Route::post('/detailsemployeur','AdminController@detailsEmployeur');
-Route::get('/deleteadmin/{id}','AdminController@deleteAdmin');
-Route::post('/detailsadmin','AdminController@detailsAdmin');
-Route::get('/recupervendeur','AdminController@recup_vendeur')->name('recupervendeur');
-Route::get('/recupconfirmer/{id}','AdminController@recupConfirmer');
-Route::get('/recuperclient','AdminController@recup_client')->name('recuperclient');
-Route::get('/recupconfirmerc/{id}','AdminController@recupConfirmerc');
-Route::get('/recupemployeur','AdminController@recu_employeur')->name('recupemployeur');
-Route::get('/recupconfirmere/{id}','AdminController@recupConfirmere');
-Route::get('/recuperadmin','AdminController@recup_admin')->name('recuperadmin');
-Route::get('/recupconfirmera/{id}','AdminController@recupConfirmera');
-Route::post('/addadmin','AdminController@addAdmin');
+Route::post('/addadmin', 'AdminController@addAdmin');
+Route::post('detailsvendeur','AdminController@detailsVendeur');
+Route::post('detailsemployeur','AdminController@detailsEmployeur');
+Route::post('detailsclient','AdminController@detailsClient');
+Route::post('detailsadmin','AdminController@detailsadmin');
+Route::get('deleteclient/{id}','AdminController@deleteClient');
+Route::get('deleteemployeur/{id}','AdminController@deleteEmployeur');
+Route::get('deletvendeur/{id}','AdminController@deleteVendeur');
+Route::get('deleteadmin/{id}','AdminController@deleteAdmin');
+Route::get('recupervendeur','AdminController@recup_vendeur');
+Route::get('recupconfirmer/{id}','AdminController@recupConfirmer');
+Route::get('recuperclient','AdminController@recup_client');
+Route::get('recupconfirmerc/{id}','AdminController@recupConfirmerc');
+Route::get('recupemployeur','AdminController@recup_employeur');
+Route::get('recupconfirmere/{id}','AdminController@recupConfirmerE');
+Route::get('recuperadmin','AdminController@recup_admin');
+Route::get('recupconfirmera/{id}','AdminController@recupConfirmerA');
+Route::delete('/deletenotification/{id}','AdminController@deleteNotif');
+
+
+
+
 /*********************************************** Employeur***********************************************/
 
-Route::get('/demandeEmploiRecu', 'BwsController@demande_emploi_reçu_employeur')->name('demandeEmploiRecu');
 Route::get('/profilEmployeur', 'EmployeurController@profil_employeur')->name('profilEmployeur');
+
 Route::get('/annonceEmploi', 'EmployeurController@annonce_emploi')->name('annonceEmploi');
 Route::get('/demandeEmploiTraite', 'BwsController@demande_emploi_traite_employeur')->name('demandeEmploiTraite');
+
 Route::put('/updateProfilE/{id}','EmployeurController@update_profil');
 Route::post('/addannonce', 'EmployeurController@addAnnonce');
 Route::post('/detaillsannonces', 'EmployeurController@detaillsAnnonce');
@@ -97,31 +107,45 @@ Route::get('/demandeemploireçu', 'DemandeReçuController@demandeReçu')->name('
 
 
 
+/*Demande traiter*/
+Route::get('/demandeEmploiTraite','EmployeurController@get_commande_traiter_emplyeur')->name('demandeEmploiTraite');
+Route::post('/detaillsacommandetraiteremplyeur', 'EmployeurController@detaillsacommandeTraiterEmplyeur'); 
+Route::delete('/deletecommandetraiteremplyeur/{id}','EmployeurController@deleteCommandeTraiterEmployeur');
+Route::put('/recudemande/{id}','EmployeurController@RecuDemande');
 
+/*Demande Reçu*/
+Route::get('/demandeEmploiRecu','EmployeurDemandeController@get_demande_reçu_emplyeur')->name('demandeEmploiRecu');
+Route::post('/detaillsdemandereçuemplyeur', 'EmployeurDemandeController@detaillsdemandeReçuEmplyeur'); 
+Route::delete('/deletedemandereçuemplyeur/{id}','EmployeurDemandeController@deleteDemandeReçuEmployeur');
 /************************************************ Vendeur***********************************************/
 
 Route::get('/statistiquesVendeur', 'BwsController@statistiques_vendeur')->name('statistiquesVendeur');
 Route::get('/profilVendeur', 'VendeurController@profil_vendeur')->name('profilVendeur');
-Route::get('/produitVendeur', 'BwsController@produit_vendeur')->name('produitVendeur');
-Route::get('/commandeTraiterVendeur', 'BwsController@commande_traiter_vendeur')->name('commandeTraiterVendeur');
-Route::get('/commandeRecuVendeur', 'BwsController@commande_recu_vendeur')->name('commandeRecuVendeur');
 Route::put('/updateProfilV/{id}','VendeurController@update_profil');
 Route::get('/produitVendeur', 'VendeurController@getProduit')->name('produitVendeur');
 Route::post('/addproduit', 'VendeurController@addProduit');
 Route::get('/getAllsouscategories/{id}','VendeurController@getSousCategories');
 Route::get('/getAllcategories', 'VendeurController@getCategories');
 Route::get('/getAllcolor', 'VendeurController@getColors');
+/*commande reçu vendeur*/
+Route::get('/commandeRecuVendeur','VendeurController@get_commande_vendeur')->name('commandeRecuVendeur');
+Route::post('/detaillsacommandevendeur', 'VendeurController@detaillsacommandeVendeur'); 
+Route::delete('/deletecommandevendeur/{id}','VendeurController@deleteCommandeVendeur');
+Route::put('/recucommande/{id}','VendeurController@RecuCommande');
 
+/*commande traiter vendeur*/
+Route::get('/commandeTraiterVendeur','VendeurCommandeController@get_commande_traiter_vendeur')->name('commandeTraiterVendeur');
+Route::post('/detaillsacommandetraitervendeur', 'VendeurCommandeController@detaillsacommandeTraiterVendeur'); 
+Route::delete('/deletecommandetraitervendeur/{id}','VendeurCommandeController@deleteCommandeTraiterVendeur');
 
 /************************************************ Client***********************************************/
-
 Route::get('/profilClient','ClientController@profil_clinet')->name('profilClient');
-Route::get('/historiqueClient','BwsController@historique_client')->name('historiqueClient');
 Route::get('/panierClient','BwsController@panier_client')->name('panierClient');
-Route::get('/notificationClient','BwsController@notification_client')->name('notificationClient');
-Route::get('/favorisClient','BwsController@favoris_client')->name('favorisClient');
 Route::put('/updateProfilC/{id}','ClientController@update_profil');
-/***Commande */
+Route::post('/detaillsacommande', 'ClientController@detaillsCommande'); 
+Route::get('/commandeClient','ClientController@get_commande_client')->name('commandeClient');
+Route::delete('/deletecommande/{id}','ClientController@deleteCommande');
+ /***Commande */
 Route::get('/commandeClient','ClientController@get_commande_client')->name('commandeClient');
 Route::post('/detaillsacommande', 'ClientController@detaillsCommande'); 
 Route::delete('/deletecommande/{id}','ClientController@deleteCommande');
@@ -130,9 +154,19 @@ Route::get('/demandeClient','DemandeClientController@get_demande_client')->name(
 Route::post('/detaillsademande', 'DemandeClientController@detaillsDemande'); 
 Route::delete('/deletedemande/{id}','DemandeClientController@deleteDemande');
 Route::post('/addpanier','ClientController@addPanier');
+Route::get('/panier','ClientController@ProduitCommande')->name('panier');
 
+/*historique*/
+Route::get('/historiqueClient','HistoriqurController@get_historique_client')->name('historiqueClient');
+Route::delete('/deletehistorique/{id}','HistoriqurController@deleteHistorique');
 
+/*Notification*/
+Route::get('/notificationClient','NotificationController@get_notification_client')->name('notificationClient');
+Route::delete('/deletenotificationclient/{id}','NotificationController@deleteNotificationClient');
 
-
+/*Favoris*/
+Route::post('/ajoutaufavoris/{id}','ClientController@AjoutAuFavoris');
+Route::get('/favorisClient','FavorisController@get_favoris_client')->name('favorisClient');
+Route::delete('/deletefavorisclient/{id}','FavorisController@deletefavorisClient');
 
 

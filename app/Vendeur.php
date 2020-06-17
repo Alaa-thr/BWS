@@ -30,4 +30,13 @@ class Vendeur extends Model
     {
         return $this->hasMany('App\Ville');
     }
+    public function produit()
+    {
+        return $this->hasMany('App\Produit');
+    }
+
+    public function commande()
+    {
+        return $this->hasMany('App\Commande');
+    }
 }

@@ -71,6 +71,7 @@
                       <div class="title" style="color: black; "><p class="title" style="font-size: 18px; color: black; margin-top: -1px;">Nouveau Email de (Miloud Slimani)</p>
                   </div>
                 </a>
+                 <li class="label11" data-label11="Nouveau"></li>
                   <div class="col-md-3">
                     <a href="#"><i class="now-ui-icons ui-1_simple-remove" style="font-size: 25px;  margin-left: 150px; "></i></a>
                   </div>

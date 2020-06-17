@@ -16,6 +16,7 @@ class Demande_emploie extends Model
         return $this->belongsTo('App\Client');
     }
 
+
      public function employeur()
     {
         return $this->belongsTo('App\Employeur');
@@ -24,4 +25,6 @@ class Demande_emploie extends Model
    {
    	return $this->belongsTo('App\Annonce_emploie');
    }
+
+
 }

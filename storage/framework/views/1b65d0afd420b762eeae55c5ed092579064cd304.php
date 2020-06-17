@@ -41,19 +41,19 @@
                   <div class="col-md-4 pl-2">
                     <div class="form-group">
                       <label>Nom</label>
-                      <input name="nom" type="text" class="form-control" v-model="profilemployeur.nom" value="<?php echo e(old('nom')); ?>">
+                      <input name="nom" type="text" class="form-control" v-model="profilemployeur.nom" value="<?php echo e(old('nom')); ?>" v-on:click="modif = true">
                     </div>
                   </div>
                   <div class="col-md-4 pl-1">
                     <div class="form-group">
                       <label>Prénom</label>
-                      <input name="prenom" type="text" class="form-control" v-model="profilemployeur.prenom" value="<?php echo e(old('prenom')); ?>">
+                      <input name="prenom" type="text" class="form-control" v-model="profilemployeur.prenom" value="<?php echo e(old('prenom')); ?>" v-on:click="modif = true">
                    </div>
                  </div>
                   <div class="col-md-4 pl-1">
                     <div class="form-group">
                       <label>Numero Telephone</label>
-                      <input name="num" type="text" class="form-control" v-model="profilemployeur.num_tel" value="<?php echo e(old('num_tel')); ?>">
+                      <input name="num" type="text" class="form-control" v-model="profilemployeur.num_tel" value="<?php echo e(old('num_tel')); ?>" v-on:click="modif = true">
                     </div>
                   </div>
                 </div>
@@ -61,13 +61,13 @@
                   <div class="col-md-8 pl-2">
                     <div class="form-group">
                       <label for="exampleInputEmail1" >Adresse Email</label>
-                      <input name="adresse_email" type="email" class="form-control" v-model="profilemployeur.email" value="<?php echo e(old('email')); ?>">
+                      <input name="adresse_email" type="email" class="form-control" v-model="profilemployeur.email" value="<?php echo e(old('email')); ?>" v-on:click="modif = true">
                     </div>
                   </div>
                   <div class="col-md-4 pl-1">
                     <div class="form-group">
                       <label>Numero compte BNQ</label>
-                      <input name="bnq" type="text" class="form-control" v-model="profilemployeur.num_compte_banquiare" value="<?php echo e(old('num_compte_banquiare')); ?>">
+                      <input name="bnq" type="text" class="form-control" v-model="profilemployeur.num_compte_banquiare" value="<?php echo e(old('num_compte_banquiare')); ?>" v-on:click="modif = true">
                     </div>
                   </div>
                 </div>
@@ -75,7 +75,7 @@
                   <div class="col-md-12 pl-2">
                     <div class="form-group">
                       <label >Adresse</label>
-                      <input type="text" class="form-control" placeholder="Home Address" >
+                      <input type="text" class="form-control" placeholder="Home Address" v-on:click="modif = true">
                     </div>
                  </div>
                 </div>
@@ -83,23 +83,23 @@
                   <div class="col-md-6 pl-2">
                     <div class="form-group">
                       <label >Societe</label>
-                      <input name="societe" type="text" class="form-control" v-model="profilemployeur.nom_societe" value="<?php echo e(old('nom_societe')); ?>">
+                      <input name="societe" type="text" class="form-control" v-model="profilemployeur.nom_societe" value="<?php echo e(old('nom_societe')); ?>" v-on:click="modif = true">
                     </div>
                   </div>
                   <div class="col-md-5 px-2">
                     <div class="form-group">
                       <label>pays</label>
-                      <input type="" class="form-control" placeholder="pays" value="Algerie" disabled="">
+                      <input type="" class="form-control" placeholder="pays" value="Algerie" disabled="disabled">
                     </div>
                   </div>
                 </div>
                   
                 <div class="row">
                   <div class="col-md-6">
-                        <button type="submit"  value="Modifier" class="btn btn-warning btn-block" style="margin-top: 40px;  border: 0;  border-radius: 2em; font-size: 12px; font-weight: 700;" >Modifier</button>     
+                    <button v-if="modif" type="submit"  value="Modifier" class="btn btn-warning btn-block" style="margin-top: 40px;  border: 0;  border-radius: 2em; font-size: 12px; font-weight: 700;" >Modifier</button>     
                   </div>
                   <div class="col-md-6">
-                    <a class=" btn btn-danger btn-block" type="submit" style="margin-top: 40px;  border: 0;  border-radius: 2em; font-size: 12px; font-weight: 900;" href="<?php echo e(route('profilEmployeur')); ?>">Annuler</a>
+                    <button v-if="modif" class=" btn btn-danger btn-block" style="margin-top: 40px;  border: 0;  border-radius: 2em; font-size: 12px; font-weight: 900;" v-on:click="modif = false">Annuler</button>
                   </div>
                 </div>
               </form>
@@ -168,7 +168,8 @@
     el: '#app',
     data:{
         
-        profilemployeur:[],           
+        profilemployeur:[],
+        modif: false,           
       },
     methods: {
       profil_employeur: function(){

@@ -11,9 +11,11 @@ use Illuminate\Support\Facades\Validator;
 use App\Rules\ModifieTextDescriptionArticle;
 use App\User;
 use Auth;
+use App\Favori;
 
 class ClientController extends Controller
 {
+
      public function profil_clinet(){
         $client=Client::find(Auth::user()->id); 
         return view('profil_clinet',['client'=>$client]);
@@ -57,28 +59,100 @@ class ClientController extends Controller
     }
 
      public function addPanier(Request $request){
-
-        $request->validate([
-                'taille' =>['required'],
-                'couleur_id' =>['required'],
-                'type_livraison' =>['required'],
-                'qte' =>['required'],
-                 ]);
-         $client =  Client::find(Auth::user()->id);
-        foreach (array_combine($request->couleur_id, $request->couleur_id) as $cmdC => $cmdT) {
-            $commande = new Commande();         
-            $commande->id = $client->nbr_cmd;
-            $commande->client_id = $client->id;
-            $commande->vendeur_id = $request->vendeur_id;
-            $commande->produit_id = $request->produit_id; 
-            $commande->prix_total = $request->
-            $commande->qte = $request->qte;
-            $commande->type_livraison = $request->type_livraison;
-            $commande->couleur_id = $cmdC;
-            $commande->taille = $cmdT;
-            $commande->save();
+        if(auth()->guest()){
+            return Response()->json(['etat' => false,'cnncte' => false]);
         }
-        return Response()->json(['etat' => true,'commande' => $commande]);
+        else{
+            if(Auth::user()->type_compte == "c"){
+                $client =  Client::find(Auth::user()->id);
+                $produitExister = \DB::table('commandes')->where([['id', $client->nbr_cmd+1],['produit_id',$request->produit_id],['client_id',$client->id]])->get();
+                
+                        if($request->tailExst == 1){
+                            $request->validate([
+                                    'taille' =>['required'],
+                                    'couleur_id' =>['required'],
+                                    'type_livraison' =>['required'],
+                                    'qte' =>['required'],
+                            ]);
+                            
+                            if(count($produitExister) == 0){
+                                $commande = new Commande();         
+                                $commande->id = $client->nbr_cmd+1;
+                                $commande->client_id = $client->id;
+                                $commande->vendeur_id = $request->vendeur_id;
+                                $commande->produit_id = $request->produit_id; 
+                                $commande->prix_total = $request->prix;
+                                $commande->qte = $request->qte;
+                                $commande->type_livraison = $request->type_livraison;
+                                $commande->couleur_id = $request->couleur_id;
+                                $commande->taille = $request->taille;
+                                $commande->save();
+                            
+                            return Response()->json(['etat' => true,'produitExister' => false]);
+                            }
+                            else{
+                                return Response()->json(['etat' => true,'produitExister' => true]);
+                            }
+                        }
+
+                        else if($request->tailExst == 0){
+                            $request->validate([
+                                'couleur_id' =>['required'],
+                                'type_livraison' =>['required'],
+                                'qte' =>['required'],
+                                 ]);
+                            
+                            if(count($produitExister) == 0){
+                                $commande = new Commande();         
+                                $commande->id = $client->nbr_cmd+1;
+                                $commande->client_id = $client->id;
+                                $commande->vendeur_id = $request->vendeur_id;
+                                $commande->produit_id = $request->produit_id; 
+                                $commande->prix_total = $request->prix;
+                                $commande->qte = $request->qte;
+                                $commande->type_livraison = $request->type_livraison;
+                                $commande->couleur_id = $request->couleur_id;
+                                $commande->save();
+                        
+                            return Response()->json(['etat' => true,'produitExister' => false]);
+                            }
+                            else{
+                                return Response()->json(['etat' => true,'produitExister' => true]);
+                            }   
+                        }
+                }           
+                else{
+                     return Response()->json(['etat' => false, 'cnncte' => true]);
+                }
+        }
+        
+    }
+    public function ProduitCommande(){
+        $clientCnncte = Client::find(Auth::user()->id);
+        $produitCmds = \DB::table('commandes')
+        ->join('produits', 'produits.id', '=', 'commandes.produit_id')
+        ->join('clients','clients.id', '=', 'commandes.client_id')
+        ->join('imageproduits','imageproduits.produit_id', '=', 'commandes.produit_id')
+        ->join('colors','colors.id', '=', 'commandes.couleur_id')
+        ->join('vendeurs','vendeurs.id', '=', 'commandes.vendeur_id')
+        ->select('colors.nom', 'imageproduits.produit_id', 'imageproduits.image', 'imageproduits.profile', 'clients.email', 'clients.codePostal', 'clients.numeroTelephone', 'clients.ville', 'produits.Libellé', 'produits.prix', 'produits.vendeur_id', 'commandes.*', 'vendeurs.Nom as nom_vendeur', 'vendeurs.Prenom as prenom_vendeur')
+        ->where([['commandes.client_id', $clientCnncte->id],['commandes.id', $clientCnncte->nbr_cmd+1],['imageproduits.profile',1]])
+        ->get();
+        $color = \DB::table('colors')->join('color_produits', 'colors.id', '=', 'color_produits.color_id')->get();
+        $taille = \DB::table('taille_produits')->get();
+        $typeLivraison = \DB::table('typechoisirvendeurs')->get();
+        //$produitCmds = \DB::table('commandes')->get();
+        return view('panier_visiteur',['produitCmds' => $produitCmds,'color' => $color, 'typeLivraison' => $typeLivraison, 'taille' => $taille]);
+
+    }
+
+    public function AjoutAuFavoris($id){
+        $clientCnncte = Client::find(Auth::user()->id);// njibo l client di ra connecter
+        $favoris = new Favori;
+        $favoris->produit_id = $id;//$id howa l id ta3 produit
+        $favoris->client_id = $clientCnncte->id;
+        $favoris->save();
+        return $favoris;
     }
  
 }

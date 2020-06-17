@@ -5,15 +5,37 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Ville;
+use App\User;
 use App\Vendeur;
 use App\Client;
 use App\Commande;
 use Auth;
 
+
 class BwsController extends Controller
 {
 
 /************************************************ Visiteur***********************************************/   
+     public function Connect(Request $request)
+    {
+        $users =  User::All();
+        $i = 0;
+        $typeCompte =  array();
+        foreach ($users as $user) {
+            if($user->email == $request->value || $user->numTelephone == $request->value){
+                $i++;
+                array_push($typeCompte,$user->type_compte);
+            }
+        }
+        if($i > 1){
+            return ['etat' => true, 'typeCompte' =>$typeCompte];
+        }
+        else{
+            return ['etat' => false];
+        }
+        
+    } 
+
      public function apropos()
     {
         return view('apropos');
@@ -21,7 +43,10 @@ class BwsController extends Controller
 
      public function produitVisiteur()
     {
-        $produit = \DB::table('produits')->get();       
+        $produit = \DB::table('produits')
+         ->join('vendeurs','vendeurs.id', '=', 'produits.vendeur_id')
+         ->select('vendeurs.Nom', 'vendeurs.Prenom', 'produits.*')
+         ->get();       
         $imageproduit = \DB::table('imageproduits')->get();
         $color = \DB::table('colors')->join('color_produits', 'colors.id', '=', 'color_produits.color_id')->get();
         $taille = \DB::table('taille_produits')->get();
@@ -29,7 +54,7 @@ class BwsController extends Controller
         return view('shop',['produit'=>$produit, 'ImageP' => $imageproduit, 'color' => $color, 'typeLivraison' => $typeLivraison, 'taille' => $taille ]);
     }
 
-   
+    
 
      public function emploi()
     {
@@ -56,10 +81,6 @@ class BwsController extends Controller
         return view('article_detaille');
     }
 
-    public function panier_visiteur()
-    {
-        return view('panier_visiteur');
-    }
 
     public function get_ville(){
         $ville = Ville::all();
@@ -131,7 +152,6 @@ class BwsController extends Controller
     public function profil_clinet(){
         return view('profil_clinet');
     }
-
     public function commande_client(){
         return view('commande_client');
     }
@@ -165,10 +185,6 @@ class BwsController extends Controller
 
     public function profil_vendeur(){
         return view('profil_vendeur');
-    }
-
-    public function produit_vendeur(){
-        return view('produit_vendeur');
     }
 
     public function commande_traiter_vendeur(){

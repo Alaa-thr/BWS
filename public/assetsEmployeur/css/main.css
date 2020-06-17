@@ -3763,6 +3763,7 @@ input.num-product::-webkit-inner-spin-button {
   }
 
 }
+
 .creat-article{
   border-style: solid ;
   border-color: rgb(202, 202, 202);
@@ -3812,4 +3813,37 @@ input[type=checkbox]:checked + label:before{
   background-color: blue;
   border-color: blue;
   color:#fff;
+}
+.cvendeur{
+  margin-left: 22%;
+  width: 210px;
+  margin-top: -58px;
+ }
+
+#cvendeu{
+   margin-top: -21px;
+ }
+
+#cv{
+  margin-top: -68px;
+   color:black;
+  font-size: 15px; 
+  font-weight: 600;
+  font-style: italic;
+  margin-left: 12%;
+}
+#txt{
+   color:black;
+  font-size: 15px; 
+  font-weight: 600;
+  font-style: italic;
+}
+ 
+#b{
+  margin-top: -58px;
+
+}
+#clr{
+  background-color: rgb(192,4,4);
+
 }

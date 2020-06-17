@@ -17,9 +17,9 @@
           <div class="card-header" >
                 
                 <div class="flex-t">
-                    <input type="checkbox" id="article" @change="selectAll()" v-model="allSelected">
+                    <input type="checkbox" id="article" @change="selectAll()" v-model="allSelected" style="margin-top: 5px;">
                     <label for="article"></label>
-                    <h4 style="margin-top: -6px;">Commandes</h4>
+                    <h4 style="margin-top: -6px;margin-left: 10px;">Commandes</h4>
                 </div>
 
             <div class="txt-right"style="margin-top: -40px; " >
@@ -38,11 +38,11 @@
             <div class="card-body"   v-for="commandec in commandeclient" >
 
 <div v-if="selectall" >
-       <input type="checkbox" :id="commandec.id" :value="commandec.id" v-model="checkedArticles" @change="changeButton(commandec)">
+       <input type="checkbox"  style=" margin-left: 10px;" :id="commandec.id" :value="commandec.id" v-model="checkedArticles" @change="changeButton(commandec)">
       <label :for="commandec.id" style="margin-top: 40px; margin-left: 10px;"></label>
     </div>
     <div v-else ><div id="ch1">
-      <input type="checkbox" :id="commandec.id" :value="commandec.id" v-model="articleIds" @click="deselectArticle(commandec.id)"></div>
+      <input type="checkbox" :id="commandec.id" :value="commandec.id" style="margin-left: -10px;" v-model="articleIds" @click="deselectArticle(commandec.id)"></div>
       <label :for="commandec.id" style="margin-top: 40px; margin-left: 10px;"></label>
     </div>
 
@@ -96,34 +96,7 @@
       </div>
     </div>
 
-  <footer class="footer">
-    <div class=" container-fluid ">
-      <nav>
-        <ul>
-          <li>
-            <a href="https://www.creative-tim.com">
-              BASMAHW&S
-            </a>
-          </li>
-          <li>
-            <a href="http://presentation.creative-tim.com">
-              A Propos
-            </a>
-          </li>
-          <li>
-            <a href="http://blog.creative-tim.com">
-              Blog
-            </a>
-          </li>
-        </ul>
-      </nav>
-      <div class="copyright" id="copyright">
-        &copy; <script>
-          document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))
-        </script>, Designer par <a href="https://www.invisionapp.com" target="_blank">BS</a>. Codé par <a href="https://www.creative-tim.com" target="_blank">BASMAHW&S</a>.
-      </div>
-    </div>
-  </footer>
+
 </div>
 <!-- Modal1 for laptob-->
 <div class="wrap-modal11 js-modal1 p-t-38 p-b-20 p-l-15 p-r-15"  id="app2" v-if="hideModel" style="margin-top:122px;">

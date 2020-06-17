@@ -51,7 +51,7 @@ class AdminController extends Controller
     }
 
     public function admin_admin(){
-        $admin = Admin::where('deleteda',0)->paginate(10);  
+        $admin = Admin::where('deleteda',0)->paginate(10); 
         return view('admin_admin',['admin'=>$admin]);
     }
     public function recup_vendeur(){
@@ -62,7 +62,7 @@ class AdminController extends Controller
         $client_recup = Client::where('deletedc',1)->paginate(10);
         return view('recup_client',['client_recu'=>$client_recup]);
    }
-   public function recu_employeur(){
+   public function recup_employeur(){
        $employeur_recup = Employeur::where('deletede',1)->paginate(10);
         return view('recu_employeur',['employeur_recu'=>$employeur_recup]);
    
@@ -164,7 +164,7 @@ class AdminController extends Controller
         $admin->save();
         $user->save();
        
-        return redirect('profilAdmin');
+        return Response()->json(['etat' => true]);
     }
     public function categories_admin(){
 
@@ -235,10 +235,11 @@ class AdminController extends Controller
 
     public function deleteCategorie($id){
 
+
         $categorie = Categorie::find($id);
         $notification = new Notification;
         $notification->admin_id =  Admin::find(Auth::user()->id)->id;
-        $notification->categorie_libelle =  $categorie->libelle; 
+        $notification->categorie_libelle =  $categorie->libelle;
         $notification->typeCategoSousCatego =  $categorie->typeCategorie;
         $notification->save(); 
         $categorie->delete();
@@ -257,6 +258,15 @@ class AdminController extends Controller
         $request->validate([
              'libelle' => ['required',new SousCategorieExiste($request->categorie_id),'regex:/^[A-Z0-9][a-z-0-9A-Z,_éçèàâ]+/'],
         ]);
+        $sousCategoAll = Sous_categorie::All();
+        foreach ($sousCategoAll as $sC) {
+            
+            if($sC->categorie_id == null && $sC->libelle == $request->libelle){
+                $sC->categorie_id = $request->categorie_id;
+                $sC->save();
+                return Response()->json(['etat' => false,'sousCategorieAjout' => $sC]);
+            }
+        }
         $sousCategorie = new Sous_categorie();
         $sousCategorie->libelle = $request->libelle;
         $sousCategorie->categorie_id = $request->categorie_id;
@@ -280,7 +290,7 @@ class AdminController extends Controller
         $Souscategorie = Sous_categorie::find($id);
         $notification =  new Notification;
         $notification->admin_id = Admin::find(Auth::user()->id)->id; 
-        $notification->sous_categorie_libelle =  $Souscategorie->libelle; 
+        $notification->sous_categorie_libelle =  $Souscategorie->libelle;
         $notification->typeCategoSousCatego =  Categorie::where('id',$Souscategorie->categorie_id)->value('typeCategorie');     
         $notification->save();
         $Souscategorie->delete();
@@ -392,6 +402,19 @@ class AdminController extends Controller
          $admin2->save();
          return Response()->json(['etat' => true,'adminAjout' => $admin2]);
     }
+    public function notifications_admin(){
+      
+        $notif = \DB::table('admins')->join('notifications','admins.id','=','notifications.admin_id')->orderBy('notifications.created_at','desc')->paginate(1);
+        return view('notifications_admin',['notif'=>$notif]);
+    }
+    public function deleteNotif($id){
+       
+       $notification = Notification::find($id);
+       $notification->delete();
+       return Response()->json(['etat' => true]);
+    }
+
+    
 
 
 }

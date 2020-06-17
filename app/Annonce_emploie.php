@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Annonce_emploie extends Model
 {
+
     protected $fillable =[
     	'libellé','discription','image','nombre_condidat','annonceE_attende','employeur_id','sous_categorie_id'
     ];
@@ -23,5 +24,6 @@ class Annonce_emploie extends Model
    {
    	return $this->hasMany('App\Demande_emploie');
    }
+
 }
 

@@ -27,4 +27,14 @@ class Client extends Model
     {
         return $this->hasMany('App\Demande_emploie');
     }
+
+    public function favori()
+    {
+        return $this->hasMany('App\Favori');
+    }
+
+    public function produit()
+    {
+        return $this->hasMany('App\Produit');
+    }
 }
