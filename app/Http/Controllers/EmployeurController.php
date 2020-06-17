@@ -8,7 +8,6 @@ use App\Employeur;
 use App\Demande_emploie;
 use App\User;
 use App\Sous_categorie;
-use App\Annonce_emploie;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Rules\ModifieTextDescriptionArticle;
