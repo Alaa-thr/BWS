@@ -16,8 +16,6 @@ use App\Imageproduit;
 use App\ColorProduit;
 use App\TailleProduit;
 use Auth;
-use Validator;
-
 class EmployeurController extends Controller
 {
      public function profil_employeur(){
