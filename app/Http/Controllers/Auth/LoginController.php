@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use Session;
 use Illuminate\Support\Facades\Route;
+use Log;
+use Illuminate\Http\Request;
 class LoginController extends Controller
 {
     /*
@@ -36,7 +38,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {        
-        $this->middleware('guest')->except(['logout', 'logoutRegister']);
+        $this->middleware('guest')->except(['logout', 'logoutRegister','authenticate']);
     }
 
     public function logout()
@@ -68,6 +70,38 @@ class LoginController extends Controller
               return  RouteServiceProvider::ADMIN;
         }
     }
+
+
+    /*public function authenticate(Request $request)
+    { 
+        if(count($request->All()) == 3){
+          \Log::info($request->All());
+           $credentials = $request->only('email' , 'password');
+        }
+        else if(count($request->All()) == 4){
+          $credentials = $request->only('email', 'type_compte', 'password');
+        }
+
+          //\Log::info(count($request->All()));
+          if (Auth::attempt($credentials)) {
+            
+              if(Auth::user()->type_compte == "c"){
+                 return redirect()->intended(url()->previous());
+              }
+              else if(Auth::user()->type_compte == "v"){
+                return redirect()->intended(RouteServiceProvider::VENDEUR);
+                 
+              }
+              else if(Auth::user()->type_compte == "e"){
+                return redirect()->intended(RouteServiceProvider::EMPLOYEUR);
+
+              }
+              else if(Auth::user()->type_compte == "a"){
+                return redirect()->intended(RouteServiceProvider::ADMIN);
+
+              }
+          }
+    }*/
 
     public function username(){
         $loginType = request()->input('numTelephone');//return string "phone number" or "email" based on input form user

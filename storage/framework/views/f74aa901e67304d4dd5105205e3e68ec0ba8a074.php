@@ -689,5 +689,6 @@ var map = new google.maps.Map(document.getElementById("adrrsse"),mapProp);
 
 
 </script>
+
 <?php $__env->stopPush(); ?>
 <?php echo $__env->make('layouts.template_visiteur', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\BWS\resources\views/shop.blade.php ENDPATH**/ ?>

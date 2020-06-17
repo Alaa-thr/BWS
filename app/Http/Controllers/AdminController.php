@@ -258,6 +258,15 @@ class AdminController extends Controller
         $request->validate([
              'libelle' => ['required',new SousCategorieExiste($request->categorie_id),'regex:/^[A-Z0-9][a-z-0-9A-Z,_éçèàâ]+/'],
         ]);
+        $sousCategoAll = Sous_categorie::All();
+        foreach ($sousCategoAll as $sC) {
+            
+            if($sC->categorie_id == null && $sC->libelle == $request->libelle){
+                $sC->categorie_id = $request->categorie_id;
+                $sC->save();
+                return Response()->json(['etat' => false,'sousCategorieAjout' => $sC]);
+            }
+        }
         $sousCategorie = new Sous_categorie();
         $sousCategorie->libelle = $request->libelle;
         $sousCategorie->categorie_id = $request->categorie_id;

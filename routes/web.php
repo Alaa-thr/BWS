@@ -22,6 +22,7 @@ Auth::routes();
 /************************************************ Visiteur***********************************************/
 
 Route::get('/logoutregister', 'Auth\LoginController@logoutRegister')->name("logoutregister");
+Route::post('/authenticate', 'Auth\LoginController@authenticate')->name("authenticate");
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/accueil', 'BwsController@accueil')->name('accueil');
 Route::get('/apropos', 'BwsController@apropos')->name('apropos');
@@ -32,12 +33,13 @@ Route::get('/contact', 'BwsController@contact')->name('contact');
 Route::get('/article_detaillé', 'BwsController@article_D')->name('article_D');
 Route::get('/getville', 'BwsController@get_ville');
 Route::get('/panierVisiteur', 'BwsController@panier_visiteur')->name('panierVisiteur');
+Route::post('/getconnect', 'BwsController@Connect');
 
 /************************************************ Admin***********************************************/
 
 Route::get('/admin', 'AdminController@admin_admin')->name('admin');
 Route::get('/articlesAdmin', 'AdminController@article_admin')->name('articlesAdmin');
-Route::get('/categoriesAdmin', 'AdminController@categories_admin')->name('categoriesAdmin');
+Route::get('/categories', 'AdminController@categories_admin')->name('categories');
 Route::get('/shopCategories', 'AdminController@Shopcategories_admin');
 Route::get('/emploiCategories', 'AdminController@Emploicategories_admin');
 
