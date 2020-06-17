@@ -30,8 +30,6 @@
                   <button v-on:click="AnnulerSel()" v-if="suppr" class="btn-sm btn-warning " style="height: 35px; " ><b>Annuler</b>
                   </button>
                </div>
-         
-            
             <hr style="margin-top:42px;">       
           
             <div class="card-body"   v-for="Favorisc in Favorisclient" >
@@ -50,13 +48,13 @@
     <div class="row" >
     <div  class="col-md-4 pr-1" v-if="Favorisc.produit_id  === null" >
       <div style="margin-left:22px" v-for="emplC in employeur" v-if=" Favorisc.annonce_emploi_id  === emplC.id">
-          <p class="" id="h" > Vous ajoutez annoncce d'emplois   '@{{emplC.libellé}}'    au favoris</p>
+          <p class="" id="h" > Ajoutez cette annoncce d'emplois   '@{{emplC.libellé}}'    au favorie</p>
       </div>
        
     </div>
     <div  class="col-md-4 pr-1" v-else="Favorisc.annonce_emploi_id  === null" >
       <div style="margin-left:22px" v-for="imgA in imagesannonce" v-if=" Favorisc.produit_id  === imgA.id">
-          <p class="" id="h" > Vous ajoutez produit '@{{imgA.Libellé}}'    au favoris .</p>
+          <p class="" id="h" > Ajoutez  ce produit :'@{{imgA.Libellé}}'    au favorie .</p>
       </div>
        
     </div>

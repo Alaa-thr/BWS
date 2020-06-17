@@ -93,6 +93,7 @@ Route::put('/updateProfilE/{id}','EmployeurController@update_profil');
 Route::get('/demandeEmploiTraite','EmployeurController@get_commande_traiter_emplyeur')->name('demandeEmploiTraite');
 Route::post('/detaillsacommandetraiteremplyeur', 'EmployeurController@detaillsacommandeTraiterEmplyeur'); 
 Route::delete('/deletecommandetraiteremplyeur/{id}','EmployeurController@deleteCommandeTraiterEmployeur');
+Route::put('/recudemande/{id}','EmployeurController@RecuDemande');
 
 /*Demande Reçu*/
 Route::get('/demandeEmploiRecu','EmployeurDemandeController@get_demande_reçu_emplyeur')->name('demandeEmploiRecu');
@@ -112,6 +113,7 @@ Route::get('/getAllcolor', 'VendeurController@getColors');
 Route::get('/commandeRecuVendeur','VendeurController@get_commande_vendeur')->name('commandeRecuVendeur');
 Route::post('/detaillsacommandevendeur', 'VendeurController@detaillsacommandeVendeur'); 
 Route::delete('/deletecommandevendeur/{id}','VendeurController@deleteCommandeVendeur');
+Route::put('/recucommande/{id}','VendeurController@RecuCommande');
 
 /*commande traiter vendeur*/
 Route::get('/commandeTraiterVendeur','VendeurCommandeController@get_commande_traiter_vendeur')->name('commandeTraiterVendeur');

@@ -1,10 +1,11 @@
-<?php
+<?php 
 
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Employeur;
+use App\Demande;
 use App\User;
 use App\Annonce_emploie;
 use App\Imageproduit;
@@ -59,5 +60,13 @@ class EmployeurController extends Controller
         return Response()->json(['etat' => true]);
     }
 
+
+    public function RecuDemande($id){
+        $traiter = Demande::find($id);
+        $traiter->demmande_traiter =1;
+        $traiter->save();
+        session()->flash('success',' Cette Demmande sera trouvée dans Demmande Traitée');
+        return $traiter;
+    }
 
 }

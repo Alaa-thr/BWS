@@ -35,7 +35,7 @@
             <hr style="margin-top:42px;">       
           
         
-            <div class="card-body"   v-for="commandec in commandeclient" >
+            <div class="card-body"   v-for="commandec in commandeclient" v-if="commandec.demmande_traiter===0">
 
 <div v-if="selectall" >
        <input type="checkbox"  style=" margin-left: 10px;" :id="commandec.id" :value="commandec.id" v-model="checkedArticles" @change="changeButton(commandec)">
@@ -217,7 +217,14 @@
     </div>
     </div>  
 
-     
+    <div class="row" style="margin-left:422px;margin-top:22px;">
+    <div class="col-md-4 pr-1" >
+      <div style="margin-left:464px">
+      <button v-on:click=" RecuCommande(commandec.id);"   class="btn-sm btn-success " style="height: 35px; " ><b>Traiter</b>
+                  </button>      </div>
+    </div>
+   
+    </div> 
 
          
       </div>
@@ -277,13 +284,20 @@ var app2 = new Vue({
     detaillsA: {
       idA: 0,
     },
-
-  
-  
                
   },
 methods: {
 
+  RecuDemande: function(id){
+          	axios.put(window.Laravel.url+'/recudemande/'+id)
+              .then(response => {
+                	console.log("response",response.data);
+                  window.location.reload();
+               })
+              .catch(error => {
+                  console.log('errors : '  , error);
+             })
+          },
 
   detaillsdemandeReçuEmplyeur: function(){
 
