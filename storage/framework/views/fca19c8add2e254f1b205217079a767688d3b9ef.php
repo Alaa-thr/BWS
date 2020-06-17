@@ -628,12 +628,10 @@
                         <span class="splash-description">Please enter your user information.</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="<?php echo e(route('login')); ?>">
+                       
+                        <form method="POST" :action="wayLogin()">
                             <?php echo csrf_field(); ?>
                             <div class="form-group">
-                                <input class="form-control form-control-lg
-                                <?php echo e($errors->has('email') || $errors->has('numTelephone') ? ' is-invalid' : ''); ?>" name="numTelephone" value="<?php echo e(old('numTelephone')); ?>" type="text" placeholder="Email ou Telephone"  id="numTelephone" v-on:keyup='Connect()'>
-                                
                                 <?php $__errorArgs = ['numTelephone'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -659,6 +657,10 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+                                <input class="form-control form-control-lg
+                                <?php echo e($errors->has('email') || $errors->has('numTelephone') ? ' is-invalid' : ''); ?>" name="numTelephone" value="<?php echo e(old('numTelephone')); ?>" type="text" placeholder="Email ou Telephone"  id="numTelephone" v-on:keyup='Connect()'>
+                                
+                                
 
                             </div>
                             <div class="form-group">
@@ -990,8 +992,17 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
             },
             hideSelect: false,
             types: [],
+            //wayLogin: <?php echo e(json_encode(route('login'))); ?>,
          },
          methods:{
+            wayLogin: function(){
+                if(this.types.length == 0){
+                    return "<?php echo e(route('login')); ?>";
+                }
+                else{
+                     return "<?php echo e(route('authenticate')); ?>";
+                }
+            },
             Connect: function(){
 
                 clearTimeout(this.timer); 
@@ -1024,6 +1035,9 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
             showww(t){
                 console.log('t',t);
             }
+         },
+         mounted:function(){
+            this.Connect();
          }
        })
        function connecterAvant(){

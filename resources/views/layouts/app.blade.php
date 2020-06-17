@@ -624,7 +624,8 @@
                         <span class="splash-description">Please enter your user information.</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('login') }}">
+                       
+                        <form method="POST" :action="wayLogin()">
                             @csrf
                             <div class="form-group">
                                 <input class="form-control form-control-lg
@@ -944,8 +945,17 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
             },
             hideSelect: false,
             types: [],
+            //wayLogin: {{ json_encode(route('login')) }},
          },
          methods:{
+            wayLogin: function(){
+                if(this.types.length == 0){
+                    return "{{route('login')}}";
+                }
+                else{
+                     return "{{route('authenticate')}}";
+                }
+            },
             Connect: function(){
 
                 clearTimeout(this.timer); 
@@ -978,6 +988,9 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
             showww(t){
                 console.log('t',t);
             }
+         },
+         mounted:function(){
+            this.Connect();
          }
        })
        function connecterAvant(){

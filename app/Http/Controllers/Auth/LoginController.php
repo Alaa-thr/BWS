@@ -10,6 +10,9 @@ use Session;
 use Illuminate\Support\Facades\Route;
 use Log;
 use Illuminate\Http\Request;
+use Redirect;
+use Illuminate\Support\MessageBag;
+use Illuminate\Support\Facades\Input;
 class LoginController extends Controller
 {
     /*
@@ -72,19 +75,16 @@ class LoginController extends Controller
     }
 
 
-    /*public function authenticate(Request $request)
+    public function authenticate(Request $request)
     { 
-        if(count($request->All()) == 3){
-          \Log::info($request->All());
-           $credentials = $request->only('email' , 'password');
-        }
-        else if(count($request->All()) == 4){
-          $credentials = $request->only('email', 'type_compte', 'password');
-        }
+           $request->validate([
+             'password' => ['required'],
+             'type_compte' => ['required'],
+         ]);
 
-          //\Log::info(count($request->All()));
+          $credentials = $request->only('email', 'type_compte', 'password');
           if (Auth::attempt($credentials)) {
-            
+            \Log::info('hello');
               if(Auth::user()->type_compte == "c"){
                  return redirect()->intended(url()->previous());
               }
@@ -101,7 +101,10 @@ class LoginController extends Controller
 
               }
           }
-    }*/
+          else{
+            return $this->sendFailedLoginResponse($request->password);
+          }
+    }
 
     public function username(){
         $loginType = request()->input('numTelephone');//return string "phone number" or "email" based on input form user
