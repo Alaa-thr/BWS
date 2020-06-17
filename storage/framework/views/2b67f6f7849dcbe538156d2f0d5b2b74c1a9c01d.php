@@ -3,7 +3,7 @@
 <?php $__env->startSection('content'); ?>
 
   <head>
-    <title><?php echo e(( 'Annonces Emplois')); ?></title>
+    <title><?php echo e(( 'Annonces Emploies')); ?></title>
   </head>
 
        <div class="main-panel" id="main-panel">

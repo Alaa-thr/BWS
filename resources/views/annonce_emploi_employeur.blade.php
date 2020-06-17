@@ -3,7 +3,7 @@
 @section('content')
 
   <head>
-    <title>{{ ( 'Annonces Emplois') }}</title>
+    <title>{{ ( 'Annonces Emploies') }}</title>
   </head>
 
        <div class="main-panel" id="main-panel">
