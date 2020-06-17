@@ -30,32 +30,33 @@
                   <button v-on:click="AnnulerSel()" v-if="suppr" class="btn-sm btn-warning " style="height: 35px; " ><b>Annuler</b>
                   </button>
                </div>
-         
-            
             <hr style="margin-top:42px;">       
           
-        
-            <div class="card-body"   v-for="notificationc in notificationclient" >
+            <div class="card-body"   v-for="Favorisc in Favorisclient" >
 
 <div v-if="selectall" ><div id="favv">
-       <input type="checkbox" style=" margin-left: 10px;" :id="notificationc.id" :value="notificationc.id" v-model="checkedArticles" @change="changeButton(notificationc)">
-</div> <label :for="notificationc.id" style="margin-top: 40px; margin-left: 10px;"></label>
+       <input type="checkbox" style=" margin-left: 10px;" :id="Favorisc.id" :value="Favorisc.id" v-model="checkedArticles" @change="changeButton(Favorisc)">
+</div> <label :for="Favorisc.id" style="margin-top: 40px; margin-left: 10px;"></label>
     </div>
     <div v-else ><div id="ch1">
-      <input type="checkbox" :id="notificationc.id" :value="notificationc.id" style="margin-left: -10px;" v-model="articleIds" @click="deselectArticle(notificationc.id)"></div>
-      <label :for="notificationc.id" style="margin-top: 40px; margin-left: 10px;"></label>
+      <input type="checkbox" :id="Favorisc.id" :value="Favorisc.id" style="margin-left: -10px;" v-model="articleIds" @click="deselectArticle(Favorisc.id)"></div>
+      <label :for="Favorisc.id" style="margin-top: 40px; margin-left: 10px;"></label>
     </div>
 
 
   <div class="card-head"  id="fav"  >              
     <div class="row" >
-    <div class="col-md-4 pr-1" >
-      <div style="margin-left:22px">
-          <p class="" id="t" >Demandes @{{notificationc.id}} </p>
+    <div  class="col-md-4 pr-1" v-if="Favorisc.produit_id  === null" >
+      <div style="margin-left:22px" v-for="emplC in employeur" v-if=" Favorisc.annonce_emploi_id  === emplC.id">
+          <p class="" id="h" > Ajoutez cette annoncce d'emplois   '@{{emplC.libellé}}'    au favorie</p>
       </div>
+       
     </div>
-    <div class="col-md-4 px-1">
-     
+    <div  class="col-md-4 pr-1" v-else="Favorisc.annonce_emploi_id  === null" >
+      <div style="margin-left:22px" v-for="imgA in imagesannonce" v-if=" Favorisc.produit_id  === imgA.id">
+          <p class="" id="h" > Ajoutez  ce produit :'@{{imgA.Libellé}}'    au favorie .</p>
+      </div>
+       
     </div>
     <div class="col-md-4 pl-1">
       <div class="">
@@ -63,8 +64,8 @@
         <i class="fas fa-ellipsis-v"  id="y"></i>
        </a>
       <div class="dropdown-menu " x-placement="right-start" id="pl">
-    <a class="dropdown-item" v-on:click="deleteDemande(notificationc)"style="color: red; font-style: italic; font-weight: 900; cursor: pointer;">Supprimer</a>
-       </div><p class=""  id="tt" >@{{notificationc.created_at}}</p>
+    <a class="dropdown-item" v-on:click="deletefavorisClient(Favorisc)"style="color: red; font-style: italic; font-weight: 900; cursor: pointer;">Supprimer</a>
+       </div>
       </div>
     </div>
     </div>
@@ -74,18 +75,17 @@
   <hr>
 
 </div>                   {{$article->links()}}
-              </div>
-              </div>
-              </div>
-              </div>
-              </div>
-              </div>
-
-
+          </div>
+    
+</div>
+</div>
+</div>
 
 
   
+</div>
 
+</div>
 
 
 
@@ -106,6 +106,9 @@
            "csrfToken"  => csrf_token(),
            "article"   => $article,
            "idAdmin" => $idAdmin,
+           'annonceC'         => $annonceC,
+           'produitC'         => $produitC,
+
            "url"      => url("/")  
       ]) !!};
 </script>
@@ -151,7 +154,8 @@ el: '#app',
 
 
 data:{
-  notificationclient: [],
+  Favorisclient: [],
+  employeur:[],imagesannonce:[],
   suppr: false, 
   checkedArticles: [],
   artilcesDelete: [],
@@ -173,7 +177,7 @@ methods: {
             Swal.fire({
             icon: 'error',
             title: 'Oops...',
-            text: 'Il ya aucun Notification a supprimer!',
+            text: 'Il ya aucun Favoris a supprimer!',
 
           }).then((result) => {
             this.allSelected = false;
@@ -185,7 +189,7 @@ methods: {
         }
         Swal.fire({
         title: 'Etes vous?',
-        text: "De supprimer cette Notification?",
+        text: "De supprimer cette Favoris?",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -198,8 +202,8 @@ methods: {
                 .then(response => {
                   if(response.data.etat){
                                         
-                            var position = this.notificationclient.indexOf(key);
-                            this.notificationclient.splice(position,1);      
+                            var position = this.Favorisclient.indexOf(key);
+                            this.Favorisclient.splice(position,1);      
                   }                    
                 })
                 .catch(error =>{
@@ -213,7 +217,7 @@ methods: {
                 this.selectall = true;
           Swal.fire(
             'Effacé!',
-            'Votre notification a été supprimé.',
+            'Votre favoris a été supprimé.',
             'success'
           )
         }
@@ -221,10 +225,10 @@ methods: {
         })
    },
  
-   deleteFavorisClient: function(article){
+   deletefavorisClient: function(article){
         Swal.fire({
     title: 'Etes vous?',
-    text: "De supprimer cette Notification?",
+    text: "De supprimer cette Favoris?",
     icon: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
@@ -235,8 +239,8 @@ methods: {
           axios.delete(window.Laravel.url+'/deletefavorisclient/'+article.id)
             .then(response => {
               if(response.data.etat){
-                       var position = this.notificationclient.indexOf(article);
-                       this.notificationclient.splice(position,1);
+                       var position = this.Favorisclient.indexOf(article);
+                       this.Favorisclient.splice(position,1);
                        this.checkedArticles.length = [];
                        this.suppr=false;
                        this.artilcesDelete = [];
@@ -248,7 +252,7 @@ methods: {
             })
       Swal.fire(
         'Effacé!',
-        'Votre notification a été supprimé.',
+        'Votre favoris a été supprimé.',
         'success'
       )
     }
@@ -264,8 +268,9 @@ methods: {
             axios.get(window.Laravel.url+'/favorisClient')
 
                 .then(response => {
-                     this.notificationclient = window.Laravel.article.data;
-                    
+                     this.Favorisclient = window.Laravel.article.data;
+                     this.employeur = window.Laravel.annonceC;
+                     this.imagesannonce = window.Laravel.produitC;
 
                 })
                 .catch(error =>{
@@ -293,9 +298,9 @@ methods: {
   selectAll: function() {
         this.selectall = false;
         if (this.allSelected) {
-            for (user in this.notificationclient) {
-                this.articleIds.push(this.notificationclient[user].id);
-                this.artilcesDelete.push(this.notificationclient[user]);
+            for (user in this.Favorisclient) {
+                this.articleIds.push(this.Favorisclient[user].id);
+                this.artilcesDelete.push(this.Favorisclient[user]);
             }
             this.suppr=true;
          }

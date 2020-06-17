@@ -30,7 +30,6 @@
                   <button v-on:click="AnnulerSel()" v-if="suppr" class="btn-sm btn-warning " style="height: 35px; " ><b>Annuler</b>
                   </button>
                </div>
-         
             
             <hr style="margin-top:42px;">       
           
@@ -59,13 +58,13 @@
     
     <div  class="col-md-4 pr-1" v-if="notificationc.vendeur_id  === null" >
       <div style="margin-left:22px" v-for="emplC in employeur" v-if=" notificationc.employeur_id  === emplC.id">
-          <p class="" id="h" >Employeur ' @{{emplC.nom}}' à  nouveau annonce d'emplois.</p>
+          <p class="" id="h" >Employeur ' @{{emplC.nom}}' à déposer une nouvelle annonce d'emploie.</p>
       </div>
        
     </div>
     <div  class="col-md-4 pr-1" v-else="notificationc.employeur_id  === null" >
       <div style="margin-left:22px" v-for="imgA in imagesannonce" v-if=" notificationc.vendeur_id  === imgA.id">
-          <p class="" id="h" >vendeur ' @{{imgA.Nom}}' à  nouveau annonce d'emplois.</p>
+          <p class="" id="h" >Vendeur ' @{{imgA.Nom}}' à déposer un nouveau produit.</p>
       </div>
        
     </div>
@@ -126,8 +125,8 @@
            "csrfToken"  => csrf_token(),
            "article"   => $article,
            "idAdmin" => $idAdmin,
-           'notificC'         => $notificC,
-           'ImageA'         => $ImageA,
+           'emploC'         => $emploC,
+           'vendeurC'         => $vendeurC,
 
            "url"      => url("/")  
       ]) !!};
@@ -289,8 +288,8 @@ methods: {
 
                 .then(response => {
                      this.notificationclient = window.Laravel.article.data;
-                     this.employeur = window.Laravel.notificC;
-                     this.imagesannonce = window.Laravel.ImageA;
+                     this.employeur = window.Laravel.emploC;
+                     this.imagesannonce = window.Laravel.vendeurC;
 
                 })
                 .catch(error =>{
