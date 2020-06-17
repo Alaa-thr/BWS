@@ -1,3 +1,4 @@
+  
 @extends('layouts.template_employeur')
 
 @section('content')
@@ -262,21 +263,16 @@
            "csrfToken"  => csrf_token(),
            "article"   => $article,
            "idAdmin" => $idAdmin,         'emploC'         => $emploC,  'prV'         => $prV,
-
            "url"      => url("/")  
       ]) !!};
 </script>
 
 <script>
-
-
-
 var app2 = new Vue({
   el: '#app2',
   data:{
     commandeclient2: [],employeur:[],produit:[],
     openInfo: false,
-
     hideModel: false,
    
  
@@ -287,36 +283,28 @@ var app2 = new Vue({
                
   },
 methods: {
-
   RecuDemande: function(id){
-          	axios.put(window.Laravel.url+'/recudemande/'+id)
+            axios.put(window.Laravel.url+'/recudemande/'+id)
               .then(response => {
-                	console.log("response",response.data);
+                  console.log("response",response.data);
                   window.location.reload();
                })
               .catch(error => {
                   console.log('errors : '  , error);
              })
           },
-
   detaillsdemandeReçuEmplyeur: function(){
-
     axios.post(window.Laravel.url+'/detaillsdemandereçuemplyeur', this.detaillsA)
-
         .then(response => {
-
              this.commandeclient2 = response.data;
              this.employeur = window.Laravel.emploC;
              this.produit = window.Laravel.prV;
-
              
         })
         .catch(error =>{
              console.log('errors :' , error);
         })
   },
-
-
   CancelArticle(article){
     this.modifier = false ;
     this.hideModel = false;
@@ -331,15 +319,10 @@ methods: {
     article.titre = this.oldArt.titre;
     article.description = this.oldArt.description;
   },
-
 },    
 });
-
 var app = new Vue({
-
 el: '#app',
-
-
 data:{
   commandeclient: [],
   suppr: false, 
@@ -348,7 +331,6 @@ data:{
   allSelected: false,
   articleIds: [],
   selectall: true,
-
   },
 methods: {
   
@@ -358,7 +340,6 @@ methods: {
             icon: 'error',
             title: 'Oops...',
             text: 'Il ya aucun Article a supprimer!',
-
           }).then((result) => {
             this.allSelected = false;
             this.suppr=false;
@@ -452,10 +433,8 @@ methods: {
   },
   get_demande_reçu_emplyeur: function(){
             axios.get(window.Laravel.url+'/demandeEmploiRecu')
-
                 .then(response => {
                      this.commandeclient = window.Laravel.article.data;
-
                 })
                 .catch(error =>{
                      console.log('errors :' , error);
@@ -510,8 +489,7 @@ created:function(){
   this.get_demande_reçu_emplyeur();
 }
 });
-
-
 </script>
 
 @endpush
+

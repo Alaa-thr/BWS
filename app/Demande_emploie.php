@@ -16,8 +16,15 @@ class Demande_emploie extends Model
         return $this->belongsTo('App\Client');
     }
 
-    public function employeur()
+
+     public function employeur()
     {
         return $this->belongsTo('App\Employeur');
     }
+   public function annonce()
+   {
+   	return $this->belongsTo('App\Annonce_emploie');
+   }
+
+
 }
