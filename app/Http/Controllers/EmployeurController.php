@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Employeur;
-use App\Demande;
+use App\Demande_emploie;
 use App\User;
 use App\Sous_categorie;
 use App\Annonce_emploie;
@@ -149,7 +149,7 @@ class EmployeurController extends Controller
 
 
     public function RecuDemande($id){
-        $traiter = Demande::find($id);
+        $traiter = Demande_emploie::find($id);
         $traiter->demmande_traiter =1;
         $traiter->save();
         session()->flash('success',' Cette Demmande sera trouvée dans Demmande Traitée');

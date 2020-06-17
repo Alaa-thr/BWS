@@ -221,7 +221,7 @@
     <div class="row" style="margin-left:422px;margin-top:22px;">
     <div class="col-md-4 pr-1" >
       <div style="margin-left:464px">
-      <button v-on:click=" RecuCommande(commandec.id);"   class="btn-sm btn-success " style="height: 35px; " ><b>Traiter</b>
+      <button v-on:click=" RecuDemande(commandec.id);"   class="btn-sm btn-success " style="height: 35px; " ><b>Traiter</b>
                   </button>      </div>
     </div>
    
