@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Vendeur;
 use App\Client;
+use App\Commande;
 use App\User;
 use App\Produit;
 use App\Imageproduit;
@@ -196,6 +197,14 @@ class VendeurController extends Controller
         return Response()->json(['etat' => true]);
     }
 
+
+    public function RecuCommande($id){
+        $traiter = Commande::find($id);
+        $traiter->commande_traiter =1;
+        $traiter->save();
+        session()->flash('success','Cette Commande sera trouvée dans Commande Traitée');
+        return $traiter;
+    }
 
 }
  /*$tableIdProduit = [];
