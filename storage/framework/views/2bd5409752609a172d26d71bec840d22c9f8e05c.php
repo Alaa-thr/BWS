@@ -48,7 +48,6 @@
                   <a v-else href="#" class="col-md-7 js-show-modal1" style="cursor: pointer; ">
                     <div><p style=" color: black; margin-top: -1px; margin-left: -25px;" v-on:click="AfficherInfo(ema.id)">Message a la part de  <b>{{ ema.adresse_email }}</b></p><br><p style="margin-top: -20px; color: green; margin-left: -22px;">Répondu par l'admin {{ ema.admin_nom }}</p>
                     </div>
-<<<<<<< HEAD
                   </a>
                   <div class="col-md-2 js-show-modal1">
                     <ul>
@@ -57,18 +56,6 @@
                       <li v-else  class="label12" data-label12="Répondu">
                       </li>
                     </ul>
-=======
-                  <div class="col-md-1">
-                    <i class="now-ui-icons ui-1_send" style="font-size: 25px; color: gray; margin-left: 20px;"></i>
-                  </div>
-                  <a href="#" class="col-md-7 " style="cursor: pointer;  color: white;">
-                      <div class="title" style="color: black; "><p class="title" style="font-size: 18px; color: black; margin-top: -1px;">Nouveau Email de (Miloud Slimani)</p>
-                  </div>
-                </a>
-                 <li class="label11" data-label11="Nouveau"></li>
-                  <div class="col-md-3">
-                    <a href="#"><i class="now-ui-icons ui-1_simple-remove" style="font-size: 25px;  margin-left: 150px; "></i></a>
->>>>>>> c39093c6df55c2af659066241f4384f6a066669c
                   </div>
                   <div class="col-md-1">
                     <a ><i class="now-ui-icons ui-1_simple-remove" style="font-size: 25px; cursor: pointer; color: red; margin-left: 20px;" v-on:click="deleteEmail(ema)"></i></a>
@@ -134,8 +121,11 @@
               </textarea>
             </div> 
               <a href="https://www.gmail.com" target=_blank>       
-                <button  class=" flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer " v-on:click="repond(emaa.id)" style="width: 250px;  background-color: #FF0000; height: 40px; box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);">                     
+                <button v-if="rep2 && emaa.reponse === 0 " class=" flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer " v-on:click="repond(emaa.id)" style="width: 250px;  background-color: #FF0000; height: 40px; box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);">                     
                   Repondre
+                </button>
+                <button v-else class=" flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04  "  style="width: 250px;  background-color: blue; height: 40px; box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);" disabled="disabled"> 
+                  était déja Répondu
                 </button>                     
               </a>
               <button class="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer " style="margin-top: 10px; margin-left: 270px; margin-top: -40px; width: 240px; background-color: #32CD32; height: 40px; box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);" v-on:click="hideModel = false">
@@ -168,6 +158,7 @@
      data:{
         emails2: [],
         hideModel: false,
+        rep2: true,
           detailsEM:{
           idEM: 0,
          },

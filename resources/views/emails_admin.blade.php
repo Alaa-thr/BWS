@@ -121,8 +121,11 @@
               </textarea>
             </div> 
               <a href="https://www.gmail.com" target=_blank>       
-                <button  class=" flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer " v-on:click="repond(emaa.id)" style="width: 250px;  background-color: #FF0000; height: 40px; box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);">                     
+                <button v-if="rep2 && emaa.reponse === 0 " class=" flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer " v-on:click="repond(emaa.id)" style="width: 250px;  background-color: #FF0000; height: 40px; box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);">                     
                   Repondre
+                </button>
+                <button v-else class=" flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04  "  style="width: 250px;  background-color: blue; height: 40px; box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);" disabled="disabled"> 
+                  était déja Répondu
                 </button>                     
               </a>
               <button class="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer " style="margin-top: 10px; margin-left: 270px; margin-top: -40px; width: 240px; background-color: #32CD32; height: 40px; box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);" v-on:click="hideModel = false">
@@ -155,6 +158,7 @@
      data:{
         emails2: [],
         hideModel: false,
+        rep2: true,
           detailsEM:{
           idEM: 0,
          },

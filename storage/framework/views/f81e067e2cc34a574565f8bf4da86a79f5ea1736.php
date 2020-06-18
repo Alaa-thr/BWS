@@ -625,7 +625,7 @@
             <div class="splash-container js-pscroll" >
                 <div class="card " >
                     <div class="card-header">
-                        <a href="index.html" class="logo p-l-50" >
+                        <a href="<?php echo e(route('accueil')); ?>" class="logo p-l-50" >
                             <img src="images/icons/LogoFinal2.png" alt="IMG-LOGO" >
                         </a>
                         <span class="splash-description">Please enter your user information.</span>
