@@ -30,12 +30,11 @@
                   <button v-on:click="AnnulerSel()" v-if="suppr" class="btn-sm btn-warning " style="height: 35px; " ><b>Annuler</b>
                   </button>
                </div>
-         
             
             <hr style="margin-top:42px;">       
           
         
-            <div class="card-body"   v-for="commandec in commandeclient" >
+            <div class="card-body"   v-for="commandec in commandeclient" v-if="commandec.demmande_traiter===1">
 
 <div v-if="selectall" >
        <input type="checkbox"  style=" margin-left: 10px;" :id="commandec.id" :value="commandec.id" v-model="checkedArticles" @change="changeButton(commandec)">

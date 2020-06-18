@@ -453,6 +453,21 @@
                     libelle :'',
                   };
                 }
+                else{
+                  this.SousCategoAjout = response.data.sousCategorieAjout;
+                  this.SousCategoAjout.id = response.data.sousCategorieAjout.id;
+                  this.sousCategories.unshift(this.SousCategoAjout);
+
+                  var position = this.sousCategoriesNull.indexOf(response.data.sousCategorieAjout);
+                  this.sousCategoriesNull.splice(position,1);
+                  this.open2 = false;
+                  this.message = {};
+                  this.SousCategoAjout={
+                    id: 0,
+                    categorie_id:0 ,
+                    libelle :'',
+                  };
+                }
                })
               .catch(error => {
                   this.message = error.response.data.errors;
@@ -499,7 +514,7 @@
                         axios.delete(window.Laravel.url+'/deletesouscategorie/'+key.id) 
                            .then(response =>{
                                if(response.data.etat){
-                                   window.location.reload();    
+                                       
                                    var position = this.sousCategories.indexOf(key);
                                    this.sousCategories.splice(position,1);
                                    this.suppr2 = false;   
@@ -541,7 +556,7 @@
                     axios.delete(window.Laravel.url+'/deletesouscategorie/'+key.id) 
                        .then(response =>{
                            if(response.data.etat){
-                               window.location.reload();    
+                                  
                                var position = this.sousCategories.indexOf(key);
                                this.sousCategories.splice(position,1);
                                this.suppr2 = false;   
@@ -569,7 +584,7 @@
             
       },
       getCategories:function(){
-             axios.get(window.Laravel.url+'/categoriesAdmin')
+             axios.get(window.Laravel.url+'/categories')
              .then(response => {
                   this.categories = window.Laravel.categorie.data;
                   if(window.Laravel.var == 1){
@@ -613,9 +628,9 @@
                         axios.delete(window.Laravel.url+'/deletecategorie/'+key.id)
                           .then(response => {
                             if(response.data.etat){
-                                     window.location.reload();             
-                                      var position = this.categories.indexOf(key);
-                                      this.categories.splice(position,1);      
+                                    window.location.reload();             
+                                    var position = this.categories.indexOf(key);
+                                    this.categories.splice(position,1);      
                             }                    
                           })
                           .catch(error =>{

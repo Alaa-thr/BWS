@@ -26,7 +26,7 @@
          $stripeCatego='';
                 
          $urlAcctuiel = Route::getCurrentRoute()->uri();
-         if($urlAcctuiel == 'categoriesAdmin' || $urlAcctuiel == 'shopCategories' || $urlAcctuiel == 'emploiCategories'){
+         if($urlAcctuiel == 'categories' || $urlAcctuiel == 'shopCategories' || $urlAcctuiel == 'emploiCategories'){
              $stripeCatego='active';
          }
   ?>
@@ -100,7 +100,7 @@
           
          
           <li class="<?php echo $stripeCatego ?>">
-            <a href="<?php echo e(route('categoriesAdmin')); ?>">
+            <a href="<?php echo e(route('categories')); ?>">
               <i class="now-ui-icons design_bullet-list-67" id="y"></i>
               <div class="m-t-5" id="x">Categories</div>
             </a>

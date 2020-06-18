@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 
 use App\Ville;
+use App\User;
 use App\Vendeur;
 use App\Client;
 use App\Employeur;
@@ -20,6 +21,26 @@ class BwsController extends Controller
 {
 
 /************************************************ Visiteur***********************************************/   
+     public function Connect(Request $request)
+    {
+        $users =  User::All();
+        $i = 0;
+        $typeCompte =  array();
+        foreach ($users as $user) {
+            if($user->email == $request->value || $user->numTelephone == $request->value){
+                $i++;
+                array_push($typeCompte,$user->type_compte);
+            }
+        }
+        if($i > 1){
+            return ['etat' => true, 'typeCompte' =>$typeCompte];
+        }
+        else{
+            return ['etat' => false];
+        }
+        
+    } 
+
      public function apropos()
     {
         return view('apropos');

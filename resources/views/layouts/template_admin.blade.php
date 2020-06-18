@@ -48,7 +48,7 @@
          else if($urlAcctuiel == 'articlesAdmin'){
              $stripeArticle='active';
          }
-         else if($urlAcctuiel == 'categoriesAdmin'){
+         else if($urlAcctuiel == 'categories'){
              $stripeCatego='active';
          }
   ?>
@@ -121,7 +121,7 @@
           
          
           <li class="<?php echo $stripeCatego ?>">
-            <a href="{{route('categoriesAdmin')}}">
+            <a href="{{route('categories')}}">
               <i class="now-ui-icons design_bullet-list-67" id="y"></i>
               <div class="m-t-5" id="x">Categories</div>
             </a>

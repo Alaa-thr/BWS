@@ -12,13 +12,26 @@
   </div>
   <div class="content" id="app">
     <div class="row">
+   
       <div class="col-md-12">
         <div class="card">
           <div class="card-header" >
-                
+          @if(session()->has('success'))
+<div class="row"> 
+<div class="alert alert-success" style="  margin-left:33px;width: 960px;">
+
+<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;
+
+</button>
+ {{ session()->get('success')}}
+</div>
+
+</div>
+      @endif
                 <div class="flex-t">
                     <input type="checkbox" id="article" @change="selectAll()" v-model="allSelected" style="margin-top: 5px;">
-                    <label for="article"></label>
+                    <label for="article"></label> 
+                   
                     <h4 style="margin-top: -6px;margin-left: 10px;">Commande Reçu</h4>
                 </div>
 
@@ -35,7 +48,7 @@
             <hr style="margin-top:42px;">       
           
         
-            <div class="card-body"   v-for="commandec in commandeclient" >
+            <div class="card-body"   v-for="commandec in commandeclient" v-if="commandec.commande_traiter===0">
 
 <div v-if="selectall" >
        <input type="checkbox"  style=" margin-left: 10px;" :id="commandec.id" :value="commandec.id" v-model="checkedArticles" @change="changeButton(commandec)">
@@ -96,6 +109,7 @@
           </div>
         </div>      
       </div>
+     
     </div>
 
 
@@ -225,7 +239,14 @@
       </div>
     </div>
     </div>  
-
+    <div class="row" style="margin-left:422px;margin-top:22px;">
+    <div class="col-md-4 pr-1" >
+      <div style="margin-left:464px">
+      <button v-on:click=" RecuCommande(commandec.id);"   class="btn-sm btn-success " style="height: 35px; " ><b>Traiter</b>
+                  </button>      </div>
+    </div>
+   
+    </div> 
          
       </div>
       </div>
@@ -284,15 +305,23 @@ var app2 = new Vue({
     detaillsA: {
       idA: 0,
     },
-
   
-  
-               
   },
 methods: {
 
+  RecuCommande: function(id){
+          	axios.put(window.Laravel.url+'/recucommande/'+id)
+              .then(response => {
+                	console.log("response",response.data);
+                  window.location.reload();
+               })
+              .catch(error => {
+                  console.log('errors : '  , error);
+             })
+          },
 
   detaillsacommandeVendeur: function(){
+
 
     axios.post(window.Laravel.url+'/detaillsacommandevendeur', this.detaillsA)
 

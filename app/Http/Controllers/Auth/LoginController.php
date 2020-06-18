@@ -8,6 +8,11 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use Session;
 use Illuminate\Support\Facades\Route;
+use Log;
+use Illuminate\Http\Request;
+use Redirect;
+use Illuminate\Support\MessageBag;
+use Illuminate\Support\Facades\Input;
 class LoginController extends Controller
 {
     /*
@@ -36,7 +41,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {        
-        $this->middleware('guest')->except(['logout', 'logoutRegister']);
+        $this->middleware('guest')->except(['logout', 'logoutRegister','authenticate']);
     }
 
     public function logout()
@@ -67,6 +72,38 @@ class LoginController extends Controller
         else if(Auth::user()->type_compte == "a"){
               return  RouteServiceProvider::ADMIN;
         }
+    }
+
+
+    public function authenticate(Request $request)
+    { 
+           $request->validate([
+             'password' => ['required'],
+             'type_compte' => ['required'],
+         ]);
+
+          $credentials = $request->only('email', 'type_compte', 'password');
+          if (Auth::attempt($credentials)) {
+            \Log::info('hello');
+              if(Auth::user()->type_compte == "c"){
+                 return redirect()->intended(url()->previous());
+              }
+              else if(Auth::user()->type_compte == "v"){
+                return redirect()->intended(RouteServiceProvider::VENDEUR);
+                 
+              }
+              else if(Auth::user()->type_compte == "e"){
+                return redirect()->intended(RouteServiceProvider::EMPLOYEUR);
+
+              }
+              else if(Auth::user()->type_compte == "a"){
+                return redirect()->intended(RouteServiceProvider::ADMIN);
+
+              }
+          }
+          else{
+            return $this->sendFailedLoginResponse($request->password);
+          }
     }
 
     public function username(){
