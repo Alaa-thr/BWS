@@ -29,7 +29,8 @@ Route::get('/apropos', 'BwsController@apropos')->name('apropos');
 Route::get('/shop', 'BwsController@produitVisiteur')->name('shop');
 Route::get('/emploi', 'BwsController@emploi')->name('emploi');
 Route::get('/article', 'BwsController@article')->name('article');
-Route::get('/contact', 'BwsController@contact')->name('contact');
+Route::get('/contact','BwsController@contact')->name('contact');
+Route::post('/addemail', 'BwsController@addEmail')->name('addemail');
 Route::get('/article_detaillé', 'BwsController@article_D')->name('article_D');
 Route::get('/getville', 'BwsController@get_ville');
 Route::get('/panierVisiteur', 'BwsController@panier_visiteur')->name('panierVisiteur');
@@ -49,7 +50,8 @@ Route::post('/addsouscategorie','AdminController@addSousCategorie');
 Route::put('/updatesouscategorie','AdminController@updateSousCategorieButton');
 Route::delete('/deletesouscategorie/{id}','AdminController@deleteSousCategorie');
 Route::get('/client', 'AdminController@client_admin')->name('client');
-Route::get('/emails', 'BwsController@emails_admin')->name('emails');
+Route::get('/emails', 'AdminController@emails_admin')->name('emails');
+Route::post('detailsemail','AdminController@detailsEmail');
 Route::get('/employeur', 'AdminController@employeur_admin')->name('employeur');
 Route::get('/notificationsAdmin', 'AdminController@notifications_admin')->name('notificationsAdmin');
 Route::get('/profilAdmin', 'AdminController@profil_admin')->name('profilAdmin');
@@ -81,8 +83,8 @@ Route::get('recupconfirmere/{id}','AdminController@recupConfirmerE');
 Route::get('recuperadmin','AdminController@recup_admin');
 Route::get('recupconfirmera/{id}','AdminController@recupConfirmerA');
 Route::delete('/deletenotification/{id}','AdminController@deleteNotif');
-
-
+Route::delete('/deleteemail/{id}','AdminController@deleteEmail');
+Route::put('/emailrependu/{id}','AdminController@emailRependu');
 
 
 /*********************************************** Employeur***********************************************/

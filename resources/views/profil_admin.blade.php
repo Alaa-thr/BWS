@@ -48,7 +48,7 @@
                   <div class="col-md-8 pl-2">
                     <div class="form-group">
                       <label for="exampleInputEmail1" >Adresse Email</label>
-                      <input name="adresse_email" type="email" class="form-control" v-model="profiladmin.email" value="{{old('admin')}}" v-on:click="modif = true">
+                      <input name="adresse_email" type="email" class="form-control" v-model="profiladmin.email" value="{{old('email')}}" v-on:click="modif = true">
                     </div>
                   </div>
                   <div class="col-md-4 pl-1">
