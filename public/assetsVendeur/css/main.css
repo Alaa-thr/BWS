@@ -3804,7 +3804,8 @@ input.num-product::-webkit-inner-spin-button {
   font-size: 15px; 
   font-weight: 600;
   font-style: italic;
-  margin-left: 12%;
+  margin-left:122px;
+  height: 20%;
 }
 #txt{
    color:black;
@@ -3820,3 +3821,65 @@ input.num-product::-webkit-inner-spin-button {
 #clr{
   background-color: rgb(192,4,4);
 }
+
+
+input[type=checkbox] + label{
+  margin: 0.2em;
+  cursor: pointer;
+
+}
+
+
+
+input[type=checkbox]{
+  display: none;
+}
+input[type=checkbox] + label:before{
+  content: "\2714";
+  border: 0.1em solid #000;
+  border-radius: 0.3em;
+  width: 0.1em;
+  height: 0.1em;
+  padding-right: 0.2em;
+  padding-left: 0.2em;
+  padding-bottom: 0.005em;
+  margin-right:1em; 
+  vertical-align: bottom;
+  color: transparent;
+  transition: .2s;
+}
+input[type=checkbox] + label:active:before{
+  transform: scale(0);
+}
+input[type=checkbox]:checked + label:before{
+  background-color: blue;
+  border-color: blue;
+  color:#fff;
+}
+
+#cvendeur{
+  margin-top: -11px;
+}
+
+#c{
+  width: 5%;
+  padding-bottom: 35px;
+}
+
+#cmd{
+	margin-top: -70px;
+	padding-top: 68px;
+	margin-bottom: 0px;
+	border: 2px solid gray;
+  border-radius: 25px;
+  height: 70px;
+}
+ #cb{
+   margin-left: 33px;
+   margin-top: -33px;
+ }
+ #cbb{
+   margin-left: -23px;
+  margin-top: -33px;
+}
+
