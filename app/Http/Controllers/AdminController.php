@@ -437,6 +437,7 @@ class AdminController extends Controller
         $email->reponse =1;
         if($email->reponse == 1){
             $email->admin_nom = $admin->nom;
+            $email->admin_prenom = $admin->prenom;
         }
         $email->save();
     }

@@ -68,7 +68,8 @@ class BwsController extends Controller
 
      public function article()
     {
-        return view('article');
+       $article = \DB::table('admins')->join('articles','admins.id','=','articles.admin_id')->orderBy('articles.created_at','desc')->get();
+        return view('article',['ar' =>$article]);
     }
     public function contact()
     {
@@ -100,7 +101,8 @@ class BwsController extends Controller
 
      public function article_D()
     {
-        return view('article_detaille');
+        $article_D = \DB::table('admins')->join('articles','admins.id','=','articles.admin_id')->get();
+        return view('article_detaille',['ardet' => $article_D]);
     }
 
 

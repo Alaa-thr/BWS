@@ -42,8 +42,8 @@
                         <td width="3%">
                           <b><i class="now-ui-icons ui-1_bell-53" style="margin-top: 5px;"></i></b>
                         </td>
-                        <td  class="text-left" v-if="noti.categorie_libelle "><a href="#" style="cursor: pointer; color: black;" ><b>L'admin @{{noti.nom}} a supprimer la catégorie @{{noti.categorie_libelle}} </b></a></td>
-                        <td  class="text-left" v-else><a href="#" style="cursor: pointer;  color: black;" ><b>L'admin @{{noti.nom}} a supprimer la sous catégorie @{{noti.sous_categorie_libelle}} </b></a></td>
+                        <td  class="text-left" v-if="noti.categorie_libelle "><a href="#" style=" color: black; cursor: auto;" >L'admin <b>@{{noti.nom}}</b> a supprimer la catégorie @{{noti.categorie_libelle}} </a></td>
+                        <td  class="text-left" v-else><a href="#" style="  color: black; cursor: auto;" >L'admin <b>@{{noti.nom}}</b> a supprimer la sous catégorie @{{noti.sous_categorie_libelle}} </a></td>
                         
                         <td  class="dropdown "  id="k">
                           <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#"> 

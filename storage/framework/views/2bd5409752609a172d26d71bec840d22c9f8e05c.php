@@ -15,17 +15,17 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <div style=" display: flex; margin-left: 17px; margin-top: 20px;">
+                <div style=" display: flex; margin-left: 17px; ">
                   <input type="checkbox" id="e" @change="selectAll()" v-model="allSelected" style="">
                   <label for="e"></label>
-                  <h4 class="card-title" style="margin-top: -5px;">Emails</h4>
+                  <h4 class="card-title" style="margin-top: -8px;">Emails</h4>
                 </div>
                 <button v-if="suppr" class="btn btn-sm btn-danger  btn-block" style="margin-left: 700px; margin-top: -50px;  border-radius: 0.8em; width: 130px; height: 35px; "  v-on:click="deleteArrayEmail()"><b>supprimer</b>
                 </button>
                 <button v-if="suppr" class="btn btn-sm btn-warning btn-block" style="margin-left: 850px; margin-top: -45px;  border-radius: 0.8em; width: 130px; height: 35px; " v-on:click="AnnulerSel" ><b>Annuler</b>
                 </button>
                 <div >
-                  <hr style="margin-top: -5px;">
+                  <hr style="margin-top: -8px;">
                 </div>
               </div>
               <div class="card-body" v-for="ema in emails">
@@ -46,22 +46,29 @@
                     </div>
                   </a>
                   <a v-else href="#" class="col-md-7 js-show-modal1" style="cursor: pointer; ">
-                    <div><p style=" color: black; margin-top: -1px; margin-left: -25px;" v-on:click="AfficherInfo(ema.id)">Message a la part de  <b>{{ ema.adresse_email }}</b></p><br><p style="margin-top: -20px; color: green; margin-left: -22px;">Répondu par l'admin {{ ema.admin_nom }}</p>
+                    <div><p style=" color: black; margin-top: -1px; margin-left: -25px;" v-on:click="AfficherInfo(ema.id)">Message a la part de  <b>{{ ema.adresse_email }}</b></p><br><p style="margin-top: -20px; color: green; margin-left: -22px;"></p>
                     </div>
                   </a>
                   <div class="col-md-2 js-show-modal1">
-                    <ul>
-                      <li  v-if="rep && ema.reponse === 0" class="label11" data-label11="Pas encors répondu">
-                      </li>
-                      <li v-else  class="label12" data-label12="Répondu">
-                      </li>
-                    </ul>
+                      <!--li  v-if="rep && ema.reponse === 0" class="label11" data-label11="Pas encors répondu"-->
+                      <div v-if="rep && ema.reponse === 1" >
+                        <span :data-toggle="!!ema.admin_nom ? 'tooltip' : false" data-html="true" :title="'Le message a été répondu par L admin : '+ema.admin_nom.toUpperCase()+' ' +ema.admin_prenom.toUpperCase()+''" > 
+                          <img src="assetsAdmin/img/image.jpeg"  style="width: 25px; margin-left: 70px;"/>
+                        </span>
+                      </div>
+                      <div v-else>
+                        <span :data-toggle="!!ema.admin_nom ? 'tooltip' : false" data-html="true" :title="'Le message pas encore répondu'" >
+                         <img src="assetsAdmin/img/image (1).jpeg"  style="width: 25px; margin-left: 70px;"/>
+                       </span>
+                      </div>
                   </div>
                   <div class="col-md-1">
                     <a ><i class="now-ui-icons ui-1_simple-remove" style="font-size: 25px; cursor: pointer; color: red; margin-left: 20px;" v-on:click="deleteEmail(ema)"></i></a>
                   </div>
                </div>
-               <hr>
+               <div>
+                <hr style="margin-bottom: 5px;">
+             </div>
             </div>
           </div>
         </div>
@@ -124,7 +131,7 @@
                 <button v-if="rep2 && emaa.reponse === 0 " class=" flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer " v-on:click="repond(emaa.id)" style="width: 250px;  background-color: #FF0000; height: 40px; box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);">                     
                   Repondre
                 </button>
-                <button v-else class=" flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04  "  style="width: 250px;  background-color: blue; height: 40px; box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);" disabled="disabled"> 
+                <button v-else class=" flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04  "  style="width: 250px;  background-color: blue; height: 40px; box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19); cursor: auto;" disabled="disabled"> 
                   était déja Répondu
                 </button>                     
               </a>
