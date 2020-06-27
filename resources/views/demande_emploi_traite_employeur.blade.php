@@ -19,7 +19,7 @@
                 <div class="flex-t">
                     <input type="checkbox" id="article" @change="selectAll()" v-model="allSelected" style="margin-top: 5px;">
                     <label for="article"></label>
-                    <h4 style="margin-top: -6px;margin-left: 10px;">Demande Traiter</h4>
+                    <h4 style="margin-top: -6px;margin-left: 10px;">Demande Traitée</h4>
                 </div>
 
             <div class="txt-right"style="margin-top: -40px; " >
@@ -36,13 +36,14 @@
         
             <div class="card-body"   v-for="commandec in commandeclient" v-if="commandec.demmande_traiter===1">
 
-<div v-if="selectall" >
+<div v-if="selectall"  id="c" >
+
        <input type="checkbox"  style=" margin-left: 10px;" :id="commandec.id" :value="commandec.id" v-model="checkedArticles" @change="changeButton(commandec)">
-      <label :for="commandec.id" style="margin-top: 40px; margin-left: 10px;"></label>
+      <label :for="commandec.id" style="margin-top: 5px; margin-left: 10px;"></label>
     </div>
-    <div v-else ><div id="ch1">
-      <input type="checkbox" :id="commandec.id" :value="commandec.id" style="margin-left: 10px;" v-model="articleIds" @click="deselectArticle(commandec.id)"></div>
-      <label :for="commandec.id" style="margin-top: 40px; margin-left: 10px;"></label>
+    <div v-else  id="c"> 
+      <input type="checkbox" :id="commandec.id" :value="commandec.id" style="margin-left: 10px;margin-top: 340px;" v-model="articleIds" @click="deselectArticle(commandec.id)">
+      <label :for="commandec.id" style="margin-top: 5px; margin-left: 10px;"></label>
     </div>
 
 
@@ -81,7 +82,7 @@
 
   </div>      
 
-  <hr  id="cvendeu">
+  <hr id="cvendeur">
 
     
 </div>                  
