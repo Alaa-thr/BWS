@@ -647,7 +647,7 @@
           <li class="<?php echo $stripeCmdT ?>">
             <a href="{{route('commandeTraiterVendeur')}}">
               <i class="now-ui-icons files_single-copy-04" id="y"></i>
-              <div class="m-t-5" id="x">Commande traité</div>
+              <div class="m-t-5" id="x">Commandes traitées</div>
             </a>
           </li>
           
