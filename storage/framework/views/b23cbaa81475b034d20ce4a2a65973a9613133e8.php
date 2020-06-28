@@ -22,7 +22,7 @@
 					<div class="p-r-45 p-r-0-lg">
 						<!-- item blog -->
 						<div class="p-b-63" v-for="art in articles">
-							<a href="<?php echo e(route('/article_D/' .$ar->id)); ?>" class="hov-img0 how-pos5-parent">
+							<a v-bind:href="<?php echo e(route('/article_detaillé/' +ar.id)); ?>" class="hov-img0 how-pos5-parent">
 								<img :src="'storage/articles_image/'+ art.image"  style="height: 501px; ">
 
 								<div class="flex-col-c-m size-123 bg9 how-pos5">
@@ -378,7 +378,7 @@
         },
        },
        created:function(){
-        this.getArticle();
+       this.getArticle();
       },
   });
 </script>

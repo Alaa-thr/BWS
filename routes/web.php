@@ -31,7 +31,7 @@ Route::get('/emploi', 'BwsController@emploi')->name('emploi');
 Route::get('/article', 'BwsController@article')->name('article');
 Route::get('/contact','BwsController@contact')->name('contact');
 Route::post('/addemail', 'BwsController@addEmail')->name('addemail');
-Route::get('/article_detaillé/{id}', 'BwsController@article_D')->name('article_D');
+Route::get('/article_detaillé/{id}', 'BwsController@article_D')->name('article_detaillé');
 Route::get('/getville', 'BwsController@get_ville');
 Route::get('/panierVisiteur', 'BwsController@panier_visiteur')->name('panierVisiteur');
 Route::post('/getconnect', 'BwsController@Connect');
