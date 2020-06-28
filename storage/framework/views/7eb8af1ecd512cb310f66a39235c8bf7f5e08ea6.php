@@ -6,18 +6,18 @@
   <head>
     <title><?php echo e(( 'Profile')); ?></title>
   </head>
-  <div class="main-panel" id="main-panel">
+  <div class="main-panel" id="main-panel" >
       
       <div class="panel-header panel-header-sm">
       </div>
   <div class="content" id="app" >
-     <div class="row">
+     <div class="row" >
         <div class="col-md-8">
-          <div class="card">
-            <div class="card-header">
-              <h5 class="title">Editer Profile</h5>
+          <div class="card" >
+            <div class="card-header"  v-on:click="modif = false">
+              <h5 class="title"  v-on:click="modif = false">Editer Profile</h5>
             </div>
-            <div class="card-body">
+            <div class="card-body"  >
 
              <form action="<?php echo e(url('/updateProfilA/'.$admin->id)); ?>" method="post" enctype="multipart/form-data" style="margin-top: 15px; font-weight: 700;">
                 <input type="hidden" name="_method" value="PUT">
@@ -88,7 +88,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-4" >
+        <div class="col-md-4" v-on:click="modif = false">
           <div class="card card-user">
             <div class="image">
               <img src="assetsClient/img/input/bg5.jpg" alt="...">
@@ -128,9 +128,9 @@
         
       </div>
   </div>
-  <footer class="footer">
-        <div class=" container-fluid ">
-          <nav>
+  <footer class="footer" >
+        <div class=" container-fluid " v-on:click="modif = false">
+          <nav >
             <ul>
               <li>
                 <a href="https://www.creative-tim.com">

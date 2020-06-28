@@ -16,14 +16,14 @@
 
 	<!-- Content page -->
 	<section class="bg0 p-t-62 p-b-60">
-		<div class="container">
+		<div class="container" id="app">
 			<div class="row">
 				<div class="col-md-8 col-lg-9 p-b-80">
 					<div class="p-r-45 p-r-0-lg">
 						<!-- item blog -->
-						<div class="p-b-63">
-							<a href="<?php echo e(route('article_D')); ?>" class="hov-img0 how-pos5-parent">
-								<img src="images/dresse.jpg" alt="IMG-BLOG"  style="height: 501px; ">
+						<div class="p-b-63" v-for="art in articles">
+							<a v-bind:href="<?php echo e(route('/article_detaillé/' +ar.id)); ?>" class="hov-img0 how-pos5-parent">
+								<img :src="'storage/articles_image/'+ art.image"  style="height: 501px; ">
 
 								<div class="flex-col-c-m size-123 bg9 how-pos5">
 									<span class="ltext-107 cl2 txt-center">
@@ -38,29 +38,26 @@
 
 							<div class="p-t-32">
 								<h4 class="p-b-15">
-									<a href="<?php echo e(route('article_D')); ?>" class="ltext-108 cl2 hov-cl1 trans-04 color-t">
-										8 Inspiring Ways to Wear Dresses in the Winter
+									<a href="<?php echo e(route('/article_D/' .$ar->id)); ?>" class="ltext-108 cl2 hov-cl1 trans-04 color-t">
+										{{ art.titre }}
 									</a>
 								</h4>
 
 								<p class="stext-117 cl6">
-									Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce eget dictum tortor. Donec dictum vitae sapien eu varius
+									 {{ MoitieDescription(art.description,100, '...') }} 
 								</p>
 
 								<div class="flex-w flex-sb-m p-t-18">
 									<span class="flex-w flex-m stext-111 cl2 p-r-30 m-tb-10">
 										<span>
-											<span class="cl4">By</span> Admin  
+											<span class="cl4">Créé Par</span> Admin {{ art.nom }}
 											<span class="cl12 m-l-4 m-r-6">|</span>
 										</span>
 
-										<span>
-											StreetStyle, Fashion, Couple  
-										</span>
 									</span>
 
-									<a href="<?php echo e(route('article_D')); ?>" class="stext-101 cl2 hov-cl1 trans-04 m-tb-10">
-										Continue Reading
+									<a href="<?php echo e(route('/article_D/' .$ar->id )); ?>" class="stext-101 cl2 hov-cl1 trans-04 m-tb-10" style="font-style: italic;">
+										Afficher plus
 
 										<i class="fa fa-long-arrow-right m-l-9"></i>
 									</a>
@@ -69,101 +66,7 @@
 						</div>
 
 						<!-- item blog -->
-						<div class="p-b-63">
-							<a href="<?php echo e(route('article_D')); ?>" class="hov-img0 how-pos5-parent">
-								<img src="images/blog-05.jpg" alt="IMG-BLOG">
-
-								<div class="flex-col-c-m size-123 bg9 how-pos5">
-									<span class="ltext-107 cl2 txt-center">
-										18
-									</span>
-
-									<span class="stext-109 cl3 txt-center">
-										Jan 2018
-									</span>
-								</div>
-							</a>
-
-							<div class="p-t-32">
-								<h4 class="p-b-15">
-									<a href="<?php echo e(route('article_D')); ?>" class="ltext-108 cl2 hov-cl1 trans-04 color-t">
-										The Great Big List of Men’s Gifts for the Holidays 
-									</a>
-								</h4>
-
-								<p class="stext-117 cl6">
-									Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce eget dictum tortor. Donec dictum vitae sapien eu varius
-								</p>
-
-								<div class="flex-w flex-sb-m p-t-18">
-									<span class="flex-w flex-m stext-111 cl2 p-r-30 m-tb-10">
-										<span>
-											<span class="cl4">By</span> Admin  
-											<span class="cl12 m-l-4 m-r-6">|</span>
-										</span>
-
-										<span>
-											StreetStyle, Fashion, Couple  
-										</span>
-									</span>
-
-									<a href="<?php echo e(route('article_D')); ?>" class="stext-101 cl2 hov-cl1 trans-04 m-tb-10">
-										Continue Reading
-
-										<i class="fa fa-long-arrow-right m-l-9"></i>
-									</a>
-								</div>
-							</div>
-						</div>
-
-						<!-- item blog -->
-						<div class="p-b-63">
-							<a href="<?php echo e(route('article_D')); ?>" class="hov-img0 how-pos5-parent">
-								<img src="images/blog-06.jpg" alt="IMG-BLOG">
-
-								<div class="flex-col-c-m size-123 bg9 how-pos5">
-									<span class="ltext-107 cl2 txt-center">
-										16
-									</span>
-
-									<span class="stext-109 cl3 txt-center">
-										Jan 2018
-									</span>
-								</div>
-							</a>
-
-							<div class="p-t-32">
-								<h4 class="p-b-15">
-									<a href="<?php echo e(route('article_D')); ?>" class="ltext-108 cl2 hov-cl1 trans-04 color-t">
-										5 Winter-to-Spring Fashion Trends to Try Now
-									</a>
-								</h4>
-
-								<p class="stext-117 cl6">
-									Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce eget dictum tortor. Donec dictum vitae sapien eu varius
-								</p>
-
-								<div class="flex-w flex-sb-m p-t-18">
-									<span class="flex-w flex-m stext-111 cl2 p-r-30 m-tb-10">
-										<span>
-											<span class="cl4">By</span> Admin  
-											<span class="cl12 m-l-4 m-r-6">|</span>
-										</span>
-
-										<span>
-											StreetStyle, Fashion, Couple  
-										</span>
-									</span>
-
-									<a href="<?php echo e(route('article_D')); ?>" class="stext-101 cl2 hov-cl1 trans-04 m-tb-10">
-										Continue Reading
-
-										<i class="fa fa-long-arrow-right m-l-9"></i>
-									</a>
-								</div>
-							</div>
-						</div>
-
+						
 						<!-- Pagination -->
 						<div class="flex-l-m flex-w w-full p-t-10 m-lr--7">
 							<a href="#" class="flex-c-m how-pagination1 trans-04 m-all-7 active-pagination1">
@@ -183,7 +86,7 @@
 					</div>
 				</div>
 
-				<div class="col-md-4 col-lg-3 p-b-80">
+				<!--div class="col-md-4 col-lg-3 p-b-80">
 					<div class="side-menu">
 						<div class="bor17 of-hidden pos-relative">
 							<input class="stext-103 cl2 plh4 size-116 p-l-28 p-r-55" type="text" name="search" placeholder="Search">
@@ -419,12 +322,66 @@
 							</div>
 						</div>
 					</div>
-				</div>
+				</div-->
 			</div>
 		</div>
-	</section>	
+	</section>
+
 
 
 
 <?php $__env->stopSection(); ?>
+
+<?php $__env->startPush('javascripts'); ?>
+
+<script> 
+        window.Laravel = <?php echo json_encode([
+
+               'csrfToken' => csrf_token(),
+               'ar'     => $ar,
+               'ardet'  => $ardet,
+               'url'       => url('/'), 
+          ]); ?>;
+</script>
+<script>
+  var app = new Vue({
+      el: '#app',
+      data:{
+         articles: [],
+         articles2: [],
+      },
+      methods:{
+        getArticle: function(){
+        axios.get(window.Laravel.url+'/article')
+            .then(response => {
+                 this.articles = window.Laravel.ar;
+                 console.log("window.Laravel.ar",window.Laravel.ar);
+            })
+            .catch(error =>{
+                 console.log('errors :' , error);
+            })
+        },
+        Afficherinfo: function($art){
+        axios.get(window.Laravel.url+'/article_detaillé/'+art.id)
+            .then(response => {
+            	this.articles2 = window.Laravel.ardet;
+            })
+            .catch(error => {
+               console.log('errors : ' , error);
+            })
+        },
+        MoitieDescription:  function (text, length, suffix){
+          if(text.length <= length){
+            return text;
+          }
+          return text.substring(0, length) + suffix;
+        },
+       },
+       created:function(){
+       this.getArticle();
+      },
+  });
+</script>
+
+<?php $__env->stopPush(); ?>
 <?php echo $__env->make('layouts.template_visiteur', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\BWS\resources\views/article.blade.php ENDPATH**/ ?>

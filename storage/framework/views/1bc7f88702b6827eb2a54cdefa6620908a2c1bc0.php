@@ -41,7 +41,7 @@
                       </th>
                     </thead>
                     <tbody>
-                      <tr v-for="employeura in employeuradmin">
+                      <tr v-for="employeura in employeuradmin" class="js-show-modal1"  v-on:click="AfficherInfo(employeura.id)" style="cursor: pointer;">
                         <td>
                           {{employeura.id}}
                         </td>

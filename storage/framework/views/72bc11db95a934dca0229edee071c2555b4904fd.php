@@ -1,9 +1,9 @@
-@extends('layouts.template_visiteur')
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 
 	
 	<head>
-		<title>{{ ( 'Acticle Detaillé') }}</title>
+		<title><?php echo e(( 'Acticle Detaillé')); ?></title>
 	</head>
 <!-- breadcrumb -->
 	<div class="container">
@@ -23,7 +23,8 @@
 			</span>
 		</div>
 	</div>
-	
+
+
 	<!-- Content page -->
 	<section class="bg0 p-t-52 p-b-20">
 		<div class="container">
@@ -312,4 +313,5 @@
 
 
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.template_visiteur', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\BWS\resources\views/article_detaille.blade.php ENDPATH**/ ?>

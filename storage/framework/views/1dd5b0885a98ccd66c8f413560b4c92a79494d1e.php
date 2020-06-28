@@ -42,7 +42,7 @@
                       </th>
                     </thead>
                     <tbody>
-                      <tr v-for="clienta in clientadmin">
+                      <tr v-for="clienta in clientadmin" class="js-show-modal1" v-on:click="AfficherInfo(clienta.id)" style="cursor: pointer;">
                         <td>
                           {{clienta.id}}
                         </td>
