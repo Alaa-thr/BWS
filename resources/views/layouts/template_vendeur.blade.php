@@ -352,7 +352,7 @@
 							<i class="zmdi zmdi-search"></i>
 						</div>
 
-						<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11  js-show-cart" >
+						<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11" onclick="connecterAvant()">
 							<i class="zmdi zmdi-shopping-cart"></i>
 						
 						</div>
@@ -408,9 +408,10 @@
 					<i class="zmdi zmdi-search"></i>
 				</div>
 
-				<div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-22  js-show-cart" >
-					<i class="zmdi zmdi-shopping-cart"></i>
-				</div>
+				<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11" onclick="connecterAvant()">
+							<i class="zmdi zmdi-shopping-cart"></i>
+						
+			    </div>
 
 				<div class="dropdown">
                               <button class="  dis-block dropdown-toggle icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-22" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -791,7 +792,31 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     </div>
 
  
-
+<script>
+  	function connecterAvant(){
+        
+            Swal.fire({
+                          icon: 'error',
+                          title: 'Oops...',
+                          html: 'Vous devez être connecté tent que <b style="text-decoration: underline;">Client</b> pour pouvez accedé a votre panier.',
+                          footer: '<form method="GET" action="{{ route("logoutregister") }}">@csrf<a style=" color: #007bff;" href="{{ route("logoutregister") }}">Créer Compte</a></form>',
+                          showCancelButton: true,
+                          cancelButtonColor: '#d33',
+                          confirmButtonColor: '#13c940',
+                          confirmButtonText:
+                            'Se Connecter',
+            }).then((result) => {
+                if (result.value){
+                    axios.post('http://localhost:8000/logout')
+                    .then(response => {
+                              window.location.href = '/accueil';
+                    })
+                    .catch(error => {console.log("error",error)})
+                	}	
+                             
+            });
+       }
+  </script>
    <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
 
   <script src="assetsVendeur/js/animsition.min.js"></script>

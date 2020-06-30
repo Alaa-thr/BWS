@@ -68,7 +68,7 @@ class VendeurController extends Controller
        
             if( $request->typet == 2){
                  $request->validate([
-                'Libellé' => ['required','regex:/^[A-Z0-9][a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
+                'Libellé' => ['required','regex:/^[A-Z0-9][-a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
                 'description' => ['required','regex:/^[A-Z0-9][a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
                 'prix' =>['required'],
                 'sous_categorie_id' =>['required'],
@@ -81,7 +81,7 @@ class VendeurController extends Controller
             }
              if( $request->typet == 1){               
                 $request->validate([
-                'Libellé' => ['required','regex:/^[A-Z0-9][a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
+                'Libellé' => ['required','regex:/^[A-Z0-9][-a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
                 'description' => ['required','regex:/^[A-Z0-9][a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
                 'prix' =>['required'],
                 'sous_categorie_id' =>['required'],
@@ -94,7 +94,7 @@ class VendeurController extends Controller
             }
             else{
                 $request->validate([
-                'Libellé' => ['required','regex:/^[A-Z0-9][a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
+                'Libellé' => ['required','regex:/^[A-Z0-9][-a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
                 'description' => ['required','regex:/^[A-Z0-9][a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
                 'prix' =>['required'],
                 'sous_categorie_id' =>['required'],

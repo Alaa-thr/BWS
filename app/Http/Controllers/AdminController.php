@@ -214,8 +214,21 @@ class AdminController extends Controller
              'typeCategorie' => ['required'],
          ]);
         $categorie = new Categorie;
+        if($request->image != null){
+            $exploded = explode(',', $request->image);
+            $decoded = base64_decode($exploded[1]);
+            if(str_contains($exploded[0], 'jpeg')){
+                $extension = 'jpg';
+            }
+            else{
+                $extension = 'png';
+            }
+            $fileName = str_random().'.'.$extension;
+            Storage::put('/public/categorie_image/' . $fileName, $decoded);
+            $categorie->image = $fileName;
+        }        
         $categorie->libelle = $request->libelle;
-        $categorie->typeCategorie = $request->typeCategorie;
+        $categorie->typeCategorie = $request->typeCategorie;       
         $categorie->save();
 
         return Response()->json(['etat' => true, 'categorie' => $categorie]);

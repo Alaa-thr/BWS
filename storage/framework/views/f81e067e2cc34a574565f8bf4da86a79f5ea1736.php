@@ -12,8 +12,12 @@
 
     <!-- Scripts -->
     <script src="<?php echo e(asset('jss/app.js')); ?>" ></script>
+    <script src="<?php echo e(asset('jss/vue.js')); ?>"></script>
+    <script src="<?php echo e(asset('jss/axios.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('jss/sweetalert2.js')); ?>"></script>
+    <script src="<?php echo e(asset('jss/vee-validate.min.js')); ?>"></script>
     <!--<link href="<?php echo e(asset('csss/app.css')); ?>" rel="stylesheet" type="text/css">-->
-    
+    <link href="<?php echo e(asset('assetsClient/css/bootstrap.min.css')); ?>" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
@@ -28,9 +32,7 @@
     <link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
     <link rel="stylesheet" type="text/css" href="css/util.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
-    <script src="<?php echo e(asset('jss/vue.js')); ?>"></script>
-    <script src="<?php echo e(asset('jss/axios.min.js')); ?>"></script>
-    <script src="<?php echo e(asset('jss/sweetalert2.js')); ?>"></script>
+
 
 
 
@@ -93,7 +95,7 @@
                 </div>
             </div>
         </nav>-->
- <header class="header-v4">
+ <header class="header-v4" id="app33">
         <!-- Header desktop -->
         <?php
 
@@ -154,125 +156,64 @@
                                     
                                     <ul class="sub-menu " >
                                             <div class="flex-w bg6 w-full p-lr-30 p-t-27 p-lr-15-sm">
-                                                <div class="filter-col1  p-b-27">
+                                                <div class="filter-col8  p-b-27">
                                             
                                                     <div class="mtext-102 cl2 p-b-15 cl13">
                                                         Catégories
                                                     </div>
-                                                    <ul>
-                                                        <li class="p-b-6 ">
-                                                        
-                                                            <img src="images/icons/tshirt.png" class="p-b-4">
-                                                            <a href="#" class="filter-link stext-106 trans-04">
-                                                                Vêtements
-                                                            </a>
+                                                    <ul >
+                                                        <li class="p-b-6 " v-for="(catego,cntt) in categories" :key = 'cntt' v-if="cntt <count">
+                                                         <img v-if="catego.image != null" :src="'storage/categorie_image/'+ catego.image" class="p-b-4">
+                                                         <a href="#" class="filter-link stext-106 trans-04">
+                                                            {{catego.libelle}}
+                                                         </a>
                                                         </li>
-                                                        <li class="p-b-6">
-                                                            <img src="images/icons/Shoes.png" class="p-b-2">
-                                                            <a href="#" class="filter-link stext-106 trans-04">
-                                                                Chaussures
-                                                            </a>
-                                                        </li>
-                                                        <li class="p-b-6">
-                                                            <img src="images/icons/cosmetics.png" class="p-b-2">
-                                                            <a href="#" class="filter-link stext-106 trans-04">
-                                                                Santé & Beauté 
-                                                            </a>
-                                                        </li>
-                                                        <li class="p-b-6">
-                                                            <img src="images/icons/lipstick.png" class="p-b-2">
-                                                            <a href="#" class="filter-link stext-106 trans-04 ">
-                                                                Maquillages
-                                                            </a>
-                                                        </li>
-                                    
-                                                        <li class="p-b-6">
-                                                            <img src="images/icons/diamond.png" class="p-b-2">
-                                                            <a href="#" class="filter-link stext-106 trans-04">
-                                                                Bijoux
-                                                            </a>
-                                                        </li>
-                                    
-                                                        <li class="p-b-6">
-                                                            <a href="#" class="filter-link stext-106 trans-04">
-                                                                
-                                                            </a>
-                                                        </li>
-                                                    </ul>
+                                                       
+                                                    </ul >
                                                 </div>
-                                    
-                                                <div class="filter-col2 p-b-27 p-t-39">
-                                                    <ul>
-                                                        <li class="p-b-6">
-                                                            <img src="images/icons/house.png" class="p-b-2">
-                                                            <a href="#" class="filter-link stext-106 trans-04 ">
-                                                                Immobilieres
-                                                            </a>
-                                                        </li>
-                                                        <li class="p-b-6">
-                                                            <img src="images/icons/nightstand.png" class="p-b-2">
-                                                            <a href="#" class="filter-link stext-106 trans-04">
-                                                                Electroménagers & Meubles
-                                                            </a>
-                                                        </li>
-                                                        <li class="p-b-6">
-                                                            <img src="images/icons/repair.png" class="p-b-2">
-                                                            <a href="#" class="filter-link stext-106 trans-04">
-                                                                Matériels
-                                                            </a>
-                                                        </li>
-                                                        <li class="p-b-6">
-                                                            <img src="images/icons/smartphone.png" class="p-b-2">
-                                                            <a href="#" class="filter-link stext-106 trans-04">
-                                                                Télephones& Accessoires
-                                                            </a>
-                                                        </li>
-                                                        <li class="p-b-6">
-                                                            <img src="images/icons/laptop.png" class="p-b-2">
-                                                            <a href="#" class="filter-link stext-106 trans-04">
-                                                                Informatiques
-                                                            </a>
-                                                        </li>
-                                                        <li class="p-b-6">
-                                                            <a href="#" class="filter-link stext-106 trans-04">
-                                                                
-                                                            </a>
-                                                        </li>
-                                                    </ul>
+
+            <?php 
+                   
+                    for ($k = 0; $k < 6; $k++){
+                            unset($categorie[$k]);               
+                    }
+                    $cc=count($categorie);
+                   
+            ?>                                 
+            <?php for($i=0; $i< $cc;  ): ?>
+           
+                        <?php
+                            $j=0;
+                        ?>
+               
+                        <div class="filter-col8 p-b-27 p-t-39"><!--filteredItems1-->
+                <?php $__currentLoopData = $categorie; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ctgo): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                   
+                    <?php if($j < 6): ?>
+                        <?php
+                            $j++;
+                        ?>            
+                        <ul>
+                            <li class="p-b-6 " >
+                            <?php if($ctgo->image !=null): ?> 
+                               <img src="storage/categorie_image/<?php echo e($ctgo->image); ?>" class="p-b-4">
+                            <?php endif; ?>
+                                <a href="#" class="filter-link stext-106 trans-04"><?php echo e($ctgo->libelle); ?></a>
+                            </li>
+                        </ul>
+                    <?php endif; ?>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                <?php for($f = 0; $f < $j; $f++): ?>
+                    
+                    <?php $categorie->shift($f);?>                
+                  
+                <?php endfor; ?>
+               
+                <?php
+                    $cc-=$j;
+                ?>
                                                 </div>
-                                    
-                                                <div class="filter-col3  p-b-27 p-t-39" >
-                                                    <ul>
-                                                        <li class="p-b-6">
-                                                            <img src="images/icons/car.png" class="p-b-2">
-                                                            <a href="#" class="filter-link stext-106 trans-04">
-                                                                Véhicules & Automobiles
-                                                            </a>
-                                                        </li>
-                                                        <li class="p-b-6">
-                                                            <img src="images/icons/customer.png" class="p-b-2">
-                                                            <a href="#" class="filter-link stext-106 trans-04">
-                                                                    Services
-                                                            </a>
-                                                        </li>
-                                                        <li class="p-b-6">
-                                                            
-                                    
-                                                            <a href="#" class="filter-link stext-106 trans-04">
-                                                                
-                                                            </a>
-                                                        </li>
-                                                        <li class="p-b-6">
-                                                            <a href="#" class="filter-link stext-106 trans-04"></a>
-                                                        </li>
-                                                        <li class="p-b-6">
-                                                            <a href="#" class="filter-link stext-106 trans-04"></a>
-                                                        </li>
-                                                        <li class="p-b-6">
-                                                            <a href="#" class="filter-link stext-106 trans-04"></a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
+            <?php endfor; ?>
                                             </div>
                                         </ul>
                                         
@@ -609,7 +550,7 @@
         </div>
 
 <!--Cart Connect--><!--**************************************************************************-->
-    <div class="wrap-header-cart js-panel-connect">
+       <div class="wrap-header-cart js-panel-connect" >
         <div class="s-full js-hide-connect"></div>
 
         <div class="header-cart flex-col-l p-l-40 p-r-25">
@@ -625,17 +566,18 @@
             <div class="splash-container js-pscroll" >
                 <div class="card " >
                     <div class="card-header">
-                        <a href="index.html" class="logo p-l-50" >
-                            <img src="images/icons/LogoFinal2.png" alt="IMG-LOGO" >
+                        <a href="<?php echo e(route('accueil')); ?>" class="logo p-l-50" >
+                            <img src="images/icons/LogoFinal2.png" alt="IMG-LOGO" />
                         </a>
                         <span class="splash-description">Please enter your user information.</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="<?php echo e(route('login')); ?>">
+                       
+                        <form method="POST" :action="wayLogin()">
                             <?php echo csrf_field(); ?>
                             <div class="form-group">
                                 <input class="form-control form-control-lg
-                                <?php echo e($errors->has('email') || $errors->has('numTelephone') ? ' is-invalid' : ''); ?>" name="numTelephone" value="<?php echo e(old('numTelephone')); ?>" type="text" placeholder="Email ou Telephone"  id="numTelephone">
+                                <?php echo e($errors->has('email') || $errors->has('numTelephone') ? ' is-invalid' : ''); ?>" name="numTelephone" value="<?php echo e(old('numTelephone')); ?>" type="text" placeholder="Email ou Telephone"  id="numTelephone" v-on:keyup='Connect()'>
                                 
                                 <?php $__errorArgs = ['numTelephone'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -688,13 +630,44 @@ endif;
 unset($__errorArgs, $__bag); ?>
 
                             </div>
-                            <div class="form-check">
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" name="remember" id="remember" <?php echo e(old('remember') ? 'checked' : ''); ?>>
-                                    <label class="custom-control-label p-t-4" for="remember">Remeber me</label>
-                                </div>
+                            <div class="form-group m-t--10 " v-if="hideSelect">
+                                <span class="stext-109">Vous avez 2 compte avec ce "{{ eventss.value}}" :</span>
+                                <select class="form-control form-control-lg <?php $__errorArgs = ['type_compte'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?> stext-104 m-t-5" id="type_compte"  name="type_compte"   style="height: 45px" value="<?php echo e(old('type_compte')); ?>">
+
+                                    <option value="0" disabled selected >Souhaitez vous connecter avec</option>
+                                    <option v-for="typ in types" value="c" v-if="typ === 'c'">Compte Client</option>
+                                    <option v-for="typ in types" value="v" v-if="typ === 'v'">Compte Vendeur</option>
+                                    <option v-for="typ in types" value="e" v-if="typ === 'e'">Compte Employeur</option>
+                                    <option v-for="typ in types" value="a" v-if="typ === 'a'">Compte Admin</option>
+
+                                </select>
+
+                                <?php $__errorArgs = ['type_compte'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong><?php echo e($message); ?></strong>
+                                    </span>
+                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+
                             </div>
-                            <button type="submit" class="btn-lg btn-block bg10 cl0">Connexion</button>
+                            <div class=" custom-checkbox p-b-10">
+                                    <input type="checkbox" class="custom-control-input" name="remember" id="remember1" <?php echo e(old('remember') ? 'checked' : ''); ?>>
+                                    <label class="custom-control-label p-t-4 p-l-24 " for="remember1">Remeber me</label>
+                            </div>
+                            <button type="submit" class="btn-lg btn-block bg10 cl0" >Connexion</button>
                         
                     </div>
                     <div class="card-footer" >
@@ -721,9 +694,12 @@ unset($__errorArgs, $__bag); ?>
             
         </div>
     </div>
+
+      
+
 <!--**********************************************************************************************-->
     <!-- Cart -->
-    <div class="wrap-header-cart js-panel-cart">
+    <div class="wrap-header-cart js-panel-cart" >
         <div class="s-full js-hide-cart"></div>
         
         <div class="header-cart flex-col-l p-l-55 p-r-25">
@@ -1094,11 +1070,121 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
    <!--<script src="vendor/jquery/jquery-3.2.1.min.js"></script>-->
    <script>
+
+       var app33 = new Vue({
+         el : "#app33",
+         data:{
+            timer: null,
+            eventss: {
+                value: '',
+            },
+            hideSelect: false,
+            types: [],
+            categories: [],
+            sousCategories: [],
+            count: 6,
+            categoriesShow: [],
+            i: 0,
+            //wayLogin: <?php echo e(json_encode(route('login'))); ?>,
+         },
+         methods:{
+
+            getCategorieHome: function(){
+                axios.get(window.Laravel.url+"/getcategoriehome")
+                        .then(response => {
+                           app33.categories = response.data.categorie;
+                           app33.sousCategories = response.data.sousCatego;
+                           this.categoriesShow =  response.data.categorie;
+                            console.log("categories",app33.categories)
+                             console.log("sousCatego",app33.sousCategories)
+                        })
+                        .catch(error =>{
+                            console.log("errors",error)
+                        })
+            },
+            wayLogin: function(){
+                if(this.types.length == 0){
+                    return "<?php echo e(route('login')); ?>";
+                }
+                else{
+                     return "<?php echo e(route('authenticate')); ?>";
+                }
+            },
+            Connect: function(){
+
+                clearTimeout(this.timer); 
+                this.timer = setTimeout(function () {
+
+                        app33.eventss.value = document.getElementById('numTelephone').value;
+                        axios.post(window.Laravel.url+"/getconnect",app33.eventss)
+                        .then(response => {
+                            if(response.data.etat ){
+                                app33.hideSelect = true;
+                                app33.types = response.data.typeCompte;
+                                
+                            }
+                            else{
+                                app33.hideSelect = false;
+
+                            }
+                            
+
+                        })
+                        .catch(error =>{
+                            console.log("errors",error)
+                        })
+                        
+                        
+                     }, 800)
+                
+            },
+            filteredItems1: function(){
+                   // this.i = 0;
+                    console.log("befor categoriesShow",this.categoriesShow);
+                    console.log("befor categories",this.categories);
+                    if(this.categories.length != 0 && this.categories.length > 6)
+                        this.categories.splice(0,6);
+                    console.log("",this.categoriesShow);
+                    this.categoriesShow = this.categories;
+                     console.log("10 gg",this.categoriesShow.length);
+                    return this.categoriesShow;
+                
+                
+
+            },
+            filteredItems: function(){
+
+                    /*console.log("befor categoriesShow",this.categoriesShow);
+                    console.log("befor categories",this.categories);
+                    if(this.categories.length != 0 && this.categories.length > 6 && this.i == 0){
+                        this.categories.splice(0,6);
+                        this.i++;
+                    }
+                    console.log("",this.categoriesShow);
+                    this.categoriesShow = this.categories;
+                     console.log("10 gg",this.categoriesShow.length);*/
+                    return this.categoriesShow;
+                
+                
+
+            },
+         },
+         mounted:function(){
+            this.Connect();
+            this.getCategorieHome();
+         },
+         computed:{
+            
+        
+
+         }
+       })
+       
        function connecterAvant(){
             Swal.fire({
                           icon: 'error',
                           title: 'Oops...',
-                          text: 'Vous devez être connecté tent que Client pour pouvez accedé a votre panier.',
+                          html: 'Vous devez être connecté tent que <b style="text-decoration: underline;">Client</b> pour pouvez accedé a votre panier.',
                           footer: '<form method="GET" action="<?php echo e(route("logoutregister")); ?>"><?php echo csrf_field(); ?><a href="<?php echo e(route("logoutregister")); ?>">Créer Compte</a></form>',
                           showCancelButton: true,
                           cancelButtonColor: '#d33',
@@ -1113,8 +1199,38 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
             });
        }
        function Estconnecter(){
-
-             $('.js-panel-cart').addClass('show-header-cart');
+            axios.get(window.Laravel.url+'/estconnecter')
+              .then(response => {
+                    if(response.data.etat){
+                        $('.js-panel-cart').addClass('show-header-cart');
+                    }
+                    else{
+                        Swal.fire({
+                          icon: 'error',
+                          title: 'Oops...',
+                          html: 'Vous devez être connecté tent que <b style="text-decoration: underline;">Client</b> pour pouvez accedé a votre panier.',
+                          footer: '<form method="GET" action="<?php echo e(route("logoutregister")); ?>"><?php echo csrf_field(); ?><a href="<?php echo e(route("logoutregister")); ?>">Créer Compte</a></form>',
+                          showCancelButton: true,
+                          cancelButtonColor: '#d33',
+                          confirmButtonColor: '#13c940',
+                          confirmButtonText:
+                            'Se Connecter',
+                        }).then((result) => {
+                            if (result.value){                          
+                                axios.post(window.Laravel.url+'/logout')
+                                .then(response => {
+                                          window.location.href = '/accueil';
+                                })
+                                .catch(error => {console.log("error",error)})
+                            }
+                         
+                        });
+                    }
+               })
+              .catch(error => {
+                  console.log('errors : '  , error);
+            })            
+            
        }
    </script>  
 

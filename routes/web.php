@@ -34,7 +34,12 @@ Route::get('/article_detaillé', 'BwsController@article_D')->name('article_D');
 Route::get('/getville', 'BwsController@get_ville');
 Route::get('/panierVisiteur', 'BwsController@panier_visiteur')->name('panierVisiteur');
 Route::post('/getconnect', 'BwsController@Connect');
-
+Route::get('/deposerproduit', 'BwsController@deposerProduit')->name('deposerProduit');
+Route::get('/deposeremploi', 'BwsController@deposerEmploi')->name('deposerEmploi');
+Route::get('/getarticlehome', 'BwsController@getArticleHome');
+Route::get('/getproduithome', 'BwsController@getProduitHome');
+Route::get('/estconnecter', 'BwsController@Estconnecter');
+Route::get('/getcategoriehome', 'BwsController@getCategorieHome');
 
 /************************************************ Admin***********************************************/
 

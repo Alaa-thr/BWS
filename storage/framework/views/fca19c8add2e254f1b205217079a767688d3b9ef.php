@@ -15,8 +15,6 @@
     <!-- Scripts -->
 
     <script src="<?php echo e(asset('jss/app.js')); ?>" ></script>
-    <script src="<?php echo e(asset('jss/vue.js')); ?>"></script>
-    <script src="<?php echo e(asset('jss/axios.min.js')); ?>">></script>
     <script src="<?php echo e(asset('jss/vee-validate.min.js')); ?>"></script>
     <!--<link href="<?php echo e(asset('csss/app.css')); ?>" rel="stylesheet" type="text/css">-->
      <link href="<?php echo e(asset('assetsClient/css/bootstrap.min.css')); ?>" rel="stylesheet" />
@@ -130,7 +128,7 @@
                 <nav class="limiter-menu-desktop container">
                     
                     <!-- Logo desktop -->       
-                    <a href="#" class="logo">
+                    <a href="<?php echo e(route('accueil')); ?>" class="logo">
                         <img src="<?php echo e(asset('images/icons/LogoFinal2.png')); ?>" alt="IMG-LOGO">
                     </a>
 
@@ -465,7 +463,7 @@
             
             <!-- Logo moblie -->        
             <div class="logo-mobile">
-                <a href="index.html"><img src="<?php echo e(asset('images/icons/LogoFinal2.png')); ?>" alt="IMG-LOGO"></a>
+                <a href="<?php echo e(route('accueil')); ?>"><img src="<?php echo e(asset('images/icons/LogoFinal2.png')); ?>" alt="IMG-LOGO"></a>
             </div>
 
             <!-- Icon header -->
@@ -632,6 +630,9 @@
                         <form method="POST" :action="wayLogin()">
                             <?php echo csrf_field(); ?>
                             <div class="form-group">
+                                <input class="form-control form-control-lg
+                                <?php echo e($errors->has('email') || $errors->has('numTelephone') ? ' is-invalid' : ''); ?>" name="numTelephone" value="<?php echo e(old('numTelephone')); ?>" type="text" placeholder="Email ou Telephone"  id="numTelephone" v-on:keyup='Connect()'>
+                                
                                 <?php $__errorArgs = ['numTelephone'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -657,10 +658,6 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-                                <input class="form-control form-control-lg
-                                <?php echo e($errors->has('email') || $errors->has('numTelephone') ? ' is-invalid' : ''); ?>" name="numTelephone" value="<?php echo e(old('numTelephone')); ?>" type="text" placeholder="Email ou Telephone"  id="numTelephone" v-on:keyup='Connect()'>
-                                
-                                
 
                             </div>
                             <div class="form-group">
@@ -1014,12 +1011,11 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                             if(response.data.etat ){
                                 app3.hideSelect = true;
                                 app3.types = response.data.typeCompte;
-                                console.log("true",response)
                                 
                             }
                             else{
                                 app3.hideSelect = false;
-                                console.log("false",response)
+
                             }
                             
 
@@ -1029,12 +1025,10 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                         })
                         
                         
-                     }, 1000)
+                     }, 800)
                 
             },
-            showww(t){
-                console.log('t',t);
-            }
+
          },
          mounted:function(){
             this.Connect();
@@ -1045,7 +1039,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
             Swal.fire({
                           icon: 'error',
                           title: 'Oops...',
-                          text: 'Vous devez être connecté tent que Client pour pouvez accedé a votre panier.',
+                          html: 'Vous devez être connecté tent que <b style="text-decoration: underline;">Client</b> pour pouvez accedé a votre panier.',
                           footer: '<form method="GET" action="<?php echo e(route("logoutregister")); ?>"><?php echo csrf_field(); ?><a href="<?php echo e(route("logoutregister")); ?>">Créer Compte</a></form>',
                           showCancelButton: true,
                           cancelButtonColor: '#d33',

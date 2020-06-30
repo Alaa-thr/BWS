@@ -51,10 +51,75 @@ class BwsController extends Controller
         $color = \DB::table('colors')->join('color_produits', 'colors.id', '=', 'color_produits.color_id')->get();
         $taille = \DB::table('taille_produits')->get();
         $typeLivraison = \DB::table('typechoisirvendeurs')->get();
-        return view('shop',['produit'=>$produit, 'ImageP' => $imageproduit, 'color' => $color, 'typeLivraison' => $typeLivraison, 'taille' => $taille ]);
+        $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+           
+        return view('shop',['produit'=>$produit, 'ImageP' => $imageproduit, 'color' => $color, 'typeLivraison' => $typeLivraison, 'taille' => $taille ,'categorie'=>$categorie]);
     }
 
-    
+    public function deposerProduit(){
+        if(auth()->check() && Auth::user()->type_compte == 'v'){//return true id it's connect
+            return ['etat' => 'cnnect'];
+        }
+        else if(auth()->check() && Auth::user()->type_compte != 'v'){
+                return ['etat' => true];
+        }
+        else{
+            return ['etat' => false];
+        }
+    }
+
+    public function deposerEmploi(){
+        if(auth()->check() && Auth::user()->type_compte == 'e'){
+            return ['etat' => 'cnnect'];
+        }
+        else if(auth()->check() && Auth::user()->type_compte != 'e'){
+                return ['etat' => true];
+        }
+        else{
+            return ['etat' => false];
+        }
+    }
+
+    public function getArticleHome(){
+        $allArticle = \DB::table('articles')
+        ->join('admins', 'admins.id', '=', 'articles.admin_id')
+        ->select('admins.nom','admins.prenom','articles.*',\DB::raw('DATE(articles.created_at) as date'))
+        ->orderBy('articles.created_at','desc')
+        ->get(3) ;
+        return ['allArticle' => $allArticle];
+    }
+
+    public function getProduitHome(){
+         $produit = \DB::table('produits')
+         ->join('vendeurs','vendeurs.id', '=', 'produits.vendeur_id')
+         ->select('vendeurs.Nom', 'vendeurs.Prenom', 'produits.*')
+         ->take(24)->get();       
+        $imageproduit = \DB::table('imageproduits')->get();
+        $color = \DB::table('colors')->join('color_produits', 'colors.id', '=', 'color_produits.color_id')->get();
+        $taille = \DB::table('taille_produits')->get();
+        $typeLivraison = \DB::table('typechoisirvendeurs')->get();
+        return ['produit'=>$produit, 'ImageP' => $imageproduit, 'color' => $color, 'typeLivraison' => $typeLivraison, 'taille' => $taille ];
+    }
+
+    public function Estconnecter(){
+        if( Auth::user()->type_compte == 'c'){
+            return ['etat' => true];
+        }
+        else{
+                return ['etat' => false];
+        }
+
+    }
+
+    public function getCategorieHome(){
+
+        $sousCatego = \DB::table('sous_categories')->get();
+        $categorie = \DB::table('categories')->orderBy('libelle','asc')->get();
+           
+        return ['categorie'=>$categorie , 'sousCatego'=> $sousCatego];
+       
+        
+    }
 
      public function emploi()
     {

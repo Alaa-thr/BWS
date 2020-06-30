@@ -144,14 +144,14 @@
             </div> 
           </div>
           <div class="row">
-            <div class="col-md-4">
+            <div class="">
               <div class="title" style="color: red; margin-top: 30px; margin-left: 90px;" >
                   <h4><b>{{  articlea.titre }}</b></h4><br>
               </div>
             </div>
           </div>
           <div class="row">
-            <div class="col-md-2">
+            <div >
                <p>{{ articlea.description }}</p>
             </div>               
           </div>  

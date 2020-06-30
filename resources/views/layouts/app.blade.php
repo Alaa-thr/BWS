@@ -15,8 +15,6 @@
     <!-- Scripts -->
 
     <script src="{{ asset('jss/app.js') }}" ></script>
-    <script src="{{ asset('jss/vue.js') }}"></script>
-    <script src="{{asset('jss/axios.min.js')}}">></script>
     <script src="{{asset('jss/vee-validate.min.js')}}"></script>
     <!--<link href="{{ asset('csss/app.css') }}" rel="stylesheet" type="text/css">-->
      <link href="{{ asset('assetsClient/css/bootstrap.min.css')}}" rel="stylesheet" />
@@ -128,7 +126,7 @@
                 <nav class="limiter-menu-desktop container">
                     
                     <!-- Logo desktop -->       
-                    <a href="#" class="logo">
+                    <a href="{{route('accueil')}}" class="logo">
                         <img src="{{ asset('images/icons/LogoFinal2.png')}}" alt="IMG-LOGO">
                     </a>
 
@@ -462,7 +460,7 @@
             
             <!-- Logo moblie -->        
             <div class="logo-mobile">
-                <a href="index.html"><img src="{{ asset('images/icons/LogoFinal2.png')}}" alt="IMG-LOGO"></a>
+                <a href="{{route('accueil')}}"><img src="{{ asset('images/icons/LogoFinal2.png')}}" alt="IMG-LOGO"></a>
             </div>
 
             <!-- Icon header -->
@@ -967,12 +965,11 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                             if(response.data.etat ){
                                 app3.hideSelect = true;
                                 app3.types = response.data.typeCompte;
-                                console.log("true",response)
                                 
                             }
                             else{
                                 app3.hideSelect = false;
-                                console.log("false",response)
+
                             }
                             
 
@@ -982,12 +979,10 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                         })
                         
                         
-                     }, 1000)
+                     }, 800)
                 
             },
-            showww(t){
-                console.log('t',t);
-            }
+
          },
          mounted:function(){
             this.Connect();
@@ -998,7 +993,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
             Swal.fire({
                           icon: 'error',
                           title: 'Oops...',
-                          text: 'Vous devez être connecté tent que Client pour pouvez accedé a votre panier.',
+                          html: 'Vous devez être connecté tent que <b style="text-decoration: underline;">Client</b> pour pouvez accedé a votre panier.',
                           footer: '<form method="GET" action="{{ route("logoutregister") }}">@csrf<a href="{{ route("logoutregister") }}">Créer Compte</a></form>',
                           showCancelButton: true,
                           cancelButtonColor: '#d33',
