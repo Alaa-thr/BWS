@@ -18,6 +18,7 @@ return array(
     'App\\Commande' => $baseDir . '/app/Commande.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Demande_emploie' => $baseDir . '/app/Demande_emploie.php',
+    'App\\Email' => $baseDir . '/app/Email.php',
     'App\\Employeur' => $baseDir . '/app/Employeur.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\Favori' => $baseDir . '/app/Favori.php',

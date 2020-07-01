@@ -427,7 +427,7 @@
                 <div class="col-sm-6 col-md-4 p-b-40" v-for="artcls in articles">
                     <div class="blog-item">
                         <div class="hov-img0">
-                            <a href="blog-detail.html">
+                            <a :href="'/articleDetaille/'+artcls.id">
                                 <img :src="'storage/articles_image/'+ artcls.image" alt="IMG-BLOG" style="height: 200px;">
                             </a>
                         </div>
@@ -1353,9 +1353,23 @@
             colors: [],
             typeLivraisons: [],
             tailles: [],
+            articleId:{
+                id: '',
+            },
 
          },
          methods:{
+            showArticleD: function(id){
+                console.log("id",id);
+                app11.articleId.id = id;
+                axios.post(window.Laravel.url+'/articleD',app11.articleId)
+                .then(response => {
+                    
+                })
+                .catch(error => {
+                      console.log('errors : '  , error);
+                })
+            },
             getProduitHome: function(){
                 var i=0;
                 axios.get(window.Laravel.url+'/getproduithome')

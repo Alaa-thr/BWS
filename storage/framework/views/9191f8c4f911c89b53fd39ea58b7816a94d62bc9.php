@@ -352,7 +352,11 @@
 							<i class="zmdi zmdi-search"></i>
 						</div>
 
+<<<<<<< HEAD
 						<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11" onclick="connecterAvant()">
+=======
+						<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11  js-show-cart" >
+>>>>>>> f6fff6da266d6f2022a602ab1661f439c32c658d
 							<i class="zmdi zmdi-shopping-cart"></i>
 						
 						</div>

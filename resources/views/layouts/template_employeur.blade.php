@@ -639,7 +639,7 @@
           <li class="<?php echo $stripeDmndT ?>">
             <a href="{{route('demandeEmploiTraite')}}">
               <i class="now-ui-icons files_single-copy-04" id="y"></i>
-              <div class="m-t-5" id="x">demandes traités</div>
+              <div class="m-t-5" id="x">demandes traitées</div>
             </a>
           </li>
         </ul>

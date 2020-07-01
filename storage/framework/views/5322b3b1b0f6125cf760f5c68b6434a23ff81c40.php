@@ -12,31 +12,32 @@
 			Contact
 		</h2>
 	</section>	
-
+		
 
 	<!-- Content page -->
 	<section class="bg0 p-t-104 p-b-116">
-		<div class="container">
+		<div class="container" id="app">
 			<div class="flex-w flex-tr">
 				<div class="size-210 bor10 p-lr-70 p-t-55 p-b-70 p-lr-15-lg w-full-md">
-					<form>
 						<h4 class="mtext-105 cl2 txt-center p-b-30 color-t">
-							Send Us A Message
+							Contactez_nous
 						</h4>
 
 						<div class="bor8 m-b-20 how-pos4-parent">
-							<input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" name="email" placeholder="Your Email Address">
+							<input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" name="email" placeholder="Votre Adresse Email" v-model="eemail.adresse_email" :class="{'is-invalid' : message.adresse_email}">
+							<span class="px-3" style="color: #ca2323" v-if="message.adresse_email" v-text="message.adresse_email[0]"></span>
 							<img class="how-pos4 pointer-none" src="images/icons/icon-email.png" alt="ICON">
 						</div>
 
 						<div class="bor8 m-b-30">
-							<textarea class="stext-111 cl2 plh3 size-120 p-lr-28 p-tb-25" name="msg" placeholder="How Can We Help?"></textarea>
+							<textarea class="stext-111 cl2 plh3 size-120 p-lr-28 p-tb-25" name="msg" placeholder="Comment pouvons-nous vous aidez?" v-model="eemail.message" :class="{'is-invalid' : message.message}"></textarea>
+							<span class="px-3" style="color: #ca2323" v-if="message.message" v-text="message.message[0]"></span>
 						</div>
 
-						<button class="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer bg10">
-							Submit
+						<button type=""  class="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer bg10" v-on:click="addEmail()">
+							Envoyer
 						</button>
-					</form>
+					
 				</div>
 
 				<div class="size-210 bor10 flex-w flex-col-m p-lr-93 p-tb-30 p-lr-15-lg w-full-md">
@@ -92,9 +93,65 @@
 		</div>
 	</section>	
 	
-
-
-
-
 <?php $__env->stopSection(); ?>
+
+<?php $__env->startPush('javascripts'); ?>
+
+<script> 
+        window.Laravel = <?php echo json_encode([
+
+               'csrfToken' => csrf_token(),
+               'url'       => url('/'), 
+          ]); ?>;
+</script>
+<script>
+	var app = new Vue({
+      el: '#app',
+      data:{
+      	eemail:{
+      		id: 0,
+      		adresse_email: '',
+      		message: '',
+      		
+      	},
+      	message: {},
+      },
+      methods:{
+      	
+      	addEmail:function(){
+              axios.post(window.Laravel.url+'/addemail',this.eemail)
+              .then(response => {
+                if(response.data.etat){
+               	  Swal.fire({
+				  position: '',
+				  icon: 'success',
+				  title: 'Votre message a été envoyé.',
+				  html: 'Nous vous répondrons bientôt sur '+ response.data.email.adresse_email,
+				  })
+                  this.eemail = response.data.email;
+                  this.eemail.id = response.data.email.id;
+                  this.eemail = {
+                        id: 0,
+			      		
+			      		adresse_email: '',
+			      		message: '',
+			      		
+                    };
+                   this.message={};
+
+                }
+              })
+              .catch(error => {
+              	this.message = error.response.data.errors;
+                console.log('errors :' , error);
+              })
+              
+           },
+
+      },
+    
+  });
+</script>
+<?php $__env->stopPush(); ?>
+
 <?php echo $__env->make('layouts.template_visiteur', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\BWS\resources\views/contact.blade.php ENDPATH**/ ?>

@@ -52,13 +52,11 @@
                     <div class="col-md-8" >
                       <h5 class="title" style="margin-top: -8px; margin-left: 20px; color: red;" >@{{ articlea.titre }}</h5><br>
                         <div class="description" style="margin-top: -10px; font-size: 17px; margin-left: 20px;">
-                          @{{ MoitieDescription(articlea.description,100, '...') }}
-                        
-                         
+                          @{{ MoitieDescription(articlea.description,100, '...') }}  
                           <div class="txt-right m-t-20">
-                           <a class="js-show-modal1 " style=" color: black; font-style: italic; font-weight: 500; cursor: pointer;" v-on:click="AfficheInfo(articlea.id)"><b> Afficher Plus </b>
-                           </a>
-                           </div>
+                            <a class="js-show-modal1 " style=" color: black;  font-style: italic; font-weight: 500; cursor: pointer;" v-on:click="AfficheInfo(articlea.id)"><b>  Afficher Plus </b>
+                            </a>
+                          </div>
                         </div>
                          
                     </div>

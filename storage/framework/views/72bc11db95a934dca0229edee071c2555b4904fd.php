@@ -6,6 +6,7 @@
 		<title><?php echo e(( 'Acticle Detaillé')); ?></title>
 	</head>
 <!-- breadcrumb -->
+<div  id='app22'>
 	<div class="container">
 		<div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
 			<a href="index.html" class="stext-109 cl8 hov-cl1 trans-04">
@@ -19,14 +20,13 @@
 			</a>
 
 			<span class="stext-109 cl4">
-				8 Inspiring Ways to Wear Dresses in the Winter
+				8 Inspiring Ways to Wear Dresses in the Winter {{msg}}
 			</span>
 		</div>
 	</div>
-
-
+	
 	<!-- Content page -->
-	<section class="bg0 p-t-52 p-b-20">
+	<section class="bg0 p-t-52 p-b-20" >
 		<div class="container">
 			<div class="row">
 				<div class="col-md-8 col-lg-9 p-b-80">
@@ -308,10 +308,23 @@
 			</div>
 		</div>
 	</section>	
-	
-
-
-
-
+</div>
 <?php $__env->stopSection(); ?>
+<?php $__env->startPush('javascripts'); ?>
+<script>
+    window.Laravel = <?php echo json_encode([
+               "csrfToken"  => csrf_token(),
+           
+               "categorie"	  => $categorie,
+               "url"      => url("/")  
+    ]); ?>;
+    var app22 = new Vue({
+         el : "#app22",
+         data:{
+         	msg: 'hello'
+
+         },
+     });
+</script>
+<?php $__env->stopPush(); ?>
 <?php echo $__env->make('layouts.template_visiteur', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\BWS\resources\views/article_detaille.blade.php ENDPATH**/ ?>

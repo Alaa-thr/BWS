@@ -491,6 +491,7 @@ class ComposerStaticInit6ac30e15a1ee6806079f05ef802d642c
         'App\\Commande' => __DIR__ . '/../..' . '/app/Commande.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Demande_emploie' => __DIR__ . '/../..' . '/app/Demande_emploie.php',
+        'App\\Email' => __DIR__ . '/../..' . '/app/Email.php',
         'App\\Employeur' => __DIR__ . '/../..' . '/app/Employeur.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Favori' => __DIR__ . '/../..' . '/app/Favori.php',

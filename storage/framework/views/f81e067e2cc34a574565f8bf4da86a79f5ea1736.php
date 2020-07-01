@@ -567,7 +567,11 @@
                 <div class="card " >
                     <div class="card-header">
                         <a href="<?php echo e(route('accueil')); ?>" class="logo p-l-50" >
+<<<<<<< HEAD
                             <img src="images/icons/LogoFinal2.png" alt="IMG-LOGO" />
+=======
+                            <img src="images/icons/LogoFinal2.png" alt="IMG-LOGO" >
+>>>>>>> f6fff6da266d6f2022a602ab1661f439c32c658d
                         </a>
                         <span class="splash-description">Please enter your user information.</span>
                     </div>

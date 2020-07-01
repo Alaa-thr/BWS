@@ -2,19 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use Illuminate\Http\UploadedFile;
 use App\Ville;
 use App\User;
 use App\Vendeur;
 use App\Client;
+use App\Employeur;
+use App\Admin;
 use App\Commande;
+use App\Email;
 use Auth;
-
+use Redirect;
 
 class BwsController extends Controller
 {
-
+    private $cat;
+    private $art;
 /************************************************ Visiteur***********************************************/   
      public function Connect(Request $request)
     {
@@ -128,12 +133,30 @@ class BwsController extends Controller
 
      public function article()
     {
-        return view('article');
+       $article = \DB::table('admins')->join('articles','admins.id','=','articles.admin_id')->orderBy('articles.created_at','desc')->get();
+        return view('article',['ar' =>$article]);
     }
-
-     public function contact()
+    public function contact()
     {
         return view('contact');
+    }
+
+     public function addEmail(Request $request)
+    {
+        $request->validate([
+             'adresse_email' => ['required','string', 'max:50', 'min:5','email'],
+             'message' => ['required','string','max:500','min:5','regex:/^[a-zA-Z0-9][a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
+         ]);
+         
+        $email = new Email;
+        
+        $email->adresse_email = $request->adresse_email;
+        $email->message = $request->message;
+        
+        $email->save();
+        
+        
+        return Response()->json(['etat' => true, 'email' => $email]);
     }
 
      public function accueil()
@@ -141,11 +164,25 @@ class BwsController extends Controller
         return view('home');
     }
 
-     public function article_D()
+    /* public function article_D()
     {
-        return view('article_detaille');
+        $article_D = \DB::table('admins')->join('articles','admins.id','=','articles.admin_id')->get();
+        return view('article_detaille',['article_detaillé' => $article_D]);
+    }*/
+    public function aa()
+    {
+        $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+        return View('article_detaille',['categorie' => $categorie]);
     }
 
+    public function showArticleD($id)
+    {
+        
+        $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+        $cat = $categorie;
+       $art = \DB::table('articles')->where('id',$id)->get();
+        return $this->aa();
+    }
 
     public function get_ville(){
         $ville = Ville::all();
