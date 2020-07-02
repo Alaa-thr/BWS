@@ -12,15 +12,21 @@ use App\Rules\ModifieTextDescriptionArticle;
 use App\User;
 use Auth;
 use App\Favori;
-
+use App\Vendeur;
+use App\Produit;
+use App\Imageproduit;
+use App\ColorProduit;
+use App\TailleProduit;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\CommandeRequest;
+ 
+ 
 class ClientController extends Controller
 {
 
      public function profil_clinet(){
-        $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
-        $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
         $client=Client::find(Auth::user()->id); 
-        return view('profil_clinet',['client'=>$client,'categorie'=>$categorie ,'categorieE'=>$categorieE]);
+        return view('profil_clinet',['client'=>$client]);
     }    
     public function update_profil(Request $request, $id) {
                 
@@ -44,12 +50,10 @@ class ClientController extends Controller
 
         return redirect('profilClient');
     }
-    public function get_commande_client(){
-        $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
-        $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
-        $c = Client::find(Auth::user()->id);
-        $article = \DB::table('commandes')->where('client_id', $c->id)->orderBy('created_at','desc')->paginate(5) ; 
-        return view('commande_client',['article'=>$article, 'idAdmin' => $c->id,'categorie'=>$categorie ,'categorieE'=>$categorieE]);
+    public function get_commande_client(){//fcnt qui retourné tout les articles qui sont dans la table "Article" et trie par ordre desc selon son dates de creations
+        $c = Client::find(Auth::user()->id);//recuperé "user_id" de admin qui est connecter       
+        $article = \DB::table('commandes')->where('client_id', $c->id)->orderBy('created_at','desc')->paginate(5) ;//recuperé les articles qui sont dans la table "Article" et trie par ordre desc selon son dates de creations et pour "->paginate(5)" c a d f kol page t'affichilek 5 ta3 les article  
+        return view('commande_client',['article'=>$article, 'idAdmin' => $c->id]);//reteurné a la view "articles_admin" et les 2 attributs "article" (contient tout les articles) et "idAdmin" (id de l'admin cncté) 
     } 
     public function detaillsCommande(Request $request){//fcnt retourné l'article di rena habin n2affichiw les détaills te3o, 3anda un parametre di fih id ta3 article rechercher
         $commande_detaills = \DB::table('commandes')->where('id', $request->idA)->get();
@@ -69,7 +73,7 @@ class ClientController extends Controller
         else{
             if(Auth::user()->type_compte == "c"){
                 $client =  Client::find(Auth::user()->id);
-                $produitExister = \DB::table('commandes')->where([['id', $client->nbr_cmd+1],['produit_id',$request->produit_id],['client_id',$client->id]])->get();
+                $produitExister = \DB::table('commandes')->where([['id', $client->nbr_cmd],['produit_id',$request->produit_id],['client_id',$client->id]])->get();
                 
                         if($request->tailExst == 1){
                             $request->validate([
@@ -116,6 +120,8 @@ class ClientController extends Controller
                                 $commande->qte = $request->qte;
                                 $commande->type_livraison = $request->type_livraison;
                                 $commande->couleur_id = $request->couleur_id;
+
+                               
                                 $commande->save();
                         
                             return Response()->json(['etat' => true,'produitExister' => false]);
@@ -142,15 +148,14 @@ class ClientController extends Controller
         ->select('colors.nom', 'imageproduits.produit_id', 'imageproduits.image', 'imageproduits.profile', 'clients.email', 'clients.codePostal', 'clients.numeroTelephone', 'clients.ville', 'produits.Libellé', 'produits.prix', 'produits.vendeur_id', 'commandes.*', 'vendeurs.Nom as nom_vendeur', 'vendeurs.Prenom as prenom_vendeur')
         ->where([['commandes.client_id', $clientCnncte->id],['commandes.id', $clientCnncte->nbr_cmd],['imageproduits.profile',1]])
         ->get();
-        $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
-        $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
         $color = \DB::table('colors')->join('color_produits', 'colors.id', '=', 'color_produits.color_id')->get();
         $taille = \DB::table('taille_produits')->get();
         $typeLivraison = \DB::table('typechoisirvendeurs')->get();
-        //$produitCmds = \DB::table('commandes')->get();
-        return view('panier_visiteur',['produitCmds' => $produitCmds,'color' => $color, 'typeLivraison' => $typeLivraison, 'taille' => $taille,'categorie'=>$categorie ,'categorieE'=>$categorieE]);
 
-    }
+        //$produitCmds = \DB::table('commandes')->get();
+        return view('panier_visiteur',['produitCmds' => $produitCmds,'color' => $color, 'typeLivraison' => $typeLivraison, 'taille' => $taille,'nomClient' => $clientCnncte->nom,'prenomClient' => $clientCnncte->prenom,'idClient' => $clientCnncte->id]);
+
+    } 
 
     public function AjoutAuFavoris($id){
         $clientCnncte = Client::find(Auth::user()->id);// njibo l client di ra connecter
@@ -161,4 +166,38 @@ class ClientController extends Controller
         return $favoris;
     }
  
+      
+    public function EnvoyerCommande(CommandeRequest $request){
+        $clientCnncte = Client::find(Auth::user()->id);// njibo l client di ra connecter
+       
+        $commandes = \DB::table('commandes')->get();
+       
+        foreach($commandes as $cmd){
+            \DB::table('commandes')->where([ ['client_id',$clientCnncte->id],['id','=',$clientCnncte->nbr_cmd]])->
+            update(['email'=> $request->email ,
+            'numero_tlf' => $request->numero_tlf, 'code_postale' => $request->code_postale, 'commande_envoyee' =>1,
+             'ville' =>$clientCnncte->ville]);}
+
+
+        $clientCnncte->nbr_cmd =$clientCnncte->nbr_cmd+1; 
+        $clientCnncte->save();
+
+        session()->flash('success','Cette Commande sera traitée par le vendeur et lui rappeler ou refuser ton commande avec notification');
+
+        return Response()->json(['etat' => true,'commandeAjout' => $commandes]);
+}
+
+public function getProduit(){
+    $clientCnncte = Client::find(Auth::user()->id);
+    $favoris = \DB::table('produits')->get();
+
+    $produit = \DB::table('favoris')->where([ ['client_id',$clientCnncte->id]])
+    ->orderBy('created_at','desc')->paginate(8); 
+
+    $imageproduit = \DB::table('imageproduits')->get();
+    return view('favoris_client',['produit'=>$produit, 'ImageP' => $imageproduit, 'Fav' => $favoris]);
+}
+
+
+
 }
