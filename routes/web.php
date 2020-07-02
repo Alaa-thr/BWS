@@ -160,7 +160,8 @@ Route::delete('/deletenotificationclient/{id}','NotificationController@deleteNot
 
 /*Favoris*/
 Route::post('/ajoutaufavoris/{id}','ClientController@AjoutAuFavoris');
-Route::get('/favorisClient','FavorisController@get_favoris_client')->name('favorisClient');
 Route::delete('/deletefavorisclient/{id}','FavorisController@deletefavorisClient');
+Route::get('/favorisClient', 'ClientController@getProduit')->name('favorisClient');
 
-
+//EnvoyerCommande
+Route::post('/envoyercommande', 'ClientController@EnvoyerCommande');
