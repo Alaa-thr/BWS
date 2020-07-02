@@ -200,6 +200,11 @@
 
 
 
-
+<script>
+  window.Laravel = <?php echo json_encode([
+               "csrfToken"  => csrf_token(),
+               "url"      => url("/")  
+    ]); ?>;
+  </script>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.template_vendeur', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\BWS\resources\views/statistiques_vendeur.blade.php ENDPATH**/ ?>

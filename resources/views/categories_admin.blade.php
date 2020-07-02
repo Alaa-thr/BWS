@@ -42,12 +42,18 @@
                       <label ><b>Nom</b></label>
                       <input name="nom" type="text" class="form-control" placeholder="Entrez le nom de catégorie (Le nom doit être commencé avec un Maj ou un Numero)" v-model="ccategorie.libelle" style="color: black;" :class="{'is-invalid' : message.libelle}"/>
                       <span class="px-3" style="color: #ca2323" v-if="message.libelle" v-text="message.libelle[0]"></span>
-                      <select v-if="edit === false" class="form-control" id="typeCategorie" name ="typeCategorie" @change="SavetTypeCategorie($event)" :class="{'is-invalid' : message.typeCategorie}" style="margin-top: 10px">
-                      <option value="0" selected disabled>Choisie le type de Categories :</option>
-                      <option value="shop">Shop Categories</option>
-                      <option value="emploi">Emploi Categories</option>
-                    </select>
-                    <span class="px-3" v-if="message.typeCategorie" v-text="message.typeCategorie[0]" style="color: #ca2323"></span>
+
+                      <div style="display: inline-flex; margin-top: 10px;">
+
+                        <select v-if="edit === false" class="form-control" id="typeCategorie" name ="typeCategorie" @change="SavetTypeCategorie($event)" :class="{'is-invalid' : message.typeCategorie}" style="margin-right: 20px; height: 38px; width: 290px">
+                        <option value="0" selected disabled>Choisie le type de Categories :</option>
+                        <option value="shop">Shop Categories</option>
+                        <option value="emploi">Emploi Categories</option>
+                        </select>                        
+                        <input type="file" class="form-control "  v-on:change="imagePreview" :class="{'is-invalid' : message.image}" accept="image/png, image/jpeg" style="height: 38px; width: 290px">
+                        
+                      </div>
+                      <span class="px-3" v-if="message.typeCategorie" v-text="message.typeCategorie[0]" style="color: #ca2323"></span>
                     </div>
                   </div>
                   <div v-if="edit === false" class="col-md-2 " style="margin-left: 20px;">
@@ -74,8 +80,15 @@
                         <button type="submit" class="btn btn-danger btn-block" style="font-size: 12px; border-radius: 1.3em; font-weight: 900;" v-on:click="CancelCatego(ccategorie)">Annuler </button>
                    </div>
                   </div>
+                  <div style="padding-bottom: 10px; margin-left: -40px;margin-right: 5px;">
+                    <div class=" alert-warning" role="alert" style="padding-left: 10px;padding-top: 1px;padding-bottom: 1px;">
+                      <i class="now-ui-icons travel_info" id="y"></i>
+                       Vous pouvez choisir des images pour votre catégories ici:<a href="https://www.flaticon.com" class="alert-link" target=_blank> Free Vector Icons</a>. Et l'image doit etre de taille 16x16 px, pour avoir une organisation comme
+                      <b class="alert-link " style="cursor: pointer;text-decoration: underline;" v-on:click="showImage">ceci</b>.
+                    </div> 
+                  </div>             
                 </div>
-
+                
               </div>
             </div>
           </div>
@@ -239,21 +252,21 @@
               </li>
             </ul>
           </nav>
-          <div class="copyright" id="copyright">
+          <div class="copyright" id="copyright" >
             &copy; <script>
               document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))
             </script>, Desinger par <a href="https://www.invisionapp.com" target="_blank">BS</a>. Codé par <a href="https://www.creative-tim.com" target="_blank">BASMAHW&S</a>.
           </div>
         </div>
       </footer>
-     
+
     </div>
 
   @endsection
 
 
   @push('javascripts')
-
+                                  
 
 <script> 
         window.Laravel = {!! json_encode([
@@ -282,6 +295,7 @@
           id: 0,
           libelle :'',
           typeCategorie: '',
+          image: null,
         },
         sousccategorie: {
           id: 0,
@@ -309,12 +323,29 @@
         message: {},
         AutreExiste: false,
         sousCategoriesNull: [],
+        image: null,
         
 
                  
       },
 
     methods: {
+      showImage: function(){
+          Swal.fire({
+          imageUrl: '{{asset('storage/categorie_image/CategoLook.png')}}',
+        
+          imageHeight: 340,
+          imageAlt: 'A tall image'
+        })
+      },
+      imagePreview(event) {
+           var fileR = new FileReader();
+           fileR.readAsDataURL(event.target.files[0]);
+           fileR.onload = (event) => {
+              
+              this.image = event.target.result;
+           }          
+      },
       SavetTypeCategorie:function(event){
 
               this.ccategorie.typeCategorie = event.target.value;
@@ -334,10 +365,11 @@
       CancelCatego(categorie){
         this.edit = false;
         this.open = false;
-        this.ccategorie= {
-          id: 0,
-          libelle :'',
-        };
+        this.ccategorie = {
+                        id: 0,
+                        libelle :'',
+                        image: null,
+                  };
         this.message = {};
         categorie.libelle = this.oldCatego.libelle;
       },
@@ -397,6 +429,7 @@
 
       }, 
       updateCategorieButton: function(){
+        this.ccategorie.image = this.image;
          if(this.ccategorie.libelle == ''){
 
             this.ccategorie.libelle =  this.oldCatego.libelle;
@@ -408,14 +441,16 @@
               if(response.data.etat){
                  this.edit = false;
                  this.open = false;
-                 this.ccategorie= {
-                   id: 0,
-                   libelle :'',
-                };
+                 this.ccategorie = {
+                        id: 0,
+                        libelle :'',
+                        image: null,
+                  };
                 this.message = {};
                 this.oldCatego= {
                   libelle: '', 
                 };
+                this.image=null;
 
               } 
                  
@@ -700,6 +735,7 @@
       
 
       addCategorie:function(){
+              this.ccategorie.image = this.image;
               axios.post(window.Laravel.url+'/addcategorie',this.ccategorie)
               .then(response => {
                 if(response.data.etat){
@@ -710,7 +746,9 @@
                   this.ccategorie = {
                         id: 0,
                         libelle :'',
+                        image: null,
                   };
+                  this.image= null;
                   this.message={};
                  
                 }
@@ -802,7 +840,8 @@
             this.ccategorie = {
                         id: 0,
                         libelle :'',
-                   };
+                        image: null,
+                  };
             
       },
       ajouterSouscategorie: function(id){
@@ -889,7 +928,19 @@
      
  
  });
-  
+
 </script>
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+<script>
+ 
+$(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip();   
+});
+
+</script>
+                            
 @endpush

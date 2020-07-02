@@ -50,7 +50,7 @@
 <body >
 
   <!-- Header -->
-	<header>
+	<header id="app66">
 		<!-- Header desktop -->
 		<div class="container-menu-desktop">
 			<!-- Topbar -->
@@ -94,126 +94,67 @@
 									</div>
 									<ul class="sub-menu " >
 											<div class="flex-w bg6 w-full p-lr-30 p-t-27 p-lr-15-sm">
-												<div class="filter-col1  p-b-27">
-											
-													<div class="mtext-102 cl2 p-b-15 cl13">
-														Catégories
-													</div>
-													<ul>
-														<li class="p-b-6 ">
-														
-															<img src="images/icons/tshirt.png" class="p-b-4">
-															<a href="#" class="filter-link stext-106 trans-04">
-																Vêtements
-															</a>
-														</li>
-														<li class="p-b-6">
-															<img src="images/icons/Shoes.png" class="p-b-2">
-															<a href="#" class="filter-link stext-106 trans-04">
-																Chaussures
-															</a>
-														</li>
-														<li class="p-b-6">
-															<img src="images/icons/cosmetics.png" class="p-b-2">
-															<a href="#" class="filter-link stext-106 trans-04">
-																Santé & Beauté 
-															</a>
-														</li>
-														<li class="p-b-6">
-															<img src="images/icons/lipstick.png" class="p-b-2">
-															<a href="#" class="filter-link stext-106 trans-04 ">
-																Maquillages
-															</a>
-														</li>
-									
-														<li class="p-b-6">
-															<img src="images/icons/diamond.png" class="p-b-2">
-															<a href="#" class="filter-link stext-106 trans-04">
-																Bijoux
-															</a>
-														</li>
-									
-														<li class="p-b-6">
-															<a href="#" class="filter-link stext-106 trans-04">
-																
-															</a>
-														</li>
-													</ul>
-												</div>
-									
-												<div class="filter-col2 p-b-27 p-t-39">
-													<ul>
-														<li class="p-b-6">
-															<img src="images/icons/house.png" class="p-b-2">
-															<a href="#" class="filter-link stext-106 trans-04 ">
-																Immobilieres
-															</a>
-														</li>
-														<li class="p-b-6">
-															<img src="images/icons/nightstand.png" class="p-b-2">
-															<a href="#" class="filter-link stext-106 trans-04">
-																Electroménagers & Meubles
-															</a>
-														</li>
-														<li class="p-b-6">
-															<img src="images/icons/repair.png" class="p-b-2">
-															<a href="#" class="filter-link stext-106 trans-04">
-																Matériels
-															</a>
-														</li>
-														<li class="p-b-6">
-															<img src="images/icons/smartphone.png" class="p-b-2">
-															<a href="#" class="filter-link stext-106 trans-04">
-																Télephones& Accessoires
-															</a>
-														</li>
-														<li class="p-b-6">
-															<img src="images/icons/laptop.png" class="p-b-2">
-															<a href="#" class="filter-link stext-106 trans-04">
-																Informatiques
-															</a>
-														</li>
-														<li class="p-b-6">
-															<a href="#" class="filter-link stext-106 trans-04">
-																
-															</a>
-														</li>
-													</ul>
-												</div>
-									
-												<div class="filter-col3  p-b-27 p-t-39" >
-													<ul>
-														<li class="p-b-6">
-															<img src="images/icons/car.png" class="p-b-2">
-															<a href="#" class="filter-link stext-106 trans-04">
-																Véhicules & Automobiles
-															</a>
-														</li>
-														<li class="p-b-6">
-															<img src="images/icons/customer.png" class="p-b-2">
-															<a href="#" class="filter-link stext-106 trans-04">
-																	Services
-															</a>
-														</li>
-														<li class="p-b-6">
-															
-									
-															<a href="#" class="filter-link stext-106 trans-04">
-																
-															</a>
-														</li>
-														<li class="p-b-6">
-															<a href="#" class="filter-link stext-106 trans-04"></a>
-														</li>
-														<li class="p-b-6">
-															<a href="#" class="filter-link stext-106 trans-04"></a>
-														</li>
-														<li class="p-b-6">
-															<a href="#" class="filter-link stext-106 trans-04"></a>
-														</li>
-													</ul>
-												</div>
-											</div>
+                                                <div class="filter-col8  p-b-27">
+                                            
+                                                    <div class="mtext-102 cl2 p-b-15 cl13">
+                                                        Catégories
+                                                    </div>
+                                                    <ul >
+                                                        <li class="p-b-6 " v-for="(catego,cntt) in categories" :key = 'cntt' v-if="cntt <count">
+
+                                                         <img v-if="catego.image != null" :src='"/storage/categorie_image/"+catego.image' class="p-b-4">
+
+                                                         <a href="#" class="filter-link stext-106 trans-04">
+                                                            @{{catego.libelle}}
+                                                         </a>
+                                                        </li>
+                                                       
+                                                    </ul >
+                                                </div>
+
+            @php 
+                   
+                    for ($k = 0; $k < 6; $k++){
+                            unset($categorie[$k]);               
+                    }
+                    $cc=count($categorie);
+                   
+            @endphp                                 
+            @for ($i=0; $i< $cc;  )
+           
+                        @php
+                            $j=0;
+                        @endphp
+               
+                        <div class="filter-col8 p-b-27 p-t-39"><!--filteredItems1-->
+                @foreach ($categorie as $ctgo)
+                                   
+                    @if($j < 6)
+                        @php
+                            $j++;
+                        @endphp            
+                        <ul>
+                            <li class="p-b-6 " >
+                            @if($ctgo->image !=null) 
+                                <img src="<?php echo asset('storage/categorie_image/'.$ctgo->image) ?>" class="p-b-4">
+                            @endif
+                                <a href="#" class="filter-link stext-106 trans-04">{{$ctgo->libelle}}</a>
+                            </li>
+                        </ul>
+                    @endif
+                @endforeach
+                @for ($f = 0; $f < $j; $f++)
+                    
+                    @php $categorie->shift($f);@endphp                
+                  
+                @endfor
+               
+                @php
+                    $cc-=$j;
+                @endphp
+                                                </div>
+            @endfor
+                                            </div>
 										</ul>
 										
 							</li>
@@ -222,117 +163,70 @@
 									<span >
 										<i class="fa fa-angle-right" aria-hidden="true"></i>
 									</span>
-								<ul class="sub-menu " style="width: 1100%;" >
-									<div class="flex-w bg6 w-full p-lr-30 p-t-27 p-lr-15-sm">
-										<div class="filter-col1  p-b-27">
-											<div class="mtext-102 cl2 p-b-15" style="color: #ca2323;">
-												Catégories
-											</div>
-							
-											<ul>
-												<li class="p-b-6">
-													<img src="images/icons/architect.png" class="p-b-2">
-													<a href="#" class="filter-link stext-106 trans-04">
-														Architecture
-													</a>
-												</li>
-												<li class="p-b-6">
-													<img src="images/icons/programmer.png" class="p-b-2">
-													<a href="#" class="filter-link stext-106 trans-04">
-														Informatique
-													</a>
-												</li>
-												<li class="p-b-6">
-													<img src="images/icons/flash.png" class="p-b-2">
-													<a href="#" class="filter-link stext-106 trans-04">
-														Electricité
-													</a>
-												</li>
-												<li class="p-b-6">
-													<img src="images/icons/shield.png" class="p-b-2">
-													<a href="#" class="filter-link stext-106 trans-04 ">
-														Sécurité
-													</a>
-												</li>
-												<li class="p-b-6">
-													<img src="images/icons/hotel.png" class="p-b-2">
-													<a href="#" class="filter-link stext-106 trans-04">
-														Hôtel
-													</a>
-												</li>
-												<li class="p-b-6">
-													<a href="#" class="filter-link stext-106 trans-04">
-														
-													</a>
-												</li>
-											</ul>
-										</div>
-										<div class="filter-col2 p-b-27 p-t-39">
-											<ul>
-												<li class="p-b-6">
-													<img src="images/icons/money.png" class="p-b-2">
-													<a href="#" class="filter-link stext-106 trans-04 ">
-														Banque
-													</a>
-												</li>
-												<li class="p-b-6">
-													<img src="images/icons/fruit.png" class="p-b-2">
-													<a href="#" class="filter-link stext-106 trans-04">
-														Alimentation
-													</a>
-												</li>
-												<li class="p-b-6">
-													<img src="images/icons/medication.png" class="p-b-2">
-													<a href="#" class="filter-link stext-106 trans-04">
-														Pharmacie
-													</a>
-												</li>
-												<li class="p-b-6">
-													<img src="images/icons/wrench.png" class="p-b-2">
-													<a href="#" class="filter-link stext-106 trans-04">
-														Mécanicien Automobile
-													</a>
-												</li>
-												<li class="p-b-6">
-													
-												</li>
-												<li class="p-b-6">
-													<a href="#" class="filter-link stext-106 trans-04">
-														
-													</a>
-												</li>
-											</ul>
-										</div>
-										<div class="filter-col3  p-b-27 p-t-39">
-											<ul>
-												<li class="p-b-6">
-													<img src="images/icons/saw.png" class="p-b-2">
-													<a href="#" class="filter-link stext-106 trans-04">
-														Menuiserie
-													</a>
-												</li>
-												<li class="p-b-6">
-													<img src="images/icons/medicine.png" class="p-b-2">
-													<a href="#" class="filter-link stext-106 trans-04 ">
-														Hôpital
-													</a>
-												</li>
-												<li class="p-b-6">
-													<a href="#" class="filter-link stext-106 trans-04"></a>
-												</li>
-												<li class="p-b-6">
-													<a href="#" class="filter-link stext-106 trans-04"></a>
-												</li>
-												<li class="p-b-6">
-													<a href="#" class="filter-link stext-106 trans-04"></a>
-												</li>
-												<li class="p-b-6">
-													<a href="#" class="filter-link stext-106 trans-04"></a>
-												</li>
-											</ul>
-										</div>
-									</div>
-								</ul>
+								<ul class="sub-menu " style="width: 990%;" >
+                                    <div class="flex-w bg6 w-full p-lr-30 p-t-27 p-lr-15-sm">
+                                                <div class="filter-col8  p-b-27">
+                                            
+                                                    <div class="mtext-102 cl2 p-b-15 cl13">
+                                                Catégories
+                                            </div>
+                            
+                                             <ul >
+                                                <li class="p-b-6 " v-for="(catego,cntt) in categoriesE" :key = 'cntt' v-if="cntt <count">
+
+                                                    <img v-if="catego.image != null" :src='"/storage/categorie_image/"+catego.image' class="p-b-4">
+
+                                                    <a href="#" class="filter-link stext-106 trans-04">
+                                                            @{{catego.libelle}}
+                                                    </a>
+                                                </li>
+                                                       
+                                            </ul >
+                                        </div>
+            @php 
+                   
+                    for ($k = 0; $k < 6; $k++){
+                            unset($categorieE[$k]);               
+                    }
+                    $cc=count($categorieE);
+                   
+            @endphp                                 
+            @for ($i=0; $i< $cc;  )
+           
+                        @php
+                            $j=0;
+                        @endphp
+               
+                        <div class="filter-col8 p-b-27 p-t-39"><!--filteredItems1-->
+                @foreach ($categorieE as $ctgo)
+                                   
+                    @if($j < 6)
+                        @php
+                            $j++;
+                        @endphp            
+                        <ul>
+                            <li class="p-b-6 " >
+                            @if($ctgo->image !=null) 
+                                <img src="<?php echo asset('storage/categorie_image/'.$ctgo->image) ?>" class="p-b-4">
+                            @endif
+                                <a href="#" class="filter-link stext-106 trans-04">{{$ctgo->libelle}}</a>
+                            </li>
+                        </ul>
+                    @endif
+                @endforeach
+                @for ($f = 0; $f < $j; $f++)
+                    
+                    @php $categorieE->shift($f);@endphp                
+                  
+                @endfor
+               
+                @php
+                    $cc-=$j;
+                @endphp
+                                                </div>
+            @endfor
+                                    </div>
+                                </ul>
 							</li>
 							<li>
 									<a href="{{route('article')}}">Article</a>
@@ -352,7 +246,7 @@
 							<i class="zmdi zmdi-search"></i>
 						</div>
 
-						<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11  js-show-cart" >
+						<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11" onclick="connecterAvant()">
 							<i class="zmdi zmdi-shopping-cart"></i>
 						
 						</div>
@@ -405,9 +299,10 @@
 					<i class="zmdi zmdi-search"></i>
 				</div>
 
-				<div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-22  js-show-cart" >
-					<i class="zmdi zmdi-shopping-cart"></i>
-				</div>
+				<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11" onclick="connecterAvant()">
+							<i class="zmdi zmdi-shopping-cart"></i>
+						
+			    </div>
 
 				<div class="dropdown">
                               <button class="  dis-block dropdown-toggle icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-22" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -773,7 +668,60 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
 	
   @stack('javascripts')
-  
+  <script>
+  	 var app66 = new Vue({
+         el : "#app66",
+         data:{
+            
+            categories: [],
+            sousCategories: [],
+            categoriesE: [],
+            count: 6,
+         },
+         methods:{
+
+            getCategorieHome: function(){
+                axios.get(window.Laravel.url+"/getcategoriehome")
+                        .then(response => {
+                           app66.categories = response.data.categorie;
+                           app66.sousCategories = response.data.sousCatego;
+                           this.categoriesE =  response.data.categorieE;
+                        })
+                        .catch(error =>{
+                            console.log("errors",error)
+                        })
+            },
+           
+         },
+         mounted:function(){
+            this.getCategorieHome();
+         },
+       })
+       
+  	function connecterAvant(){
+        
+            Swal.fire({
+                          icon: 'error',
+                          title: 'Oops...',
+                          html: 'Vous devez être connecté tent que <b style="text-decoration: underline;">Client</b> pour pouvez accedé a votre panier.',
+                          footer: '<form method="GET" action="{{ route("logoutregister") }}">@csrf<a style=" color: #007bff;" href="{{ route("logoutregister") }}">Créer Compte</a></form>',
+                          showCancelButton: true,
+                          cancelButtonColor: '#d33',
+                          confirmButtonColor: '#13c940',
+                          confirmButtonText:
+                            'Se Connecter',
+            }).then((result) => {
+                if (result.value){
+                    axios.post('http://localhost:8000/logout')
+                    .then(response => {
+                              window.location.href = '/accueil';
+                    })
+                    .catch(error => {console.log("error",error)})
+                	}	
+                             
+            });
+       }
+  </script>
   <script src="assetsEmployeur/js/jquery-3.2.1.min.js"></script>
   <script src="assetsEmployeur/js/animsition.min.js"></script>
   <script src="assetsEmployeur/js/main.js"></script>

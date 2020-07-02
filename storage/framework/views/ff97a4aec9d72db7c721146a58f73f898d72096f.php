@@ -30,8 +30,6 @@
                   <button v-on:click="AnnulerSel()" v-if="suppr" class="btn-sm btn-warning " style="height: 35px; " ><b>Annuler</b>
                   </button>
                </div>
-         
-            
             <hr style="margin-top:42px;">       
           
         
@@ -43,7 +41,7 @@
     </div>
     <div v-else >
       <div id="ch1">
-      <input type="checkbox" :id="historiquec.id" :value="historiquec.id" v-model="articleIds" @click="deselectArticle(historiquec.id)"></div>
+      <input type="checkbox" :id="historiquec.id" :value="historiquec.id" style="margin-left: -20px;" v-model="articleIds" @click="deselectArticle(historiquec.id)"></div>
       <label :for="historiquec.id" style="margin-top: 35px; margin-left: 10px;"></label>
     </div>
 
@@ -56,14 +54,14 @@
       </div> 
     <div class="col-md-4 pr-1" v-if="historiquec.produit_id  === null" >
       <div style="margin-left:22px" v-for="imgA in imagesannonce" v-if=" historiquec.annonceE_id  === imgA.id">
-          <p class="" id="h" > Vous Avez envoyez  annonce ' {{imgA.libellé}}'</p>
+          <p class="" id="h" > Ajoutez cette  annonce d'emploie ' {{imgA.libellé}}' à l'historique</p>
       </div>
        
     </div>
     
     <div  class="col-md-4 pr-1" v-else="historiquec.annonceE_id  === null" >
       <div style="margin-left:22px" v-for="imgP in imagesproduit" v-if=" historiquec.produit_id  === imgP.id">
-          <p class="" id="h" >Vous Avez ajoutez  produit ' {{imgP.Libellé}}' sur votre panier</p>
+          <p class="" id="h" >Ajoutez ce produit ' {{imgP.Libellé}}' à l'historique</p>
       </div>
        
     </div>
@@ -124,8 +122,8 @@
            "csrfToken"  => csrf_token(),
            "article"   => $article,
            "idAdmin" => $idAdmin,
-           'ImageP'         => $ImageP,
-           'ImageA'         => $ImageA,
+           'produitCL'         => $produitCL,
+           'annoncemploiesCL'         => $annoncemploiesCL,
            "url"      => url("/")  
       ]); ?>;
 </script>
@@ -290,8 +288,8 @@ methods: {
 
                 .then(response => {
                      this.historiqueclient = window.Laravel.article.data;
-                     this.imagesproduit = window.Laravel.ImageP;
-                     this.imagesannonce = window.Laravel.ImageA;
+                     this.imagesproduit = window.Laravel.produitCL;
+                     this.imagesannonce = window.Laravel.annoncemploiesCL;
                 })
                 .catch(error =>{
                      console.log('errors :' , error);

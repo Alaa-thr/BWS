@@ -766,6 +766,21 @@
 	</div>
 
 
+<script>
+	window.Laravel = <?php echo json_encode([
+               "csrfToken"  => csrf_token(),
+               "url"      => url("/")  
+    ]); ?>;
+
+
+
+</script>
+<script type="text/javascript">
+	$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+});
+
+</script>
 
 
 <?php $__env->stopSection(); ?>

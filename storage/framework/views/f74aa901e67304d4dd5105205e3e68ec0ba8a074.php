@@ -7,7 +7,18 @@
 	</head>
 
 
+	<div class="container">
+		<div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+			<a href="index.html" class="stext-109 cl8 hov-cl1 trans-04">
+				Accueil
+				<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+			</a>
 
+			<span class="stext-109 cl4">
+				Shop
+			</span>
+		</div>
+	</div>
 	<!-- Product -->
 	<div class="bg0 m-t-23 p-b-140">
 		<div class="container">
@@ -447,9 +458,10 @@
 <?php $__env->stopSection(); ?>
 <?php $__env->startPush('javascripts'); ?>
 
+
+
 <script>
-	
-        window.Laravel = <?php echo json_encode([
+	window.Laravel = <?php echo json_encode([
                "csrfToken"  => csrf_token(),
                'produit'        => $produit,
                'ImageP'         => $ImageP,
@@ -457,13 +469,7 @@
                'taille'         => $taille,
                'typeLivraison'         => $typeLivraison,
                "url"      => url("/")  
-          ]); ?>;
-	
-
-</script>
-
-
-<script>
+    ]); ?>;
 
 	 var app1 = new Vue({
       el: '#app1',
@@ -559,7 +565,7 @@
                 	Swal.fire({
 					  icon: 'error',
 					  title: 'Oops...',
-					  text: 'Vous devez être connecté tent que Client pour ajouter ce produit au panier.',
+					  html: 'Vous devez être connecté tent que <b style="text-decoration: underline;">Client</b> pour pouvez accedé a votre panier.',
 					  footer: '<form method="GET" action="<?php echo e(route("logoutregister")); ?>"><?php echo csrf_field(); ?><a href="<?php echo e(route("logoutregister")); ?>">Créer Compte</a></form>',
 					  showCancelButton: true,
 					  cancelButtonColor: '#d33',
@@ -583,7 +589,7 @@
             			Swal.fire({
 						  icon: 'error',
 						  title: 'Oops...',
-						  text: 'Vous devez être connecté tent que Client pour ajouter ce produit au panier.',
+						  html: 'Vous devez être connecté tent que <b style="text-decoration: underline;">Client</b> pour pouvez accedé a votre panier.',
 						  footer: '<form method="GET" action="<?php echo e(route("logoutregister")); ?>"><?php echo csrf_field(); ?><a href="<?php echo e(route("logoutregister")); ?>">Créer Compte</a></form>',
 						  showCancelButton: true,
 					  	  cancelButtonColor: '#d33',
@@ -638,7 +644,6 @@
                 this.colors = window.Laravel.color;
                 this.typeLivraisons = window.Laravel.typeLivraison;
                 this.tailles = window.Laravel.taille;
-                console.log("window.Laravel.produit",window.Laravel.produit);
                })
               .catch(error => {
                   console.log('errors : '  , error);
