@@ -33,113 +33,74 @@
                       </button>
                    </div>
                 <hr> 
-                <div class="flex-t" class="col-md-6">
-                    <div class="row m-b-10" v-for="annoncea in annoncesEmployeur" >
-                  <div v-if="selectall">
-                    <input type="checkbox" :id="annoncea.id" :value="annoncea.id" v-model="checkedAnnonces" @change="changeButton(annoncea)" >
-                    <label :for="annoncea.id" style="margin-top: 40px; margin-left: 10px;"></label>
-                  </div>
-                   <div v-else>
-                    <input type="checkbox" :id="annoncea.id" :value="annoncea.id" v-model="annonceIds" @click="deselectAnnonce(annoncea.id)">
-                    <label :for="annoncea.id" style="margin-top: 40px; margin-left: 10px;"></label>
-                  </div>
-                  
-                  <div style="width:80%;height:10% ;margin-right: 20px;margin-bottom: 20px;margin-left: 20px">
-                    <p style="float: right">
-                     <table style="margin-top: -17px"><tr>
-                          <td  class="dropdown "  id="k">
-                          <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
-                                <img src="assetsEmployeur/img/menu.png"style="float: right; margin-left: 50px">
-                             </a>
-                            <div class="dropdown-menu dropdown-menu-right "  >
-                                <a class="dropdown-item js-show-modal1" style="color: red; font-style: italic; font-weight: 900; cursor: pointer;" v-on:click="updateAnnonce(annoncea)">Modifier</a>
-                           <a class="dropdown-item" v-on:click="deleteAnnonce(annoncea)"style="color: red; font-style: italic; font-weight: 900; cursor: pointer;">Supprimer</a>
-                            </div>
-                        </td>
-                      </tr>
-                       </table>
-                        </p> 
-                   <p style="float: left;margin-right:40px ;margin-top: -20px">
-                      <img  :src="'storage/annonces_image/'+ annoncea.image" style="height: 100px;width:100px; margin-bottom: 20px;margin-right : -20px">
-                    </p>
-                    
-                      <h5 class="title" style="width:60px; margin-left: -40px; color: red;float:right;" >{{ annoncea.libellé }}</h5><br>
-                        <div class="description" style="margin-top: 10px; font-size: 17px;">
-                          {{ MoitieDescription(annoncea.discription,100, '...') }}
-                           <div class="nombre_condidat" style="margin-top: -10px; font-size: 17px; margin-left: 20px;">
-                          {{annoncea.nombre_condidat }}  
-                          <div class="txt-right m-t-20">
-                           <a class="js-show-modal1 " style=" color: black; font-style: italic; font-weight: 500; cursor: pointer;" v-on:click="AfficheInfo(annoncea.id)"><b> Afficher Plus </b>
-                           </a>
-                           </div>
+
+               
+
+
+
+
+
+               <div class="row m-b-10 flex-t" v-for="annoncea in annoncesEmployeur" style="display: inline-flex; height: 190px;">
+                      <div v-if="selectall">
+                        <input type="checkbox" :id="annoncea.id" :value="annoncea.id" v-model="checkedAnnonces" @change="changeButton(annoncea)">
+                        <label :for="annoncea.id" style="margin-top: 40px; margin-left: 10px;"></label>
+                      </div>
+                      <div v-else>
+                        <input type="checkbox" :id="annoncea.id" :value="annoncea.id" v-model="annonceIds" @click="deselectAnnonce(annoncea.id)">
+                        <label :for="annoncea.id" style="margin-top: 40px; margin-left: 10px;">
+                        </label>
+                      </div>
+                        <div class="col-md-3 " style="padding-right: 10px; " >
+                          <img  :src="'storage/annonces_image/'+ annoncea.image" style="height: 100px; width:100px; margin-bottom: 20px">
                         </div>
-                        </div> 
-                    </div>
-                    
+                        
+                        <div class="col-md-5" >
+                          <h6 class="title" style="margin-top: -4px;  color: red; margin-left: -10px;" >{{ annoncea.libellé }}</h6><br>
+                            <div class="description" style="margin-top: -10px; font-size: 17px; margin-left: -10px;">
+                              {{ MoitieDescription(annoncea.discription,10, '...') }}  
+                              <div class="txt-right m-t-20">
+                                <a class="js-show-modal1 " style=" color: black;  font-style: italic; font-weight: 500; cursor: pointer; margin-right: 20px;" v-on:click="AfficheInfo(annoncea.id)"><b>  Afficher Plus </b>
+                                </a>
+                              </div>
+                            </div>
+                             
+                        </div>
+                        <table>
+                         <tr>                        
+                            <td class="dropdown" >
+                              <a data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
+                               <img src="assetsEmployeur/img/menu.png" /> 
+                              </a>
+                              <div class="dropdown-menu dropdown-menu-right ">   
+                               <a class="dropdown-item js-show-modal1" style="color: red; font-style: italic; font-weight: 900; cursor: pointer;" v-on:click="updateAnnonce(annoncea)">Modifier</a>
+                               <a class="dropdown-item" v-on:click="deleteAnnonce(annoncea)" style="color: red; font-style: italic; font-weight: 900; cursor: pointer;">Supprimer</a>
+                              </div>
+                            </td>
+                         </tr>
+                       </table> 
                 </div>
-</div>
-
-
-                    <div> 
-                       <?php echo e($annonce->links()); ?><!-- pour afficher la pagination -->
-                  </div>
-
-
-
-
+               <div> 
+                   <?php echo e($annonce->links()); ?><!-- pour afficher la pagination -->
                </div>
+              </div>
              </div>
            </div>
          </div>
        </div>
      </div>
-               
-                <footer class="footer">
-    <div class=" container-fluid ">
-      <nav>
-        <ul>
-          <li>
-            <a href="https://www.creative-tim.com">
-              BASMAHW&S
-            </a>
-          </li>
-          <li>
-            <a href="http://presentation.creative-tim.com">
-              A Propos
-            </a>
-          </li>
-          <li>
-            <a href="http://blog.creative-tim.com">
-              Blog
-            </a>
-          </li>
-        </ul>
-      </nav>
-      <div class="copyright" id="copyright">
-        &copy; <script>
-          document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))
-        </script>, Designer par <a href="https://www.invisionapp.com" target="_blank">BS</a>. Codé par <a href="https://www.creative-tim.com" target="_blank">BASMAHW&S</a>.
-      </div>
-    </div>
-  </footer>
-               </div>  
-         
-             
-  
- 
     <div class="wrap-modal11 js-modal1 p-t-38 p-b-20 p-l-15 p-r-15"  id="app2" v-if="hideModel">
-      <div class="overlay-modal11 js-hide-modal1" v-on:click="CancelAnnonce(annc)"></div>
+      <div class="overlay-modal11 " v-on:click="CancelAnnonce(annc)"></div>
   
       <div class="container">
-        <div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent" v-if="openInfo " style=" width: 985px;"   v-for="annoncea in annoncesemployeur2">
+        <div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent" v-if="openInfo " style=" width: 985px; margin-top: 40px;"   v-for="annoncea in annoncesemployeur2">
           <button class="how-pos3 hov3 trans-04 p-t-6 " v-on:click="hideModel = false">
-            <img src="images/icon-close2.png" alt="CLOSE">
+            <img src="images/icon-close.png" alt="CLOSE">
           </button>
           <div class="row">
             <div class="col-md-6">
               <div class="p-b-30 p-l-40" style="margin-left: 80px;" >
                 <h3 class=" cl2" >
-                   Informations sur l'image
+                   Informations sur L'annonce
                 </h3>
               </div>
             </div>
@@ -225,7 +186,7 @@
                 </div>
                 <div class="row">
                   <div class="col-md-10 flex-t">
-                        <button type="submit" v-if="modifier" class="btn btn-success btn-block " style="margin-top:40px;margin-left: 50px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="updateAnnonceButton()" >Modifier
+                        <button type="submit" v-if="modifier" class="btn btn-success btn-block " style="margin-top:40px;margin-left: 50px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="updateannoncebutton()" >Modifier
                         </button> 
                         <button type="submit" v-else class="btn btn-success btn-block " style="margin-top:40px;margin-left: 50px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="addAnnonce()" >Ajouter
                         </button> 
@@ -270,7 +231,7 @@
               if(response.data.etat){
                  app2.annc = response.data.annonceAjout;
                  app2.annc.id = response.data.annonceAjout.id;
-                 //window.location.reload();
+                 window.location.reload();
                  app.annoncesEmployeur.unshift(app2.annc);
                  console.log("app.annoncesemployeur",app.annoncesEmployeur)
                  app2.annc={
@@ -355,7 +316,7 @@
 
             this.annc.sousCategories =  this.oldAnnc.sousCategories;
          }        
-         axios.put(window.Laravel.url+"/annonce",this.annc)
+         axios.put(window.Laravel.url+"/updateannonce",this.annc)
 
             .then(response => {
               if(response.data.etat){
@@ -646,6 +607,7 @@ var app = new Vue({
        AfficheInfo: function($id){
         app2.hideModel = true; 
         app2.openInfo = true;
+        openAjout = false;
         app2.detaillsAn.idAn= $id;
         app2.detaillsAnnonce();
       }, 
