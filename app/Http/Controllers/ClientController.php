@@ -17,8 +17,10 @@ class ClientController extends Controller
 {
 
      public function profil_clinet(){
+        $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+        $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
         $client=Client::find(Auth::user()->id); 
-        return view('profil_clinet',['client'=>$client]);
+        return view('profil_clinet',['client'=>$client,'categorie'=>$categorie ,'categorieE'=>$categorieE]);
     }    
     public function update_profil(Request $request, $id) {
                 
@@ -42,10 +44,12 @@ class ClientController extends Controller
 
         return redirect('profilClient');
     }
-    public function get_commande_client(){//fcnt qui retourné tout les articles qui sont dans la table "Article" et trie par ordre desc selon son dates de creations
-        $c = Client::find(Auth::user()->id);//recuperé "user_id" de admin qui est connecter       
-        $article = \DB::table('commandes')->where('client_id', $c->id)->orderBy('created_at','desc')->paginate(5) ;//recuperé les articles qui sont dans la table "Article" et trie par ordre desc selon son dates de creations et pour "->paginate(5)" c a d f kol page t'affichilek 5 ta3 les article  
-        return view('commande_client',['article'=>$article, 'idAdmin' => $c->id]);//reteurné a la view "articles_admin" et les 2 attributs "article" (contient tout les articles) et "idAdmin" (id de l'admin cncté) 
+    public function get_commande_client(){
+        $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+        $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
+        $c = Client::find(Auth::user()->id);
+        $article = \DB::table('commandes')->where('client_id', $c->id)->orderBy('created_at','desc')->paginate(5) ; 
+        return view('commande_client',['article'=>$article, 'idAdmin' => $c->id,'categorie'=>$categorie ,'categorieE'=>$categorieE]);
     } 
     public function detaillsCommande(Request $request){//fcnt retourné l'article di rena habin n2affichiw les détaills te3o, 3anda un parametre di fih id ta3 article rechercher
         $commande_detaills = \DB::table('commandes')->where('id', $request->idA)->get();
@@ -77,7 +81,7 @@ class ClientController extends Controller
                             
                             if(count($produitExister) == 0){
                                 $commande = new Commande();         
-                                $commande->id = $client->nbr_cmd+1;
+                                $commande->id = $client->nbr_cmd;
                                 $commande->client_id = $client->id;
                                 $commande->vendeur_id = $request->vendeur_id;
                                 $commande->produit_id = $request->produit_id; 
@@ -104,7 +108,7 @@ class ClientController extends Controller
                             
                             if(count($produitExister) == 0){
                                 $commande = new Commande();         
-                                $commande->id = $client->nbr_cmd+1;
+                                $commande->id = $client->nbr_cmd;
                                 $commande->client_id = $client->id;
                                 $commande->vendeur_id = $request->vendeur_id;
                                 $commande->produit_id = $request->produit_id; 
@@ -136,13 +140,15 @@ class ClientController extends Controller
         ->join('colors','colors.id', '=', 'commandes.couleur_id')
         ->join('vendeurs','vendeurs.id', '=', 'commandes.vendeur_id')
         ->select('colors.nom', 'imageproduits.produit_id', 'imageproduits.image', 'imageproduits.profile', 'clients.email', 'clients.codePostal', 'clients.numeroTelephone', 'clients.ville', 'produits.Libellé', 'produits.prix', 'produits.vendeur_id', 'commandes.*', 'vendeurs.Nom as nom_vendeur', 'vendeurs.Prenom as prenom_vendeur')
-        ->where([['commandes.client_id', $clientCnncte->id],['commandes.id', $clientCnncte->nbr_cmd+1],['imageproduits.profile',1]])
+        ->where([['commandes.client_id', $clientCnncte->id],['commandes.id', $clientCnncte->nbr_cmd],['imageproduits.profile',1]])
         ->get();
+        $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+        $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
         $color = \DB::table('colors')->join('color_produits', 'colors.id', '=', 'color_produits.color_id')->get();
         $taille = \DB::table('taille_produits')->get();
         $typeLivraison = \DB::table('typechoisirvendeurs')->get();
         //$produitCmds = \DB::table('commandes')->get();
-        return view('panier_visiteur',['produitCmds' => $produitCmds,'color' => $color, 'typeLivraison' => $typeLivraison, 'taille' => $taille]);
+        return view('panier_visiteur',['produitCmds' => $produitCmds,'color' => $color, 'typeLivraison' => $typeLivraison, 'taille' => $taille,'categorie'=>$categorie ,'categorieE'=>$categorieE]);
 
     }
 

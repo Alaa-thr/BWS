@@ -236,11 +236,24 @@ class AdminController extends Controller
     }
 
     public function updateCategorie(Request $request){
-
+        
         $request->validate([
              'libelle' => [new ModifieCategorieExiste($request->id,$request->typeCategorie),'regex:/^[A-Z0-9][a-z0-9A-Z,_-éçèàâ]+/'],
         ]);
         $categorie = Categorie::find($request->id);
+        if($request->image != null){
+            $exploded = explode(',', $request->image);
+            $decoded = base64_decode($exploded[1]);
+            if(str_contains($exploded[0], 'jpeg')){
+                $extension = 'jpg';
+            }
+            else{
+                $extension = 'png';
+            }
+            $fileName = str_random().'.'.$extension;
+            Storage::put('/public/categorie_image/' . $fileName, $decoded);
+            $categorie->image = $fileName;
+        }        
         $categorie->libelle = $request->libelle;
         $categorie->save();
         return Response()->json(['etat' => true]);

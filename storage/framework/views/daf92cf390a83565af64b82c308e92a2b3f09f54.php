@@ -20,7 +20,7 @@
 				<div class="col-md-7 col-lg-8">
 					<div class="p-t-7 p-r-85 p-r-15-lg p-r-0-md">
 						<h3 class="mtext-111 cl2 p-b-16 color-t">
-							Our Story
+							Notre Histoire
 						</h3>
 
 						<p class="stext-113 cl6 p-b-26">
@@ -50,7 +50,7 @@
 				<div class="order-md-2 col-md-7 col-lg-8 p-b-30">
 					<div class="p-t-7 p-l-85 p-l-15-lg p-l-0-md">
 						<h3 class="mtext-111 cl2 p-b-16 color-t">
-							Our Mission
+							Notre Mission
 						</h3>
 
 						<p class="stext-113 cl6 p-b-26">
@@ -81,7 +81,12 @@
 	</section>	
 	
 		
-
+<script>
+	window.Laravel = <?php echo json_encode([
+               "csrfToken"  => csrf_token(),
+               "url"      => url("/")  
+    ]); ?>;
+</script>
 
 
 <?php $__env->stopSection(); ?>

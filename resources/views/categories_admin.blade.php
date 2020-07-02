@@ -80,8 +80,15 @@
                         <button type="submit" class="btn btn-danger btn-block" style="font-size: 12px; border-radius: 1.3em; font-weight: 900;" v-on:click="CancelCatego(ccategorie)">Annuler </button>
                    </div>
                   </div>
+                  <div style="padding-bottom: 10px; margin-left: -40px;margin-right: 5px;">
+                    <div class=" alert-warning" role="alert" style="padding-left: 10px;padding-top: 1px;padding-bottom: 1px;">
+                      <i class="now-ui-icons travel_info" id="y"></i>
+                       Vous pouvez choisir des images pour votre catégories ici:<a href="https://www.flaticon.com" class="alert-link" target=_blank> Free Vector Icons</a>. Et l'image doit etre de taille 16x16 px, pour avoir une organisation comme <a >
+  <b class="alert-link" v-on:click="showModal=true">ceci</b>.</a>
+                    </div> 
+                  </div>             
                 </div>
-
+                
               </div>
             </div>
           </div>
@@ -222,6 +229,49 @@
         </div>
                   {{$categorie->links()}}
               <br><br>
+  <div class="wrap-modal11 js-modal1 p-t-38 p-b-20 p-l-15 p-r-15" v-if="showModal">
+      <div class="overlay-modal11 "></div>
+  
+      <div class="container">
+
+        <!--<div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent" v-if="openInfo "   v-for="articlea in articlesadmin2">-->
+
+        <div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent"  style=" width: 985px;"  >
+
+          <button class="how-pos3 hov3 trans-04 p-t-6 " >
+            <img src="images/icon-close.png" alt="CLOSE">
+          </button>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="p-b-30 p-l-40" style="margin-left: 80px;" >
+                <h3 class=" cl2" >
+                   Informations sur l'image
+                </h3>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-10" >
+              <img src="" style="width: 1500px; height: 450px; margin-left: 80px; " />
+            </div> 
+          </div>
+          <div class="row">
+            <div class="">
+              <div class="title" style="color: red; margin-top: 30px; margin-left: 90px;" >
+                  <h4><b>kkkkk</b></h4><br>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div >
+               <p>kkkk</p>
+            </div>               
+          </div>  
+
+        </div>
+      </div>
+    </div>
       </div>
 
       <footer class="footer">
@@ -252,7 +302,7 @@
           </div>
         </div>
       </footer>
-     
+
     </div>
 
   @endsection
@@ -317,6 +367,7 @@
         AutreExiste: false,
         sousCategoriesNull: [],
         image: null,
+        showModal: false,
         
 
                  
@@ -414,6 +465,7 @@
 
       }, 
       updateCategorieButton: function(){
+        this.ccategorie.image = this.image;
          if(this.ccategorie.libelle == ''){
 
             this.ccategorie.libelle =  this.oldCatego.libelle;
@@ -434,6 +486,7 @@
                 this.oldCatego= {
                   libelle: '', 
                 };
+                this.image=null;
 
               } 
                  
@@ -911,7 +964,19 @@
      
  
  });
-  
+
 </script>
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+<script>
+ 
+$(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip();   
+});
+
+</script>
+                            
 @endpush

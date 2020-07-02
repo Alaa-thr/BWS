@@ -52,7 +52,7 @@
 							</span>
 
 							<p class="stext-115 cl6 size-213 p-t-18">
-								Coza Store Center 8th floor, 379 Hudson St, New York, NY 10018 US
+								Algerie Tlemcen, université Abou Baker Bel-Kayed 
 							</p>
 						</div>
 					</div>
@@ -84,7 +84,7 @@
 							</span>
 
 							<p class="stext-115 cl6 size-213 p-t-18 ">
-								contact@example.com
+								basmah.WS@gmail.com
 							</p>
 						</div>
 					</div>

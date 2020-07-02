@@ -19,8 +19,10 @@ use Validator;
 class VendeurController extends Controller
 {
      public function profil_vendeur(){
+        $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+        $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
         $vendeur = Vendeur::find(Auth::user()->id); 
-        return view('profil_vendeur',['vendeur'=>$vendeur]);
+        return view('profil_vendeur',['vendeur'=>$vendeur,'categorie'=>$categorie ,'categorieE'=>$categorieE]);
     }
     public function update_profil(Request $request, $id) {
                 
@@ -45,10 +47,12 @@ class VendeurController extends Controller
     }
 
     public function getProduit(){
+        $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+        $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
         $vendeur = Vendeur::find(Auth::user()->id);
         $produit = \DB::table('produits')->where('vendeur_id', $vendeur->id)->orderBy('created_at','desc')->paginate(8);       
         $imageproduit = \DB::table('imageproduits')->get();
-        return view('produit_vendeur',['produit'=>$produit, 'ImageP' => $imageproduit]);
+        return view('produit_vendeur',['produit'=>$produit, 'ImageP' => $imageproduit,'categorie'=>$categorie ,'categorieE'=>$categorieE]);
     }
 
     public function getSousCategories($CategoId){
@@ -182,9 +186,9 @@ class VendeurController extends Controller
         $article = \DB::table('commandes')->where('vendeur_id', $c->id)->orderBy('created_at','desc')->paginate(5);
         $employeur = \DB::table('clients')->get(); 
         $produit = \DB::table('produits')->get(); 
-
-        
-        return view('commande_recu_vendeur',['article'=>$article, 'idAdmin' => $c->id,'emploC' => $employeur,'prV' => $produit]);
+        $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+        $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
+        return view('commande_recu_vendeur',['article'=>$article, 'idAdmin' => $c->id,'emploC' => $employeur,'prV' => $produit,'categorie'=>$categorie ,'categorieE'=>$categorieE]);
     } 
     public function detaillsacommandeVendeur(Request $request){
         $commande_detaills = \DB::table('commandes')->where('id', $request->idA)->get();

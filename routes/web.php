@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', 'BwsController@home');
 
 Auth::routes();
 
@@ -31,7 +29,7 @@ Route::get('/emploi', 'BwsController@emploi')->name('emploi');
 Route::get('/article', 'BwsController@article')->name('article');
 Route::get('/contact','BwsController@contact')->name('contact');
 Route::post('/addemail', 'BwsController@addEmail')->name('addemail');
-Route::get('/articleD', 'BwsController@aa')->name('articleDetaille');
+
 Route::get('/articleDetaille/{id}', 'BwsController@showArticleD');
 Route::get('/getville', 'BwsController@get_ville');
 Route::get('/panierVisiteur', 'BwsController@panier_visiteur')->name('panierVisiteur');
@@ -44,7 +42,7 @@ Route::get('/estconnecter', 'BwsController@Estconnecter');
 Route::get('/getcategoriehome', 'BwsController@getCategorieHome');
 
 /************************************************ Admin***********************************************/
-
+Route::get('/categoriesAdmin', 'AdminController@categories_admin');
 Route::get('/admin', 'AdminController@admin_admin')->name('admin');
 Route::get('/articlesAdmin', 'AdminController@article_admin')->name('articlesAdmin');
 Route::get('/categories', 'AdminController@categories_admin')->name('categories');
@@ -96,10 +94,7 @@ Route::put('/emailrependu/{id}','AdminController@emailRependu');
 /*********************************************** Employeur***********************************************/
 
 Route::get('/profilEmployeur', 'EmployeurController@profil_employeur')->name('profilEmployeur');
-
 Route::get('/annonceEmploi', 'EmployeurController@annonce_emploi')->name('annonceEmploi');
-Route::get('/demandeEmploiTraite', 'BwsController@demande_emploi_traite_employeur')->name('demandeEmploiTraite');
-
 Route::put('/updateProfilE/{id}','EmployeurController@update_profil');
 Route::post('/addannonce', 'EmployeurController@addAnnonce');
 Route::post('/detaillsannonces', 'EmployeurController@detaillsAnnonce');
@@ -107,20 +102,13 @@ Route::put('/updateannonce','EmployeurController@updateAnnonceButton');
 Route::delete('/deleteannonce/{id}','EmployeurController@deleteAnnonce');
 Route::get('/getAllSouscategories/{id}','EmployeurController@getSousCategories');
 Route::get('/getAllCategories', 'EmployeurController@getCategories');
-Route::get('/annoncesemploi', 'EmployeurController@annonce_emploi');
 Route::post('/detaillsdemandereçu', 'DemandeReçuController@detaillsDemandeReçu');
 Route::delete('/deletedemandereçu/{id}','DemandeReçuController@deleteDemandeReçu');
-Route::get('/demandeemploireçu', 'DemandeReçuController@demandeReçu')->name('DemmandeEmploieReçu');
-
-
-
-
 /*Demande traiter*/
 Route::get('/demandeEmploiTraite','EmployeurController@get_commande_traiter_emplyeur')->name('demandeEmploiTraite');
 Route::post('/detaillsacommandetraiteremplyeur', 'EmployeurController@detaillsacommandeTraiterEmplyeur'); 
 Route::delete('/deletecommandetraiteremplyeur/{id}','EmployeurController@deleteCommandeTraiterEmployeur');
 Route::put('/recudemande/{id}','EmployeurController@RecuDemande');
-
 /*Demande Reçu*/
 Route::get('/demandeEmploiRecu','EmployeurDemandeController@get_demande_reçu_emplyeur')->name('demandeEmploiRecu');
 Route::post('/detaillsdemandereçuemplyeur', 'EmployeurDemandeController@detaillsdemandeReçuEmplyeur'); 
@@ -153,10 +141,8 @@ Route::put('/updateProfilC/{id}','ClientController@update_profil');
 Route::post('/detaillsacommande', 'ClientController@detaillsCommande'); 
 Route::get('/commandeClient','ClientController@get_commande_client')->name('commandeClient');
 Route::delete('/deletecommande/{id}','ClientController@deleteCommande');
- /***Commande */
-Route::get('/commandeClient','ClientController@get_commande_client')->name('commandeClient');
-Route::post('/detaillsacommande', 'ClientController@detaillsCommande'); 
-Route::delete('/deletecommande/{id}','ClientController@deleteCommande');
+
+
 /*demande*/
 Route::get('/demandeClient','DemandeClientController@get_demande_client')->name('demandeClient');
 Route::post('/detaillsademande', 'DemandeClientController@detaillsDemande'); 

@@ -1,9 +1,9 @@
 
- 
+
 <?php $__env->startSection('content'); ?>
 
 <head>
-      <title><?php echo e(( 'Mes Commandes ')); ?></title>
+      <title><?php echo e(( 'Mes Commandes')); ?></title>
   </head>
 
 <div class="main-panel" id="main-panel">
@@ -12,14 +12,28 @@
   </div>
   <div class="content" id="app">
     <div class="row">
+   
       <div class="col-md-12">
         <div class="card">
           <div class="card-header" >
-                
+          <?php if(session()->has('success')): ?>
+<div class="row"> 
+<div class="alert alert-success" style="  margin-left:33px;width: 960px;">
+
+<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;
+
+</button>
+ <?php echo e(session()->get('success')); ?>
+
+</div>
+
+</div>
+      <?php endif; ?>
                 <div class="flex-t">
                     <input type="checkbox" id="article" @change="selectAll()" v-model="allSelected" style="margin-top: 5px;">
-                    <label for="article"></label>
-                    <h4 style="margin-top: -6px;margin-left: 10px;">Commandes</h4>
+                    <label for="article"></label> 
+                   
+                    <h4 style="margin-top: -6px;margin-left: 10px;">Commande </h4>
                 </div>
 
             <div class="txt-right"style="margin-top: -40px; " >
@@ -35,59 +49,75 @@
             <hr style="margin-top:42px;">       
           
         
-            <div class="card-body"   v-for="commandec in commandeclient" >
+            <div class="card-body"  v-for="commandec in commandeclient" >
 
-<div v-if="selectall" >
+<div v-if="selectall" id="c">
        <input type="checkbox"  style=" margin-left: 10px;" :id="commandec.id" :value="commandec.id" v-model="checkedArticles" @change="changeButton(commandec)">
       <label :for="commandec.id" style="margin-top: 40px; margin-left: 10px;"></label>
     </div>
-    <div v-else ><div id="ch1">
-      <input type="checkbox" :id="commandec.id" :value="commandec.id" style="margin-left: -10px;" v-model="articleIds" @click="deselectArticle(commandec.id)"></div>
+    <div v-else id="c">
+      <input type="checkbox" :id="commandec.id" :value="commandec.id" style="margin-left: 10px;" v-model="articleIds" @click="deselectArticle(commandec.id)">
       <label :for="commandec.id" style="margin-top: 40px; margin-left: 10px;"></label>
     </div>
 
 
-  <div class="card-head"  id="cmd"  >              
-    <div class="row" >
-    <div class="col-md-4 pr-1" >
-      <div style="margin-left:22px">
-          <p class="" id="t" >commande {{commandec.id}} </p>
+  
+    <div class="card-head"  id="cmd"   >              
+    <div class="row"  >
+    <div >
+  <p class="cvendeur"  id="txt" >
+  Commande {{commandec.id}}</p>
+      </div> 
+ 
+    
+    <div  class="col-md-4 pr-1" id="cv">
+      <div style="margin-left:22px" >
+          <p id="txt" > {{commandec.created_at}} </p>
       </div>
+       
     </div>
-    <div class="col-md-4 px-1">
-     
-    </div>
-    <div class="col-md-4 pl-1">
-      <div class="">
-      <a class="f" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#" id="point">
+   
+    <div class="col-md-4 pl-1" id="a">
+      <div class="" id="b" >
+      <a class="f" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#" id="point"  style="  margin-left: 245px;">
         <i class="fas fa-ellipsis-v"  id="y"></i>
        </a>
-      <div class="dropdown-menu " x-placement="right-start" id="pl">
-      <a   v-on:click="AfficheInfo(commandec.id)"  class="dropdown-item js-show-modal1" style="color: red; font-style: italic; font-weight: 900; cursor: pointer;" >Afficher Plus</a>
-    <a class="dropdown-item" v-on:click="deleteCommande(commandec)"style="color: red; font-style: italic; font-weight: 900; cursor: pointer;">Supprimer</a>
-       </div><p class=""  id="tt" >{{commandec.created_at}}</p>
-      </div>
-    </div>
-    </div>
-    <div class="row">
-    <div class="col-md-4 pr-1">
-      <div class="">
-      <label  id="ttt">Addresse : {{commandec.address}}</label>
-      </div>
-    </div>
-    <div class="col-md-4 px-1">
-     
-    </div>
-    <div class="col-md-4 pr-3">
-      <div class="">
-      <label  id="tttt">Prix Total : {{commandec.prix_total}}</label>
-      </div>
-    </div>
+      <div class="dropdown-menu " x-placement="right-start" id="pl" >
+      <a   v-on:click="AfficheInfo(commandec.id)"  class="dropdown-item js-show-modal1" 
+      style="color: red; font-style: italic; font-weight: 900; cursor: pointer;" >Afficher Plus</a>
+    <a class="dropdown-item" v-on:click="deleteCommandeVendeur(commandec)"
+    style="color: red; font-style: italic; font-weight: 900; cursor: pointer;">
+    Supprimer</a>
+       </div>
+      
+    </div>    
+
     </div>      
-  </div>
+    <div  class="col-md-4 pr-1" id="cb">
+      <div  >
+          <p id="txt" >Addresse : {{commandec.address}}</p>
+      </div>
+       
+    </div>
+
+    <div  class="col-md-4 pr-1" id="cbb">
+      <div  >
+          <p id="txt" >Prix Total : {{commandec.prix_total}}</p>
+      </div>
+       
+    </div>
+
+  </div>      
+
   
+
+
     
-</div>                   <?php echo e($article->links()); ?>
+</div>                  
+              </div>
+
+            </div>     
+              <?php echo e($article->links()); ?>
 
               </div>
 
@@ -95,6 +125,7 @@
           </div>
         </div>      
       </div>
+     
     </div>
 
 
@@ -106,7 +137,7 @@
   <div class="container">
 
  
-    <div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent" v-if="openInfo " style=" width: 985px;"   v-for="commandec in commandeclient2">
+    <div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent" v-if="openInfo " style=" width: 985px;"  v-for="commandec in commandeclient2">
 
       <button class="how-pos3 hov3 trans-04 p-t-6 " v-on:click="hideModel = false">
         <img src="images/icon-close.png" alt="CLOSE">
@@ -116,7 +147,7 @@
       <div class="row" >
     <div class="col-md-4 pr-1" >
       <div style="margin-left:22px">
-          <p class="" id="t" >commande {{commandec.id}} </p>
+          <p class="" id="t" >Commande {{commandec.id}}  </p>
       </div>
     </div>
     <div class="col-md-4 px-1">
@@ -129,7 +160,7 @@
        </a>
       <div class="dropdown-menu " x-placement="right-start" id="pl">
       <a   v-on:click="AfficheInfo(commandec.id)"  class="dropdown-item js-show-modal1" style="color: red; font-style: italic; font-weight: 900; cursor: pointer;" >Afficher Plus</a>
-    <a class="dropdown-item" v-on:click="deleteCommande(commandec)"style="color: red; font-style: italic; font-weight: 900; cursor: pointer;">Supprimer</a>
+    <a class="dropdown-item" v-on:click="deleteDemande(commandec)"style="color: red; font-style: italic; font-weight: 900; cursor: pointer;">Supprimer</a>
        </div><p class=""  id="tt" >{{commandec.created_at}}</p>
       </div>
     </div>

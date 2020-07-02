@@ -436,7 +436,7 @@
                             <div class="stext-107 flex-w p-b-14">
                                 <span class="m-r-3">
                                     <span class="cl4">
-                                        By
+                                        par
                                     </span>
 
                                     <span class="cl5">
@@ -456,7 +456,7 @@
                             </div>
                             <div  >
                                 <h4 class="p-b-12">
-                                    <a href="" class="mtext-101 cl2 hov-cl1 trans-04">
+                                    <a :href="'/articleDetaille/'+artcls.id" class="mtext-101 cl2 hov-cl1 trans-04">
                                         {{artcls.titre}} 
                                     </a>
                                 </h4>

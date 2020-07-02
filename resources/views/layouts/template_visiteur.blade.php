@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link  href="images/icons/favicon.png" rel="icon" type="image/png">
+    <link  href="{{ asset('images/icons/favicon.png')}}" rel="icon" type="image/png">
     
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -18,81 +18,31 @@
     <script src="{{asset('jss/vee-validate.min.js')}}"></script>
     <!--<link href="{{ asset('csss/app.css') }}" rel="stylesheet" type="text/css">-->
     <link href="{{ asset('assetsClient/css/bootstrap.min.css')}}" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
-    <link rel="stylesheet" type="text/css" href="fonts/linearicons-v1.0.0/icon-font.min.css">
-    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
-    <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
-    <link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
-    <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
-    <link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
-    <link rel="stylesheet" type="text/css" href="vendor/slick/slick.css">
-    <link rel="stylesheet" type="text/css" href="vendor/MagnificPopup/magnific-popup.css">
-    <link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
-    <link rel="stylesheet" type="text/css" href="css/util.css">
-    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/bootstrap/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('fonts/font-awesome-4.7.0/css/font-awesome.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('fonts/iconic/css/material-design-iconic-font.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('fonts/linearicons-v1.0.0/icon-font.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/animate/animate.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/css-hamburgers/hamburgers.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/animsition/css/animsition.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/select2/select2.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/daterangepicker/daterangepicker.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/slick/slick.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/MagnificPopup/magnific-popup.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/perfect-scrollbar/perfect-scrollbar.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/util.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/main.css')}}">
 
 
 
 
-</script>
+
 
     
 
 </head>
 <body>
-    <!--<div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">-->
-                    <!-- Left Side Of Navbar 
-                    <ul class="navbar-nav mr-auto">
-
-                    </ul>-->
-
-                    <!-- Right Side Of Navbar
-                    <ul class="navbar-nav ml-auto"> -->
-                        <!-- Authentication Links -->
-                        <!--@guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->id }} <span class="caret"></span>
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
-            </div>
-        </nav>-->
  <header class="header-v4" id="app33">
         <!-- Header desktop -->
         <?php
@@ -137,7 +87,7 @@
                     
                     <!-- Logo desktop -->       
                     <a href="#" class="logo">
-                        <img src="images/icons/LogoFinal2.png" alt="IMG-LOGO">
+                        <img src="{{ asset('images/icons/LogoFinal2.png')}}" alt="IMG-LOGO">
                     </a>
 
                     <!-- Menu desktop -->
@@ -161,7 +111,9 @@
                                                     </div>
                                                     <ul >
                                                         <li class="p-b-6 " v-for="(catego,cntt) in categories" :key = 'cntt' v-if="cntt <count">
-                                                         <img v-if="catego.image != null" :src="'storage/categorie_image/'+ catego.image" class="p-b-4">
+
+                                                         <img v-if="catego.image != null" :src='"/storage/categorie_image/"+catego.image' class="p-b-4">
+
                                                          <a href="#" class="filter-link stext-106 trans-04">
                                                             @{{catego.libelle}}
                                                          </a>
@@ -194,7 +146,7 @@
                         <ul>
                             <li class="p-b-6 " >
                             @if($ctgo->image !=null) 
-                               <img src="storage/categorie_image/{{$ctgo->image}}" class="p-b-4">
+                                <img src="<?php echo asset('storage/categorie_image/'.$ctgo->image) ?>" class="p-b-4">
                             @endif
                                 <a href="#" class="filter-link stext-106 trans-04">{{$ctgo->libelle}}</a>
                             </li>
@@ -221,115 +173,68 @@
                                     <span >
                                         <i class="fa fa-angle-right" aria-hidden="true"></i>
                                     </span>
-                                <ul class="sub-menu " style="width: 1100%;" >
+                                <ul class="sub-menu " style="width: 990%;" >
                                     <div class="flex-w bg6 w-full p-lr-30 p-t-27 p-lr-15-sm">
-                                        <div class="filter-col1  p-b-27">
-                                            <div class="mtext-102 cl2 p-b-15" style="color: #ca2323;">
+                                                <div class="filter-col8  p-b-27">
+                                            
+                                                    <div class="mtext-102 cl2 p-b-15 cl13">
                                                 Catégories
                                             </div>
                             
-                                            <ul>
-                                                <li class="p-b-6">
-                                                    <img src="images/icons/architect.png" class="p-b-2">
+                                             <ul >
+                                                <li class="p-b-6 " v-for="(catego,cntt) in categoriesE" :key = 'cntt' v-if="cntt <count">
+
+                                                    <img v-if="catego.image != null" :src='"/storage/categorie_image/"+catego.image' class="p-b-4">
+
                                                     <a href="#" class="filter-link stext-106 trans-04">
-                                                        Architecture
+                                                            @{{catego.libelle}}
                                                     </a>
                                                 </li>
-                                                <li class="p-b-6">
-                                                    <img src="images/icons/programmer.png" class="p-b-2">
-                                                    <a href="#" class="filter-link stext-106 trans-04">
-                                                        Informatique
-                                                    </a>
-                                                </li>
-                                                <li class="p-b-6">
-                                                    <img src="images/icons/flash.png" class="p-b-2">
-                                                    <a href="#" class="filter-link stext-106 trans-04">
-                                                        Electricité
-                                                    </a>
-                                                </li>
-                                                <li class="p-b-6">
-                                                    <img src="images/icons/shield.png" class="p-b-2">
-                                                    <a href="#" class="filter-link stext-106 trans-04 ">
-                                                        Sécurité
-                                                    </a>
-                                                </li>
-                                                <li class="p-b-6">
-                                                    <img src="images/icons/hotel.png" class="p-b-2">
-                                                    <a href="#" class="filter-link stext-106 trans-04">
-                                                        Hôtel
-                                                    </a>
-                                                </li>
-                                                <li class="p-b-6">
-                                                    <a href="#" class="filter-link stext-106 trans-04">
-                                                        
-                                                    </a>
-                                                </li>
-                                            </ul>
+                                                       
+                                            </ul >
                                         </div>
-                                        <div class="filter-col2 p-b-27 p-t-39">
-                                            <ul>
-                                                <li class="p-b-6">
-                                                    <img src="images/icons/money.png" class="p-b-2">
-                                                    <a href="#" class="filter-link stext-106 trans-04 ">
-                                                        Banque
-                                                    </a>
-                                                </li>
-                                                <li class="p-b-6">
-                                                    <img src="images/icons/fruit.png" class="p-b-2">
-                                                    <a href="#" class="filter-link stext-106 trans-04">
-                                                        Alimentation
-                                                    </a>
-                                                </li>
-                                                <li class="p-b-6">
-                                                    <img src="images/icons/medication.png" class="p-b-2">
-                                                    <a href="#" class="filter-link stext-106 trans-04">
-                                                        Pharmacie
-                                                    </a>
-                                                </li>
-                                                <li class="p-b-6">
-                                                    <img src="images/icons/wrench.png" class="p-b-2">
-                                                    <a href="#" class="filter-link stext-106 trans-04">
-                                                        Mécanicien Automobile
-                                                    </a>
-                                                </li>
-                                                <li class="p-b-6">
-                                                    
-                                                </li>
-                                                <li class="p-b-6">
-                                                    <a href="#" class="filter-link stext-106 trans-04">
-                                                        
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="filter-col3  p-b-27 p-t-39">
-                                            <ul>
-                                                <li class="p-b-6">
-                                                    <img src="images/icons/saw.png" class="p-b-2">
-                                                    <a href="#" class="filter-link stext-106 trans-04">
-                                                        Menuiserie
-                                                    </a>
-                                                </li>
-                                                <li class="p-b-6">
-                                                    <img src="images/icons/medicine.png" class="p-b-2">
-                                                    <a href="#" class="filter-link stext-106 trans-04 ">
-                                                        Hôpital
-                                                    </a>
-                                                </li>
-                                                <li class="p-b-6">
-                                                    <a href="#" class="filter-link stext-106 trans-04"></a>
-                                                </li>
-                                                <li class="p-b-6">
-                                                    <a href="#" class="filter-link stext-106 trans-04"></a>
-                                                </li>
-                                                <li class="p-b-6">
-                                                    <a href="#" class="filter-link stext-106 trans-04"></a>
-                                                </li>
-                                                <li class="p-b-6">
-                                                    <a href="#" class="filter-link stext-106 trans-04"></a>
-                                                </li>
-                                            </ul>
-                                        </div>
+            @php 
+                   
+                    for ($k = 0; $k < 6; $k++){
+                            unset($categorieE[$k]);               
+                    }
+                    $cc=count($categorieE);
+                   
+            @endphp                                 
+            @for ($i=0; $i< $cc;  )
+           
+                        @php
+                            $j=0;
+                        @endphp
+               
+                        <div class="filter-col8 p-b-27 p-t-39"><!--filteredItems1-->
+                @foreach ($categorieE as $ctgo)
+                                   
+                    @if($j < 6)
+                        @php
+                            $j++;
+                        @endphp            
+                        <ul>
+                            <li class="p-b-6 " >
+                            @if($ctgo->image !=null) 
+                                <img src="<?php echo asset('storage/categorie_image/'.$ctgo->image) ?>" class="p-b-4">
+                            @endif
+                                <a href="#" class="filter-link stext-106 trans-04">{{$ctgo->libelle}}</a>
+                            </li>
+                        </ul>
+                    @endif
+                @endforeach
+                @for ($f = 0; $f < $j; $f++)
+                    
+                    @php $categorieE->shift($f);@endphp                
+                  
+                @endfor
+               
+                @php
+                    $cc-=$j;
+                @endphp
+                                                </div>
+            @endfor
                                     </div>
                                 </ul>
                             </li>
@@ -408,7 +313,7 @@
             
             <!-- Logo moblie -->        
             <div class="logo-mobile">
-                <a href="index.html"><img src="images/icons/LogoFinal2.png" alt="IMG-LOGO"></a>
+                <a href="index.html"><img src="{{ asset('images/icons/LogoFinal2.png')}}" alt="IMG-LOGO"></a>
             </div>
 
             <!-- Icon header -->
@@ -463,7 +368,7 @@
             <!-- Button show menu -->
             <div class="btn-show-menu-mobile hov-cl1 hamburger hamburger--squeeze" >
                 <a class="hamburger-box" >
-                    <img src="images/menu.png" alt="..." style="width: 60%;">
+                    <img src="{{ asset('images/menu.png')}}" alt="..." style="width: 60%;">
                 </a>
             </div>
         </div>
@@ -532,7 +437,7 @@
         <div class="modal-search-header flex-c-m trans-04 js-hide-modal-search">
             <div class="container-search-header">
                 <button class="flex-c-m btn-hide-modal-search trans-04 js-hide-modal-search">
-                    <img src="images/icons/icon-close2.png" alt="CLOSE">
+                    <img src="{{ asset('images/icons/icon-close2.png')}}" alt="CLOSE">
                 </button>
 
                 <form class="wrap-search-header flex-w p-l-15">
@@ -563,7 +468,7 @@
                 <div class="card " >
                     <div class="card-header">
                         <a href="{{route('accueil')}}" class="logo p-l-50" >
-                            <img src="images/icons/LogoFinal2.png" alt="IMG-LOGO" />
+                            <img src="{{ asset('images/icons/LogoFinal2.png')}}" alt="IMG-LOGO" />
                         </a>
                         <span class="splash-description">Please enter your user information.</span>
                     </div>
@@ -673,7 +578,7 @@
                 <ul class="header-cart-wrapitem w-full">
                     <li class="header-cart-item flex-w flex-t m-b-12">
                         <div class="header-cart-item-img">
-                            <img  src="images/item-cart-01.jpg"  alt="IMG">
+                            <img  src="{{ asset('images/item-cart-01.jpg')}}"  alt="IMG">
                         </div>
 
                         <div class="header-cart-item-txt p-t-8">
@@ -689,7 +594,7 @@
 
                     <li class="header-cart-item flex-w flex-t m-b-12">
                         <div class="header-cart-item-img">
-                            <img src="images/item-cart-02.jpg" alt="IMG">
+                            <img src="{{ asset('images/item-cart-02.jpg')}}" alt="IMG">
                         </div>
 
                         <div class="header-cart-item-txt p-t-8">
@@ -705,7 +610,7 @@
 
                     <li class="header-cart-item flex-w flex-t m-b-12">
                         <div class="header-cart-item-img">
-                            <img src="images/item-cart-03.jpg" alt="IMG">
+                            <img src="{{ asset('images/item-cart-03.jpg')}}" alt="IMG">
                         </div>
 
                         <div class="header-cart-item-txt p-t-8">
@@ -831,23 +736,23 @@
             <div class="p-t-40">
                 <div class="flex-c-m flex-w p-b-18">
                     <a href="#" class="m-all-1">
-                        <img src="images/icons/icon-pay-01.png" alt="ICON-PAY">
+                        <img src="{{ asset('images/icons/icon-pay-01.png')}}" alt="ICON-PAY">
                     </a>
 
                     <a href="#" class="m-all-1">
-                        <img src="images/icons/icon-pay-02.png" alt="ICON-PAY">
+                        <img src="{{ asset('images/icons/icon-pay-02.png')}}" alt="ICON-PAY">
                     </a>
 
                     <a href="#" class="m-all-1">
-                        <img src="images/icons/icon-pay-03.png" alt="ICON-PAY">
+                        <img src="{{ asset('images/icons/icon-pay-03.png')}}" alt="ICON-PAY">
                     </a>
 
                     <a href="#" class="m-all-1">
-                        <img src="images/icons/icon-pay-04.png" alt="ICON-PAY">
+                        <img src="{{ asset('images/icons/icon-pay-04.png')}}" alt="ICON-PAY">
                     </a>
 
                     <a href="#" class="m-all-1">
-                        <img src="images/icons/icon-pay-05.png" alt="ICON-PAY">
+                        <img src="{{ asset('images/icons/icon-pay-05.png')}}" alt="ICON-PAY">
                     </a>
                 </div>
 
@@ -867,159 +772,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         </span>
     </div>
 
-     <!-- Modal1
-    <div class="wrap-modal1 js-modal1 p-t-60 p-b-20">
-        <div class="overlay-modal1 js-hide-modal1"></div>
-
-        <div class="container">
-            <div class="bg0 p-t-60 p-b-30 p-lr-15-lg how-pos3-parent">
-                <button class="how-pos3 hov3 trans-04 js-hide-modal1">
-                    <img src="images/icons/icon-close.png" alt="CLOSE">
-                </button>
-
-                <div class="row">
-                    <div class="col-md-6 col-lg-7 p-b-30">
-                        <div class="p-l-25 p-r-30 p-lr-0-lg">
-                            <div class="wrap-slick3 flex-sb flex-w">
-                                <div class="wrap-slick3-dots"></div>
-                                <div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
-
-                                <div class="slick3 gallery-lb">
-                                    <div class="item-slick3" data-thumb="images/product-detail-01.jpg">
-                                        <div class="wrap-pic-w pos-relative">
-                                            <img src="images/product-detail-01.jpg" alt="IMG-PRODUCT">
-
-                                            <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="images/product-detail-01.jpg">
-                                                <i class="fa fa-expand"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-
-                                    <div class="item-slick3" data-thumb="images/product-detail-02.jpg">
-                                        <div class="wrap-pic-w pos-relative">
-                                            <img src="images/product-detail-02.jpg" alt="IMG-PRODUCT">
-
-                                            <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="images/product-detail-02.jpg">
-                                                <i class="fa fa-expand"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-
-                                    <div class="item-slick3" data-thumb="images/product-detail-03.jpg">
-                                        <div class="wrap-pic-w pos-relative">
-                                            <img src="images/product-detail-03.jpg" alt="IMG-PRODUCT">
-
-                                            <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="images/product-detail-03.jpg">
-                                                <i class="fa fa-expand"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-6 col-lg-5 p-b-30">
-                        <div class="p-r-50 p-t-5 p-lr-0-lg">
-                            <h4 class="mtext-105 cl2 js-name-detail p-b-14">
-                                Lightweight Jacket
-                            </h4>
-
-                            <span class="mtext-106 cl2">
-                                $58.79
-                            </span>
-
-                            <p class="stext-102 cl3 p-t-23">
-                                Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus ligula. Mauris consequat ornare feugiat.
-                            </p>
-                            
-                            
-                            <div class="p-t-33">
-                                <div class="flex-w flex-r-m p-b-10">
-                                    <div class="size-203 flex-c-m respon6">
-                                        Size
-                                    </div>
-
-                                    <div class="size-204 respon6-next">
-                                        <div class="rs1-select2 bor8 bg0">
-                                            <select class="js-select2" name="time">
-                                                <option>Choose an option</option>
-                                                <option>Size S</option>
-                                                <option>Size M</option>
-                                                <option>Size L</option>
-                                                <option>Size XL</option>
-                                            </select>
-                                            <div class="dropDownSelect2"></div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="flex-w flex-r-m p-b-10">
-                                    <div class="size-203 flex-c-m respon6">
-                                        Color
-                                    </div>
-
-                                    <div class="size-204 respon6-next">
-                                        <div class="rs1-select2 bor8 bg0">
-                                            <select class="js-select2" name="time">
-                                                <option>Choose an option</option>
-                                                <option>Red</option>
-                                                <option>Blue</option>
-                                                <option>White</option>
-                                                <option>Grey</option>
-                                            </select>
-                                            <div class="dropDownSelect2"></div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            
-                                <div class="flex-w flex-r-m p-b-10">
-                                    <div class="size-203 flex-c-m respon6">
-                                        Type Livraison
-                                    </div>
-
-                                    <div class="size-204 respon6-next">
-                                        <div class="rs1-select2 bor8 bg0">
-                                            <select class="js-select2" name="time">
-                                                <option>Choose an option</option>
-                                                <option value="1">DHL / 36.00 DA</option>
-                                                <option value="2">Vendeure / 142.50 DA</option>
-                                                <option value="3">Client / 142.50 DA</option>
-                                            </select>
-                                            <div class="dropDownSelect2"></div>
-                                        </div>
-                                    </div>
-                                </div>
-    
-                                <div class="flex-w flex-r-m p-b-10">
-                                    <div class="size-204 flex-w flex-m respon6-next">
-                                        <div class="wrap-num-product flex-w m-r-20 m-tb-10">
-                                            <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-                                                <i class="fs-16 zmdi zmdi-minus"></i>
-                                            </div>
-
-                                            <input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product" value="1">
-
-                                            <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-                                                <i class="fs-16 zmdi zmdi-plus"></i>
-                                            </div>
-                                        </div>
-
-                                        <button class="flex-c-m stext-101 cl0 size-101 bg10 bor1 p-lr-15 trans-04 js-addcart-detail">
-                                            Add to cart
-                                        </button>
-                                    </div>
-                                </div>  
-                            </div>
-                            
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>-->
 @stack('javascripts')
 
    <!--<script src="vendor/jquery/jquery-3.2.1.min.js"></script>-->
@@ -1036,9 +788,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
             types: [],
             categories: [],
             sousCategories: [],
+            categoriesE: [],
             count: 6,
-            categoriesShow: [],
-            i: 0,
             //wayLogin: {{ json_encode(route('login')) }},
          },
          methods:{
@@ -1048,9 +799,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                         .then(response => {
                            app33.categories = response.data.categorie;
                            app33.sousCategories = response.data.sousCatego;
-                           this.categoriesShow =  response.data.categorie;
-                            console.log("categories",app33.categories)
-                             console.log("sousCatego",app33.sousCategories)
+                           this.categoriesE =  response.data.categorieE;
                         })
                         .catch(error =>{
                             console.log("errors",error)
@@ -1089,49 +838,14 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                         })
                         
                         
-                     }, 800)
+                     }, 10)
                 
-            },
-            filteredItems1: function(){
-                   // this.i = 0;
-                    console.log("befor categoriesShow",this.categoriesShow);
-                    console.log("befor categories",this.categories);
-                    if(this.categories.length != 0 && this.categories.length > 6)
-                        this.categories.splice(0,6);
-                    console.log("",this.categoriesShow);
-                    this.categoriesShow = this.categories;
-                     console.log("10 gg",this.categoriesShow.length);
-                    return this.categoriesShow;
-                
-                
-
-            },
-            filteredItems: function(){
-
-                    /*console.log("befor categoriesShow",this.categoriesShow);
-                    console.log("befor categories",this.categories);
-                    if(this.categories.length != 0 && this.categories.length > 6 && this.i == 0){
-                        this.categories.splice(0,6);
-                        this.i++;
-                    }
-                    console.log("",this.categoriesShow);
-                    this.categoriesShow = this.categories;
-                     console.log("10 gg",this.categoriesShow.length);*/
-                    return this.categoriesShow;
-                
-                
-
             },
          },
          mounted:function(){
             this.Connect();
             this.getCategorieHome();
          },
-         computed:{
-            
-        
-
-         }
        })
        
        function connecterAvant(){
@@ -1189,10 +903,10 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
    </script>  
 
    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChnAfNPjSPo76qR3c9yR5IOWkA9BRlpf0" type="text/javascript"></script>
-    <script src="vendor/animsition/js/animsition.min.js"></script>
-    <script src="vendor/bootstrap/js/popper.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-    <script src="vendor/select2/select2.min.js"></script>
+    <script src="{{ asset('vendor/animsition/js/animsition.min.js')}}"></script>
+    <script src="{{ asset('vendor/bootstrap/js/popper.js')}}"></script>
+    <script src="{{ asset('vendor/bootstrap/js/bootstrap.min.js')}}"></script>
+    <script src="{{ asset('vendor/select2/select2.min.js')}}"></script>
     <script>
         $(".js-select2").each(function(){
             $(this).select2({
@@ -1201,17 +915,17 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
             });
         })
     </script>
-    <script src="vendor/daterangepicker/moment.min.js"></script>
-    <script src="vendor/daterangepicker/daterangepicker.js"></script>
-    <script src="vendor/slick/slick.min.js"></script>
-    <script src="js/slick-custom.js"></script>
+    <script src="{{ asset('vendor/daterangepicker/moment.min.js')}}"></script>
+    <script src="{{ asset('vendor/daterangepicker/daterangepicker.js')}}"></script>
+    <script src="{{ asset('vendor/slick/slick.min.js')}}"></script>
+    <script src="{{ asset('js/slick-custom.js')}}"></script>
 
-    <script src="vendor/parallax100/parallax100.js"></script>
+    <script src="{{ asset('vendor/parallax100/parallax100.js')}}"></script>
     <script>
         $('.parallax100').parallax100();
     </script>
-    <script src="vendor/isotope/isotope.pkgd.min.js"></script>
-    <script src="vendor/sweetalert/sweetalert.min.js"></script>
+    <script src="{{ asset('vendor/isotope/isotope.pkgd.min.js')}}"></script>
+    <script src="{{ asset('vendor/sweetalert/sweetalert.min.js')}}"></script>
     <script>
         $('.js-addwish-b2').on('click', function(e){
             e.preventDefault();
@@ -1248,7 +962,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         });
     
     </script>
-    <script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="{{ asset('vendor/perfect-scrollbar/perfect-scrollbar.min.js')}}"></script>
     <script>
         $('.js-pscroll').each(function(){
             $(this).css('position','relative');
@@ -1264,7 +978,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
             })
         });
     </script>
-    <script src="js/main.js"></script>
+    <script src="{{ asset('js/main.js')}}"></script>
 
 </body>
 </html>

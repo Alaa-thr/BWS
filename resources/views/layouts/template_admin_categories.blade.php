@@ -19,7 +19,7 @@
   <script src="{{ asset('jss/vue.js') }}"></script>
   <script src="{{asset('jss/axios.min.js')}}"></script>
   <script src="{{asset('jss/sweetalert2.js')}}"></script>
-
+  
   <?php
 
 
@@ -234,7 +234,7 @@
      </div>
            
       @stack('javascripts')
-
+  
   <script src="assetsAdmin/js/core/jquery.min.js"></script>
   <script src="assetsAdmin/js/core/popper.min.js"></script>
   <script src="assetsAdmin/js/core/bootstrap.min.js"></script>
@@ -248,12 +248,6 @@
   <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="assetsAdmin/js/now-ui-dashboard.min.js?v=1.5.0" type="text/javascript"></script><!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
   <script src="assetsAdmin/demo/demo.js"></script>
-  <script>
-    $(document).ready(function() {
-      // Javascript method's body can be found in assets/js/demos.js
-      demo.initDashboardPageCharts();
 
-    });
-  </script>
 </body>
 </html>

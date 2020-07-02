@@ -560,7 +560,7 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
   position: absolute;
   top:0;
   left:100%;
-  width: 1400%;
+  width: 1200%;
   background-color: rgb(243, 243, 243);
   transition: all 0.4s;
   -webkit-transition: all 0.4s;
@@ -3853,3 +3853,5 @@ input[type=checkbox]:checked + label:before{
   width: 5%;
   padding-bottom: 35px;
 }
+
+.filter-col8 {width: 32%;}

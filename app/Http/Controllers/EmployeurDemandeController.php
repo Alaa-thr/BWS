@@ -21,8 +21,9 @@ class EmployeurDemandeController extends Controller
         $article = \DB::table('demande_emploies')->where('employeur_id', $c->id)->orderBy('created_at','desc')->paginate(5);
         $employeur = \DB::table('clients')->get(); 
         $produit = \DB::table('annonce_emploies')->get(); 
-
-        return view('demande_emploi_reçu_employeur',['article'=>$article, 'idAdmin' => $c->id,'emploC' => $employeur,'prV' => $produit]);
+        $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+        $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
+        return view('demande_emploi_reçu_employeur',['article'=>$article, 'idAdmin' => $c->id,'emploC' => $employeur,'prV' => $produit,'categorie'=>$categorie ,'categorieE'=>$categorieE]);
     } 
     public function detaillsdemandeReçuEmplyeur(Request $request){
         $commande_detaills = \DB::table('demande_emploies')->where('id', $request->idA)->get();

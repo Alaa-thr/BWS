@@ -20,9 +20,12 @@ use Auth;
 class EmployeurController extends Controller
 {
      public function profil_employeur(){
+        $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+        $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
         $employeur=Employeur::find(Auth::user()->id); 
-        return view('profil_employeur',['employeur'=>$employeur]);
+        return view('profil_employeur',['employeur'=>$employeur,'categorie'=>$categorie ,'categorieE'=>$categorieE]);
     }
+    
    public function update_profil(Request $request, $id) {
                 
 
@@ -43,14 +46,17 @@ class EmployeurController extends Controller
        
         return redirect('profilEmployeur');
     }
+
     public function get_commande_traiter_emplyeur(){
         $c = Employeur::find(Auth::user()->id);
         $article = \DB::table('demande_emploies')->where('employeur_id', $c->id)->orderBy('created_at','desc')->paginate(5);
         $employeur = \DB::table('clients')->get(); 
         $produit = \DB::table('annonce_emploies')->get(); 
-
-        return view('demande_emploi_traite_employeur',['article'=>$article, 'idAdmin' => $c->id,'emploC' => $employeur,'prV' => $produit]);
+        $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+        $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
+        return view('demande_emploi_traite_employeur',['article'=>$article, 'idAdmin' => $c->id,'emploC' => $employeur,'prV' => $produit,'categorie'=>$categorie ,'categorieE'=>$categorieE]);
     } 
+
     public function detaillsacommandeTraiterEmplyeur(Request $request){
         $commande_detaills = \DB::table('demande_emploies')->where('id', $request->idA)->get();
         return  $commande_detaills;
@@ -70,7 +76,9 @@ class EmployeurController extends Controller
      public function annonce_emploi(){
         $a = Employeur::find(Auth::user()->id);      
         $annonce = \DB::table('annonce_emploies')->where('employeur_id', $a->id)->orderBy('created_at','desc')->paginate(5) ; 
-        return view('annonce_emploi_employeur',['annonce'=>$annonce, 'idEmployeur' => $a->id]);
+        $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+        $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
+        return view('annonce_emploi_employeur',['annonce'=>$annonce, 'idEmployeur' => $a->id,'categorie'=>$categorie ,'categorieE'=>$categorieE]);
     }
 
     public function detaillsAnnonce(Request $request){

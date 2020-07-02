@@ -40,8 +40,9 @@
                   <div class="col-md-6 ">
                     <div class="form-group" style="width: 600px;">
                       <label ><b>Nom</b></label>
-                      <input name="nom" type="text" class="form-control" placeholder="Entrez le nom de catégorie (Le nom doit être commencé avec un Maj ou un Numero)" v-model="ccategorie.libelle" style="color: black;" :class="{'is-invalid' : message.libelle}"/>
-                      <span class="px-3" style="color: #ca2323" v-if="message.libelle" v-text="message.libelle[0]"></span>
+                      <input name="nom" type="text" class="form-control" placeholder="Entrez le nom de catégorie (Le nom doit être commencé avec un Maj ou un Numero)" v-model="ccategorie.libelle" style="color: black; margin-bottom: 10px;" :class="{'is-invalid' : message.libelle}"/>
+                      <span class="px-3" style="color: #ca2323;" v-if="message.libelle" v-text="message.libelle[0]"></span>
+                      <input type="file" class="form-control "  v-on:change="imagePreview" :class="{'is-invalid' : message.image}" accept="image/png, image/jpeg" style="height: 38px;">
                     </div>
                   </div>
                   <div class="col-md-2 " style="margin-left: 20px;">
@@ -56,6 +57,13 @@
                         <button type="submit" class="btn btn-danger btn-block" style="font-size: 12px; border-radius: 1.3em; font-weight: 900;" v-on:click="CancelCatego(ccategorie)">Annuler </button>
                    </div>
                   </div>
+                  <div style="padding-bottom: 10px; margin-left: -40px;margin-right: 5px;">
+                    <div class=" alert-warning" role="alert" style="padding-left: 10px;padding-top: 1px;padding-bottom: 1px;">
+                      <i class="now-ui-icons travel_info" id="y"></i>
+                       Vous pouvez choisir des images pour votre catégories ici:<a href="https://www.flaticon.com" class="alert-link" target=_blank> Free Vector Icons</a>. Et l'image doit etre de taille 16x16 px, pour avoir une organisation comme <a >
+  <b class="alert-link" v-on:click="showModal=true">ceci</b>.</a>
+                    </div> 
+                  </div>       
                 </div>
 
               </div>
@@ -262,6 +270,7 @@
           id: 0,
           libelle :'',
           typeCategorie: 'shop',
+          image: null,
         },
         sousccategorie: {
           id: 0,
@@ -289,13 +298,20 @@
         message: {},
         AutreExiste: false,
         sousCategoriesNull: [],
-        
+        image: null,
 
                  
       },
 
     methods: {
-
+      imagePreview(event) {
+           var fileR = new FileReader();
+           fileR.readAsDataURL(event.target.files[0]);
+           fileR.onload = (event) => {
+              
+              this.image = event.target.result;
+           }          
+      },
       deselectSousCategorie: function(souscategorieId){
           console.log("souscategorieId",souscategorieId);
         this.SousCategoriesDelete.forEach(key => { 
@@ -328,6 +344,7 @@
           id: 0,
           libelle :'',
           typeCategorie: 'shop',
+          image: null,
         };
         this.message = {};
         categorie.libelle = this.oldCatego.libelle;
@@ -378,6 +395,7 @@
                   libelle: '', 
                 };
 
+
               } 
                  
             })
@@ -388,6 +406,7 @@
 
       }, 
       updateCategorieButton: function(){
+          this.ccategorie.image = this.image;
          if(this.ccategorie.libelle == ''){
 
             this.ccategorie.libelle =  this.oldCatego.libelle;
@@ -403,11 +422,13 @@
                   id: 0,
                   libelle :'',
                   typeCategorie: 'shop',
+                  image: null,
                 };
                 this.message = {};
                 this.oldCatego= {
                   libelle: '', 
                 };
+                this.image=null;
 
               } 
                  
@@ -599,6 +620,7 @@
       
 
       addCategorie:function(){
+              this.ccategorie.image = this.image;
               axios.post(window.Laravel.url+'/addcategorie',this.ccategorie)
               .then(response => {
                 if(response.data.etat){
@@ -610,9 +632,10 @@
                     id: 0,
                     libelle :'',
                     typeCategorie: 'shop',
+                    image: null,
                   };
                   this.message={};
-                 
+                  this.image=null;
                 }
                 
               })
@@ -702,6 +725,7 @@
               id: 0,
               libelle :'',
               typeCategorie: 'shop',
+              image: null,
             };
             
       },
