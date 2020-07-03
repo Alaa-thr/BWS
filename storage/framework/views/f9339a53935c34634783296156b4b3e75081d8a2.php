@@ -1,335 +1,131 @@
 
- 
+
 <?php $__env->startSection('content'); ?>
 
-<head>
-      <title><?php echo e(( 'Favoris ')); ?></title>
-  </head>
-
-<div class="main-panel" id="main-panel">
-  
-  <div class="panel-header panel-header-sm" >
-  </div>
-  <div class="content" id="app">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="card">
-          <div class="card-header" >
-                
-                <div class="flex-t">
-                    <input type="checkbox" id="article" @change="selectAll()" v-model="allSelected" style="margin-top: 5px;">
-                    <label for="article"></label>
-                    <h4 style="margin-top: -6px; margin-left: 10px;">Favoris</h4>
-                </div>
-
-            <div class="txt-right"style="margin-top: -40px; " >
-                  <button v-if="suppr" class="btn-sm btn-danger " style="height: 35px; " v-on:click="deleteArrayArticle()"><b>Supprimer</b>
-                  </button>
-                  
-                  
-                  <button v-on:click="AnnulerSel()" v-if="suppr" class="btn-sm btn-warning " style="height: 35px; " ><b>Annuler</b>
-                  </button>
-               </div>
-            <hr style="margin-top:42px;">       
-          
-            <div class="card-body"   v-for="Favorisc in Favorisclient" >
-
-<div v-if="selectall" ><div id="favv">
-       <input type="checkbox" style=" margin-left: 10px;" :id="Favorisc.id" :value="Favorisc.id" v-model="checkedArticles" @change="changeButton(Favorisc)">
-</div> <label :for="Favorisc.id" style="margin-top: 40px; margin-left: 10px;"></label>
-    </div>
-    <div v-else ><div id="ch1">
-      <input type="checkbox" :id="Favorisc.id" :value="Favorisc.id" style="margin-left: -10px;" v-model="articleIds" @click="deselectArticle(Favorisc.id)"></div>
-      <label :for="Favorisc.id" style="margin-top: 40px; margin-left: 10px;"></label>
-    </div>
-
-
-  <div class="card-head"  id="fav"  >              
-    <div class="row" >
-    <div  class="col-md-4 pr-1" v-if="Favorisc.produit_id  === null" >
-      <div style="margin-left:22px" v-for="emplC in employeur" v-if=" Favorisc.annonce_emploi_id  === emplC.id">
-          <p class="" id="h" > Ajoutez cette annoncce d'emplois   '{{emplC.libellé}}'    au favorie</p>
-      </div>
-       
-    </div>
-    <div  class="col-md-4 pr-1" v-else="Favorisc.annonce_emploi_id  === null" >
-      <div style="margin-left:22px" v-for="imgA in imagesannonce" v-if=" Favorisc.produit_id  === imgA.id">
-          <p class="" id="h" > Ajoutez  ce produit :'{{imgA.Libellé}}'    au favorie .</p>
-      </div>
-       
-    </div>
-    <div class="col-md-4 pl-1">
-      <div class="">
-      <a class="f" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#" id="point">
-        <i class="fas fa-ellipsis-v"  id="y"></i>
-       </a>
-      <div class="dropdown-menu " x-placement="right-start" id="pl">
-    <a class="dropdown-item" v-on:click="deletefavorisClient(Favorisc)"style="color: red; font-style: italic; font-weight: 900; cursor: pointer;">Supprimer</a>
-       </div>
-      </div>
-    </div>
-    </div>
-     
-  </div>
-  
-  <hr>
-
-</div>                   <?php echo e($article->links()); ?>
-
+    <head>
+        <title><?php echo e(( 'Favorie')); ?></title>
+    </head>
+    <nav class="navbar navbar-expand-lg navbar-transparent  bg-primary  navbar-absolute">
+        <div class="container-fluid">
+          <div class="navbar-wrapper">
+            <div class="navbar-toggle">
+              <button type="button" class="navbar-toggler">
+                <span class="navbar-toggler-bar bar1"></span>
+                <span class="navbar-toggler-bar bar2"></span>
+                <span class="navbar-toggler-bar bar3"></span>
+              </button>
+            </div>
+            <a class="navbar-brand" href="#pablo">Favories </a>
           </div>
-    
-</div>
-</div>
-</div>
+        </div>
+    </nav>
+    <div class="panel-header panel-header-sm">
+    </div>
+    <div class="content">
+        <div class="row" id='app'>
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header m-b-30">
+                <h4 class="card-title " style="margin-top: -5px; ">Favories</h4>
+               
+                    
+              </div> 
+            <div class="row isotope-grid" style =" margin-left:22px; margin-right:22px;" >
+                <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women" v-for="produit in ProduitsVendeur">
+                    <!-- Block2 -->
+                    <div class="block2">
+                        <div class="block2-pic hov-img0" v-for="imgP in imagesproduit">
+                            <img v-if="imgP.produit_id === produit.produit_id && imgP.profile === 1" :src="'storage/produits_image/'+ imgP.image" alt="IMG-PRODUCT" style="height: 290px;width: 990px;">
 
+                            <a href="" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1" v-on:click="ShowInfo()">
+                                Quick View
+                            </a>
+                        </div>
 
-  
-</div>
+                        <div class="block2-txt flex-w flex-t p-t-14">
+                            <div class="block2-txt-child1 flex-col-l " v-for="fv in favoris" v-if="produit.produit_id === fv.id">
+                                <a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+                                    {{fv.Libellé}}
+                                </a>
 
-</div>
+                                <span class="stext-105 cl3">
+                                    {{fv.prix}} DA
+                                </span>
+                            </div>
 
+                            <div class="block2-txt-child2 flex-r p-t-3">
+                                <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+                                    <img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON">
+                                    <img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div >
+                    <?php echo e($produit->links()); ?>
 
+                </div>
+        </div>
+    </div>
 
-
-
-<?php $__env->stopSection(); ?>
-
-
-
-
-<?php $__env->startPush("javascripts"); ?>
-
-
-
-
-<script>
-    window.Laravel = <?php echo json_encode([
-           "csrfToken"  => csrf_token(),
-           "article"   => $article,
-           "idAdmin" => $idAdmin,
-           'annonceC'         => $annonceC,
-           'produitC'         => $produitC,
-
-           "url"      => url("/")  
-      ]); ?>;
-</script>
-
-<script>
-
-
-
-var app2 = new Vue({
-  el: '#app2',
-  data:{
-    openInfo: false,
-    hideModel: false,
-    detaillsA: {
-      idA: 0,
-    },
-
-  },
-methods: {
-
-
-  CancelArticle(article){
-    this.modifier = false ;
-    this.hideModel = false;
-    this.art = {        
-                  id: 0,
-                  admin_id: window.Laravel.idAdmin,
-                  titre: '', 
-                  description: '',
-                  image: ''
-    };
-    this.message = {};
-    article.titre = this.oldArt.titre;
-    article.description = this.oldArt.description;
-  },
-
-},    
-});
-
-var app = new Vue({
-
-el: '#app',
-
-
-data:{
-  Favorisclient: [],
-  employeur:[],imagesannonce:[],
-  suppr: false, 
-  checkedArticles: [],
-  artilcesDelete: [],
-  allSelected: false,
-  articleIds: [],
-  selectall: true,
-
-  },
-methods: {
-  AfficheInfo: function($id){
-    app2.hideModel = true; 
-    app2.openAjout = false ;
-    app2.openInfo = true;
-    app2.detaillsA.idA= $id;
-    app2.detaillsCommande();
-  },
-   deleteArrayArticle:function(){
-        if(this.artilcesDelete.length == 0){
-            Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Il ya aucun Favoris a supprimer!',
-
-          }).then((result) => {
-            this.allSelected = false;
-            this.suppr=false;
-            this.selectall = true;
-           
-         })
-          return;
-        }
-        Swal.fire({
-        title: 'Etes vous?',
-        text: "De supprimer cette Favoris?",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Oui, Supprimer!'
-      }).then((result) => {
-          if (result.value) {
-            this.artilcesDelete.forEach(key => {
-              axios.delete(window.Laravel.url+'/deletefavorisclient/'+key.id)
-                .then(response => {
-                  if(response.data.etat){
-                                        
-                            var position = this.Favorisclient.indexOf(key);
-                            this.Favorisclient.splice(position,1);      
-                  }                    
-                })
-                .catch(error =>{
-                           console.log('errors :' , error);
-                })
-            })
-                this.allSelected = false;
-                this.checkedArticles.length = [];
-                this.suppr=false;
-                this.artilcesDelete = [];
-                this.selectall = true;
-          Swal.fire(
-            'Effacé!',
-            'Votre favoris a été supprimé.',
-            'success'
-          )
-        }
-        
-        })
-   },
- 
-   deletefavorisClient: function(article){
-        Swal.fire({
-    title: 'Etes vous?',
-    text: "De supprimer cette Favoris?",
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Oui, Supprimer!'
-  }).then((result) => {
-      if (result.value) {
-          axios.delete(window.Laravel.url+'/deletefavorisclient/'+article.id)
-            .then(response => {
-              if(response.data.etat){
-                       var position = this.Favorisclient.indexOf(article);
-                       this.Favorisclient.splice(position,1);
-                       this.checkedArticles.length = [];
-                       this.suppr=false;
-                       this.artilcesDelete = [];
-                       this.selectall = true;
-              }                     
-            })
-            .catch(error =>{
-                       console.log('errors :' , error);
-            })
-      Swal.fire(
-        'Effacé!',
-        'Votre favoris a été supprimé.',
-        'success'
-      )
-    }
-    
-    })
-  },
- 
- 
-  
-  
-  
-  get_favoris_client: function(){
-            axios.get(window.Laravel.url+'/favorisClient')
-
-                .then(response => {
-                     this.Favorisclient = window.Laravel.article.data;
-                     this.employeur = window.Laravel.annonceC;
-                     this.imagesannonce = window.Laravel.produitC;
-
-                })
-                .catch(error =>{
-                     console.log('errors :' , error);
-                })
-  },
-  changeButton: function(a){
-    this.artilcesDelete.unshift(a);
-    if(this.checkedArticles.length > 0){
-      this.suppr=true;
-    }
-    else{
-      this.artilcesDelete = [];
-      this.suppr=false;
-    }        
-  }, 
-  AnnulerSel: function(){
-    this.checkedArticles.length = [];
-    this.changeButton();
-    this.selectall = true;
-    this.allSelected = false;
-  },
- 
- 
-  selectAll: function() {
-        this.selectall = false;
-        if (this.allSelected) {
-            for (user in this.Favorisclient) {
-                this.articleIds.push(this.Favorisclient[user].id);
-                this.artilcesDelete.push(this.Favorisclient[user]);
-            }
-            this.suppr=true;
-         }
-         else{
-          this.articleIds = [];
-          this.artilcesDelete= [];
-          this.suppr=false;
-          this.selectall = true;
-          this.checkedArticles = [];
-        }
+                  
+                </div>
+              </div>
          
-    },
-    deselectArticle: function(article){
-         this.artilcesDelete.forEach(key => {
-              if(key.id == article){
-                  var position = this.artilcesDelete.indexOf(key);
-                  this.artilcesDelete.splice(position,1);                    
-              } 
-        });             
-    }
-},  
-created:function(){
-  this.get_favoris_client();
-}
-});
+     
+<?php $__env->stopSection(); ?>
+<?php $__env->startPush('javascripts'); ?>
 
 
+
+  
+
+<script> 
+        window.Laravel = <?php echo json_encode([
+
+               'csrfToken'      => csrf_token(),
+               'produit'        => $produit,
+               'ImageP'         => $ImageP,
+               'Fav'         => $Fav,
+
+                'url'           => url('/'), 
+          ]); ?>;
 </script>
 
+<script>
+     var app = new Vue({
+        el: '#app',
+        data:{
+          message:'hello',
+          ProduitsVendeur: [],
+          suppr: true,
+          imagesproduit: [],
+          favoris: [],
+          p:[],
+
+        },
+        methods:{
+          getProduit: function(){
+            axios.get(window.Laravel.url+'/favorisClient')
+              .then(response => {
+                this.ProduitsVendeur = window.Laravel.produit.data;
+                this.imagesproduit = window.Laravel.ImageP;
+                this.favoris = window.Laravel.Fav;
+               })
+              .catch(error => {
+                  console.log('errors : '  , error);
+             })
+          },
+          
+
+        },
+        created:function(){
+            this.getProduit();
+
+        }
+     })
+</script>
 <?php $__env->stopPush(); ?>
 <?php echo $__env->make('layouts.template_clinet', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\BWS\resources\views/favoris_client.blade.php ENDPATH**/ ?>

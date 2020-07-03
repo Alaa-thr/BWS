@@ -25,8 +25,10 @@ class ClientController extends Controller
 {
 
      public function profil_clinet(){
-        $client=Client::find(Auth::user()->id); 
-        return view('profil_clinet',['client'=>$client]);
+        $client=Client::find(Auth::user()->id);
+        $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+        $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get(); 
+        return view('profil_clinet',['client'=>$client,'categorie'=>$categorie,'categorieE'=>$categorieE]);
     }    
     public function update_profil(Request $request, $id) {
                 
@@ -53,7 +55,9 @@ class ClientController extends Controller
     public function get_commande_client(){//fcnt qui retourné tout les articles qui sont dans la table "Article" et trie par ordre desc selon son dates de creations
         $c = Client::find(Auth::user()->id);//recuperé "user_id" de admin qui est connecter       
         $article = \DB::table('commandes')->where('client_id', $c->id)->orderBy('created_at','desc')->paginate(5) ;//recuperé les articles qui sont dans la table "Article" et trie par ordre desc selon son dates de creations et pour "->paginate(5)" c a d f kol page t'affichilek 5 ta3 les article  
-        return view('commande_client',['article'=>$article, 'idAdmin' => $c->id]);//reteurné a la view "articles_admin" et les 2 attributs "article" (contient tout les articles) et "idAdmin" (id de l'admin cncté) 
+        $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+        $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
+        return view('commande_client',['article'=>$article, 'idAdmin' => $c->id,'categorie'=>$categorie,'categorieE'=>$categorieE]);//reteurné a la view "articles_admin" et les 2 attributs "article" (contient tout les articles) et "idAdmin" (id de l'admin cncté) 
     } 
     public function detaillsCommande(Request $request){//fcnt retourné l'article di rena habin n2affichiw les détaills te3o, 3anda un parametre di fih id ta3 article rechercher
         $commande_detaills = \DB::table('commandes')->where('id', $request->idA)->get();
@@ -152,8 +156,9 @@ class ClientController extends Controller
         $taille = \DB::table('taille_produits')->get();
         $typeLivraison = \DB::table('typechoisirvendeurs')->get();
 
-        //$produitCmds = \DB::table('commandes')->get();
-        return view('panier_visiteur',['produitCmds' => $produitCmds,'color' => $color, 'typeLivraison' => $typeLivraison, 'taille' => $taille,'nomClient' => $clientCnncte->nom,'prenomClient' => $clientCnncte->prenom,'idClient' => $clientCnncte->id]);
+        $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+        $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
+        return view('panier_visiteur',['produitCmds' => $produitCmds,'color' => $color, 'typeLivraison' => $typeLivraison, 'taille' => $taille,'nomClient' => $clientCnncte->nom,'prenomClient' => $clientCnncte->prenom,'idClient' => $clientCnncte->id,'categorie'=>$categorie,'categorieE'=>$categorieE]);
 
     } 
 
@@ -193,9 +198,10 @@ public function getProduit(){
 
     $produit = \DB::table('favoris')->where([ ['client_id',$clientCnncte->id]])
     ->orderBy('created_at','desc')->paginate(8); 
-
+    $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+    $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
     $imageproduit = \DB::table('imageproduits')->get();
-    return view('favoris_client',['produit'=>$produit, 'ImageP' => $imageproduit, 'Fav' => $favoris]);
+    return view('favoris_client',['produit'=>$produit, 'ImageP' => $imageproduit, 'Fav' => $favoris,'categorie'=>$categorie,'categorieE'=>$categorieE]);
 }
 
 
