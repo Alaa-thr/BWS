@@ -27,7 +27,8 @@ class CommandeRequest extends FormRequest {
           'numero_tlf' => ['required', 'string', 'max:10', 'min:10','regex:/0[5-7]+/'],
           'email' => ['required', 'string','email'],
           'code_postale' => ['required', 'string', 'max:5', 'min:5','regex:/[0-9]{5}+/'],
+          'address' => ['required', 'string'],
         ];
-        }
+    }
 }
 

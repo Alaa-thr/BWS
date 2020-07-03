@@ -3367,7 +3367,7 @@ input.num-product::-webkit-inner-spin-button {
   width: 60px;
   position: relative;
   margin-right: 20px;
-  cursor: pointer;
+ 
 }
 
 .how-itemcart1 img {
@@ -3400,7 +3400,7 @@ input.num-product::-webkit-inner-spin-button {
 }
 
 .how-itemcart1:hover:after {
-  opacity: 1;
+  opacity: 0;
 }
 
 /*---------------------------------------------*/

@@ -139,7 +139,7 @@ Route::get('/profilClient','ClientController@profil_clinet')->name('profilClient
 Route::put('/updateProfilC/{id}','ClientController@update_profil');
 Route::post('/detaillsacommande', 'ClientController@detaillsCommande'); 
 Route::get('/commandeClient','ClientController@get_commande_client')->name('commandeClient');
-Route::delete('/deletecommande/{id}','ClientController@deleteCommande');
+Route::get('/deletecommande/{id}','ClientController@deleteCommande');
 
 
 /*demande*/

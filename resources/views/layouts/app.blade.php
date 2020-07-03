@@ -831,7 +831,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                             }
                             else{
                                 app3.hideSelect = false;
-
+                                app3.types = [];
                             }
                             
 
