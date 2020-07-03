@@ -32,7 +32,6 @@ Route::post('/addemail', 'BwsController@addEmail')->name('addemail');
 
 Route::get('/articleDetaille/{id}', 'BwsController@showArticleD');
 Route::get('/getville', 'BwsController@get_ville');
-Route::get('/panierVisiteur', 'BwsController@panier_visiteur')->name('panierVisiteur');
 Route::post('/getconnect', 'BwsController@Connect');
 Route::get('/deposerproduit', 'BwsController@deposerProduit')->name('deposerProduit');
 Route::get('/deposeremploi', 'BwsController@deposerEmploi')->name('deposerEmploi');
@@ -40,6 +39,7 @@ Route::get('/getarticlehome', 'BwsController@getArticleHome');
 Route::get('/getproduithome', 'BwsController@getProduitHome');
 Route::get('/estconnecter', 'BwsController@Estconnecter');
 Route::get('/getcategoriehome', 'BwsController@getCategorieHome');
+Route::get('/getfavoris', 'BwsController@getFavoris');
 
 /************************************************ Admin***********************************************/
 Route::get('/categoriesAdmin', 'AdminController@categories_admin');
@@ -136,7 +136,6 @@ Route::delete('/deletecommandetraitervendeur/{id}','VendeurCommandeController@de
 
 /************************************************ Client***********************************************/
 Route::get('/profilClient','ClientController@profil_clinet')->name('profilClient');
-Route::get('/panierClient','BwsController@panier_client')->name('panierClient');
 Route::put('/updateProfilC/{id}','ClientController@update_profil');
 Route::post('/detaillsacommande', 'ClientController@detaillsCommande'); 
 Route::get('/commandeClient','ClientController@get_commande_client')->name('commandeClient');

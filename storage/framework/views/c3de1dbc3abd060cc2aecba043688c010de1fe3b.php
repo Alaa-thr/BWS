@@ -81,7 +81,7 @@
                    </div>
                   </div>
                   <div style="padding-bottom: 10px; margin-left: -40px;margin-right: 5px;">
-                    <div class=" alert-warning" role="alert" style="padding-left: 10px;padding-top: 1px;padding-bottom: 1px;">
+                    <div class=" " role="alert" style="padding-left: 10px;padding-top: 1px;padding-bottom: 1px;">
                       <i class="now-ui-icons travel_info" id="y"></i>
                        Vous pouvez choisir des images pour votre catégories ici:<a href="https://www.flaticon.com" class="alert-link" target=_blank> Free Vector Icons</a>. Et l'image doit etre de taille 16x16 px, pour avoir une organisation comme
                       <b class="alert-link " style="cursor: pointer;text-decoration: underline;" v-on:click="showImage">ceci</b>.

@@ -6,25 +6,28 @@
 		<title><?php echo e(( 'Panier')); ?></title>
 	</head>
 	
-	<!-- breadcrumb -->
-	<div class="container">
-		<div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
-			<a href="index.html" class="stext-109 cl8 hov-cl1 trans-04">
-				Accueil
-				<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
-			</a>
-
-			<span class="stext-109 cl4">
-				Panier
-			</span>
-		</div>
-	</div>
-		
+ 	 
 
 	<!-- Shoping Cart -->
 	<div class="bg0 p-t-75 p-b-85" >
 		<div class="container" id='app'>
 			<div class="row">
+
+			<!--alert-->
+<?php if(session()->has('success')): ?>
+<div class="row"> 
+<div class="alert alert-success" style="  margin-left:33px;width: 1160px;">
+
+<button type="button"  class="close" data-dismiss="alert" aria-hidden="true">&times;
+
+</button>
+ <?php echo e(session()->get('success')); ?>
+
+</div>
+
+</div>
+	  <?php endif; ?>
+	  
 				<div class="col-lg-10 m-l-80 m-b-50">
 					<div class="m-l-25 m-r--38 m-lr-0-xl">
 						<div class="wrap-table-shopping-cart">
@@ -39,7 +42,7 @@
 									<th class="column-2 p-l-100">Prix Total</th>
 								</tr>
 
-								<tr class="table_row" v-for="produit in produitCommandes">
+								<tr class="table_row" v-for="produit in produitCommandes" v-if="produit.commande_envoyee===0">
 									<td class="column-1">
 										<div class="how-itemcart1">
 											<img :src="'storage/produits_image/'+ produit.image" alt="IMG">
@@ -130,7 +133,7 @@
 				</div>
 			</div>
 		
-	<div class="wrap-modal1 js-modal1 p-t-60 p-b-20">
+	<div class="wrap-modal1 js-modal1 p-t-60 p-b-20" >
 		<div class="overlay-modal1 js-hide-modal1"></div>
 
 		<div class="container">
@@ -140,11 +143,13 @@
 				</button>
 				<div class="p-b-30 p-l-40">
 					<h4 class="ltext-102  cl2">
-						Commande de Tahraoui Alaâ
+				           COMMANDE DE    <?php echo e($nomClient); ?>   <?php echo e($prenomClient); ?>
+
+
 					</h4>
 				</div>
 
-				<div class="row">
+				<div class="row" >
 					<div class="col-md-6 col-lg-6 m-r-40">
 						<div class="p-l-60 p-lr-0-lg">
 							<div class="wrap-slick3 flex-sb flex-w">
@@ -156,7 +161,7 @@
 								<div class="div1" >
 								  <div>
 
-										<div class="table_row flex-t p-b-20" v-for="produit in produitCommandes">
+										<div class="table_row flex-t p-b-20" v-for="produit in produitCommandes" v-if="produit.commande_envoyee===0">
 											<div class="column-1">
 												<div class="how-itemcart1" style="height: 80px">
 													<img :src="'storage/produits_image/'+ produit.image" alt="IMG">
@@ -182,9 +187,9 @@
 							</div>
 						</div>
 					</div>
-					
-					<div class="col-md-6 col-lg-5 p-b-30 m-l-30">
-						<div class=" p-t-5 p-lr-0-lg">
+				
+					<div class="col-md-6 col-lg-5 p-b-30 m-l-30" >
+						<div class=" p-t-5 p-lr-0-lg" >
 							
 							<!--  -->
 							<div class="p-t-19">
@@ -201,7 +206,10 @@
 											</div>
 											<div class="size-219">
 												<div class=" bg0 ">
-													<input class="form-control" id="Numero" type="text" placeholder="Numero Telephone" >
+													<input class="form-control" type="text" id="Numero" type="text" placeholder="Numero Telephone" v-model="art.numero_tlf" :class="{'is-invalid' : message.numero_tlf}" >
+                      								 <span class="px-3 cl13" v-if="message.numero_tlf" v-text="message.numero_tlf[0]">
+                    								  </span>
+
 												</div>
 											</div>
 										</div>
@@ -212,7 +220,9 @@
 											</div>
 											<div class="size-219 ">
 												<div class=" bg0">
-													<input class="form-control m-r-30" id="Email" type="text" placeholder="Email" >
+													<input class="form-control m-r-30" id="Email" type="text" placeholder="Email"  v-model="art.email" :class="{'is-invalid' : message.email}">
+                       								 <span class="px-3 cl13" v-if="message.email" v-text="message.email[0]">
+                    								  </span>
 												</div>
 											</div>
 										</div>
@@ -223,10 +233,9 @@
 											</div>
 											<div class="size-219">
 												<div class="bg0">
-													<input class="form-control m-r-30" id="adrrsse" type="text" placeholder="Adrrsse">
-
-
-
+													<input class="form-control m-r-30" id="adrrsse" type="text" placeholder="Adrrsse"  v-model="art.address" :class="{'is-invalid' : message.address}">
+                       								 <span class="px-3 cl13" v-if="message.address" v-text="message.address[0]">
+                    								  </span>
 												</div>
 											</div>
 										</div>
@@ -237,7 +246,9 @@
 											</div>
 											<div class="size-219">
 												<div class="bg0">
-													<input class="form-control m-r-30" id="code" type="text" placeholder="code Postale" >
+													<input class="form-control m-r-30" id="code" type="text" placeholder="code Postale"  v-model="art.code_postale" :class="{'is-invalid' : message.code_postale}">
+                       								 <span class="px-3 cl13" v-if="message.code_postale" v-text="message.code_postale[0]">
+                    								  </span>
 												</div>
 											</div>
 										</div>
@@ -251,7 +262,7 @@
 										<button class="stext-101 cl0 size-1044 bg10 bor1 trans-04 m-r-10" v-on:click="CancelCommande()">
 											Annuler
 										</button>
-										<button class=" stext-101 cl0 size-1044 bg11 bor1 trans-04">
+										<button class=" stext-101 cl0 size-1044 bg11 bor1 trans-04" v-on:click="EnvoyerCommande()">
 											Envoyer
 										</button>
 									</div>
@@ -279,10 +290,70 @@
                'color'         => $color,
                'taille'         => $taille,
                'typeLivraison'         => $typeLivraison,
+			   "nomClient" => $nomClient,
+			   "prenomClient" => $prenomClient,
+			   "idClient" => $idClient,
+
                "url"      => url("/")  
           ]); ?>;
 </script>
 <script>
+ Vue.mixin({
+
+
+methods:{
+
+	
+	EnvoyerCommande: function(){
+	 axios.post(window.Laravel.url+"/envoyercommande",app.art)
+
+	.then(response => {
+	  if(response.data.etat){
+		 app.art = response.data.commandeAjout; 
+		 app.art.id = response.data.commandeAjout.id; 
+		 window.location.reload(); 
+		 app.articlesadmin.unshift(app.art);
+		 app.art={
+			  id: 0,
+			  client_id: window.Laravel.idClient,
+			  numero_tlf: '', 
+			  email: '', 
+			  address: '', 
+			  code_postale: '', 
+
+			  
+		 };
+  		 app.message = {};
+	   }          
+	})
+	.catch(error =>{
+		app.message = error.response.data.errors;
+		console.log('errors :' , app.message);
+	})
+},         
+}                     
+}); 
+
+/*var app2 = new Vue({
+      el: '#app2',
+      data:{
+         art: {
+          id: 0,
+          client_id: window.Laravel.idClient,
+          numero_tlf: '', 
+		  email: '', 
+		  address: '', 
+		  code_postale: '', 
+
+		     }, 
+        
+        message: {},
+                   
+      },
+      
+});*/
+
+ 
 
 	var app = new Vue({
 	    el: '#app',
@@ -294,7 +365,16 @@
 	      tailleExist: true,
 	      adrresse: false,
 	      codePostale: false,
-
+		  art: {
+			id: 0,
+			client_id: window.Laravel.idClient,
+			numero_tlf: '', 
+			email: '', 
+			address: '', 
+			code_postale: '', 
+		  }, 
+        
+        message: {},
 	    },
 	    methods: {
 	    	ProduitCommande:function(){
@@ -330,7 +410,11 @@
 
 			this.message= {};
 			 	
-      	},
+      	}, 
+ 
+
+
+
 	    },
 	    mounted:function(){
 	    	this.ProduitCommande();

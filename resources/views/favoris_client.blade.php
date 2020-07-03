@@ -3,7 +3,7 @@
 @section('content')
 
     <head>
-        <title>{{ ( 'Fvaorie') }}</title>
+        <title>{{ ( 'Favorie') }}</title>
     </head>
     <nav class="navbar navbar-expand-lg navbar-transparent  bg-primary  navbar-absolute">
         <div class="container-fluid">
@@ -15,7 +15,7 @@
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="#pablo">Fvaories </a>
+            <a class="navbar-brand" href="#pablo">Favories </a>
           </div>
         </div>
     </nav>
@@ -26,7 +26,7 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header m-b-30">
-                <h4 class="card-title " style="margin-top: -5px; ">Fvaories</h4>
+                <h4 class="card-title " style="margin-top: -5px; ">Favories</h4>
                
                     
               </div> 
