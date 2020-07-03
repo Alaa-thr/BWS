@@ -33,37 +33,32 @@
                       </button>
                    </div>
                 <hr> 
-
-               
-
-
-
-
-
-               <div class="row m-b-10 flex-t" v-for="annoncea in annoncesEmployeur" style="display: inline-flex; height: 190px;">
+               <div class="row m-b-10 " v-for="annoncea in annoncesEmployeur" style="display: inline-flex; height: 160px; width: 360px;">
                       <div v-if="selectall">
                         <input type="checkbox" :id="annoncea.id" :value="annoncea.id" v-model="checkedAnnonces" @change="changeButton(annoncea)">
-                        <label :for="annoncea.id" style="margin-top: 40px; margin-left: 10px;"></label>
+                        <label :for="annoncea.id" style="margin-top: 40px; margin-left: 20px;"></label>
                       </div>
                       <div v-else>
                         <input type="checkbox" :id="annoncea.id" :value="annoncea.id" v-model="annonceIds" @click="deselectAnnonce(annoncea.id)">
-                        <label :for="annoncea.id" style="margin-top: 40px; margin-left: 10px;">
+                        <label :for="annoncea.id" style="margin-top: 40px; margin-left: 20px;">
                         </label>
                       </div>
-                        <div class="col-md-3 " style="padding-right: 10px; " >
-                          <img  :src="'storage/annonces_image/'+ annoncea.image" style="height: 100px; width:100px; margin-bottom: 20px">
+                        <div class="col-md-3 "  >
+                          <img v-if=""  :src="'storage/annonces_image/'+ annoncea.image" style="height: 110px; width:120px; margin-bottom: 20px">
                         </div>
                         
                         <div class="col-md-5" >
                           <h6 class="title" style="margin-top: -4px;  color: red; margin-left: -10px;" >@{{ annoncea.libellé }}</h6><br>
-                            <div class="description" style="margin-top: -10px; font-size: 17px; margin-left: -10px;">
-                              @{{ MoitieDescription(annoncea.discription,10, '...') }}  
-                              <div class="txt-right m-t-20">
-                                <a class="js-show-modal1 " style=" color: black;  font-style: italic; font-weight: 500; cursor: pointer; margin-right: 20px;" v-on:click="AfficheInfo(annoncea.id)"><b>  Afficher Plus </b>
-                                </a>
-                              </div>
+                            <div class="description" style="margin-top: -10px; font-size: 11px; margin-left: -10px;">
+                              @{{ MoitieDescription(annoncea.discription,13, '...') }}
+                            </div>  
+                            <div class="description" style="font-weight: 500; color: black; font-size: 12px; margin-left: -10px; margin-top: 10px;">
+                                Nombre de condidat : @{{annoncea.nombre_condidat}}
                             </div>
-                             
+                            <div class="txt-right m-t-20">
+                                <a class="js-show-modal1 " style=" color: black;  font-style: italic; font-weight: 500; cursor: pointer; margin-right: -30px; " v-on:click="AfficheInfo(annoncea.id)"><b>  Afficher Plus </b>
+                                </a>
+                             </div>
                         </div>
                         <table>
                          <tr>                        
@@ -72,21 +67,23 @@
                                <img src="assetsEmployeur/img/menu.png" /> 
                               </a>
                               <div class="dropdown-menu dropdown-menu-right ">   
-                               <a class="dropdown-item js-show-modal1" style="color: red; font-style: italic; font-weight: 900; cursor: pointer;" v-on:click="updateAnnonce(annoncea)">Modifier</a>
-                               <a class="dropdown-item" v-on:click="deleteAnnonce(annoncea)" style="color: red; font-style: italic; font-weight: 900; cursor: pointer;">Supprimer</a>
+                               <a class="dropdown-item js-show-modal1" style="color: blue; font-style: italic; font-weight: 900; cursor: pointer;" v-on:click="updateAnnonce(annoncea)">Modifier</a>
+                               <a class="dropdown-item" v-on:click="deleteAnnonce(annoncea)" style="color: blue; font-style: italic; font-weight: 900; cursor: pointer;">Supprimer</a>
                               </div>
                             </td>
                          </tr>
-                       </table> 
-                </div>
-               <div> 
+                       </table>
+                       <div style="border-left: 2px solid #000; display: inline-block;height: 130px; margin: 0 20px;">
+                       </div> 
+                 </div>  
+                 <div> 
                    {{$annonce->links()}}<!-- pour afficher la pagination -->
-               </div>
+                </div>
               </div>
              </div>
            </div>
          </div>
-       </div>
+        </div>
      </div>
     <div class="wrap-modal11 js-modal1 p-t-38 p-b-20 p-l-15 p-r-15"  id="app2" v-if="hideModel">
       <div class="overlay-modal11 " v-on:click="CancelAnnonce(annc)"></div>
@@ -97,7 +94,7 @@
             <img src="images/icon-close.png" alt="CLOSE">
           </button>
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-8">
               <div class="p-b-30 p-l-40" style="margin-left: 80px;" >
                 <h3 class=" cl2" >
                    Informations sur L'annonce
@@ -118,8 +115,15 @@
             </div>
           </div>
           <div class="row">
+            <div class="col-md-10">
+              <div class="description" style="margin-left: 90px; margin-top: -20px; font-weight: 700; color: black;">
+                Le nombre de condidat est : @{{annoncea.nombre_condidat}}
+              </div>
+            </div>
+          </div>
+          <div class="row" style="margin-left: 50px; margin-top: 10px;">
             <div class="col-md-2">
-               <p>@{{ annoncea.discription }}</p>
+               <p style="color: black;">@{{ annoncea.discription }}</p>
             </div>               
           </div>  
         </div>
@@ -242,12 +246,12 @@
                       libellé: '', 
                       discription: '',
                       nombre_condidat:'',
-                      image: ''
+                      image: null,
                  };
+                 app2.image = null;
                  app2.hideModel=false;
                  app2.openAjout = false;
                  app2.message = {};
-                 app2.image = '';
               }          
             })
             .catch(error =>{
@@ -287,7 +291,7 @@
         sousCategories: [],
         categories: [],
         modifier: false,
-        image: '',
+        image: null,
 
         
                    

@@ -34,7 +34,7 @@
            if($urlAcctuiel == 'profilEmployeur'){
                $stripeProfil='active';
            }
-           else if($urlAcctuiel == 'annonceEmploi'){
+           else if($urlAcctuiel == 'annoncesemploi'){
                $stripeAnnonce='active';
            }
            else if($urlAcctuiel == 'demandeEmploiRecu'){
@@ -519,7 +519,7 @@
             </a>
           </li>
           <li class="<?php echo $stripeAnnonce ?>">
-            <a href="{{route('annonceEmploi')}}">
+            <a href="{{route('annoncesemploi')}}">
               <i class="now-ui-icons business_briefcase-24" id="y"></i>
               <div class="m-t-5" id="x">Annonces d'emplois</div>
             </a>
