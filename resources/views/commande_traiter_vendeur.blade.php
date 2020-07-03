@@ -3,7 +3,7 @@
 @section('content')
 
 <head>
-      <title>{{ ( 'Commande Traiter ') }}</title>
+      <title>{{ ( 'Commande Traitée') }}</title>
   </head>
 
 <div class="main-panel" id="main-panel">
@@ -12,14 +12,16 @@
   </div>
   <div class="content" id="app">
     <div class="row">
+   
       <div class="col-md-12">
         <div class="card">
           <div class="card-header" >
-                
+         
                 <div class="flex-t">
                     <input type="checkbox" id="article" @change="selectAll()" v-model="allSelected" style="margin-top: 5px;">
-                    <label for="article"></label>
-                    <h4 style="margin-top: -6px;margin-left: 10px;">Commande Traiter</h4>
+                    <label for="article"></label> 
+                   
+                    <h4 style="margin-top: -6px;margin-left: 10px;">Commande Traitée</h4>
                 </div>
 
             <div class="txt-right"style="margin-top: -40px; " >
@@ -30,18 +32,20 @@
                   <button v-on:click="AnnulerSel()" v-if="suppr" class="btn-sm btn-warning " style="height: 35px; " ><b>Annuler</b>
                   </button>
                </div>
+         
+            
             <hr style="margin-top:42px;">       
           
         
             <div class="card-body"   v-for="commandec in commandeclient" v-if="commandec.commande_traiter===1">
 
-<div v-if="selectall" >
+<div v-if="selectall" id="c">
        <input type="checkbox"  style=" margin-left: 10px;" :id="commandec.id" :value="commandec.id" v-model="checkedArticles" @change="changeButton(commandec)">
-      <label :for="commandec.id" style="margin-top: 40px; margin-left: 10px;"></label>
+      <label :for="commandec.id" style="margin-top: 5px; margin-left: 10px;"></label>
     </div>
-    <div v-else ><div id="ch1">
-      <input type="checkbox" :id="commandec.id" :value="commandec.id" style="margin-left: 10px;" v-model="articleIds" @click="deselectArticle(commandec.id)"></div>
-      <label :for="commandec.id" style="margin-top: 40px; margin-left: 10px;"></label>
+    <div v-else id="c">
+      <input type="checkbox" :id="commandec.id" :value="commandec.id" style="margin-left: 10px;" v-model="articleIds" @click="deselectArticle(commandec.id)">
+      <label :for="commandec.id" style="margin-top: 5px; margin-left: 10px;"></label>
     </div>
 
 
@@ -56,7 +60,7 @@
     
     <div  class="col-md-4 pr-1" id="cv">
       <div style="margin-left:22px" >
-          <p id="txt" > prix_total : @{{commandec.prix_total}}</p>
+          <p id="txt" > prix_total : @{{commandec.prix_total}} </p>
       </div>
        
     </div>
@@ -69,7 +73,7 @@
       <div class="dropdown-menu " x-placement="right-start" id="pl"  >
       <a   v-on:click="AfficheInfo(commandec.id)"  class="dropdown-item js-show-modal1" 
       style="color: red; font-style: italic; font-weight: 900; cursor: pointer;" >Afficher Plus</a>
-    <a class="dropdown-item" v-on:click="deleteCommandeTraiterVendeur(commandec)"
+    <a class="dropdown-item" v-on:click="deleteCommandeVendeur(commandec)"
     style="color: red; font-style: italic; font-weight: 900; cursor: pointer;">
     Supprimer</a>
        </div>
@@ -80,7 +84,7 @@
 
   </div>      
 
-  <hr  id="cvendeu">
+  <hr  id="cvendeur">
 
     
 </div>                  
@@ -94,6 +98,7 @@
           </div>
         </div>      
       </div>
+     
     </div>
 
 
@@ -223,7 +228,14 @@
       </div>
     </div>
     </div>  
-
+    <div class="row" style="margin-left:422px;margin-top:22px;">
+    <div class="col-md-4 pr-1" >
+      <div style="margin-left:464px">
+      <button v-on:click=" RecuCommande(commandec.id);"   class="btn-sm btn-success " style="height: 35px; " ><b>Traiter</b>
+                  </button>      </div>
+    </div>
+   
+    </div> 
          
       </div>
       </div>
@@ -282,17 +294,25 @@ var app2 = new Vue({
     detaillsA: {
       idA: 0,
     },
-
   
-  
-               
   },
 methods: {
 
+  RecuCommande: function(id){
+          	axios.put(window.Laravel.url+'/recucommande/'+id)
+              .then(response => {
+                	console.log("response",response.data);
+                  window.location.reload();
+               })
+              .catch(error => {
+                  console.log('errors : '  , error);
+             })
+          },
 
-  detaillsacommandeTraiterVendeur: function(){
+  detaillsacommandeVendeur: function(){
 
-    axios.post(window.Laravel.url+'/detaillsacommandetraitervendeur', this.detaillsA)
+
+    axios.post(window.Laravel.url+'/detaillsacommandevendeur', this.detaillsA)
 
         .then(response => {
 
@@ -369,7 +389,7 @@ methods: {
       }).then((result) => {
           if (result.value) {
             this.artilcesDelete.forEach(key => {
-              axios.delete(window.Laravel.url+'/deletecommandetraitervendeur/'+key.id)
+              axios.delete(window.Laravel.url+'/deletecommandevendeur/'+key.id)
                 .then(response => {
                   if(response.data.etat){
                                         
@@ -396,7 +416,7 @@ methods: {
         })
    },
  
-   deleteCommandeTraiterVendeur: function(article){
+   deleteCommandeVendeur: function(article){
         Swal.fire({
     title: 'Etes vous?',
     text: "De supprimer cette Commande?",
@@ -407,7 +427,7 @@ methods: {
     confirmButtonText: 'Oui, Supprimer!'
   }).then((result) => {
       if (result.value) {
-          axios.delete(window.Laravel.url+'/deletecommandetraitervendeur/'+article.id)
+          axios.delete(window.Laravel.url+'/deletecommandevendeur/'+article.id)
             .then(response => {
               if(response.data.etat){
                        var position = this.commandeclient.indexOf(article);
@@ -439,9 +459,9 @@ methods: {
     app2.openAjout = false ;
     app2.openInfo = true;
     app2.detaillsA.idA= $id;
-    app2.detaillsacommandeTraiterVendeur();
+    app2.detaillsacommandeVendeur();
   },
-  get_commande_traiter_vendeur: function(){
+  get_commande_vendeur: function(){
             axios.get(window.Laravel.url+'/commandeTraiterVendeur')
 
                 .then(response => {
@@ -498,7 +518,7 @@ methods: {
     }
 },  
 created:function(){
-  this.get_commande_traiter_vendeur();
+  this.get_commande_vendeur();
 }
 });
 
