@@ -1513,7 +1513,7 @@
                 axios.get(window.Laravel.url+"/deposeremploi")
                 .then(response => {
                     if(response.data.etat == 'cnnect'){
-                        window.location.href = "{{route('annonceEmploi')}}";
+                        window.location.href = "{{route('annoncesemploi')}}";
                     }
                     else if(response.data.etat){
                         Swal.fire({

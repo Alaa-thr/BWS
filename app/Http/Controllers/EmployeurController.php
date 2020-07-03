@@ -75,7 +75,7 @@ class EmployeurController extends Controller
 
      public function annonce_emploi(){
         $a = Employeur::find(Auth::user()->id);      
-        $annonce = \DB::table('annonce_emploies')->where('employeur_id', $a->id)->orderBy('created_at','desc')->paginate(5) ; 
+        $annonce = \DB::table('annonce_emploies')->where('employeur_id', $a->id)->orderBy('created_at','desc')->paginate(6) ; 
         $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
         $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
         return view('annonce_emploi_employeur',['annonce'=>$annonce, 'idEmployeur' => $a->id,'categorie'=>$categorie ,'categorieE'=>$categorieE]);
@@ -87,23 +87,24 @@ class EmployeurController extends Controller
     }
 
     public function addAnnonce(Request $request){
-                $exploded = explode(',', $request->image);
-                $decoded = base64_decode($exploded[1]); 
-                if(str_contains($exploded[0], 'jpeg')){
-                    $extension = 'jpg';
-                }
-                else{
-                    $extension = 'png';
-                }
-                $fileName = str_random().'.'.$extension;
-                Storage::put('/public/annonces_image/' . $fileName, $decoded);
-       
                 $annonce2 = new Annonce_emploie;
+                if($request->image != null){
+                    $exploded = explode(',', $request->image);
+                    $decoded = base64_decode($exploded[1]); 
+                    if(str_contains($exploded[0], 'jpeg')){
+                        $extension = 'jpg';
+                    }
+                    else{
+                        $extension = 'png';
+                    }
+                    $fileName = str_random().'.'.$extension;
+                    Storage::put('/public/annonces_image/' . $fileName, $decoded);
+                    $annonce2->image = $fileName;
+                }
                 $annonce2->libellé = $request->libellé;
                 $annonce2->discription = $request->discription;
                 $annonce2->employeur_id = $request->employeur_id;
                 $annonce2->sous_categorie_id = $request->sous_categorie_id;
-                $annonce2->image = $fileName;
                 $annonce2->save();
                 return Response()->json(['etat' => true,'annonceAjout' => $annonce2]);
     }

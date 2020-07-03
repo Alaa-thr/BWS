@@ -94,7 +94,7 @@ Route::put('/emailrependu/{id}','AdminController@emailRependu');
 /*********************************************** Employeur***********************************************/
 
 Route::get('/profilEmployeur', 'EmployeurController@profil_employeur')->name('profilEmployeur');
-Route::get('/annonceEmploi', 'EmployeurController@annonce_emploi')->name('annonceEmploi');
+Route::get('/annoncesemploi', 'EmployeurController@annonce_emploi')->name('annoncesemploi');
 Route::put('/updateProfilE/{id}','EmployeurController@update_profil');
 Route::post('/addannonce', 'EmployeurController@addAnnonce');
 Route::post('/detaillsannonces', 'EmployeurController@detaillsAnnonce');
