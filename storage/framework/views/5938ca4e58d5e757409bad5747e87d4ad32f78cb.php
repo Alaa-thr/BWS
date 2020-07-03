@@ -93,8 +93,8 @@
     </div>    
 
     </div>      
-    <div  class="col-md-4 pr-1" id="cb">
-      <div  >
+    <div  class="col-md-4 pr-1" id="cb" >
+      <div  v-if="commandec.address != null">
           <p id="txt" >Addresse : {{commandec.address}}</p>
       </div>
        
