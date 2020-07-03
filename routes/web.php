@@ -40,6 +40,7 @@ Route::get('/getarticlehome', 'BwsController@getArticleHome');
 Route::get('/getproduithome', 'BwsController@getProduitHome');
 Route::get('/estconnecter', 'BwsController@Estconnecter');
 Route::get('/getcategoriehome', 'BwsController@getCategorieHome');
+Route::get('/getfavoris', 'BwsController@getFavoris');
 
 /************************************************ Admin***********************************************/
 Route::get('/categoriesAdmin', 'AdminController@categories_admin');

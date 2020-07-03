@@ -266,10 +266,11 @@
 								</span>
 							</div>
 
-							<div class="block2-txt-child2 flex-r p-t-3">
-								<a href="" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2" v-on:click="AjoutAuFavoris(produit.id)">
-									<img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON" >
-									<img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON">
+							<div class="block2-txt-child2 flex-r p-t-3" v-if="testFavoris(produit.id)">
+
+								<a href="" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2" v-on:click="AjoutAuFavoris(produit.id)" id='favoo'>
+									<img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON"  >
+									<img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON" >
 								</a>
 							</div>
 						</div>
@@ -495,9 +496,37 @@
       	tailleExiste: false,
       	message: {},
       	hideModel: false,
+      	favoris : [],
+      	showFavoris: true,
 
       },
       methods:{
+      	testFavoris($id){
+      			console.log('id',$id);
+      			this.favoris.forEach(key =>{
+      					if(key.produit_id == $id){
+      						this.showFavoris = false;
+      						console.log('enter id',key);
+	      					$('#favoo').addClass('js-addedwish-b2');
+      					}
+      					else{
+      						
+      					}
+      			})
+      			return true;
+      	},
+      	getFavoris(){
+      		axios.get(window.Laravel.url+'/getfavoris')
+              .then(response => {
+              		if(response.data.etat){
+	              		this.favoris = response.data.fav;
+	              		console.log('errors :' , this.favoris); 
+              		}
+               })
+              .catch(error => {
+                    console.log('errors :' , this.message);   
+             })
+      	},
       	CancelArticle(){
       		$('.js-modal1').removeClass('show-modal1');
       		this.ajoutPanier= {
@@ -607,9 +636,7 @@
               .catch(error => {
               	
                   this.message = error.response.data.errors;
-                    console.log('errors :' , this.message);
-
-                
+                    console.log('errors :' , this.message);              
              })
       	},
       	detaillProduit:function(produit){
@@ -662,6 +689,7 @@
       },
       created:function(){
       	this.getProduit();
+      	this.getFavoris();
       }
   });
   function selectTaille(taille){

@@ -20,7 +20,16 @@ use App\Article;
 class BwsController extends Controller
 {
    
-/************************************************ Visiteur***********************************************/   
+/************************************************ Visiteur***********************************************/  
+    public function getFavoris(){
+        if(auth()->check() && Auth::user()->type_compte == 'c'){
+            $client = $client = Client::find(Auth::user()->id);
+            $fav = \DB::table('favoris')->where('client_id',$client->id)->get();
+            return ['etat' => true , 'fav' => $fav];
+        }
+        return ['etat' => false];
+    } 
+
      public function Connect(Request $request)
     {
         $users =  User::All();
