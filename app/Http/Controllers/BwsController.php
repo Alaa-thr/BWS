@@ -24,8 +24,8 @@ class BwsController extends Controller
     public function getFavoris(){
         if(auth()->check() && Auth::user()->type_compte == 'c'){
             $client = $client = Client::find(Auth::user()->id);
-            $fav = \DB::table('favoris')->where('client_id',$client->id)->get();
-            return ['etat' => true , 'fav' => $fav];
+           
+            return ['etat' => true ];
         }
         return ['etat' => false];
     } 
@@ -69,7 +69,12 @@ class BwsController extends Controller
         $typeLivraison = \DB::table('typechoisirvendeurs')->get();
         $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
         $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
-           
+        if(auth()->check() && Auth::user()->type_compte == 'c'){
+            $client = $client = Client::find(Auth::user()->id);
+           $fav = \DB::table('favoris')->where('client_id',$client->id)->get();
+            return view('shop',['produit'=>$produit, 'ImageP' => $imageproduit, 'color' => $color, 'typeLivraison' => $typeLivraison, 'taille' => $taille ,'categorie'=>$categorie,'categorieE'=>$categorieE,'fav' => $fav]);
+        }
+            
         return view('shop',['produit'=>$produit, 'ImageP' => $imageproduit, 'color' => $color, 'typeLivraison' => $typeLivraison, 'taille' => $taille ,'categorie'=>$categorie,'categorieE'=>$categorieE]);
     }
 
