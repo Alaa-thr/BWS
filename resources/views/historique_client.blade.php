@@ -1,9 +1,9 @@
 @extends('layouts.template_clinet')
- 
+
 @section('content')
 
 <head>
-      <title>{{ ( 'Historique ') }}</title>
+      <title>{{ ( 'Historique') }}</title>
   </head>
 
 <div class="main-panel" id="main-panel">
@@ -12,14 +12,27 @@
   </div>
   <div class="content" id="app">
     <div class="row">
+   
       <div class="col-md-12">
         <div class="card">
           <div class="card-header" >
-                
+          @if(session()->has('success'))
+<div class="row"> 
+<div class="alert alert-success" style="  margin-left:33px;width: 960px;">
+
+<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;
+
+</button>
+ {{ session()->get('success')}}
+</div>
+
+</div>
+      @endif
                 <div class="flex-t">
                     <input type="checkbox" id="article" @change="selectAll()" v-model="allSelected" style="margin-top: 5px;">
-                    <label for="article"></label>
-                    <h4 style="margin-top: -6px;margin-left: 10px;">Historiques</h4>
+                    <label for="article"></label> 
+                   
+                    <h4 style="margin-top: -6px;margin-left: 10px;">Commande </h4>
                 </div>
 
             <div class="txt-right"style="margin-top: -40px; " >
@@ -30,24 +43,26 @@
                   <button v-on:click="AnnulerSel()" v-if="suppr" class="btn-sm btn-warning " style="height: 35px; " ><b>Annuler</b>
                   </button>
                </div>
+         
+            
             <hr style="margin-top:42px;">       
           
         
-            <div class="card-body"   v-for="historiquec in historiqueclient" >
+            <div class="card-body"  v-for="historiquec in historiqueclient"  id="his">
 
-<div v-if="selectall" >
-       <input type="checkbox" :id="historiquec.id" :value="historiquec.id" v-model="checkedArticles" @change="changeButton(historiquec)">
-      <label :for="historiquec.id" style="margin-top: 35px; margin-left: 10px;"></label>
+<div v-if="selectall" id="c">
+       <input type="checkbox"  style=" margin-left: 10px;" :id="historiquec.id" :value="historiquec.id" v-model="checkedArticles" @change="changeButton(historiquec)">
+      <label :for="historiquec.id" style="margin-top: 40px; margin-left: 10px;"></label>
     </div>
-    <div v-else >
-      <div id="ch1">
-      <input type="checkbox" :id="historiquec.id" :value="historiquec.id" style="margin-left: -20px;" v-model="articleIds" @click="deselectArticle(historiquec.id)"></div>
-      <label :for="historiquec.id" style="margin-top: 35px; margin-left: 10px;"></label>
+    <div v-else id="c">
+      <input type="checkbox" :id="historiquec.id" :value="historiquec.id" style="margin-left: 10px;" v-model="articleIds" @click="deselectArticle(historiquec.id)">
+      <label :for="historiquec.id" style="margin-top: 40px; margin-left: 10px;"></label>
     </div>
 
 
-  <div class="card-head"  id="hmdd"  >              
-    <div class="row" >
+  
+    <div class="card-head"   >              
+    <div class="row" id="xcl">
     <div >
   <p class=""  id="hh" >
        @{{historiquec.created_at}}</p>
@@ -79,25 +94,38 @@
     </div>    
 
     </div>      
+   
+
+    
 
   </div>      
 
-  <hr>
+  
+
 
     
-</div>                   {{$article->links()}}
+</div> 
+<hr>
+
               </div>
 
-            
+            </div>     
+              {{$article->links()}}
+              </div>
+
+            </div>      
+          </div>
         </div>      
       </div>
+     
     </div>
 
-  
-</div>
-  
+
 </div>
 
+</div>
+
+</div>
 
 
   

@@ -10,6 +10,7 @@ use App\Commande;
 use App\User;
 use App\Produit;
 use App\Imageproduit;
+use App\Notification;
 use App\ColorProduit;
 use App\TailleProduit;
 use Illuminate\Support\Facades\Storage;
@@ -215,6 +216,32 @@ class VendeurController extends Controller
         $traiter->save();
         */session()->flash('success','Cette Commande sera trouvée dans Commande Traitée');
         return $traiter;
+    }
+
+    public function RefuserCommande($id){
+        $vendeurCnncte = Vendeur::find(Auth::user()->id);
+
+        $traiter=\DB::table('commandes')->where([ ['vendeur_id',$vendeurCnncte->id],['id','=',$id]])->
+            update(['commande_traiter'=>1]);
+
+            $client=\DB::table('commandes')->where([ ['vendeur_id',$vendeurCnncte->id],['id','=',$id]])->get();
+       
+            foreach ($client as $clr) {
+                $color = $clr->client_id;
+               
+            }
+
+            $notification = new Notification;
+            $notification->client_id =$color;
+            $notification->vendeur_id = $vendeurCnncte->id;
+            $notification->cmd_id = $id;
+    
+            $notification->save();
+        session()->flash('success','Cette Commande sera trouvée dans Commande Traité et envoyer une notification pour Ce client lorsque vous avez le refuder ');
+
+       
+
+        return ([$traiter,$notification]);
     }
 
 }

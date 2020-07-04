@@ -37,4 +37,8 @@ class Client extends Model
     {
         return $this->hasMany('App\Produit');
     }
+    public function notification()
+    {
+        return $this->hasMany('App\Notification');
+    }
 }
