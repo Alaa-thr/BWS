@@ -26,6 +26,7 @@ Route::get('/accueil', 'BwsController@accueil')->name('accueil');
 Route::get('/apropos', 'BwsController@apropos')->name('apropos');
 Route::get('/shop', 'BwsController@produitVisiteur')->name('shop');
 Route::get('/emploi', 'BwsController@emploi')->name('emploi');
+Route::post('detailsemp','BwsController@detailsEmploi');
 Route::get('/article', 'BwsController@article')->name('article');
 Route::get('/contact','BwsController@contact')->name('contact');
 Route::post('/addemail', 'BwsController@addEmail')->name('addemail');

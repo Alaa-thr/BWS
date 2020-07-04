@@ -56,7 +56,7 @@
                                 Nombre de condidat : {{annoncea.nombre_condidat}}
                             </div>
                             <div class="txt-right m-t-20">
-                                <a class="js-show-modal1 " style=" color: black;  font-style: italic; font-weight: 500; cursor: pointer; margin-right: -30px; " v-on:click="AfficheInfo(annoncea.id)"><b>  Afficher Plus </b>
+                                <a class="js-show-modal1 " style=" color: black;  font-style: italic; font-weight: 500; cursor: pointer; margin-right: -30px; " ><b>  Afficher Plus </b>
                                 </a>
                              </div>
                         </div>
