@@ -102,6 +102,7 @@ class EmployeurController extends Controller
                     $annonce2->image = $fileName;
                 }
                 $annonce2->libellé = $request->libellé;
+                $annonce2->nombre_condidat = $request->nombre_condidat;
                 $annonce2->discription = $request->discription;
                 $annonce2->employeur_id = $request->employeur_id;
                 $annonce2->sous_categorie_id = $request->sous_categorie_id;

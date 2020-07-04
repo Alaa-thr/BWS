@@ -3668,3 +3668,19 @@ a#condi:hover {
   padding: 10px;
   text-decoration: none;
 }
+.creat-articlee{
+  border-style: solid ;
+  border-color: white;
+  border-radius: 10px;
+  width: 800px;
+  height: 850px;
+  margin-left: 220px;
+  margin-top: 20px;
+  margin-top: -10px;
+  
+}
+.container-creat-articlee{
+  padding: 10%;
+  padding-right: 100px;
+  width: 120%
+}
