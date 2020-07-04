@@ -3899,3 +3899,33 @@ input[type=checkbox]:checked + label:before{
 }
 
 .filter-col8 {width: 32%;}
+
+
+#articl{
+  margin-left: -4%;
+  width: 150%;
+  background-color: rgb(192,4,4);
+}
+
+#xxx{
+  padding-top: 10%;
+  padding-left: 3.2%;
+  background-color: white;
+margin-bottom: 10%;}
+#xx{
+  margin-top: -5%;
+  padding-top: 5%;
+  margin-left: 0%;
+  padding-left: 3.5%;
+  background-color: white;
+  margin-bottom: 10%;
+}
+
+#xcl{
+  margin-top: -5.5%;
+padding-left: -92%;
+  margin-left:3%;
+}
+#his{
+  margin-top: 3%;
+}

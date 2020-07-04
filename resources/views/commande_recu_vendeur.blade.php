@@ -243,7 +243,12 @@
     <div class="col-md-4 pr-1" >
       <div style="margin-left:464px">
       <button v-on:click=" RecuCommande(commandec.id);"   class="btn-sm btn-success " style="height: 35px; " ><b>Traiter</b>
-                  </button>      </div>
+       </button>   
+
+      <button v-on:click=" RefuserCommande(commandec.id);"   class="btn-sm btn-danger " style="height: 35px;margin-left:-954px; " ><b>Refuser</b>
+       </button>   
+                  
+                     </div>
     </div>
    
     </div> 
@@ -319,6 +324,17 @@ methods: {
                   console.log('errors : '  , error);
              })
           },
+          RefuserCommande: function(id){
+          	axios.put(window.Laravel.url+'/refusercommande/'+id)
+              .then(response => {
+                	console.log("response",response.data);
+                  window.location.reload();
+               })
+              .catch(error => {
+                  console.log('errors : '  , error);
+             })
+          },
+
 
   detaillsacommandeVendeur: function(){
 

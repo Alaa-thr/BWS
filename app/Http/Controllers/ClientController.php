@@ -12,6 +12,7 @@ use App\Rules\ModifieTextDescriptionArticle;
 use App\User;
 use Auth;
 use App\Favori;
+use App\Historique;
 use App\Vendeur;
 use App\Produit;
 use App\Imageproduit;
@@ -52,21 +53,39 @@ class ClientController extends Controller
 
         return redirect('profilClient');
     }
-    public function get_commande_client(){//fcnt qui retourné tout les articles qui sont dans la table "Article" et trie par ordre desc selon son dates de creations
-        $c = Client::find(Auth::user()->id);//recuperé "user_id" de admin qui est connecter       
-        $article = \DB::table('commandes')->where('client_id', $c->id)->orderBy('created_at','desc')->paginate(5) ;//recuperé les articles qui sont dans la table "Article" et trie par ordre desc selon son dates de creations et pour "->paginate(5)" c a d f kol page t'affichilek 5 ta3 les article  
+    public function get_commande_client(){
+        $c = Client::find(Auth::user()->id);
+        $article = \DB::table('commandes')
+        ->where([['client_id', $c->id],['commande_envoyee',1],['CmdClientDelete',0]])
+        ->select('id')
+        ->distinct('id')
+        ->paginate(5) ;
+        $cmd =\DB::table('commandes')->get() ;     
+        
+
         $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
         $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
-        return view('commande_client',['article'=>$article, 'idAdmin' => $c->id,'categorie'=>$categorie,'categorieE'=>$categorieE]);//reteurné a la view "articles_admin" et les 2 attributs "article" (contient tout les articles) et "idAdmin" (id de l'admin cncté) 
+        return view('commande_client',['article'=>$article, 'idAdmin' => $c->id,'categorie'=>$categorie,'categorieE'=>$categorieE, 'cmd' =>$cmd,'client' =>$c]);
     } 
-    public function detaillsCommande(Request $request){//fcnt retourné l'article di rena habin n2affichiw les détaills te3o, 3anda un parametre di fih id ta3 article rechercher
-        $commande_detaills = \DB::table('commandes')->where('id', $request->idA)->get();
+    public function detaillsCommande(Request $request){
+        $clientCnncte = Client::find(Auth::user()->id);
+        $commande_detaills = \DB::table('commandes')
+        ->join('produits', 'produits.id', '=', 'commandes.produit_id')
+        ->join('clients','clients.id', '=', 'commandes.client_id')
+        ->join('imageproduits','imageproduits.produit_id', '=', 'commandes.produit_id')
+        ->join('colors','colors.id', '=', 'commandes.couleur_id')
+        ->join('vendeurs','vendeurs.id', '=', 'commandes.vendeur_id')
+        ->select('colors.nom', 'imageproduits.produit_id', 'imageproduits.image', 'imageproduits.profile', 'commandes.email','commandes.address', 'commandes.code_postale', 'commandes.numero_tlf', 'clients.ville', 'produits.Libellé', 'produits.prix', 'produits.vendeur_id', 'commandes.*', 'vendeurs.Nom as nom_vendeur', 'vendeurs.Prenom as prenom_vendeur')
+        ->where([['commandes.client_id', $clientCnncte->id],['commandes.id', $request->idA],['imageproduits.profile',1]])
+        ->get();
         return  $commande_detaills;
     }
 
-    public function deleteCommande($id){//fnct pour supprimer un article di 3ando un parametre di hoda id ta3 article di nssuprimiwah w tretourni un attributs "etat"(ida kan = true => la supprision n3amlt ghaya)
-        $commande = Commande::find($id);//n7awes 3la l article di rena habin nsupprimiwah
-        $commande->delete();
+    public function deleteCommande($id){
+        $client = Client::find(Auth::user()->id);
+        \DB::table('commandes')->where([['id',$id],['client_id',$client->id]])->update(['CmdClientDelete' => 1]);
+
+        
         return Response()->json(['etat' => true]);
     }
 
@@ -172,7 +191,36 @@ class ClientController extends Controller
     }
  
       
-    public function EnvoyerCommande(CommandeRequest $request){
+    public function EnvoyerCommande(Request $request){
+        if($request->code_postale == null && $request->address == null){
+             $request->validate([
+              'numero_tlf' => ['required', 'string', 'max:10', 'min:10','regex:/0[5-7]+/'],
+              'email' => ['required', 'string','email'],
+
+             ]);
+        }
+        else if($request->code_postale != null && $request->address == null){
+             $request->validate([
+              'numero_tlf' => ['required', 'string', 'max:10', 'min:10','regex:/0[5-7]+/'],
+              'email' => ['required', 'string','email'],
+              'code_postale' => ['required', 'string', 'max:5', 'min:5','regex:/[0-9]{5}+/'],
+             ]);
+        }
+        else if($request->code_postale == null && $request->address != null){
+             $request->validate([
+              'numero_tlf' => ['required', 'string', 'max:10', 'min:10','regex:/0[5-7]+/'],
+              'email' => ['required', 'string','email'],
+              'address' => ['required', 'string'],
+             ]);
+        }
+        else if($request->code_postale != null && $request->address != null){
+             $request->validate([
+              'numero_tlf' => ['required', 'string', 'max:10', 'min:10','regex:/0[5-7]+/'],
+              'email' => ['required', 'string','email'],
+              'address' => ['required', 'string'],
+              'code_postale' => ['required', 'string', 'max:5', 'min:5','regex:/[0-9]{5}+/'],
+             ]);
+        }
         $clientCnncte = Client::find(Auth::user()->id);// njibo l client di ra connecter
        
         $commandes = \DB::table('commandes')->get();
@@ -181,7 +229,7 @@ class ClientController extends Controller
             \DB::table('commandes')->where([ ['client_id',$clientCnncte->id],['id','=',$clientCnncte->nbr_cmd]])->
             update(['email'=> $request->email ,
             'numero_tlf' => $request->numero_tlf, 'code_postale' => $request->code_postale, 'commande_envoyee' =>1,
-             'ville' =>$clientCnncte->ville]);}
+             'ville' =>$clientCnncte->ville,'address' =>$request->address]);}
 
 
         $clientCnncte->nbr_cmd =$clientCnncte->nbr_cmd+1; 
@@ -204,6 +252,14 @@ public function getProduit(){
     return view('favoris_client',['produit'=>$produit, 'ImageP' => $imageproduit, 'Fav' => $favoris,'categorie'=>$categorie,'categorieE'=>$categorieE]);
 }
 
+public function addHisto($id){
+    $clientCnncte = Client::find(Auth::user()->id);// njibo l client di ra connecter
+    $histoProd = new historique;
+    $histoProd->produit_id = $id;//$id howa l id ta3 produit
+    $histoProd->client_id = $clientCnncte->id;
+    $histoProd->save();
+    return $histoProd;
+}
 
 
 }

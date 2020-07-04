@@ -129,6 +129,7 @@ Route::get('/commandeRecuVendeur','VendeurController@get_commande_vendeur')->nam
 Route::post('/detaillsacommandevendeur', 'VendeurController@detaillsacommandeVendeur'); 
 Route::delete('/deletecommandevendeur/{id}','VendeurController@deleteCommandeVendeur');
 Route::put('/recucommande/{id}','VendeurController@RecuCommande');
+Route::put('/refusercommande/{id}','VendeurController@RefuserCommande');
 
 /*commande traiter vendeur*/
 Route::get('/commandeTraiterVendeur','VendeurCommandeController@get_commande_traiter_vendeur')->name('commandeTraiterVendeur');
@@ -140,7 +141,7 @@ Route::get('/profilClient','ClientController@profil_clinet')->name('profilClient
 Route::put('/updateProfilC/{id}','ClientController@update_profil');
 Route::post('/detaillsacommande', 'ClientController@detaillsCommande'); 
 Route::get('/commandeClient','ClientController@get_commande_client')->name('commandeClient');
-Route::delete('/deletecommande/{id}','ClientController@deleteCommande');
+Route::get('/deletecommande/{id}','ClientController@deleteCommande');
 
 
 /*demande*/
@@ -153,6 +154,7 @@ Route::get('/panier','ClientController@ProduitCommande')->name('panier');
 /*historique*/
 Route::get('/historiqueClient','HistoriqurController@get_historique_client')->name('historiqueClient');
 Route::delete('/deletehistorique/{id}','HistoriqurController@deleteHistorique');
+Route::post('/ajouterHistoProduit/{id}','ClientController@addHisto');
 
 /*Notification*/
 Route::get('/notificationClient','NotificationController@get_notification_client')->name('notificationClient');
@@ -165,3 +167,12 @@ Route::get('/favorisClient', 'ClientController@getProduit')->name('favorisClient
 
 //EnvoyerCommande
 Route::post('/envoyercommande', 'ClientController@EnvoyerCommande');
+
+/****************Vendeur******Client*******Admin******Employeur*******Visiteur**********/
+//Search
+Route::get('/abest', 'BwsController@getsearch')->name('abest');
+Route::get('/abestv', 'BwsController@getsearchVisiteur')->name('abestv');
+
+
+
+

@@ -52,6 +52,7 @@ return array(
     'App\\Http\\Middleware\\TrustProxies' => $baseDir . '/app/Http/Middleware/TrustProxies.php',
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
     'App\\Http\\Requests\\ArticleRequest' => $baseDir . '/app/Http/Requests/ArticleRequest.php',
+    'App\\Http\\Requests\\CommandeRequest' => $baseDir . '/app/Http/Requests/CommandeRequest.php',
     'App\\Imageproduit' => $baseDir . '/app/Imageproduit.php',
     'App\\Notification' => $baseDir . '/app/Notification.php',
     'App\\Paiement_employeur' => $baseDir . '/app/Paiement_employeur.php',

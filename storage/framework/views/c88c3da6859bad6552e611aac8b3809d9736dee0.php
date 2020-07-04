@@ -143,7 +143,7 @@
 				</button>
 				<div class="p-b-30 p-l-40">
 					<h4 class="ltext-102  cl2">
-				           COMMANDE DE    <?php echo e($nomClient); ?>   <?php echo e($prenomClient); ?>
+				           COMMANDE DE    <?php echo e(strtoupper ($nomClient)); ?>   <?php echo e(strtoupper ($prenomClient)); ?>
 
 
 					</h4>
@@ -334,26 +334,6 @@ methods:{
 }                     
 }); 
 
-/*var app2 = new Vue({
-      el: '#app2',
-      data:{
-         art: {
-          id: 0,
-          client_id: window.Laravel.idClient,
-          numero_tlf: '', 
-		  email: '', 
-		  address: '', 
-		  code_postale: '', 
-
-		     }, 
-        
-        message: {},
-                   
-      },
-      
-});*/
-
- 
 
 	var app = new Vue({
 	    el: '#app',
@@ -370,8 +350,8 @@ methods:{
 			client_id: window.Laravel.idClient,
 			numero_tlf: '', 
 			email: '', 
-			address: '', 
-			code_postale: '', 
+			address: null, 
+			code_postale: null, 
 		  }, 
         
         message: {},
@@ -394,16 +374,28 @@ methods:{
                 })
 	    	},
 	    	openCommande: function(){
-	    		
-	    		$('.js-modal1').addClass('show-modal1');
-	    		this.produitCommandes.forEach(key => {
-	    			if(key.type_livraison == "vc"){
-	    				this.adrresse = true;
-	    			}
-	    			if(key.type_livraison == "dhl"){
-	    				this.codePostale = true;
-	    			}
-	    		})
+	    		if(this.produitCommandes.length == 0 ){
+	    				Swal.fire({
+						  icon: 'error',
+						  title: 'Oops...',
+						  text: 'Vous devez ajouter des produits à votre panier en premier.',
+						}).then((result) => {
+          						if (result.value) {
+          							window.location.href = "<?php echo e(route('shop')); ?>";
+          						}
+          				})
+	    		}
+	    		else{
+		    		$('.js-modal1').addClass('show-modal1');
+		    		this.produitCommandes.forEach(key => {
+		    			if(key.type_livraison == "vc"){
+		    				this.adrresse = true;
+		    			}
+		    			if(key.type_livraison == "dhl"){
+		    				this.codePostale = true;
+		    			}
+		    		})
+	    		}
 	    	},
 	    	CancelCommande(){
       		$('.js-modal1').removeClass('show-modal1');

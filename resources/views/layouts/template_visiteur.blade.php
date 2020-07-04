@@ -399,12 +399,12 @@
 
             <ul class="main-menu-m">
                 <li>
-                    <a href="{{route('accueil')}} id="colorr">Accueil</a>
+                    <a href="{{route('accueil')}}" id="colorr">Accueil</a>
                     
                 </li>
 
                 <li>
-                    <a href="{{route('shop')}}id="colorr">Shop</a>
+                    <a href="{{route('shop')}}" id="colorr">Shop</a>
                     
                     <span class="arrow-main-menu-m">
                         <i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -420,32 +420,34 @@
                 </li>
 
                 <li>
-                    <a href="{{route('article')}}id="colorr">Article</a>
+                    <a href="{{route('article')}}" id="colorr">Article</a>
                 </li>
 
                 <li>
-                    <a href="{{route('apropos')}} id="colorr">A propos</a>
+                    <a href="{{route('apropos')}}" id="colorr">A propos</a>
                 </li>
 
                 <li>
-                    <a href="{{route('contact')}} id="colorr">Contact</a>
+                    <a href="{{route('contact')}}" id="colorr">Contact</a>
                 </li>
             </ul>
         </div>
 
-        <!-- Modal Search -->
-        <div class="modal-search-header flex-c-m trans-04 js-hide-modal-search">
+       <!-- Modal Search -->
+       <div class="modal-search-header flex-c-m trans-04 js-hide-modal-search" style="z-index: 11000;">
             <div class="container-search-header">
                 <button class="flex-c-m btn-hide-modal-search trans-04 js-hide-modal-search">
-                    <img src="{{ asset('images/icons/icon-close2.png')}}" alt="CLOSE">
+                    <img src="images/icons/icon-close2.png" alt="CLOSE">
                 </button>
 
-                <form class="wrap-search-header flex-w p-l-15">
+                <form class="wrap-search-header flex-w p-l-15" action="/abestv" method="get">
                     <button class="flex-c-m trans-04">
                         <i class="zmdi zmdi-search"></i>
                     </button>
-                    <input class="plh3" type="text" name="search" placeholder="Search...">
+                    <input  type="search" name="search" class="form-control" placeholder="Search...">
+                    
                 </form>
+                
                 
             </div>
         </div>

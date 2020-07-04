@@ -265,14 +265,44 @@
 									@{{produit.prix}}DA
 								</span>
 							</div>
+							@php
+								$x = "<script> echo 5;</script>";
+								$j=19;
+								$k=0;
+							@endphp
+						@for($i=0 ; $i< count($fav) ; $i++)
+								@if($fav[$i]->produit_id == 19)
+										
+									@php
+										$k=$k+1;
+										$i=count($fav);
+										$j=$j+1;
+									@endphp
+								@else
+									
 
-							<div class="block2-txt-child2 flex-r p-t-3" v-if="testFavoris(produit.id)">
-
-								<a href="" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2" v-on:click="AjoutAuFavoris(produit.id)" id='favoo'>
-									<img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON"  >
-									<img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON" >
-								</a>
-							</div>
+								@endif
+						@endfor	
+						@if($k == 1)
+							<div class="block2-txt-child2 flex-r p-t-3" >
+								
+										<a href="" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2" v-on:click="AjoutAuFavoris(produit.id)" id='favoo'>
+											<img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON"  >
+											<img class=" dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" id='cccc'alt="ICON" >
+										</a>
+									</div>
+						@else
+						<div class="block2-txt-child2 flex-r p-t-3" >
+									
+									<a href="" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2" v-on:click="AjoutAuFavoris(produit.id)" id='favoo'>
+										<img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON"  >
+										<img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" id='cccc'alt="ICON" >
+									</a>
+								</div>
+	
+						@endif
+							
+							
 						</div>
 					</div>
 					<!-- Modal1 -->
@@ -420,7 +450,7 @@
 			                                        </div >
 			                                        <span class="m-b-10 cl13" v-if="message.qte" v-text="message.qte[0]" style="margin-top: -10px"></span>
 													<div class="flex-t">
-				                                        <button class="flex-c-m m-r-20 stext-102 cl0 size-102 bg11 bor1 p-lr-15 trans-04" v-on:click="addPanier()">
+													<button class="flex-c-m m-r-20 stext-102 cl0 size-102 bg11 bor1 p-lr-15 trans-04" v-on:click="addPanier();addHisto(produit.id);">
 				                                            Ajouter au panier
 				                                        </button>
 				                                        <button class="flex-c-m stext-102 cl0 size-102 bg10 bor1 p-lr-15 trans-04" v-on:click="CancelArticle()" >
@@ -462,12 +492,14 @@
 
 
 <script>
+
 	window.Laravel = {!! json_encode([
                "csrfToken"  => csrf_token(),
                'produit'        => $produit,
                'ImageP'         => $ImageP,
                'color'         => $color,
                'taille'         => $taille,
+               'fav'         => $fav,
                'typeLivraison'         => $typeLivraison,
                "url"      => url("/")  
     ]) !!};
@@ -505,15 +537,18 @@
       			console.log('id',$id);
       			this.favoris.forEach(key =>{
       					if(key.produit_id == $id){
-      						this.showFavoris = false;
+      						
       						console.log('enter id',key);
-	      					$('#favoo').addClass('js-addedwish-b2');
+      						
+	      					
+	      					return;
       					}
       					else{
       						
       					}
       			})
-      			return true;
+      			return;
+      		
       	},
       	getFavoris(){
       		axios.get(window.Laravel.url+'/getfavoris')
