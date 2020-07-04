@@ -43,8 +43,10 @@
                         <label :for="annoncea.id" style="margin-top: 40px; margin-left: 20px;">
                         </label>
                       </div>
-                        <div class="col-md-3 "  >
-                          <img v-if=""  :src="'storage/annonces_image/'+ annoncea.image" style="height: 110px; width:120px; margin-bottom: 20px">
+                        <div class="col-md-3 " >
+                          <img v-if="annoncea.image"  :src="'storage/annonces_image/'+ annoncea.image" style="height: 110px; width:120px; margin-bottom: 20px ; "/>
+                          <img v-else src="storage/téléchargement.png"  style="height: 90px; width:200px; margin-bottom: 20px ; ">
+                          
                         </div>
                         
                         <div class="col-md-5" >
@@ -56,7 +58,7 @@
                                 Nombre de condidat : {{annoncea.nombre_condidat}}
                             </div>
                             <div class="txt-right m-t-20">
-                                <a class="js-show-modal1 " style=" color: black;  font-style: italic; font-weight: 500; cursor: pointer; margin-right: -30px; " ><b>  Afficher Plus </b>
+                                <a class="js-show-modal1 " style=" color: black;  font-style: italic; font-weight: 500; cursor: pointer; margin-right: -30px; " v-on:click="AfficheInfo(annoncea.id)"><b>  Afficher Plus </b>
                                 </a>
                              </div>
                         </div>
@@ -73,7 +75,7 @@
                             </td>
                          </tr>
                        </table>
-                       <div style="border-left: 2px solid #000; display: inline-block;height: 130px; margin: 0 20px;">
+                       <div style="border-left: 2px solid #000; display: inline-block; height: 130px; margin: 0 20px;">
                        </div> 
                  </div>  
                  <div> 
@@ -104,7 +106,8 @@
           </div>
           <div class="row">
             <div class="col-md-10" >
-              <img :src="'storage/annonces_image/'+ annoncea.image" style="width: 1500px; height: 450px; margin-left: 80px; " />
+              <img v-if="annoncea.image" :src="'storage/annonces_image/'+ annoncea.image" style="width: 1500px; height: 450px; margin-left: 80px; " />
+              <img v-else src="storage/téléchargement.png" style="width: 800px; height: 300px; margin-left: 80px; " />
             </div> 
           </div>
           <div class="row">

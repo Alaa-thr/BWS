@@ -145,14 +145,14 @@ class BwsController extends Controller
 
      public function emploi()
     {
-        $emploi = \DB::table('annonce_emploies')->orderBy('created_at','desc')->get() ;
-        $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
-        $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
+        $emploi = \DB::table('annonce_emploies')->orderBy('created_at','desc')->paginate(21) ;
+        $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->paginate(21);
+        $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->paginate(21);
         return view('emploi',['emploi'=>$emploi,'categorie'=>$categorie ,'categorieE'=>$categorieE]); 
     }
     
     public function detailsEmploi(Request $request){
-        $det_emp = \DB::table('annonce_emploies')->where('id', $request->idEMP)->get();
+        $det_emp = \DB::table('employeurs')->join('annonce_emploies','employeurs.id','=','annonce_emploies.employeur_id')->where('annonce_emploies.id', $request->idEMP)->get();
         return  $det_emp;
     }
 

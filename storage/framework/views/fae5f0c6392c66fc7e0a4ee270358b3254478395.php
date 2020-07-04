@@ -241,45 +241,10 @@
 					</div>
 				</div>
 			</div>
-         
-         <!--div class="row m-b-10 " v-for="annoncea in annoncesEmployeur" style="display: inline-flex; height: 160px; width: 360px;">
-        
-                        <div class="col-md-3 "  >
-                          <img v-if=""  :src="'storage/annonces_image/'+ annoncea.image" style="height: 110px; width:120px; margin-bottom: 20px">
-                        </div>
-                        
-                        <div class="col-md-5" >
-                          <h6 class="title" style="margin-top: -4px;  color: red; margin-left: -10px;" >{{ annoncea.libellé }}</h6><br>
-                            <div class="description" style="margin-top: -10px; font-size: 11px; margin-left: -10px;">
-                              {{ MoitieDescription(annoncea.discription,13, '...') }}
-                            </div>  
-                            <div class="description" style="font-weight: 500; color: black; font-size: 12px; margin-left: -10px; margin-top: 10px;">
-                                Nombre de condidat : {{annoncea.nombre_condidat}}
-                            </div>
-                            <div class="txt-right m-t-20">
-                                <a class="js-show-modal1 " style=" color: black;  font-style: italic; font-weight: 500; cursor: pointer; margin-right: -30px; " v-on:click="AfficheInfo(annoncea.id)"><b>  Afficher Plus </b>
-                                </a>
-                             </div>
-                        </div>
-                        <table>
-                         <tr>                        
-                            <td class="dropdown" >
-                              <a data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
-                               <img src="assetsEmployeur/img/menu.png" /> 
-                              </a>
-                              <div class="dropdown-menu dropdown-menu-right ">   
-                               <a class="dropdown-item js-show-modal1" style="color: blue; font-style: italic; font-weight: 900; cursor: pointer;" v-on:click="updateAnnonce(annoncea)">Modifier</a>
-                               <a class="dropdown-item" v-on:click="deleteAnnonce(annoncea)" style="color: blue; font-style: italic; font-weight: 900; cursor: pointer;">Supprimer</a>
-                              </div>
-                            </td>
-                         </tr>
-                       </table>
-                       <div style="border-left: 2px solid #000; display: inline-block;height: 130px; margin: 0 20px;">
-                       </div> 
-                 </div-->
-		        	<div class="row m-b-10"  v-for="emp in emplois" style="display: inline-flex;  width: 420px;">
+		        	<div class="row m-b-10"  v-for="emp in emplois" style="display: inline-flex;  width: 420px; height: 160px;">
 						<div class="col-md-4 block2 block2-pic hov-img0" style="margin-left: 30px;">
-							<img  :src="'storage/annonces_image/'+ emp.image" style="height: 120px; width: 350px; ">
+							<img v-if="emp.image"  :src="'storage/annonces_image/'+ emp.image" style="height: 120px; width: 350px; ">
+							<img v-else src="storage/téléchargement.png" style="height: 120px; width: 120px; border-image: 1;">
 							<a class="js-show-modal1 block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 " v-on:click="AfficheInfo(emp.id)" style="cursor: pointer;">
 								Quick View
 							</a>
@@ -310,22 +275,27 @@
 			<div class="flex-c-m flex-w w-full p-t-45">
 				<a href="#" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
 					Load More
+
 				</a>
 			</div>
+			<div style="margin-left: 900px;"> 
+                   <?php echo e($emploi->links()); ?><!-- pour afficher la pagination -->
+             </div>
 		</div>
 	</div>
 
-	<div class="wrap-modal11 js-modal1 p-t-38 p-b-20 p-l-15 p-r-15 " id="app2" v-if="hideModel">
+	<div class="wrap-modal1 js-modal1 p-t-38 p-b-20 p-l-15 p-r-15 " id="app2" v-if="hideModel">
       <div class="overlay-modal11 "></div>
   
       <div class="container">
-        <div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent" v-if="openInfo "  style="width: 985px;" v-for="empp in emplois2" >
-          <button class="how-pos3 hov3 trans-04 p-t-6">
-            <img src="images/icon-close.png" alt="CLOSE" >
+        <div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent" v-if="openInfo "  style="width: 1250px; background: gray; margin-top: 20px; margin-left: -30px;" v-for="empp in emplois2" >
+          <button class="how-pos3 hov3 trans-04 p-t-6" v-on:click="hideModel = false">
+            <img src="images/icon-close.png" alt="CLOSE" style="background-color: black; margin-top: 10px;">
           </button>
+        <section class=" creat-articlee " > 
            <div class="row">
             <div class="col-md-8">
-              <div class="p-b-30 p-l-40" style="margin-left: 80px;" >
+              <div class="p-b-30 p-l-40" style="margin-left: 20px; margin-top: 20px;" >
                 <h3 class=" cl2" >
                    Informations sur L'annonce
                 </h3>
@@ -334,28 +304,43 @@
           </div>
           <div class="row">
             <div class="col-md-10" >
-              <img :src="'storage/annonces_image/'+ empp.image" style="width: 1500px; height: 450px; margin-left: 80px; " />
+              <img v-if="empp.image" :src="'storage/annonces_image/'+ empp.image" style="width: 680px; height: 300px; margin-left: 60px; " />
+              <img v-else src="storage/téléchargement.png" style="width: 600px; height: 300px; margin-left: 60px;" />
             </div> 
           </div>
           <div class="row">
             <div class="col-md-4">
-              <div class="title" style="color: red; margin-top: 30px; margin-left: 90px;" >
+              <div class="title" style="color: red; margin-top: 30px; margin-left: 60px;" >
                   <h4><b>{{empp.libellé }}</b></h4><br>
+              </div>
+            </div>
+          </div>
+          <div class="row" style="margin-left: 50px; margin-top: -15px;">
+            <div class="col-md-2">
+               <p style="color: black;">{{ empp.discription }}</p>
+            </div>               
+          </div>
+          <div class="row">
+            <div class="col-md-10">
+              <div class="description" style="margin-left: 65px; margin-top: 20px; font-weight: 700; color: black;">
+                Le nombre de condidat est : {{empp.nombre_condidat}}
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-md-10">
-              <div class="description" style="margin-left: 90px; margin-top: -20px; font-weight: 700; color: black;">
-                Le nombre de condidat est : {{empp.nombre_condidat}}
+              <div class="description" style="margin-left: 65px; margin-top: 40px; font-weight: 500; color: black;">
+                Pour contacté <b>{{ empp.nom }} {{empp.prenom}} : </b> 
+                <div  style="margin-top: -35px; margin-left: 210px; font-style: italic; color: white;">
+                	<b>{{empp.num_tel}}</b>
+                </div>
+                <div style="margin-top: 5px; margin-left: 210px; font-style: italic; color: white;">
+                   <b >{{empp.email}}</b>
+               </div>
               </div>
             </div>
           </div>
-          <div class="row" style="margin-left: 50px; margin-top: 10px;">
-            <div class="col-md-2">
-               <p style="color: black;">{{ empp.discription }}</p>
-            </div>               
-          </div>   
+          </section>   
         </div>
       </div>
     </div>
@@ -389,11 +374,13 @@
          },
      },
      methods: {
+     	
            detaillsAnnonceemp: function(){
              axios.post(window.Laravel.url+'/detailsemp',this.detailsEMP)
 
             .then(response => {
                  this.emplois2 = response.data;
+                 console.log("this.emplois2",this.emplois2);
             })
             .catch(error =>{
                  console.log('errors :' , error);
@@ -412,7 +399,7 @@
         axios.get(window.Laravel.url+'/emploi')
 
             .then(response => {
-                 this.emplois = window.Laravel.emploi;
+                 this.emplois = window.Laravel.emploi.data;
                  console.log("window.Laravel.emploi",window.Laravel.emploi);
             })
             .catch(error =>{
