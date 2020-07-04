@@ -58,13 +58,13 @@
     
     <div  class="col-md-4 pr-1" v-if="notificationc.vendeur_id  === null" >
       <div style="margin-left:22px" v-for="emplC in employeur" v-if=" notificationc.employeur_id  === emplC.id">
-          <p class="" id="h" >Employeur ' @{{emplC.nom}}' à déposer une nouvelle annonce d'emploie.</p>
+          <p class="" id="h" >Employeur ' @{{emplC.nom}}' à refusr votre  annonce d'emploie @{{notificationc.cmd_id}} .</p>
       </div>
        
     </div>
     <div  class="col-md-4 pr-1" v-else="notificationc.employeur_id  === null" >
       <div style="margin-left:22px" v-for="imgA in imagesannonce" v-if=" notificationc.vendeur_id  === imgA.id">
-          <p class="" id="h" >Vendeur ' @{{imgA.Nom}}' à déposer un nouveau produit.</p>
+          <p class="" id="h" >Vendeur ' @{{imgA.Nom}}' à refusr votre Commande @{{notificationc.cmd_id}}</p>
       </div>
        
     </div>

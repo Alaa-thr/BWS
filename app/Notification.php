@@ -16,4 +16,9 @@ class Notification extends Model
     {
         return $this->hasMany('App\Admin');
     }
+
+    public function client()
+    {
+        return $this->hasMany('App\Client');
+    }
 }

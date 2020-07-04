@@ -12,6 +12,7 @@ use App\Rules\ModifieTextDescriptionArticle;
 use App\User;
 use Auth;
 use App\Favori;
+use App\Historique;
 use App\Vendeur;
 use App\Produit;
 use App\Imageproduit;
@@ -251,6 +252,14 @@ public function getProduit(){
     return view('favoris_client',['produit'=>$produit, 'ImageP' => $imageproduit, 'Fav' => $favoris,'categorie'=>$categorie,'categorieE'=>$categorieE]);
 }
 
+public function addHisto($id){
+    $clientCnncte = Client::find(Auth::user()->id);// njibo l client di ra connecter
+    $histoProd = new historique;
+    $histoProd->produit_id = $id;//$id howa l id ta3 produit
+    $histoProd->client_id = $clientCnncte->id;
+    $histoProd->save();
+    return $histoProd;
+}
 
 
 }
