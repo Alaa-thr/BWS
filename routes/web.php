@@ -164,3 +164,8 @@ Route::get('/favorisClient', 'ClientController@getProduit')->name('favorisClient
 
 //EnvoyerCommande
 Route::post('/envoyercommande', 'ClientController@EnvoyerCommande');
+
+/****************Vendeur******Client*******Admin******Employeur*******Visiteur**********/
+//Search
+Route::get('/abest', 'BwsController@getsearch')->name('abest');
+Route::get('/abestv', 'BwsController@getsearchVisiteur')->name('abestv');

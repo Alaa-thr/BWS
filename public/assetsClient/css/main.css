@@ -3367,7 +3367,7 @@ input.num-product::-webkit-inner-spin-button {
   width: 60px;
   position: relative;
   margin-right: 20px;
- 
+  cursor: pointer;
 }
 
 .how-itemcart1 img {
@@ -3400,7 +3400,7 @@ input.num-product::-webkit-inner-spin-button {
 }
 
 .how-itemcart1:hover:after {
-  opacity: 0;
+  opacity: 1;
 }
 
 /*---------------------------------------------*/
@@ -3899,3 +3899,24 @@ input[type=checkbox]:checked + label:before{
 }
 
 .filter-col8 {width: 32%;}
+
+
+#articl{
+  margin-left: -4%;
+  width: 150%;
+  background-color: rgb(192,4,4);
+}
+
+#xxx{
+  padding-top: 10%;
+  padding-left: 3.2%;
+  background-color: white;
+margin-bottom: 10%;}
+#xx{
+  margin-top: -5%;
+  padding-top: 5%;
+  margin-left: 0%;
+  padding-left: 3.5%;
+  background-color: white;
+  margin-bottom: 10%;
+}
