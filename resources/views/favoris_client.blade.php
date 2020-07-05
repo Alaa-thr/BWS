@@ -27,13 +27,13 @@
             </div>
             
             <div class="header-cart-content flex-w js-pscroll" id="app1" >
-                <ul class="header-cart-wrapitem w-full" v-for="command in ProduitsPanier">
+                <ul class="header-cart-wrapitem w-full" v-for="command in ProduitsPanierr">
                     <li class="header-cart-item flex-w flex-t m-b-12" >
-                        <div class="header-cart-item-img" v-for="imgP in imagesproduit">
+                        <div class="header-cart-item-img" v-for="imgP in imagesproduitr">
                         <img v-if="imgP.produit_id === command.produit_id && imgP.profile === 1" :src="'storage/produits_image/'+ imgP.image" alt="IMG-PRODUCT" style="height: 60px;">
                         </div>
 
-                        <div class="header-cart-item-txt p-t-8"  v-for="fv in favoris" v-if="fv.id === command.produit_id" >
+                        <div class="header-cart-item-txt p-t-8"  v-for="fv in favorirs" v-if="fv.id === command.produit_id" >
                             <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
                             @{{fv.Libellé}}
                             </a>
@@ -92,7 +92,7 @@
             <div class="row isotope-grid" style =" margin-left:22px; margin-right:22px;" >
                 <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women" v-for="produit in ProduitsVendeur">
                     <!-- Block2 -->
-                    <div class="block2">
+                    <div class="block2" v-if="produit.annonce_emploi_id===null">
                         <div class="block2-pic hov-img0" v-for="imgP in imagesproduit">
                             <img v-if="imgP.produit_id === produit.produit_id && imgP.profile === 1" :src="'storage/produits_image/'+ imgP.image" alt="IMG-PRODUCT" style="height: 290px;width: 990px;">
 
@@ -120,6 +120,32 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="row m-b-10 " v-if="produit.produit_id===null" v-for="annonce in AnnonceTableau" style="display: inline-flex; height: 160px; width: 360px;">
+                     
+                     
+                     <div class="col-md-3 "   v-if="produit.annonce_emploi_id===annonce.id">
+                       <img v-if=""  :src="'storage/annonces_image/'+ annonce.image" style="height: 110px; width:120px; margin-bottom: 20px">
+                     </div>
+                     
+                     <div class="col-md-5" >
+                       <h6 class="title" style="margin-top: -4px;  color: red; margin-left: -10px;" >@{{ annonce.libellé }}</h6><br>
+                         <div class="description" style="margin-top: -10px; font-size: 11px; margin-left: -10px;">
+                         @{{ MoitieDescription(annonce.discription,15, '...') }}
+
+                         </div>  
+                         <div class="description" style="font-weight: 500; color: black; font-size: 12px; margin-left: -10px; margin-top: 10px;">
+                         Nombre de condidat : @{{annonce.nombre_condidat}}                         </div>
+                         <div class="txt-right m-t-20">
+                            
+                          </div>
+                     </div>
+                    
+                    <div style="border-left: 2px solid #000; display: inline-block;height: 130px; margin: 0 20px;">
+                    </div> 
+</div>  
+             
+
                 </div>
             </div>
             <div >
@@ -147,7 +173,8 @@
                'produit'        => $produit,
                'ImageP'         => $ImageP,
                'Fav'         => $Fav,
-               'command'         => $command,
+               'annonce'         => $annonce,
+
                 'url'           => url('/'), 
           ]) !!};
 </script>
@@ -157,17 +184,17 @@
         el: '#app1',
         data:{
           message:'hello',
-          ProduitsPanier: [],
-          favoris: [],
-          imagesproduit: [],
+          ProduitsPanierr: [],
+          favorisr: [],
+          imagesproduitr: [],
         },
         methods:{
-          getProduit: function(){
+          get_favoris_client: function(){
             axios.get(window.Laravel.url+'/favorisClient')
               .then(response => {
-                this.favoris = window.Laravel.Fav;
-                this.imagesproduit = window.Laravel.ImageP;
-                this.ProduitsPanier = window.Laravel.command;
+                this.favorisr = window.Laravel.Fav;
+                this.imagesproduitr = window.Laravel.ImageP;
+                this.ProduitsPanierr = window.Laravel.command;
                })
               .catch(error => {
                   console.log('errors : '  , error);
@@ -177,12 +204,11 @@
 
         },
         created:function(){
-            this.getProduit();
+            this.get_favoris_client();
 
         }
      })
 </script>
-
 <script>
      var app = new Vue({
         el: '#app',
@@ -194,9 +220,19 @@
           favoris: [],
           p:[],
           ProduitsPanier: [],
+          AnnonceTableau: [],
 
         },
         methods:{
+            MoitieDescription:  function (text, length, suffix){
+          if(text.length <= length){
+            return text;
+
+          }
+         
+          return text.substring(0, length) + suffix;
+
+      }, 
           getProduit: function(){
             axios.get(window.Laravel.url+'/favorisClient')
               .then(response => {
@@ -204,6 +240,8 @@
                 this.imagesproduit = window.Laravel.ImageP;
                 this.favoris = window.Laravel.Fav;
                 this.ProduitsPanier = window.Laravel.command;
+                this.AnnonceTableau = window.Laravel.annonce;
+
                })
               .catch(error => {
                   console.log('errors : '  , error);

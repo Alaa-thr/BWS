@@ -207,7 +207,12 @@ class ClientController extends Controller
 
         $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
         $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
-        return view('panier_visiteur',['produitCmds' => $produitCmds,'color' => $color, 'typeLivraison' => $typeLivraison, 'taille' => $taille,'client' => $clientCnncte,'idClient' => $clientCnncte->id,'categorie'=>$categorie,'categorieE'=>$categorieE]);
+
+        $favoris = \DB::table('produits')->get();
+        $imageproduit = \DB::table('imageproduits')->get();
+        $command = \DB::table('commandes')->where([ ['client_id',$clientCnncte->id],['commande_envoyee',0]])->get();     
+        return view('panier_visiteur',['produitCmds' => $produitCmds,'color' => $color, 'typeLivraison' => $typeLivraison, 'taille' => $taille,'nomClient' => $clientCnncte->nom,'prenomClient' => $clientCnncte->prenom,'idClient' => $clientCnncte->id,'categorie'=>$categorie,'categorieE'=>$categorieE,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command]);
+
 
     } 
 
@@ -311,7 +316,7 @@ class ClientController extends Controller
 public function getProduit(){
     $clientCnncte = Client::find(Auth::user()->id);
     $favoris = \DB::table('produits')->get();
-
+    $annonce  =\DB::table('annonce_emploies')->get();
     $produit = \DB::table('favoris')->where([ ['client_id',$clientCnncte->id]])
     ->orderBy('created_at','desc')->paginate(8); 
     $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
@@ -321,7 +326,7 @@ public function getProduit(){
     $command = \DB::table('commandes')->where([ ['client_id',$clientCnncte->id],['commande_envoyee',0]])->get(); 
    
     
-    return view('favoris_client',['produit'=>$produit, 'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command,'categorie'=>$categorie,'categorieE'=>$categorieE]);
+    return view('favoris_client',['produit'=>$produit, 'ImageP' => $imageproduit, 'Fav' => $favoris,'annonce'=>$annonce,'command' => $command,'categorie'=>$categorie,'categorieE'=>$categorieE]);
 }
 
 public function addHisto($id){
@@ -332,6 +337,13 @@ public function addHisto($id){
     $histoProd->save();
     return $histoProd;
 }
-
+public function AnnonceAuFavoris($id){
+    $clientCnncte = Client::find(Auth::user()->id);
+    $annonce = new Favori;
+    $annonce->annonce_emploi_id = $id;//$id howa l id ta3 annonce
+    $annonce->client_id = $clientCnncte->id;
+    $annonce->save();
+    return $annonce;
+}
 
 }
