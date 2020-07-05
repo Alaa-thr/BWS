@@ -359,12 +359,19 @@
                                 </button> 
                                 <button type="submit" v-else class="btn btn-success btn-block m-r-5" style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="addProduit()" >Ajouter
                                 </button> 
-                                <button type="submit"  class="btn btn-danger btn-block " style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="CancelArticle()" >Anuller
+                                <button type="submit"  class="btn btn-danger btn-block " style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="CancelArticle()" >Annuler
                                 </button> 
                           </div>
                         </div>
                       </div>
                   </section>
+              
+            </div>
+            <div class="bg0 p-b-150 p-lr-15-lg how-pos3-parent" v-if="openAjout "style=" width: 1050px; padding-top: 45%">
+                  <button class="how-pos3 hov3 trans-04 p-t-6" v-on:click="CancelArticle()">
+                    <img src="images/icon-close.png" alt="CLOSE">
+                  </button>
+                  
               
             </div>
         </div>
