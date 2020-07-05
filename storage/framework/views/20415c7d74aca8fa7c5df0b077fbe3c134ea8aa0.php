@@ -36,10 +36,17 @@
             <hr style="margin-top:42px;">       
           
         
+<<<<<<< HEAD
+            <div class="card-body"   v-for="commandec in commandeclient">
+
+<div v-if="selectall"  id="c"  style="margin-bottom: 40px">
+       <input type="checkbox"  style=" margin-left: 10px; " :id="commandec.id" :value="commandec.id" v-model="checkedArticles" @change="changeButton(commandec)">
+=======
             <div class="card-body"   v-for="commandec in commandeclient" v-if="commandec.demmande_traiter===0">
 
 <div v-if="selectall"  id="c" >
        <input type="checkbox"  style=" margin-left: 10px;" :id="commandec.id" :value="commandec.id" v-model="checkedArticles" @change="changeButton(commandec)">
+>>>>>>> master
       <label :for="commandec.id" style="margin-top: 5px; margin-left: 10px;"></label>
     </div>
     <div v-else  id="c" >
@@ -49,24 +56,40 @@
 
 
   
+<<<<<<< HEAD
+    <div class="card-head"  id="cmd">              
+    <div class="row"  >
+    <div >
+  <p class="cvendeur"  id="txt" >
+  Demande   {{commandec.id}}</p>
+=======
     <div class="card-head" >              
     <div class="row"  >
     <div >
   <p class="cvendeur"  id="txt" >
   Demande Numero  {{commandec.id}}</p>
+>>>>>>> master
       </div> 
  
     
     <div  class="col-md-4 pr-1" id="cv">
       <div style="margin-left:22px" >
+<<<<<<< HEAD
+          <p id="txt" style="margin-left: 60px">  {{commandec.date}}</p>
+=======
           <p id="txt" > Cv Client : {{commandec.cv_client}}</p>
+>>>>>>> master
       </div>
        
     </div>
    
     <div class="col-md-4 pl-1" id="a">
       <div class="" id="b" >
+<<<<<<< HEAD
+      <a class="f" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#" id="point"  style="margin-left: 245px">
+=======
       <a class="f" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#" id="point">
+>>>>>>> master
         <i class="fas fa-ellipsis-v"  id="y"></i>
        </a>
       <div class="dropdown-menu " x-placement="right-start" id="pl"  >
@@ -76,6 +99,21 @@
     style="color: red; font-style: italic; font-weight: 900; cursor: pointer;">
     Supprimer</a>
        </div>
+<<<<<<< HEAD
+       
+    </div>    
+
+    </div> 
+    <div  >
+<p id="txt" style="margin-top: -20px ;margin-left: 39px" >Condidat: </p> 
+<p id="txt1" style="margin-top: -20px;margin-left:120px;">{{commandec.nom.toUpperCase()}} {{commandec.prenom.toUpperCase()}}</p>
+ </div>     
+ 
+  </div>      
+   
+</div>    
+
+=======
       
     </div>    
 
@@ -87,6 +125,7 @@
 
     
 </div>                  
+>>>>>>> master
               </div>
 
             </div>     
@@ -436,6 +475,10 @@ methods: {
             axios.get(window.Laravel.url+'/demandeEmploiRecu')
                 .then(response => {
                      this.commandeclient = window.Laravel.article.data;
+<<<<<<< HEAD
+                     console.log('this.commandeclient',this.commandeclient);
+=======
+>>>>>>> master
                 })
                 .catch(error =>{
                      console.log('errors :' , error);

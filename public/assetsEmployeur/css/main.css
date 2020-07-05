@@ -3839,6 +3839,20 @@ input[type=checkbox]:checked + label:before{
   font-weight: 600;
   font-style: italic;
 }
+#txt1{
+   color:black;
+  font-size: 15px; 
+  font-weight: 500;
+  font-style: italic;
+}
+ #cmd{
+    margin-top: -70px;
+    padding-top: 68px;
+    margin-bottom: 0px;
+    border: 2px solid gray;
+    border-radius: 25px;
+    height: 70px;
+  }
  
 #b{
   margin-top: -58px;
