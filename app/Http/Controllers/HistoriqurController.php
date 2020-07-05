@@ -21,7 +21,10 @@ class HistoriqurController extends Controller
         $annoncemploies = \DB::table('annonce_emploies')->get();
         $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
         $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();       
-        return view('historique_client',['article'=>$article, 'idAdmin' => $c->id,'produitCL' => $produitss,'annoncemploiesCL' => $annoncemploies,'categorie'=>$categorie ,'categorieE'=>$categorieE]);
+        $favoris = \DB::table('produits')->get();
+        $imageproduit = \DB::table('imageproduits')->get();
+        $command = \DB::table('commandes')->where([ ['client_id',$c->id],['commande_envoyee',0]])->get();     
+        return view('historique_client',['article'=>$article, 'idAdmin' => $c->id,'produitCL' => $produitss,'annoncemploiesCL' => $annoncemploies,'categorie'=>$categorie ,'categorieE'=>$categorieE,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command]);
     } 
     
     public function deleteHistorique($id){

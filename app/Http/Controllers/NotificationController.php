@@ -22,9 +22,14 @@ class NotificationController extends Controller
         $employeur = \DB::table('employeurs')->get(); 
         $vendeur = \DB::table('vendeurs')->get(); 
         $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
-        $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();      
-        return view('notification_client',['article'=>$article, 'idAdmin' => $c->id,'emploC' => $employeur,'vendeurC' => $vendeur,'categorie'=>$categorie ,'categorieE'=>$categorieE]);
+        $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get(); 
+        $favoris = \DB::table('produits')->get();
+        $imageproduit = \DB::table('imageproduits')->get();
+        $command = \DB::table('commandes')->where([ ['client_id',$c->id],['commande_envoyee',0]])->get();     
+        return view('notification_client',['article'=>$article, 'idAdmin' => $c->id,'emploC' => $employeur,'vendeurC' => $vendeur,'categorie'=>$categorie ,'categorieE'=>$categorieE,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command]);
     } 
+
+   
     
     public function deleteNotificationClient($id){
         $notification = Notification::find($id);
