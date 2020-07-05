@@ -24,6 +24,10 @@ class Annonce_emploie extends Model
    {
    	return $this->hasMany('App\Demande_emploie');
    }
+   public function client()
+    {
+        return $this->belongsTo('App\Client');
+    }
 
 }
 
