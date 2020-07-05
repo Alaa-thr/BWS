@@ -5,6 +5,62 @@
 	<head>
 		<title><?php echo e(( 'Emplois')); ?></title>
 	</head>
+	 <!-- Cart -->
+	 <div class="wrap-header-cart js-panel-cart" style="z-index: 11000; ">
+        <div class="s-full js-hide-cart"></div>
+        
+        <div class="header-cart flex-col-l p-l-55 p-r-25">
+            
+            <div class="header-cart-title flex-w flex-sb-m p-b-8">
+                <span class="mtext-103 cl2">
+                    Votre Panier
+                </span>
+
+                <div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart" >
+                    <i class="zmdi zmdi-close" style="margin-left: 171%"></i>
+                </div>
+                
+            </div>
+            
+            <div class="header-cart-content flex-w js-pscroll" id="app1" >
+                <ul class="header-cart-wrapitem w-full" v-for="command in ProduitsPanier" >
+                    <li class="header-cart-item flex-w flex-t m-b-12">
+                        <div class="header-cart-item-img" v-for="imgP in imagesproduit" id="profi">
+                        <img v-if="imgP.produit_id === command.produit_id && imgP.profile === 1" :src="'storage/produits_image/'+ imgP.image" 
+                        alt="IMG-PRODUCT"  style="height: 60px;">
+                        </div>
+
+                        <div class="header-cart-item-txt p-t-8"  v-for="fv in favoris" v-if="fv.id === command.produit_id" id="bb">
+                            <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
+                            {{fv.Libellé}}
+                            </a>
+
+                            <span class="header-cart-item-info">
+                            {{command.qte}} x  {{fv.prix}} DA
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+                
+                <div class="w-full" >
+                    
+                <div class="header-cart-total w-full p-tb-40">
+                        Total: 
+                    </div>
+
+                    <div class="header-cart-buttons flex-w w-full">
+                        <a href="<?php echo e(route('panier')); ?>" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+                            View Cart
+                        </a>
+
+                        <a href="<?php echo e(route('panier')); ?>" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
+                            Check Out
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>      
+    </div>
 <!-- breadcrumb -->
 	<div class="container">
 		<div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
@@ -258,9 +314,9 @@
 							</div>
 							<div class="description" style="margin-top: 10px;">
 								<b>Nombre de condidat : {{emp.nombre_condidat}}</b>
-							</div>
+							</div> 
 							<div class="block2-txt-child2 ">
-								<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+								<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2" v-on:click="AnnonceAuFavoris(emp.id)">
 									<img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON" style="margin-top: 20px; margin-left: 150px;">
 									<img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON" style="margin-top: 20px; margin-left: 150px;">
 								</a>
@@ -285,10 +341,10 @@
 	</div>
 
 	<div class="wrap-modal1 js-modal1 p-t-38 p-b-20 p-l-15 p-r-15 " id="app2" v-if="hideModel">
-      <div class="overlay-modal11 "></div>
+      <div class="overlay-modal1 "></div>
   
       <div class="container">
-        <div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent" v-if="openInfo "  style="width: 1250px; background: gray; margin-top: 20px; margin-left: -30px;" v-for="empp in emplois2" >
+        <div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent" v-if="openInfo "  style="width: 1250px;  margin-top: 20px; margin-left: -30px;" v-for="empp in emplois2" >
           <button class="how-pos3 hov3 trans-04 p-t-6" v-on:click="hideModel = false">
             <img src="images/icon-close.png" alt="CLOSE" style="background-color: black; margin-top: 10px;">
           </button>
@@ -350,12 +406,47 @@
 	window.Laravel = <?php echo json_encode([
                "csrfToken"  => csrf_token(),
                "emploi"     => $emploi,
+			   
+'ImageP'         => $ImageP,
+               'Fav'            => $Fav,
+               'command'        => $command,
                "url"      => url("/")  
     ]); ?>;
 
 
 
 </script>
+<script>
+     var app1 = new Vue({
+        el: '#app1',
+        data:{
+          message:'hello',
+          ProduitsPanier: [],
+          favoris: [],
+          imagesproduit: [],
+        },
+        methods:{
+			emploi: function(){
+            axios.get(window.Laravel.url+'/emploi')
+              .then(response => {
+                this.favoris = window.Laravel.Fav;
+                this.imagesproduit = window.Laravel.ImageP;
+                this.ProduitsPanier = window.Laravel.command;
+               })
+              .catch(error => {
+                  console.log('errors : '  , error);
+             })
+          },
+          
+
+        },
+        created:function(){
+            this.emploi();
+
+        }
+     })
+</script>
+
 <script type="text/javascript">
 	$(function () {
   $('[data-toggle="tooltip"]').tooltip()
@@ -421,6 +512,16 @@
           return text.substring(0, length) + suffix;
 
       }, 
+	  AnnonceAuFavoris: function(id){
+          	axios.post(window.Laravel.url+'/annonceaufavoris/'+id)
+              .then(response => {
+                	console.log("response",response.data)
+               })
+              .catch(error => {
+                  console.log('errors : '  , error);
+             })
+          }
+
         
       },
       created:function(){
@@ -428,7 +529,6 @@
       },
   });
 </script>
-
 
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.template_visiteur', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\BWS\resources\views/emploi.blade.php ENDPATH**/ ?>

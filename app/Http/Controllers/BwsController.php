@@ -157,9 +157,9 @@ $favoris = \DB::table('produits')->get();
      public function emploi()
     {
         $c = Client::find(Auth::user()->id);
-$favoris = \DB::table('produits')->get();
+        $favoris = \DB::table('produits')->get();
         $imageproduit = \DB::table('imageproduits')->get();
-        $command = \DB::table('commandes')->where([ ['client_id',$c->id],['commande_envoyee',0]])->get();     
+        $command = \DB::table('commandes')->where([['commande_envoyee',0]])->get();     
 
         $emploi = \DB::table('annonce_emploies')->orderBy('created_at','desc')->paginate(21) ;
         $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->paginate(21);
