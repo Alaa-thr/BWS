@@ -74,8 +74,8 @@ class BwsController extends Controller
            $fav = \DB::table('favoris')->where('client_id',$client->id)->get();
             return view('shop',['produit'=>$produit, 'ImageP' => $imageproduit, 'color' => $color, 'typeLivraison' => $typeLivraison, 'taille' => $taille ,'categorie'=>$categorie,'categorieE'=>$categorieE,'fav' => $fav]);
         }
-            
-        return view('shop',['produit'=>$produit, 'ImageP' => $imageproduit, 'color' => $color, 'typeLivraison' => $typeLivraison, 'taille' => $taille ,'categorie'=>$categorie,'categorieE'=>$categorieE]);
+           $fav=array(); 
+        return view('shop',['produit'=>$produit, 'ImageP' => $imageproduit, 'color' => $color, 'typeLivraison' => $typeLivraison, 'taille' => $taille ,'categorie'=>$categorie,'categorieE'=>$categorieE,'fav' => $fav]);
     }
 
     public function deposerProduit(){
@@ -214,6 +214,35 @@ class BwsController extends Controller
     public function get_ville(){
         $ville = Ville::all();
         return $ville;
+    }
+
+    public function deleteProduitPanier($id){
+       
+        $client = Client::find(Auth::user()->id);
+        \DB::table('commandes')->where([['produit_id',$id],['client_id',$client->id],['id',$client->nbr_cmd]])->delete();
+        return Response()->json(['etat' => true]);
+    }
+
+    public function updateProduitPanier(Request $request){
+       
+        $client = Client::find(Auth::user()->id);
+        if($request->type == 'color'){
+            \DB::table('commandes')->where([['produit_id',$request->produit_id],['client_id',$client->id],['id',$client->nbr_cmd]])->
+            update(['couleur_id'=> $request->val]);
+        }
+        else if($request->type == 'taille'){
+            \DB::table('commandes')->where([['produit_id',$request->produit_id],['client_id',$client->id],['id',$client->nbr_cmd]])->
+            update(['taille'=> $request->val]);
+        }
+        else if($request->type == 'typeL'){
+            \DB::table('commandes')->where([['produit_id',$request->produit_id],['client_id',$client->id],['id',$client->nbr_cmd]])->
+            update(['type_livraison'=> $request->val]);
+        }
+        else if($request->type == 'qte'){
+            \DB::table('commandes')->where([['produit_id',$request->produit_id],['client_id',$client->id],['id',$client->nbr_cmd]])->
+            update(['qte'=> $request->val]);
+        }
+        return Response()->json(['etat' => true]);
     }
 /*********************************************** Admin ***********************************************/
 

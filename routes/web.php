@@ -40,6 +40,8 @@ Route::get('/getproduithome', 'BwsController@getProduitHome');
 Route::get('/estconnecter', 'BwsController@Estconnecter');
 Route::get('/getcategoriehome', 'BwsController@getCategorieHome');
 Route::get('/getfavoris', 'BwsController@getFavoris');
+Route::delete('/deleteproduitpanier/{id}', 'BwsController@deleteProduitPanier');
+Route::post('/updateproduitpanier', 'BwsController@updateProduitPanier');
 
 /************************************************ Admin***********************************************/
 Route::get('/categoriesAdmin', 'AdminController@categories_admin');
@@ -148,6 +150,7 @@ Route::post('/detaillsademande', 'DemandeClientController@detaillsDemande');
 Route::delete('/deletedemande/{id}','DemandeClientController@deleteDemande');
 Route::post('/addpanier','ClientController@addPanier');
 Route::get('/panier','ClientController@ProduitCommande')->name('panier');
+Route::get('/panierdemmande','ClientController@panierDemmande');
 
 /*historique*/
 Route::get('/historiqueClient','HistoriqurController@get_historique_client')->name('historiqueClient');

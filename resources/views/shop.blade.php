@@ -243,14 +243,16 @@
 			</div>
 <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
 			<div class="row isotope-grid" id="app1">
-				<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women" v-for="produit in produits" >
-					
-					<div class="block2">
+				@foreach($produit as $prdt)	
+				<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women" >
+				
+
+					<div class="block2" >
 						<div class="block2-pic hov-img0" v-for="imgP in imagesproduit" >
 							
-							<img v-if="imgP.produit_id === produit.id && imgP.profile === 1" :src="'storage/produits_image/'+ imgP.image" alt="IMG-PRODUCT" style="height: 334px;width: 300px;">
+							<img v-if="imgP.produit_id == <?php echo $prdt->id ?> && imgP.profile === 1"  :src="'storage/produits_image/'+ imgP.image" alt="IMG-PRODUCT" style="height: 334px;width: 300px;">
 
-							<a href="" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1" v-on:click="detaillProduit(produit)">
+							<a href="" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1" v-on:click="detaillProduit({{ json_encode($prdt) }})">
                                 Quick View
                             </a>
 						</div>
@@ -258,11 +260,11 @@
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l ">
 								<a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-									@{{produit.Libellé}}
+									{{$prdt->Libellé}}
 								</a>
 
 								<span class="stext-105 cl3">
-									@{{produit.prix}}DA
+									{{$prdt->prix}}DA
 								</span>
 							</div>
 							@php
@@ -271,7 +273,7 @@
 								$k=0;
 							@endphp
 						@for($i=0 ; $i< count($fav) ; $i++)
-								@if($fav[$i]->produit_id == 19)
+								@if($fav[$i]->produit_id == $prdt->id)
 										
 									@php
 										$k=$k+1;
@@ -284,27 +286,29 @@
 								@endif
 						@endfor	
 						@if($k == 1)
-							<div class="block2-txt-child2 flex-r p-t-3" >
+							<div class="p-t-3">
 								
-										<a href="" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2" v-on:click="AjoutAuFavoris(produit.id)" id='favoo'>
-											<img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON"  >
-											<img class=" dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" id='cccc'alt="ICON" >
+										<a  class="" v-on:click="AjoutAuFavoris({{ json_encode($prdt) }})" style="cursor: pointer;">
+											<i  class="zmdi zmdi-favorite zmdi-hc-2x" style="color: #e60000; " id="<?php echo $prdt->id ?>"></i>
+											
 										</a>
 									</div>
 						@else
-						<div class="block2-txt-child2 flex-r p-t-3" >
+						<div class=" p-t-3">
 									
-									<a href="" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2" v-on:click="AjoutAuFavoris(produit.id)" id='favoo'>
-										<img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON"  >
-										<img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" id='cccc'alt="ICON" >
+									<a  class="" v-on:click="AjoutAuFavoris({{ json_encode($prdt) }})" style="cursor: pointer; " >
+										<i  class="cl222 zmdi zmdi-favorite-outline zmdi-hc-2x favoo " id="<?php echo $prdt->id ?>"></i>
+										
 									</a>
 								</div>
 	
 						@endif
-							
+						
 							
 						</div>
 					</div>
+				</div>
+				@endforeach
 					<!-- Modal1 -->
 			<div class="wrap-modal1 js-modal1 p-t-60 p-b-20" >
 			        <div class="overlay-modal1" v-on:click="CancelArticle()" ></div>
@@ -468,7 +472,7 @@
 			            </div>
 			        </div>
     		</div>
-				</div>
+				
 		
    
 				
@@ -488,7 +492,19 @@
 	
 @endsection
 @push('javascripts')
+<script>
+	function adde(a){
 
+		$('#'+a).removeClass('zmdi-favorite-outline');
+		$('#'+a).addClass('zmdi-favorite');
+		document.getElementById(a).style.color = '#e60000';
+	}
+	function deletee(a){
+			$('#'+a).removeClass('zmdi-favorite');
+			$('#'+a).addClass('zmdi-favorite-outline');
+			document.getElementById(a).style.color = '#d3d3d3';
+	}
+</script>
 
 
 <script>
@@ -530,7 +546,10 @@
       	hideModel: false,
       	favoris : [],
       	showFavoris: true,
-
+      	remoadd: true,
+      	addremo: true,
+      	idproduitfavadd: '',
+      	idproduitfavadd: '',
       },
       methods:{
       	testFavoris($id){
@@ -675,12 +694,10 @@
              })
       	},
       	detaillProduit:function(produit){
-      		
-      		var position = this.produits.indexOf(produit);
       		var i = 0;
       		this.ajoutPanier.vendeur_id = produit.vendeur_id;
       		this.ajoutPanier.prix = produit.prix;
-      		this.detaillproduit = this.produits[position];
+      		this.detaillproduit = produit;
       		this.detaillproduit.Nom = this.detaillproduit.Nom.toUpperCase();
       		this.detaillproduit.Prenom = this.detaillproduit.Prenom.toUpperCase();
       		this.ajoutPanier.produit_id = this.detaillproduit.id;
@@ -711,14 +728,25 @@
                   console.log('errors : '  , error);
              })
           },
-          AjoutAuFavoris: function(id){//jebna l id ta3 l produit bach nzaftouh l la method AjoutAuFavoris di ra f controller clientController
-          	axios.post(window.Laravel.url+'/ajoutaufavoris/'+id)
-              .then(response => {
-                	console.log("response",response.data)
-               })
-              .catch(error => {
-                  console.log('errors : '  , error);
-             })
+          AjoutAuFavoris: function(produit){
+				axios.post(window.Laravel.url+'/ajoutaufavoris/'+produit.id)
+	              .then(response => {
+	              		if(response.data.etat == "add"){
+							swal(produit.Libellé, "a été ajouté au liste de favoris.", "success");
+							adde(produit.id);
+               	 		}
+               	 		else{
+               	 			swal(produit.Libellé, "a été retiré au liste de favoris.", "success");
+	                		deletee(produit.id);
+               	 		}
+					
+				             
+			        	
+	               })
+	              .catch(error => {
+	                  console.log('errors : '  , error);
+	             })
+            
           }
 
       },

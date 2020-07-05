@@ -43,7 +43,7 @@
 
 								<tr class="table_row" v-for="produit in produitCommandes" v-if="produit.commande_envoyee===0">
 									<td class="column-1">
-										<div class="how-itemcart1">
+										<div class="how-itemcart1" @click="deleteProduitPanier(produit)">
 											<img :src="'storage/produits_image/'+ produit.image" alt="IMG">
 										</div>
 									</td>
@@ -58,27 +58,27 @@
 									<td class="column-3">@{{produit.prix}}DA</td>
 									<td class="column-4">
 										<div class="wrap-num-product flex-w m-l-auto m-r-0">
-											<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
+											<div class="btn-num-product-downp cl8 hov-btn3 trans-04 flex-c-m" @click="callfunctionQte(-1, produit.produit_id )">
 												<i class="fs-16 zmdi zmdi-minus"></i>
 											</div>
 
-											<input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product1" :value="produit.qte">
+											<input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product" :value="produit.qte" id="qte">
 
-											<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
+											<div class="btn-num-product-upp cl8 hov-btn3 trans-04 flex-c-m" @click="callfunctionQte(1, produit.produit_id )">
 												<i class="fs-16 zmdi zmdi-plus"></i>
 											</div>
 										</div>
 									</td>
 									<td class="column-2 p-l-50">
 										<div v-if="produit.taille != null" class="flex-t">
-											<select class="custom-select m-r-10" id=""  style="width: 100px">
+											<select class="custom-select m-r-10" id=""  style="width: 100px"  v-on:change="updateProduitPanier($event,produit.produit_id,'color')" >
 											  <option  value="" disabled>Couleur</option>
 			                                  <option :value="produit.couleur_id">@{{produit.nom}}</option>
-			                                  <option v-for="color in colors" :value="color.id" v-if="color.produit_id === produit.produit_id && color.color_id != produit.couleur_id">@{{color.nom}}</option>
+			                                  <option v-for="color in colors" :value="color.color_id" v-if="color.produit_id === produit.produit_id && color.color_id != produit.couleur_id">@{{color.nom}}</option>
 			                                  
 											</select>
 											
-											<select  class="custom-select" id=""  style="width: 100px" >
+											<select  class="custom-select" id=""  style="width: 100px" v-on:change="updateProduitPanier($event,produit.produit_id,'taille')">
 											 <option  value="" disabled>Taille</option>
 			                                 <option :value="produit.taille">@{{produit.taille}}</option>
 											 <option v-for="taille in tailles" :value="taille.nom" v-if="taille.nom != produit.taille && produit.produit_id === taille.produit_id ">@{{taille.nom}}</option>
@@ -86,10 +86,10 @@
 											
 										</div>
 										<div v-else class="flex-t">
-											<select class="custom-select m-r-10" id=""  style="width: 212px">
+											<select class="custom-select m-r-10" id=""  style="width: 212px" v-on:change="updateProduitPanier($event,produit.produit_id,'color')">
 											  <option  value="" disabled>Couleur</option>
 			                                  <option :value="produit.couleur_id">@{{produit.nom}}</option>
-			                                  <option v-for="color in colors" :value="color.id" v-if="color.produit_id === produit.produit_id && color.color_id != produit.couleur_id">@{{color.nom}}</option>
+			                                  <option v-for="color in colors" :value="color.color_id" v-if="color.produit_id === produit.produit_id && color.color_id != produit.couleur_id">@{{color.nom}}</option>
 			                                  
 											</select>
 											
@@ -98,7 +98,7 @@
 									</td>
 									<td class="column-6" >
 										
-											<select class="custom-select " id="inputGroupSelect01" style="width: 270px; margin-top:-17px">
+											<select class="custom-select " id="inputGroupSelect01" style="width: 270px; margin-top:-17px" v-on:change="updateProduitPanier($event,produit.produit_id,'typeL')">
 											  <option  value="" disabled>Type de Livraison</option>
 											  <option  value="vc" v-if="produit.type_livraison === 'vc'">Le vendeur effectuer la livraison</option>
 			                                  <option value="cv" v-if="produit.type_livraison === 'cv'">Vous apportez votre produit</option>
@@ -109,7 +109,7 @@
 											</select>
 										
 									</td>
-									<td class="column-2 p-l-100">@{{produit.prix}} DA</td>
+									<td class="column-2 p-l-100">@{{produit.prixTo}} DA</td>
 								</tr>
 
 								
@@ -120,7 +120,7 @@
 						</div>
 
 						<div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
-							<div class="flex-w flex-m m-r-20 m-tb-5">
+							<div class="header-cart-total  p-tb-40">
 								
 							</div>
 
@@ -142,7 +142,7 @@
 				</button>
 				<div class="p-b-30 p-l-40">
 					<h4 class="ltext-102  cl2">
-				           COMMANDE DE    {{strtoupper ($nomClient)}}   {{strtoupper ($prenomClient)}}
+				           COMMANDE DE    {{strtoupper ($client->nom)}}   {{strtoupper ($client->prenom)}}
 
 					</h4>
 				</div>
@@ -159,13 +159,13 @@
 								<div class="div1" >
 								  <div>
 
-										<div class="table_row flex-t p-b-20" v-for="produit in produitCommandes" v-if="produit.commande_envoyee===0">
+										<div class="table_row flex-t p-b-20" v-for="produit in produitCommandesDemmande" v-if="produit.commande_envoyee===0">
 											<div class="column-1">
 												<div class="how-itemcart1" style="height: 80px">
 													<img :src="'storage/produits_image/'+ produit.image" alt="IMG">
 												</div>
 											</div>
-											<div class="column-2 p-l-40 p-r-40 p-t-10">@{{produit.prix}} DA
+											<div class="column-2 p-l-40 p-r-40 p-t-10">@{{produit.qte}}x@{{produit.prix}} DA
 											</div>
 											<div class="column-2 p-l-40 ">
 												<div class="input-group mb-3 ">
@@ -175,7 +175,7 @@
 												</div>
 												<div class="flex-t m-t--10">
 													<div>Couleur: @{{produit.nom}}</div>
-													<div v-if="produit.taille != null">&nbsp&nbsp/&nbsp&nbspTaille: @{{produit.taille}}</div>
+													<div v-if="produit.taille != null">&nbsp/&nbsp&nbspTaille: @{{produit.taille}}</div>
 												</div>
 											</div>
 										</div>
@@ -183,6 +183,9 @@
 								  </div>
 								</div>
 							</div>
+						</div>
+						<div class="header-cart-total m-l-60 p-tb-40">
+								<b>Totale:&nbsp</b> @{{prixT[0]}}&nbspDA
 						</div>
 					</div>
 				
@@ -204,7 +207,7 @@
 											</div>
 											<div class="size-219">
 												<div class=" bg0 ">
-													<input class="form-control" type="text" id="Numero" type="text" placeholder="Numero Telephone" v-model="art.numero_tlf" :class="{'is-invalid' : message.numero_tlf}" >
+													<input class="form-control" type="text" id="Numero" type="text" v-model="art.numero_tlf" :class="{'is-invalid' : message.numero_tlf}" >
                       								 <span class="px-3 cl13" v-if="message.numero_tlf" v-text="message.numero_tlf[0]">
                     								  </span>
 
@@ -218,7 +221,7 @@
 											</div>
 											<div class="size-219 ">
 												<div class=" bg0">
-													<input class="form-control m-r-30" id="Email" type="text" placeholder="Email"  v-model="art.email" :class="{'is-invalid' : message.email}">
+													<input class="form-control m-r-30" id="Email" type="text"   v-model="art.email" :class="{'is-invalid' : message.email}" >
                        								 <span class="px-3 cl13" v-if="message.email" v-text="message.email[0]">
                     								  </span>
 												</div>
@@ -231,7 +234,7 @@
 											</div>
 											<div class="size-219">
 												<div class="bg0">
-													<input class="form-control m-r-30" id="adrrsse" type="text" placeholder="Adrrsse"  v-model="art.address" :class="{'is-invalid' : message.address}">
+													<input class="form-control m-r-30" id="adrrsse" type="text"   v-model="art.address" :class="{'is-invalid' : message.address}" >
                        								 <span class="px-3 cl13" v-if="message.address" v-text="message.address[0]">
                     								  </span>
 												</div>
@@ -244,7 +247,7 @@
 											</div>
 											<div class="size-219">
 												<div class="bg0">
-													<input class="form-control m-r-30" id="code" type="text" placeholder="code Postale"  v-model="art.code_postale" :class="{'is-invalid' : message.code_postale}">
+													<input class="form-control m-r-30" id="code" type="text"   v-model="art.code_postale" :class="{'is-invalid' : message.code_postale}" >
                        								 <span class="px-3 cl13" v-if="message.code_postale" v-text="message.code_postale[0]">
                     								  </span>
 												</div>
@@ -288,8 +291,7 @@
                'color'         => $color,
                'taille'         => $taille,
                'typeLivraison'         => $typeLivraison,
-			   "nomClient" => $nomClient,
-			   "prenomClient" => $prenomClient,
+			   "client" => $client,
 			   "idClient" => $idClient,
 
                "url"      => url("/")  
@@ -300,9 +302,14 @@
 
 
 methods:{
-
 	
 	EnvoyerCommande: function(){
+		if(app.adrresse == false){
+	    		app.art.nonAddresse = 0;
+	    }
+	    if(app.codePostale == false){
+	    		app.art.nonCode = 0;
+	    }
 	 axios.post(window.Laravel.url+"/envoyercommande",app.art)
 
 	.then(response => {
@@ -314,10 +321,12 @@ methods:{
 		 app.art={
 			  id: 0,
 			  client_id: window.Laravel.idClient,
-			  numero_tlf: '', 
-			  email: '', 
-			  address: '', 
-			  code_postale: '', 
+			  numero_tlf: window.Laravel.client.numeroTelephone, 
+			  email: window.Laravel.client.email, 
+			  address: window.Laravel.client.addresse, 
+			  code_postale: window.Laravel.client.codePostal,
+			  nonAddresse: 1,
+			  nonCode: 1, 
 
 			  
 		 };
@@ -346,19 +355,83 @@ methods:{
 		  art: {
 			id: 0,
 			client_id: window.Laravel.idClient,
-			numero_tlf: '', 
-			email: '', 
-			address: null, 
-			code_postale: null, 
-		  }, 
-        
-        message: {},
+			numero_tlf: window.Laravel.client.numeroTelephone, 
+			email: window.Laravel.client.email, 
+			address: window.Laravel.client.addresse, 
+			code_postale: window.Laravel.client.codePostal,
+			nonAddresse: 1,
+			nonCode: 1, 
+		  },
+		  infoClinet: [] ,
+		  updateP: {
+		  	produit_id: 0,
+		  	val: 0,
+		  	type: ''
+		  },
+          message: {},
+          produitCommandesDemmande: [],
+          prixT: [],
 	    },
 	    methods: {
+	    	callfunctionQte(val,id){
+	    		changeQte(val,id);
+	    	},
+	    	updateProduitPanier: function(e,id,type){
+	    		
+		      	console.log("yees")
+		      	if(type == 'qte'){
+		      		this.updateP.val = e;
+		      	}
+		      	else{
+		      		this.updateP.val = e.target.options[e.target.options.selectedIndex].value;
+		      	} 
+		      	this.updateP.produit_id = id;		      	
+		      	this.updateP.type = type;         
+		        axios.post(window.Laravel.url+'/updateproduitpanier',this.updateP)
+		            .then(response => {
+		                if(response.data.etat){
+		                          
+
+		                }                     
+		            })
+		            .catch(error =>{
+		                console.log('errors :' , error);
+		             })
+  
+			},
+	    	deleteProduitPanier: function(produit){
+		       Swal.fire({
+		        title: 'Etes vous?',
+		        text: "De supprimer cette Produit?",
+		        icon: 'warning',
+		        showCancelButton: true,
+		        confirmButtonColor: '#3085d6',
+		        cancelButtonColor: '#d33',
+		        confirmButtonText: 'Oui, Supprimer!'
+		      }).then((result) => {
+		          if (result.value) {
+		              axios.delete(window.Laravel.url+'/deleteproduitpanier/'+produit.produit_id)
+		                .then(response => {
+		                  if(response.data.etat){
+		                           var position = this.produitCommandes.indexOf(produit);
+		                           this.produitCommandes.splice(position,1);
+
+		                  }                     
+		                })
+		                .catch(error =>{
+		                           console.log('errors :' , error);
+		                })
+
+		       	  }
+		        
+		        })
+			},
 	    	ProduitCommande:function(){
+
 	    	    axios.get(window.Laravel.url+'/panier')
                 .then(response => {
                 	this.produitCommandes = window.Laravel.produitCmds;
+                	this.infoClinet = this.produitCommandes[0];
                 	this.colors = window.Laravel.color;
                 	this.tailles = window.Laravel.taille;
                 	this.typeLivraisons = window.Laravel.typeLivraison;
@@ -372,6 +445,8 @@ methods:{
                 })
 	    	},
 	    	openCommande: function(){
+	    		this.adrresse = false;
+	    		this.codePostale = false;
 	    		if(this.produitCommandes.length == 0 ){
 	    				Swal.fire({
 						  icon: 'error',
@@ -384,15 +459,29 @@ methods:{
           				})
 	    		}
 	    		else{
-		    		$('.js-modal1').addClass('show-modal1');
-		    		this.produitCommandes.forEach(key => {
-		    			if(key.type_livraison == "vc"){
-		    				this.adrresse = true;
-		    			}
-		    			if(key.type_livraison == "dhl"){
-		    				this.codePostale = true;
-		    			}
-		    		})
+	    			 axios.get(window.Laravel.url+'/panierdemmande')
+	                .then(response => {
+	                	this.produitCommandesDemmande = response.data.produitCmds;
+	                	this.infoClinet = this.produitCommandesDemmande[0];
+	                	this.prixT = response.data.prixT;
+	                	console.log("this.prixT ",this.prixT );
+		                $('.js-modal1').addClass('show-modal1');
+			    		this.produitCommandesDemmande.forEach(key => {
+			    			if(key.type_livraison == "vc"){
+			    				this.adrresse = true;
+			    			}
+			    			if(key.type_livraison == "dhl"){
+			    				this.codePostale = true;
+			    			}
+		    		
+	    				});
+	                })                     
+	                .catch(error =>{
+	                           console.log('errors :' , error);
+	                })
+
+
+	               
 	    		}
 	    	},
 	    	CancelCommande(){
@@ -401,6 +490,7 @@ methods:{
 			this.message= {};
 			 	
       	}, 
+      	  
  
 
 
@@ -410,6 +500,18 @@ methods:{
 	    	this.ProduitCommande();
 	    },
 	});
+
+	  function changeQte(val,id){
+	  	var x= parseInt(document.getElementById('qte').value,10);
+	 	if(val == 1){
+	 		document.getElementById('qte').value = x+1;
+	 		app.updateProduitPanier(x+1,id,'qte')
+	 	}	
+	 	else if(val == -1 && x > 1){
+	 		document.getElementById('qte').value = x-1;
+	 		app.updateProduitPanier(x-1,id,'qte')
+	 	}       		
+	  }
 </script>
 <script type="text/javascript">
 $(function () {
