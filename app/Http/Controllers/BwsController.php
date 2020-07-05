@@ -74,7 +74,9 @@ class BwsController extends Controller
            $fav = \DB::table('favoris')->where('client_id',$client->id)->get();
             return view('shop',['produit'=>$produit, 'ImageP' => $imageproduit, 'color' => $color, 'typeLivraison' => $typeLivraison, 'taille' => $taille ,'categorie'=>$categorie,'categorieE'=>$categorieE,'fav' => $fav]);
         }
-           $fav=array(); 
+
+            $fav=array(); 
+
         return view('shop',['produit'=>$produit, 'ImageP' => $imageproduit, 'color' => $color, 'typeLivraison' => $typeLivraison, 'taille' => $taille ,'categorie'=>$categorie,'categorieE'=>$categorieE,'fav' => $fav]);
     }
 
@@ -145,9 +147,15 @@ class BwsController extends Controller
 
      public function emploi()
     {
-        $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
-        $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
-        return view('emploi',['categorie'=>$categorie ,'categorieE'=>$categorieE]);
+        $emploi = \DB::table('annonce_emploies')->orderBy('created_at','desc')->paginate(21) ;
+        $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->paginate(21);
+        $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->paginate(21);
+        return view('emploi',['emploi'=>$emploi,'categorie'=>$categorie ,'categorieE'=>$categorieE]); 
+    }
+    
+    public function detailsEmploi(Request $request){
+        $det_emp = \DB::table('employeurs')->join('annonce_emploies','employeurs.id','=','annonce_emploies.employeur_id')->where('annonce_emploies.id', $request->idEMP)->get();
+        return  $det_emp;
     }
 
      public function article()
@@ -302,4 +310,78 @@ class BwsController extends Controller
     }
 
 
+/******Client***************Admin*************** Vendeur************Employeur***********************Visiteur************/
+
+
+    
+    public function getsearch(Request $request)
+    {
+        $search = $request->get('search');
+        $produit  =\DB::table('produits')->where('Libellé', 'like', '%'.$search.'%')
+                                         ->orWhere('description', 'like', '%'.$search.'%')
+                                         ->paginate(5);
+        $imagesproduit = \DB::table('imageproduits')->get();
+
+
+
+        $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+        $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
+
+        $article  =\DB::table('articles')->where('titre', 'like', '%'.$search.'%')
+        ->orWhere('description', 'like', '%'.$search.'%')
+        ->paginate(5);
+
+        $annonce  =\DB::table('annonce_emploies')->where('libellé', 'like', '%'.$search.'%')
+        ->orWhere('discription', 'like', '%'.$search.'%')
+        ->paginate(5);
+        
+if(User::find(Auth::user()->id)->type_compte === 'c') {
+        return view('searchclient',['produit'=>$produit, 'ImageP' => $imagesproduit,'annonce'=>$annonce,'article'=>$article, 'search' => $search,'categorie'=>$categorie,'categorieE'=>$categorieE]);
+
+}
+elseif(User::find(Auth::user()->id)->type_compte === 'v') {
+    return view('searchvendeur',['produit'=>$produit, 'ImageP' => $imagesproduit,'annonce'=>$annonce,'article'=>$article, 'search' => $search,'categorie'=>$categorie,'categorieE'=>$categorieE]);
+
+}
+elseif(User::find(Auth::user()->id)->type_compte === 'e') {
+    return view('searchemployeur',['produit'=>$produit, 'ImageP' => $imagesproduit,'annonce'=>$annonce,'article'=>$article, 'search' => $search,'categorie'=>$categorie,'categorieE'=>$categorieE]);
+
+}
+elseif(User::find(Auth::user()->id)->type_compte === 'a') {
+    return view('searchadmin',['produit'=>$produit, 'ImageP' => $imagesproduit,'annonce'=>$annonce,'article'=>$article, 'search' => $search,'categorie'=>$categorie,'categorieE'=>$categorieE]);
+
+}
+
+    }
+   
+    /*****************************VisiteurSearch***********************/
+
+    public function getsearchVisiteur(Request $request)
+    {
+        $search = $request->get('search');
+        $produit  =\DB::table('produits')->where('Libellé', 'like', '%'.$search.'%')
+                                         ->orWhere('description', 'like', '%'.$search.'%')
+                                         ->paginate(5);
+        $imagesproduit = \DB::table('imageproduits')->get();
+
+
+
+        $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+        $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
+
+        $article  =\DB::table('articles')->where('titre', 'like', '%'.$search.'%')
+        ->orWhere('description', 'like', '%'.$search.'%')
+        ->paginate(5);
+
+        $annonce  =\DB::table('annonce_emploies')->where('libellé', 'like', '%'.$search.'%')
+        ->orWhere('discription', 'like', '%'.$search.'%')
+        ->paginate(5);
+
+
+    return view('searchvisiteur',['produit'=>$produit,'ImageP' => $imagesproduit,'annonce'=>$annonce,'article'=>$article, 'search' => $search,'categorie'=>$categorie,'categorieE'=>$categorieE]);
+
+
+
+    }
+    
 }

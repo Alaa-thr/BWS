@@ -12,6 +12,7 @@ use App\Rules\ModifieTextDescriptionArticle;
 use App\User;
 use Auth;
 use App\Favori;
+use App\Historique;
 use App\Vendeur;
 use App\Produit;
 use App\Imageproduit;
@@ -28,7 +29,10 @@ class ClientController extends Controller
         $client=Client::find(Auth::user()->id);
         $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
         $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get(); 
-        return view('profil_clinet',['client'=>$client,'categorie'=>$categorie,'categorieE'=>$categorieE]);
+        $favoris = \DB::table('produits')->get();
+        $imageproduit = \DB::table('imageproduits')->get();
+        $command = \DB::table('commandes')->where([ ['client_id',$client->id],['commande_envoyee',0]])->get();     
+        return view('profil_clinet',['client'=>$client,'categorie'=>$categorie,'categorieE'=>$categorieE,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command]);
     }    
     public function update_profil(Request $request, $id) {
                 
@@ -59,12 +63,17 @@ class ClientController extends Controller
         ->select('id')
         ->distinct('id')
         ->paginate(5) ;
+
         $cmd =\DB::table('commandes')->get() ;     
         
 
         $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
         $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
-        return view('commande_client',['article'=>$article, 'idAdmin' => $c->id,'categorie'=>$categorie,'categorieE'=>$categorieE, 'cmd' =>$cmd,'client' =>$c]);
+        $favoris = \DB::table('produits')->get();
+        $imageproduit = \DB::table('imageproduits')->get();
+        $command = \DB::table('commandes')->where([ ['client_id',$c->id],['commande_envoyee',0]])->get();     
+        
+        return view('commande_client',['article'=>$article, 'idAdmin' => $c->id,'categorie'=>$categorie,'categorieE'=>$categorieE, 'cmd' =>$cmd,'client' =>$c,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command]);
     } 
     public function detaillsCommande(Request $request){
         $clientCnncte = Client::find(Auth::user()->id);
@@ -289,9 +298,21 @@ public function getProduit(){
     $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
     $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
     $imageproduit = \DB::table('imageproduits')->get();
-    return view('favoris_client',['produit'=>$produit, 'ImageP' => $imageproduit, 'Fav' => $favoris,'categorie'=>$categorie,'categorieE'=>$categorieE]);
+    
+    $command = \DB::table('commandes')->where([ ['client_id',$clientCnncte->id],['commande_envoyee',0]])->get(); 
+   
+    
+    return view('favoris_client',['produit'=>$produit, 'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command,'categorie'=>$categorie,'categorieE'=>$categorieE]);
 }
 
+public function addHisto($id){
+    $clientCnncte = Client::find(Auth::user()->id);// njibo l client di ra connecter
+    $histoProd = new historique;
+    $histoProd->produit_id = $id;//$id howa l id ta3 produit
+    $histoProd->client_id = $clientCnncte->id;
+    $histoProd->save();
+    return $histoProd;
+}
 
 
 }

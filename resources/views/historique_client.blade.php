@@ -1,25 +1,92 @@
 @extends('layouts.template_clinet')
- 
+
 @section('content')
 
 <head>
-      <title>{{ ( 'Historique ') }}</title>
+      <title>{{ ( 'Historique') }}</title>
   </head>
+ <!-- Cart -->
+ <div class="wrap-header-cart js-panel-cart" style="z-index: 11000; ">
+        <div class="s-full js-hide-cart"></div>
+        
+        <div class="header-cart flex-col-l p-l-55 p-r-25">
+            
+            <div class="header-cart-title flex-w flex-sb-m p-b-8">
+                <span class="mtext-103 cl2">
+                    Votre Panier
+                </span>
 
+                <div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart" >
+                    <i class="zmdi zmdi-close" style="margin-left: 171%"></i>
+                </div>
+                
+            </div>
+            
+            <div class="header-cart-content flex-w js-pscroll" id="app1" >
+                <ul class="header-cart-wrapitem w-full" v-for="command in ProduitsPanier">
+                    <li class="header-cart-item flex-w flex-t m-b-12" >
+                        <div class="header-cart-item-img" v-for="imgP in imagesproduit">
+                        <img v-if="imgP.produit_id === command.produit_id && imgP.profile === 1" :src="'storage/produits_image/'+ imgP.image" alt="IMG-PRODUCT" style="height: 60px;">
+                        </div>
+
+                        <div class="header-cart-item-txt p-t-8"  v-for="fv in favoris" v-if="fv.id === command.produit_id" >
+                            <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
+                            @{{fv.Libellé}}
+                            </a>
+
+                            <span class="header-cart-item-info">
+                            @{{command.qte}} x  @{{fv.prix}} DA
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+                
+                <div class="w-full" >
+                    
+                <div class="header-cart-total w-full p-tb-40">
+                        Total: 
+                    </div>
+
+                    <div class="header-cart-buttons flex-w w-full">
+                        <a href="{{route('panier')}}" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+                            View Cart
+                        </a>
+
+                        <a href="{{route('panier')}}" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
+                            Check Out
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>      
+    </div>
 <div class="main-panel" id="main-panel">
   
   <div class="panel-header panel-header-sm" >
   </div>
   <div class="content" id="app">
     <div class="row">
+   
       <div class="col-md-12">
         <div class="card">
           <div class="card-header" >
-                
+          @if(session()->has('success'))
+<div class="row"> 
+<div class="alert alert-success" style="  margin-left:33px;width: 960px;">
+
+<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;
+
+</button>
+ {{ session()->get('success')}}
+</div>
+
+</div>
+      @endif
                 <div class="flex-t">
                     <input type="checkbox" id="article" @change="selectAll()" v-model="allSelected" style="margin-top: 5px;">
-                    <label for="article"></label>
-                    <h4 style="margin-top: -6px;margin-left: 10px;">Historiques</h4>
+                    <label for="article"></label> 
+                   
+                    <h4 style="margin-top: -6px;margin-left: 10px;">Commande </h4>
                 </div>
 
             <div class="txt-right"style="margin-top: -40px; " >
@@ -30,24 +97,26 @@
                   <button v-on:click="AnnulerSel()" v-if="suppr" class="btn-sm btn-warning " style="height: 35px; " ><b>Annuler</b>
                   </button>
                </div>
+         
+            
             <hr style="margin-top:42px;">       
           
         
-            <div class="card-body"   v-for="historiquec in historiqueclient" >
+            <div class="card-body"  v-for="historiquec in historiqueclient"  id="his">
 
-<div v-if="selectall" >
-       <input type="checkbox" :id="historiquec.id" :value="historiquec.id" v-model="checkedArticles" @change="changeButton(historiquec)">
-      <label :for="historiquec.id" style="margin-top: 35px; margin-left: 10px;"></label>
+<div v-if="selectall" id="c">
+       <input type="checkbox"  style=" margin-left: 10px;" :id="historiquec.id" :value="historiquec.id" v-model="checkedArticles" @change="changeButton(historiquec)">
+      <label :for="historiquec.id" style="margin-top: 40px; margin-left: 10px;"></label>
     </div>
-    <div v-else >
-      <div id="ch1">
-      <input type="checkbox" :id="historiquec.id" :value="historiquec.id" style="margin-left: -20px;" v-model="articleIds" @click="deselectArticle(historiquec.id)"></div>
-      <label :for="historiquec.id" style="margin-top: 35px; margin-left: 10px;"></label>
+    <div v-else id="c">
+      <input type="checkbox" :id="historiquec.id" :value="historiquec.id" style="margin-left: 10px;" v-model="articleIds" @click="deselectArticle(historiquec.id)">
+      <label :for="historiquec.id" style="margin-top: 40px; margin-left: 10px;"></label>
     </div>
 
 
-  <div class="card-head"  id="hmdd"  >              
-    <div class="row" >
+  
+    <div class="card-head"   >              
+    <div class="row" id="xcl">
     <div >
   <p class=""  id="hh" >
        @{{historiquec.created_at}}</p>
@@ -79,25 +148,38 @@
     </div>    
 
     </div>      
+   
+
+    
 
   </div>      
 
-  <hr>
+  
+
 
     
-</div>                   {{$article->links()}}
+</div> 
+<hr>
+
               </div>
 
-            
+            </div>     
+              {{$article->links()}}
+              </div>
+
+            </div>      
+          </div>
         </div>      
       </div>
+     
     </div>
 
-  
-</div>
-  
+
 </div>
 
+</div>
+
+</div>
 
 
   
@@ -123,6 +205,9 @@
            "idAdmin" => $idAdmin,
            'produitCL'         => $produitCL,
            'annoncemploiesCL'         => $annoncemploiesCL,
+           'ImageP'         => $ImageP,
+               'Fav'         => $Fav,
+               'command'         => $command,
            "url"      => url("/")  
       ]) !!};
 </script>
@@ -345,6 +430,36 @@ created:function(){
 });
 
 
+</script>
+<script>
+     var app1 = new Vue({
+        el: '#app1',
+        data:{
+          message:'hello',
+          ProduitsPanier: [],
+          favoris: [],
+          imagesproduit: [],
+        },
+        methods:{
+          getProduit: function(){
+            axios.get(window.Laravel.url+'/favorisClient')
+              .then(response => {
+                this.favoris = window.Laravel.Fav;
+                this.imagesproduit = window.Laravel.ImageP;
+                this.ProduitsPanier = window.Laravel.command;
+               })
+              .catch(error => {
+                  console.log('errors : '  , error);
+             })
+          },
+          
+
+        },
+        created:function(){
+            this.getProduit();
+
+        }
+     })
 </script>
 
 @endpush
