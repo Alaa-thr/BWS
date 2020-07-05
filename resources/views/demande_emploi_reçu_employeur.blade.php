@@ -20,7 +20,7 @@
                 <div class="flex-t">
                     <input type="checkbox" id="article" @change="selectAll()" v-model="allSelected" style="margin-top: 5px;">
                     <label for="article"></label>
-                    <h4 style="margin-top: -6px;margin-left: 10px;">Demande Traiter</h4>
+                    <h4 style="margin-top: -6px;margin-left: 10px;">Demande Reçu</h4>
                 </div>
 
             <div class="txt-right"style="margin-top: -40px; " >
@@ -36,37 +36,37 @@
             <hr style="margin-top:42px;">       
           
         
-            <div class="card-body"   v-for="commandec in commandeclient" v-if="commandec.demmande_traiter===0">
+            <div class="card-body"   v-for="commandec in commandeclient">
 
-<div v-if="selectall" >
-       <input type="checkbox"  style=" margin-left: 10px;" :id="commandec.id" :value="commandec.id" v-model="checkedArticles" @change="changeButton(commandec)">
-      <label :for="commandec.id" style="margin-top: 40px; margin-left: 10px;"></label>
+<div v-if="selectall"  id="c"  style="margin-bottom: 40px">
+       <input type="checkbox"  style=" margin-left: 10px; " :id="commandec.id" :value="commandec.id" v-model="checkedArticles" @change="changeButton(commandec)">
+      <label :for="commandec.id" style="margin-top: 5px; margin-left: 10px;"></label>
     </div>
-    <div v-else ><div id="ch1">
-      <input type="checkbox" :id="commandec.id" :value="commandec.id" style="margin-left: 10px;" v-model="articleIds" @click="deselectArticle(commandec.id)"></div>
-      <label :for="commandec.id" style="margin-top: 40px; margin-left: 10px;"></label>
+    <div v-else  id="c" >
+      <input type="checkbox" :id="commandec.id" :value="commandec.id" style="margin-left: 10px;" v-model="articleIds" @click="deselectArticle(commandec.id)">
+      <label :for="commandec.id" style="margin-top: 5px; margin-left: 10px;"></label>
     </div>
 
 
   
-    <div class="card-head" >              
+    <div class="card-head"  id="cmd">              
     <div class="row"  >
     <div >
   <p class="cvendeur"  id="txt" >
-  Demande Numero  @{{commandec.id}}</p>
+  Demande   @{{commandec.id}}</p>
       </div> 
  
     
     <div  class="col-md-4 pr-1" id="cv">
       <div style="margin-left:22px" >
-          <p id="txt" > Cv Client : @{{commandec.cv_client}}</p>
+          <p id="txt" style="margin-left: 60px">  @{{commandec.date}}</p>
       </div>
        
     </div>
    
     <div class="col-md-4 pl-1" id="a">
       <div class="" id="b" >
-      <a class="f" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#" id="point">
+      <a class="f" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#" id="point"  style="margin-left: 245px">
         <i class="fas fa-ellipsis-v"  id="y"></i>
        </a>
       <div class="dropdown-menu " x-placement="right-start" id="pl"  >
@@ -76,17 +76,19 @@
     style="color: red; font-style: italic; font-weight: 900; cursor: pointer;">
     Supprimer</a>
        </div>
-      
+       
     </div>    
 
-    </div>      
-
+    </div> 
+    <div  >
+<p id="txt" style="margin-top: -20px ;margin-left: 39px" >Condidat: </p> 
+<p id="txt1" style="margin-top: -20px;margin-left:120px;">@{{commandec.nom.toUpperCase()}} @{{commandec.prenom.toUpperCase()}}</p>
+ </div>     
+ 
   </div>      
+   
+</div>    
 
-  <hr  id="cvendeu">
-
-    
-</div>                  
               </div>
 
             </div>     
@@ -221,7 +223,7 @@
     <div class="row" style="margin-left:422px;margin-top:22px;">
     <div class="col-md-4 pr-1" >
       <div style="margin-left:464px">
-      <button v-on:click=" RecuCommande(commandec.id);"   class="btn-sm btn-success " style="height: 35px; " ><b>Traiter</b>
+      <button v-on:click=" RecuDemande(commandec.id);"   class="btn-sm btn-success " style="height: 35px; " ><b>Traiter</b>
                   </button>      </div>
     </div>
    
@@ -435,6 +437,7 @@ methods: {
             axios.get(window.Laravel.url+'/demandeEmploiRecu')
                 .then(response => {
                      this.commandeclient = window.Laravel.article.data;
+                     console.log('this.commandeclient',this.commandeclient);
                 })
                 .catch(error =>{
                      console.log('errors :' , error);
