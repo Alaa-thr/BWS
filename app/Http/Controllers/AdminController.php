@@ -10,6 +10,7 @@ use App\Vendeur;
 use App\Client;
 use App\Employeur;
 use App\Article;
+use App\Email;
 use App\User;
 use App\Categorie;
 use App\Sous_categorie;
@@ -214,19 +215,45 @@ class AdminController extends Controller
              'typeCategorie' => ['required'],
          ]);
         $categorie = new Categorie;
+        if($request->image != null){
+            $exploded = explode(',', $request->image);
+            $decoded = base64_decode($exploded[1]);
+            if(str_contains($exploded[0], 'jpeg')){
+                $extension = 'jpg';
+            }
+            else{
+                $extension = 'png';
+            }
+            $fileName = str_random().'.'.$extension;
+            Storage::put('/public/categorie_image/' . $fileName, $decoded);
+            $categorie->image = $fileName;
+        }        
         $categorie->libelle = $request->libelle;
-        $categorie->typeCategorie = $request->typeCategorie;
+        $categorie->typeCategorie = $request->typeCategorie;       
         $categorie->save();
 
         return Response()->json(['etat' => true, 'categorie' => $categorie]);
     }
 
     public function updateCategorie(Request $request){
-
+        
         $request->validate([
              'libelle' => [new ModifieCategorieExiste($request->id,$request->typeCategorie),'regex:/^[A-Z0-9][a-z0-9A-Z,_-éçèàâ]+/'],
         ]);
         $categorie = Categorie::find($request->id);
+        if($request->image != null){
+            $exploded = explode(',', $request->image);
+            $decoded = base64_decode($exploded[1]);
+            if(str_contains($exploded[0], 'jpeg')){
+                $extension = 'jpg';
+            }
+            else{
+                $extension = 'png';
+            }
+            $fileName = str_random().'.'.$extension;
+            Storage::put('/public/categorie_image/' . $fileName, $decoded);
+            $categorie->image = $fileName;
+        }        
         $categorie->libelle = $request->libelle;
         $categorie->save();
         return Response()->json(['etat' => true]);
@@ -414,7 +441,32 @@ class AdminController extends Controller
        return Response()->json(['etat' => true]);
     }
 
-    
+    public function emails_admin(){
+
+        $email = \DB::table('emails')->orderBy('created_at','desc')->get();
+        return view('emails_admin',['em' =>$email]);
+    }
+    public function detailsEmail(Request $request){
+        $email_details = \DB::table('emails')->where('id',$request->idEM)->get();
+        return $email_details;
+    }
+    public function deleteEmail($id){
+        $email = Email::find($id);
+        $email->delete();
+        return Response()->json(['etat' => true]);
+    }
+    public function emailRependu($id){
+        $admin = Admin::find(Auth::user()->id);
+        //$admin2 =  Admin::find($id);
+        $email = Email::find($id);
+        $email->admin_id = $admin->id;
+        $email->reponse =1;
+        if($email->reponse == 1){
+            $email->admin_nom = $admin->nom;
+            $email->admin_prenom = $admin->prenom;
+        }
+        $email->save();
+    }
 
 
 }

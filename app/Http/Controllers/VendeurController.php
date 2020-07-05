@@ -10,6 +10,7 @@ use App\Commande;
 use App\User;
 use App\Produit;
 use App\Imageproduit;
+use App\Notification;
 use App\ColorProduit;
 use App\TailleProduit;
 use Illuminate\Support\Facades\Storage;
@@ -19,8 +20,10 @@ use Validator;
 class VendeurController extends Controller
 {
      public function profil_vendeur(){
-        $vendeur = Vendeur::find(Auth::user()->id); 
-        return view('profil_vendeur',['vendeur'=>$vendeur]);
+        $vendeur = Vendeur::find(Auth::user()->id);
+        $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+        $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get(); 
+        return view('profil_vendeur',['vendeur'=>$vendeur,'categorie'=>$categorie,'categorieE'=>$categorieE]);
     }
     public function update_profil(Request $request, $id) {
                 
@@ -48,7 +51,9 @@ class VendeurController extends Controller
         $vendeur = Vendeur::find(Auth::user()->id);
         $produit = \DB::table('produits')->where('vendeur_id', $vendeur->id)->orderBy('created_at','desc')->paginate(8);       
         $imageproduit = \DB::table('imageproduits')->get();
-        return view('produit_vendeur',['produit'=>$produit, 'ImageP' => $imageproduit]);
+        $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+        $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
+        return view('produit_vendeur',['produit'=>$produit, 'ImageP' => $imageproduit,'categorie'=>$categorie,'categorieE'=>$categorieE]);
     }
 
     public function getSousCategories($CategoId){
@@ -182,9 +187,10 @@ class VendeurController extends Controller
         $article = \DB::table('commandes')->where('vendeur_id', $c->id)->orderBy('created_at','desc')->paginate(5);
         $employeur = \DB::table('clients')->get(); 
         $produit = \DB::table('produits')->get(); 
-
+        $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+        $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
         
-        return view('commande_recu_vendeur',['article'=>$article, 'idAdmin' => $c->id,'emploC' => $employeur,'prV' => $produit]);
+        return view('commande_recu_vendeur',['article'=>$article, 'idAdmin' => $c->id,'emploC' => $employeur,'prV' => $produit,'categorie'=>$categorie,'categorieE'=>$categorieE]);
     } 
     public function detaillsacommandeVendeur(Request $request){
         $commande_detaills = \DB::table('commandes')->where('id', $request->idA)->get();
@@ -198,12 +204,44 @@ class VendeurController extends Controller
     }
 
 
+    
+
     public function RecuCommande($id){
-        $traiter = Commande::find($id);
-        $traiter->commande_traiter =1;
+        $vendeurCnncte = Vendeur::find(Auth::user()->id);
+
+        $traiter=\DB::table('commandes')->where([ ['vendeur_id',$vendeurCnncte->id],['id','=',$id]])->
+            update(['commande_traiter'=>1]);
+
+       /* $traiter = Commande::find($id);
         $traiter->save();
-        session()->flash('success','Cette Commande sera trouvée dans Commande Traitée');
+        */session()->flash('success','Cette Commande sera trouvée dans Commande Traitée');
         return $traiter;
+    }
+
+    public function RefuserCommande($id){
+        $vendeurCnncte = Vendeur::find(Auth::user()->id);
+
+        $traiter=\DB::table('commandes')->where([ ['vendeur_id',$vendeurCnncte->id],['id','=',$id]])->
+            update(['commande_traiter'=>1]);
+
+            $client=\DB::table('commandes')->where([ ['vendeur_id',$vendeurCnncte->id],['id','=',$id]])->get();
+       
+            foreach ($client as $clr) {
+                $color = $clr->client_id;
+               
+            }
+
+            $notification = new Notification;
+            $notification->client_id =$color;
+            $notification->vendeur_id = $vendeurCnncte->id;
+            $notification->cmd_id = $id;
+    
+            $notification->save();
+        session()->flash('success','Cette Commande sera trouvée dans Commande Traité et envoyer une notification pour Ce client lorsque vous avez le refuder ');
+
+       
+
+        return ([$traiter,$notification]);
     }
 
 }

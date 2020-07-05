@@ -52,13 +52,11 @@
                     <div class="col-md-8" >
                       <h5 class="title" style="margin-top: -8px; margin-left: 20px; color: red;" >{{ articlea.titre }}</h5><br>
                         <div class="description" style="margin-top: -10px; font-size: 17px; margin-left: 20px;">
-                          {{ MoitieDescription(articlea.description,100, '...') }}
-                        
-                         
+                          {{ MoitieDescription(articlea.description,100, '...') }}  
                           <div class="txt-right m-t-20">
-                           <a class="js-show-modal1 " style=" color: black; font-style: italic; font-weight: 500; cursor: pointer;" v-on:click="AfficheInfo(articlea.id)"><b> Afficher Plus </b>
-                           </a>
-                           </div>
+                            <a class="js-show-modal1 " style=" color: black;  font-style: italic; font-weight: 500; cursor: pointer;" v-on:click="AfficheInfo(articlea.id)"><b>  Afficher Plus </b>
+                            </a>
+                          </div>
                         </div>
                          
                     </div>
@@ -144,14 +142,14 @@
             </div> 
           </div>
           <div class="row">
-            <div class="col-md-4">
+            <div class="">
               <div class="title" style="color: red; margin-top: 30px; margin-left: 90px;" >
                   <h4><b>{{  articlea.titre }}</b></h4><br>
               </div>
             </div>
           </div>
           <div class="row">
-            <div class="col-md-2">
+            <div >
                <p>{{ articlea.description }}</p>
             </div>               
           </div>  
@@ -554,13 +552,18 @@
         else{//sinon c a d makanch ta checkbox ra mselictionya (le cas di nkoun 3mlna selection awed na7inaha)
           this.artilcesDelete = [];//nkhawiw tableau "artilcesDelete" di kona 3amerna fih les articles bach nsuprimiwhom
           this.suppr=false;//bach nredo button "ajouter article" w na7iw les 2 button "supprimer" et "annuler"
-        }        
+        } 
+        if(this.checkedArticles.length < this.artilcesDelete.length){
+              
+                 this.artilcesDelete = this.artilcesDelete.filter(function(item) { return item != a; });
+        }       
       }, 
       AnnulerSel: function(){//ki nersaw 3la button Annuler
         this.checkedArticles.length = [];//kml les articles di kona mselictioniwhm (bla manersaw 3la chechbox di godam article) na7iwlhom hadak selectionnement w nkhawiw tableau "checkedArticles"
         this.changeButton(null);//appelle fct changeButton bach nredo l button "ajouter article" (yedkhol l else psq "this.checkedArticles.length = 0" welat = 0 bhadi "this.checkedArticles.length = [];")
         this.selectall = true;//bach nredo les <input type="checkbox"> ta3 chaque article (bach ki nsélictioniwhom w nersaw 3la 3 point => supprimer takhdem la supprition ou bien 3la button "supprilmer" di tban f blaset "ajouter article")
         this.allSelected = false;//bach hadik checkbox di godam "Article" l foug tetna7a menha selection
+        this.articleIds.length = [];
       },
       MoitieDescription:  function (text, length, suffix){//bach n2affichiw ghi nes ta3 l ketba f la page article
           // si la taille de text est <= a l'argument Length, return the text koma di kan 

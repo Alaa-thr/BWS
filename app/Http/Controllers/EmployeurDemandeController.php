@@ -25,10 +25,10 @@ class EmployeurDemandeController extends Controller
         ->where('employeur_id', $c->id,'commandec.demmande_traiter===0')->orderBy('demande_emploies.created_at','desc')->paginate(5);
         $employeur = \DB::table('clients')->get(); 
         $produit = \DB::table('annonce_emploies')->get(); 
+
        
         $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
         $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
-
 
         return view('demande_emploi_reçu_employeur',['article'=>$article, 'idAdmin' => $c->id,'emploC' => $employeur,'prV' => $produit,'categorie'=>$categorie ,'categorieE'=>$categorieE]);
     } 

@@ -12,7 +12,7 @@ class Commande extends Model
         'qte','type_livraison','email','numero_tlf','code_postale','ville','commande_envoyee',
         'commande_traiter','created_at','updated_at','couleur_id','taille'
     ];
-
+   
     public function client()
     {
         return $this->belongsTo('App\Client');

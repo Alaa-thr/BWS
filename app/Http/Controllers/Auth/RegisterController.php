@@ -218,4 +218,10 @@ class RegisterController extends Controller
                 }
 
     }
+    public function showRegistrationForm()
+    {
+        $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+        $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get(); 
+        return view('auth.register', ['categorie'=>$categorie,'categorieE'=>$categorieE]);
+    }
 }

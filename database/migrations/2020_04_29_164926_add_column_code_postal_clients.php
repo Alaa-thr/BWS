@@ -14,7 +14,7 @@ class AddColumnCodePostalClients extends Migration
     public function up()
     {
         Schema::table('clients', function (Blueprint $table) {
-            $table->integer('codePostal')->after('email')->default(0);
+            $table->string('codePostal')->after('email')->nullable();
         });
     }
 

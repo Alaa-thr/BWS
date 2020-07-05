@@ -15,8 +15,6 @@
     <!-- Scripts -->
 
     <script src="{{ asset('jss/app.js') }}" ></script>
-    <script src="{{ asset('jss/vue.js') }}"></script>
-    <script src="{{asset('jss/axios.min.js')}}">></script>
     <script src="{{asset('jss/vee-validate.min.js')}}"></script>
     <!--<link href="{{ asset('csss/app.css') }}" rel="stylesheet" type="text/css">-->
      <link href="{{ asset('assetsClient/css/bootstrap.min.css')}}" rel="stylesheet" />
@@ -43,58 +41,8 @@
 
 </head>
 <body>
-    <!--<div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">-->
-                    <!-- Left Side Of Navbar 
-                    <ul class="navbar-nav mr-auto">
-
-                    </ul>-->
-
-                    <!-- Right Side Of Navbar
-                    <ul class="navbar-nav ml-auto"> -->
-                        <!-- Authentication Links -->
-                        <!--@guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->id }} <span class="caret"></span>
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
-            </div>
-        </nav>-->
- <header>
+   
+ <header id='app3'>
         <!-- Header desktop -->
         <?php
 
@@ -105,6 +53,7 @@
                     $stripeAccueil='active-menu';
                 }
   ?>
+
         <div class="container-menu-desktop">
             <!-- Topbar -->
             <div class="top-bar">
@@ -128,7 +77,7 @@
                 <nav class="limiter-menu-desktop container">
                     
                     <!-- Logo desktop -->       
-                    <a href="#" class="logo">
+                    <a href="{{route('accueil')}}" class="logo">
                         <img src="{{ asset('images/icons/LogoFinal2.png')}}" alt="IMG-LOGO">
                     </a>
 
@@ -147,125 +96,67 @@
                                     </div>
                                     <ul class="sub-menu " >
                                             <div class="flex-w bg6 w-full p-lr-30 p-t-27 p-lr-15-sm">
-                                                <div class="filter-col1  p-b-27">
+                                                <div class="filter-col8  p-b-27">
                                             
                                                     <div class="mtext-102 cl2 p-b-15 cl13">
                                                         Catégories
                                                     </div>
-                                                    <ul>
-                                                        <li class="p-b-6 ">
-                                                        
-                                                            <img src="{{ asset('images/icons/tshirt.png')}}" class="p-b-4">
-                                                            <a href="#" class="filter-link stext-106 trans-04">
-                                                                Vêtements
-                                                            </a>
-                                                        </li>
-                                                        <li class="p-b-6">
-                                                            <img src="{{ asset('images/icons/Shoes.png')}}" class="p-b-2">
-                                                            <a href="#" class="filter-link stext-106 trans-04">
-                                                                Chaussures
-                                                            </a>
-                                                        </li>
-                                                        <li class="p-b-6">
-                                                            <img src="{{ asset('images/icons/cosmetics.png')}}" class="p-b-2">
-                                                            <a href="#" class="filter-link stext-106 trans-04">
-                                                                Santé & Beauté 
-                                                            </a>
-                                                        </li>
-                                                        <li class="p-b-6">
-                                                            <img src="{{ asset('images/icons/lipstick.png')}}" class="p-b-2">
-                                                            <a href="#" class="filter-link stext-106 trans-04 ">
-                                                                Maquillages
-                                                            </a>
-                                                        </li>
+                                                    <ul >
                                     
-                                                        <li class="p-b-6">
-                                                            <img src="{{ asset('images/icons/diamond.png')}}" class="p-b-2">
+                                                        <li class="p-b-6 " v-for="(catego,cntt) in categories" :key = 'cntt' v-if="cntt <count">
+
+                                                            <img v-if="catego.image != null" :src='"/storage/categorie_image/"+catego.image' class="p-b-4">
+
                                                             <a href="#" class="filter-link stext-106 trans-04">
-                                                                Bijoux
+                                                                    @{{catego.libelle}}
                                                             </a>
                                                         </li>
-                                    
-                                                        <li class="p-b-6">
-                                                            <a href="#" class="filter-link stext-106 trans-04">
-                                                                
-                                                            </a>
-                                                        </li>
-                                                    </ul>
+                                                               
+                                                    </ul >
                                                 </div>
                                     
-                                                <div class="filter-col2 p-b-27 p-t-39">
-                                                    <ul>
-                                                        <li class="p-b-6">
-                                                            <img src="{{ asset('images/icons/house.png')}}" class="p-b-2">
-                                                            <a href="#" class="filter-link stext-106 trans-04 ">
-                                                                Immobilieres
-                                                            </a>
-                                                        </li>
-                                                        <li class="p-b-6">
-                                                            <img src="{{ asset('images/icons/nightstand.png')}}" class="p-b-2">
-                                                            <a href="#" class="filter-link stext-106 trans-04">
-                                                                Electroménagers & Meubles
-                                                            </a>
-                                                        </li>
-                                                        <li class="p-b-6">
-                                                            <img src="{{ asset('images/icons/repair.png')}}" class="p-b-2">
-                                                            <a href="#" class="filter-link stext-106 trans-04">
-                                                                Matériels
-                                                            </a>
-                                                        </li>
-                                                        <li class="p-b-6">
-                                                            <img src="{{ asset('images/icons/smartphone.png')}}" class="p-b-2">
-                                                            <a href="#" class="filter-link stext-106 trans-04">
-                                                                Télephones& Accessoires
-                                                            </a>
-                                                        </li>
-                                                        <li class="p-b-6">
-                                                            <img src="{{ asset('images/icons/laptop.png')}}" class="p-b-2">
-                                                            <a href="#" class="filter-link stext-106 trans-04">
-                                                                Informatiques
-                                                            </a>
-                                                        </li>
-                                                        <li class="p-b-6">
-                                                            <a href="#" class="filter-link stext-106 trans-04">
-                                                                
-                                                            </a>
-                                                        </li>
-                                                    </ul>
+            @php 
+                   
+                    for ($k = 0; $k < 6; $k++){
+                            unset($categorie[$k]);               
+                    }
+                    $cc=count($categorie);
+                   
+            @endphp                                 
+            @for ($i=0; $i< $cc;  )
+           
+                        @php
+                            $j=0;
+                        @endphp
+               
+                        <div class="filter-col8 p-b-27 p-t-39"><!--filteredItems1-->
+                @foreach ($categorie as $ctgo)
+                                   
+                    @if($j < 6)
+                        @php
+                            $j++;
+                        @endphp            
+                        <ul>
+                            <li class="p-b-6 " >
+                            @if($ctgo->image !=null) 
+                                <img src="<?php echo asset('storage/categorie_image/'.$ctgo->image) ?>" class="p-b-4">
+                            @endif
+                                <a href="#" class="filter-link stext-106 trans-04">{{$ctgo->libelle}}</a>
+                            </li>
+                        </ul>
+                    @endif
+                @endforeach
+                @for ($f = 0; $f < $j; $f++)
+                    
+                    @php $categorie->shift($f);@endphp                
+                  
+                @endfor
+               
+                @php
+                    $cc-=$j;
+                @endphp
                                                 </div>
-                                    
-                                                <div class="filter-col3  p-b-27 p-t-39" >
-                                                    <ul>
-                                                        <li class="p-b-6">
-                                                            <img src="{{ asset('images/icons/car.png')}}" class="p-b-2">
-                                                            <a href="#" class="filter-link stext-106 trans-04">
-                                                                Véhicules & Automobiles
-                                                            </a>
-                                                        </li>
-                                                        <li class="p-b-6">
-                                                            <img src="{{ asset('images/icons/customer.png')}}" class="p-b-2">
-                                                            <a href="#" class="filter-link stext-106 trans-04">
-                                                                    Services
-                                                            </a>
-                                                        </li>
-                                                        <li class="p-b-6">
-                                                            
-                                    
-                                                            <a href="#" class="filter-link stext-106 trans-04">
-                                                                
-                                                            </a>
-                                                        </li>
-                                                        <li class="p-b-6">
-                                                            <a href="#" class="filter-link stext-106 trans-04"></a>
-                                                        </li>
-                                                        <li class="p-b-6">
-                                                            <a href="#" class="filter-link stext-106 trans-04"></a>
-                                                        </li>
-                                                        <li class="p-b-6">
-                                                            <a href="#" class="filter-link stext-106 trans-04"></a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
+            @endfor
                                             </div>
                                         </ul>
                                         
@@ -275,115 +166,68 @@
                                     <span >
                                         <i class="fa fa-angle-right" aria-hidden="true"></i>
                                     </span>
-                                <ul class="sub-menu " style="width: 1100%;" >
+                                <ul class="sub-menu " style="width: 990%;" >
                                     <div class="flex-w bg6 w-full p-lr-30 p-t-27 p-lr-15-sm">
                                         <div class="filter-col1  p-b-27">
                                             <div class="mtext-102 cl2 p-b-15" style="color: #ca2323;">
                                                 Catégories
                                             </div>
                             
-                                            <ul>
-                                                <li class="p-b-6">
-                                                    <img src="{{ asset('images/icons/architect.png')}}" class="p-b-2">
-                                                    <a href="#" class="filter-link stext-106 trans-04">
-                                                        Architecture
-                                                    </a>
-                                                </li>
-                                                <li class="p-b-6">
-                                                    <img src="{{ asset('images/icons/programmer.png')}}" class="p-b-2">
-                                                    <a href="#" class="filter-link stext-106 trans-04">
-                                                        Informatique
-                                                    </a>
-                                                </li>
-                                                <li class="p-b-6">
-                                                    <img src="{{ asset('images/icons/flash.png')}}" class="p-b-2">
-                                                    <a href="#" class="filter-link stext-106 trans-04">
-                                                        Electricité
-                                                    </a>
-                                                </li>
-                                                <li class="p-b-6">
-                                                    <img src="{{ asset('images/icons/shield.png')}}" class="p-b-2">
-                                                    <a href="#" class="filter-link stext-106 trans-04 ">
-                                                        Sécurité
-                                                    </a>
-                                                </li>
-                                                <li class="p-b-6">
-                                                    <img src="{{ asset('images/icons/hotel.png')}}" class="p-b-2">
-                                                    <a href="#" class="filter-link stext-106 trans-04">
-                                                        Hôtel
-                                                    </a>
-                                                </li>
-                                                <li class="p-b-6">
-                                                    <a href="#" class="filter-link stext-106 trans-04">
-                                                        
-                                                    </a>
-                                                </li>
-                                            </ul>
+                                            <ul >
+                                                        <li class="p-b-6 " v-for="(catego,cntt) in categoriesE" :key = 'cntt' v-if="cntt <count">
+
+                                                            <img v-if="catego.image != null" :src='"/storage/categorie_image/"+catego.image' class="p-b-4">
+
+                                                            <a href="#" class="filter-link stext-106 trans-04">
+                                                                    @{{catego.libelle}}
+                                                            </a>
+                                                        </li>
+                                                               
+                                                    </ul >
                                         </div>
-                                        <div class="filter-col2 p-b-27 p-t-39">
-                                            <ul>
-                                                <li class="p-b-6">
-                                                    <img src="{{ asset('images/icons/money.png')}}" class="p-b-2">
-                                                    <a href="#" class="filter-link stext-106 trans-04 ">
-                                                        Banque
-                                                    </a>
-                                                </li>
-                                                <li class="p-b-6">
-                                                    <img src="{{ asset('images/icons/fruit.png')}}" class="p-b-2">
-                                                    <a href="#" class="filter-link stext-106 trans-04">
-                                                        Alimentation
-                                                    </a>
-                                                </li>
-                                                <li class="p-b-6">
-                                                    <img src="{{ asset('images/icons/medication.png')}}" class="p-b-2">
-                                                    <a href="#" class="filter-link stext-106 trans-04">
-                                                        Pharmacie
-                                                    </a>
-                                                </li>
-                                                <li class="p-b-6">
-                                                    <img src="{{ asset('images/icons/wrench.png')}}" class="p-b-2">
-                                                    <a href="#" class="filter-link stext-106 trans-04">
-                                                        Mécanicien Automobile
-                                                    </a>
-                                                </li>
-                                                <li class="p-b-6">
-                                                    
-                                                </li>
-                                                <li class="p-b-6">
-                                                    <a href="#" class="filter-link stext-106 trans-04">
-                                                        
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="filter-col3  p-b-27 p-t-39">
-                                            <ul>
-                                                <li class="p-b-6">
-                                                    <img src="{{ asset('images/icons/saw.png')}}" class="p-b-2">
-                                                    <a href="#" class="filter-link stext-106 trans-04">
-                                                        Menuiserie
-                                                    </a>
-                                                </li>
-                                                <li class="p-b-6">
-                                                    <img src="{{ asset('images/icons/medicine.png')}}" class="p-b-2">
-                                                    <a href="#" class="filter-link stext-106 trans-04 ">
-                                                        Hôpital
-                                                    </a>
-                                                </li>
-                                                <li class="p-b-6">
-                                                    <a href="#" class="filter-link stext-106 trans-04"></a>
-                                                </li>
-                                                <li class="p-b-6">
-                                                    <a href="#" class="filter-link stext-106 trans-04"></a>
-                                                </li>
-                                                <li class="p-b-6">
-                                                    <a href="#" class="filter-link stext-106 trans-04"></a>
-                                                </li>
-                                                <li class="p-b-6">
-                                                    <a href="#" class="filter-link stext-106 trans-04"></a>
-                                                </li>
-                                            </ul>
-                                        </div>
+                                         @php 
+                   
+                    for ($k = 0; $k < 6; $k++){
+                            unset($categorieE[$k]);               
+                    }
+                    $cc=count($categorieE);
+                   
+            @endphp                                 
+            @for ($i=0; $i< $cc;  )
+           
+                        @php
+                            $j=0;
+                        @endphp
+               
+                        <div class="filter-col8 p-b-27 p-t-39"><!--filteredItems1-->
+                @foreach ($categorieE as $ctgo)
+                                   
+                    @if($j < 6)
+                        @php
+                            $j++;
+                        @endphp            
+                        <ul>
+                            <li class="p-b-6 " >
+                            @if($ctgo->image !=null) 
+                                <img src="<?php echo asset('storage/categorie_image/'.$ctgo->image) ?>" class="p-b-4">
+                            @endif
+                                <a href="#" class="filter-link stext-106 trans-04">{{$ctgo->libelle}}</a>
+                            </li>
+                        </ul>
+                    @endif
+                @endforeach
+                @for ($f = 0; $f < $j; $f++)
+                    
+                    @php $categorieE->shift($f);@endphp                
+                  
+                @endfor
+               
+                @php
+                    $cc-=$j;
+                @endphp
+                                                </div>
+            @endfor
+                                        
                                     </div>
                                 </ul>
                             </li>
@@ -462,7 +306,7 @@
             
             <!-- Logo moblie -->        
             <div class="logo-mobile">
-                <a href="index.html"><img src="{{ asset('images/icons/LogoFinal2.png')}}" alt="IMG-LOGO"></a>
+                <a href="{{route('accueil')}}"><img src="{{ asset('images/icons/LogoFinal2.png')}}" alt="IMG-LOGO"></a>
             </div>
 
             <!-- Icon header -->
@@ -584,25 +428,27 @@
             </ul>
         </div>
 
-        <!-- Modal Search -->
-        <div class="modal-search-header flex-c-m trans-04 js-hide-modal-search">
+      <!-- Modal Search -->
+      <div class="modal-search-header flex-c-m trans-04 js-hide-modal-search" style="z-index: 11000;">
             <div class="container-search-header">
                 <button class="flex-c-m btn-hide-modal-search trans-04 js-hide-modal-search">
-                    <img src="{{ asset('images/icons/icon-close2.png')}}" alt="CLOSE">
+                    <img src="images/icons/icon-close2.png" alt="CLOSE">
                 </button>
 
-                <form class="wrap-search-header flex-w p-l-15">
+                <form class="wrap-search-header flex-w p-l-15" action="/abestv" method="get">
                     <button class="flex-c-m trans-04">
                         <i class="zmdi zmdi-search"></i>
                     </button>
-                    <input class="plh3" type="text" name="search" placeholder="Search...">
+                    <input  type="search" name="search" class="form-control" placeholder="Search...">
+                    
                 </form>
+                
                 
             </div>
         </div>
 
 <!--Cart Connect--><!--**************************************************************************-->
-    <div class="wrap-header-cart js-panel-connect" id="app3">
+    <div class="wrap-header-cart js-panel-connect" >
         <div class="s-full js-hide-connect"></div>
 
         <div class="header-cart flex-col-l p-l-40 p-r-25">
@@ -624,7 +470,8 @@
                         <span class="splash-description">Please enter your user information.</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('login') }}">
+                       
+                        <form method="POST" :action="wayLogin()">
                             @csrf
                             <div class="form-group">
                                 <input class="form-control form-control-lg
@@ -944,8 +791,33 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
             },
             hideSelect: false,
             types: [],
+            categories: [],
+            sousCategories: [],
+            categoriesE: [],
+            count: 6,
+            //wayLogin: {{ json_encode(route('login')) }},
          },
          methods:{
+            getCategorieHome: function(){
+                axios.get(window.Laravel.url+"/getcategoriehome")
+                        .then(response => {
+                           this.categories = response.data.categorie;
+                           this.sousCategories = response.data.sousCatego;
+                           this.categoriesE =  response.data.categorieE;
+
+                        })
+                        .catch(error =>{
+                            console.log("errors",error)
+                        })
+            },
+            wayLogin: function(){
+                if(this.types.length == 0){
+                    return "{{route('login')}}";
+                }
+                else{
+                     return "{{route('authenticate')}}";
+                }
+            },
             Connect: function(){
 
                 clearTimeout(this.timer); 
@@ -957,12 +829,11 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                             if(response.data.etat ){
                                 app3.hideSelect = true;
                                 app3.types = response.data.typeCompte;
-                                console.log("true",response)
                                 
                             }
                             else{
                                 app3.hideSelect = false;
-                                console.log("false",response)
+
                             }
                             
 
@@ -972,12 +843,14 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                         })
                         
                         
-                     }, 1000)
+                     }, 10)
                 
             },
-            showww(t){
-                console.log('t',t);
-            }
+
+         },
+         mounted:function(){
+            this.Connect();
+            this.getCategorieHome();
          }
        })
        function connecterAvant(){
@@ -985,7 +858,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
             Swal.fire({
                           icon: 'error',
                           title: 'Oops...',
-                          text: 'Vous devez être connecté tent que Client pour pouvez accedé a votre panier.',
+                          html: 'Vous devez être connecté tent que <b style="text-decoration: underline;">Client</b> pour pouvez accedé a votre panier.',
                           footer: '<form method="GET" action="{{ route("logoutregister") }}">@csrf<a href="{{ route("logoutregister") }}">Créer Compte</a></form>',
                           showCancelButton: true,
                           cancelButtonColor: '#d33',

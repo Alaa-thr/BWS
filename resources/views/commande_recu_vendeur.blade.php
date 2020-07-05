@@ -50,13 +50,13 @@
         
             <div class="card-body"   v-for="commandec in commandeclient" v-if="commandec.commande_traiter===0">
 
-<div v-if="selectall" >
+<div v-if="selectall" id="c">
        <input type="checkbox"  style=" margin-left: 10px;" :id="commandec.id" :value="commandec.id" v-model="checkedArticles" @change="changeButton(commandec)">
-      <label :for="commandec.id" style="margin-top: 40px; margin-left: 10px;"></label>
+      <label :for="commandec.id" style="margin-top: 5px; margin-left: 10px;"></label>
     </div>
-    <div v-else ><div id="ch1">
-      <input type="checkbox" :id="commandec.id" :value="commandec.id" style="margin-left: 10px;" v-model="articleIds" @click="deselectArticle(commandec.id)"></div>
-      <label :for="commandec.id" style="margin-top: 40px; margin-left: 10px;"></label>
+    <div v-else id="c">
+      <input type="checkbox" :id="commandec.id" :value="commandec.id" style="margin-left: 10px;" v-model="articleIds" @click="deselectArticle(commandec.id)">
+      <label :for="commandec.id" style="margin-top: 5px; margin-left: 10px;"></label>
     </div>
 
 
@@ -95,7 +95,7 @@
 
   </div>      
 
-  <hr  id="cvendeu">
+  <hr  id="cvendeur">
 
     
 </div>                  
@@ -243,7 +243,12 @@
     <div class="col-md-4 pr-1" >
       <div style="margin-left:464px">
       <button v-on:click=" RecuCommande(commandec.id);"   class="btn-sm btn-success " style="height: 35px; " ><b>Traiter</b>
-                  </button>      </div>
+       </button>   
+
+      <button v-on:click=" RefuserCommande(commandec.id);"   class="btn-sm btn-danger " style="height: 35px;margin-left:-954px; " ><b>Refuser</b>
+       </button>   
+                  
+                     </div>
     </div>
    
     </div> 
@@ -319,6 +324,17 @@ methods: {
                   console.log('errors : '  , error);
              })
           },
+          RefuserCommande: function(id){
+          	axios.put(window.Laravel.url+'/refusercommande/'+id)
+              .then(response => {
+                	console.log("response",response.data);
+                  window.location.reload();
+               })
+              .catch(error => {
+                  console.log('errors : '  , error);
+             })
+          },
+
 
   detaillsacommandeVendeur: function(){
 

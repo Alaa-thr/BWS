@@ -25,6 +25,8 @@
   <script src="{{ asset('jss/vue.js') }}"></script>
   <script src="{{asset('jss/axios.min.js')}}"></script>
   <script src="{{asset('jss/sweetalert2.js')}}"></script>
+  
+
    <?php
 
             $stripeProfil=$stripeDmnd=$stripeCmd=$stripeNotif=$stripePanier=$stripeHisto=$stripeFavoris='';
@@ -57,7 +59,7 @@
 <body >
 
   <!-- Header -->
-    <header>
+    <header id="app55">
         <!-- Header desktop -->
         <div class="container-menu-desktop">
             <!-- Topbar -->
@@ -101,125 +103,66 @@
                                     </div>
                                     <ul class="sub-menu " >
                                             <div class="flex-w bg6 w-full p-lr-30 p-t-27 p-lr-15-sm">
-                                                <div class="filter-col1  p-b-27">
+                                                <div class="filter-col8  p-b-27">
                                             
                                                     <div class="mtext-102 cl2 p-b-15 cl13">
                                                         Catégories
                                                     </div>
-                                                    <ul>
-                                                        <li class="p-b-6 ">
-                                                        
-                                                            <img src="images/icons/tshirt.png" class="p-b-4">
-                                                            <a href="#" class="filter-link stext-106 trans-04">
-                                                                Vêtements
-                                                            </a>
+                                                    <ul >
+                                                        <li class="p-b-6 " v-for="(catego,cntt) in categories" :key = 'cntt' v-if="cntt <count">
+
+                                                         <img v-if="catego.image != null" :src='"/storage/categorie_image/"+catego.image' class="p-b-4">
+
+                                                         <a href="#" class="filter-link stext-106 trans-04">
+                                                            @{{catego.libelle}}
+                                                         </a>
                                                         </li>
-                                                        <li class="p-b-6">
-                                                            <img src="images/icons/Shoes.png" class="p-b-2">
-                                                            <a href="#" class="filter-link stext-106 trans-04">
-                                                                Chaussures
-                                                            </a>
-                                                        </li>
-                                                        <li class="p-b-6">
-                                                            <img src="images/icons/cosmetics.png" class="p-b-2">
-                                                            <a href="#" class="filter-link stext-106 trans-04">
-                                                                Santé & Beauté 
-                                                            </a>
-                                                        </li>
-                                                        <li class="p-b-6">
-                                                            <img src="images/icons/lipstick.png" class="p-b-2">
-                                                            <a href="#" class="filter-link stext-106 trans-04 ">
-                                                                Maquillages
-                                                            </a>
-                                                        </li>
-                                    
-                                                        <li class="p-b-6">
-                                                            <img src="images/icons/diamond.png" class="p-b-2">
-                                                            <a href="#" class="filter-link stext-106 trans-04">
-                                                                Bijoux
-                                                            </a>
-                                                        </li>
-                                    
-                                                        <li class="p-b-6">
-                                                            <a href="#" class="filter-link stext-106 trans-04">
-                                                                
-                                                            </a>
-                                                        </li>
-                                                    </ul>
+                                                       
+                                                    </ul >
                                                 </div>
                                     
-                                                <div class="filter-col2 p-b-27 p-t-39">
-                                                    <ul>
-                                                        <li class="p-b-6">
-                                                            <img src="images/icons/house.png" class="p-b-2">
-                                                            <a href="#" class="filter-link stext-106 trans-04 ">
-                                                                Immobilieres
-                                                            </a>
-                                                        </li>
-                                                        <li class="p-b-6">
-                                                            <img src="images/icons/nightstand.png" class="p-b-2">
-                                                            <a href="#" class="filter-link stext-106 trans-04">
-                                                                Electroménagers & Meubles
-                                                            </a>
-                                                        </li>
-                                                        <li class="p-b-6">
-                                                            <img src="images/icons/repair.png" class="p-b-2">
-                                                            <a href="#" class="filter-link stext-106 trans-04">
-                                                                Matériels
-                                                            </a>
-                                                        </li>
-                                                        <li class="p-b-6">
-                                                            <img src="images/icons/smartphone.png" class="p-b-2">
-                                                            <a href="#" class="filter-link stext-106 trans-04">
-                                                                Télephones& Accessoires
-                                                            </a>
-                                                        </li>
-                                                        <li class="p-b-6">
-                                                            <img src="images/icons/laptop.png" class="p-b-2">
-                                                            <a href="#" class="filter-link stext-106 trans-04">
-                                                                Informatiques
-                                                            </a>
-                                                        </li>
-                                                        <li class="p-b-6">
-                                                            <a href="#" class="filter-link stext-106 trans-04">
-                                                                
-                                                            </a>
-                                                        </li>
-                                                    </ul>
+                                                 @php 
+                   
+                    for ($k = 0; $k < 6; $k++){
+                            unset($categorie[$k]);               
+                    }
+                    $cc=count($categorie);
+                   
+            @endphp                                 
+            @for ($i=0; $i< $cc;  )
+           
+                        @php
+                            $j=0;
+                        @endphp
+               
+                        <div class="filter-col8 p-b-27 p-t-39"><!--filteredItems1-->
+                @foreach ($categorie as $ctgo)
+                                   
+                    @if($j < 6)
+                        @php
+                            $j++;
+                        @endphp            
+                        <ul>
+                            <li class="p-b-6 " >
+                            @if($ctgo->image !=null) 
+                                <img src="<?php echo asset('storage/categorie_image/'.$ctgo->image) ?>" class="p-b-4">
+                            @endif
+                                <a href="#" class="filter-link stext-106 trans-04">{{$ctgo->libelle}}</a>
+                            </li>
+                        </ul>
+                    @endif
+                @endforeach
+                @for ($f = 0; $f < $j; $f++)
+                    
+                    @php $categorie->shift($f);@endphp                
+                  
+                @endfor
+               
+                @php
+                    $cc-=$j;
+                @endphp
                                                 </div>
-                                    
-                                                <div class="filter-col3  p-b-27 p-t-39" >
-                                                    <ul>
-                                                        <li class="p-b-6">
-                                                            <img src="images/icons/car.png" class="p-b-2">
-                                                            <a href="#" class="filter-link stext-106 trans-04">
-                                                                Véhicules & Automobiles
-                                                            </a>
-                                                        </li>
-                                                        <li class="p-b-6">
-                                                            <img src="images/icons/customer.png" class="p-b-2">
-                                                            <a href="#" class="filter-link stext-106 trans-04">
-                                                                    Services
-                                                            </a>
-                                                        </li>
-                                                        <li class="p-b-6">
-                                                            
-                                    
-                                                            <a href="#" class="filter-link stext-106 trans-04">
-                                                                
-                                                            </a>
-                                                        </li>
-                                                        <li class="p-b-6">
-                                                            <a href="#" class="filter-link stext-106 trans-04"></a>
-                                                        </li>
-                                                        <li class="p-b-6">
-                                                            <a href="#" class="filter-link stext-106 trans-04"></a>
-                                                        </li>
-                                                        <li class="p-b-6">
-                                                            <a href="#" class="filter-link stext-106 trans-04"></a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
+            @endfor
                                             </div>
                                         </ul>
                                         
@@ -229,115 +172,68 @@
                                     <span >
                                         <i class="fa fa-angle-right" aria-hidden="true"></i>
                                     </span>
-                                <ul class="sub-menu " style="width: 1100%;" >
+                                <ul class="sub-menu " style="width: 990%;" >
                                     <div class="flex-w bg6 w-full p-lr-30 p-t-27 p-lr-15-sm">
-                                        <div class="filter-col1  p-b-27">
-                                            <div class="mtext-102 cl2 p-b-15" style="color: #ca2323;">
+                                                <div class="filter-col8  p-b-27">
+                                            
+                                                    <div class="mtext-102 cl2 p-b-15 cl13">
                                                 Catégories
                                             </div>
                             
-                                            <ul>
-                                                <li class="p-b-6">
-                                                    <img src="images/icons/architect.png" class="p-b-2">
+                                             <ul >
+                                                <li class="p-b-6 " v-for="(catego,cntt) in categoriesE" :key = 'cntt' v-if="cntt <count">
+
+                                                    <img v-if="catego.image != null" :src='"/storage/categorie_image/"+catego.image' class="p-b-4">
+
                                                     <a href="#" class="filter-link stext-106 trans-04">
-                                                        Architecture
+                                                            @{{catego.libelle}}
                                                     </a>
                                                 </li>
-                                                <li class="p-b-6">
-                                                    <img src="images/icons/programmer.png" class="p-b-2">
-                                                    <a href="#" class="filter-link stext-106 trans-04">
-                                                        Informatique
-                                                    </a>
-                                                </li>
-                                                <li class="p-b-6">
-                                                    <img src="images/icons/flash.png" class="p-b-2">
-                                                    <a href="#" class="filter-link stext-106 trans-04">
-                                                        Electricité
-                                                    </a>
-                                                </li>
-                                                <li class="p-b-6">
-                                                    <img src="images/icons/shield.png" class="p-b-2">
-                                                    <a href="#" class="filter-link stext-106 trans-04 ">
-                                                        Sécurité
-                                                    </a>
-                                                </li>
-                                                <li class="p-b-6">
-                                                    <img src="images/icons/hotel.png" class="p-b-2">
-                                                    <a href="#" class="filter-link stext-106 trans-04">
-                                                        Hôtel
-                                                    </a>
-                                                </li>
-                                                <li class="p-b-6">
-                                                    <a href="#" class="filter-link stext-106 trans-04">
-                                                        
-                                                    </a>
-                                                </li>
-                                            </ul>
+                                                       
+                                            </ul >
                                         </div>
-                                        <div class="filter-col2 p-b-27 p-t-39">
-                                            <ul>
-                                                <li class="p-b-6">
-                                                    <img src="images/icons/money.png" class="p-b-2">
-                                                    <a href="#" class="filter-link stext-106 trans-04 ">
-                                                        Banque
-                                                    </a>
-                                                </li>
-                                                <li class="p-b-6">
-                                                    <img src="images/icons/fruit.png" class="p-b-2">
-                                                    <a href="#" class="filter-link stext-106 trans-04">
-                                                        Alimentation
-                                                    </a>
-                                                </li>
-                                                <li class="p-b-6">
-                                                    <img src="images/icons/medication.png" class="p-b-2">
-                                                    <a href="#" class="filter-link stext-106 trans-04">
-                                                        Pharmacie
-                                                    </a>
-                                                </li>
-                                                <li class="p-b-6">
-                                                    <img src="images/icons/wrench.png" class="p-b-2">
-                                                    <a href="#" class="filter-link stext-106 trans-04">
-                                                        Mécanicien Automobile
-                                                    </a>
-                                                </li>
-                                                <li class="p-b-6">
-                                                    
-                                                </li>
-                                                <li class="p-b-6">
-                                                    <a href="#" class="filter-link stext-106 trans-04">
-                                                        
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="filter-col3  p-b-27 p-t-39">
-                                            <ul>
-                                                <li class="p-b-6">
-                                                    <img src="images/icons/saw.png" class="p-b-2">
-                                                    <a href="#" class="filter-link stext-106 trans-04">
-                                                        Menuiserie
-                                                    </a>
-                                                </li>
-                                                <li class="p-b-6">
-                                                    <img src="images/icons/medicine.png" class="p-b-2">
-                                                    <a href="#" class="filter-link stext-106 trans-04 ">
-                                                        Hôpital
-                                                    </a>
-                                                </li>
-                                                <li class="p-b-6">
-                                                    <a href="#" class="filter-link stext-106 trans-04"></a>
-                                                </li>
-                                                <li class="p-b-6">
-                                                    <a href="#" class="filter-link stext-106 trans-04"></a>
-                                                </li>
-                                                <li class="p-b-6">
-                                                    <a href="#" class="filter-link stext-106 trans-04"></a>
-                                                </li>
-                                                <li class="p-b-6">
-                                                    <a href="#" class="filter-link stext-106 trans-04"></a>
-                                                </li>
-                                            </ul>
-                                        </div>
+            @php 
+                   
+                    for ($k = 0; $k < 6; $k++){
+                            unset($categorieE[$k]);               
+                    }
+                    $cc=count($categorieE);
+                   
+            @endphp                                 
+            @for ($i=0; $i< $cc;  )
+           
+                        @php
+                            $j=0;
+                        @endphp
+               
+                        <div class="filter-col8 p-b-27 p-t-39"><!--filteredItems1-->
+                @foreach ($categorieE as $ctgo)
+                                   
+                    @if($j < 6)
+                        @php
+                            $j++;
+                        @endphp            
+                        <ul>
+                            <li class="p-b-6 " >
+                            @if($ctgo->image !=null) 
+                                <img src="<?php echo asset('storage/categorie_image/'.$ctgo->image) ?>" class="p-b-4">
+                            @endif
+                                <a href="#" class="filter-link stext-106 trans-04">{{$ctgo->libelle}}</a>
+                            </li>
+                        </ul>
+                    @endif
+                @endforeach
+                @for ($f = 0; $f < $j; $f++)
+                    
+                    @php $categorieE->shift($f);@endphp                
+                  
+                @endfor
+               
+                @php
+                    $cc-=$j;
+                @endphp
+                                                </div>
+            @endfor
                                     </div>
                                 </ul>
                             </li>
@@ -510,108 +406,25 @@
             </ul>
         </div>
 
-        <!-- Modal Search -->
-        <div class="modal-search-header flex-c-m trans-04 js-hide-modal-search" style="z-index: 11000;">
+         <!-- Modal Search -->
+         <div class="modal-search-header flex-c-m trans-04 js-hide-modal-search" style="z-index: 11000;">
             <div class="container-search-header">
                 <button class="flex-c-m btn-hide-modal-search trans-04 js-hide-modal-search">
                     <img src="images/icons/icon-close2.png" alt="CLOSE">
                 </button>
 
-                <form class="wrap-search-header flex-w p-l-15">
+                <form class="wrap-search-header flex-w p-l-15" action="/abest" method="get">
                     <button class="flex-c-m trans-04">
                         <i class="zmdi zmdi-search"></i>
                     </button>
-                    <input class="plh3" type="text" name="search" placeholder="Search...">
+                    <input  type="search" name="search" class="form-control" placeholder="Search...">
+                    
                 </form>
+                
                 
             </div>
         </div>
-    <!-- Cart -->
-    <div class="wrap-header-cart js-panel-cart" style="z-index: 11000; ">
-        <div class="s-full js-hide-cart"></div>
-        
-        <div class="header-cart flex-col-l p-l-55 p-r-25">
-            
-            <div class="header-cart-title flex-w flex-sb-m p-b-8">
-                <span class="mtext-103 cl2">
-                    Votre Panier
-                </span>
-
-                <div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart" >
-                    <i class="zmdi zmdi-close" style="margin-left: 171%"></i>
-                </div>
-                
-            </div>
-            
-            <div class="header-cart-content flex-w js-pscroll">
-                <ul class="header-cart-wrapitem w-full">
-                    <li class="header-cart-item flex-w flex-t m-b-12">
-                        <div class="header-cart-item-img">
-                            <img  src="images/item-cart-01.jpg"  alt="IMG">
-                        </div>
-
-                        <div class="header-cart-item-txt p-t-8">
-                            <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-                                White Shirt Pleat
-                            </a>
-
-                            <span class="header-cart-item-info">
-                                1 x $19.00
-                            </span>
-                        </div>
-                    </li>
-
-                    <li class="header-cart-item flex-w flex-t m-b-12">
-                        <div class="header-cart-item-img">
-                            <img src="images/item-cart-02.jpg" alt="IMG">
-                        </div>
-
-                        <div class="header-cart-item-txt p-t-8">
-                            <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-                                Converse All Star
-                            </a>
-
-                            <span class="header-cart-item-info">
-                                1 x $39.00
-                            </span>
-                        </div>
-                    </li>
-
-                    <li class="header-cart-item flex-w flex-t m-b-12">
-                        <div class="header-cart-item-img">
-                            <img src="images/item-cart-03.jpg" alt="IMG">
-                        </div>
-
-                        <div class="header-cart-item-txt p-t-8">
-                            <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-                                Nixon Porter Leather
-                            </a>
-
-                            <span class="header-cart-item-info">
-                                1 x $17.00
-                            </span>
-                        </div>
-                    </li>
-                </ul>
-                
-                <div class="w-full">
-                    <div class="header-cart-total w-full p-tb-40">
-                        Total: $75.00
-                    </div>
-
-                    <div class="header-cart-buttons flex-w w-full">
-                        <a href="{{route('panier')}}" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
-                            View Cart
-                        </a>
-
-                        <a href="{{route('panier')}}" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
-                            Check Out
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>      
-    </div>
+   
 
     </header>
 
@@ -800,7 +613,36 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     </div>
      
    @stack('javascripts') 
+<script>
+         var app55 = new Vue({
+         el : "#app55",
+         data:{
+            categories: [],
+            sousCategories: [],
+            categoriesE: [],
+            count: 6,
+            //wayLogin: {{ json_encode(route('login')) }},
+         },
+         methods:{
 
+            getCategorieHome: function(){
+                axios.get(window.Laravel.url+"/getcategoriehome")
+                        .then(response => {
+                           app55.categories = response.data.categorie;
+                           app55.sousCategories = response.data.sousCatego;
+                           this.categoriesE =  response.data.categorieE;
+                        })
+                        .catch(error =>{
+                            console.log("errors",error)
+                        })
+            },
+            
+         },
+         mounted:function(){
+            this.getCategorieHome();
+         },
+       })
+</script>
   <script src="assetsClient/js/jquery-3.2.1.min.js"></script>
   <script src="assetsClient/js/animsition.min.js"></script>
   <script src="assetsClient/js/main.js"></script>
