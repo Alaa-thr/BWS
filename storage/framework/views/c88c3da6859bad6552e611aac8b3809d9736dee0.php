@@ -186,8 +186,8 @@
 								</div>
 							</div>
 						</div>
-						<div class="header-cart-total m-l-60 p-tb-40">
-								<b>Totale:&nbsp</b> {{prixT[0]}}&nbspDA
+						<div class="header-cart-total m-l-60 p-tb-40" v-for="t in prixT">
+								<b>Totale:&nbsp</b> {{t.prixTo}}&nbspDA
 						</div>
 					</div>
 				

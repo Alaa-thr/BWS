@@ -129,6 +129,25 @@ class ClientController extends Controller
                             
                             return Response()->json(['etat' => true,'produitExister' => false]);
                             }
+                            else if(count($produitExister) != 0){
+                                foreach ($produitExister as $key ) {
+                                    if($key->qte != $request->qte || $key->type_livraison != $request->type_livraison || $key->couleur_id != $request->couleur_id || $key->taille != $request->taille){
+                                        $commande = new Commande();         
+                                        $commande->id = $client->nbr_cmd;
+                                        $commande->client_id = $client->id;
+                                        $commande->vendeur_id = $request->vendeur_id;
+                                        $commande->produit_id = $request->produit_id; 
+                                        $commande->prix_total = $request->prix;
+                                        $commande->qte = $request->qte;
+                                        $commande->type_livraison = $request->type_livraison;
+                                        $commande->couleur_id = $request->couleur_id;
+                                        $commande->taille = $request->taille;
+                                        $commande->save();
+                                        return Response()->json(['etat' => true,'produitExister' => false]);
+                                    }
+                                }
+                                
+                            }
                             else{
                                 return Response()->json(['etat' => true,'produitExister' => true]);
                             }
