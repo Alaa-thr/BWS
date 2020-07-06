@@ -52,9 +52,13 @@ class BwsController extends Controller
 
      public function apropos()
     {
+        $c = Client::find(Auth::user()->id);
         $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
         $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
-        return view('apropos',['categorie'=>$categorie,'categorieE'=>$categorieE]);
+        $favoris = \DB::table('produits')->get();
+        $imageproduit = \DB::table('imageproduits')->get();
+        $command = \DB::table('commandes')->where([ ['client_id',$c->id],['commande_envoyee',0]])->get();     
+        return view('apropos',['categorie'=>$categorie,'categorieE'=>$categorieE,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command]);
     }
 
      public function produitVisiteur()
@@ -69,12 +73,19 @@ class BwsController extends Controller
         $typeLivraison = \DB::table('typechoisirvendeurs')->get();
         $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
         $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
+        $c = Client::find(Auth::user()->id);
+$favoris = \DB::table('produits')->get();
+        $imageproduit = \DB::table('imageproduits')->get();
+        $command = \DB::table('commandes')->where([ ['client_id',$c->id],['commande_envoyee',0]])->get();     
+
         if(auth()->check() && Auth::user()->type_compte == 'c'){
             $client = $client = Client::find(Auth::user()->id);
            $fav = \DB::table('favoris')->where('client_id',$client->id)->get();
-            return view('shop',['produit'=>$produit, 'ImageP' => $imageproduit, 'color' => $color, 'typeLivraison' => $typeLivraison, 'taille' => $taille ,'categorie'=>$categorie,'categorieE'=>$categorieE,'fav' => $fav]);
+            return view('shop',['produit'=>$produit, 'ImageP' => $imageproduit, 'color' => $color, 'typeLivraison' => $typeLivraison, 'taille' => $taille ,'categorie'=>$categorie,'categorieE'=>$categorieE,'fav' => $fav, 'Fav' => $favoris,'command' => $command]);
         }
+
             $fav=array(); 
+
         return view('shop',['produit'=>$produit, 'ImageP' => $imageproduit, 'color' => $color, 'typeLivraison' => $typeLivraison, 'taille' => $taille ,'categorie'=>$categorie,'categorieE'=>$categorieE,'fav' => $fav]);
     }
 
@@ -145,10 +156,15 @@ class BwsController extends Controller
 
      public function emploi()
     {
+        $c = Client::find(Auth::user()->id);
+        $favoris = \DB::table('produits')->get();
+        $imageproduit = \DB::table('imageproduits')->get();
+        $command = \DB::table('commandes')->where([['commande_envoyee',0]])->get();     
+
         $emploi = \DB::table('annonce_emploies')->orderBy('created_at','desc')->paginate(21) ;
         $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->paginate(21);
         $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->paginate(21);
-        return view('emploi',['emploi'=>$emploi,'categorie'=>$categorie ,'categorieE'=>$categorieE]); 
+        return view('emploi',['emploi'=>$emploi,'categorie'=>$categorie ,'categorieE'=>$categorieE        ,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command]); 
     }
     
     public function detailsEmploi(Request $request){
@@ -158,6 +174,11 @@ class BwsController extends Controller
 
      public function article()
     {
+        $c = Client::find(Auth::user()->id);
+$favoris = \DB::table('produits')->get();
+        $imageproduit = \DB::table('imageproduits')->get();
+        $command = \DB::table('commandes')->where([ ['client_id',$c->id],['commande_envoyee',0]])->get();     
+
        $allArticle = \DB::table('articles')
         ->join('admins', 'admins.id', '=', 'articles.admin_id')
         ->select('admins.nom','admins.prenom','articles.*',\DB::raw('DATE(articles.created_at) as date'))
@@ -165,13 +186,17 @@ class BwsController extends Controller
         ->paginate(3) ;
        $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
         $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
-        return view('article',['allArticle' =>$allArticle,'categorie'=>$categorie ,'categorieE'=>$categorieE]);
+        return view('article',['allArticle' =>$allArticle,'categorie'=>$categorie ,'categorieE'=>$categorieE        ,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command]);
     }
     public function contact()
-    {
+    {         $c = Client::find(Auth::user()->id);
+        $favoris = \DB::table('produits')->get();
+        $imageproduit = \DB::table('imageproduits')->get();
+        $command = \DB::table('commandes')->where([ ['client_id',$c->id],['commande_envoyee',0]])->get();     
         $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
         $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
-        return view('contact',['categorie'=>$categorie ,'categorieE'=>$categorieE]);
+        return view('contact',['categorie'=>$categorie ,'categorieE'=>$categorieE ,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command
+        ]);
     }
 
      public function addEmail(Request $request)
@@ -194,6 +219,7 @@ class BwsController extends Controller
 
      public function accueil()
     {
+        
         $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
         $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
         return view('home',['categorie'=>$categorie ,'categorieE'=>$categorieE]);
@@ -220,6 +246,35 @@ class BwsController extends Controller
     public function get_ville(){
         $ville = Ville::all();
         return $ville;
+    }
+
+    public function deleteProduitPanier($id){
+       
+        $client = Client::find(Auth::user()->id);
+        \DB::table('commandes')->where([['produit_id',$id],['client_id',$client->id],['id',$client->nbr_cmd]])->delete();
+        return Response()->json(['etat' => true]);
+    }
+
+    public function updateProduitPanier(Request $request){
+       
+        $client = Client::find(Auth::user()->id);
+        if($request->type == 'color'){
+            \DB::table('commandes')->where([['produit_id',$request->produit_id],['client_id',$client->id],['id',$client->nbr_cmd]])->
+            update(['couleur_id'=> $request->val]);
+        }
+        else if($request->type == 'taille'){
+            \DB::table('commandes')->where([['produit_id',$request->produit_id],['client_id',$client->id],['id',$client->nbr_cmd]])->
+            update(['taille'=> $request->val]);
+        }
+        else if($request->type == 'typeL'){
+            \DB::table('commandes')->where([['produit_id',$request->produit_id],['client_id',$client->id],['id',$client->nbr_cmd]])->
+            update(['type_livraison'=> $request->val]);
+        }
+        else if($request->type == 'qte'){
+            \DB::table('commandes')->where([['produit_id',$request->produit_id],['client_id',$client->id],['id',$client->nbr_cmd]])->
+            update(['qte'=> $request->val]);
+        }
+        return Response()->json(['etat' => true]);
     }
 /*********************************************** Admin ***********************************************/
 

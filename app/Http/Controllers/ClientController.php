@@ -129,6 +129,25 @@ class ClientController extends Controller
                             
                             return Response()->json(['etat' => true,'produitExister' => false]);
                             }
+                            else if(count($produitExister) != 0){
+                                foreach ($produitExister as $key ) {
+                                    if($key->qte != $request->qte || $key->type_livraison != $request->type_livraison || $key->couleur_id != $request->couleur_id || $key->taille != $request->taille){
+                                        $commande = new Commande();         
+                                        $commande->id = $client->nbr_cmd;
+                                        $commande->client_id = $client->id;
+                                        $commande->vendeur_id = $request->vendeur_id;
+                                        $commande->produit_id = $request->produit_id; 
+                                        $commande->prix_total = $request->prix;
+                                        $commande->qte = $request->qte;
+                                        $commande->type_livraison = $request->type_livraison;
+                                        $commande->couleur_id = $request->couleur_id;
+                                        $commande->taille = $request->taille;
+                                        $commande->save();
+                                        return Response()->json(['etat' => true,'produitExister' => false]);
+                                    }
+                                }
+                                
+                            }
                             else{
                                 return Response()->json(['etat' => true,'produitExister' => true]);
                             }
@@ -176,57 +195,101 @@ class ClientController extends Controller
         ->join('imageproduits','imageproduits.produit_id', '=', 'commandes.produit_id')
         ->join('colors','colors.id', '=', 'commandes.couleur_id')
         ->join('vendeurs','vendeurs.id', '=', 'commandes.vendeur_id')
-        ->select('colors.nom', 'imageproduits.produit_id', 'imageproduits.image', 'imageproduits.profile', 'clients.email', 'clients.codePostal', 'clients.numeroTelephone', 'clients.ville', 'produits.Libellé', 'produits.prix', 'produits.vendeur_id', 'commandes.*', 'vendeurs.Nom as nom_vendeur', 'vendeurs.Prenom as prenom_vendeur')
+        ->select('colors.nom', 'imageproduits.produit_id', 'imageproduits.image', 'imageproduits.profile','clients.ville', 'produits.Libellé', 'produits.prix', 'produits.vendeur_id', 'commandes.*', 'vendeurs.Nom as nom_vendeur', 'vendeurs.Prenom as prenom_vendeur',DB::raw('(commandes.prix_total * commandes.qte) as prixTo'))
         ->where([['commandes.client_id', $clientCnncte->id],['commandes.id', $clientCnncte->nbr_cmd],['imageproduits.profile',1]])
         ->get();
+
+        
+
         $color = \DB::table('colors')->join('color_produits', 'colors.id', '=', 'color_produits.color_id')->get();
         $taille = \DB::table('taille_produits')->get();
         $typeLivraison = \DB::table('typechoisirvendeurs')->get();
 
         $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
         $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
-        return view('panier_visiteur',['produitCmds' => $produitCmds,'color' => $color, 'typeLivraison' => $typeLivraison, 'taille' => $taille,'nomClient' => $clientCnncte->nom,'prenomClient' => $clientCnncte->prenom,'idClient' => $clientCnncte->id,'categorie'=>$categorie,'categorieE'=>$categorieE]);
+
+        $favoris = \DB::table('produits')->get();
+        $imageproduit = \DB::table('imageproduits')->get();
+        $command = \DB::table('commandes')->where([ ['client_id',$clientCnncte->id],['commande_envoyee',0]])->get();     
+        return view('panier_visiteur',['produitCmds' => $produitCmds,'color' => $color, 'typeLivraison' => $typeLivraison, 'taille' => $taille,'nomClient' => $clientCnncte->nom,'prenomClient' => $clientCnncte->prenom,'idClient' => $clientCnncte->id,'categorie'=>$categorie,'categorieE'=>$categorieE,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command]);
+
 
     } 
 
+    public function panierDemmande(){
+        $clientCnncte = Client::find(Auth::user()->id);
+        $produitCmds = \DB::table('commandes')
+        ->join('produits', 'produits.id', '=', 'commandes.produit_id')
+        ->join('clients','clients.id', '=', 'commandes.client_id')
+        ->join('imageproduits','imageproduits.produit_id', '=', 'commandes.produit_id')
+        ->join('colors','colors.id', '=', 'commandes.couleur_id')
+        ->join('vendeurs','vendeurs.id', '=', 'commandes.vendeur_id')
+        ->select('colors.nom', 'imageproduits.produit_id', 'imageproduits.image', 'imageproduits.profile','clients.ville', 'produits.Libellé', 'produits.prix', 'produits.vendeur_id', 'commandes.*', 'vendeurs.Nom as nom_vendeur', 'vendeurs.Prenom as prenom_vendeur',DB::raw('(commandes.prix_total * commandes.qte) as prixTo'))
+        ->where([['commandes.client_id', $clientCnncte->id],['commandes.id', $clientCnncte->nbr_cmd],['imageproduits.profile',1]])
+        ->get();
+        $prixT = \DB::table('commandes')
+        ->join('clients','clients.id', '=', 'commandes.client_id')
+        ->select(DB::raw('sum(commandes.prix_total * commandes.qte) as prixTo'))
+        ->where([['commandes.client_id', $clientCnncte->id],['commandes.id', $clientCnncte->nbr_cmd]])
+        ->get();
+        if($prixT[0]->prixTo == null){
+            $prixT[0]->prixTo  = "0.00";
+        }
+
+        return  ['produitCmds' => $produitCmds, 'prixT' => $prixT];
+    } 
+
+
     public function AjoutAuFavoris($id){
+
         $clientCnncte = Client::find(Auth::user()->id);// njibo l client di ra connecter
-        $favoris = new Favori;
-        $favoris->produit_id = $id;//$id howa l id ta3 produit
-        $favoris->client_id = $clientCnncte->id;
-        $favoris->save();
-        return $favoris;
+        $favexiste = \DB::table('favoris')->where([['produit_id',$id],["client_id", $clientCnncte->id]])->get();
+        if(count($favexiste) == 0){
+            $favoris = new Favori;
+            $favoris->produit_id = $id;//$id howa l id ta3 produit
+            $favoris->client_id = $clientCnncte->id;
+            $favoris->save();
+            return ['etat' => "add"];
+        }
+        else{
+            $favoris = \DB::table('favoris')->where('produit_id', $id)->delete();
+            return ['etat' => "remove"];
+        }
+        
+        
     }
  
       
     public function EnvoyerCommande(Request $request){
-        if($request->code_postale == null && $request->address == null){
+
+        if($request->nonCode == 1 && $request->nonAddresse == 1 ){
              $request->validate([
               'numero_tlf' => ['required', 'string', 'max:10', 'min:10','regex:/0[5-7]+/'],
               'email' => ['required', 'string','email'],
+              'address' => ['required', 'string'],
+              'code_postale' => ['required', 'string', 'max:5', 'min:5','regex:/[0-9]{5}+/'],
 
              ]);
         }
-        else if($request->code_postale != null && $request->address == null){
-             $request->validate([
-              'numero_tlf' => ['required', 'string', 'max:10', 'min:10','regex:/0[5-7]+/'],
-              'email' => ['required', 'string','email'],
-              'code_postale' => ['required', 'string', 'max:5', 'min:5','regex:/[0-9]{5}+/'],
-             ]);
-        }
-        else if($request->code_postale == null && $request->address != null){
+        else if($request->nonCode != 1 && $request->nonAddresse == 1){
              $request->validate([
               'numero_tlf' => ['required', 'string', 'max:10', 'min:10','regex:/0[5-7]+/'],
               'email' => ['required', 'string','email'],
               'address' => ['required', 'string'],
              ]);
         }
-        else if($request->code_postale != null && $request->address != null){
+        else if($request->nonCode == 1 && $request->nonAddresse != 1){
              $request->validate([
               'numero_tlf' => ['required', 'string', 'max:10', 'min:10','regex:/0[5-7]+/'],
               'email' => ['required', 'string','email'],
-              'address' => ['required', 'string'],
               'code_postale' => ['required', 'string', 'max:5', 'min:5','regex:/[0-9]{5}+/'],
+             ]);
+        }
+        else if($request->nonCode != 1 && $request->nonAddresse != 1){
+             $request->validate([
+              'numero_tlf' => ['required', 'string', 'max:10', 'min:10','regex:/0[5-7]+/'],
+              'email' => ['required', 'string','email'],
+              
              ]);
         }
         $clientCnncte = Client::find(Auth::user()->id);// njibo l client di ra connecter
@@ -240,7 +303,9 @@ class ClientController extends Controller
              'ville' =>$clientCnncte->ville,'address' =>$request->address]);}
 
 
-        $clientCnncte->nbr_cmd =$clientCnncte->nbr_cmd+1; 
+        $clientCnncte->nbr_cmd =$clientCnncte->nbr_cmd+1;
+        $clientCnncte->addresse = $request->address;
+        $clientCnncte->codePostal  = $request->code_postale;
         $clientCnncte->save();
 
         session()->flash('success','Cette Commande sera traitée par le vendeur et lui rappeler ou refuser ton commande avec notification');
@@ -251,7 +316,7 @@ class ClientController extends Controller
 public function getProduit(){
     $clientCnncte = Client::find(Auth::user()->id);
     $favoris = \DB::table('produits')->get();
-
+    $annonce  =\DB::table('annonce_emploies')->get();
     $produit = \DB::table('favoris')->where([ ['client_id',$clientCnncte->id]])
     ->orderBy('created_at','desc')->paginate(8); 
     $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
@@ -261,7 +326,7 @@ public function getProduit(){
     $command = \DB::table('commandes')->where([ ['client_id',$clientCnncte->id],['commande_envoyee',0]])->get(); 
    
     
-    return view('favoris_client',['produit'=>$produit, 'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command,'categorie'=>$categorie,'categorieE'=>$categorieE]);
+    return view('favoris_client',['produit'=>$produit, 'ImageP' => $imageproduit, 'Fav' => $favoris,'annonce'=>$annonce,'command' => $command,'categorie'=>$categorie,'categorieE'=>$categorieE]);
 }
 
 public function addHisto($id){
@@ -272,6 +337,13 @@ public function addHisto($id){
     $histoProd->save();
     return $histoProd;
 }
-
+public function AnnonceAuFavoris($id){
+    $clientCnncte = Client::find(Auth::user()->id);
+    $annonce = new Favori;
+    $annonce->annonce_emploi_id = $id;//$id howa l id ta3 annonce
+    $annonce->client_id = $clientCnncte->id;
+    $annonce->save();
+    return $annonce;
+}
 
 }

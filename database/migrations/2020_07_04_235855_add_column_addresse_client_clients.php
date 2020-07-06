@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddColumnCodePostalClients extends Migration
+class AddColumnAddresseClientClients extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddColumnCodePostalClients extends Migration
     public function up()
     {
         Schema::table('clients', function (Blueprint $table) {
-            $table->string('codePostal')->after('email')->nullable();
+            $table->string('addresse')->nullable();
         });
     }
 
@@ -26,7 +26,7 @@ class AddColumnCodePostalClients extends Migration
     public function down()
     {
         Schema::table('clients', function (Blueprint $table) {
-            $table->dropColumn('codePostal');
+            $table->dropColumn('addresse');
         });
     }
 }

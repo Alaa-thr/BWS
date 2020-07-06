@@ -5,7 +5,62 @@
 	<head>
 		<title><?php echo e(( 'Shops')); ?></title>
 	</head>
+ <!-- Cart -->
+ <div class="wrap-header-cart js-panel-cart" style="z-index: 11000; ">
+        <div class="s-full js-hide-cart"></div>
+        
+        <div class="header-cart flex-col-l p-l-55 p-r-25">
+            
+            <div class="header-cart-title flex-w flex-sb-m p-b-8">
+                <span class="mtext-103 cl2">
+                    Votre Panier
+                </span>
 
+                <div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart" >
+                    <i class="zmdi zmdi-close" style="margin-left: 171%"></i>
+                </div>
+                
+            </div>
+            
+            <div class="header-cart-content flex-w js-pscroll" id="app11" >
+                <ul class="header-cart-wrapitem w-full" v-for="command in ProduitsPanier" >
+                    <li class="header-cart-item flex-w flex-t m-b-12">
+                        <div class="header-cart-item-img" v-for="imgP in imagesproduit" id="profi">
+                        <img v-if="imgP.produit_id === command.produit_id && imgP.profile === 1" :src="'storage/produits_image/'+ imgP.image" 
+                        alt="IMG-PRODUCT"  style="height: 60px;">
+                        </div>
+
+                        <div class="header-cart-item-txt p-t-8"  v-for="fv in favoris" v-if="fv.id === command.produit_id" id="bb">
+                            <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
+                            {{fv.Libellé}}
+                            </a>
+
+                            <span class="header-cart-item-info">
+                            {{command.qte}} x  {{fv.prix}} DA
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+                
+                <div class="w-full" >
+                    
+                <div class="header-cart-total w-full p-tb-40">
+                        Total: 
+                    </div>
+
+                    <div class="header-cart-buttons flex-w w-full">
+                        <a href="<?php echo e(route('panier')); ?>" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+                            View Cart
+                        </a>
+
+                        <a href="<?php echo e(route('panier')); ?>" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
+                            Check Out
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>      
+    </div>
 
 	<div class="container">
 		<div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
@@ -243,14 +298,16 @@
 			</div>
 <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
 			<div class="row isotope-grid" id="app1">
-				<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women" v-for="produit in produits" >
-					
-					<div class="block2">
+				<?php $__currentLoopData = $produit; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $prdt): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>	
+				<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women" >
+				
+
+					<div class="block2" >
 						<div class="block2-pic hov-img0" v-for="imgP in imagesproduit" >
 							
-							<img v-if="imgP.produit_id === produit.id && imgP.profile === 1" :src="'storage/produits_image/'+ imgP.image" alt="IMG-PRODUCT" style="height: 334px;width: 300px;">
+							<img v-if="imgP.produit_id == <?php echo $prdt->id ?> && imgP.profile === 1"  :src="'storage/produits_image/'+ imgP.image" alt="IMG-PRODUCT" style="height: 334px;width: 300px;">
 
-							<a href="" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1" v-on:click="detaillProduit(produit)">
+							<a href="" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1" v-on:click="detaillProduit(<?php echo e(json_encode($prdt)); ?>)">
                                 Quick View
                             </a>
 						</div>
@@ -258,11 +315,12 @@
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l ">
 								<a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-									{{produit.Libellé}}
+									<?php echo e($prdt->Libellé); ?>
+
 								</a>
 
 								<span class="stext-105 cl3">
-									{{produit.prix}}DA
+									<?php echo e($prdt->prix); ?>DA
 								</span>
 							</div>
 							<?php
@@ -271,7 +329,7 @@
 								$k=0;
 							?>
 						<?php for($i=0 ; $i< count($fav) ; $i++): ?>
-								<?php if($fav[$i]->produit_id == 19): ?>
+								<?php if($fav[$i]->produit_id == $prdt->id): ?>
 										
 									<?php
 										$k=$k+1;
@@ -284,27 +342,29 @@
 								<?php endif; ?>
 						<?php endfor; ?>	
 						<?php if($k == 1): ?>
-							<div class="block2-txt-child2 flex-r p-t-3" >
+							<div class="p-t-3">
 								
-										<a href="" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2" v-on:click="AjoutAuFavoris(produit.id)" id='favoo'>
-											<img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON"  >
-											<img class=" dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" id='cccc'alt="ICON" >
+										<a  class="" v-on:click="AjoutAuFavoris(<?php echo e(json_encode($prdt)); ?>)" style="cursor: pointer;">
+											<i  class="zmdi zmdi-favorite zmdi-hc-2x" style="color: #e60000; " id="<?php echo $prdt->id ?>"></i>
+											
 										</a>
 									</div>
 						<?php else: ?>
-						<div class="block2-txt-child2 flex-r p-t-3" >
+						<div class=" p-t-3">
 									
-									<a href="" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2" v-on:click="AjoutAuFavoris(produit.id)" id='favoo'>
-										<img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON"  >
-										<img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" id='cccc'alt="ICON" >
+									<a  class="" v-on:click="AjoutAuFavoris(<?php echo e(json_encode($prdt)); ?>)" style="cursor: pointer; " >
+										<i  class="cl222 zmdi zmdi-favorite-outline zmdi-hc-2x favoo " id="<?php echo $prdt->id ?>"></i>
+										
 									</a>
 								</div>
 	
 						<?php endif; ?>
-							
+						
 							
 						</div>
 					</div>
+				</div>
+				<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 					<!-- Modal1 -->
 			<div class="wrap-modal1 js-modal1 p-t-60 p-b-20" >
 			        <div class="overlay-modal1" v-on:click="CancelArticle()" ></div>
@@ -450,7 +510,7 @@
 			                                        </div >
 			                                        <span class="m-b-10 cl13" v-if="message.qte" v-text="message.qte[0]" style="margin-top: -10px"></span>
 													<div class="flex-t">
-				                                        <button class="flex-c-m m-r-20 stext-102 cl0 size-102 bg11 bor1 p-lr-15 trans-04" v-on:click="addPanier()">
+													<button class="flex-c-m m-r-20 stext-102 cl0 size-102 bg11 bor1 p-lr-15 trans-04" v-on:click="addPanier()">
 				                                            Ajouter au panier
 				                                        </button>
 				                                        <button class="flex-c-m stext-102 cl0 size-102 bg10 bor1 p-lr-15 trans-04" v-on:click="CancelArticle()" >
@@ -468,7 +528,7 @@
 			            </div>
 			        </div>
     		</div>
-				</div>
+				
 		
    
 				
@@ -488,7 +548,19 @@
 	
 <?php $__env->stopSection(); ?>
 <?php $__env->startPush('javascripts'); ?>
+<script>
+	function adde(a){
 
+		$('#'+a).removeClass('zmdi-favorite-outline');
+		$('#'+a).addClass('zmdi-favorite');
+		document.getElementById(a).style.color = '#e60000';
+	}
+	function deletee(a){
+			$('#'+a).removeClass('zmdi-favorite');
+			$('#'+a).addClass('zmdi-favorite-outline');
+			document.getElementById(a).style.color = '#d3d3d3';
+	}
+</script>
 
 
 <script>
@@ -501,6 +573,8 @@
                'taille'         => $taille,
                'fav'         => $fav,
                'typeLivraison'         => $typeLivraison,
+               'Fav'            => $Fav,
+               'command'        => $command,
                "url"      => url("/")  
     ]); ?>;
 
@@ -530,7 +604,10 @@
       	hideModel: false,
       	favoris : [],
       	showFavoris: true,
-
+      	remoadd: true,
+      	addremo: true,
+      	idproduitfavadd: '',
+      	idproduitfavadd: '',
       },
       methods:{
       	testFavoris($id){
@@ -675,12 +752,10 @@
              })
       	},
       	detaillProduit:function(produit){
-      		
-      		var position = this.produits.indexOf(produit);
       		var i = 0;
       		this.ajoutPanier.vendeur_id = produit.vendeur_id;
       		this.ajoutPanier.prix = produit.prix;
-      		this.detaillproduit = this.produits[position];
+      		this.detaillproduit = produit;
       		this.detaillproduit.Nom = this.detaillproduit.Nom.toUpperCase();
       		this.detaillproduit.Prenom = this.detaillproduit.Prenom.toUpperCase();
       		this.ajoutPanier.produit_id = this.detaillproduit.id;
@@ -711,14 +786,25 @@
                   console.log('errors : '  , error);
              })
           },
-          AjoutAuFavoris: function(id){//jebna l id ta3 l produit bach nzaftouh l la method AjoutAuFavoris di ra f controller clientController
-          	axios.post(window.Laravel.url+'/ajoutaufavoris/'+id)
-              .then(response => {
-                	console.log("response",response.data)
-               })
-              .catch(error => {
-                  console.log('errors : '  , error);
-             })
+          AjoutAuFavoris: function(produit){
+				axios.post(window.Laravel.url+'/ajoutaufavoris/'+produit.id)
+	              .then(response => {
+	              		if(response.data.etat == "add"){
+							swal(produit.Libellé, "a été ajouté au liste de favoris.", "success");
+							adde(produit.id);
+               	 		}
+               	 		else{
+               	 			swal(produit.Libellé, "a été retiré au liste de favoris.", "success");
+	                		deletee(produit.id);
+               	 		}
+					
+				             
+			        	
+	               })
+	              .catch(error => {
+	                  console.log('errors : '  , error);
+	             })
+            
           }
 
       },
@@ -742,6 +828,36 @@
   }
 
 
+</script>
+<script>
+     var app11 = new Vue({
+        el: '#app11',
+        data:{
+          message:'hello',
+          ProduitsPanier: [],
+          favoris: [],
+          imagesproduit: [],
+        },
+        methods:{
+			produitVisiteur: function(){
+            axios.get(window.Laravel.url+'/shop')
+              .then(response => {
+                this.favoris = window.Laravel.Fav;
+                this.imagesproduit = window.Laravel.ImageP;
+                this.ProduitsPanier = window.Laravel.command;
+               })
+              .catch(error => {
+                  console.log('errors : '  , error);
+             })
+          },
+          
+
+        },
+        created:function(){
+            this.produitVisiteur();
+
+        }
+     })
 </script>
 <script type="text/javascript">
 	$(function () {

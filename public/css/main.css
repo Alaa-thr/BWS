@@ -2043,6 +2043,13 @@ button.mfp-close {
   cursor: pointer;
 }
 
+.btn-num-product-upp,
+.btn-num-product-downp {
+  width: 45px;
+  height: 100%;
+  cursor: pointer;
+}
+
 .num-product {
   width: calc(100% - 90px);
   height: 100%;
@@ -3668,6 +3675,13 @@ a#condi:hover {
   padding: 10px;
   text-decoration: none;
 }
+
+i.favoo:hover{
+  color: #e60000;
+}
+
+.cl222{color:#d3d3d3;}
+
 .creat-articlee{
   border-style: solid ;
   border-color: gray;
@@ -3684,3 +3698,4 @@ a#condi:hover {
   padding-right: 100px;
   width: 120%
 }
+

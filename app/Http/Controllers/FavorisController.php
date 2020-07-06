@@ -28,8 +28,9 @@ class FavorisController extends Controller
     
 
     public function deletefavorisClient($id){
-        $favoris = Favori::find($id);
-        $favoris->delete();
+        $favoris = \DB::table('favoris')->where('produit_id', $id)->delete();
+        
+        
         return Response()->json(['etat' => true]);
     }
 }

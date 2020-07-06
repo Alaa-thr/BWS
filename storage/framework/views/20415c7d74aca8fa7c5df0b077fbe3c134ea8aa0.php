@@ -36,7 +36,7 @@
             <hr style="margin-top:42px;">       
           
         
-            <div class="card-body"   v-for="commandec in commandeclient" v-if="commandec.demmande_traiter===0">
+            <div class="card-body"   v-for="commandec in commandeclient">
 
 <div v-if="selectall"  id="c" >
        <input type="checkbox"  style=" margin-left: 10px;" :id="commandec.id" :value="commandec.id" v-model="checkedArticles" @change="changeButton(commandec)">
@@ -49,24 +49,24 @@
 
 
   
-    <div class="card-head" >              
+    <div class="card-head"  id="cmd">              
     <div class="row"  >
     <div >
   <p class="cvendeur"  id="txt" >
-  Demande Numero  {{commandec.id}}</p>
+  Demande   {{commandec.id}}</p>
       </div> 
  
     
     <div  class="col-md-4 pr-1" id="cv">
       <div style="margin-left:22px" >
-          <p id="txt" > Cv Client : {{commandec.cv_client}}</p>
+          <p id="txt" style="margin-left: 60px">  {{commandec.date}}</p>
       </div>
        
     </div>
    
     <div class="col-md-4 pl-1" id="a">
       <div class="" id="b" >
-      <a class="f" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#" id="point">
+      <a class="f" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#" id="point"  style="margin-left: 245px">
         <i class="fas fa-ellipsis-v"  id="y"></i>
        </a>
       <div class="dropdown-menu " x-placement="right-start" id="pl"  >
@@ -76,17 +76,19 @@
     style="color: red; font-style: italic; font-weight: 900; cursor: pointer;">
     Supprimer</a>
        </div>
-      
+       
     </div>    
 
-    </div>      
-
+    </div> 
+    <div  >
+<p id="txt" style="margin-top: -20px ;margin-left: 39px" >Condidat: </p> 
+<p id="txt1" style="margin-top: -20px;margin-left:120px;">{{commandec.nom.toUpperCase()}} {{commandec.prenom.toUpperCase()}}</p>
+ </div>     
+ 
   </div>      
+   
+</div>    
 
-  <hr  id="cvendeur">
-
-    
-</div>                  
               </div>
 
             </div>     
@@ -436,6 +438,7 @@ methods: {
             axios.get(window.Laravel.url+'/demandeEmploiRecu')
                 .then(response => {
                      this.commandeclient = window.Laravel.article.data;
+                     console.log('this.commandeclient',this.commandeclient);
                 })
                 .catch(error =>{
                      console.log('errors :' , error);

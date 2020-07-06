@@ -23,13 +23,14 @@
             </div>
             
             <div class="header-cart-content flex-w js-pscroll" id="app1" >
-                <ul class="header-cart-wrapitem w-full" v-for="command in ProduitsPanier">
-                    <li class="header-cart-item flex-w flex-t m-b-12" >
-                        <div class="header-cart-item-img" v-for="imgP in imagesproduit">
-                        <img v-if="imgP.produit_id === command.produit_id && imgP.profile === 1" :src="'storage/produits_image/'+ imgP.image" alt="IMG-PRODUCT" style="height: 60px;">
+                <ul class="header-cart-wrapitem w-full" v-for="command in ProduitsPanier" >
+                    <li class="header-cart-item flex-w flex-t m-b-12">
+                        <div class="header-cart-item-img" v-for="imgP in imagesproduit" id="profi">
+                        <img v-if="imgP.produit_id === command.produit_id && imgP.profile === 1" :src="'storage/produits_image/'+ imgP.image" 
+                        alt="IMG-PRODUCT"  style="height: 60px;">
                         </div>
 
-                        <div class="header-cart-item-txt p-t-8"  v-for="fv in favoris" v-if="fv.id === command.produit_id" >
+                        <div class="header-cart-item-txt p-t-8"  v-for="fv in favoris" v-if="fv.id === command.produit_id" id="bb">
                             <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
                             @{{fv.Libellé}}
                             </a>
@@ -442,7 +443,7 @@ created:function(){
         },
         methods:{
           getProduit: function(){
-            axios.get(window.Laravel.url+'/favorisClient')
+            axios.get(window.Laravel.url+'/historiqueClient')
               .then(response => {
                 this.favoris = window.Laravel.Fav;
                 this.imagesproduit = window.Laravel.ImageP;
