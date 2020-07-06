@@ -4027,3 +4027,7 @@ otification_client.blade.php) at C:\\Users\\Metak\\Documents\\BWS\esources\\vie
 #43 C:\\Users\\Metak\\Documents\\BWS\\server.php(21): require_once('C:\\\\Users\\\\Metak\\\\...')
 #44 {main}
 "} 
+[2020-07-05 22:15:01] local.ERROR: Maximum execution time of 60 seconds exceeded {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Maximum execution time of 60 seconds exceeded at C:\\xampp\\htdocs\\BWS\\vendor\\laravel\\framework\\src\\Illuminate\\Translation\\FileLoader.php:9)
+[stacktrace]
+#0 {main}
+"} 

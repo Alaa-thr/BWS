@@ -285,12 +285,12 @@
 	</div>
 
 	<div class="wrap-modal1 js-modal1 p-t-38 p-b-20 p-l-15 p-r-15 " id="app2" v-if="hideModel">
-      <div class="overlay-modal11 "></div>
+      <div class="overlay-modal1 "></div>
   
       <div class="container">
-        <div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent" v-if="openInfo "  style="width: 1250px; background: gray; margin-top: 20px; margin-left: -30px;" v-for="empp in emplois2" >
+        <div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent" v-if="openInfo "  style="width: 1250px;  margin-top: 20px; margin-left: -30px;" v-for="empp in emplois2" >
           <button class="how-pos3 hov3 trans-04 p-t-6" v-on:click="hideModel = false">
-            <img src="images/icon-close.png" alt="CLOSE" style="background-color: black; margin-top: 10px;">
+            <img src="images/icon-close.png" alt="CLOSE">
           </button>
         <section class=" creat-articlee " > 
            <div class="row">

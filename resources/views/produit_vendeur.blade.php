@@ -232,7 +232,7 @@
                     </div>
                 </div>
             </div>
-            <div class="bg0 p-b-150 p-lr-15-lg how-pos3-parent" v-if="openAjout "style=" width: 1050px; padding-top: 45%">
+            <div class="bg0 p-b-150 p-lr-15-lg how-pos3-parent" v-if="openAjout"style=" width: 990px; padding-top: 45%">
                   <button class="how-pos3 hov3 trans-04 p-t-6" v-on:click="CancelArticle()">
                     <img src="images/icon-close.png" alt="CLOSE">
                   </button>
@@ -357,7 +357,9 @@
                           <div class="col-md-10 flex-t">
                                  <button type="submit" v-if="modifier" class="btn btn-success btn-block m-r-5" style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="" >Modifier
                                 </button> 
-                                <button type="submit" v-else class="btn btn-success btn-block m-r-5" style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="addProduit()" >Ajouter
+                                <!--button type="submit" v-else class="btn btn-success btn-block m-r-5" style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="addProduit()" >Ajouter
+                                </button-->
+                                <button type="submit" v-else class="js-show-modal1 btn btn-success btn-block m-r-5" style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="AfficherAjout2()">Suivant
                                 </button> 
                                 <button type="submit"  class="btn btn-danger btn-block " style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="CancelArticle()" >Annuler
                                 </button> 
@@ -367,12 +369,41 @@
                   </section>
               
             </div>
-            <div class="bg0 p-b-150 p-lr-15-lg how-pos3-parent" v-if="openAjout "style=" width: 1050px; padding-top: 45%">
+            <div class="bg0 p-b-150 p-lr-15-lg how-pos3-parent" v-if="openAjout2 "style=" width: 990px; padding-top: 45%">
                   <button class="how-pos3 hov3 trans-04 p-t-6" v-on:click="CancelArticle()">
                     <img src="images/icon-close.png" alt="CLOSE">
                   </button>
-                  
-              
+                 <div class="tab " style="border: 1px" >
+                    <div class="form-group m-b-35 m-l-50 " style="margin-left: 30px; margin-top: -20px;">
+                        <input type="checkbox" value="" class="form-control" id="selectall" onclick="selectAll(this);" >
+                        <label for="selectall" style="font-size: 20px;" >Selectionner Tout :</label>
+                    </div>
+                   <div class="form-group m-b-35 m-l-50 " v-for="v in villes" style="display: inline-flex;">
+                                    <div  >
+                                        <input type="checkbox" class=" form-control  @error('villeC') is-invalid @enderror" value="v.id" :id="v.id" name="villeC[]" >
+                                        <label class="p-l-25 p-t-4" :for="v.id" >@{{v.nom}}</label>
+                                        @error('villeC')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                    </div>
+                    <div class="form-group input-group m-b-60">
+                                  <input type="text" class="form-control @error('prix_tarif') is-invalid @enderror" aria-label="Text input with dropdown button" placeholder="Entrez le prix de livraison pour la(les) ville(s) selectionner" name="prix_tarif" style="height: 45px" value="{{old('prix_tarif')}}">
+                                  <div class="input-group-append">
+                                    <select class="form-control form-control-lg @error('poids') is-invalid @enderror" id="exampleFormControlSelect1"  name="poids" style="height: 45px">
+                                            <option value="1" selected {{ old('poids') == 1 ? 'selected' : '' }}>/Kg</option>
+                                            <option value="2" {{ old('poids') == 2 ? 'selected' : '' }}>/g</option>
+                                    </select>
+                                  </div>
+                                  @error('prix_tarif')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                  @enderror
+                    </div>
+                  </div>
             </div>
         </div>
     </div>
@@ -459,6 +490,7 @@
         data:{
           hideModel: false,
           openAjout: false,
+          openAjout2: false,
           openInfo: false,
           modifier: false,
           produitAjout: {
@@ -477,6 +509,7 @@
             pointures: [],
             typet: 0,
           },
+          villes: [],
           image: '',
           message: {},
           sousCategories: [],
@@ -528,6 +561,21 @@
                   this.image = event.target.result;
                }              
             },
+            getVille: function(){
+                axios.get(window.Laravel.url+'/getville')
+                 .then(response => {
+                      this.villes = response.data;
+                      console.log("this.villes",this.villes)
+                 })
+                 .catch(error => {
+                      console.log('errors : '  ,error);
+                 })
+ 
+            },
+            openAjoutt :function(){
+              this.openAjout = true;
+              
+            },
             imagesPreviews(event) {
                
                for( i = 0 ; i < event.target.files.length ; i++){
@@ -575,6 +623,22 @@
                 this.getSousCategories(event.target.value);
 
             },
+            AfficherAjout2: function(){
+             this.hideModel = true;
+             this.openAjout2 = true;
+             this.openAjout = false
+             this.openInfo = false;
+             this.produitAjout ={
+                        id: 0,
+                        vendeur_id: 0,
+                        sous_categorie_id: 0,
+                        Libellé: '',
+                        prix: 0,
+                        description: '',
+                        Qte_P: 0,
+                        poid: 0
+             }
+            },
             activeTaille: function(){
                 if(this.Type == 1){
                     this.typeTaille = true;
@@ -609,6 +673,7 @@
         created: function(){
             this.getCategories();
             this.getColors();
+            this.getVille();
         }
      })
 </script>
@@ -638,17 +703,10 @@
              app2.hideModel = true;
              app2.openAjout = true;
              app2.openInfo = false;
-             app2.produitAjout ={
-                        id: 0,
-                        vendeur_id: 0,
-                        sous_categorie_id: 0,
-                        Libellé: '',
-                        prix: 0,
-                        description: '',
-                        Qte_P: 0,
-                        poid: 0
-             }
+             app2.openAjout2 = false;
+              
           },
+
           ShowInfo: function(){
             app2.hideModel = true;
              app2.openAjout = false;
