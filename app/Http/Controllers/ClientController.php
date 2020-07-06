@@ -105,7 +105,7 @@ class ClientController extends Controller
             if(Auth::user()->type_compte == "c"){
                 $client =  Client::find(Auth::user()->id);
                 $produitExister = \DB::table('commandes')->where([['id', $client->nbr_cmd],['produit_id',$request->produit_id],['client_id',$client->id]])->get();
-                
+              
                         if($request->tailExst == 1){
                             $request->validate([
                                     'taille' =>['required'],
@@ -131,7 +131,7 @@ class ClientController extends Controller
                             }
                             else if(count($produitExister) != 0){
                                 foreach ($produitExister as $key ) {
-                                    if($key->qte != $request->qte || $key->type_livraison != $request->type_livraison || $key->couleur_id != $request->couleur_id || $key->taille != $request->taille){
+                                    if($key->qte != $request->qte || $key->type_livraison != $request->type_livraison || $key->couleur_id != $request->couleur_id ){
                                         $commande = new Commande();         
                                         $commande->id = $client->nbr_cmd;
                                         $commande->client_id = $client->id;
@@ -141,7 +141,6 @@ class ClientController extends Controller
                                         $commande->qte = $request->qte;
                                         $commande->type_livraison = $request->type_livraison;
                                         $commande->couleur_id = $request->couleur_id;
-                                        $commande->taille = $request->taille;
                                         $commande->save();
                                         return Response()->json(['etat' => true,'produitExister' => false]);
                                     }

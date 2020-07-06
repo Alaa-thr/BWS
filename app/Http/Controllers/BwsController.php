@@ -73,20 +73,22 @@ class BwsController extends Controller
         $typeLivraison = \DB::table('typechoisirvendeurs')->get();
         $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
         $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
-        $c = Client::find(Auth::user()->id);
-$favoris = \DB::table('produits')->get();
+        
+        $favori = \DB::table('produits')->get();
         $imageproduit = \DB::table('imageproduits')->get();
-        $command = \DB::table('commandes')->where([ ['client_id',$c->id],['commande_envoyee',0]])->get();     
-
+            
+        $command = array();
         if(auth()->check() && Auth::user()->type_compte == 'c'){
-            $client = $client = Client::find(Auth::user()->id);
+            $client =  Client::find(Auth::user()->id);
+            $command = \DB::table('commandes')->where([ ['client_id',$client->id],['commande_envoyee',0]])->get();
+            
            $fav = \DB::table('favoris')->where('client_id',$client->id)->get();
-            return view('shop',['produit'=>$produit, 'ImageP' => $imageproduit, 'color' => $color, 'typeLivraison' => $typeLivraison, 'taille' => $taille ,'categorie'=>$categorie,'categorieE'=>$categorieE,'fav' => $fav, 'Fav' => $favoris,'command' => $command]);
+            return view('shop',['produit'=>$produit, 'ImageP' => $imageproduit, 'color' => $color, 'typeLivraison' => $typeLivraison, 'taille' => $taille ,'categorie'=>$categorie,'categorieE'=>$categorieE,'fav' => $fav,'command' => $command,'favori' => $favori]);
         }
 
             $fav=array(); 
 
-        return view('shop',['produit'=>$produit, 'ImageP' => $imageproduit, 'color' => $color, 'typeLivraison' => $typeLivraison, 'taille' => $taille ,'categorie'=>$categorie,'categorieE'=>$categorieE,'fav' => $fav]);
+        return view('shop',['produit'=>$produit, 'ImageP' => $imageproduit, 'color' => $color, 'typeLivraison' => $typeLivraison, 'taille' => $taille ,'categorie'=>$categorie,'categorieE'=>$categorieE,'fav' => $fav,'command' => $command]);
     }
 
     public function deposerProduit(){
