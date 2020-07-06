@@ -1,9 +1,9 @@
-@extends('layouts.template_employeur')
 
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 
 <head>
-      <title>{{ ( 'Demande Traiter ') }}</title>
+      <title><?php echo e(( 'Demande Traiter ')); ?></title>
   </head>
 
 <div class="main-panel" id="main-panel">
@@ -52,13 +52,13 @@
     <div class="row"  >
     <div  style="margin-top: 25px">
   <p class="cvendeur"  id="txt" >
-  Demande  @{{commandec.id}}</p>
+  Demande  {{commandec.id}}</p>
       </div> 
  
     
     <div  class="col-md-4 pr-1" id="cv"  style="margin-top: -45px">
       <div style="margin-left:22px" >
-          <p id="txt" >  @{{commandec.date}}</p>
+          <p id="txt" >  {{commandec.date}}</p>
       </div>
        
     </div>
@@ -89,7 +89,8 @@
               </div>
 
             </div>     
-              {{$article->links()}}
+              <?php echo e($article->links()); ?>
+
               </div>
 
             </div>      
@@ -117,7 +118,7 @@
       <div class="row" >
     <div class="col-md-4 pr-1" >
       <div style="margin-left:22px">
-          <p class="" id="t" >Demande @{{commandec.id}} </p>
+          <p class="" id="t" >Demande {{commandec.id}} </p>
       </div>
     </div>
     <div class="col-md-4 px-1">
@@ -126,7 +127,7 @@
     <div class="col-md-4 pl-1">
       <div class=""style="margin-top: 11px;" >
        
-      <p class=""  id="tt" >@{{commandec.created_at}}</p>
+      <p class=""  id="tt" >{{commandec.created_at}}</p>
       </div>
     </div>
     </div>  
@@ -135,20 +136,20 @@
     <div class="row" style="margin-left:22px;margin-top:52px;"  v-for="emplC in employeur" v-if="commandec.client_id  === emplC.id">
     <div class="col-md-4 pr-1" >
       <div style="margin-left:-16px;">
-          <p class="" id="t" >Les information sur Client @{{commandec.id}} : </p>
+          <p class="" id="t" >Les information sur Client {{commandec.id}} : </p>
       </div>
     </div>
     <div class="col-md-4 px-1" >
     <div class="" style="margin-left:-16px;margin-top:7px;">
        
-       <p class=""  id="tt" >@{{emplC.nom}}  @{{emplC.prenom}}  </p>
+       <p class=""  id="tt" >{{emplC.nom}}  {{emplC.prenom}}  </p>
        </div>
     </div>
     <div class="col-md-4 pl-1"  >
       <div class="" style="margin-left:-211px;margin-top:7px;">
        
       <p class=""  id="tt" > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      @{{emplC.ville}} 
+      {{emplC.ville}} 
   
  </p>
       </div>
@@ -157,14 +158,14 @@
     <div class="col-md-4 pl-1"  >
       <div class="" style="margin-left: 306px;margin-top: 51px;">
        
-      <p class=""  id="tt" > @{{emplC.email}}  </p>
+      <p class=""  id="tt" > {{emplC.email}}  </p>
       </div>
     </div>
 
     <div class="col-md-4 pl-1"  >
       <div class="" style="margin-left:350px;margin-top: 51px;">
        
-      <p class=""  id="tt" >@{{emplC.numeroTelephone}}</p>
+      <p class=""  id="tt" >{{emplC.numeroTelephone}}</p>
       </div>
     </div>
     </div>  
@@ -182,7 +183,7 @@
     <div class="" style="margin-left:-126px;margin-top:7px;">
        
        <p class=""  id="tt" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-       Libellé :@{{emplC.libellé}}
+       Libellé :{{emplC.libellé}}
        
         </p>
        </div>
@@ -193,7 +194,7 @@
        
        <p class=""  id="tt" >
       
-      Discription :@{{emplC.discription}}
+      Discription :{{emplC.discription}}
         </p>
        </div>
     </div>
@@ -204,7 +205,7 @@
     <div class="row" style="margin-left:22px;margin-top:42px;">
     <div class="col-md-4 pr-1" >
       <div style="margin-left:-16px">
-          <p class="" id="t" >Address:@{{commandec.address}} </p>
+          <p class="" id="t" >Address:{{commandec.address}} </p>
       </div>
     </div>
     <div class="col-md-4 px-1">
@@ -213,7 +214,7 @@
     <div class="col-md-4 pl-1">
       <div class="">
        
-      <p class=""  id="tt" >reponse_employeur :@{{commandec.reponse_employeur}}</p>
+      <p class=""  id="tt" >reponse_employeur :{{commandec.reponse_employeur}}</p>
       </div>
     </div>
     </div>  
@@ -241,24 +242,24 @@
 
 
 
-@endsection
+<?php $__env->stopSection(); ?>
 
 
 
 
-@push("javascripts")
+<?php $__env->startPush("javascripts"); ?>
 
 
 
 
 <script>
-    window.Laravel = {!! json_encode([
+    window.Laravel = <?php echo json_encode([
            "csrfToken"  => csrf_token(),
            "article"   => $article,
            "idAdmin" => $idAdmin,         'emploC'         => $emploC,  'prV'         => $prV,
 
            "url"      => url("/")  
-      ]) !!};
+      ]); ?>;
 </script>
 
 <script>
@@ -501,4 +502,5 @@ created:function(){
 
 </script>
 
-@endpush
+<?php $__env->stopPush(); ?>
+<?php echo $__env->make('layouts.template_employeur', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\BWS\resources\views/demande_emploi_traite_employeur.blade.php ENDPATH**/ ?>
