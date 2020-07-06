@@ -38,15 +38,11 @@
 
 <div v-if="selectall"  id="c"  >
 
-
-<div v-if="selectall"  id="c" >
-
        <input type="checkbox"  style=" margin-left: 10px;" :id="commandec.id" :value="commandec.id" v-model="checkedArticles" @change="changeButton(commandec)">
-      <label :for="commandec.id" style="margin-top: 5px; margin-left: 10px;"></label>
+      <label :for="commandec.id" style="margin-top: -20px; margin-left: 10px;"></label>
     </div>
-    <div v-else  id="c"> 
-      <input type="checkbox" :id="commandec.id" :value="commandec.id" style="margin-left: 10px;margin-top: 340px;" v-model="articleIds" @click="deselectArticle(commandec.id)">
-
+    <div v-else  id="c" > 
+      <input  type="checkbox" :id="commandec.id" :value="commandec.id" style="margin-left: 10px;" v-model="articleIds" @click="deselectArticle(commandec.id)">
       <label :for="commandec.id" style="margin-top: 5px; margin-left: 10px;"></label>
     </div>
 
@@ -54,13 +50,13 @@
   
     <div class="card-head" >              
     <div class="row"  >
-    <div  style="margin-top: 25px">
+    <div  style="margin-top: 1px">
   <p class="cvendeur"  id="txt" >
   Demande  @{{commandec.id}}</p>
       </div> 
  
     
-    <div  class="col-md-4 pr-1" id="cv"  style="margin-top: -45px">
+    <div  class="col-md-4 pr-1" id="cv"  style="margin-top: -68px;margin-left: 350px">
       <div style="margin-left:22px" >
           <p id="txt" >  @{{commandec.date}}</p>
       </div>
@@ -86,9 +82,7 @@
 
   </div>      
 
-
-  <hr id="cvendeur" style="margin-top: -25px">
-
+  <hr id="cvendeur" style="margin-top: -20px;margin-bottom: -10px">
 
     
 </div>                  
