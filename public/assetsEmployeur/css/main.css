@@ -560,7 +560,7 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
   position: absolute;
   top:0;
   left:100%;
-  width: 1400%;
+  width: 1200%;
   background-color: rgb(243, 243, 243);
   transition: all 0.4s;
   -webkit-transition: all 0.4s;
@@ -3789,6 +3789,9 @@ input[type=checkbox] + label{
   cursor: pointer;
 
 }
+
+
+
 input[type=checkbox]{
   display: none;
 }
@@ -3819,11 +3822,9 @@ input[type=checkbox]:checked + label:before{
   width: 210px;
   margin-top: -58px;
  }
-
-#cvendeu{
-   margin-top: -21px;
+ #cvendeur{
+   margin-top: -11px;
  }
-
 #cv{
   margin-top: -68px;
    color:black;
@@ -3864,4 +3865,31 @@ input[type=checkbox]:checked + label:before{
 #clr{
   background-color: rgb(192,4,4);
 
+}
+
+#c{
+  width: 5%;
+  padding-bottom: 35px;
+}
+
+.filter-col8 {width: 32%;}
+
+#articl{
+  margin-left: -4%;
+  width: 150%;
+  background-color: rgb(192,4,4);
+}
+
+#xxx{
+  padding-top: 10%;
+  padding-left: 3.2%;
+  background-color: white;
+margin-bottom: 10%;}
+#xx{
+  margin-top: -5%;
+  padding-top: 5%;
+  margin-left: 0%;
+  padding-left: 3.5%;
+  background-color: white;
+  margin-bottom: 10%;
 }

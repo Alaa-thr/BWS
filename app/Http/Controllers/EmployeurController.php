@@ -16,8 +16,8 @@ use App\Imageproduit;
 use App\ColorProduit;
 use App\TailleProduit;
 use Auth;
-use DB;
 
+use DB;
 
 
 class EmployeurController extends Controller
@@ -52,6 +52,7 @@ class EmployeurController extends Controller
 
     public function get_commande_traiter_emplyeur(){
         $c = Employeur::find(Auth::user()->id);
+
         $article = \DB::table('demande_emploies')
        
         ->select('*',\DB::raw('DATE(demande_emploies.created_at) as date'))
@@ -60,7 +61,7 @@ class EmployeurController extends Controller
         $employeur = \DB::table('clients')->get();
 
         $produit = \DB::table('annonce_emploies')->get(); 
-        
+
         $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
         $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
         return view('demande_emploi_traite_employeur',['article'=>$article, 'idAdmin' => $c->id,'emploC' => $employeur,'prV' => $produit,'categorie'=>$categorie ,'categorieE'=>$categorieE]);

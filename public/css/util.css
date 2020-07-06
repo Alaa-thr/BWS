@@ -3712,3 +3712,38 @@ iframe {border: none;}
 .pointer-none {
 	pointer-events: none;
 }
+#articl{
+	margin-left: -4%;
+	width: 150%;
+	background-color: rgb(192,4,4);
+  }
+  
+  #xxx{
+	padding-top: 10%;
+	padding-left: 3.2%;
+	background-color: white;
+  margin-bottom: 10%;}
+  #xx{
+	margin-top: -5%;
+	padding-top: 5%;
+	margin-left: 0%;
+	padding-left: 3.5%;
+	background-color: white;
+	margin-bottom: 10%;
+  }
+  #s{
+	margin-left: 12%;
+	margin-right: 12%;
+}
+  #ss{
+	  margin-left: 12%;
+	  margin-right: 16.5%;
+  }
+  #bb{
+	margin-left: 21%;
+	margin-top: -20%;
+}
+#profi{
+	margin-left: -5%;
+	
+}

@@ -29,7 +29,7 @@
                       <th></th>
                     </thead>
                     <tbody>
-                      <tr v-for="vendeura in vendeuradmin">
+                      <tr v-for="vendeura in vendeuradmin" class="js-show-modal1"  v-on:click="AfficherInfo(vendeura.id)" style="cursor: pointer;">
                         <td>@{{vendeura.id}}</td>
 
                         <td>@{{vendeura.Nom}} @{{vendeura.Prenom}}</td>

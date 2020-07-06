@@ -29,4 +29,4 @@ class DemandeReçuController extends Controller
         return Response()->json(['etat' => true]);
     }
 }
-}
+

@@ -5,7 +5,62 @@
 		<title>{{ ( 'A Propos') }}</title>
 	</head>
 
-	
+	 <!-- Cart -->
+	 <div class="wrap-header-cart js-panel-cart" style="z-index: 11000; ">
+        <div class="s-full js-hide-cart"></div>
+        
+        <div class="header-cart flex-col-l p-l-55 p-r-25">
+            
+            <div class="header-cart-title flex-w flex-sb-m p-b-8">
+                <span class="mtext-103 cl2">
+                    Votre Panier
+                </span>
+
+                <div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart" >
+                    <i class="zmdi zmdi-close" style="margin-left: 171%"></i>
+                </div>
+                
+            </div>
+            
+            <div class="header-cart-content flex-w js-pscroll" id="app1" >
+                <ul class="header-cart-wrapitem w-full" v-for="command in ProduitsPanier" >
+                    <li class="header-cart-item flex-w flex-t m-b-12">
+                        <div class="header-cart-item-img" v-for="imgP in imagesproduit" id="profi">
+                        <img v-if="imgP.produit_id === command.produit_id && imgP.profile === 1" :src="'storage/produits_image/'+ imgP.image" 
+                        alt="IMG-PRODUCT"  style="height: 60px;">
+                        </div>
+
+                        <div class="header-cart-item-txt p-t-8"  v-for="fv in favoris" v-if="fv.id === command.produit_id" id="bb">
+                            <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
+                            @{{fv.Libellé}}
+                            </a>
+
+                            <span class="header-cart-item-info">
+                            @{{command.qte}} x  @{{fv.prix}} DA
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+                
+                <div class="w-full" >
+                    
+                <div class="header-cart-total w-full p-tb-40">
+                        Total: 
+                    </div>
+
+                    <div class="header-cart-buttons flex-w w-full">
+                        <a href="{{route('panier')}}" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+                            View Cart
+                        </a>
+
+                        <a href="{{route('panier')}}" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
+                            Check Out
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>      
+    </div>
 	<section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url('images/gallery-02.jpg');">
 		<h2 class="ltext-105 cl0 txt-center">
 			A Propos
@@ -20,7 +75,7 @@
 				<div class="col-md-7 col-lg-8">
 					<div class="p-t-7 p-r-85 p-r-15-lg p-r-0-md">
 						<h3 class="mtext-111 cl2 p-b-16 color-t">
-							Our Story
+							Notre Histoire
 						</h3>
 
 						<p class="stext-113 cl6 p-b-26">
@@ -50,7 +105,7 @@
 				<div class="order-md-2 col-md-7 col-lg-8 p-b-30">
 					<div class="p-t-7 p-l-85 p-l-15-lg p-l-0-md">
 						<h3 class="mtext-111 cl2 p-b-16 color-t">
-							Our Mission
+							Notre Mission
 						</h3>
 
 						<p class="stext-113 cl6 p-b-26">
@@ -81,7 +136,44 @@
 	</section>	
 	
 		
+<script>
+	window.Laravel = {!! json_encode([
+               "csrfToken"  => csrf_token(),
+			   'ImageP'         => $ImageP,
+               'Fav'            => $Fav,
+               'command'        => $command,
+               "url"      => url("/")  
+    ]) !!};
+</script>
 
+<script>
+     var app1 = new Vue({
+        el: '#app1',
+        data:{
+          message:'hello',
+          ProduitsPanier: [],
+          favoris: [],
+          imagesproduit: [],
+        },
+        methods:{
+			apropos: function(){
+            axios.get(window.Laravel.url+'/apropos')
+              .then(response => {
+                this.favoris = window.Laravel.Fav;
+                this.imagesproduit = window.Laravel.ImageP;
+                this.ProduitsPanier = window.Laravel.command;
+               })
+              .catch(error => {
+                  console.log('errors : '  , error);
+             })
+          },
+          
 
+        },
+        created:function(){
+            this.apropos();
 
+        }
+     })
+</script>
 @endsection

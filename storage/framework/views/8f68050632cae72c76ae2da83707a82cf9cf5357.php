@@ -54,8 +54,8 @@
                       </th>
                     </thead>
                     <tbody>
-                      <tr v-for="admina in adminadmin">
-                        <td>
+                      <tr v-for="admina in adminadmin" class="js-show-modal1"  v-on:click="AfficherInfo(admina.id)" style="cursor: pointer;">
+                        <td >
                          {{admina.id}}  
                         </td>
                         <td>

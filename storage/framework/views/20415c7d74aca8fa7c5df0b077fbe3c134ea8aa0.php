@@ -38,8 +38,10 @@
         
             <div class="card-body"   v-for="commandec in commandeclient">
 
+
 <div v-if="selectall"  id="c"  style="margin-bottom: 20px">
        <input type="checkbox"  style=" margin-left: 10px; " :id="commandec.id" :value="commandec.id" v-model="checkedArticles" @change="changeButton(commandec)">
+
       <label :for="commandec.id" style="margin-top: 5px; margin-left: 10px;"></label>
     </div>
     <div v-else  id="c" >

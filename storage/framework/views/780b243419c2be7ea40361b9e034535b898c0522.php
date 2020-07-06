@@ -1,5 +1,5 @@
 
- 
+
 <?php $__env->startSection('content'); ?>
 
 <head>
@@ -12,13 +12,27 @@
   </div>
   <div class="content" id="app">
     <div class="row">
+   
       <div class="col-md-12">
         <div class="card">
           <div class="card-header" >
-                
+          <?php if(session()->has('success')): ?>
+<div class="row"> 
+<div class="alert alert-success" style="  margin-left:33px;width: 960px;">
+
+<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;
+
+</button>
+ <?php echo e(session()->get('success')); ?>
+
+</div>
+
+</div>
+      <?php endif; ?>
                 <div class="flex-t">
                     <input type="checkbox" id="article" @change="selectAll()" v-model="allSelected" style="margin-top: 5px;">
-                    <label for="article"></label>
+                    <label for="article"></label> 
+                   
                     <h4 style="margin-top: -6px;margin-left: 10px;">Demandes</h4>
                 </div>
 
@@ -35,59 +49,75 @@
             <hr style="margin-top:42px;">       
           
         
-            <div class="card-body"   v-for="demandec in demandeclient" >
+            <div class="card-body"  v-for="demandec in demandeclient" >
 
-<div v-if="selectall" >
-       <input type="checkbox" style=" margin-left: 10px;" :id="demandec.id" :value="demandec.id" v-model="checkedArticles" @change="changeButton(demandec)">
+<div v-if="selectall" id="c">
+       <input type="checkbox"  style=" margin-left: 10px;" :id="demandec.id" :value="demandec.id" v-model="checkedArticles" @change="changeButton(demandec)">
       <label :for="demandec.id" style="margin-top: 40px; margin-left: 10px;"></label>
     </div>
-    <div v-else ><div id="ch1">
-      <input type="checkbox" :id="demandec.id" :value="demandec.id" v-model="articleIds" @click="deselectArticle(demandec.id)"></div>
+    <div v-else id="c">
+      <input type="checkbox" :id="demandec.id" :value="demandec.id" style="margin-left: 10px;" v-model="articleIds" @click="deselectArticle(demandec.id)">
       <label :for="demandec.id" style="margin-top: 40px; margin-left: 10px;"></label>
     </div>
 
 
-  <div class="card-head"  id="cmd"  >              
-    <div class="row" >
-    <div class="col-md-4 pr-1" >
-      <div style="margin-left:22px">
-          <p class="" id="t" >Demandes {{demandec.id}} </p>
+  
+    <div class="card-head"  id="cmd"   >              
+    <div class="row"  >
+    <div >
+  <p class="cvendeur"  id="txt" >
+  Demande   {{demandec.id}}</p>
+      </div> 
+ 
+    
+    <div  class="col-md-4 pr-1" id="cv">
+      <div style="margin-left:22px" >
+          <p id="txt" > {{demandec.created_at}} </p>
       </div>
+       
     </div>
-    <div class="col-md-4 px-1">
-     
-    </div>
-    <div class="col-md-4 pl-1">
-      <div class="">
-      <a class="f" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#" id="point">
+   
+    <div class="col-md-4 pl-1" id="a">
+      <div class="" id="b" >
+      <a class="f" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#" id="point"  style="  margin-left: 245px;">
         <i class="fas fa-ellipsis-v"  id="y"></i>
        </a>
-      <div class="dropdown-menu " x-placement="right-start" id="pl">
-      <a   v-on:click="AfficheInfo(demandec.id)"  class="dropdown-item js-show-modal1" style="color: red; font-style: italic; font-weight: 900; cursor: pointer;" >Afficher Plus</a>
-    <a class="dropdown-item" v-on:click="deleteDemande(demandec)"style="color: red; font-style: italic; font-weight: 900; cursor: pointer;">Supprimer</a>
-       </div><p class=""  id="tt" >{{demandec.created_at}}</p>
-      </div>
-    </div>
-    </div>
-    <div class="row">
-    <div class="col-md-4 pr-1">
-      <div class="">
-      <label  id="ttt">Addresse : {{demandec.address}}</label>
-      </div>
-    </div>
-    <div class="col-md-4 px-1">
-     
-    </div>
-    <div class="col-md-4 pr-3">
-      <div class="">
-      <label  id="tttt">CV_client : {{demandec.cv_client}}</label>
-      </div>
-    </div>
+      <div class="dropdown-menu " x-placement="right-start" id="pl" >
+      <a   v-on:click="AfficheInfo(demandec.id)"  class="dropdown-item js-show-modal1" 
+      style="color: red; font-style: italic; font-weight: 900; cursor: pointer;" >Afficher Plus</a>
+    <a class="dropdown-item" v-on:click="deleteCommandeVendeur(demandec)"
+    style="color: red; font-style: italic; font-weight: 900; cursor: pointer;">
+    Supprimer</a>
+       </div>
+      
+    </div>    
+
     </div>      
-  </div>
+    <div  class="col-md-4 pr-1" id="cb">
+      <div  >
+          <p id="txt" > Addresse : {{demandec.address}}</p>
+      </div>
+       
+    </div>
+
+    <div  class="col-md-4 pr-1" id="cbb">
+      <div  >
+          <p id="txt" >CV_client : {{demandec.cv_client}}</p>
+      </div>
+       
+    </div>
+
+  </div>      
+
   
+
+
     
-</div>                   <?php echo e($article->links()); ?>
+</div>                  
+              </div>
+
+            </div>     
+              <?php echo e($article->links()); ?>
 
               </div>
 
@@ -95,36 +125,10 @@
           </div>
         </div>      
       </div>
+     
     </div>
 
-  <footer class="footer">
-    <div class=" container-fluid ">
-      <nav>
-        <ul>
-          <li>
-            <a href="https://www.creative-tim.com">
-              BASMAHW&S
-            </a>
-          </li>
-          <li>
-            <a href="http://presentation.creative-tim.com">
-              A Propos
-            </a>
-          </li>
-          <li>
-            <a href="http://blog.creative-tim.com">
-              Blog
-            </a>
-          </li>
-        </ul>
-      </nav>
-      <div class="copyright" id="copyright">
-        &copy; <script>
-          document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))
-        </script>, Designer par <a href="https://www.invisionapp.com" target="_blank">BS</a>. Codé par <a href="https://www.creative-tim.com" target="_blank">BASMAHW&S</a>.
-      </div>
-    </div>
-  </footer>
+
 </div>
 <!-- Modal1 for laptob-->
 <div class="wrap-modal11 js-modal1 p-t-38 p-b-20 p-l-15 p-r-15"  id="app2" v-if="hideModel" style="margin-top:122px;">
@@ -143,7 +147,7 @@
       <div class="row" >
     <div class="col-md-4 pr-1" >
       <div style="margin-left:22px">
-          <p class="" id="t" >demande {{demandec.id}} </p>
+          <p class="" id="t" >Demande {{demandec.id}}  </p>
       </div>
     </div>
     <div class="col-md-4 px-1">

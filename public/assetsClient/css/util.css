@@ -3859,13 +3859,7 @@ background-color: chartreuse;
 #pl{
 	margin-left: -8px;
 }
-#cmd{
-	margin-top: -70px;
-	padding-top: 12px;
-	margin-bottom: 20px;
-	border: 2px solid gray;
-	border-radius: 25px;
-}
+
 #cmdd{
 	margin-top: -30px;
 	padding-top: 12px;
@@ -4004,4 +3998,12 @@ float: right;  }
 	padding-top: 12px;
 	margin-bottom: 20px;
 	 
+}
+#bb{
+	margin-left: 21%;
+	margin-top: -20%;
+}
+#profi{
+	margin-left: -5%;
+	
 }
