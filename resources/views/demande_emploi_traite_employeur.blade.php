@@ -34,7 +34,10 @@
             <hr style="margin-top:42px;">       
           
         
-            <div class="card-body"   v-for="commandec in commandeclient" v-if="commandec.demmande_traiter===1">
+            <div class="card-body"   v-for="commandec in commandeclient" v-if="commandec.demmande_traiter===1" >
+
+<div v-if="selectall"  id="c"  >
+
 
 <div v-if="selectall"  id="c" >
 
@@ -43,6 +46,7 @@
     </div>
     <div v-else  id="c"> 
       <input type="checkbox" :id="commandec.id" :value="commandec.id" style="margin-left: 10px;margin-top: 340px;" v-model="articleIds" @click="deselectArticle(commandec.id)">
+
       <label :for="commandec.id" style="margin-top: 5px; margin-left: 10px;"></label>
     </div>
 
@@ -50,20 +54,20 @@
   
     <div class="card-head" >              
     <div class="row"  >
-    <div >
+    <div  style="margin-top: 25px">
   <p class="cvendeur"  id="txt" >
-  Demande Numero  @{{commandec.id}}</p>
+  Demande  @{{commandec.id}}</p>
       </div> 
  
     
-    <div  class="col-md-4 pr-1" id="cv">
+    <div  class="col-md-4 pr-1" id="cv"  style="margin-top: -45px">
       <div style="margin-left:22px" >
-          <p id="txt" > Cv Client : @{{commandec.cv_client}}</p>
+          <p id="txt" >  @{{commandec.date}}</p>
       </div>
        
     </div>
    
-    <div class="col-md-4 pl-1" id="a">
+    <div class="col-md-4 pl-1" id="a" style="margin-top: -5px;margin-left: 950px">
       <div class="" id="b" >
       <a class="f" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#" id="point">
         <i class="fas fa-ellipsis-v"  id="y"></i>
@@ -82,7 +86,9 @@
 
   </div>      
 
-  <hr id="cvendeur">
+
+  <hr id="cvendeur" style="margin-top: -25px">
+
 
     
 </div>                  
