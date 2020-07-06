@@ -38,8 +38,10 @@
         
             <div class="card-body"   v-for="commandec in commandeclient">
 
-<div v-if="selectall"  id="c" >
-       <input type="checkbox"  style=" margin-left: 10px;" :id="commandec.id" :value="commandec.id" v-model="checkedArticles" @change="changeButton(commandec)">
+
+<div v-if="selectall"  id="c"  style="margin-bottom: 20px">
+       <input type="checkbox"  style=" margin-left: 10px; " :id="commandec.id" :value="commandec.id" v-model="checkedArticles" @change="changeButton(commandec)">
+
       <label :for="commandec.id" style="margin-top: 5px; margin-left: 10px;"></label>
     </div>
     <div v-else  id="c" >
@@ -83,6 +85,10 @@
     <div  >
 <p id="txt" style="margin-top: -20px ;margin-left: 39px" >Condidat: </p> 
 <p id="txt1" style="margin-top: -20px;margin-left:120px;">@{{commandec.nom.toUpperCase()}} @{{commandec.prenom.toUpperCase()}}</p>
+ </div>     
+ <div  >
+<p id="txt" style="margin-top: -20px ;margin-left: 150px" >Annonce: </p> 
+<p id="txt1" style="margin-top: -20px;margin-left:220px;">@{{commandec.libellé.toUpperCase()}} </p>
  </div>     
  
   </div>      
