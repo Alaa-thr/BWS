@@ -21,8 +21,9 @@ class EmployeurDemandeController extends Controller
         $c = Employeur::find(Auth::user()->id);
         $article = \DB::table('demande_emploies')
         ->join('clients','clients.id','=','demande_emploies.client_id')
-        ->select('demande_emploies.id','clients.nom','clients.prenom',\DB::raw('DATE(demande_emploies.created_at) as date'))
-        ->where('employeur_id', $c->id,'commandec.demmande_traiter===0')->orderBy('demande_emploies.created_at','desc')->paginate(5);
+        ->join('annonce_emploies','annonce_emploies.id','=','demande_emploies.annonceE_id')
+        ->select('demande_emploies.id','annonce_emploies.libellé','clients.nom','clients.prenom',\DB::raw('DATE(demande_emploies.created_at) as date'))
+        ->where('demande_emploies.employeur_id', $c->id,'commandec.demmande_traiter===0')->orderBy('demande_emploies.created_at','desc')->paginate(5);
         $employeur = \DB::table('clients')->get(); 
         $produit = \DB::table('annonce_emploies')->get(); 
 
