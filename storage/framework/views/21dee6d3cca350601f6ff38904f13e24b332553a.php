@@ -67,8 +67,6 @@
                                 </a>
                             </div>
                         </div>
-                         <div style="border-left: 2px solid #000; display: inline-block;height: 130px; margin: 0 20px;">
-                   </div>
                     </div>
                 </div>
             </div>

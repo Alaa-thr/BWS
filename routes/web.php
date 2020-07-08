@@ -43,7 +43,7 @@ Route::get('/getcategoriehome', 'BwsController@getCategorieHome');
 Route::get('/getfavoris', 'BwsController@getFavoris');
 Route::delete('/deleteproduitpanier/{id}', 'BwsController@deleteProduitPanier');
 Route::post('/updateproduitpanier', 'BwsController@updateProduitPanier');
-
+Route::get('/getproduitpaniershop', 'BwsController@getProduitPanierShop');
 /************************************************ Admin***********************************************/
 Route::get('/categoriesAdmin', 'AdminController@categories_admin');
 Route::get('/admin', 'AdminController@admin_admin')->name('admin');
@@ -118,7 +118,7 @@ Route::post('/detaillsdemandereçuemplyeur', 'EmployeurDemandeController@detaill
 Route::delete('/deletedemandereçuemplyeur/{id}','EmployeurDemandeController@deleteDemandeReçuEmployeur');
 /************************************************ Vendeur***********************************************/
 
-Route::get('/statistiquesVendeur', 'BwsController@statistiques_vendeur')->name('statistiquesVendeur');
+Route::get('/statistiques', 'BwsController@getstatistique')->name('statistiquesVendeur');
 Route::get('/profilVendeur', 'VendeurController@profil_vendeur')->name('profilVendeur');
 Route::put('/updateProfilV/{id}','VendeurController@update_profil');
 Route::get('/produitVendeur', 'VendeurController@getProduit')->name('produitVendeur');

@@ -30,6 +30,11 @@ class BwsController extends Controller
         return ['etat' => false];
     } 
 
+    public function getProduitPanierShop(){
+        $favori = \DB::table('produits')->get();
+        return ['Fav' => $favori];
+    }
+
      public function Connect(Request $request)
     {
         $users =  User::All();
@@ -52,13 +57,31 @@ class BwsController extends Controller
 
      public function apropos()
     {
-        $c = Client::find(Auth::user()->id);
+         if(auth()->check() && Auth::user()->type_compte == 'c'){
+            $c = Client::find(Auth::user()->id);
+            $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+            $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
+            $favoris = \DB::table('produits')->get();
+            $imageproduit = \DB::table('imageproduits')->get();
+            $command = \DB::table('commandes')->where([ ['client_id',$c->id],['commande_envoyee',0]])->get(); 
+            $prixTotale= \DB::table('commandes')->where([ ['client_id',$c->id],['id',$c->nbr_cmd]])->select(\DB::raw('sum(commandes.prix_total * commandes.qte) as prixTo'))->get();
+            if($prixTotale[0]->prixTo == null){
+                $prixTotale[0]->prixTo = 0.00;
+            }    
+            return view('apropos',['categorie'=>$categorie,'categorieE'=>$categorieE,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command,'prixTotale' => $prixTotale]);
+
+         }
+        $c = array();
         $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
         $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
         $favoris = \DB::table('produits')->get();
         $imageproduit = \DB::table('imageproduits')->get();
-        $command = \DB::table('commandes')->where([ ['client_id',$c->id],['commande_envoyee',0]])->get();     
-        return view('apropos',['categorie'=>$categorie,'categorieE'=>$categorieE,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command]);
+        $command = array(); 
+        $prixTotale = \DB::table('commandes')->where('client_id',0)->select(\DB::raw('sum(commandes.prix_total * commandes.qte) as prixTo'))->get();
+        if($prixTotale[0]->prixTo == null){
+            $prixTotale[0]->prixTo = 0.00;
+        }    
+        return view('apropos',['categorie'=>$categorie,'categorieE'=>$categorieE,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command,'prixTotale' => $prixTotale]);
     }
 
      public function produitVisiteur()
@@ -77,18 +100,23 @@ class BwsController extends Controller
         $favori = \DB::table('produits')->get();
         $imageproduit = \DB::table('imageproduits')->get();
             
-        $command = array();
         if(auth()->check() && Auth::user()->type_compte == 'c'){
             $client =  Client::find(Auth::user()->id);
-            $command = \DB::table('commandes')->where([ ['client_id',$client->id],['commande_envoyee',0]])->get();
-            
+            $command = \DB::table('commandes')->where([ ['client_id',$client->id],['id',$client->nbr_cmd]])->get();
+            $prixTotale= \DB::table('commandes')->where([ ['client_id',$client->id],['id',$client->nbr_cmd]])->select(\DB::raw('sum(commandes.prix_total * commandes.qte) as prixTo'))->get();
+            if($prixTotale[0]->prixTo == null){
+                $prixTotale[0]->prixTo = 0.00;
+            }
            $fav = \DB::table('favoris')->where('client_id',$client->id)->get();
-            return view('shop',['produit'=>$produit, 'ImageP' => $imageproduit, 'color' => $color, 'typeLivraison' => $typeLivraison, 'taille' => $taille ,'categorie'=>$categorie,'categorieE'=>$categorieE,'fav' => $fav,'command' => $command,'favori' => $favori]);
+            return view('shop',['produit'=>$produit, 'ImageP' => $imageproduit, 'color' => $color, 'typeLivraison' => $typeLivraison, 'taille' => $taille ,'categorie'=>$categorie,'categorieE'=>$categorieE,'fav' => $fav,'command' => $command,'Fav' => $favori,'prixTotale' => $prixTotale]);
         }
-
-            $fav=array(); 
-
-        return view('shop',['produit'=>$produit, 'ImageP' => $imageproduit, 'color' => $color, 'typeLivraison' => $typeLivraison, 'taille' => $taille ,'categorie'=>$categorie,'categorieE'=>$categorieE,'fav' => $fav,'command' => $command]);
+        $prixTotale = \DB::table('commandes')->where('client_id',0)->select(\DB::raw('sum(commandes.prix_total * commandes.qte) as prixTo'))->get();
+        if($prixTotale[0]->prixTo == null){
+            $prixTotale[0]->prixTo = 0.00;
+        }
+        $fav=array(); 
+        $command = array();
+        return view('shop',['produit'=>$produit, 'ImageP' => $imageproduit, 'color' => $color, 'typeLivraison' => $typeLivraison, 'taille' => $taille ,'categorie'=>$categorie,'categorieE'=>$categorieE,'fav' => $fav,'command' => $command,'Fav' => $favori,'prixTotale' => $prixTotale]);
     }
 
     public function deposerProduit(){
@@ -125,6 +153,31 @@ class BwsController extends Controller
     }
 
     public function getProduitHome(){
+        $favori = \DB::table('produits')->get();
+        if(auth()->check() && Auth::user()->type_compte == 'c'){
+            $client =  Client::find(Auth::user()->id);
+            $command = \DB::table('commandes')->where([ ['client_id',$client->id],['id',$client->nbr_cmd]])->get();
+            $produit = \DB::table('produits')
+             ->join('vendeurs','vendeurs.id', '=', 'produits.vendeur_id')
+             ->select('vendeurs.Nom', 'vendeurs.Prenom', 'produits.*')
+             ->take(24)->get();       
+            $imageproduit = \DB::table('imageproduits')->get();
+            $color = \DB::table('colors')->join('color_produits', 'colors.id', '=', 'color_produits.color_id')->get();
+            $taille = \DB::table('taille_produits')->get();
+            $typeLivraison = \DB::table('typechoisirvendeurs')->get();
+            $prixTotale= \DB::table('commandes')->where([ ['client_id',$client->id],['id',$client->nbr_cmd]])->select(\DB::raw('sum(commandes.prix_total * commandes.qte) as prixTo'))->get();
+            if($prixTotale[0]->prixTo == null){
+                $prixTotale[0]->prixTo = 0.00;
+            }
+          
+            return ['produit'=>$produit, 'ImageP' => $imageproduit, 'color' => $color, 'typeLivraison' => $typeLivraison, 'taille' => $taille ,'command' => $command,'Fav' => $favori,'prixTotale' => $prixTotale];
+        }
+        $prixTotale = \DB::table('commandes')->where('client_id',0)->select(\DB::raw('sum(commandes.prix_total * commandes.qte) as prixTo'))->get();
+        if($prixTotale[0]->prixTo == null){
+            $prixTotale[0]->prixTo = 0.00;
+        }
+        $fav=array(); 
+        $command = array();
          $produit = \DB::table('produits')
          ->join('vendeurs','vendeurs.id', '=', 'produits.vendeur_id')
          ->select('vendeurs.Nom', 'vendeurs.Prenom', 'produits.*')
@@ -133,7 +186,7 @@ class BwsController extends Controller
         $color = \DB::table('colors')->join('color_produits', 'colors.id', '=', 'color_produits.color_id')->get();
         $taille = \DB::table('taille_produits')->get();
         $typeLivraison = \DB::table('typechoisirvendeurs')->get();
-        return ['produit'=>$produit, 'ImageP' => $imageproduit, 'color' => $color, 'typeLivraison' => $typeLivraison, 'taille' => $taille ];
+        return ['produit'=>$produit, 'ImageP' => $imageproduit, 'color' => $color, 'typeLivraison' => $typeLivraison, 'taille' => $taille,'command' => $command,'Fav' => $favori,'prixTotale' => $prixTotale ];
     }
 
     public function Estconnecter(){
@@ -158,15 +211,34 @@ class BwsController extends Controller
 
      public function emploi()
     {
-        $c = Client::find(Auth::user()->id);
+        if(auth()->check() && Auth::user()->type_compte == 'c'){
+            $c = Client::find(Auth::user()->id);
+            $favoris = \DB::table('produits')->get();
+            $imageproduit = \DB::table('imageproduits')->get();
+            $command = \DB::table('commandes')->where([['commande_envoyee',0]])->get();     
+
+            $emploi = \DB::table('annonce_emploies')->orderBy('created_at','desc')->paginate(21) ;
+            $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+            $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
+            $prixTotale= \DB::table('commandes')->where([ ['client_id',$c->id],['id',$c->nbr_cmd]])->select(\DB::raw('sum(commandes.prix_total * commandes.qte) as prixTo'))->get();
+            if($prixTotale[0]->prixTo == null){
+                $prixTotale[0]->prixTo = 0.00;
+            }
+            return view('emploi',['emploi'=>$emploi,'categorie'=>$categorie ,'categorieE'=>$categorieE,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command,'prixTotale' => $prixTotale]);
+        }
+        $c = array();
         $favoris = \DB::table('produits')->get();
         $imageproduit = \DB::table('imageproduits')->get();
-        $command = \DB::table('commandes')->where([['commande_envoyee',0]])->get();     
+        $command = array();     
 
         $emploi = \DB::table('annonce_emploies')->orderBy('created_at','desc')->paginate(21) ;
-        $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->paginate(21);
-        $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->paginate(21);
-        return view('emploi',['emploi'=>$emploi,'categorie'=>$categorie ,'categorieE'=>$categorieE        ,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command]); 
+        $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+        $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
+        $prixTotale = \DB::table('commandes')->where('client_id',0)->select(\DB::raw('sum(commandes.prix_total * commandes.qte) as prixTo'))->get();
+        if($prixTotale[0]->prixTo == null){
+            $prixTotale[0]->prixTo = 0.00;
+        }
+        return view('emploi',['emploi'=>$emploi,'categorie'=>$categorie ,'categorieE'=>$categorieE        ,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command,'prixTotale' => $prixTotale]); 
     }
     
     public function detailsEmploi(Request $request){
@@ -176,10 +248,29 @@ class BwsController extends Controller
 
      public function article()
     {
-        $c = Client::find(Auth::user()->id);
-$favoris = \DB::table('produits')->get();
+        if(auth()->check() && Auth::user()->type_compte == 'c'){
+            $c = Client::find(Auth::user()->id);
+            $favoris = \DB::table('produits')->get();
+            $imageproduit = \DB::table('imageproduits')->get();
+            $command = \DB::table('commandes')->where([ ['client_id',$c->id],['commande_envoyee',0]])->get();     
+
+           $allArticle = \DB::table('articles')
+            ->join('admins', 'admins.id', '=', 'articles.admin_id')
+            ->select('admins.nom','admins.prenom','articles.*',\DB::raw('DATE(articles.created_at) as date'))
+            ->orderBy('articles.created_at','desc')
+            ->paginate(3) ;
+           $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+            $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
+            $prixTotale= \DB::table('commandes')->where([ ['client_id',$c->id],['id',$c->nbr_cmd]])->select(\DB::raw('sum(commandes.prix_total * commandes.qte) as prixTo'))->get();
+            if($prixTotale[0]->prixTo == null){
+                $prixTotale[0]->prixTo = 0.00;
+            }
+            return view('article',['allArticle' =>$allArticle,'categorie'=>$categorie ,'categorieE'=>$categorieE,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command,'prixTotale' => $prixTotale]);
+        }
+        $c = array();
+        $favoris = \DB::table('produits')->get();
         $imageproduit = \DB::table('imageproduits')->get();
-        $command = \DB::table('commandes')->where([ ['client_id',$c->id],['commande_envoyee',0]])->get();     
+        $command = array();     
 
        $allArticle = \DB::table('articles')
         ->join('admins', 'admins.id', '=', 'articles.admin_id')
@@ -188,17 +279,38 @@ $favoris = \DB::table('produits')->get();
         ->paginate(3) ;
        $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
         $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
-        return view('article',['allArticle' =>$allArticle,'categorie'=>$categorie ,'categorieE'=>$categorieE        ,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command]);
+        $prixTotale = \DB::table('commandes')->where('client_id',0)->select(\DB::raw('sum(commandes.prix_total * commandes.qte) as prixTo'))->get();
+        if($prixTotale[0]->prixTo == null){
+            $prixTotale[0]->prixTo = 0.00;
+        }
+        return view('article',['allArticle' =>$allArticle,'categorie'=>$categorie ,'categorieE'=>$categorieE,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command,'prixTotale' => $prixTotale]);
     }
     public function contact()
-    {         $c = Client::find(Auth::user()->id);
+    {         
+        if(auth()->check() && Auth::user()->type_compte == 'c'){
+            $c = Client::find(Auth::user()->id);
+            $favoris = \DB::table('produits')->get();
+            $imageproduit = \DB::table('imageproduits')->get();
+            $command = \DB::table('commandes')->where([ ['client_id',$c->id],['commande_envoyee',0]])->get();     
+            $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+            $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
+            $prixTotale= \DB::table('commandes')->where([ ['client_id',$c->id],['id',$c->nbr_cmd]])->select(\DB::raw('sum(commandes.prix_total * commandes.qte) as prixTo'))->get();
+            if($prixTotale[0]->prixTo == null){
+                $prixTotale[0]->prixTo = 0.00;
+            }
+            return view('contact',['categorie'=>$categorie ,'categorieE'=>$categorieE ,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command,'prixTotale' => $prixTotale]);
+        }
+        $c = array();
         $favoris = \DB::table('produits')->get();
         $imageproduit = \DB::table('imageproduits')->get();
-        $command = \DB::table('commandes')->where([ ['client_id',$c->id],['commande_envoyee',0]])->get();     
+        $command = array();     
         $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
         $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
-        return view('contact',['categorie'=>$categorie ,'categorieE'=>$categorieE ,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command
-        ]);
+        $prixTotale = \DB::table('commandes')->where('client_id',0)->select(\DB::raw('sum(commandes.prix_total * commandes.qte) as prixTo'))->get();
+        if($prixTotale[0]->prixTo == null){
+            $prixTotale[0]->prixTo = 0.00;
+        }
+        return view('contact',['categorie'=>$categorie ,'categorieE'=>$categorieE ,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command,'prixTotale' => $prixTotale]);
     }
 
      public function addEmail(Request $request)
@@ -318,8 +430,69 @@ $favoris = \DB::table('produits')->get();
    
 
     public function statistiques_admin(){
-      
-        return view('statistiques_admin');
+        $NombreInscriptionParMois = \DB::table("users")->where('type_compte','<>','a')->select(\DB::raw('count(id) as `Nombre_Iscription_Par_Mois`'),\DB::raw('YEAR(created_at) year, MONTH(created_at) month'))
+           ->groupby('month','year')
+           ->having('year','=',date("Y"))
+           ->get();
+        $categoriesPlusDemanderShop = \DB::table("produits")
+            ->join('sous_categories','sous_categories.id','=','produits.sous_categorie_id')
+            ->join('categories','categories.id','=','sous_categories.categorie_id')
+            ->where('categories.typeCategorie','shop')
+            ->select(\DB::raw('count(produits.id) as `Catego_shop`'),'categories.libelle')
+           ->groupby('categories.libelle')
+           ->orderBy('categories.libelle','asc')
+           ->get();
+        $categoriesPlusDemanderEmploi = \DB::table("annonce_emploies")
+            ->join('sous_categories','sous_categories.id','=','annonce_emploies.sous_categorie_id')
+            ->join('categories','categories.id','=','sous_categories.categorie_id')
+            ->where('categories.typeCategorie','emploi')
+            ->select(\DB::raw('count(annonce_emploies.id) as `Catego_shop`'),'categories.libelle')
+           ->groupby('categories.libelle')
+           ->orderBy('categories.libelle','asc')
+           ->get();
+        $postulationProduit = \DB::table("produits")
+            ->select(\DB::raw('count(id) as `postulation_produit`'),\DB::raw('YEAR(created_at) year, MONTH(created_at) month'))
+           ->groupby('month','year')
+           ->having('year','=',date("Y"))
+           ->get();
+        $postulationAnnonce = \DB::table("annonce_emploies")
+            ->select(\DB::raw('count(id) as `postulation_annonce`'),\DB::raw('YEAR(created_at) year, MONTH(created_at) month'))
+           ->groupby('month','year')
+           ->having('year','=',date("Y"))
+           ->get();   
+        $commande = \DB::table("commandes")
+            ->where('commandes.commande_envoyee',1)
+            ->select(\DB::raw('count(id) as `commande`'),\DB::raw('YEAR(created_at) year, MONTH(created_at) month'))
+           ->groupby('month','year')
+           ->having('year','=',date("Y"))
+           ->orderBy('month','asc')
+           ->get();
+        $demande = \DB::table("demande_emploies")
+            ->where('demande_emploies.reponse_employeur',1)
+            ->select(\DB::raw('count(id) as `demande`'),\DB::raw('YEAR(created_at) year, MONTH(created_at) month'))
+           ->groupby('month','year')
+           ->having('year','=',date("Y"))
+           ->orderBy('month','asc')
+           ->get();  
+        $client = \DB::table("users")->where('type_compte','c')->select(\DB::raw('count(id) as `Iscription_client`'),\DB::raw('YEAR(created_at) year, MONTH(created_at) month'))
+           ->groupby('month','year')
+           ->having('year','=',date("Y"))
+           ->get();
+
+
+        $vendeur = \DB::table("users")->where('type_compte','v')->select(\DB::raw('count(id) as `Iscription_vendeur`'),\DB::raw('YEAR(created_at) year, MONTH(created_at) month'))
+           ->groupby('month','year')
+           ->having('year','=',date("Y"))
+           ->get();
+
+
+        $employeur = \DB::table("users")->where('type_compte','e')->select(\DB::raw('count(id) as `Iscription_employeur`'),\DB::raw('YEAR(created_at) year, MONTH(created_at) month'))
+           ->groupby('month','year')
+           ->having('year','=',date("Y"))
+           ->get();
+
+
+        return view('statistiques_admin',["NombreInscriptionParMois"=>$NombreInscriptionParMois,"categoriesPlusDemanderShop"=>$categoriesPlusDemanderShop,"categoriesPlusDemanderEmploi"=>$categoriesPlusDemanderEmploi,"postulationProduit"=>$postulationProduit,"postulationAnnonce"=>$postulationAnnonce,"commande"=>$commande,"demande"=>$demande,"client"=>$client,"vendeur"=>$vendeur,"employeur"=>$employeur]);
     }
 
     public function vendeur_admin(){
@@ -329,10 +502,58 @@ $favoris = \DB::table('produits')->get();
 
 /************************************************ Vendeur***********************************************/
 
-    public function statistiques_vendeur(){
+    public function getstatistique(){
+        $vendeur = Vendeur::find(Auth::user()->id);
         $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
         $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
-        return view('statistiques_vendeur',['categorie'=>$categorie ,'categorieE'=>$categorieE]);
+        $achatParMois = \DB::table('commandes')->where([['Réponse_vendeur',0],['commande_envoyee',1],['vendeur_id',$vendeur->id]])->select(\DB::raw('count(id) as `nombre_Achat`'),\DB::raw('YEAR(created_at) year, MONTH(created_at) month'))
+           ->groupby('month','year')
+           ->having('year','=',date("Y"))
+           ->get();
+        $produitPlusAcheter = \DB::table('commandes')
+            ->join("produits",'produits.id','=','commandes.produit_id')
+            ->where([['commandes.Réponse_vendeur',0],['commandes.commande_envoyee',1],['commandes.vendeur_id',$vendeur->id]])->select(\DB::raw('count(produit_id) as `produit_Plus_Achater`'),'produits.Libellé','commandes.produit_id',\DB::raw('YEAR(commandes.created_at) year'))
+           ->groupby('commandes.produit_id','produits.Libellé','commandes.produit_id','year')
+            ->having('year','=',date("Y"))
+           ->orderBy('produit_Plus_Achater','asc')
+           ->get(); 
+        $produits = \DB::table('produits')
+            ->join('imageproduits','imageproduits.produit_id','=','produits.id')
+            ->where([['vendeur_id',$vendeur->id],['imageproduits.profile',1]])
+            ->select('Libellé','prix','Qte_P','image','Qte_P','prix','produits.id')
+            ->get(); 
+        $villeFaitAchat =\DB::table('commandes')
+            ->where([['commandes.Réponse_vendeur',0],['commandes.commande_envoyee',1],['commandes.vendeur_id',$vendeur->id]])->select(\DB::raw('count(ville) as `ville_Fait_Achat`'),'ville')
+           ->groupby('ville')
+           ->orderBy('ville_Fait_Achat','asc')
+           ->get(); 
+        $produitsJamaisAchete = \DB::table('produits')
+            ->whereNotExists(function ($query) {
+                   $query->select('commandes.produit_id')
+                         ->from('commandes')
+                         ->whereRaw('commandes.produit_id = produits.id');
+               })
+            ->join('imageproduits','imageproduits.produit_id','=','produits.id')
+            ->where([['vendeur_id',$vendeur->id],['imageproduits.profile',1]])
+            ->select(\DB::raw('DATE(produits.created_at) date'),'Libellé','produits.id','Qte_P','prix','image')
+            ->orderBy('date','asc')
+            ->take(5)->get();     
+        $clientFidele = \DB::table('clients')
+            ->join('commandes','commandes.client_id','=','clients.id')
+            ->where([['commandes.vendeur_id',$vendeur->id],['commandes.Réponse_vendeur',0],['commandes.commande_envoyee',1]])
+            ->select(\DB::raw('count(clients.id) as `nombre_client`'),'nom','prenom')
+            ->groupby('clients.id','nom','prenom')
+            ->orderBy('nombre_client','desc')
+            ->take(10)->get();  
+         $commande = \DB::table("commandes")
+            ->where([['commandes.vendeur_id',$vendeur->id],['commandes.commande_envoyee',1]])
+            ->select(\DB::raw('count(id) as `commande`'),\DB::raw('YEAR(created_at) year, MONTH(created_at) month'))
+           ->groupby('month','year')
+           ->having('year','=',date("Y"))
+           ->orderBy('month','asc')
+           ->get();
+
+        return view('statistiques_vendeur',['categorie'=>$categorie ,'categorieE'=>$categorieE,'achatParMois'=>$achatParMois,'produitPlusAcheter'=>$produitPlusAcheter,'produits'=>$produits,'villeFaitAchat'=>$villeFaitAchat,'produitsJamaisAchete'=>$produitsJamaisAchete,'clientFidele'=>$clientFidele,'commande'=>$commande]);
     }
 
 

@@ -22,15 +22,14 @@
                 
             </div>
             
-            <div class="header-cart-content flex-w js-pscroll" id="app1" >
-                <ul class="header-cart-wrapitem w-full" v-for="command in ProduitsPanier" >
-                    <li class="header-cart-item flex-w flex-t m-b-12">
-                        <div class="header-cart-item-img" v-for="imgP in imagesproduit" id="profi">
-                        <img v-if="imgP.produit_id === command.produit_id && imgP.profile === 1" :src="'storage/produits_image/'+ imgP.image" 
-                        alt="IMG-PRODUCT"  style="height: 60px;">
+            <div class="header-cart-content flex-w js-pscroll" id="app11" >
+                <ul class="header-cart-wrapitem w-full"  >
+                    <li class="header-cart-item flex-w flex-t m-b-12" v-for="command in ProduitsPanier" >
+                        <div class="header-cart-item-img" @click="deleteProduitPanier(command)" >
+                        	<img v-for="imgP in imagesproduit" v-if="imgP.produit_id === command.produit_id && imgP.profile === 1" :src="'storage/produits_image/'+ imgP.image" alt="IMG-PRODUCT"  style="height: 60px;">
                         </div>
 
-                        <div class="header-cart-item-txt p-t-8"  v-for="fv in favoris" v-if="fv.id === command.produit_id" id="bb">
+                        <div class="header-cart-item-txt p-t-8"  v-for="fv in favoris" v-if="fv.id === command.produit_id" >
                             <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
                             @{{fv.Libellé}}
                             </a>
@@ -44,8 +43,8 @@
                 
                 <div class="w-full" >
                     
-                <div class="header-cart-total w-full p-tb-40">
-                        Total: 
+                <div class="header-cart-total w-full p-tb-40" v-for="p in prix">
+                        Totale: @{{p.prixTo}} DA
                     </div>
 
                     <div class="header-cart-buttons flex-w w-full">
@@ -310,7 +309,7 @@
 								<b>@{{emp.libellé}}</b>
 							</h5><br>
 							<div class="description" style="margin-top: -10px; font-size: 14px;">
-								@{{ MoitieDescription(emp.discription,15, '...') }}
+								@{{ MoitieDescription(emp.discription,45, '...') }}
 							</div>
 							<div class="description" style="margin-top: 10px;">
 								<b>Nombre de condidat : @{{emp.nombre_condidat}}</b>
@@ -406,10 +405,10 @@
 	window.Laravel = {!! json_encode([
                "csrfToken"  => csrf_token(),
                "emploi"     => $emploi,
-			   
-'ImageP'         => $ImageP,
-               'Fav'            => $Fav,
+			   'ImageP'         => $ImageP,
+               'Fav'         => $Fav,
                'command'        => $command,
+               'prixTotale'		=> $prixTotale,
                "url"      => url("/")  
     ]) !!};
 
@@ -417,35 +416,60 @@
 
 </script>
 <script>
-     var app1 = new Vue({
-        el: '#app1',
+     var app11 = new Vue({
+        el: '#app11',
         data:{
           message:'hello',
           ProduitsPanier: [],
           favoris: [],
           imagesproduit: [],
+          prix:[],
         },
         methods:{
+        	deleteProduitPanier: function(produit){
+		       
+		              axios.delete(window.Laravel.url+'/deleteproduitpanier/'+produit.produit_id)
+		                .then(response => {
+		                  if(response.data.etat){
+		                  	console.log("produit",produit);
+		                           var position = this.ProduitsPanier.indexOf(produit);
+		                           this.ProduitsPanier.splice(position,1);
+		                           if(this.ProduitsPanier.lenght == 0){
+		                           		this.prix[0].prixTo = 0;
+		                           }
+		                           else{
+		                           		this.prix[0].prixTo -= produit.prix_total*produit.qte;
+		                           }
+
+		                  }                     
+		                })
+		                .catch(error =>{
+		                           console.log('errors :' , error);
+		                })
+
+		       	  
+			},
 			emploi: function(){
             axios.get(window.Laravel.url+'/emploi')
               .then(response => {
-                this.favoris = window.Laravel.Fav;
                 this.imagesproduit = window.Laravel.ImageP;
                 this.ProduitsPanier = window.Laravel.command;
+                this.prix = window.Laravel.prixTotale;
+                this.favoris = window.Laravel.Fav;
                })
               .catch(error => {
                   console.log('errors : '  , error);
              })
           },
-          
-
         },
         created:function(){
-            this.emploi();
+           this.emploi();
+
 
         }
      })
 </script>
+
 
 <script type="text/javascript">
 	$(function () {
@@ -471,7 +495,6 @@
 
             .then(response => {
                  this.emplois2 = response.data;
-                 console.log("this.emplois2",this.emplois2);
             })
             .catch(error =>{
                  console.log('errors :' , error);
@@ -491,7 +514,6 @@
 
             .then(response => {
                  this.emplois = window.Laravel.emploi.data;
-                 console.log("window.Laravel.emploi",window.Laravel.emploi);
             })
             .catch(error =>{
                  console.log('errors :' , error);

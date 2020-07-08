@@ -11,6 +11,7 @@ class AddColumnFkCommandes extends Migration
      *
      * @return void
      */
+    
     public function up()
     {
         Schema::table('commandes', function (Blueprint $table) {
@@ -19,7 +20,7 @@ class AddColumnFkCommandes extends Migration
             $table->foreign('produit_id')->references('id')->on('produits');
 
         });
-        DB::unprepared('ALTER TABLE `commandes` DROP PRIMARY KEY ,ADD PRIMARY KEY (`id`,`produit_id`,`client_id`) ');
+        
     }
 
     /**

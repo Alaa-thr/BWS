@@ -20,7 +20,7 @@ use App\ColorProduit;
 use App\TailleProduit;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\CommandeRequest;
- 
+use App\Rules\Taille; 
  
 class ClientController extends Controller
 {
@@ -105,16 +105,23 @@ class ClientController extends Controller
             if(Auth::user()->type_compte == "c"){
                 $client =  Client::find(Auth::user()->id);
                 $produitExister = \DB::table('commandes')->where([['id', $client->nbr_cmd],['produit_id',$request->produit_id],['client_id',$client->id]])->get();
-              
+            
                         if($request->tailExst == 1){
                             $request->validate([
-                                    'taille' =>['required'],
+                                    'taille' =>['required',new Taille()],
                                     'couleur_id' =>['required'],
                                     'type_livraison' =>['required'],
                                     'qte' =>['required'],
                             ]);
-                            
-                            if(count($produitExister) == 0){
+                        } 
+                        else if($request->tailExst == 0){
+                            $request->validate([
+                                'couleur_id' =>['required'],
+                                'type_livraison' =>['required'],
+                                'qte' =>['required'],
+                                 ]);
+                        }   
+                        if(count($produitExister) == 0){
                                 $commande = new Commande();         
                                 $commande->id = $client->nbr_cmd;
                                 $commande->client_id = $client->id;
@@ -126,64 +133,46 @@ class ClientController extends Controller
                                 $commande->couleur_id = $request->couleur_id;
                                 $commande->taille = $request->taille;
                                 $commande->save();
-                            
-                            return Response()->json(['etat' => true,'produitExister' => false]);
-                            }
-                            else if(count($produitExister) != 0){
-                                foreach ($produitExister as $key ) {
-                                    if($key->qte != $request->qte || $key->type_livraison != $request->type_livraison || $key->couleur_id != $request->couleur_id ){
+                                $cmd=\DB::table('produits')->where('id',$request->produit_id)->get();
+                                $image =\DB::table('imageproduits')->where('produit_id',$request->produit_id)->get();
+                                $prixTotale= $request->prix * $request->qte;
+                            return Response()->json(['cmd'=>$cmd,'prixTotale'=>$prixTotale,'image'=>$image,'commande'=>$commande,'etat' => true,'produitExister' => false]);
+                        }
+                        else if(count($produitExister) != 0){
+                            foreach ($produitExister as $key ) {
+                                if($key->taille != $request->taille || $key->qte != $request->qte || $key->type_livraison != $request->type_livraison || $key->couleur_id != $request->couleur_id ){
                                         $commande = new Commande();         
                                         $commande->id = $client->nbr_cmd;
                                         $commande->client_id = $client->id;
                                         $commande->vendeur_id = $request->vendeur_id;
                                         $commande->produit_id = $request->produit_id; 
                                         $commande->prix_total = $request->prix;
-                                        $commande->qte = $request->qte;
+                                        $commande->qte = $request->prix;
                                         $commande->type_livraison = $request->type_livraison;
                                         $commande->couleur_id = $request->couleur_id;
+                                        $commande->taille = $request->taille;
                                         $commande->save();
-                                        return Response()->json(['etat' => true,'produitExister' => false]);
-                                    }
+                                        $cmd=\DB::table('produits')->where('id',$request->produit_id)->get();
+                                        $image =\DB::table('imageproduits')->where('produit_id',$request->produit_id)->get();
+                                        $prixTotale= $request->prix * $request->qte;
+                                        return Response()->json(['cmd'=>$cmd,'prixTotale'=>$prixTotale,'image'=>$image,'commande'=>$commande,'etat' => true,'produitExister' => false]);
                                 }
+                                if($key->taille == $request->taille && $key->qte == $request->qte && $key->type_livraison == $request->type_livraison && $key->couleur_id == $request->couleur_id && $key->id == $client->nbr_cmd && $key->produit_id == $request->produit_id && $key->client_id == $client->id ){
+
+                                    return Response()->json(['etat' => true,'produitExister' => true]);
+                                }
+                            }
                                 
-                            }
-                            else{
-                                return Response()->json(['etat' => true,'produitExister' => true]);
-                            }
                         }
-
-                        else if($request->tailExst == 0){
-                            $request->validate([
-                                'couleur_id' =>['required'],
-                                'type_livraison' =>['required'],
-                                'qte' =>['required'],
-                                 ]);
                             
-                            if(count($produitExister) == 0){
-                                $commande = new Commande();         
-                                $commande->id = $client->nbr_cmd;
-                                $commande->client_id = $client->id;
-                                $commande->vendeur_id = $request->vendeur_id;
-                                $commande->produit_id = $request->produit_id; 
-                                $commande->prix_total = $request->prix;
-                                $commande->qte = $request->qte;
-                                $commande->type_livraison = $request->type_livraison;
-                                $commande->couleur_id = $request->couleur_id;
-
-                               
-                                $commande->save();
+            }
+            else{//est cncte mais ps client
+                return Response()->json(['etat' => false,'cnncte' => false]);
+            }   
                         
-                            return Response()->json(['etat' => true,'produitExister' => false]);
-                            }
-                            else{
-                                return Response()->json(['etat' => true,'produitExister' => true]);
-                            }   
-                        }
-                }           
-                else{
-                     return Response()->json(['etat' => false, 'cnncte' => true]);
-                }
-        }
+        }           
+                
+        
         
     }
     public function ProduitCommande(){
@@ -210,7 +199,7 @@ class ClientController extends Controller
         $favoris = \DB::table('produits')->get();
         $imageproduit = \DB::table('imageproduits')->get();
         $command = \DB::table('commandes')->where([ ['client_id',$clientCnncte->id],['commande_envoyee',0]])->get();     
-        return view('panier_visiteur',['produitCmds' => $produitCmds,'color' => $color, 'typeLivraison' => $typeLivraison, 'taille' => $taille,'nomClient' => $clientCnncte->nom,'prenomClient' => $clientCnncte->prenom,'idClient' => $clientCnncte->id,'categorie'=>$categorie,'categorieE'=>$categorieE,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command]);
+        return view('panier_visiteur',['produitCmds' => $produitCmds,'color' => $color, 'typeLivraison' => $typeLivraison, 'taille' => $taille,'client' => $clientCnncte,'idClient' => $clientCnncte->id,'categorie'=>$categorie,'categorieE'=>$categorieE,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command]);
 
 
     } 
