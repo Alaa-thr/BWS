@@ -263,7 +263,7 @@
                         
                             <div class="form-group m-r-35">
                               <label for='img'>Image<span style="font-size: 12px">(Entrer l'image de profil pour votre produit*)</span></label>
-                              <input type="file" class="form-control" accept="image/png, image/jpeg" style="height: 40px;"  v-on:change="imagePreview" :class="{'is-invalid' : message.image}"  id='img'/>
+                              <input type="file" class="form-control" accept="image/*" style="height: 40px;"  v-on:change="imagePreview" :class="{'is-invalid' : message.image}"  id='img'/>
                               <span class="px-3 cl13" v-if="message.image" v-text="message.image[0]">
                               </span>
                             </div>

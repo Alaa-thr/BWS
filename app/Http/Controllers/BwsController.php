@@ -224,9 +224,12 @@ class BwsController extends Controller
             if($prixTotale[0]->prixTo == null){
                 $prixTotale[0]->prixTo = 0.00;
             }
-            return view('emploi',['emploi'=>$emploi,'categorie'=>$categorie ,'categorieE'=>$categorieE,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command,'prixTotale' => $prixTotale]);
+             $c->nom= ucwords($c->nom);
+             $c->prenom= ucwords($c->prenom);
+            return view('emploi',['emploi'=>$emploi,'categorie'=>$categorie ,'categorieE'=>$categorieE,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command,'prixTotale' => $prixTotale,'client' => $c]);
         }
-        $c = array();
+        $c['nom'] = "";
+        $c['prenom'] = "";
         $favoris = \DB::table('produits')->get();
         $imageproduit = \DB::table('imageproduits')->get();
         $command = array();     
@@ -238,11 +241,13 @@ class BwsController extends Controller
         if($prixTotale[0]->prixTo == null){
             $prixTotale[0]->prixTo = 0.00;
         }
-        return view('emploi',['emploi'=>$emploi,'categorie'=>$categorie ,'categorieE'=>$categorieE        ,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command,'prixTotale' => $prixTotale]); 
+        return view('emploi',['emploi'=>$emploi,'categorie'=>$categorie ,'categorieE'=>$categorieE        ,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command,'prixTotale' => $prixTotale,'client' => $c]); 
     }
     
     public function detailsEmploi(Request $request){
         $det_emp = \DB::table('employeurs')->join('annonce_emploies','employeurs.id','=','annonce_emploies.employeur_id')->where('annonce_emploies.id', $request->idEMP)->get();
+        $det_emp[0]->nom =  ucwords($det_emp[0]->nom);
+        $det_emp[0]->prenom =  ucwords($det_emp[0]->prenom);
         return  $det_emp;
     }
 
@@ -478,14 +483,10 @@ class BwsController extends Controller
            ->groupby('month','year')
            ->having('year','=',date("Y"))
            ->get();
-
-
         $vendeur = \DB::table("users")->where('type_compte','v')->select(\DB::raw('count(id) as `Iscription_vendeur`'),\DB::raw('YEAR(created_at) year, MONTH(created_at) month'))
            ->groupby('month','year')
            ->having('year','=',date("Y"))
            ->get();
-
-
         $employeur = \DB::table("users")->where('type_compte','e')->select(\DB::raw('count(id) as `Iscription_employeur`'),\DB::raw('YEAR(created_at) year, MONTH(created_at) month'))
            ->groupby('month','year')
            ->having('year','=',date("Y"))

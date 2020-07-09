@@ -15,6 +15,7 @@ use App\Favori;
 use App\Historique;
 use App\Vendeur;
 use App\Produit;
+use App\Demande_emploie;
 use App\Imageproduit;
 use App\ColorProduit;
 use App\TailleProduit;
@@ -24,6 +25,7 @@ use App\Rules\Taille;
  
 class ClientController extends Controller
 {
+    
 
      public function profil_clinet(){
         $client=Client::find(Auth::user()->id);
@@ -299,39 +301,117 @@ class ClientController extends Controller
         session()->flash('success','Cette Commande sera traitée par le vendeur et lui rappeler ou refuser ton commande avec notification');
 
         return Response()->json(['etat' => true,'commandeAjout' => $commandes]);
-}
+    }
 
-public function getProduit(){
-    $clientCnncte = Client::find(Auth::user()->id);
-    $favoris = \DB::table('produits')->get();
-    $annonce  =\DB::table('annonce_emploies')->get();
-    $produit = \DB::table('favoris')->where([ ['client_id',$clientCnncte->id]])
-    ->orderBy('created_at','desc')->paginate(8); 
-    $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
-    $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
-    $imageproduit = \DB::table('imageproduits')->get();
-    
-    $command = \DB::table('commandes')->where([ ['client_id',$clientCnncte->id],['commande_envoyee',0]])->get(); 
-   
-    
-    return view('favoris_client',['produit'=>$produit, 'ImageP' => $imageproduit, 'Fav' => $favoris,'annonce'=>$annonce,'command' => $command,'categorie'=>$categorie,'categorieE'=>$categorieE]);
-}
+    public function getProduit(){
+        $clientCnncte = Client::find(Auth::user()->id);
+        $favoris = \DB::table('produits')->get();
+        $annonce  =\DB::table('annonce_emploies')->get();
+        $produit = \DB::table('favoris')->where([ ['client_id',$clientCnncte->id]])
+        ->orderBy('created_at','desc')->paginate(8); 
+        $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+        $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
+        $imageproduit = \DB::table('imageproduits')->get();
+        
+        $command = \DB::table('commandes')->where([ ['client_id',$clientCnncte->id],['commande_envoyee',0]])->get(); 
+       
+        
+        return view('favoris_client',['produit'=>$produit, 'ImageP' => $imageproduit, 'Fav' => $favoris,'annonce'=>$annonce,'command' => $command,'categorie'=>$categorie,'categorieE'=>$categorieE]);
+    }
 
-public function addHisto($id){
-    $clientCnncte = Client::find(Auth::user()->id);// njibo l client di ra connecter
-    $histoProd = new historique;
-    $histoProd->produit_id = $id;//$id howa l id ta3 produit
-    $histoProd->client_id = $clientCnncte->id;
-    $histoProd->save();
-    return $histoProd;
-}
-public function AnnonceAuFavoris($id){
-    $clientCnncte = Client::find(Auth::user()->id);
-    $annonce = new Favori;
-    $annonce->annonce_emploi_id = $id;//$id howa l id ta3 annonce
-    $annonce->client_id = $clientCnncte->id;
-    $annonce->save();
-    return $annonce;
-}
+    public function addHisto($id){
+        $clientCnncte = Client::find(Auth::user()->id);// njibo l client di ra connecter
+        $histoProd = new historique;
+        $histoProd->produit_id = $id;//$id howa l id ta3 produit
+        $histoProd->client_id = $clientCnncte->id;
+        $histoProd->save();
+        return $histoProd;
+    }
+    public function AnnonceAuFavoris($id){
+        $clientCnncte = Client::find(Auth::user()->id);
+        $annonce = new Favori;
+        $annonce->annonce_emploi_id = $id;//$id howa l id ta3 annonce
+        $annonce->client_id = $clientCnncte->id;
+        $annonce->save();
+        return $annonce;
+    }
 
+    public function EnvoyerDemande(Request $request){
+        
+        if(auth()->check() && Auth::user()->type_compte == 'c'){
+            $client = Client::find(Auth::user()->id);
+            $demandeExiste = \DB::table('demande_emploies')->where([['client_id',$client->id],['annonceE_id',$request->annonceE_id]])->get();
+            if(count($demandeExiste) != 0){
+                return Response()->json(['etat' => true, 'cncte' => true, 'demandeExiste' => true]);
+            }
+            $request->validate([
+             'nom_Prenom' => ['required','string','max:60'],
+             'tlf' => ['required','string','min:10','max:10','regex:/0[5-7][0-9]+/'],
+             'email' => ['required','email'],
+             'cv' => ['required'],
+            ]);
+            $employeur = \DB::table('annonce_emploies')->where('id',$request->annonceE_id)->select('employeur_id')->get();
+               $exploded = explode(',', $request->cv);
+                $decoded = base64_decode($exploded[1]);
+                if(str_contains($exploded[0], 'jpeg')){
+                    $extension = 'jpg';
+                }
+                else if(str_contains($exploded[0], 'png')){
+                    $extension = 'png';
+                }
+                else if(str_contains($exploded[0], 'pdf')){
+                    $extension = 'pdf';
+                }
+                else if(str_contains($exploded[0], 'doc')){
+                    $extension = 'doc';
+                }
+                else if(str_contains($exploded[0], 'xls')){
+                    $extension = 'xls';
+                }
+                else if(str_contains($exploded[0], 'ppt')){
+                    $extension = 'ppt';
+                }
+                else if(str_contains($exploded[0], 'text')){
+                    $extension = 'txt';
+                }
+                else if(str_contains($exploded[0], 'txt')){
+                    $extension = 'txt';
+                }
+                else if(str_contains($exploded[0], 'jfif')){
+                    $extension = 'jfif';
+                }
+                else if(str_contains($exploded[0], 'pjpeg')){
+                    $extension = 'pjpeg';
+                }
+                else if(str_contains($exploded[0], 'pjp')){
+                    $extension = 'pjp';
+                }
+                $fileName = $client->nom.'_'.$client->prenom.$client->id.str_random(4).'.'.$extension;
+                Storage::put('/public/demande_cv/' . $fileName, $decoded);
+                $demande = new Demande_emploie;
+                $demande->demmande_envoyer = 1;
+                $demande->client_id = $client->id;
+                $demande->annonceE_id = $request->annonceE_id;
+                $demande->employeur_id = $employeur[0]->employeur_id;
+                $demande->cv_client = $fileName;
+                $demande->nom_Prenom = $client->nom.' '.$client->prenom;
+                $demande->numeroTlf = $client->numeroTelephone;
+                $demande->email = $client->email;
+                $demande->save();
+               return Response()->json(['etat' => true, 'cncte' => true,'demandeExiste' => false]);
+        }
+
+    }
+
+    public function isCnnected(){
+        if(!auth()->check()){
+            return Response()->json(['etatee' => false, 'type'=> 0]);
+        }
+        else if(auth()->check() && Auth::user()->type_compte != 'c'){
+            return Response()->json(['etatee' => true, 'type'=> 1]);
+        }
+        else if(auth()->check() && Auth::user()->type_compte == 'c'){
+             return Response()->json(['etatee' => true, 'type'=> 2]);
+        }
+    }
 }

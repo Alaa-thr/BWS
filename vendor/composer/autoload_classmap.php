@@ -72,6 +72,7 @@ return array(
     'App\\Rules\\NumCarteBancaireExist' => $baseDir . '/app/Rules/NumCarteBancaireExist.php',
     'App\\Rules\\NumberExist' => $baseDir . '/app/Rules/NumberExist.php',
     'App\\Rules\\SousCategorieExiste' => $baseDir . '/app/Rules/SousCategorieExiste.php',
+    'App\\Rules\\Taille' => $baseDir . '/app/Rules/Taille.php',
     'App\\Rules\\TitreDescriptionExist' => $baseDir . '/app/Rules/TitreDescriptionExist.php',
     'App\\Signal' => $baseDir . '/app/Signal.php',
     'App\\Sous_categorie' => $baseDir . '/app/Sous_categorie.php',

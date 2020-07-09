@@ -171,6 +171,8 @@ Route::post('/annonceaufavoris/{id}','ClientController@AnnonceAuFavoris');
 
 //EnvoyerCommande
 Route::post('/envoyercommande', 'ClientController@EnvoyerCommande');
+Route::post('/envoyerdemande', 'ClientController@EnvoyerDemande');
+Route::get('/iscnnected', 'ClientController@isCnnected');
 
 /****************Vendeur******Client*******Admin******Employeur*******Visiteur**********/
 //Search
