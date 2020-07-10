@@ -17,7 +17,8 @@
     <script src="{{ asset('jss/app.js') }}" ></script>
     <script src="{{asset('jss/vee-validate.min.js')}}"></script>
     <!--<link href="{{ asset('csss/app.css') }}" rel="stylesheet" type="text/css">-->
-     <link href="{{ asset('assetsClient/css/bootstrap.min.css')}}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link href="{{ asset('assetsClient/css/bootstrap.min.css')}}" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="{{ asset('vendor/bootstrap/css/bootstrap.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ asset('fonts/font-awesome-4.7.0/css/font-awesome.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ asset('fonts/iconic/css/material-design-iconic-font.min.css')}}">

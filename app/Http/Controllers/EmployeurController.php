@@ -68,7 +68,12 @@ class EmployeurController extends Controller
     } 
 
     public function detaillsacommandeTraiterEmplyeur(Request $request){
-        $commande_detaills = \DB::table('demande_emploies')->where('id', $request->idA)->get();
+         $empl = Employeur::find(Auth::user()->id);
+        $commande_detaills = \DB::table('demande_emploies')
+        ->join('clients','clients.id','=','demande_emploies.client_id')
+        ->join('annonce_emploies','annonce_emploies.id','=','demande_emploies.annonceE_id')
+        ->select('demande_emploies.id','clients.nom','clients.prenom','annonce_emploies.libellé','annonce_emploies.discription',\DB::raw('DATE(demande_emploies.created_at) as date'))
+        ->where([['demande_emploies.id', $request->idA],['demande_emploies.employeur_id','=',$empl->id]])->get();
         return  $commande_detaills;
     }
 
@@ -88,6 +93,21 @@ class EmployeurController extends Controller
         $annonce = \DB::table('annonce_emploies')->where('employeur_id', $a->id)->orderBy('created_at','desc')->paginate(6) ; 
         $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
         $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
+        $notification = \DB::table('notifications')->get();
+
+        foreach($notification as $noti){
+           
+
+            
+            if($noti->employeur_id === $a->id AND $noti->DeleteNotif === 0){
+                session()->flash('danger','Votre Produit :  ' .$noti->nomProduit  .'  était Supprimer car il est Signaler 3 fois');
+               /* $noti->DeleteNotif = 1;
+                $noti->save();
+               */ \DB::table('notifications')->where([['employeur_id',$a->id],['DeleteNotif',0]])->update(['DeleteNotif' => 1]);
+           }
+            
+        }
+        
         return view('annonce_emploi_employeur',['annonce'=>$annonce, 'idEmployeur' => $a->id,'categorie'=>$categorie ,'categorieE'=>$categorieE]);
     }
 

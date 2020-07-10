@@ -1,7 +1,7 @@
 <?php
 
 namespace App;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
 class Employeur extends Model
@@ -11,7 +11,10 @@ class Employeur extends Model
         'nom','prenom','num_tel', 'email','user_id','address','nom_societe', 
         'num_compte_banquiare','image',
     ];
+    use SoftDeletes;
+    protected $dates= ['deleted_at'];
 
+ 
     public function user()
     {
         return $this->belongsTo('App\User');

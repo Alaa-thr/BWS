@@ -12,10 +12,13 @@ use App\Rules\ModifieTextDescriptionArticle;
 use App\User;
 use Auth;
 use App\Favori;
+use App\Signal;
+use App\Notification;
 use App\Historique;
 use App\Vendeur;
 use App\Produit;
 use App\Demande_emploie;
+use App\Annonce_emploie;
 use App\Imageproduit;
 use App\ColorProduit;
 use App\TailleProduit;
@@ -414,4 +417,100 @@ class ClientController extends Controller
              return Response()->json(['etatee' => true, 'type'=> 2]);
         }
     }
-}
+    public function SignalerProduit($id){
+    
+        $clientCnncte = Client::find(Auth::user()->id);
+        $produit = \DB::table('produits')->where('id',$id)->get();
+    
+       
+            $signal = new Signal;
+            $signal->produit_id = $id;
+            $signal->client_id = $clientCnncte->id;
+            $signal->nomProduit = $produit[0]->Libellé;
+            $signal->save();
+            
+            $signalsproduit= \DB::table('signals')->where('produit_id',$id)->get();
+        
+        if(count($signalsproduit) === 3){
+                 $notif = new Notification;
+                 $notif->vendeur_id  = $produit[0]->vendeur_id;
+                 $notif->nomProduit   =  $produit[0]->Libellé;
+                 $notif->save();
+    
+                \DB::table('produits')->where('id', $id)->delete();
+            return ['etat' => "remove"];
+            
+        }
+    }
+    
+    public function SignalerVendeur($id){
+    
+        $clientCnncte = Client::find(Auth::user()->id);
+        
+    
+       
+            $signal = new Signal;
+            $signal->vendeur_id = $id;
+            $signal->client_id = $clientCnncte->id;
+            
+            $signal->save();
+            
+            $signalsvendeur= \DB::table('signals')->where('vendeur_id',$id)->get();
+        
+        if(count($signalsvendeur) === 5){
+            \DB::table('vendeurs')->where([['id',$id]])->update(['deleted_at' => new \dateTime]);
+            
+            return ['etat' => "remove"];
+            
+        }
+    }
+    
+    public function SignalerAnnonce($id){
+    
+        $clientCnncte = Client::find(Auth::user()->id);
+        $annonce = \DB::table('annonce_emploies')->where('id',$id)->get();
+    
+       
+            $signal = new Signal;
+            $signal->annonce_emploi_id = $id;
+            $signal->client_id = $clientCnncte->id;
+            $signal->nomAnnonce = $annonce[0]->libellé;
+            $signal->save();
+            $signalsannonce= \DB::table('signals')->where('annonce_emploi_id',$id)->get();
+        
+        if(count($signalsannonce) === 3){
+                 $notif = new Notification;
+                 $notif->employeur_id  = $annonce[0]->employeur_id;
+                 $notif->nomAnnonce   =  $annonce[0]->libellé;
+                 $notif->save();
+    
+                \DB::table('annonce_emploies')->where('id', $id)->delete();
+            return ['etat' => "remove"];
+            
+        }
+    }
+    
+    public function SignalerEmployeur($id){
+    
+        $clientCnncte = Client::find(Auth::user()->id);
+        
+    
+       
+            $signal = new Signal;
+            $signal->employeur_id = $id;
+            $signal->client_id = $clientCnncte->id;
+            
+            $signal->save();
+            
+            $signalsemployeur= \DB::table('signals')->where('employeur_id',$id)->get();
+        
+        if(count($signalsemployeur) === 5){
+            \DB::table('employeurs')->where([['id',$id]])->update(['deleted_at' => new \dateTime]);
+            
+            return ['etat' => "remove"];
+            
+        }
+    }
+    
+    }
+    

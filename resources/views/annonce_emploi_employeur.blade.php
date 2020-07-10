@@ -14,6 +14,19 @@
         <div class="row">
           <div class="col-md-12">
             <div class="card">
+            @if(session()->has('danger'))
+<div class="row"> 
+<div class="alert alert-danger" style="  margin-left:33px;width: 960px;">
+
+<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;
+
+</button>
+ {{ session()->get('danger')}}
+</div>
+
+</div>
+      @endif
+           
               <div class="card-header">
                 
                     <div class="flex-t">

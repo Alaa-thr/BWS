@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddCmdIdToNotificationsTable extends Migration
+class AddNomProduitToSignalsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddCmdIdToNotificationsTable extends Migration
      */
     public function up()
     {
-        Schema::table('notifications', function (Blueprint $table) {
-            $table->unsignedBigInteger('cmd_id')->nullable();
+        Schema::table('signals', function (Blueprint $table) {
+            $table->string('nomProduit')->default(NULL)->after('produit_id')->nullable();
         });
     }
 
@@ -25,7 +25,7 @@ class AddCmdIdToNotificationsTable extends Migration
      */
     public function down()
     {
-        Schema::table('notifications', function (Blueprint $table) {
+        Schema::table('signals', function (Blueprint $table) {
             //
         });
     }
