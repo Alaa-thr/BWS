@@ -1,7 +1,7 @@
 <?php
 
 namespace App;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
 class Vendeur extends Model
@@ -14,7 +14,9 @@ class Vendeur extends Model
         'Num_Compte_Banquaire','type_livraison','Nbre_abbon','prix_livraison','image','deletedv',
     ];
 
- 
+    use SoftDeletes;
+    protected $dates= ['deleted_at'];
+
 
     public function user()
     {

@@ -179,6 +179,10 @@ Route::get('/iscnnected', 'ClientController@isCnnected');
 Route::get('/abest', 'BwsController@getsearch')->name('abest');
 Route::get('/abestv', 'BwsController@getsearchVisiteur')->name('abestv');
 
-
+/***Signaler***/
+Route::post('/signalerproduit/{id}','ClientController@SignalerProduit');
+Route::post('/signalerannonce/{id}','ClientController@SignalerAnnonce');
+Route::post('/signalervendeur/{id}','ClientController@SignalerVendeur');
+Route::post('/signaleremployeur/{id}','ClientController@SignalerEmployeur');
 
 

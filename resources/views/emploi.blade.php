@@ -495,6 +495,19 @@
 											Demander
 										</button>
 									</div>
+									<div class=""  style=	background-color:red;margin-top:-292%;" >
+      <a class="f" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#"   style="  margin-left: 335px;">
+        <i class="fas fa-ellipsis-v"  id="y"></i>
+       </a>
+      <div class="dropdown-menu " x-placement="right-start" id="divSignal">
+                    <a    v-on:click="SignalerAnnonce(empp.id)"  class="dropdown-item js-show-modal1" 
+      style="color: #0074d9; font-style: italic; font-weight: 900; cursor: pointer;" >   Signaler Produit</a>
+                    <a class="dropdown-item" v-on:click="SignalerEmployeur(empp.employeur_id)"
+    style="color: #0074d9; font-style: italic; font-weight: 900; cursor: pointer;">
+    Signaler Vendeur</a>
+       </div>
+      
+    </div>    					
 								</div>	
 							</div>
 							
@@ -786,7 +799,33 @@
         emplois: [],
       },
       methods:{
-
+		SignalerEmployeur: function(id){
+          	axios.post(window.Laravel.url+'/signaleremployeur/'+id)
+              .then(response => {
+				Swal.fire(
+					  "Signal est fait avec success!",
+					);
+					$('.js-modal1').removeClass('show-modal1');
+                	console.log("response",response.data)
+               })
+              .catch(error => {
+                  console.log('errors : '  , error);
+             })
+          },
+		SignalerAnnonce: function(id){
+          	axios.post(window.Laravel.url+'/signalerannonce/'+id)
+              .then(response => {
+				Swal.fire(
+					  "Signal est fait avec success!",
+					);
+					$('.js-modal1').removeClass('show-modal1');
+                	console.log("response",response.data)
+               })
+              .catch(error => {
+                  console.log('errors : '  , error);
+             })
+          },
+      	
         getEmploi: function(){
 	        axios.get(window.Laravel.url+'/emploi')
 
