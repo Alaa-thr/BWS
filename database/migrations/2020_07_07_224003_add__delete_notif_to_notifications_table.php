@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddCmdIdToNotificationsTable extends Migration
+class AddDeleteNotifToNotificationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddCmdIdToNotificationsTable extends Migration
     public function up()
     {
         Schema::table('notifications', function (Blueprint $table) {
-            $table->unsignedBigInteger('cmd_id')->nullable();
+            $table->unsignedBigInteger('DeleteNotif')->default(0)->nullable();
         });
     }
 

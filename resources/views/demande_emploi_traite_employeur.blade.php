@@ -101,126 +101,76 @@
 
 </div>
 <!-- Modal1 for laptob-->
-<div class="wrap-modal11 js-modal1 p-t-38 p-b-20 p-l-15 p-r-15"  id="app2" v-if="hideModel" style="margin-top:122px;">
-  <div class="overlay-modal11 " v-on:click="CancelArticle(art)"></div>
+<div class="wrap-modal11 js-modal1 p-t-38 p-b-20 p-l-15 p-r-15"  id="app2"  style="margin-top:50px;">
+  <div class="overlay-modal11 js-hide-modal1 " ></div>
 
   <div class="container" >
 
  
-    <div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent" v-if="openInfo " style=" width: 985px; height:381px;"  v-for="commandec in commandeclient2">
+    <div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent" style="width: 985px;"  v-for="commandec in commandeclient2">
 
-      <button class="how-pos3 hov3 trans-04 p-t-6 " v-on:click="hideModel = false">
+      <button class="how-pos3 hov3 trans-04 p-t-6 js-hide-modal1" >
         <img src="images/icon-close.png" alt="CLOSE">
       </button>
       
 
       <div class="row" >
     <div class="col-md-4 pr-1" >
-      <div style="margin-left:22px">
-          <p class="" id="t" >Demande @{{commandec.id}} </p>
+      <div class="p-b-30-p-l-40">
+         <h4 class="ltext-102 cl2" style="margin-left: 20px"> Demande </h4>
+         <h4 class="ltext-102 cl2" style="margin-left: 170px;margin-top: -30px"> de </h4>
+         <h4 class="ltext-102 cl2" style="margin-left: 220px;margin-top: -30px">@{{commandec.nom}} </h4>
+         <h4 class="ltext-102 cl2" style="margin-left: 330px;margin-top: -30px"> @{{commandec.prenom}} </h4>
       </div>
     </div>
     <div class="col-md-4 px-1">
+
      
     </div>
-    <div class="col-md-4 pl-1">
+    <div class="col-md-4 pl-1" >
       <div class=""style="margin-top: 11px;" >
        
-      <p class=""  id="tt" >@{{commandec.created_at}}</p>
+      <p class=""  id="tt" style="margin-left: 180px;margin-top: -5px">@{{commandec.date}}</p>
       </div>
     </div>
     </div>  
-    <hr  id="clr">
+   
 
-    <div class="row" style="margin-left:22px;margin-top:52px;"  v-for="emplC in employeur" v-if="commandec.client_id  === emplC.id">
+    <div class="row" style="margin-left:22px;margin-top:52px;"  v-for="emplC in employeur" >
     <div class="col-md-4 pr-1" >
       <div style="margin-left:-16px;">
-          <p class="" id="t" >Les information sur Client @{{commandec.id}} : </p>
-      </div>
+          <p class="" id="t2" > Information de condidat:<br>  </p>
+              <p id="t1" style="margin-left: 50px;margin-top: 10px">   Nom et prenom :</p>
+             <p id="t3" style="margin-left: 180px;margin-top: -22px">   @{{emplC.nom}}  @{{emplC.prenom}} <br> </p>
+            <p id="t1" style="margin-left: 50px;margin-top: 10px"> E-mail: </p>
+            <p id="t3" style="margin-left: 110px;margin-top:-22px">@{{emplC.email}} 
+              <br>  </p>
+              <p id="t1" style="margin-left: 50px;margin-top: 10px">   Numéro_téléphone:</p>
+             <p id="t3" style="margin-left: 210px;margin-top:-22px">  @{{emplC.numeroTelephone}}</p> 
+               <p id="t1" style="margin-left: 50px;margin-top: 10px">   CV_client:@{{emplC.cv_client}}</p>
+     
     </div>
-    <div class="col-md-4 px-1" >
-    <div class="" style="margin-left:-16px;margin-top:7px;">
+    </div>  
+
+</div>
+    
+
+    <div class="row" style="margin-left:22px;margin-top:20px;" v-for="emplC in commandeclient2" >
+    <div class="col-md-4 pr-1" >
+      <div style="margin-left:-16px;">
+       <p class="" id="t2" >Information sur l'annonce :<br> </p>
+       <p class=""  id="t1"  style="margin-top: 10px;margin-left: -60px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       Libellé :</p>
+      <p id="t3" style="margin-left:120px;margin-top: -22px"> @{{emplC.libellé}}</p>
        
-       <p class=""  id="tt" >@{{emplC.nom}}  @{{emplC.prenom}}  </p>
+       <p class=""  id="t1" style="margin-top: 10px;margin-left: 50px" > Discription :</p>
+     <p id="t3" style="margin-left: 150px;margin-top: -22px"> @{{emplC.discription}} </p>
        </div>
     </div>
-    <div class="col-md-4 pl-1"  >
-      <div class="" style="margin-left:-211px;margin-top:7px;">
-       
-      <p class=""  id="tt" > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      @{{emplC.ville}} 
+    </div>  
+
   
- </p>
-      </div>
-    </div>
-
-    <div class="col-md-4 pl-1"  >
-      <div class="" style="margin-left: 306px;margin-top: 51px;">
-       
-      <p class=""  id="tt" > @{{emplC.email}}  </p>
-      </div>
-    </div>
-
-    <div class="col-md-4 pl-1"  >
-      <div class="" style="margin-left:350px;margin-top: 51px;">
-       
-      <p class=""  id="tt" >@{{emplC.numeroTelephone}}</p>
-      </div>
-    </div>
-    </div>  
-
-
-    <hr  id="clr">
-
-    <div class="row" style="margin-left:22px;margin-top:62px;" v-for="emplC in produit" v-if="commandec.annonceE_id  === emplC.id">
-    <div class="col-md-4 pr-1" >
-      <div style="margin-left:-16px;">
-          <p class="" id="t" >Les information sur cette d'annonde : </p>
-      </div>
-    </div>
-    <div class="col-md-4 px-1" >
-    <div class="" style="margin-left:-126px;margin-top:7px;">
-       
-       <p class=""  id="tt" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-       Libellé :@{{emplC.libellé}}
-       
-        </p>
-       </div>
-    </div>
-     
-    <div class="col-md-4 px-1" >
-    <div class="" style="margin-right:-136px;margin-top:7px;">
-       
-       <p class=""  id="tt" >
-      
-      Discription :@{{emplC.discription}}
-        </p>
-       </div>
-    </div>
-    </div>  
-
-    <hr  id="clr">
-
-    <div class="row" style="margin-left:22px;margin-top:42px;">
-    <div class="col-md-4 pr-1" >
-      <div style="margin-left:-16px">
-          <p class="" id="t" >Address:@{{commandec.address}} </p>
-      </div>
-    </div>
-    <div class="col-md-4 px-1">
-     
-    </div>
-    <div class="col-md-4 pl-1">
-      <div class="">
-       
-      <p class=""  id="tt" >reponse_employeur :@{{commandec.reponse_employeur}}</p>
-      </div>
-    </div>
-    </div>  
-
-     
-
-         
+    
       </div>
       </div>
 
@@ -296,7 +246,7 @@ methods: {
              this.employeur = window.Laravel.emploC;
              this.produit = window.Laravel.prV;
 
-             
+             console.log('this.emplC',this.commandeclient2);
         })
         .catch(error =>{
              console.log('errors :' , error);

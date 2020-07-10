@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddCmdIdToNotificationsTable extends Migration
+class AddColumnDeletedAtVendeurs extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class AddCmdIdToNotificationsTable extends Migration
      */
     public function up()
     {
-        Schema::table('notifications', function (Blueprint $table) {
-            $table->unsignedBigInteger('cmd_id')->nullable();
+        Schema::table('vendeurs', function (Blueprint $table) {
+            $table->softDeletes();
+
         });
     }
 
@@ -25,8 +26,9 @@ class AddCmdIdToNotificationsTable extends Migration
      */
     public function down()
     {
-        Schema::table('notifications', function (Blueprint $table) {
-            //
+        Schema::table('vendeurs', function (Blueprint $table) {
+            $table->dropColumn('deleted_at');
+
         });
     }
 }
