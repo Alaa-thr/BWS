@@ -16,7 +16,7 @@ class AddColumnFkDemandeEmploies extends Migration
         Schema::table('demande_emploies', function (Blueprint $table) {
             $table->foreign('client_id')->references('id')->on('clients');
             $table->foreign('employeur_id')->references('id')->on('employeurs');
-            $table->foreign('annonceE_id')->references('id')->on('annonce_emploies');
+            $table->foreign('annonceE_id')->references('id')->on('annonce_emploies')->onDelete('cascade');
         });
         DB::statement("ALTER TABLE `demande_emploies` ADD UNIQUE `unique_user`(`client_id`, `annonceE_id`)");
     }

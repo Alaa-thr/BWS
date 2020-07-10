@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Commande extends Model
 {
+
 	protected $primaryKey = 'client_id';
+    public $incrementing = false;
     protected $fillable = [
         'client_id','vendeur_id','produit_id','prix_total','address','Réponse_vendeur',
         'qte','type_livraison','email','numero_tlf','code_postale','ville','commande_envoyee',

@@ -16,7 +16,9 @@ class AddColumnFkCommandes extends Migration
         Schema::table('commandes', function (Blueprint $table) {
             $table->foreign('client_id')->references('id')->on('clients');
             $table->foreign('vendeur_id')->references('id')->on('vendeurs');
-            $table->foreign('produit_id')->references('id')->on('produits');
+            //$table->foreign('produit_id')->references('id')->on('produits');
+            $table->foreign('produit_id')->references('id')->on('produits')->onDelete('cascade');
+
 
         });
         DB::unprepared('ALTER TABLE `commandes` DROP PRIMARY KEY ,ADD PRIMARY KEY (`id`,`produit_id`,`client_id`) ');

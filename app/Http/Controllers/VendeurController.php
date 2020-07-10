@@ -53,6 +53,20 @@ class VendeurController extends Controller
         $imageproduit = \DB::table('imageproduits')->get();
         $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
         $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
+        $notification = \DB::table('notifications')->get();
+
+        foreach($notification as $noti){
+           
+
+            
+            if($noti->vendeur_id === $vendeur->id AND $noti->DeleteNotif === 0){
+                session()->flash('danger','Votre Produit :  ' .$noti->nomProduit  .'  était Supprimer car il est Signaler 3 fois');
+               /* $noti->DeleteNotif = 1;
+                $noti->save();
+               */ \DB::table('notifications')->where([['vendeur_id',$vendeur->id],['DeleteNotif',0]])->update(['DeleteNotif' => 1]);
+           }
+            
+        }
         return view('produit_vendeur',['produit'=>$produit, 'ImageP' => $imageproduit,'categorie'=>$categorie,'categorieE'=>$categorieE]);
     }
 

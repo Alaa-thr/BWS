@@ -3739,11 +3739,23 @@ iframe {border: none;}
 	  margin-left: 12%;
 	  margin-right: 16.5%;
   }
-  #bb{
+  #bbbb{
 	margin-left: 21%;
 	margin-top: -20%;
-}
-#profi{
+  }
+  #profi{
 	margin-left: -5%;
 	
+  }
+  
+#searchV{
+	margin-left: 12%;
+	width: 85%;
 }
+#y{
+	color: #828181;
+  }
+  #divSignal{
+
+margin-right: 29%;
+  }

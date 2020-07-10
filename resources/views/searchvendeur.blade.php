@@ -1,4 +1,4 @@
-@extends('layouts.vendeur')
+@extends('layouts.template_vendeur')
 
 @section('content')
 

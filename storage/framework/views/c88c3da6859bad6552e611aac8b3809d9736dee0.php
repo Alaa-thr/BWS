@@ -6,7 +6,64 @@
 		<title><?php echo e(( 'Panier')); ?></title>
 	</head>
 	
- 	 
+	  
+	<!-- Cart -->
+	<div class="wrap-header-cart js-panel-cart" style="z-index: 11000; ">
+        <div class="s-full js-hide-cart"></div>
+        
+        <div class="header-cart flex-col-l p-l-55 p-r-25">
+            
+            <div class="header-cart-title flex-w flex-sb-m p-b-8">
+                <span class="mtext-103 cl2">
+                    Votre Panier
+                </span>
+
+                <div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart" >
+                    <i class="zmdi zmdi-close" style="margin-left: 171%"></i>
+                </div>
+                
+            </div>
+            
+            <div class="header-cart-content flex-w js-pscroll" id="app1" >
+                <ul class="header-cart-wrapitem w-full"  >
+                    <li class="header-cart-item flex-w flex-t m-b-12" v-for="command in ProduitsPanier">
+                        <div class="header-cart-item-img"  >
+                        <img v-for="imgP in imagesproduit" v-if="imgP.produit_id === command.produit_id && imgP.profile === 1" :src="'storage/produits_image/'+ imgP.image" 
+                        alt="IMG-PRODUCT"  style="height: 60px;">
+                        </div>
+
+                        <div class="header-cart-item-txt p-t-8"  v-for="fv in favoris" v-if="fv.id === command.produit_id">
+                            <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
+                            {{fv.Libellé}}
+                            </a>
+
+                            <span class="header-cart-item-info">
+                            {{command.qte}} x  {{fv.prix}} DA
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+                
+                <div class="w-full" >
+                    
+                <div class="header-cart-total w-full p-tb-40">
+                        Total: 
+                    </div>
+
+                    <div class="header-cart-buttons flex-w w-full">
+                        <a href="<?php echo e(route('panier')); ?>" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+                            View Cart
+                        </a>
+
+                        <a href="<?php echo e(route('panier')); ?>" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
+                            Check Out
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>      
+	</div>
+	
 
 	<!-- Shoping Cart -->
 	<div class="bg0 p-t-75 p-b-85" >
@@ -71,7 +128,7 @@
 										</div>
 									</td>
 									<td class="column-2 p-l-50">
-										<div v-if="produit.taille != null" class="flex-t">
+										<div v-if="produit.taille != 0" class="flex-t">
 											<select class="custom-select m-r-10" id=""  style="width: 100px"  v-on:change="updateProduitPanier($event,produit.produit_id,'color')" >
 											  <option  value="" disabled>Couleur</option>
 			                                  <option :value="produit.couleur_id">{{produit.nom}}</option>
@@ -177,7 +234,7 @@
 												</div>
 												<div class="flex-t m-t--10">
 													<div>Couleur: {{produit.nom}}</div>
-													<div v-if="produit.taille != null">&nbsp/&nbsp&nbspTaille: {{produit.taille}}</div>
+													<div v-if="produit.taille != 0">&nbsp/&nbsp&nbspTaille: {{produit.taille}}</div>
 												</div>
 											</div>
 										</div>
@@ -296,6 +353,9 @@
 			   "client" => $client,
 			   "idClient" => $idClient,
 
+			   'ImageP'         => $ImageP,
+               'Fav'         => $Fav,
+               'command'         => $command,
                "url"      => url("/")  
           ]); ?>;
 </script>
@@ -379,8 +439,6 @@ methods:{
 	    		changeQte(val,id);
 	    	},
 	    	updateProduitPanier: function(e,id,type){
-	    		
-		      	console.log("yees")
 		      	if(type == 'qte'){
 		      		this.updateP.val = e;
 		      	}
@@ -437,10 +495,6 @@ methods:{
                 	this.colors = window.Laravel.color;
                 	this.tailles = window.Laravel.taille;
                 	this.typeLivraisons = window.Laravel.typeLivraison;
-                	
-                  console.log("response", this.produitCommandes)
-                  console.log("tailles", this.tailles)
-                  console.log("colors", window.Laravel.color)
                 })                     
                 .catch(error =>{
                            console.log('errors :' , error);
@@ -466,7 +520,6 @@ methods:{
 	                	this.produitCommandesDemmande = response.data.produitCmds;
 	                	this.infoClinet = this.produitCommandesDemmande[0];
 	                	this.prixT = response.data.prixT;
-	                	console.log("this.prixT ",this.prixT );
 		                $('.js-modal1').addClass('show-modal1');
 			    		this.produitCommandesDemmande.forEach(key => {
 			    			if(key.type_livraison == "vc"){
@@ -533,6 +586,36 @@ Vue.directive('tooltip', function(el, binding){
              trigger: 'hover'             
          })
 })
+</script>
+<script>
+     var app1 = new Vue({
+        el: '#app1',
+        data:{
+          message:'hello',
+          ProduitsPanier: [],
+          favoris: [],
+          imagesproduit: [],
+        },
+        methods:{
+			ProduitCommande: function(){
+            axios.get(window.Laravel.url+'/panier')
+              .then(response => {
+                this.favoris = window.Laravel.Fav;
+                this.imagesproduit = window.Laravel.ImageP;
+                this.ProduitsPanier = window.Laravel.command;
+               })
+              .catch(error => {
+                  console.log('errors : '  , error);
+             })
+          },
+          
+
+        },
+        created:function(){
+            this.ProduitCommande();
+
+        }
+     })
 </script>
 <?php $__env->stopPush(); ?>
 <?php echo $__env->make('layouts.template_visiteur', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\BWS\resources\views/panier_visiteur.blade.php ENDPATH**/ ?>

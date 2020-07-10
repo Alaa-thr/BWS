@@ -191,7 +191,7 @@
                   <div class="col-md-10 pr-2" >
                     <div class="form-group">
                       <label for="image" >image</label>
-                      <input type="file" class="form-control"  v-on:change="imagePreview" :class="{'is-invalid' : message.image}" accept="image/png, image/jpeg">
+                      <input type="file" class="form-control"  v-on:change="imagePreview" :class="{'is-invalid' : message.image}" accept="image/*">
                       <span class="px-3 cl13" v-if="message.image" v-text="message.image[0]"></span>
                     </div>
                  </div>

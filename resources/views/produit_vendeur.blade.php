@@ -25,6 +25,18 @@
         <div class="row" id='app'>
           <div class="col-md-12">
             <div class="card">
+            @if(session()->has('danger'))
+<div class="row"> 
+<div class="alert alert-danger" style="  margin-left:33px;width: 960px;">
+
+<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;
+
+</button>
+ {{ session()->get('danger')}}
+</div>
+
+</div>
+      @endif
               <div class="card-header m-b-30">
                 <h4 class="card-title " style="margin-top: -5px; ">Mes produits</h4>
                
@@ -263,7 +275,7 @@
                         
                             <div class="form-group m-r-35">
                               <label for='img'>Image<span style="font-size: 12px">(Entrer l'image de profil pour votre produit*)</span></label>
-                              <input type="file" class="form-control" accept="image/png, image/jpeg" style="height: 40px;"  v-on:change="imagePreview" :class="{'is-invalid' : message.image}"  id='img'/>
+                              <input type="file" class="form-control" accept="image/*" style="height: 40px;"  v-on:change="imagePreview" :class="{'is-invalid' : message.image}"  id='img'/>
                               <span class="px-3 cl13" v-if="message.image" v-text="message.image[0]">
                               </span>
                             </div>

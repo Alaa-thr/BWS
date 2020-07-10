@@ -14,7 +14,7 @@ class AddCmdIdToNotificationsTable extends Migration
     public function up()
     {
         Schema::table('notifications', function (Blueprint $table) {
-            $table->unsignedBigInteger('cmd_id');
+            $table->unsignedBigInteger('cmd_id')->nullable();
         });
     }
 
