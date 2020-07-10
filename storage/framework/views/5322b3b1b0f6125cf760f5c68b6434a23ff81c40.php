@@ -6,6 +6,61 @@
 		<title><?php echo e(( 'Contact')); ?></title>
 	</head>
 
+	 <!-- Cart -->
+	  <div class="wrap-header-cart js-panel-cart" style="z-index: 11000; ">
+        <div class="s-full js-hide-cart"></div>
+        
+        <div class="header-cart flex-col-l p-l-55 p-r-25">
+            
+            <div class="header-cart-title flex-w flex-sb-m p-b-8">
+                <span class="mtext-103 cl2">
+                    Votre Panier
+                </span>
+
+                <div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart" >
+                    <i class="zmdi zmdi-close" style="margin-left: 171%"></i>
+                </div>
+                
+            </div>
+            
+            <div class="header-cart-content flex-w js-pscroll" id="app11" >
+                <ul class="header-cart-wrapitem w-full"  >
+                    <li class="header-cart-item flex-w flex-t m-b-12" v-for="command in ProduitsPanier" >
+                        <div class="header-cart-item-img" @click="deleteProduitPanier(command)" >
+                          <img v-for="imgP in imagesproduit" v-if="imgP.produit_id === command.produit_id && imgP.profile === 1" :src="'storage/produits_image/'+ imgP.image" alt="IMG-PRODUCT"  style="height: 60px;">
+                        </div>
+
+                        <div class="header-cart-item-txt p-t-8"  v-for="fv in favoris" v-if="fv.id === command.produit_id" >
+                            <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
+                            {{fv.Libellé}}
+                            </a>
+
+                            <span class="header-cart-item-info">
+                            {{command.qte}} x  {{fv.prix}} DA
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+                
+                <div class="w-full" >
+                    
+                <div class="header-cart-total w-full p-tb-40" v-for="p in prix">
+                        Totale: {{p.prixTo}} DA
+                    </div>
+
+                    <div class="header-cart-buttons flex-w w-full">
+                        <a href="<?php echo e(route('panier')); ?>" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+                            View Cart
+                        </a>
+
+                        <a href="<?php echo e(route('panier')); ?>" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
+                            Check Out
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>      
+    </div>
 		<!-- Title page -->
 	<section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url('images/bg-02.jpg');">
 		<h2 class="ltext-105 cl0 txt-center">
@@ -101,6 +156,10 @@
         window.Laravel = <?php echo json_encode([
 
                'csrfToken' => csrf_token(),
+			         'ImageP'         => $ImageP,
+               'Fav'            => $Fav,
+               'command'        => $command,
+               'prixTotale'   => $prixTotale,
                'url'       => url('/'), 
           ]); ?>;
 </script>
@@ -152,6 +211,61 @@
     
   });
 </script>
+<script>
+     var app11 = new Vue({
+        el: '#app11',
+        data:{
+          message:'hello',
+          ProduitsPanier: [],
+          favoris: [],
+          imagesproduit: [],
+          prix:[],
+        },
+        methods:{
+          deleteProduitPanier: function(produit){
+           
+                  axios.delete(window.Laravel.url+'/deleteproduitpanier/'+produit.produit_id)
+                    .then(response => {
+                      if(response.data.etat){
+                               var position = this.ProduitsPanier.indexOf(produit);
+                               this.ProduitsPanier.splice(position,1);
+                               if(this.ProduitsPanier.lenght == 0){
+                                  this.prix[0].prixTo = 0;
+                               }
+                               else{
+                                  this.prix[0].prixTo -= produit.prix_total*produit.qte;
+                               }
+
+                      }                     
+                    })
+                    .catch(error =>{
+                               console.log('errors :' , error);
+                    })
+
+              
+      },
+			apropos: function(){
+            axios.get(window.Laravel.url+'/apropos')
+              .then(response => {
+                this.favoris = window.Laravel.Fav;
+                this.imagesproduit = window.Laravel.ImageP;
+                this.ProduitsPanier = window.Laravel.command;
+                this.prix = window.Laravel.prixTotale;
+               })
+              .catch(error => {
+                  console.log('errors : '  , error);
+             })
+          },
+          
+
+        },
+        created:function(){
+            this.apropos();
+
+        }
+     })
+</script>
+
 <?php $__env->stopPush(); ?>
 
 <?php echo $__env->make('layouts.template_visiteur', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\BWS\resources\views/contact.blade.php ENDPATH**/ ?>

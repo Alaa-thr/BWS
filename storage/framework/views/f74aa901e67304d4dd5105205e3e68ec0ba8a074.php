@@ -1,12 +1,16 @@
 
 <?php $__env->startSection('content'); ?>
 
+	<?php
+		$xxxx=21;
+
+	?>
 	
 	<head>
 		<title><?php echo e(( 'Shops')); ?></title>
 	</head>
  <!-- Cart -->
- <div class="wrap-header-cart js-panel-cart" style="z-index: 11000; ">
+ 	 <div class="wrap-header-cart js-panel-cart" style="z-index: 11000; ">
         <div class="s-full js-hide-cart"></div>
         
         <div class="header-cart flex-col-l p-l-55 p-r-25">
@@ -23,14 +27,13 @@
             </div>
             
             <div class="header-cart-content flex-w js-pscroll" id="app11" >
-                <ul class="header-cart-wrapitem w-full" v-for="command in ProduitsPanier" >
-                    <li class="header-cart-item flex-w flex-t m-b-12">
-                        <div class="header-cart-item-img" v-for="imgP in imagesproduit" id="profi">
-                        <img v-if="imgP.produit_id === command.produit_id && imgP.profile === 1" :src="'storage/produits_image/'+ imgP.image" 
-                        alt="IMG-PRODUCT"  style="height: 60px;">
+                <ul class="header-cart-wrapitem w-full"  >
+                    <li class="header-cart-item flex-w flex-t m-b-12" v-for="command in ProduitsPanier" >
+                        <div class="header-cart-item-img" @click="deleteProduitPanier(command)" >
+                        	<img v-for="imgP in imagesproduit" v-if="imgP.produit_id === command.produit_id && imgP.profile === 1" :src="'storage/produits_image/'+ imgP.image" alt="IMG-PRODUCT"  style="height: 60px;">
                         </div>
 
-                        <div class="header-cart-item-txt p-t-8"  v-for="fv in favoris" v-if="fv.id === command.produit_id" id="bb">
+                        <div class="header-cart-item-txt p-t-8"  v-for="fv in favoriss" v-if="fv.id === command.produit_id" >
                             <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
                             {{fv.Libellé}}
                             </a>
@@ -44,8 +47,8 @@
                 
                 <div class="w-full" >
                     
-                <div class="header-cart-total w-full p-tb-40">
-                        Total: 
+                <div class="header-cart-total w-full p-tb-40" v-for="p in prix">
+                        Totale: {{p.prixTo}} DA
                     </div>
 
                     <div class="header-cart-buttons flex-w w-full">
@@ -364,8 +367,8 @@
 						</div>
 					</div>
 				</div>
-				<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-					<!-- Modal1 -->
+				
+			 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>		<!-- Modal1 -->
 			<div class="wrap-modal1 js-modal1 p-t-60 p-b-20" >
 			        <div class="overlay-modal1" v-on:click="CancelArticle()" ></div>
 
@@ -378,61 +381,53 @@
 			                <div class="row">
 			                    <div class="col-md-6 col-lg-7 p-b-30">
 			                        <div class="p-l-25 p-r-30 p-lr-0-lg">
-			                            <div class="wrap-slick3 flex-sb flex-w">
+			                            <div class="wrap-slick3 flex-sb flex-w" >
 			                                <div class="wrap-slick3-dots"></div>
 			                                <div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
-
+	
 			                                <div class="slick3 gallery-lb">
-			                                    <div class="item-slick3" data-thumb="images/product-detail-01.jpg">
+			                                
+										
+												<?php $__currentLoopData = $ImageP; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $t): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+													<?php if($t->produit_id == 21): ?>
+			                                    <div  class="item-slick3" data-thumb="<?php echo asset('storage/produits_image/'.$t->image) ?>" >
 			                                        <div class="wrap-pic-w pos-relative">
-			                                            <img src="images/product-detail-01.jpg" alt="IMG-PRODUCT">
+			                                            <img src="<?php echo asset('storage/produits_image/'.$t->image) ?>" alt="IMG-PRODUCT" style="height: 500px">
 
-			                                            <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="images/product-detail-01.jpg">
-			                                                <i class="fa fa-expand"></i>
-			                                            </a>
 			                                        </div>
 			                                    </div>
+			                                	<?php endif; ?>
+			                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+			                                  
+			                             
+			                           
+			                                	
+	
 
-			                                    <div class="item-slick3" data-thumb="images/product-detail-02.jpg">
-			                                        <div class="wrap-pic-w pos-relative">
-			                                            <img src="images/product-detail-02.jpg" alt="IMG-PRODUCT">
 
-			                                            <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="images/product-detail-02.jpg">
-			                                                <i class="fa fa-expand"></i>
-			                                            </a>
-			                                        </div>
-			                                    </div>
-
-			                                    <div class="item-slick3" data-thumb="images/product-detail-03.jpg">
-			                                        <div class="wrap-pic-w pos-relative">
-			                                            <img src="images/product-detail-03.jpg" alt="IMG-PRODUCT">
-
-			                                            <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="images/product-detail-03.jpg">
-			                                                <i class="fa fa-expand"></i>
-			                                            </a>
-			                                        </div>
-			                                    </div>
+			                                    
 			                                </div>
 			                            </div>
+
 			                        </div>
 			                    </div>
 			                    
 			                    <div class="col-md-6 col-lg-5 p-b-30">
 			                        <div class="p-r-50 p-t-5 p-lr-0-lg">
 			                            <h4 class="mtext-105 cl2 js-name-detail p-b-14">
-			                                {{detaillproduit.Libellé}}
+			                                {{this.detaillproduit.Libellé}}
 			                            </h4>
 
 			                            <span class="mtext-106 cl2">
-			                                {{detaillproduit.prix}}DA
+			                                {{this.detaillproduit.prix}}DA
 			                            </span>
 
 			                            <p class="stext-102 cl3 p-t-23">
-			                                {{detaillproduit.description}}.
+			                                {{this.detaillproduit.description}}.
 			                            </p>
 			                            <p class="stext-102 cl3 p-t-23 " >
-			                            	<span :data-toggle="!!detaillproduit.Nom ? 'tooltip' : false" data-html="true" :title="detaillproduit.Nom " >
-			                               Vendeur&nbsp:<b>&nbsp&nbsp{{detaillproduit.Nom}} &nbsp{{detaillproduit.Prenom}}</b>.</span>
+			                            	<span :data-toggle="!!this.detaillproduit.Nom ? 'tooltip' : false" data-html="true" :title="this.detaillproduit.Nom " >
+			                               Vendeur&nbsp:<b>&nbsp&nbsp{{this.detaillproduit.Nom}} &nbsp{{this.detaillproduit.Prenom}}</b>.</span>
 			                           		
 			                            </p>
 			                            <!--  -->
@@ -444,7 +439,7 @@
 
 			                                    <div class="size-204 respon6-next">
 			                                        <div class="rs1-select2 bor8 bg0" :class="{'is-invalid' : message.taille}">
-			                                            <select class="js-select2" name="t" onchange="selectTaille(this.options[this.selectedIndex].value)">
+			                                            <select class="js-select2" id="tttt" onchange="selectTaille(this.options[this.selectedIndex].value)">
 			                                                <option value="0" disabled selected>Choisir la taille</option>
 			                                                <option v-for="taille in tailles" v-if="taille.produit_id  === detaillproduit.id" :value="taille.nom">{{taille.nom}}</option>
 			                                            </select>
@@ -463,7 +458,7 @@
 
 			                                    <div class="size-204 respon6-next">
 			                                        <div class="rs1-select2 bor8 bg0"  :class="{'is-invalid' : message.couleur_id}">
-			                                            <select class="js-select2" name="c" onchange="selectColor(this.options[this.selectedIndex].value)">
+			                                            <select class="js-select2" id="cccc" onchange="selectColor(this.options[this.selectedIndex].value)">
 			                                                <option value="0" disabled selected="true">Choisir la couleur</option>
 			                                                <option v-for="color in colors" :value="color.color_id" v-if="color.produit_id === detaillproduit.id">{{color.nom}}</option>
 			                                            </select>
@@ -482,8 +477,8 @@
 
 			                                    <div class="size-204 respon6-next">
 			                                        <div class="rs1-select2 bor8 bg0" :class="{'is-invalid' : message.type_livraison}">
-			                                            <select  class="js-select2" name="TL" onchange="selectLivraisen(this.options[this.selectedIndex].value)">
-			                                                <option value="0" selected disabled>Choisir le type de livraison</option>
+			                                            <select  class="js-select2" id="TLTLTL" onchange="selectLivraisen(this.options[this.selectedIndex].value)">
+			                                                <option id='TL0' value="0" disabled selected="true">Choisir le type de livraison</option>
 			                                                
 			                                                <option v-for="typeLivraison in typeLivraisons" value="vc" v-if="typeLivraison.vendeur_id === detaillproduit.vendeur_id && typeLivraison.type_livraison === 'vc'">Le vendeur effectuer la livraison</option>
 			                                                <option v-for="typeLivraison in typeLivraisons" value="cv" v-if="typeLivraison.vendeur_id === detaillproduit.vendeur_id && typeLivraison.type_livraison === 'cv'">Vous apportez votre produit</option>
@@ -502,7 +497,7 @@
 			                                                <i class="fs-16 zmdi zmdi-minus"></i>
 			                                            </div>
 
-			                                            <input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product" value="0" placeholder="0">
+			                                            <input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product" value="0" placeholder="0" id="qtee">
 
 			                                            <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
 			                                                <i class="fs-16 zmdi zmdi-plus"></i>
@@ -529,7 +524,7 @@
 			        </div>
     		</div>
 				
-		
+		 
    
 				
 			</div>
@@ -556,9 +551,18 @@
 		document.getElementById(a).style.color = '#e60000';
 	}
 	function deletee(a){
-			$('#'+a).removeClass('zmdi-favorite');
-			$('#'+a).addClass('zmdi-favorite-outline');
-			document.getElementById(a).style.color = '#d3d3d3';
+		$('#'+a).removeClass('zmdi-favorite');
+		$('#'+a).addClass('zmdi-favorite-outline');
+		document.getElementById(a).style.color = '#d3d3d3';
+	}
+	function initialiser(){
+		
+		document.getElementById("tttt").options.selectedIndex = 0;
+		document.getElementById("cccc").options.selectedIndex = 0;
+		document.getElementById("qtee").value = 0;
+		document.getElementById("TLTLTL").options.selectedIndex = 0;
+
+		
 	}
 </script>
 
@@ -571,13 +575,78 @@
                'ImageP'         => $ImageP,
                'color'         => $color,
                'taille'         => $taille,
-               'fav'         => $fav,
-               'typeLivraison'         => $typeLivraison,
-               'Fav'            => $Fav,
+               'fav'            => $fav,
+               'typeLivraison'       => $typeLivraison,
+          		'Fav'         => $Fav,
                'command'        => $command,
+               'prixTotale'		=> $prixTotale,
                "url"      => url("/")  
     ]); ?>;
+</script>
+<script>
+     var app11 = new Vue({
+        el: '#app11',
+        data:{
+          message:'hello',
+          ProduitsPanier: [],
+          favoriss: [],
+          imagesproduit: [],
+          prix:[],
+        },
+        methods:{
+        	deleteProduitPanier: function(produit){
+		       
+		              axios.delete(window.Laravel.url+'/deleteproduitpanier/'+produit.produit_id)
+		                .then(response => {
+		                  if(response.data.etat){
+		                           var position = this.ProduitsPanier.indexOf(produit);
+		                           this.ProduitsPanier.splice(position,1);
+		                           if(this.ProduitsPanier.lenght == 0){
+		                           		this.prix[0].prixTo = 0;
+		                           }
+		                           else{
+		                           		this.prix[0].prixTo -= produit.prix_total*produit.qte;
+		                           }
 
+		                  }                     
+		                })
+		                .catch(error =>{
+		                           console.log('errors :' , error);
+		                })
+
+		       	  
+			},
+			produitVisiteur: function(){
+            axios.get(window.Laravel.url+'/shop')
+              .then(response => {
+                this.imagesproduit = window.Laravel.ImageP;
+                this.ProduitsPanier = window.Laravel.command;
+                this.prix = window.Laravel.prixTotale;
+               })
+              .catch(error => {
+                  console.log('errors : '  , error);
+             })
+          },
+          getProduitPanierShop(){
+          	axios.get(window.Laravel.url+'/getproduitpaniershop')
+              .then(response => {
+                this.favoriss = response.data.Fav;
+               })
+              .catch(error => {
+                  console.log('errors : '  , error);
+             })
+          }
+          
+
+        },
+        created:function(){
+           this.produitVisiteur();
+           this.getProduitPanierShop();
+
+        }
+     })
+</script>
+<script >
 	 var app1 = new Vue({
       el: '#app1',
       data:{
@@ -594,7 +663,7 @@
       		couleur_id: '',
       		qte: null,
       		type_livraison: '',
-      		taille: '',
+      		taille: '0',
       		prix: 0,
       		tailExst : 0,
 
@@ -608,31 +677,15 @@
       	addremo: true,
       	idproduitfavadd: '',
       	idproduitfavadd: '',
+      	tttt:[],
+      	
       },
       methods:{
-      	testFavoris($id){
-      			console.log('id',$id);
-      			this.favoris.forEach(key =>{
-      					if(key.produit_id == $id){
-      						
-      						console.log('enter id',key);
-      						
-	      					
-	      					return;
-      					}
-      					else{
-      						
-      					}
-      			})
-      			return;
-      		
-      	},
       	getFavoris(){
       		axios.get(window.Laravel.url+'/getfavoris')
               .then(response => {
               		if(response.data.etat){
 	              		this.favoris = response.data.fav;
-	              		console.log('errors :' , this.favoris); 
               		}
                })
               .catch(error => {
@@ -647,11 +700,12 @@
 			      		couleur_id: '',
 			      		qte: null,
 			      		type_livraison: '',
-			      		taille: '',
+			      		taille: '0',
 			      		prix: 0,
 			      		tailExst : 0,
 
 			      	};
+			initialiser();
 			this.message= {};
 			 	
       	},
@@ -659,27 +713,33 @@
       		axios.post(window.Laravel.url+'/addpanier',this.ajoutPanier)
               .then(response => {
               	if(response.data.etat && !response.data.produitExister){
+              		app11.favoriss.unshift(response.data.cmd);
+              		app1.imagesproduit.unshift(response.data.image);
+              		app11.ProduitsPanier.unshift(response.data.commande);
+              		app11.prix[0].prixTo += response.data.prixTotale;
+              		
               		Swal.fire(
 					  "L'ajout est fait avec success!",
 					  'Votre produit a bien ajouter a votre panier.',
 					  'success'
 					);
-              		$('.js-modal1').removeClass('show-modal1');
-              		this.ajoutPanier= {
+					initialiser();
+					this.ajoutPanier= {
 			      		vendeur_id: 0,
 			      		produit_id: 0,
 			      		couleur_id: '',
 			      		qte: null,
 			      		type_livraison: '',
-			      		taille: '',
+			      		taille: '0',
 			      		prix: 0,
 			      		tailExst : 0,
 
 			      	};
+              		$('.js-modal1').removeClass('show-modal1');
+              		
 			      	this.message= {};
-			      	document.getElementByname("t").value = 0;
-			      	document.getElementByname("c").value = 0;
-			      	document.getElementByname("TL").value = 0;			      	
+			      	
+			      				      	
               	}
               	else if(response.data.etat && response.data.produitExister){
               		$('.js-modal1').removeClass('show-modal1');
@@ -689,7 +749,7 @@
 				      		couleur_id: '',
 				      		qte: null,
 				      		type_livraison: '',
-				      		taille: '',
+				      		taille: '0',
 				      		prix: 0,
 				      		tailExst : 0,
 
@@ -698,7 +758,7 @@
               		Swal.fire({
 					  icon: 'error',
 					  title: 'Oops...',
-					  text: 'Le produit est dija existé dans votre panier.',		  
+					  text: 'Le produit est déja existé dans votre panier.',		  
 					});
               	}
                 else if(!response.data.etat && response.data.cnncte){
@@ -753,6 +813,11 @@
       	},
       	detaillProduit:function(produit){
       		var i = 0;
+      		 this.produits.forEach(key => {
+      			if(produit.id == key.id ){
+      					this.tttt.push(key);
+      			}
+      		});
       		this.ajoutPanier.vendeur_id = produit.vendeur_id;
       		this.ajoutPanier.prix = produit.prix;
       		this.detaillproduit = produit;
@@ -829,36 +894,7 @@
 
 
 </script>
-<script>
-     var app11 = new Vue({
-        el: '#app11',
-        data:{
-          message:'hello',
-          ProduitsPanier: [],
-          favoris: [],
-          imagesproduit: [],
-        },
-        methods:{
-			produitVisiteur: function(){
-            axios.get(window.Laravel.url+'/shop')
-              .then(response => {
-                this.favoris = window.Laravel.Fav;
-                this.imagesproduit = window.Laravel.ImageP;
-                this.ProduitsPanier = window.Laravel.command;
-               })
-              .catch(error => {
-                  console.log('errors : '  , error);
-             })
-          },
-          
 
-        },
-        created:function(){
-            this.produitVisiteur();
-
-        }
-     })
-</script>
 <script type="text/javascript">
 	$(function () {
   $('[data-toggle="tooltip"]').tooltip()

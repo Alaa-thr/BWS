@@ -43,16 +43,28 @@
                         <label :for="annoncea.id" style="margin-top: 40px; margin-left: 20px;">
                         </label>
                       </div>
-                        <div class="col-md-3 " >
+                        <div class="col-md-3 " v-if="annoncea.image!=null">
                           <img v-if="annoncea.image"  :src="'storage/annonces_image/'+ annoncea.image" style="height: 110px; width:120px; margin-bottom: 20px ; "/>
-                          <img v-else src="storage/téléchargement.png"  style="height: 90px; width:200px; margin-bottom: 20px ; ">
                           
                         </div>
                         
-                        <div class="col-md-5" >
+                        <div class="col-md-5" v-if="annoncea.image!=null">
                           <h6 class="title" style="margin-top: -4px;  color: red; margin-left: -10px;" >{{ annoncea.libellé }}</h6><br>
                             <div class="description" style="margin-top: -10px; font-size: 11px; margin-left: -10px;">
-                              {{ MoitieDescription(annoncea.discription,13, '...') }}
+                              {{ MoitieDescription(annoncea.discription,40, '...') }}
+                            </div>  
+                            <div class="description" style="font-weight: 500; color: black; font-size: 12px; margin-left: -10px; margin-top: 10px;">
+                                Nombre de condidat : {{annoncea.nombre_condidat}}
+                            </div>
+                            <div class="txt-right m-t-20">
+                                <a class="js-show-modal1 " style=" color: black;  font-style: italic; font-weight: 500; cursor: pointer; margin-right: -30px; " v-on:click="AfficheInfo(annoncea.id)"><b>  Afficher Plus </b>
+                                </a>
+                             </div>
+                        </div>
+                        <div class="col-md-8" v-else>
+                          <h6 class="title" style="margin-top: -4px;  color: red; margin-left: -10px;" >{{ annoncea.libellé }}</h6><br>
+                            <div class="description" style="margin-top: -10px; font-size: 11px; margin-left: -10px;">
+                              {{ MoitieDescription(annoncea.discription,120, '...') }}
                             </div>  
                             <div class="description" style="font-weight: 500; color: black; font-size: 12px; margin-left: -10px; margin-top: 10px;">
                                 Nombre de condidat : {{annoncea.nombre_condidat}}
@@ -106,8 +118,8 @@
           </div>
           <div class="row">
             <div class="col-md-10" >
-              <img v-if="annoncea.image" :src="'storage/annonces_image/'+ annoncea.image" style="width: 1500px; height: 450px; margin-left: 80px; " />
-              <img v-else src="storage/téléchargement.png" style="width: 800px; height: 300px; margin-left: 80px; " />
+              <img v-if="annoncea.image!=null" :src="'storage/annonces_image/'+ annoncea.image" style="width: 1500px; height: 450px; margin-left: 80px; " />
+
             </div> 
           </div>
           <div class="row">
@@ -118,17 +130,17 @@
             </div>
           </div>
           <div class="row">
+            <div class="col-md-10 m-l-50 m-t--10 m-b-10">
+               <p style="color: black;">{{ annoncea.discription }}</p>
+            </div>               
+          </div> 
+          <div class="row">
             <div class="col-md-10">
-              <div class="description" style="margin-left: 90px; margin-top: -20px; font-weight: 700; color: black;">
+              <div class="description" style="margin-left: 90px; font-weight: 700; color: black;">
                 Le nombre de condidat est : {{annoncea.nombre_condidat}}
               </div>
             </div>
-          </div>
-          <div class="row" style="margin-left: 50px; margin-top: 10px;">
-            <div class="col-md-2">
-               <p style="color: black;">{{ annoncea.discription }}</p>
-            </div>               
-          </div>  
+          </div> 
         </div>
 
     <!--*****************************************************-->
@@ -186,7 +198,7 @@
                   <div class="col-md-10 pr-2" >
                     <div class="form-group">
                       <label for="image" style="margin-left: 50px">image</label>
-                      <input type="file" class="form-control"  v-on:change="imagePreview" :class="{'is-invalid' : message.image}" style="margin-left: 50px">
+                      <input type="file" class="form-control"  v-on:change="imagePreview" accept="image/*" :class="{'is-invalid' : message.image}" style="margin-left: 50px">
                       <span class="px-3 cl13" v-if="message.image" v-text="message.image[0]"></span>
                     </div>
                  </div>

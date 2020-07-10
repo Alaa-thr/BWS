@@ -277,7 +277,9 @@
 var app2 = new Vue({
   el: '#app2',
   data:{
-    commandeclient2: [],employeur:[],produit:[],
+    commandeclient2: [],
+    employeur:[],
+    produit:[],
     openInfo: false,
     hideModel: false,
    

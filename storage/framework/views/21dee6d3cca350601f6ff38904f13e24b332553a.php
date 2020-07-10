@@ -44,14 +44,14 @@
                     <!-- Block2 -->
                     <div v-if="selectalll">
                            <input type="checkbox" :id="produit.id" :value="produit.id" v-model="checkedproduits" @change="changeButton2(produit)">
-                           <label :for="produit.id" style="margin-top: 120px; margin-left: 00px;"></label>
+                           <label :for="produit.id" style="margin-top: 120px; margin-left: -10px;"></label>
                    </div>
                    <div v-else>
                            <input type="checkbox" :id="produit.id" :value="produit.id" v-model="produitIds" @change="deselectProduit(produit.id)">
-                           <label :for="produit.id" style="margin-top: 120px; margin-left: 00px;"></label>
+                           <label :for="produit.id" style="margin-top: 120px; margin-left: -10px;"></label>
                    </div>
                     <div class="block2" style="margin-top: -140px;">
-                        <div class="block2-pic hov-img0" v-for="imgP in imagesproduit" style="margin-left: 20px; ">
+                        <div class="block2-pic hov-img0"  style="margin-left: 20px; " v-for="imgP in imagesproduit">
                             <img v-if="imgP.produit_id === produit.id && imgP.profile === 1" :src="'storage/produits_image/'+ imgP.image" alt="IMG-PRODUCT" style="height: 290px;width: 990px; border: 1;">
 
                             <a href="" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1" v-on:click="ShowInfo()">
@@ -60,7 +60,7 @@
                         </div>
 
                         <div class="block2-txt flex-w flex-t p-t-14">
-                            <div class="block2-txt-child1 flex-col-l " style="margin-left: 80px;">
+                            <div class="block2-txt-child1 flex-col-l " style="margin-left: 20px;">
                                 <a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
                                     {{produit.Libellé}}
                                 </a>
@@ -70,11 +70,14 @@
                                 </span>
                             </div>
 
-                            <div class="block2-txt-child2 flex-r p-t-3" style="margin-left: 180px; margin-right: -20px; margin-top: -50px;">
+                            <div class="block2-txt-child2 flex-r p-t-3" style="margin-left: 160px; margin-right: -20px; margin-top: -50px;">
                                 <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
                                     <img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON">
                                     <img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON">
                                 </a>
+                            </div>
+                            <div class="js-show-modal1"  style="margin-top: -50px; margin-left: 30px; cursor: pointer;"  v-on:click="updateProduit(produit)">
+                                   <img src="../images/icons/document.png" alt="..."/>
                             </div>
                         </div>
                     </div>
@@ -274,7 +277,7 @@
                         
                             <div class="form-group m-r-35">
                               <label for='img'>Image<span style="font-size: 12px">(Entrer l'image de profil pour votre produit*)</span></label>
-                              <input type="file" class="form-control" accept="image/png, image/jpeg" style="height: 40px;"  v-on:change="imagePreview" :class="{'is-invalid' : message.image}"  id='img'/>
+                              <input type="file" class="form-control" accept="image/*" style="height: 40px;"  v-on:change="imagePreview" :class="{'is-invalid' : message.image}"  id='img'/>
                               <span class="px-3 cl13" v-if="message.image" v-text="message.image[0]">
                               </span>
                             </div>
@@ -582,6 +585,13 @@ unset($__errorArgs, $__bag); ?>
             nom: '',
           },
 
+          oldprd: {
+            Libellé: '',
+            description: '',
+            prix: '',
+            image: '',
+          },
+
           
         },
         methods:{
@@ -849,8 +859,7 @@ unset($__errorArgs, $__bag); ?>
                       this.produitDelete.forEach(key => {
                         axios.delete(window.Laravel.url+'/deleteproduit/'+key.id)
                           .then(response => {
-                            if(response.data.etat){
-                                    window.location.reload();             
+                            if(response.data.etat){             
                                     var position = this.ProduitsVendeur.indexOf(key);
                                     this.ProduitsVendeur.splice(position,1);      
                             }                    
@@ -890,8 +899,7 @@ unset($__errorArgs, $__bag); ?>
                       this.CategoriesDelete.forEach(key => {
                         axios.delete(window.Laravel.url+'/deleteproduit/'+key.id)
                           .then(response => {
-                            if(response.data.etat){
-                                     window.location.reload();             
+                            if(response.data.etat){             
                                       var position = this.ProduitsVendeur.indexOf(key);
                                       this.ProduitsVendeur.splice(position,1);      
                             }                    
@@ -918,7 +926,19 @@ unset($__errorArgs, $__bag); ?>
 
             }
             
-      },
+        },
+         updateProduit: function(produit){     
+         app2.hideModel = true;
+         app2.openAjout = true;
+         app2.openInfo = false;
+         app2.modifier = true;
+         app2.produitAjout = produit;
+         app2.oldprd.Libellé = produit.Libellé;
+         app2.oldprd.description = produit.description;
+         app2.oldprd.prix = produit.prix;
+         app2.oldprd.image = produit.image;
+         
+        },      
           AfficherAjout: function(){
              app2.hideModel = true;
              app2.openAjout = true;

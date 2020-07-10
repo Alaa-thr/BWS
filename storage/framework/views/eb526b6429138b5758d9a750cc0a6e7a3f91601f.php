@@ -132,7 +132,9 @@
     </div>
 
     <!-- Navbar -->
+
       <nav class="navbar navbar-expand-lg navbar-transparent  bg-primary  navbar-absolute">
+                                                         
         <div class="container-fluid">
           <div class="navbar-wrapper">
             <div class="navbar-toggle">
@@ -142,7 +144,7 @@
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="#pablo"></a>
+            <a class="navbar-brand" style="margin-left: 260px">Nombre Inscription / Mois de L'année Courante</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -249,6 +251,7 @@
           </div>
         </div>
       </nav>
+
       <!-- End Navbar -->
       <?php echo $__env->yieldContent('content'); ?>
 </div>
@@ -275,7 +278,7 @@
   <script>
     $(document).ready(function() {
       // Javascript method's body can be found in assets/js/demos.js
-      demo.initDashboardPageCharts();
+      initDashboardPageCharts();
 
     });
   </script>

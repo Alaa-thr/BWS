@@ -2132,6 +2132,7 @@ input.num-product::-webkit-inner-spin-button {
 
 /*//////////////////////////////////////////////////////////////////
 [ Modal1 ]*/
+
 .wrap-modal1 {
   position: fixed;
   width: 100%;
@@ -3698,4 +3699,6 @@ i.favoo:hover{
   padding-right: 100px;
   width: 120%
 }
-
+.swal2-container {
+  z-index: 9001;
+}

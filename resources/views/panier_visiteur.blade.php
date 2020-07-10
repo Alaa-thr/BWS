@@ -25,14 +25,14 @@
             </div>
             
             <div class="header-cart-content flex-w js-pscroll" id="app1" >
-                <ul class="header-cart-wrapitem w-full" v-for="command in ProduitsPanier" >
-                    <li class="header-cart-item flex-w flex-t m-b-12">
-                        <div class="header-cart-item-img" v-for="imgP in imagesproduit" id="profi">
-                        <img v-if="imgP.produit_id === command.produit_id && imgP.profile === 1" :src="'storage/produits_image/'+ imgP.image" 
+                <ul class="header-cart-wrapitem w-full"  >
+                    <li class="header-cart-item flex-w flex-t m-b-12" v-for="command in ProduitsPanier">
+                        <div class="header-cart-item-img"  >
+                        <img v-for="imgP in imagesproduit" v-if="imgP.produit_id === command.produit_id && imgP.profile === 1" :src="'storage/produits_image/'+ imgP.image" 
                         alt="IMG-PRODUCT"  style="height: 60px;">
                         </div>
 
-                        <div class="header-cart-item-txt p-t-8"  v-for="fv in favoris" v-if="fv.id === command.produit_id" id="bb">
+                        <div class="header-cart-item-txt p-t-8"  v-for="fv in favoris" v-if="fv.id === command.produit_id">
                             <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
                             @{{fv.Libellé}}
                             </a>
@@ -127,7 +127,7 @@
 										</div>
 									</td>
 									<td class="column-2 p-l-50">
-										<div v-if="produit.taille != null" class="flex-t">
+										<div v-if="produit.taille != 0" class="flex-t">
 											<select class="custom-select m-r-10" id=""  style="width: 100px"  v-on:change="updateProduitPanier($event,produit.produit_id,'color')" >
 											  <option  value="" disabled>Couleur</option>
 			                                  <option :value="produit.couleur_id">@{{produit.nom}}</option>
@@ -232,7 +232,7 @@
 												</div>
 												<div class="flex-t m-t--10">
 													<div>Couleur: @{{produit.nom}}</div>
-													<div v-if="produit.taille != null">&nbsp/&nbsp&nbspTaille: @{{produit.taille}}</div>
+													<div v-if="produit.taille != 0">&nbsp/&nbsp&nbspTaille: @{{produit.taille}}</div>
 												</div>
 											</div>
 										</div>
@@ -437,8 +437,6 @@ methods:{
 	    		changeQte(val,id);
 	    	},
 	    	updateProduitPanier: function(e,id,type){
-	    		
-		      	console.log("yees")
 		      	if(type == 'qte'){
 		      		this.updateP.val = e;
 		      	}
@@ -495,10 +493,6 @@ methods:{
                 	this.colors = window.Laravel.color;
                 	this.tailles = window.Laravel.taille;
                 	this.typeLivraisons = window.Laravel.typeLivraison;
-                	
-                  console.log("response", this.produitCommandes)
-                  console.log("tailles", this.tailles)
-                  console.log("colors", window.Laravel.color)
                 })                     
                 .catch(error =>{
                            console.log('errors :' , error);
@@ -524,7 +518,6 @@ methods:{
 	                	this.produitCommandesDemmande = response.data.produitCmds;
 	                	this.infoClinet = this.produitCommandesDemmande[0];
 	                	this.prixT = response.data.prixT;
-	                	console.log("this.prixT ",this.prixT );
 		                $('.js-modal1').addClass('show-modal1');
 			    		this.produitCommandesDemmande.forEach(key => {
 			    			if(key.type_livraison == "vc"){

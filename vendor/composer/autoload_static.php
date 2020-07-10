@@ -545,6 +545,7 @@ class ComposerStaticInit6ac30e15a1ee6806079f05ef802d642c
         'App\\Rules\\NumCarteBancaireExist' => __DIR__ . '/../..' . '/app/Rules/NumCarteBancaireExist.php',
         'App\\Rules\\NumberExist' => __DIR__ . '/../..' . '/app/Rules/NumberExist.php',
         'App\\Rules\\SousCategorieExiste' => __DIR__ . '/../..' . '/app/Rules/SousCategorieExiste.php',
+        'App\\Rules\\Taille' => __DIR__ . '/../..' . '/app/Rules/Taille.php',
         'App\\Rules\\TitreDescriptionExist' => __DIR__ . '/../..' . '/app/Rules/TitreDescriptionExist.php',
         'App\\Signal' => __DIR__ . '/../..' . '/app/Signal.php',
         'App\\Sous_categorie' => __DIR__ . '/../..' . '/app/Sous_categorie.php',

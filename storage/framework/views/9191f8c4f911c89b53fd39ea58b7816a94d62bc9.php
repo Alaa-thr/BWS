@@ -31,7 +31,7 @@
         		$stripeProfil=$stripeProduit=$stripeCmdR=$stripeCmdT=$stripeStatistique='';
         		
         		$urlAcctuiel = Route::getCurrentRoute()->uri();
-        		if($urlAcctuiel == 'statistiquesVendeur'){
+        		if($urlAcctuiel == 'statistiques'){
         			$stripeStatistique='active';
         		}
         		else if($urlAcctuiel == 'profilVendeur'){
@@ -682,11 +682,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 	
 
 
-   <div class="btn-back-to-top" id="myBtn">
-        <span class="symbol-btn-back-to-top">
-            <i class="zmdi zmdi-chevron-up"></i>
-        </span>
-    </div>
 
  
 <script>
@@ -761,7 +756,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
   <script>
     $(document).ready(function() {
       // Javascript method's body can be found in assets/js/demos.js
-      demo.initDashboardPageCharts();
+      initDashboardPageCharts();
 
     });
   </script>
