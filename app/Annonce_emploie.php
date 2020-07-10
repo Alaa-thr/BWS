@@ -8,7 +8,7 @@ class Annonce_emploie extends Model
 {
 
     protected $fillable =[
-    	'libellé','discription','image','nombre_condidat','annonceE_attende','employeur_id','sous_categorie_id'
+'id','libellé','discription','image','nombre_condidat','annonceE_attende','employeur_id','sous_categorie_id'
     ];
 
    public function employeur()

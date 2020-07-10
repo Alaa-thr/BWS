@@ -17,9 +17,7 @@ class AddColumnTailleCouleurCommande extends Migration
             $table->unsignedBigInteger('couleur_id')->nullable();
             $table->string('taille')->nullable();
             $table->foreign('couleur_id')->references('id')->on('colors');
-            
         });
-        
     }
 
     /**

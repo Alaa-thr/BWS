@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddColumnFkSignals extends Migration
+class AddColumnFkSignalsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,12 +14,14 @@ class AddColumnFkSignals extends Migration
     public function up()
     {
         Schema::table('signals', function (Blueprint $table) {
-                     
+            
             $table->foreign('employeur_id')->references('id')->on('employeurs');
             $table->foreign('vendeur_id')->references('id')->on('vendeurs');
             $table->foreign('client_id')->references('id')->on('clients');
-            $table->foreign('produit_id')->references('id')->on('produits');
-            $table->foreign('annonce_emploi_id')->references('id')->on('annonce_emploies');
+            $table->foreign('produit_id')->references('id')->on('produits')->onDelete('SET NULL');     
+            $table->foreign('annonce_emploi_id')->references('id')->on('annonce_emploies')->onDelete('SET NULL');     
+        
+            
         });
     }
 
@@ -42,7 +44,6 @@ class AddColumnFkSignals extends Migration
             $table->dropForeign('annonce_emploies_annonce_emploi_id_foreign');
             $table->dropForeign(['annonce_emploi_id']);
            
-
         });
     }
 }

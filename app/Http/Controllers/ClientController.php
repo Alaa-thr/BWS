@@ -18,6 +18,7 @@ use App\Historique;
 use App\Vendeur;
 use App\Produit;
 use App\Demande_emploie;
+use App\Annonce_emploie;
 use App\Imageproduit;
 use App\ColorProduit;
 use App\TailleProduit;
@@ -473,15 +474,14 @@ class ClientController extends Controller
             $signal = new Signal;
             $signal->annonce_emploi_id = $id;
             $signal->client_id = $clientCnncte->id;
-            $signal->nomAnnonce = $annonce[0]->Libellé;
+            $signal->nomAnnonce = $annonce[0]->libellé;
             $signal->save();
-            
             $signalsannonce= \DB::table('signals')->where('annonce_emploi_id',$id)->get();
         
         if(count($signalsannonce) === 3){
                  $notif = new Notification;
-                 $notif->employeur_id  = $annonce[0]->vendeur_id;
-                 $notif->nomAnnonce   =  $annonce[0]->Libellé;
+                 $notif->employeur_id  = $annonce[0]->employeur_id;
+                 $notif->nomAnnonce   =  $annonce[0]->libellé;
                  $notif->save();
     
                 \DB::table('annonce_emploies')->where('id', $id)->delete();
