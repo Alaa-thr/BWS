@@ -387,10 +387,10 @@
             <div class="col-md-10">
               <div class="description" style="margin-left: 65px; margin-top: 40px; font-weight: 500; color: black;">
                 Pour contacté <b>{{ empp.nom }} {{empp.prenom}} : </b> 
-                <div  style="margin-top: -35px; margin-left: 210px; font-style: italic; color: white;">
+                <div  style="margin-top: -35px; margin-left: 210px; font-style: italic; color: blue;">
                 	<b>{{empp.num_tel}}</b>
                 </div>
-                <div style="margin-top: 5px; margin-left: 210px; font-style: italic; color: white;">
+                <div style="margin-top: 5px; margin-left: 210px; font-style: italic; color: blue;">
                    <b >{{empp.email}}</b>
                </div>
               </div>

@@ -13,6 +13,7 @@ use App\Imageproduit;
 use App\Notification;
 use App\ColorProduit;
 use App\TailleProduit;
+use App\Tarif_livraison;
 use Illuminate\Support\Facades\Storage;
 use Auth;
 use Validator;
@@ -242,6 +243,23 @@ class VendeurController extends Controller
        
 
         return ([$traiter,$notification]);
+    }
+    public function AjouterVillePrix(Request $request){
+       $vendeur = Vendeur::find(Auth::user()->id);
+       echo $request;
+       $tf = new Tarif_livraison;
+       $tf->ville_id = $request->id;
+       $tf->vendeur_id = $vendeur->id;
+       $tf->prix = $request->prix;
+       $tf->save();
+       return Response()->json(['etat' => true, 'tf' => $tf]);
+
+    }
+    public function deleteProduit($id){
+       $imagee = Imageproduit::find($id);
+       $produit = Produit::find($id);
+       $produit->delete();
+       return Response()->json(['etat' => true]);
     }
 
 }

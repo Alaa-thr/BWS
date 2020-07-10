@@ -132,6 +132,9 @@ Route::post('/detaillsacommandevendeur', 'VendeurController@detaillsacommandeVen
 Route::delete('/deletecommandevendeur/{id}','VendeurController@deleteCommandeVendeur');
 Route::put('/recucommande/{id}','VendeurController@RecuCommande');
 Route::put('/refusercommande/{id}','VendeurController@RefuserCommande');
+Route::post('/addvilles','VendeurController@AjouterVillePrix');
+Route::delete('/deleteproduit/{id}','VendeurController@deleteProduit');
+
 
 /*commande traiter vendeur*/
 Route::get('/commandeTraiterVendeur','VendeurCommandeController@get_commande_traiter_vendeur')->name('commandeTraiterVendeur');

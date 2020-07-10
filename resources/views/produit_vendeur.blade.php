@@ -21,28 +21,38 @@
     </nav>
     <div class="panel-header panel-header-sm">
     </div>
-    <div class="content">
-        <div class="row" id='app'>
+    <div class="content" id="app">
+        <div class="row" >
           <div class="col-md-12">
             <div class="card">
               <div class="card-header m-b-30">
-                <h4 class="card-title " style="margin-top: -5px; ">Mes produits</h4>
+                <input type="checkbox" id="produit" @change="selectAlll()" v-model="allSelectedd">
+                <label for="produit" style="margin-left: 10px; margin-top: 10px;"></label>
+                <h4 class="card-title " style="margin-top: -30px; margin-left: 50px;">Mes produits</h4>
                
                     <div class="txt-right"style="margin-top: -50px; " >
-                            <button  v-if="suppr" class="btn-sm btn-info js-show-modal1 m-r-30" style="height: 35px;" v-on:click="AfficherAjout()" ><b>Ajouter Produit</b>
+                            <button  v-if="suppr" class="btn-sm btn-danger " style="height: 35px; " v-on:click="deleteArrayProduit()"><b>Supprimer</b>
                             </button>
-                            <button  v-else class="btn-sm btn-danger " style="height: 35px; " v-on:click="deleteArrayArticle()"><b>Supprimer</b>
+                             <button  v-else class="btn-sm btn-info js-show-modal1 m-r-30" style="height: 35px;" v-on:click="AfficherAjout()" ><b>Ajouter Produit</b>
                             </button>
-                            <button v-else v-on:click="AnnulerSel()"  class="btn-sm btn-warning " style="height: 35px; " ><b>Annuler</b>
+                            <button v-if="suppr" v-on:click="AnnulerSel()"  class="btn-sm btn-warning " style="height: 35px; " ><b>Annuler</b>
                             </button>
                     </div>
               </div> 
             <div class="row isotope-grid" style =" margin-left:22px; margin-right:22px;" >
                 <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women" v-for="produit in ProduitsVendeur">
                     <!-- Block2 -->
-                    <div class="block2">
-                        <div class="block2-pic hov-img0" v-for="imgP in imagesproduit">
-                            <img v-if="imgP.produit_id === produit.id && imgP.profile === 1" :src="'storage/produits_image/'+ imgP.image" alt="IMG-PRODUCT" style="height: 290px;width: 990px;">
+                    <div v-if="selectalll">
+                           <input type="checkbox" :id="produit.id" :value="produit.id" v-model="checkedproduits" @change="changeButton2(produit)">
+                           <label :for="produit.id" style="margin-top: 120px; margin-left: 00px;"></label>
+                   </div>
+                   <div v-else>
+                           <input type="checkbox" :id="produit.id" :value="produit.id" v-model="produitIds" @change="deselectProduit(produit.id)">
+                           <label :for="produit.id" style="margin-top: 120px; margin-left: 00px;"></label>
+                   </div>
+                    <div class="block2" style="margin-top: -140px;">
+                        <div class="block2-pic hov-img0" v-for="imgP in imagesproduit" style="margin-left: 20px; ">
+                            <img v-if="imgP.produit_id === produit.id && imgP.profile === 1" :src="'storage/produits_image/'+ imgP.image" alt="IMG-PRODUCT" style="height: 290px;width: 990px; border: 1;">
 
                             <a href="" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1" v-on:click="ShowInfo()">
                                 Quick View
@@ -50,7 +60,7 @@
                         </div>
 
                         <div class="block2-txt flex-w flex-t p-t-14">
-                            <div class="block2-txt-child1 flex-col-l ">
+                            <div class="block2-txt-child1 flex-col-l " style="margin-left: 80px;">
                                 <a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
                                     @{{produit.Libellé}}
                                 </a>
@@ -60,7 +70,7 @@
                                 </span>
                             </div>
 
-                            <div class="block2-txt-child2 flex-r p-t-3">
+                            <div class="block2-txt-child2 flex-r p-t-3" style="margin-left: 180px; margin-right: -20px; margin-top: -50px;">
                                 <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
                                     <img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON">
                                     <img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON">
@@ -355,14 +365,13 @@
                         
                         <div class="row">
                           <div class="col-md-10 flex-t">
-                                 <button type="submit" v-if="modifier" class="btn btn-success btn-block m-r-5" style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="" >Modifier
-                                </button> 
-                                <!--button type="submit" v-else class="btn btn-success btn-block m-r-5" style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="addProduit()" >Ajouter
-                                </button-->
-                                <button type="submit" v-else class="js-show-modal1 btn btn-success btn-block m-r-5" style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="AfficherAjout2()">Suivant
-                                </button> 
+                                          
                                 <button type="submit"  class="btn btn-danger btn-block " style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="CancelArticle()" >Annuler
+                                </button>
+                                <button type="submit" v-if="modifier" class="btn btn-success btn-block m-r-5" style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="" >Modifier
                                 </button> 
+                                <button type="submit" v-else class="js-show-modal1 btn btn-success btn-block m-r-5" style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="AfficherAjout2()">Suivant
+                                </button>
                           </div>
                         </div>
                       </div>
@@ -374,13 +383,15 @@
                     <img src="images/icon-close.png" alt="CLOSE">
                   </button>
                  <div class="tab " style="border: 1px" >
-                    <div class="form-group m-b-35 m-l-50 " style="margin-left: 30px; margin-top: -20px;">
-                        <input type="checkbox" value="" class="form-control" id="selectall" onclick="selectAll(this);" >
-                        <label for="selectall" style="font-size: 20px;" >Selectionner Tout :</label>
+                    <div class="form-group m-b-35 m-l-50 " style="margin-left: 70px; margin-top: -10px;">
+                        <input type="checkbox" v-on:change="selectAll()" class="form-control" v-model="allSelected" id="e"  >
+                        <label for="e" style="font-size: 20px;" >Selectionner Tout :</label>
                     </div>
                    <div class="form-group m-b-35 m-l-50 " v-for="v in villes" style="display: inline-flex;">
                                     <div  >
-                                        <input type="checkbox" class=" form-control  @error('villeC') is-invalid @enderror" value="v.id" :id="v.id" name="villeC[]" >
+                                        <!--input type="checkbox"  :id="ema.id" :value="ema.id" v-model="checkedEmail" @change="changeButton(ema)">
+                                       <label :for="ema.id" style="margin-left: 30px;"></label-->
+                                        <input type="checkbox" class=" form-control  @error('villeC') is-invalid @enderror" :value="v.id" :id="v.id" name="villeC[]" v-model="checkedville" @change="changeButton(v)">
                                         <label class="p-l-25 p-t-4" :for="v.id" >@{{v.nom}}</label>
                                         @error('villeC')
                                             <span class="invalid-feedback" role="alert">
@@ -389,20 +400,23 @@
                                         @enderror
                                     </div>
                     </div>
-                    <div class="form-group input-group m-b-60">
-                                  <input type="text" class="form-control @error('prix_tarif') is-invalid @enderror" aria-label="Text input with dropdown button" placeholder="Entrez le prix de livraison pour la(les) ville(s) selectionner" name="prix_tarif" style="height: 45px" value="{{old('prix_tarif')}}">
+                    <div class="form-group input-group m-b-60" style="width: 800px; margin-left: 30px;">
+                                <div class="input-group mb-3" style="margin-left: 50px;">   
+                                  <input type="number" class="form-control @error('prix_tarif') is-invalid @enderror" aria-label="Recipient's username" aria-describedby="basic-addon2" placeholder="Entrez le prix de livraison pour la(les) ville(s) selectionner" name="prix_tarif" style="height: 45px" v-model='prixx.prx' value="{{old('prix_tarif')}}">
                                   <div class="input-group-append">
-                                    <select class="form-control form-control-lg @error('poids') is-invalid @enderror" id="exampleFormControlSelect1"  name="poids" style="height: 45px">
-                                            <option value="1" selected {{ old('poids') == 1 ? 'selected' : '' }}>/Kg</option>
-                                            <option value="2" {{ old('poids') == 2 ? 'selected' : '' }}>/g</option>
-                                    </select>
+                                    <button class="btn btn-block btn-sm btn-success" type="button" style="height: 45px; margin-top: 0px; width: 90px; font-size: 16px; border-bottom-right-radius: 1.8em 1.8em; border-top-right-radius: 1.8em 1.8em;" v-on:click="AjouterArrayVille()">valider</button>
                                   </div>
+                                </div>
                                   @error('prix_tarif')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                   @enderror
                     </div>
+                    <button type="submit" class="btn btn-success btn-block m-r-5" style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700; width: 380px; margin-left: 80px;" v-on:click="addProduit()" >Ajouter
+                    </button>
+                    <button type="submit"  class="btn btn-danger btn-block " style=" border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700; width: 380px; margin-left: 465px; margin-top: -48px" v-on:click="CancelArticle()" >Annuler
+                    </button>
                   </div>
             </div>
         </div>
@@ -519,6 +533,14 @@
             produit_id: 0,
             image: ''
           },
+          allSelected: false,
+          selectall: true,
+          villeIds: [],
+          checkedville: [],
+          villesAdd: [],
+          prixx:{
+            prx:0,
+          },
           imagesP: [],
           colorsP: [],
           tailleP: [],
@@ -526,6 +548,10 @@
           typeTaille: false ,
           typePointure: false,
           Type: 0,
+          vville :{
+            id: 0,
+            nom: '',
+          },
 
           
         },
@@ -576,8 +602,34 @@
               this.openAjout = true;
               
             },
-            imagesPreviews(event) {
+            AjouterArrayVille: function(){
                
+                this.villesAdd.forEach(key=>{
+                    key['prix']=this.prixx.prx;
+                })
+            console.log("this.villesAdd",this.villesAdd)
+           
+             this.villesAdd.forEach(key => {
+                        axios.post(window.Laravel.url+'/addvilles',key)
+                          .then(response => {
+                            if(response.data.etat){
+                                console.log("hello")
+                                 this.allSelected = false;
+                                  this.checkedville.length = [];
+                                  this.villesAdd = [];
+                                  this.selectall = true;
+                            }
+                          })
+                          .catch(error =>{
+                                     console.log('errors :' , error);
+                          })
+                      })
+                      
+                         
+            
+            
+        },
+        imagesPreviews(event) {         
                for( i = 0 ; i < event.target.files.length ; i++){
                     var fileR = new FileReader();
                     fileR.readAsDataURL(event.target.files[i]);
@@ -668,7 +720,43 @@
             getIdColor: function(event){
                 
                 console.log("this.produitAjout.colors",event);
+            },
+            deselectVille: function(villeId){
+             this.villesAdd.forEach(key => {
+                  if(key.id == villeId){
+                      var position = this.villesAdd.indexOf(key);
+                      this.villesAdd.splice(position,1);                    
+                  } 
+            });             
+          },
+          selectAll: function(){
+            this.selectall = false;
+            if (this.allSelected) {
+                for (user in this.villes) {
+                    this.villeIds.push(this.villes[user].id);
+                    this.villesAdd.push(this.villes[user]);
+                    this.checkedville.push(this.villes[user].id);
+                }
+             }
+             else{
+              this.villeIds = [];
+              this.selectall = true;
+              this.checkedville = [];
             }
+        },
+        
+         changeButton: function(v){
+              if(this.checkedville.length > 0){
+                 this.villesAdd.push(v);
+              }
+              else{
+                this.villesAdd = [];
+                
+             }
+             if(this.checkedville.length < this.villesAdd.length){
+                this.deselectVille(v.id)
+              }
+          },
         },
         created: function(){
             this.getCategories();
@@ -681,10 +769,14 @@
      var app = new Vue({
         el: '#app',
         data:{
-          message:'hello',
           ProduitsVendeur: [],
-          suppr: true,
+          suppr: false,
           imagesproduit: [],
+          checkedproduits: [],
+          selectalll: true,
+          allSelectedd: false,
+          produitIds: [],
+          produitDelete :[],
           p:[],
 
         },
@@ -699,6 +791,105 @@
                   console.log('errors : '  , error);
              })
           },
+          deleteArrayProduit:function(){
+            if(this.produitDelete.length == 0){
+                Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Il ya aucun produit a supprimer!',
+
+              }).then((result) => {
+                this.allSelectedd = false;
+                this.suppr=false;
+                this.selectalll = true;
+               
+             })
+              
+            }
+            else if(this.produitDelete.length == 1){
+                Swal.fire({
+                  title: 'Etes vous de supprimer ce produit?',
+                  html: "<smal style='font-size:15px; display:flex'><h6 style='color: red'>",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Oui, Supprimer!'
+                }).then((result) => {
+                    if (result.value) {
+                      this.produitDelete.forEach(key => {
+                        axios.delete(window.Laravel.url+'/deleteproduit/'+key.id)
+                          .then(response => {
+                            if(response.data.etat){
+                                    window.location.reload();             
+                                    var position = this.ProduitsVendeur.indexOf(key);
+                                    this.ProduitsVendeur.splice(position,1);      
+                            }                    
+                          })
+                          .catch(error =>{
+                                     console.log('errors :' , error);
+                          })
+                      })
+                      
+                          this.allSelectedd = false;
+                          this.checkedproduits.length = [];
+                          this.suppr=false;
+                          this.produitDelete = [];
+                          this.selectalll = true;
+
+                    Swal.fire(
+                      'Effacé!',
+                      'Votre produit a été supprimé.',
+                      'success'
+                    )
+                  }
+                  
+                  })
+
+            }
+            else{
+                Swal.fire({
+                  title: 'Etes vous de supprimer ces produits?',
+                  html: "<smal style='font-size:15px; display:flex'><h6 style='color: red'>",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Oui, Supprimer!'
+                }).then((result) => {
+                    if (result.value) {
+                      this.CategoriesDelete.forEach(key => {
+                        axios.delete(window.Laravel.url+'/deleteproduit/'+key.id)
+                          .then(response => {
+                            if(response.data.etat){
+                                     window.location.reload();             
+                                      var position = this.ProduitsVendeur.indexOf(key);
+                                      this.ProduitsVendeur.splice(position,1);      
+                            }                    
+                          })
+                          .catch(error =>{
+                                     console.log('errors :' , error);
+                          })
+                      })
+                      
+                          this.allSelectedd = false;
+                          this.checkedproduits.length = [];
+                          this.suppr=false;
+                          this.produitDelete = [];
+                          this.selectalll = true;
+
+                    Swal.fire(
+                      'Effacé!',
+                      'Vos produits ont été supprimé.',
+                      'success'
+                    )
+                  }
+                  
+                  })
+
+            }
+            
+      },
           AfficherAjout: function(){
              app2.hideModel = true;
              app2.openAjout = true;
@@ -706,7 +897,46 @@
              app2.openAjout2 = false;
               
           },
-
+          deselectProduit: function(produitId){
+             this.produitDelete.forEach(key => {
+                  if(key.id == produitId){
+                      var position = this.produitDelete.indexOf(key);
+                      this.produitDelete.splice(position,1);                    
+                  } 
+            });             
+         },
+           changeButton2: function(p){
+           if(this.checkedproduits.length > 0){
+          this.suppr=true;
+          this.produitDelete.unshift(p);
+        }
+        else{
+          this.produitDelete = [];
+          this.suppr=false;
+        } 
+        if(this.checkedproduits.length < this.produitDelete.length){
+                 this.produitDelete = this.produitDelete.filter(function(item) { return item != p; });
+        }       
+      }, 
+          selectAlll: function() {
+              this.selectalll = false;
+            if (this.allSelectedd) {
+                for (user in this.ProduitsVendeur) {
+                    this.produitIds.push(this.ProduitsVendeur[user].id);
+                    this.produitDelete.push(this.ProduitsVendeur[user]);
+                }
+                this.suppr=true;
+             }
+             else{
+              this.produitIds = [];
+              this.produitDelete= [];
+              this.suppr=false;
+              this.selectalll = true;
+              this.checkedproduits = [];
+            }
+             
+        },
+          
           ShowInfo: function(){
             app2.hideModel = true;
              app2.openAjout = false;
