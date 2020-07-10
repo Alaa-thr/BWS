@@ -511,7 +511,22 @@
 				                                            Annuler
 				                                        </button>
 			                                        </div>
+													<div class=""  style="margin-top:-292%;" >
+      <a class="f" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#"   style="  margin-left: 335px;">
+        <i class="fas fa-ellipsis-v"  id="y"></i>
+       </a>
+      <div class="dropdown-menu " x-placement="right-start" id="divSignal">
+                    <a    v-on:click="SignalerProduit(detaillproduit.id)"  class="dropdown-item js-show-modal1" 
+      style="color: #0074d9; font-style: italic; font-weight: 900; cursor: pointer;" >   Signaler Produit</a>
+                    <a class="dropdown-item" v-on:click="SignalerVendeur(detaillproduit.vendeur_id)"
+    style="color: #0074d9; font-style: italic; font-weight: 900; cursor: pointer;">
+    Signaler Vendeur</a>
+       </div>
+      
+    </div>    					
+														
 			                                    </div>
+
 			                                </div>  
 			                            </div>
 			                            
@@ -523,7 +538,7 @@
 			        </div>
     		</div>
 				
-		 
+		
    
 				
 			</div>
@@ -680,6 +695,33 @@
       	
       },
       methods:{
+		SignalerVendeur: function(id){
+          	axios.post(window.Laravel.url+'/signalervendeur/'+id)
+              .then(response => {
+				Swal.fire(
+					  "Signal est fait avec success!",
+					);
+					$('.js-modal1').removeClass('show-modal1');
+                	console.log("response",response.data)
+               })
+              .catch(error => {
+                  console.log('errors : '  , error);
+             })
+          },
+		SignalerProduit: function(id){
+          	axios.post(window.Laravel.url+'/signalerproduit/'+id)
+              .then(response => {
+				Swal.fire(
+					  "Signal est fait avec success!",
+					);
+					$('.js-modal1').removeClass('show-modal1');
+                	console.log("response",response.data)
+               })
+              .catch(error => {
+                  console.log('errors : '  , error);
+             })
+          },
+      	
       	getFavoris(){
       		axios.get(window.Laravel.url+'/getfavoris')
               .then(response => {

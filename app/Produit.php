@@ -36,5 +36,8 @@ class Produit extends Model
     {
         return $this->hasMany('App\TailleProduit');
     }
-    
+    public function client()
+    {
+        return $this->hasMany('App\Client');
+    }   
 }

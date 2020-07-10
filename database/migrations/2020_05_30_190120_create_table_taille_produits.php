@@ -17,7 +17,7 @@ class CreateTableTailleProduits extends Migration
             $table->id();
             $table->string('nom');
             $table->unsignedBigInteger('produit_id');
-            $table->foreign('produit_id')->references('id')->on('produits');
+            //$table->foreign('produit_id')->references('id')->on('produits');
             $table->unique(['nom', 'produit_id']);
             $table->timestamps();
         });

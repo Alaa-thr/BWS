@@ -14,8 +14,8 @@ class AddColumnFkFavoris extends Migration
     public function up()
     {
         Schema::table('favoris', function (Blueprint $table) {
-            $table->foreign('produit_id')->references('id')->on('produits');
-            $table->foreign('annonce_emploi_id')->references('id')->on('annonce_emploies');
+            $table->foreign('produit_id')->references('id')->on('produits')->onDelete('SET NULL');     
+            $table->foreign('annonce_emploi_id')->references('id')->on('annonce_emploies')->onDelete('SET NULL');     
             $table->foreign('client_id')->references('id')->on('clients');
         });
     }

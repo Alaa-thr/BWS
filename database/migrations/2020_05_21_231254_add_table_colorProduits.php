@@ -18,8 +18,10 @@ class AddTableColorProduits extends Migration
             $table->unsignedBigInteger('produit_id');
             $table->unsignedBigInteger('color_id');
             $table->timestamps();
-            $table->foreign('produit_id')->references('id')->on('produits');
-            $table->foreign('color_id')->references('id')->on('colors');
+         //  $table->foreign('produit_id')->references('id')->on('produits');
+           $table->foreign('color_id')->references('id')->on('colors');
+        
+
         });
     }
 

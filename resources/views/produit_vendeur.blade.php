@@ -25,6 +25,18 @@
         <div class="row" id='app'>
           <div class="col-md-12">
             <div class="card">
+            @if(session()->has('danger'))
+<div class="row"> 
+<div class="alert alert-danger" style="  margin-left:33px;width: 960px;">
+
+<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;
+
+</button>
+ {{ session()->get('danger')}}
+</div>
+
+</div>
+      @endif
               <div class="card-header m-b-30">
                 <h4 class="card-title " style="margin-top: -5px; ">Mes produits</h4>
                
