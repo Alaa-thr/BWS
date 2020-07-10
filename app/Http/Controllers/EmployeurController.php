@@ -68,7 +68,12 @@ class EmployeurController extends Controller
     } 
 
     public function detaillsacommandeTraiterEmplyeur(Request $request){
-        $commande_detaills = \DB::table('demande_emploies')->where('id', $request->idA)->get();
+         $empl = Employeur::find(Auth::user()->id);
+        $commande_detaills = \DB::table('demande_emploies')
+        ->join('clients','clients.id','=','demande_emploies.client_id')
+        ->join('annonce_emploies','annonce_emploies.id','=','demande_emploies.annonceE_id')
+        ->select('demande_emploies.id','clients.nom','clients.prenom','annonce_emploies.libellé','annonce_emploies.discription',\DB::raw('DATE(demande_emploies.created_at) as date'))
+        ->where([['demande_emploies.id', $request->idA],['demande_emploies.employeur_id','=',$empl->id]])->get();
         return  $commande_detaills;
     }
 
