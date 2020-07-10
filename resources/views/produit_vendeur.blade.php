@@ -820,8 +820,7 @@
                       this.produitDelete.forEach(key => {
                         axios.delete(window.Laravel.url+'/deleteproduit/'+key.id)
                           .then(response => {
-                            if(response.data.etat){
-                                    window.location.reload();             
+                            if(response.data.etat){             
                                     var position = this.ProduitsVendeur.indexOf(key);
                                     this.ProduitsVendeur.splice(position,1);      
                             }                    
@@ -861,8 +860,7 @@
                       this.CategoriesDelete.forEach(key => {
                         axios.delete(window.Laravel.url+'/deleteproduit/'+key.id)
                           .then(response => {
-                            if(response.data.etat){
-                                     window.location.reload();             
+                            if(response.data.etat){             
                                       var position = this.ProduitsVendeur.indexOf(key);
                                       this.ProduitsVendeur.splice(position,1);      
                             }                    

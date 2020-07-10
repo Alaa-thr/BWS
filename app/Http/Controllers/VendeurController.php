@@ -258,6 +258,7 @@ class VendeurController extends Controller
     public function deleteProduit($id){
        $imagee = Imageproduit::find($id);
        $produit = Produit::find($id);
+       $imagee->delete();
        $produit->delete();
        return Response()->json(['etat' => true]);
     }
