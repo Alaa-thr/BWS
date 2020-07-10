@@ -64,7 +64,7 @@ Route::get('/notificationsAdmin', 'AdminController@notifications_admin')->name('
 Route::get('/profilAdmin', 'AdminController@profil_admin')->name('profilAdmin');
 Route::get('/statistiquesAdmin', 'BwsController@statistiques_admin')->name('statistiquesAdmin');
 Route::get('/vendeur', 'AdminController@vendeur_admin')->name('vendeur');
-Route::put('/updateProfilA/{id}','AdminController@update_profil');
+Route::put('/updateProfil','AdminController@update_profil');
 Route::post('/addarticle', 'AdminController@addArticle');
 Route::post('/detaillsarticle', 'AdminController@detaillsArticle');
 Route::post('/addcategorie', 'AdminController@addCategorie');

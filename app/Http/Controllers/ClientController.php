@@ -254,7 +254,7 @@ class ClientController extends Controller
 
         if($request->nonCode == 1 && $request->nonAddresse == 1 ){
              $request->validate([
-              'numero_tlf' => ['required', 'string', 'max:10', 'min:10','regex:/0[5-7]+/'],
+              'numero_tlf' => ['required', 'string', 'max:10', 'min:10','regex:/^0[5-7]+/'],
               'email' => ['required', 'string','email'],
               'address' => ['required', 'string'],
               'code_postale' => ['required', 'string', 'max:5', 'min:5','regex:/[0-9]{5}+/'],
@@ -263,21 +263,21 @@ class ClientController extends Controller
         }
         else if($request->nonCode != 1 && $request->nonAddresse == 1){
              $request->validate([
-              'numero_tlf' => ['required', 'string', 'max:10', 'min:10','regex:/0[5-7]+/'],
+              'numero_tlf' => ['required', 'string', 'max:10', 'min:10','regex:/^0[5-7]+/'],
               'email' => ['required', 'string','email'],
               'address' => ['required', 'string'],
              ]);
         }
         else if($request->nonCode == 1 && $request->nonAddresse != 1){
              $request->validate([
-              'numero_tlf' => ['required', 'string', 'max:10', 'min:10','regex:/0[5-7]+/'],
+              'numero_tlf' => ['required', 'string', 'max:10', 'min:10','regex:/^0[5-7]+/'],
               'email' => ['required', 'string','email'],
               'code_postale' => ['required', 'string', 'max:5', 'min:5','regex:/[0-9]{5}+/'],
              ]);
         }
         else if($request->nonCode != 1 && $request->nonAddresse != 1){
              $request->validate([
-              'numero_tlf' => ['required', 'string', 'max:10', 'min:10','regex:/0[5-7]+/'],
+              'numero_tlf' => ['required', 'string', 'max:10', 'min:10','regex:/^0[5-7]+/'],
               'email' => ['required', 'string','email'],
               
              ]);
@@ -346,7 +346,7 @@ class ClientController extends Controller
             }
             $request->validate([
              'nom_Prenom' => ['required','string','max:60'],
-             'tlf' => ['required','string','min:10','max:10','regex:/0[5-7][0-9]+/'],
+             'tlf' => ['required','string','min:10','max:10','regex:/^0[5-7][0-9]+/'],
              'email' => ['required','email'],
              'cv' => ['required'],
             ]);

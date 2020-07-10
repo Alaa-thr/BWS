@@ -165,7 +165,7 @@
     <!--*********************************************************-->
  <div id="app11">
     <!--*********************************************************-->
-    <section>
+    <section class="m-b-20">
         <div  class="container">
             <div class="p-b-10">
                 <h3 class="ltext-103 cl5">
@@ -448,7 +448,7 @@
     <div style="height: 6%;"></div>
     <!--************************************************************************************************-->
     <!-- Blog -->
-    <section class="sec-blog bg0 p-t-60 p-b-80">
+    <section class="sec-blog bg0 p-t-60 p-b-80" v-if="articles.length != 0">
         <div class="container">
             <div class="p-b-66">
                 <h3 class="ltext-103 cl5 txt-center ">

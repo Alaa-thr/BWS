@@ -725,8 +725,6 @@
 								      	this.message= {};
 					            	}
 					            	else if(response.data.etat && response.data.cncte && !response.data.demandeExiste){//cncté et client
-					                 console.log('response :' , response);
-
 					                 	Swal.fire(
 					                 	  "La Demande a été envoyé avec success!",
 										  "",
@@ -766,7 +764,6 @@
 	           fileR.readAsDataURL(event.target.files[0]);
 
 	           fileR.onload = (event) => {
-	           		console.log("event.target.result",event.target.result);
 	              this.sendDemande.cv = event.target.result;
 	           }
      	   },
