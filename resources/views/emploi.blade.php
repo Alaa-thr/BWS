@@ -479,7 +479,7 @@
                        								<span class="px-3 cl13" v-if="message.cv" v-text="message.cv[0]"></span>
 												</div>
 											</div>
-											<span>Si votre fichier de CV est volumineux, ça peut prendre au plus quelques secondes pour le téléchargé.<br> MERCI POUR PATIENCE</span>
+											<span>Si votre fichier de CV est volumineux, ça peut prendre au plus quelques secondes pour le téléchargé.<br> MERCI DE PATIENCE</span>
 										</div>
 
 									</form>

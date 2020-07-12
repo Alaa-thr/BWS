@@ -13,6 +13,9 @@ use App\Imageproduit;
 use App\Notification;
 use App\ColorProduit;
 use App\TailleProduit;
+use App\Tarif_livraison;
+use App\Rules\ModifieLibelleDescriptionProduit;
+
 use Illuminate\Support\Facades\Storage;
 use Auth;
 use Validator;
@@ -256,6 +259,77 @@ class VendeurController extends Controller
        
 
         return ([$traiter,$notification]);
+    }
+    public function AjouterVillePrix(Request $request){
+       $vendeur = Vendeur::find(Auth::user()->id);
+       echo $request;
+       $tf = new Tarif_livraison;
+       $tf->ville_id = $request->id;
+       $tf->vendeur_id = $vendeur->id;
+       $tf->prix = $request->prix;
+       $tf->save();
+       return Response()->json(['etat' => true, 'tf' => $tf]);
+
+    }
+    public function deleteProduit($id){
+       $imagee = Imageproduit::find($id);
+       $produit = Produit::find($id);
+       $imagee->delete();
+       $produit->delete();
+       return Response()->json(['etat' => true]);
+    }
+    public function updateProduit(Request $request){
+
+        $request->validate([
+             'Libellé' => ['required','regex:/^[A-Z0-9][-a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
+             'description' => ['required','regex:/^[A-Z0-9][a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
+         ]);
+        $produit2 = Produit::find($request->id);    
+        $img = \DB::table('imageproduits')->where('produit_id',$request->id)->get();
+          $imageproduit = new Imageproduit; 
+                $exploded = explode(',', $request->image);
+                $decoded = base64_decode($exploded[1]);
+                if(str_contains($exploded[0], 'jpeg')){
+                    $extension = 'jpg';
+                }
+                else{
+                    $extension = 'png';
+                }
+                $fileName = str_random().'.'.$extension;
+                Storage::put('/public/produits_image/' . $fileName, $decoded);
+                $imageproduit->image = $fileName;
+                $imageproduit->produit_id = $produit->id;
+                $imageproduit->profile = 1;
+                $imageproduit->save();
+            if($request->images != null ){
+                foreach ($request->images as $imgs) {
+                    $images = new Imageproduit;
+                    $exploded = explode(',', $imgs);
+                    $decoded = base64_decode($exploded[1]);
+                    if(str_contains($exploded[0], 'jpeg')){
+                        $extension = 'jpg';
+                    }
+                    else{
+                        $extension = 'png';
+                    }
+                    $fileName = str_random().'.'.$extension;
+                    Storage::put('/public/produits_image/' . $fileName, $decoded);
+                    $images->image = $fileName;
+                    $images->produit_id = $produit->id;
+                    $images->save();
+                }
+            } 
+        $produit2->Libellé = $request->Libellé;
+        $produit2->description = $request->description;
+        $produit2->prix = $request->prix;
+        $produit2->poid = $request->poid;
+        $produit2->sous_categorie_id = $request->sous_categorie_id;
+        $produit2->vendeur_id = $request->vendeur_id;
+        $produit2->Qte_P = $request->Qte_P;
+       
+        $produit2->save();
+        return Response()->json(['etat' => true,'produitAjout' => $produit2]);
+    
     }
 
 }
