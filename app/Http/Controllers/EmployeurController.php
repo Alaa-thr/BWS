@@ -151,7 +151,7 @@ class EmployeurController extends Controller
 
 
     public function deleteCommandeTraiterEmployeur($id){
-        $commande = Demande::find($id);
+        $commande = Demande_emploie::find($id);
         $commande->delete();
         return Response()->json(['etat' => true]);
     }
@@ -161,7 +161,6 @@ class EmployeurController extends Controller
         $traiter = Demande_emploie::find($id);
         $traiter->demmande_traiter =1;
         $traiter->save();
-        session()->flash('success',' Cette Demmande sera trouvée dans Demmande Traitée');
         return $traiter;
     }
 

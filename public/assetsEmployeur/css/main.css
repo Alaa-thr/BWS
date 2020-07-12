@@ -106,6 +106,29 @@ font-weight: 600;
 font-style: italic;
 margin-top: -18px;
 }
+
+#t1{
+  color:black;
+font-size: 15px; 
+font-weight: 600;
+font-style: italic;
+margin-top: -18px;
+} 
+
+#t2{
+  color:black;
+font-size: 18px; 
+font-weight: 600;
+font-style: italic;
+margin-top: -18px;
+} 
+#t3{
+  color:gray;
+font-size: 15px; 
+font-weight: 600;
+font-style: italic;
+margin-top: -18px;
+} 
 #tt{
   color:black;
 font-size: 15px; 
