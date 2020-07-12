@@ -25,6 +25,19 @@
         <div class="row" >
           <div class="col-md-12">
             <div class="card">
+            <?php if(session()->has('danger')): ?>
+<div class="row"> 
+<div class="alert alert-danger" style="  margin-left:33px;width: 960px;">
+
+<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;
+
+</button>
+ <?php echo e(session()->get('danger')); ?>
+
+</div>
+
+</div>
+      <?php endif; ?>
               <div class="card-header m-b-30">
                 <input type="checkbox" id="produit" @change="selectAlll()" v-model="allSelectedd">
                 <label for="produit" style="margin-left: 10px; margin-top: 10px;"></label>
@@ -98,8 +111,8 @@
     <div class="wrap-modal11 js-modal1 p-t-80 p-b-20" id='app2' v-if="hideModel">
         <div class="overlay-modal11" v-on:click="CancelArticle()"></div>
 
-        <div class="container">
-            <div class="bg0 p-t-60 p-b-30 p-lr-15-lg how-pos3-parent" v-if="openInfo ">
+        <div class="container" >
+            <div class="bg0 p-t-60 p-b-30 p-lr-15-lg how-pos3-parent" v-if="openInfo">
                 <button class="how-pos3 hov3 trans-04 " v-on:click="CancelArticle()">
                     <img src="images/icons/icon-close.png" alt="CLOSE">
                 </button>
@@ -372,7 +385,7 @@
                                           
                                 <button type="submit"  class="btn btn-danger btn-block " style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="CancelArticle()" >Annuler
                                 </button>
-                                <button type="submit" v-if="modifier" class="btn btn-success btn-block m-r-5" style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="" >Modifier
+                                <button type="submit" v-if="modifier" class="btn btn-success btn-block m-r-5" style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="updateProduitButton()" >Modifier
                                 </button> 
                                 <button type="submit" v-else class="js-show-modal1 btn btn-success btn-block m-r-5" style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="AfficherAjout2()">Suivant
                                 </button>
@@ -591,6 +604,22 @@ unset($__errorArgs, $__bag); ?>
             prix: '',
             image: '',
           },
+          prd: {
+            id: 0,
+            sous_categorie_id: '',
+            catego: '',
+            Libellé: '',
+            prix: '',
+            description: '',
+            Qte_P: '',
+            poid: '',
+            image: '',
+            images: [],
+            colors: [],
+            tailles: [],
+            pointures: [],
+            typet: 0,
+          },
 
           
         },
@@ -668,6 +697,85 @@ unset($__errorArgs, $__bag); ?>
             
             
         },
+        updateProduitButton: function(){
+
+         if(this.prd.Libellé == ''){
+
+            this.prd.Libellé =  this.oldprd.Libellé;         }
+         if(this.prd.description == ''){
+
+            this.prd.description =  this.oldprd.description;
+         }
+         if(this.prd.prix == ''){
+
+            this.prd.prix =  this.oldprd.prix;
+         }
+         if(this.prd.Qte_p == ''){
+
+            this.prd.Qte_p =  this.oldprd.Qte_p;
+         }
+         if(this.prd.poid == ''){
+
+            this.prd.poid =  this.oldprd.poid;
+         }
+         if(this.prd.image == ''){
+            this.prd.image = this.oldprd.image;
+         }  
+         if(this.prd.images == []){
+            this.prd.images =  this.oldprd.images;
+         }
+         if(this.prd.colors == ''){
+
+            this.prd.colors =  this.oldprd.colors;
+         }
+         if(this.prd.tailles == ''){
+
+            this.prd.tailles =  this.oldprd.tailles;
+         }
+         if(this.prd.pointures == ''){
+            this.prd.pointures =  this.oldprd.pointures;
+         }
+         console.log("this.prd",this.prd)       
+         axios.put(window.Laravel.url+"/updateproduit",this.prd)
+         
+           .then(response => {
+              if(response.data.etat){
+                this.modifier = false;
+                 this.hideModel = false;
+                 this.prd = {
+                        id: 0,
+                        sous_categorie_id: '',
+                        catego: '',
+                        Libellé: '',
+                        prix: '',
+                        description: '',
+                        Qte_P: '',
+                        poid: '',
+                        image: '',
+                        images: [],
+                        colors: [],
+                        tailles: [],
+                        pointures: [],
+                        typet: 0,
+                      };
+
+              } 
+              
+              this.message = {}; 
+              this.image = null;
+              this.oldprd= {
+                    Libellé: '',
+                    description: '',
+                    prix: '',
+                    image: '',
+                  }; 
+            })
+            .catch(error =>{
+                this.message = error.response.data.errors;
+                console.log('errors :' , this.message);
+            })
+
+      },
         imagesPreviews(event) {         
                for( i = 0 ; i < event.target.files.length ; i++){
                     var fileR = new FileReader();
@@ -937,6 +1045,7 @@ unset($__errorArgs, $__bag); ?>
          app2.oldprd.description = produit.description;
          app2.oldprd.prix = produit.prix;
          app2.oldprd.image = produit.image;
+         app2.prd.id = produit.id;
          
         },      
           AfficherAjout: function(){

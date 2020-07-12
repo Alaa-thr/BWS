@@ -134,6 +134,7 @@ Route::put('/recucommande/{id}','VendeurController@RecuCommande');
 Route::put('/refusercommande/{id}','VendeurController@RefuserCommande');
 Route::post('/addvilles','VendeurController@AjouterVillePrix');
 Route::delete('/deleteproduit/{id}','VendeurController@deleteProduit');
+Route::put('/updateproduit','VendeurController@updateProduit');
 
 
 /*commande traiter vendeur*/
