@@ -14,19 +14,10 @@
     <div class="row">
       <div class="col-md-12">
         <div class="card">
-          @if(session()->has('success'))
 
-          <div class="row"><div class="alert alert-success"
-           style="margin-left:33px">
-            <button type="button" class="close" data-dismiss="alert" 
-            aria-hidden="true">&times;</button>
-
-            {{ session()->get('success')}}
-          </div>
-        </div>
-        @endif
+      
           <div class="card-header" >
-                
+               
                 <div class="flex-t">
                     <input type="checkbox" id="article" @change="selectAll()" v-model="allSelected" style="margin-top: 5px;">
                     <label for="article"></label>
@@ -82,7 +73,7 @@
       <div class="dropdown-menu " x-placement="right-start" id="pl"  >
       <a   v-on:click="AfficheInfo(commandec.id)"  class="dropdown-item " 
       style="color: red; font-style: italic; font-weight: 900; cursor: pointer;" >Afficher Plus</a>
-    <a class="dropdown-item" v-on:click="deleteDemandeReçuEmployeur(commandec)"
+    <a class="dropdown-item " v-on:click="deleteDemandeReçuEmployeur(commandec)"
     style="color: red; font-style: italic; font-weight: 900; cursor: pointer;">
     Supprimer</a>
        </div>
@@ -173,7 +164,7 @@
     
 
     <div class="row" style="margin-left:22px;margin-top:20px;" v-for="emplC in commandeclient2" >
-    <div class="col-md-4 pr-1" >
+    <div class="col-md-10 pr-1" >
       <div style="margin-left:-16px;">
        <p class="" id="t2" >Information sur l'annonce :<br> </p>
        <p class=""  id="t1"  style="margin-top: 10px;margin-left: -60px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -187,9 +178,10 @@
     </div>  
 
     <div class="row" style="margin-left:400px;">
-    <div class="col-md-4 pr-1" >
+    <div class="col-md-8 pr-1" >
       <div style="margin-left:464px">
-      <button v-on:click=" Recudemande(commandec.id);"   class="btn-sm btn-success " style="height: 35px; " ><b>Traiter</b>
+      <button v-on:click=" Recudemande(commandec.id);" class="btn-sm btn-success " style="height: 35px; " ><b>Traiter</b>
+
                   </button>     
                    </div>
     </div>
@@ -256,15 +248,28 @@ var app2 = new Vue({
   },
 methods: {
   Recudemande: function(id){
+
             axios.put(window.Laravel.url+'/recudemande/'+id)
               .then(response => {
-                  console.log("response",response.data);
-                  window.location.reload();
-               })
+                  console.log(this.employeur)
+                  this.employeur.forEach(key=>{
+                    if(response.data.etat){
+                    
+                      var position = this.employeur.indexOf(key);
+                      this.employeur.splice(position,1);
+                    }
+                  })
+                  Swal.fire(
+                    "Votre demande!",
+                    'a été ajouter dans demande traité avec success.',
+                    'success'
+                  );
+                  $('.js-modal1').removeClass('show-modal1');    
+                 })
               .catch(error => {
                   console.log("errors : "  , error);
-             })
-              console.log("this.id",this.id);
+              })
+              
           },
   detaillsdemandeReçuEmplyeur: function(){
     axios.post(window.Laravel.url+'/detaillsdemandereçuemplyeur', this.detaillsA)
@@ -307,12 +312,12 @@ data:{
   },
 methods: {
   
-   deleteArrayArticle:function(){
+    deleteArrayArticle:function(){
         if(this.artilcesDelete.length == 0){
             Swal.fire({
             icon: 'error',
             title: 'Oops...',
-            text: 'Il ya aucun Article a supprimer!',
+            text: 'Il ya aucun Demande a supprimer!',
           }).then((result) => {
             this.allSelected = false;
             this.suppr=false;
@@ -323,7 +328,7 @@ methods: {
         }
         Swal.fire({
         title: 'Etes vous?',
-        text: "De supprimer cette Commande?",
+        text: "De supprimer cette demande?",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -332,7 +337,7 @@ methods: {
       }).then((result) => {
           if (result.value) {
             this.artilcesDelete.forEach(key => {
-              axios.delete(window.Laravel.url+'/deletedemandereçuemplyeur/'+key.id)
+              axios.delete(window.Laravel.url+'/deletedemanderçuemplyeur/'+key.id)
                 .then(response => {
                   if(response.data.etat){
                                         
@@ -351,7 +356,7 @@ methods: {
                 this.selectall = true;
           Swal.fire(
             'Effacé!',
-            'Votre commande a été supprimé.',
+            'Votre demande a été supprimé.',
             'success'
           )
         }
@@ -362,7 +367,7 @@ methods: {
    deleteDemandeReçuEmployeur: function(article){
         Swal.fire({
     title: 'Etes vous?',
-    text: "De supprimer cette Commande?",
+    text: "De supprimer cette demande?",
     icon: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
@@ -379,6 +384,7 @@ methods: {
                        this.suppr=false;
                        this.artilcesDelete = [];
                        this.selectall = true;
+                       console.log("this.commandeclient",this.commandeclient);
               }                     
             })
             .catch(error =>{
@@ -386,14 +392,13 @@ methods: {
             })
       Swal.fire(
         'Effacé!',
-        'Votre commande a été supprimé.',
+        'Votre demande a été supprimé.',
         'success'
       )
     }
     
     })
   },
- 
  
   
   
