@@ -50,7 +50,7 @@
                         <option value="shop">Shop Categories</option>
                         <option value="emploi">Emploi Categories</option>
                         </select>                        
-                        <input type="file" class="form-control "  v-on:change="imagePreview" :class="{'is-invalid' : message.image}" accept="image/png, image/jpeg" style="height: 38px; width: 290px">
+                        <input type="file" class="form-control "  v-on:change="imagePreview" accept="image/*" :class="{'is-invalid' : message.image}" accept="image/png, image/jpeg" style="height: 38px; width: 290px">
                         
                       </div>
                       <span class="px-3" v-if="message.typeCategorie" v-text="message.typeCategorie[0]" style="color: #ca2323"></span>

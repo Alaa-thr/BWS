@@ -494,7 +494,21 @@
 										<button class=" stext-101 cl0 size-1044 bg11 bor1 trans-04" v-on:click="addDemande(emplois2[0].id)">
 											Demander
 										</button>
+										<div class=""  style="margin-top:-162%;argin-right:10px;" >
+												<a class="f" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#"   style="  margin-left: 335px;">
+													<i class="fas fa-ellipsis-v"  id="y"></i>
+												</a>
+     									 <div class="dropdown-menu " x-placement="right-start" id="divSignal">
+																<a  class="dropdown-item"  v-on:click="SignalerAnnonce(1)"  
+												style="color: #0074d9; font-style: italic; font-weight: 900; cursor: pointer;" >   Signaler Annonce</a>
+																<a class="dropdown-item" v-on:click="SignalerEmployeur(1)"
+												style="color: #0074d9; font-style: italic; font-weight: 900; cursor: pointer;">
+												Signaler Employeur</a>
+      											 </div>
+      
+   									 </div>    		
 									</div>
+												
 								</div>	
 							</div>
 							
@@ -624,6 +638,32 @@
 				this.message= {};
 				 	
 	      	},
+			  SignalerEmployeur: function(id){
+          	axios.post(window.Laravel.url+'/signaleremployeur/'+id)
+              .then(response => {
+				Swal.fire(
+					  "Signal est fait avec success!",
+					);
+					$('.js-modal1').removeClass('show-modal1');
+                	console.log("response",response.data)
+               })
+              .catch(error => {
+                  console.log('errors : '  , error);
+             })
+          },
+		SignalerAnnonce: function(id){
+          	axios.post(window.Laravel.url+'/signalerannonce/'+id)
+              .then(response => {
+				Swal.fire(
+					  "Signal est fait avec success!",
+					);
+					$('.js-modal1').removeClass('show-modal1');
+                	console.log("response",response.data)
+               })
+              .catch(error => {
+                  console.log('errors : '  , error);
+             })
+          },
 	     	addDemande: function(id_Annonce){
 	      		this.sendDemande.annonceE_id = id_Annonce;
 	      		axios.get(window.Laravel.url+'/iscnnected')
@@ -725,8 +765,6 @@
 								      	this.message= {};
 					            	}
 					            	else if(response.data.etat && response.data.cncte && !response.data.demandeExiste){//cncté et client
-					                 console.log('response :' , response);
-
 					                 	Swal.fire(
 					                 	  "La Demande a été envoyé avec success!",
 										  "",
@@ -766,7 +804,6 @@
 	           fileR.readAsDataURL(event.target.files[0]);
 
 	           fileR.onload = (event) => {
-	           		console.log("event.target.result",event.target.result);
 	              this.sendDemande.cv = event.target.result;
 	           }
      	   },
@@ -780,6 +817,7 @@
 	                 console.log('errors :' , error);
 	            })
         	},
+      	
        
     },
    });
@@ -789,7 +827,7 @@
         emplois: [],
       },
       methods:{
-
+		
         getEmploi: function(){
 	        axios.get(window.Laravel.url+'/emploi')
 
