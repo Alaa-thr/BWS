@@ -13,12 +13,10 @@ use Illuminate\Support\Facades\Validator;
 use App\Rules\ModifieTextDescriptionArticle;
 use App\Annonce_emploie;
 use App\Imageproduit;
+use App\Paiement_employeur;
 use App\ColorProduit;
 use App\TailleProduit;
 use Auth;
-
-use DB;
-
 
 class EmployeurController extends Controller
 {
@@ -52,28 +50,16 @@ class EmployeurController extends Controller
 
     public function get_commande_traiter_emplyeur(){
         $c = Employeur::find(Auth::user()->id);
-
-        $article = \DB::table('demande_emploies')
-       
-        ->select('*',\DB::raw('DATE(demande_emploies.created_at) as date'))
-        ->where('demande_emploies.employeur_id', $c->id)->orderBy('demande_emploies.created_at','desc')->paginate(5);
-
-        $employeur = \DB::table('clients')->get();
-
+        $article = \DB::table('demande_emploies')->where('employeur_id', $c->id)->orderBy('created_at','desc')->paginate(5);
+        $employeur = \DB::table('clients')->get(); 
         $produit = \DB::table('annonce_emploies')->get(); 
-
         $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
         $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
         return view('demande_emploi_traite_employeur',['article'=>$article, 'idAdmin' => $c->id,'emploC' => $employeur,'prV' => $produit,'categorie'=>$categorie ,'categorieE'=>$categorieE]);
     } 
 
     public function detaillsacommandeTraiterEmplyeur(Request $request){
-         $empl = Employeur::find(Auth::user()->id);
-        $commande_detaills = \DB::table('demande_emploies')
-        ->join('clients','clients.id','=','demande_emploies.client_id')
-        ->join('annonce_emploies','annonce_emploies.id','=','demande_emploies.annonceE_id')
-        ->select('demande_emploies.id','clients.nom','clients.prenom','annonce_emploies.libellé','annonce_emploies.discription',\DB::raw('DATE(demande_emploies.created_at) as date'))
-        ->where([['demande_emploies.id', $request->idA],['demande_emploies.employeur_id','=',$empl->id]])->get();
+        $commande_detaills = \DB::table('demande_emploies')->where('id', $request->idA)->get();
         return  $commande_detaills;
     }
 
@@ -93,21 +79,6 @@ class EmployeurController extends Controller
         $annonce = \DB::table('annonce_emploies')->where('employeur_id', $a->id)->orderBy('created_at','desc')->paginate(6) ; 
         $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
         $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
-        $notification = \DB::table('notifications')->get();
-
-        foreach($notification as $noti){
-           
-
-            
-            if($noti->employeur_id === $a->id AND $noti->DeleteNotif === 0){
-                session()->flash('danger','Votre Produit :  ' .$noti->nomProduit  .'  était Supprimer car il est Signaler 3 fois');
-               /* $noti->DeleteNotif = 1;
-                $noti->save();
-               */ \DB::table('notifications')->where([['employeur_id',$a->id],['DeleteNotif',0]])->update(['DeleteNotif' => 1]);
-           }
-            
-        }
-        
         return view('annonce_emploi_employeur',['annonce'=>$annonce, 'idEmployeur' => $a->id,'categorie'=>$categorie ,'categorieE'=>$categorieE]);
     }
 
@@ -193,5 +164,22 @@ class EmployeurController extends Controller
         return $traiter;
     }
 
+    public function change_valeur($id){
+    
+        
+        $clientCnncte = Employeur::find(Auth::user()->id);
+        echo $id;
+           $signal = new Paiement_employeur;
+            $signal->employeur_id =$clientCnncte->id;
+            if($id == 0)  {             $signal->position_publication = "First";}
+            elseif($id ==1) {          $signal->position_publication = "Second";}
+            elseif($id ==2)  {                  $signal->position_publication = "third";}
+            
+            $signal->admin_id = 1;
+
+            $signal->save();
+        
+        
+    }
 
 }
