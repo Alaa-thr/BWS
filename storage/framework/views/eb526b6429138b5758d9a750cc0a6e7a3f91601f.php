@@ -153,10 +153,10 @@
             <span class="navbar-toggler-bar navbar-kebab"></span>
             <span class="navbar-toggler-bar navbar-kebab"></span>
           </button>
-          <div class="collapse navbar-collapse justify-content-end" id="navigation">
+          <div class="collapse navbar-collapse justify-content-end" id="navigation" >
           <form  action="/abest" method="get">
-              <div class="input-group no-border">
-                <input type="search" name="search"  class="form-control" placeholder="Rechercher...">
+              <div class="input-group no-border"  style="left: -40px;">
+                <input type="search" name="search"  class="form-control" placeholder="Rechercher..." >
                 <div class="input-group-append">
                   <div class="input-group-text">
                     <i class="now-ui-icons ui-1_zoom-bold"></i>
@@ -164,57 +164,10 @@
                 </div>
               </div>
             </form>
-            <ul class="navbar-nav">
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle " id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#pablo">
-                  <i class="now-ui-icons ui-1_bell-53" id="fa"></i>
-                  <p>
-                    <span class="d-lg-none d-md-block">Notifs</span>
-                  </p>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                  <div class="account-item clearfix js-item-menu">
-                    <div class="card-body">
-                      <h7 style="color: gray;">Vous avez 3 Nouveaux Notififcations</h7>
-                    <hr>
-                      <a class="dropdown-item" href="#"><b>1....</b></a>
-                      <a class="dropdown-item" href="#"><b>2....</b></a>
-                      <a class="dropdown-item" href="#"><b>3....</b></a>
-                      <hr>
-                      <a class="dropdown-item" href="notifications.html"  id="n"><h6>Voir Touts Les Notifications</h6></a>
-                      </div>
-                    </div>
-                  </div> 
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#pablo">
-                  <i class="now-ui-icons ui-1_email-85"></i>
-                  <p>
-                    <span class="d-lg-none d-md-block">Email</span>
-                  </p>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                  <div class="account-item clearfix js-item-menu">
-                    <div class="card-body">
-                     <h7 style="color: gray;"><b>Vous avez 3 nouveaux Emails</b></h7>
-                      <hr>
-                      <a class="dropdown-item" href="#"><i class="now-ui-icons ui-1_send" id="m"></i><b>Nouveau Email de </b><b id="a"> (Jonathan Smith)...</b><i class="now-ui-icons arrows-1_minimal-right" id="m"></i>
-                      </a>
-                      
-                      <a class="dropdown-item" href="#"><i class="now-ui-icons ui-1_send" id="v"></i><b>Nouveau Email de </b><b id="a"> (Islam Bellifa)...</b><i class="now-ui-icons arrows-1_minimal-right" id="v"></i>
-                      </a>
-
-                      <a class="dropdown-item" href="#"><i class="now-ui-icons ui-1_send" id="w"></i><b>Nouveau Email de </b><b id="a"> (Miloud Slimani)...</b><i class="now-ui-icons arrows-1_minimal-right" id="w"></i>
-                      </a>
-                      <hr>
-                      <a class="dropdown-item " href="Emails.html" id="n"><h6>Voir Touts Les Emails</h6></a>
-                      </div>
-                    </div>
-                  </div>
-              </li>
-            <li class="nav-item dropdown" style="cursor: pointer;">
+            <ul class="navbar-nav" >
+            <li class="nav-item dropdown" style="cursor: pointer; margin-right: 40px;">
                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <img class="img-xs rounded-circle" src="assetsAdmin/img/admin.jpg" alt="..."/>
+                  <img class="img-xs rounded-circle" src="assetsAdmin/img/admin.jpg" alt="..."  />
                   <p>
                     <span class="d-lg-none d-md-block">Quelques Actions</span>
                   </p>
@@ -235,8 +188,11 @@
                              </tr>
                             </table>
                         </a>  
-                    </div> 
-                    <hr width="90%">
+                    </div>
+                    <div style="width: 255px; margin-left: 20px;"> 
+                      <hr >
+                     </div>
+                      <a class="dropdown-item" href="<?php echo e(route('accueil')); ?>" id="n"><i class="now-ui-icons business_bank" id="m"></i><b>Allez vers Acceuil</b></a>
                       <a class="dropdown-item" href="<?php echo e(route('profilAdmin')); ?>" id="n"><i class="now-ui-icons users_single-02" id="m"></i><b>Profil</b></a>
                       <a class="dropdown-item" href="<?php echo e(route('logout')); ?>" onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();" id="n">

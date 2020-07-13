@@ -528,9 +528,10 @@
 													<i class="fas fa-ellipsis-v"  id="y" style="color: black"></i>
 												</a>
      									 <div class="dropdown-menu " x-placement="right-start" id="divSignal">
-																<a  class="dropdown-item"  v-on:click="SignalerAnnonce(1)"  
+
+										  <a  class="dropdown-item"  v-on:click="SignalerAnnonce(empp.id)"  
 												style="color: #0074d9; font-style: italic; font-weight: 900; cursor: pointer;" >   Signaler Annonce</a>
-																<a class="dropdown-item" v-on:click="SignalerEmployeur(1)"
+																<a class="dropdown-item" v-on:click="SignalerEmployeur(empp.employeur_id)"
 												style="color: #0074d9; font-style: italic; font-weight: 900; cursor: pointer;">
 												Signaler Employeur</a>
       											 </div>

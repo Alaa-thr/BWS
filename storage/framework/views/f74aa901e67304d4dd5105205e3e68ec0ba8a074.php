@@ -500,9 +500,15 @@
 				                                            Annuler
 				                                        </button>
 			                                        </div>
+<<<<<<< HEAD
 													<div class=""  style="margin-top:-330%;" >
       <a class="f" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#"   style="  margin-left: 335px;">
         <i class="fas fa-ellipsis-v"  id="y" style="color: black"></i>
+=======
+													<div class=""  style="margin-top:-292%;" >
+      <a class="f" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#"   style="  margin-left: 335px;">
+        <i class="fas fa-ellipsis-v"  id="y"></i>
+>>>>>>> 972cd76de5808c4efa19ced1533269b756e75bba
        </a>
       <div class="dropdown-menu " x-placement="right-start" id="divSignal">
                     <a    v-on:click="SignalerProduit(detaillproduit.id)"  class="dropdown-item js-show-modal1" 
@@ -686,9 +692,12 @@
       	
       },
       methods:{
+<<<<<<< HEAD
         changePicVue(img){
             changePic(img);
         },
+=======
+>>>>>>> 972cd76de5808c4efa19ced1533269b756e75bba
 		SignalerVendeur: function(id){
           	axios.post(window.Laravel.url+'/signalervendeur/'+id)
               .then(response => {

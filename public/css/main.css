@@ -3685,7 +3685,7 @@ i.favoo:hover{
 
 .creat-articlee{
   border-style: solid ;
-  border-color: white;
+  border-color: gray;
   border-radius: 10px;
   width: 800px;
   height: 850px;
@@ -3700,3 +3700,14 @@ i.favoo:hover{
   width: 120%
 }
 
+.swal2-container {
+  z-index: 9001;
+}
+#s{
+  display: none;
+
+}
+#m{
+  display: none;
+
+}

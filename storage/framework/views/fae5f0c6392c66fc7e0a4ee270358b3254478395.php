@@ -388,6 +388,66 @@
 	</div>
 
 	<div class="wrap-modal1 js-modal1 p-t-38 p-b-20 p-l-15 p-r-15 " id="app2" v-if="hideModel">
+<<<<<<< HEAD
+      <div class="overlay-modal1 "></div>
+  
+      <div class="container">
+        <div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent" v-if="openInfo "  style="width: 1250px;  margin-top: 20px; margin-left: -30px;" v-for="empp in emplois2" >
+          <button class="how-pos3 hov3 trans-04 p-t-6" v-on:click="hideModel = false">
+            <img src="images/icon-close.png" alt="CLOSE">
+          </button>
+        <section class=" creat-articlee " > 
+           <div class="row">
+            <div class="col-md-8">
+              <div class="p-b-30 p-l-40" style="margin-left: 20px; margin-top: 20px;" >
+                <h3 class=" cl2" >
+                   Informations sur L'annonce
+                </h3>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-10" >
+              <img v-if="empp.image" :src="'storage/annonces_image/'+ empp.image" style="width: 680px; height: 300px; margin-left: 60px; " />
+              <img v-else src="storage/téléchargement.png" style="width: 600px; height: 300px; margin-left: 60px;" />
+            </div> 
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="title" style="color: red; margin-top: 30px; margin-left: 60px;" >
+                  <h4><b>{{empp.libellé }}</b></h4><br>
+              </div>
+            </div>
+          </div>
+          <div class="row" style="margin-left: 50px; margin-top: -15px;">
+            <div class="col-md-2">
+               <p style="color: black;">{{ empp.discription }}</p>
+            </div>               
+          </div>
+          <div class="row">
+            <div class="col-md-10">
+              <div class="description" style="margin-left: 65px; margin-top: 20px; font-weight: 700; color: black;">
+                Le nombre de condidat est : {{empp.nombre_condidat}}
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-10">
+              <div class="description" style="margin-left: 65px; margin-top: 40px; font-weight: 500; color: black;">
+                Pour contacté <b>{{ empp.nom }} {{empp.prenom}} : </b> 
+                <div  style="margin-top: -35px; margin-left: 210px; font-style: italic; color: blue;">
+                	<b>{{empp.num_tel}}</b>
+                </div>
+                <div style="margin-top: 5px; margin-left: 210px; font-style: italic; color: blue;">
+                   <b >{{empp.email}}</b>
+               </div>
+              </div>
+            </div>
+          </div>
+          </section>   
+        </div>
+      </div>
+=======
       <div class="overlay-modal1 " @click='CancelArticle'></div>
   		<div class="container">
 			<div class="bg0 p-t-55 p-b-100 p-lr-15-lg how-pos3-parent" >
@@ -523,9 +583,15 @@
 										<button class=" stext-101 cl0 size-1044 bg11 bor1 trans-04" v-on:click="addDemande(emplois2[0].id)">
 											Demander
 										</button>
+<<<<<<< HEAD
 										<div class=""  style="margin-top:-158%;argin-right:10px;" >
 												<a class="f" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#"   style="  margin-left: 335px;">
 													<i class="fas fa-ellipsis-v"  id="y" style="color: black"></i>
+=======
+										<div class=""  style="margin-top:-162%;argin-right:10px;" >
+												<a class="f" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#"   style="  margin-left: 335px;">
+													<i class="fas fa-ellipsis-v"  id="y"></i>
+>>>>>>> 972cd76de5808c4efa19ced1533269b756e75bba
 												</a>
      									 <div class="dropdown-menu " x-placement="right-start" id="divSignal">
 																<a  class="dropdown-item"  v-on:click="SignalerAnnonce(1)"  
@@ -548,6 +614,7 @@
 			</div>
 		</div>
 
+>>>>>>> 4fd9837ad7a6fa5401a9d535a1a8ea7259e4f807
     </div>
 
 
@@ -868,6 +935,7 @@
         emplois: [],
       },
       methods:{
+<<<<<<< HEAD
 		AjoutAuFavoris: function(produit){
 				axios.post(window.Laravel.url+'/ajoutaufavorisE/'+produit.id)
 	              .then(response => {
@@ -888,6 +956,9 @@
 	             })
             
         },
+=======
+		
+>>>>>>> 972cd76de5808c4efa19ced1533269b756e75bba
         getEmploi: function(){
 	        axios.get(window.Laravel.url+'/emploi')
 

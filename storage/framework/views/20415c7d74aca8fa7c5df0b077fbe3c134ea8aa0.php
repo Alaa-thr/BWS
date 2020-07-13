@@ -17,7 +17,7 @@
 
       
           <div class="card-header" >
-                
+               
                 <div class="flex-t">
                     <input type="checkbox" id="article" @change="selectAll()" v-model="allSelected" style="margin-top: 5px;">
                     <label for="article"></label>
@@ -73,7 +73,11 @@
       <div class="dropdown-menu " x-placement="right-start" id="pl"  >
       <a   v-on:click="AfficheInfo(commandec.id)"  class="dropdown-item " 
       style="color: red; font-style: italic; font-weight: 900; cursor: pointer;" >Afficher Plus</a>
+<<<<<<< HEAD
     <a class="dropdown-item " v-on:click="deleteDemandeReçuEmployeur(articlea)"
+=======
+    <a class="dropdown-item " v-on:click="deleteDemandeReçuEmployeur(commandec)"
+>>>>>>> 972cd76de5808c4efa19ced1533269b756e75bba
     style="color: red; font-style: italic; font-weight: 900; cursor: pointer;">
     Supprimer</a>
        </div>
@@ -473,4 +477,8 @@ created:function(){
 </script>
 
 <?php $__env->stopPush(); ?>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 972cd76de5808c4efa19ced1533269b756e75bba
 <?php echo $__env->make('layouts.template_employeur', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\BWS\resources\views/demande_emploi_reçu_employeur.blade.php ENDPATH**/ ?>

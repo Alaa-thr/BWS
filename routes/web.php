@@ -135,6 +135,10 @@ Route::post('/detaillsacommandevendeur', 'VendeurController@detaillsacommandeVen
 Route::delete('/deletecommandevendeur/{id}','VendeurController@deleteCommandeVendeur');
 Route::put('/recucommande/{id}','VendeurController@RecuCommande');
 Route::put('/refusercommande/{id}','VendeurController@RefuserCommande');
+Route::post('/addvilles','VendeurController@AjouterVillePrix');
+Route::delete('/deleteproduit/{id}','VendeurController@deleteProduit');
+Route::put('/updateproduit','VendeurController@updateProduit');
+
 
 /*commande traiter vendeur*/
 Route::get('/commandeTraiterVendeur','VendeurCommandeController@get_commande_traiter_vendeur')->name('commandeTraiterVendeur');
@@ -189,4 +193,9 @@ Route::post('/signalerannonce/{id}','ClientController@SignalerAnnonce');
 Route::post('/signalervendeur/{id}','ClientController@SignalerVendeur');
 Route::post('/signaleremployeur/{id}','ClientController@SignalerEmployeur');
 
+Route::post('/paiementemployeur/{id}','EmployeurController@change_valeur');
+Route::post('/paimentemp','EmployeurController@validateForm');
+Route::post('/paiementvendeur/{id}','VendeurController@change_valeur_vendeur');
+Route::post('/paiementvend','VendeurController@validateFormProduit');
 
+Route::post('/verifierproduit/{id}','AdminController@Verifier');

@@ -435,8 +435,9 @@ class AdminController extends Controller
     }
     public function notifications_admin(){
       
-        $notif = \DB::table('admins')->join('notifications','admins.id','=','notifications.admin_id')->orderBy('notifications.created_at','desc')->paginate(1);
-        return view('notifications_admin',['notif'=>$notif]);
+        $notif = \DB::table('admins')->join('notifications','admins.id','=','notifications.admin_id')
+        ->paginate(24);
+         return view('notifications_admin',['notif'=>$notif]);
     }
     public function deleteNotif($id){
        
@@ -472,5 +473,16 @@ class AdminController extends Controller
         $email->save();
     }
 
+    public function Verifier($id){
+ 
+        $signalsvendeur= \DB::table('paiement_vendeurs')->where([['vendeur_id',$id],['response',0]])->get();
+    
+    if(count($signalsvendeur) != 0){
+        return Response()->json(['etat' => true]);
+    }
+    else 
+    return Response()->json(['etat' => false]);
+
+}
 
 }

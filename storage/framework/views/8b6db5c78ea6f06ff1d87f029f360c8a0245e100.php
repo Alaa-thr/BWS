@@ -42,7 +42,7 @@
                       <label ><b>Nom</b></label>
                       <input name="nom" type="text" class="form-control" placeholder="Entrez le nom de catégorie (Le nom doit être commencé avec un Maj ou un Numero)" v-model="ccategorie.libelle" style="color: black;margin-bottom: 10px;" :class="{'is-invalid' : message.libelle}"/>
                       <span class="px-3" style="color: #ca2323" v-if="message.libelle" v-text="message.libelle[0]"></span>
-                      <input type="file" class="form-control "  v-on:change="imagePreview" :class="{'is-invalid' : message.image}" accept="image/png, image/jpeg" style="height: 38px;">
+                      <input type="file" class="form-control "  v-on:change="imagePreview" accept="image/*" :class="{'is-invalid' : message.image}" accept="image/png, image/jpeg" style="height: 38px;">
                       
                     </div>
                   </div>
