@@ -327,8 +327,7 @@
 								</span>
 							</div>
 							<?php
-								$x = "<script> echo 5;</script>";
-								$j=19;
+								
 								$k=0;
 							?>
 						<?php for($i=0 ; $i< count($fav) ; $i++): ?>
@@ -337,9 +336,9 @@
 									<?php
 										$k=$k+1;
 										$i=count($fav);
-										$j=$j+1;
+										
 									?>
-								<?php else: ?>
+								
 									
 
 								<?php endif; ?>
@@ -380,37 +379,26 @@
 
 			                <div class="row">
 			                    <div class="col-md-6 col-lg-7 p-b-30">
-			                        <div class="p-l-25 p-r-30 p-lr-0-lg">
-			                            <div class="wrap-slick3 flex-sb flex-w" >
-			                                <div class="wrap-slick3-dots"></div>
-			                                <div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
-	
-			                                <div class="slick3 gallery-lb">
-			                                
-										
-												<?php $__currentLoopData = $ImageP; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $t): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-													<?php if($t->produit_id == 21): ?>
-			                                    <div  class="item-slick3" data-thumb="<?php echo asset('storage/produits_image/'.$t->image) ?>" >
-			                                        <div class="wrap-pic-w pos-relative">
-			                                            <img src="<?php echo asset('storage/produits_image/'.$t->image) ?>" alt="IMG-PRODUCT" style="height: 500px">
+                                    <div class="p-l-25 p-r-30 p-lr-0-lg">
+                                        <div class="wrap-slick3 flex-sb flex-w">
+                                            <div class=" flex-t">
+                                                <div class="m-r-10">
+                                                    <div class ="m-b-10" v-for="imgg in getImageD" style="border: 1px solid">
+                                                    <img   :src="'storage/produits_image/'+imgg.image" alt="IMG-PRODUCT" style="width: 65px;height: 65px;" v-on:click="changePicVue(imgg.image)">
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="item-slick3" >
+                                                    <div class="wrap-pic-w">
 
-			                                        </div>
-			                                    </div>
-			                                	<?php endif; ?>
-			                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-			                                  
-			                             
-			                           
-			                                	
-	
+                                                        <img v-for="img in getImageD" v-if="img.profile==1" :src="'storage/produits_image/'+img.image" alt="IMG-PRODUCT" id="pic"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
-
-			                                    
-			                                </div>
-			                            </div>
-
-			                        </div>
-			                    </div>
+                                    </div>
+                                </div>
 			                    
 			                    <div class="col-md-6 col-lg-5 p-b-30">
 			                        <div class="p-r-50 p-t-5 p-lr-0-lg">
@@ -512,7 +500,22 @@
 				                                            Annuler
 				                                        </button>
 			                                        </div>
+													<div class=""  style="margin-top:-330%;" >
+      <a class="f" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#"   style="  margin-left: 335px;">
+        <i class="fas fa-ellipsis-v"  id="y" style="color: black"></i>
+       </a>
+      <div class="dropdown-menu " x-placement="right-start" id="divSignal">
+                    <a    v-on:click="SignalerProduit(detaillproduit.id)"  class="dropdown-item js-show-modal1" 
+      style="color: #0074d9; font-style: italic; font-weight: 900; cursor: pointer;" >   Signaler Produit</a>
+                    <a class="dropdown-item" v-on:click="SignalerVendeur(detaillproduit.vendeur_id)"
+    style="color: #0074d9; font-style: italic; font-weight: 900; cursor: pointer;">
+    Signaler Vendeur</a>
+       </div>
+      
+    </div>    					
+														
 			                                    </div>
+
 			                                </div>  
 			                            </div>
 			                            
@@ -524,7 +527,7 @@
 			        </div>
     		</div>
 				
-		 
+		
    
 				
 			</div>
@@ -561,9 +564,10 @@
 		document.getElementById("cccc").options.selectedIndex = 0;
 		document.getElementById("qtee").value = 0;
 		document.getElementById("TLTLTL").options.selectedIndex = 0;
-
-		
 	}
+	function changePic(img){
+        document.getElementById("pic").src = 'http://localhost:8000/storage/produits_image/'+img;
+    }
 </script>
 
 
@@ -596,7 +600,7 @@
         methods:{
         	deleteProduitPanier: function(produit){
 		       
-		              axios.delete(window.Laravel.url+'/deleteproduitpanier/'+produit.produit_id)
+		              axios.delete(window.Laravel.url+'/deleteproduitpanier/'+produit.produit_id+'/'+produit.qte+'/'+produit.taille+'/'+produit.type_livraison+'/'+produit.couleur_id)
 		                .then(response => {
 		                  if(response.data.etat){
 		                           var position = this.ProduitsPanier.indexOf(produit);
@@ -678,9 +682,40 @@
       	idproduitfavadd: '',
       	idproduitfavadd: '',
       	tttt:[],
+      	getImageD: [],
       	
       },
       methods:{
+        changePicVue(img){
+            changePic(img);
+        },
+		SignalerVendeur: function(id){
+          	axios.post(window.Laravel.url+'/signalervendeur/'+id)
+              .then(response => {
+				Swal.fire(
+					  "Signal est fait avec success!",
+					);
+					$('.js-modal1').removeClass('show-modal1');
+                	console.log("response",response.data)
+               })
+              .catch(error => {
+                  console.log('errors : '  , error);
+             })
+          },
+		SignalerProduit: function(id){
+          	axios.post(window.Laravel.url+'/signalerproduit/'+id)
+              .then(response => {
+				Swal.fire(
+					  "Signal est fait avec success!",
+					);
+					$('.js-modal1').removeClass('show-modal1');
+                	console.log("response",response.data)
+               })
+              .catch(error => {
+                  console.log('errors : '  , error);
+             })
+          },
+      	
       	getFavoris(){
       		axios.get(window.Laravel.url+'/getfavoris')
               .then(response => {
@@ -754,6 +789,7 @@
 				      		tailExst : 0,
 
 				      	};
+				     initialiser();
 				    this.message= {};
               		Swal.fire({
 					  icon: 'error',
@@ -812,6 +848,13 @@
              })
       	},
       	detaillProduit:function(produit){
+      		axios.get(window.Laravel.url+'/getimageD/'+produit.id)
+                .then(response => {
+                      this.getImageD = response.data.imagee;                       
+                })
+                .catch(error =>{
+                        console.log('errors :' , error);
+                })
       		var i = 0;
       		 this.produits.forEach(key => {
       			if(produit.id == key.id ){

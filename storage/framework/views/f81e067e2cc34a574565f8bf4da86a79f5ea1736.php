@@ -17,6 +17,7 @@
     <script src="<?php echo e(asset('jss/sweetalert2.js')); ?>"></script>
     <script src="<?php echo e(asset('jss/vee-validate.min.js')); ?>"></script>
     <!--<link href="<?php echo e(asset('csss/app.css')); ?>" rel="stylesheet" type="text/css">-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link href="<?php echo e(asset('assetsClient/css/bootstrap.min.css')); ?>" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="<?php echo e(asset('vendor/bootstrap/css/bootstrap.min.css')); ?>">
     <link rel="stylesheet" type="text/css" href="<?php echo e(asset('fonts/font-awesome-4.7.0/css/font-awesome.min.css')); ?>">
@@ -86,7 +87,7 @@
                 <nav class="limiter-menu-desktop container">
                     
                     <!-- Logo desktop -->       
-                    <a href="#" class="logo">
+                    <a href="<?php echo e(route('accueil')); ?>" class="logo">
                         <img src="<?php echo e(asset('images/icons/LogoFinal2.png')); ?>" alt="IMG-LOGO">
                     </a>
 
@@ -948,7 +949,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
        }
    </script>  
 
-   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChnAfNPjSPo76qR3c9yR5IOWkA9BRlpf0" type="text/javascript"></script>
+   <!--<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChnAfNPjSPo76qR3c9yR5IOWkA9BRlpf0" type="text/javascript"></script>-->
     <script src="<?php echo e(asset('vendor/animsition/js/animsition.min.js')); ?>"></script>
     <script src="<?php echo e(asset('vendor/bootstrap/js/popper.js')); ?>"></script>
     <script src="<?php echo e(asset('vendor/bootstrap/js/bootstrap.min.js')); ?>"></script>

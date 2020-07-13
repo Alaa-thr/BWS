@@ -26,6 +26,7 @@ class CreateEmployeursTable extends Migration
             $table->string('image')->nullable();
             $table->integer('Nbre_signal')->default(0);
             $table->timestamps();
+            
         });
     }
 

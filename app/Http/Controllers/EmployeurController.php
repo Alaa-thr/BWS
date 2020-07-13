@@ -117,6 +117,12 @@ class EmployeurController extends Controller
     }
 
     public function addAnnonce(Request $request){
+                $request->validate([
+                     'libellé' => ['required','string','max:70','min:3','regex:/^[A-Z0-9][-a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
+                     'discription' => ['required','min:3','string','regex:/^[A-Z0-9][-a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
+                     'nombre_condidat' => ['required'],
+                     'sous_categorie_id' => ['required'],
+                 ]);
                 $annonce2 = new Annonce_emploie;
                 if($request->image != null){
                     $exploded = explode(',', $request->image);
@@ -148,9 +154,11 @@ class EmployeurController extends Controller
 
     public function updateAnnonceButton(Request $request){
         $request->validate([
-             'libellé' => [new ModifieTextDescriptionArticle($request->id),'regex:/^[A-Z0-9][a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
-             'discription' => [new ModifieTextDescriptionArticle($request->id),'regex:/^[A-Z0-9][a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
-         ]);
+                     'libellé' => ['required','string','max:70','min:3','regex:/^[A-Z0-9][-a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
+                     'discription' => ['required','min:3','string','regex:/^[A-Z0-9][-a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
+                     'nombre_condidat' => ['required'],
+                     'sous_categorie_id' => ['required'],
+        ]);
         $annonce2 = Annonce_emploie::find($request->id);
             
         if($annonce2->image == $request->image){

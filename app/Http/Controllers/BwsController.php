@@ -21,6 +21,23 @@ class BwsController extends Controller
 {
    
 /************************************************ Visiteur***********************************************/  
+    public function getAnnonceHome(){
+        $favori = \DB::table('annonce_emploies')->get();
+         $annonce = \DB::table('annonce_emploies')
+         ->join('employeurs','employeurs.id', '=', 'annonce_emploies.employeur_id')
+         ->select('employeurs.Nom', 'employeurs.Prenom', 'annonce_emploies.*')
+         ->take(24)->get(); 
+        if(auth()->check() && Auth::user()->type_compte == 'c'){
+            $client = $client = Client::find(Auth::user()->id);
+            $client->nom= ucwords($client->nom);
+             $client->prenom= ucwords($client->prenom);
+            return ['annonce'=>$annonce,'client' => $client];
+        }
+        $client['nom'] = "";
+        $client['prenom'] = "";  
+        return ['annonce'=>$annonce,'client' => $client];
+    }
+
     public function getFavoris(){
         if(auth()->check() && Auth::user()->type_compte == 'c'){
             $client = $client = Client::find(Auth::user()->id);
@@ -152,6 +169,11 @@ class BwsController extends Controller
         return ['allArticle' => $allArticle];
     }
 
+    public function getImageD($id){
+            $image = \DB::table('imageproduits')->where('imageproduits.produit_id',$id)->get();
+            return ['imagee'=>$image];
+    }
+
     public function getProduitHome(){
         $favori = \DB::table('produits')->get();
         if(auth()->check() && Auth::user()->type_compte == 'c'){
@@ -159,7 +181,9 @@ class BwsController extends Controller
             $command = \DB::table('commandes')->where([ ['client_id',$client->id],['id',$client->nbr_cmd]])->get();
             $produit = \DB::table('produits')
              ->join('vendeurs','vendeurs.id', '=', 'produits.vendeur_id')
-             ->select('vendeurs.Nom', 'vendeurs.Prenom', 'produits.*')
+             ->join('imageproduits','imageproduits.produit_id', '=', 'produits.id')
+             ->where('imageproduits.profile',1)
+             ->select('vendeurs.Nom', 'vendeurs.Prenom', 'produits.*','imageproduits.image')
              ->take(24)->get();       
             $imageproduit = \DB::table('imageproduits')->get();
             $color = \DB::table('colors')->join('color_produits', 'colors.id', '=', 'color_produits.color_id')->get();
@@ -224,16 +248,17 @@ class BwsController extends Controller
             if($prixTotale[0]->prixTo == null){
                 $prixTotale[0]->prixTo = 0.00;
             }
+            $fav = \DB::table('favoris')->where('client_id',$c->id)->get();
              $c->nom= ucwords($c->nom);
              $c->prenom= ucwords($c->prenom);
-            return view('emploi',['emploi'=>$emploi,'categorie'=>$categorie ,'categorieE'=>$categorieE,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command,'prixTotale' => $prixTotale,'client' => $c]);
+            return view('emploi',['emploi'=>$emploi,'categorie'=>$categorie ,'categorieE'=>$categorieE,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command,'prixTotale' => $prixTotale,'client' => $c,'fav' => $fav]);
         }
         $c['nom'] = "";
         $c['prenom'] = "";
         $favoris = \DB::table('produits')->get();
         $imageproduit = \DB::table('imageproduits')->get();
         $command = array();     
-
+        $fav = array();
         $emploi = \DB::table('annonce_emploies')->orderBy('created_at','desc')->paginate(21) ;
         $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
         $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
@@ -241,7 +266,7 @@ class BwsController extends Controller
         if($prixTotale[0]->prixTo == null){
             $prixTotale[0]->prixTo = 0.00;
         }
-        return view('emploi',['emploi'=>$emploi,'categorie'=>$categorie ,'categorieE'=>$categorieE        ,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command,'prixTotale' => $prixTotale,'client' => $c]); 
+        return view('emploi',['emploi'=>$emploi,'categorie'=>$categorie ,'categorieE'=>$categorieE        ,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command,'prixTotale' => $prixTotale,'client' => $c,'fav' => $fav]); 
     }
     
     public function detailsEmploi(Request $request){
@@ -338,17 +363,20 @@ class BwsController extends Controller
 
      public function accueil()
     {
-        
+        $image=array();
+        $imageP=\DB::table('imageproduits')->get();
         $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
         $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
-        return view('home',['categorie'=>$categorie ,'categorieE'=>$categorieE]);
+        return view('home',['imageP'=>$imageP,'image'=>$image,'categorie'=>$categorie ,'categorieE'=>$categorieE]);
     }
 
      public function home()
     {
+        $image=array();
+        $imageP=\DB::table('imageproduits')->get();
         $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
         $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
-        return view('home',['categorie'=>$categorie ,'categorieE'=>$categorieE]);
+        return view('home',['imageP'=>$imageP,'image'=>$image,'categorie'=>$categorie ,'categorieE'=>$categorieE]);
     }
 
     public function showArticleD($id)
@@ -367,10 +395,10 @@ class BwsController extends Controller
         return $ville;
     }
 
-    public function deleteProduitPanier($id){
-       
+    public function deleteProduitPanier($id1 ,$id2 ,$id3 ,$id4 ,$id5){
         $client = Client::find(Auth::user()->id);
-        \DB::table('commandes')->where([['produit_id',$id],['client_id',$client->id],['id',$client->nbr_cmd]])->delete();
+        \DB::table('commandes')->where([['produit_id',$id1],['qte',$id2],['taille',$id3],['type_livraison',$id4],['couleur_id',$id5],['client_id',$client->id],['id',$client->nbr_cmd]])->delete();
+       
         return Response()->json(['etat' => true]);
     }
 

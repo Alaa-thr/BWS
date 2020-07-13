@@ -23,7 +23,7 @@ class EmployeurDemandeController extends Controller
         ->join('clients','clients.id','=','demande_emploies.client_id')
         ->join('annonce_emploies','annonce_emploies.id','=','demande_emploies.annonceE_id')
         ->select('demande_emploies.id','annonce_emploies.libellé','clients.nom','clients.prenom',\DB::raw('DATE(demande_emploies.created_at) as date'))
-        ->where('demande_emploies.employeur_id', $c->id,'commandec.demmande_traiter===0')->orderBy('demande_emploies.created_at','desc')->paginate(5);
+        ->where([['demande_emploies.employeur_id', $c->id],['demande_emploies.demmande_traiter',0]])->orderBy('demande_emploies.created_at','desc')->paginate(5);
         $employeur = \DB::table('clients')->get(); 
         $produit = \DB::table('annonce_emploies')->get(); 
 
@@ -43,8 +43,8 @@ class EmployeurDemandeController extends Controller
         return  $commande_detaills;
     }
 
-    public function deleteDemandeReçuEmployeur($id){
-        $commande = Demande::find($id);
+     public function deleteDemandeReçuEmployeur($id){
+        $commande = Demande_emploie::find($id);
         $commande->delete();
         return Response()->json(['etat' => true]);
     }

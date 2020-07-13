@@ -38,12 +38,15 @@ Route::get('/deposerproduit', 'BwsController@deposerProduit')->name('deposerProd
 Route::get('/deposeremploi', 'BwsController@deposerEmploi')->name('deposerEmploi');
 Route::get('/getarticlehome', 'BwsController@getArticleHome');
 Route::get('/getproduithome', 'BwsController@getProduitHome');
+Route::get('/getannoncehome', 'BwsController@getAnnonceHome');
 Route::get('/estconnecter', 'BwsController@Estconnecter');
 Route::get('/getcategoriehome', 'BwsController@getCategorieHome');
 Route::get('/getfavoris', 'BwsController@getFavoris');
-Route::delete('/deleteproduitpanier/{id}', 'BwsController@deleteProduitPanier');
+Route::delete('/deleteproduitpanier/{id1}/{id2}/{id3}/{id4}/{id5}', 'BwsController@deleteProduitPanier');
 Route::post('/updateproduitpanier', 'BwsController@updateProduitPanier');
 Route::get('/getproduitpaniershop', 'BwsController@getProduitPanierShop');
+Route::get('/getimageD/{id}', 'BwsController@getImageD');
+
 /************************************************ Admin***********************************************/
 Route::get('/categoriesAdmin', 'AdminController@categories_admin');
 Route::get('/admin', 'AdminController@admin_admin')->name('admin');
@@ -165,6 +168,7 @@ Route::delete('/deletenotificationclient/{id}','NotificationController@deleteNot
 
 /*Favoris*/
 Route::post('/ajoutaufavoris/{id}','ClientController@AjoutAuFavoris');
+Route::post('/ajoutaufavorisE/{id}','ClientController@AjoutAuFavorisE');
 Route::delete('/deletefavorisclient/{id}','FavorisController@deletefavorisClient');
 Route::get('/favorisClient', 'ClientController@getProduit')->name('favorisClient');
 Route::post('/annonceaufavoris/{id}','ClientController@AnnonceAuFavoris');

@@ -18,7 +18,8 @@ class FavorisController extends Controller
 {
     public function get_favoris_client(){
         $c = Client::find(Auth::user()->id);
-        $article = \DB::table('favoris')->where('client_id', $c->id)->orderBy('created_at','desc')->paginate(5);
+        $article = \DB::table('favoris')
+        ->where('client_id', $c->id)->orderBy('created_at','desc')->paginate(5);
         $annonce_emploies = \DB::table('annonce_emploies')->get(); 
         $produit = \DB::table('produits')->get();  
          $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();

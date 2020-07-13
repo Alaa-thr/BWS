@@ -22,6 +22,7 @@
   <link href="assetsClient/css/util.css" rel="stylesheet" />
   <link href="assetsClient/css/main.css" rel="stylesheet" />
   <link rel="stylesheet" type="text/css" href="assetsClient/fonts/linearicons-v1.0.0/icon-font.min.css">
+  <link rel="stylesheet" type="text/css" href="<?php echo e(asset('vendor/select2/select2.min.css')); ?>">
   <script src="<?php echo e(asset('jss/vue.js')); ?>"></script>
   <script src="<?php echo e(asset('jss/axios.min.js')); ?>"></script>
   <script src="<?php echo e(asset('jss/sweetalert2.js')); ?>"></script>
@@ -425,92 +426,7 @@
                 
             </div>
         </div>
-    <!-- Cart -->
-    <div class="wrap-header-cart js-panel-cart" style="z-index: 11000; ">
-        <div class="s-full js-hide-cart"></div>
-        
-        <div class="header-cart flex-col-l p-l-55 p-r-25">
-            
-            <div class="header-cart-title flex-w flex-sb-m p-b-8">
-                <span class="mtext-103 cl2">
-                    Votre Panier
-                </span>
-
-                <div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart" >
-                    <i class="zmdi zmdi-close" style="margin-left: 171%"></i>
-                </div>
-                
-            </div>
-            
-            <div class="header-cart-content flex-w js-pscroll">
-                <ul class="header-cart-wrapitem w-full">
-                    <li class="header-cart-item flex-w flex-t m-b-12">
-                        <div class="header-cart-item-img">
-                            <img  src="images/item-cart-01.jpg"  alt="IMG">
-                        </div>
-
-                        <div class="header-cart-item-txt p-t-8">
-                            <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-                                White Shirt Pleat
-                            </a>
-
-                            <span class="header-cart-item-info">
-                                1 x $19.00
-                            </span>
-                        </div>
-                    </li>
-
-                    <li class="header-cart-item flex-w flex-t m-b-12">
-                        <div class="header-cart-item-img">
-                            <img src="images/item-cart-02.jpg" alt="IMG">
-                        </div>
-
-                        <div class="header-cart-item-txt p-t-8">
-                            <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-                                Converse All Star
-                            </a>
-
-                            <span class="header-cart-item-info">
-                                1 x $39.00
-                            </span>
-                        </div>
-                    </li>
-
-                    <li class="header-cart-item flex-w flex-t m-b-12">
-                        <div class="header-cart-item-img">
-                            <img src="images/item-cart-03.jpg" alt="IMG">
-                        </div>
-
-                        <div class="header-cart-item-txt p-t-8">
-                            <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-                                Nixon Porter Leather
-                            </a>
-
-                            <span class="header-cart-item-info">
-                                1 x $17.00
-                            </span>
-                        </div>
-                    </li>
-                </ul>
-                
-                <div class="w-full">
-                    <div class="header-cart-total w-full p-tb-40">
-                        Total: $75.00
-                    </div>
-
-                    <div class="header-cart-buttons flex-w w-full">
-                        <a href="<?php echo e(route('panier')); ?>" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
-                            View Cart
-                        </a>
-
-                        <a href="<?php echo e(route('panier')); ?>" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
-                            Check Out
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>      
-    </div>
+   
 
     </header>
 
@@ -736,8 +652,15 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
   <script src="assetsClient/js/core/popper.min.js"></script>
   <script src="assetsClient/js/core/bootstrap.min.js"></script>
   <script src="assetsClient/js/plugins/perfect-scrollbar.jquery.min.js"></script>
-  <!--  Google Maps Plugin    -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+  <script src="<?php echo e(asset('vendor/select2/select2.min.js')); ?>"></script>
+  <script>
+        $(".js-select2").each(function(){
+            $(this).select2({
+                minimumResultsForSearch: 20,
+                dropdownParent: $(this).next('.dropDownSelect2')
+            });
+        })
+ </script>
   <!-- Chart JS -->
   <script src="assetsClient/js/plugins/chartjs.min.js"></script>
   <!--  Notifications Plugin    -->
