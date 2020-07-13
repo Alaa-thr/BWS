@@ -334,8 +334,8 @@
 							</div> 
 							<div class="block2-txt-child2" style="float: right;">
 								<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2" v-on:click="AnnonceAuFavoris(emp.id)">
-									<img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON" style="margin-top: 20px;">
-									<img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON" style="margin-top: 20px; ">
+									<img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON" >
+									<img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON" >
 								</a>
 							</div>
 						</div>
@@ -359,66 +359,6 @@
 	</div>
 
 	<div class="wrap-modal1 js-modal1 p-t-38 p-b-20 p-l-15 p-r-15 " id="app2" v-if="hideModel">
-<<<<<<< HEAD
-      <div class="overlay-modal1 "></div>
-  
-      <div class="container">
-        <div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent" v-if="openInfo "  style="width: 1250px;  margin-top: 20px; margin-left: -30px;" v-for="empp in emplois2" >
-          <button class="how-pos3 hov3 trans-04 p-t-6" v-on:click="hideModel = false">
-            <img src="images/icon-close.png" alt="CLOSE">
-          </button>
-        <section class=" creat-articlee " > 
-           <div class="row">
-            <div class="col-md-8">
-              <div class="p-b-30 p-l-40" style="margin-left: 20px; margin-top: 20px;" >
-                <h3 class=" cl2" >
-                   Informations sur L'annonce
-                </h3>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-10" >
-              <img v-if="empp.image" :src="'storage/annonces_image/'+ empp.image" style="width: 680px; height: 300px; margin-left: 60px; " />
-              <img v-else src="storage/téléchargement.png" style="width: 600px; height: 300px; margin-left: 60px;" />
-            </div> 
-          </div>
-          <div class="row">
-            <div class="col-md-4">
-              <div class="title" style="color: red; margin-top: 30px; margin-left: 60px;" >
-                  <h4><b>{{empp.libellé }}</b></h4><br>
-              </div>
-            </div>
-          </div>
-          <div class="row" style="margin-left: 50px; margin-top: -15px;">
-            <div class="col-md-2">
-               <p style="color: black;">{{ empp.discription }}</p>
-            </div>               
-          </div>
-          <div class="row">
-            <div class="col-md-10">
-              <div class="description" style="margin-left: 65px; margin-top: 20px; font-weight: 700; color: black;">
-                Le nombre de condidat est : {{empp.nombre_condidat}}
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-10">
-              <div class="description" style="margin-left: 65px; margin-top: 40px; font-weight: 500; color: black;">
-                Pour contacté <b>{{ empp.nom }} {{empp.prenom}} : </b> 
-                <div  style="margin-top: -35px; margin-left: 210px; font-style: italic; color: blue;">
-                	<b>{{empp.num_tel}}</b>
-                </div>
-                <div style="margin-top: 5px; margin-left: 210px; font-style: italic; color: blue;">
-                   <b >{{empp.email}}</b>
-               </div>
-              </div>
-            </div>
-          </div>
-          </section>   
-        </div>
-      </div>
-=======
       <div class="overlay-modal1 " @click='CancelArticle'></div>
   		<div class="container">
 			<div class="bg0 p-t-55 p-b-100 p-lr-15-lg how-pos3-parent" >
@@ -539,7 +479,7 @@
                        								<span class="px-3 cl13" v-if="message.cv" v-text="message.cv[0]"></span>
 												</div>
 											</div>
-											<span>Si votre fichier de CV est volumineux, ça peut prendre au plus quelques secondes pour le téléchargé.<br> MERCI POUR PATIENCE</span>
+											<span>Si votre fichier de CV est volumineux, ça peut prendre au plus quelques secondes pour le téléchargé.<br> MERCI DE PATIENCE</span>
 										</div>
 
 									</form>
@@ -579,7 +519,6 @@
 			</div>
 		</div>
 
->>>>>>> 4fd9837ad7a6fa5401a9d535a1a8ea7259e4f807
     </div>
 
 

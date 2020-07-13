@@ -25,7 +25,7 @@
                 </div>
 
             <div class="txt-right"style="margin-top: -40px; " >
-                  <button v-if="suppr" class="btn-sm btn-danger " style="height: 35px; " v-on:click="deleteArrayArticle()"><b>Supprimer</b>
+                  <button v-if="suppr" class="btn-sm btn-danger " style="height: 35px; " v-on:click="deleteArrayDemande()"><b>Supprimer</b>
                   </button>
                   
                   
@@ -66,18 +66,18 @@
     </div>
    
     <div class="col-md-4 pl-1" id="a">
-      <div class="" id="b" >
-      <a class="f" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#" id="point"  style="margin-left: 245px">
+      <div class="dropdown" id="b" >
+      <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#" id="point"  style="margin-left: 245px">
         <i class="fas fa-ellipsis-v"  id="y"></i>
        </a>
-      <div class="dropdown-menu " x-placement="right-start" id="pl"  >
-      <a   v-on:click="AfficheInfo(commandec.id)"  class="dropdown-item " 
-      style="color: red; font-style: italic; font-weight: 900; cursor: pointer;" >Afficher Plus</a>
-    <a class="dropdown-item " v-on:click="deleteDemandeReçuEmployeur(commandec)"
-    style="color: red; font-style: italic; font-weight: 900; cursor: pointer;">
-    Supprimer</a>
-       </div>
-       
+      <div class="dropdown-menu dropdown-menu-right"  id="pl"  style="margin-left: 220px; margin-right: 50px;">
+        <a class="dropdown-item  js-show-modal1"  v-on:click="AfficheInfo(commandec.id)" style="color: red; font-style: italic; font-weight: 900; cursor: pointer;" >
+          Afficher Plus
+        </a>
+        <a class="dropdown-item " v-on:click="deleteDemandeReçuEmployeur(commandec)" style="color: red; font-style: italic; font-weight: 900; cursor: pointer;">
+         Supprimer
+        </a>
+      </div> 
     </div>    
 
     </div> 
@@ -109,7 +109,7 @@
 
 </div>
 <!-- Modal1 for laptob-->
-<div class="wrap-modal11 js-modal1 p-t-38 p-b-20 p-l-15 p-r-15"  id="app2"  style="margin-top:50px;">
+<div class="wrap-modal11 js-modal1 p-t-38 p-b-20 p-l-15 p-r-15" v-if="hideModel"  id="app2"  style="margin-top:50px;">
   <div class="overlay-modal11 js-hide-modal1 " ></div>
 
   <div class="container" >
@@ -117,8 +117,8 @@
  
     <div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent" style="width: 985px;"  v-for="commandec in commandeclient2">
 
-      <button class="how-pos3 hov3 trans-04 p-t-6 js-hide-modal1" >
-        <img src="images/icon-close.png" alt="CLOSE">
+      <button class="how-pos3 hov3 trans-04 p-t-6 js-hide-modal1" v-on:click="canceldemande()">
+        <img src="images/icon-close.png" alt="CLOSE" >
       </button>
       
 
@@ -271,6 +271,9 @@ methods: {
               })
               
           },
+          canceldemande: function(){
+           this.hideModel = false; 
+          },
   detaillsdemandeReçuEmplyeur: function(){
     axios.post(window.Laravel.url+'/detaillsdemandereçuemplyeur', this.detaillsA)
         .then(response => {
@@ -282,20 +285,6 @@ methods: {
         .catch(error =>{
              console.log('errors :' , error);
         })
-  },
-  CancelArticle(article){
-    this.modifier = false ;
-    this.hideModel = false;
-    this.art = {        
-                  id: 0,
-                  admin_id: window.Laravel.idAdmin,
-                  titre: '', 
-                  description: '',
-                  image: ''
-    };
-    this.message = {};
-    article.titre = this.oldArt.titre;
-    article.description = this.oldArt.description;
   },
 },    
 });
@@ -312,7 +301,7 @@ data:{
   },
 methods: {
   
-    deleteArrayArticle:function(){
+    deleteArrayDemande:function(){
         if(this.artilcesDelete.length == 0){
             Swal.fire({
             icon: 'error',
@@ -363,6 +352,7 @@ methods: {
         
         })
    },
+   
  
    deleteDemandeReçuEmployeur: function(article){
         Swal.fire({
@@ -403,7 +393,7 @@ methods: {
   
   
   AfficheInfo: function($id){
-    $('.js-modal1').addClass('show-modal1');
+    
     app2.hideModel = true; 
     app2.openAjout = false ;
     app2.openInfo = true;
