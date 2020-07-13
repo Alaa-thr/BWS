@@ -1,7 +1,11 @@
 @extends('layouts.template_employeur')
 
 @section('content')
-
+<style type="text/css">
+    .swal2-container {
+      z-index: 9001;
+    }
+</style>
   <head>
     <title>{{ ( 'Annonces Emploies') }}</title>
   </head>
@@ -136,15 +140,19 @@
           <button class="how-pos3 hov3 trans-04 p-t-6" v-on:click="CancelAnnonce(annc)">
             <img src="images/icon-close.png" alt="CLOSE">
           </button>
-          <section class=" creat-annonce "   id="myDIV">     
+
+          <section class=" creat-annonce "   id="myDIV"> 
+         
+
               <div  class=" container-creat-annonce">
                 <div class="row">
                   <div class="col-md-10 pr-2" >
                     <div class="form-group mb-3">
                       <label style="margin-left: 50px">Titre</label>
-                      <input  type="text" class="form-control" placeholder="Le titre doit commencer avec un Maj ou un nombre" v-model="annc.libellé" :class="{'is-invalid' : message.libellé}" style="margin-left: 50px">
-                      <span class="px-3 cl13" v-if="message.libellé" v-text="message.libellé[0]">
+                      <input id="libelle" type="text" class="form-control" placeholder="Le titre doit commencer avec un Maj ou un nombre" name="username" v-model="annc.libellé" :class="{'is-invalid' : message.libellé}" style="margin-left: 50px" required>
+                      <span  id="error" class="px-3 cl13" v-if="message.libellé" v-text="message.libellé[0]">
                       </span>
+                      
                     </div>
                   </div>
                 </div>
@@ -152,7 +160,7 @@
                   <div class="col-md-10 pr-2" >
                     <div class="form-group">
                       <label style="margin-left: 50px">description</label>
-                      <textarea class="form-control" placeholder="La description doit commencer avec un Maj ou un nombre" v-model="annc.discription" :class="{'is-invalid' : message.discription}" style="margin-left: 50px"></textarea>
+                      <textarea id="desc" class="form-control" placeholder="La description doit commencer avec un Maj ou un nombre" v-model="annc.discription" :class="{'is-invalid' : message.discription}" style="margin-left: 50px"></textarea>
                       <span class="px-3 cl13" v-if="message.discription" v-text="message.discription[0]">
                       </span>
                     </div>
@@ -162,7 +170,7 @@
                   <div class="col-md-10 pr-2" >
                     <div class="form-group mb-3">
                       <label style="margin-left: 50px">Nombre_condidat</label>
-                      <input  type="number" class="form-control" placeholder="entrez ici le nombre de condidat  "  v-model="annc.nombre_condidat " :class="{'is-invalid' : message.nombre_condidat}" style="margin-left: 50px">
+                      <input id="nbrc" type="number" class="form-control" placeholder="entrez ici le nombre de condidat  "  v-model="annc.nombre_condidat " :class="{'is-invalid' : message.nombre_condidat}" style="margin-left: 50px">
                       <span class="px-3 cl13" v-if="message.nombre_condidat" v-text="message.nombre_condidat[0]">
                       </span>
                     </div>
@@ -186,20 +194,25 @@
                   <div class="col-md-10 pr-2" >
                     <div class="form-group">
                       <label for="image" style="margin-left: 50px">image</label>
-                      <input type="file" class="form-control"  v-on:change="imagePreview" :class="{'is-invalid' : message.image}" style="margin-left: 50px">
+                      <input id="mss" type="file" class="form-control"  v-on:change="imagePreview" :class="{'is-invalid' : message.image}" style="margin-left: 50px">
                       <span class="px-3 cl13" v-if="message.image" v-text="message.image[0]"></span>
                     </div>
                  </div>
                 </div>
                 <div class="row">
                   <div class="col-md-10 flex-t">
-                        <button type="submit" v-if="modifier" class="btn btn-success btn-block " style="margin-top:40px;margin-left: 50px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="updateannoncebutton()" >Modifier
+                        <button type="submit" v-if="modifier" class="btn btn-success btn-block " style="margin-top:40px;margin-left: 50px; 
+                         border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="updateannoncebutton()" >Modifier
                         </button> 
-                        <button type="submit" v-else class="btn btn-success btn-block " style="margin-top:40px;margin-left: 50px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;"  v-on:click="myFunction()"> Suivant
+                        <button  id="suiv" type="submit"  class="btn btn-success btn-block " style="margin-top:40px;margin-left: 50px;
+                          border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;"  v-on:click="myFunction();"> Suivant
                         </button> 
-                        <button type="submit"  class="btn btn-danger btn-block " style="margin-top:40px;  border: 0;margin-left: 50px;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="CancelAnnonce(annc)" >Annuler
+                        <button type="submit"  id="mod" class="btn btn-warning btn-block " style="margin-top:40px;margin-left: 50px;
+                          border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="validateForm();">Vérifier
+                        </button>
+                        <button type="submit"  class="btn btn-danger btn-block " style="margin-top:40px;  border: 0;margin-left: 50px;  
+                        border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="CancelAnnonce(annc)" >Annuler
                         </button> 
-                            
                   </div>
                 </div>
               </div>
@@ -209,22 +222,46 @@
               <div  id="div">
 
               <div>
-              <p style="width: 100%;margin-left:11%;margin-top:-31px ;color:black" > 
-              Paiment:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.Il y'a 3 emplacement dans ce site :
+              <p style="width: 100%;margin-left:11%;margin-top:-61px ;color: rgb(192,4,4);font-size: 40px;"> 
+              Paiment:</p><p style="width: 100%;margin-left:11%;margin-top:-11px ;color: black"> <br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;.Il y'a 3 emplacement dans ce site :
                <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1 er emplacement:900DA/Produit,180DA/Annonce -Par mois-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              * Les 2 premiers slide dans page Home. <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Les 2 premier ligne dans page Emploi.
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+               <p style="width: 100%;margin-left:13%;font-size: 18px;margin-top:-11px ;"> 
+              1 er emplacement:900DA/Produit,180DA/Annonce -Par mois-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              </p> <p style="width: 100%;margin-left:11%;margin-top:-11px ;color: black">
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Les 2 premiers slide dans page 
+              <b class="alert-link " style="cursor: pointer;text-decoration: underline;" v-on:click="showImage1">Accueil</b>. <br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              *Les 2 premiers&nbsp;ligne dans page 
+              <b class="alert-link " style="cursor: pointer;text-decoration: underline;" v-on:click="showImageEmp1">Emploi</b>.
               
               <br><br><br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2 er emplacement:500DA/Produit,140DA/Annonce -Par mois-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              * Les 4 dernier slide dans page Home. <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Les 4 dernier ligne dans page Emploi.
-              
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               <p style="width: 100%;margin-left:13%;font-size: 18px;margin-top:-41px ;"> 
+               2 er emplacement:500DA/Produit,140DA/Annonce -Par moi<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              </p> <p style="width: 100%;margin-left:11%;margin-top:-11px ;color: black">
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Les 4 derniers slide dans page 
+              <b class="alert-link " style="cursor: pointer;text-decoration: underline;" v-on:click="showImage2">Accueil</b>.
+               <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              *Les 5 derniers&nbsp;ligne dans page            
+                 <b class="alert-link " style="cursor: pointer;text-decoration: underline;" v-on:click="showImageEmp2">Emploi</b>.              
               <br><br><br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3 er emplacement:200DA/Produit,70DA/Annonce -Par mois-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              * Le reste dans page Home. <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Le reste dans page Emploi.
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               <p style="width: 100%;margin-left:13%;font-size: 18px;margin-top:-41px ;"> 
+
+              3 er emplacement:200DA/Produit,70DA/Annonce -Par mois-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              </p> <p style="width: 100%;margin-left:11%;margin-top:-11px ;color: black">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              * Le reste dans page <b class="alert-link " style="cursor: pointer;text-decoration: underline;" v-on:click="showImage3"> Accueil</b>. <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              *Le reste dans page         
+                    <b class="alert-link " style="cursor: pointer;text-decoration: underline;" v-on:click="showImageEmp3">Emploi</b>.
+
               
               </p>
  
@@ -242,7 +279,7 @@
                         <div style="width: 90%;padding-bottom: 10px;padding-top: 30px; margin-left: 20px;margin-right: 20px;">
                     <div class=" alert-warning" role="alert" style="padding-left: 10px;padding-top: 1px;padding-bottom: 1px;">
                       <i class="now-ui-icons travel_info" id="y"></i>
-                      Après cette étape votre annonce sera ajouté avec les annonces qui déjç ajouter .Quand fait le paiment il sera ajouté a les autres pages.
+                      Après cette étape votre annonce sera ajouté avec les annonces qui déjà ajouter .Quand fait le paiment il sera ajouté a les autres pages.
                     </div> 
 
                     <div class="col-md-10 flex-t">
@@ -258,6 +295,7 @@
         </div>
       </div>
     </div>
+    </div>
 
 
 
@@ -272,11 +310,16 @@
           ]) !!};
 </script>
 
+
+
 <script>
 
 
    Vue.mixin({
+  
      methods:{
+       
+             
           addAnnonce: function(){
             app2.annc.image = app2.image;
              console.log("app.app2.annc",app2.annc)
@@ -343,11 +386,102 @@
         categories: [],
         modifier: false,
         image: null,
+        suivant: false,
 
-        
+
+      //  formErrors: [],
+        //username: null,
+           // annc.discription :null,
+             //annc.nombre_condidat: null,
+          //   maxChar:10,
                    
       },  
        methods: {
+
+        validateForm: function(){
+          
+          var s = document.getElementById("suiv");
+            var m = document.getElementById("mod");
+ 
+            
+            axios.post(window.Laravel.url+"/paimentemp",app2.annc)
+
+
+  
+
+
+                  .then(response => {
+                    if(response.data.etat){
+                      s.style.display = "block";
+              m.style.display = "none";
+                     // document.getElementById('suiv').disabled = false; 
+                      //this.suivant = true ;
+                      this.annc = response.data.annonceAjout;
+                      app.annoncesEmployeur.forEach(key => { 
+                        if(key.id == this.annc.id){
+                              key.image = this.annc.image;
+                        }
+                      })
+                      
+                    } 
+                    this.message = {};
+                        
+                  })
+              .catch(error =>{
+                  this.message = error.response.data.errors;
+                  console.log('errors :' , this.message);
+              })
+
+      },   
+
+         showImage1: function(){
+          Swal.fire({
+          imageUrl: '{{asset('storage/annonces_image/homeplace1.png')}}',
+        
+          imageHeight: 340,
+          imageAlt: 'A tall image'
+        })
+      },
+      showImage2: function(){
+          Swal.fire({
+          imageUrl: '{{asset('storage/annonces_image/homeplace2.png')}}',
+        
+          imageHeight: 340,
+          imageAlt: 'A tall image'
+        })
+      },
+      showImage3: function(){
+          Swal.fire({
+          imageUrl: '{{asset('storage/annonces_image/homeplace3.png')}}',
+        
+          imageHeight: 340,
+          imageAlt: 'A tall image'
+        })
+      },
+      showImageEmp1: function(){
+          Swal.fire({
+          imageUrl: '{{asset('storage/annonces_image/emploplace1.png')}}',
+        
+          imageHeight: 340,
+          imageAlt: 'A tall image'
+        })
+      },
+      showImageEmp2: function(){
+          Swal.fire({
+          imageUrl: '{{asset('storage/annonces_image/emploplace2.png')}}',
+        
+          imageHeight: 340,
+          imageAlt: 'A tall image'
+        })
+      }, 
+      showImageEmp3: function(){
+          Swal.fire({
+          imageUrl: '{{asset('storage/annonces_image/emploplace3.png')}}',
+        
+          imageHeight: 340,
+          imageAlt: 'A tall image'
+        })
+      },   
         updateannoncebutton: function(){
          if(this.annc.libellé == ''){
 
@@ -460,6 +594,7 @@ axios.post(window.Laravel.url+'/paiementemployeur/'+choice)
     y.style.visibility= "visible";
   }
 },
+
        CancelAnnonce(annonce){
         this.modifier = false ;
         this.hideModel = false;

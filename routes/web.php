@@ -189,4 +189,9 @@ Route::post('/signalerannonce/{id}','ClientController@SignalerAnnonce');
 Route::post('/signalervendeur/{id}','ClientController@SignalerVendeur');
 Route::post('/signaleremployeur/{id}','ClientController@SignalerEmployeur');
 
+Route::post('/paiementemployeur/{id}','EmployeurController@change_valeur');
+Route::post('/paimentemp','EmployeurController@validateForm');
+Route::post('/paiementvendeur/{id}','VendeurController@change_valeur_vendeur');
+Route::post('/paiementvend','VendeurController@validateFormProduit');
 
+Route::post('/verifierproduit/{id}','AdminController@Verifier');

@@ -12,6 +12,7 @@ use App\Produit;
 use App\Imageproduit;
 use App\Notification;
 use App\ColorProduit;
+use App\Paiement_vendeur;
 use App\TailleProduit;
 use App\Tarif_livraison;
 use App\Rules\ModifieLibelleDescriptionProduit;
@@ -331,6 +332,42 @@ class VendeurController extends Controller
         return Response()->json(['etat' => true,'produitAjout' => $produit2]);
     
     }
+    public function change_valeur_vendeur($id){
+    
+        
+        $clientCnncte = Vendeur::find(Auth::user()->id);
+        echo $id;
+           $signal = new Paiement_vendeur;
+            $signal->vendeur_id=$clientCnncte->id;
+            if($id == 0)  {             $signal->position_publication = "First";}
+            elseif($id ==1) {          $signal->position_publication = "Second";}
+            elseif($id ==2)  {                  $signal->position_publication = "third";}
+            
+            $signal->admin_id = 1;
+
+            $signal->save();
+        
+        
+    }
+
+    public function validateFormProduit(Request $request){
+    
+        
+        $request->validate([
+            'Libellé' => ['required','regex:/^[A-Z0-9][a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
+            'description' => ['required','regex:/^[A-Z0-9][a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
+            'prix' =>['required'],
+            'sous_categorie_id' =>['required'],
+            'Qte_P' =>['required'],
+            'poid' =>['required'],
+           
+             ]);
+       
+            return Response()->json(['etat' => true]);
+
+        
+    }
+
 
 }
  /*$tableIdProduit = [];
