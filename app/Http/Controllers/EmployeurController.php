@@ -168,7 +168,7 @@ class EmployeurController extends Controller
     
         
         $clientCnncte = Employeur::find(Auth::user()->id);
-        echo $id;
+       
            $signal = new Paiement_employeur;
             $signal->employeur_id =$clientCnncte->id;
             if($id == 0)  {             $signal->position_publication = "First";}
@@ -181,5 +181,19 @@ class EmployeurController extends Controller
         
         
     }
+    public function validateForm(Request $request){
+    
+        
+        $request->validate([
+       'libellé' => ['required','regex:/^[A-Z0-9][a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
+       'discription' => ['required','regex:/^[A-Z0-9][a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
+       'nombre_condidat' =>['required'],
+       'sous_categorie_id' =>['required'],
 
+        ]);
+   
+        return Response()->json(['etat' => true]);
+
+    
+}
 }

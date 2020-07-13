@@ -25,7 +25,7 @@
                 <button v-if="suppr" class="btn btn-sm btn-warning btn-block" style="margin-left: 850px; margin-top: -45px; border-radius: 0.8em; width: 130px; height: 35px; " v-on:click="AnnulerSel" ><b>Annuler</b></button>
               </div>
               <div class="card-body">
-                <div class="table-responsive" style="height: 100px;">
+                <div class="table-responsive" style="height: auto;">
                   <table class="table" width="100%">
                     <tbody>
                       <tr v-for="noti in notifications">
@@ -42,9 +42,10 @@
                         <td width="3%">
                           <b><i class="now-ui-icons ui-1_bell-53" style="margin-top: 5px;"></i></b>
                         </td>
-                        <td  class="text-left" v-if="noti.categorie_libelle "><a href="#" style=" color: black; cursor: auto;" >L'admin <b>@{{noti.nom}}</b> a supprimer la catégorie @{{noti.categorie_libelle}} </a></td>
-                        <td  class="text-left" v-else><a href="#" style="  color: black; cursor: auto;" >L'admin <b>@{{noti.nom}}</b> a supprimer la sous catégorie @{{noti.sous_categorie_libelle}} </a></td>
-                        
+                      <!--  <td  class="text-left"  v-if="noti.client_id "><a href="#" style="  color: black; cursor: auto;" >L'client_id <b>@{{noti.nom}}</b> a supprimer la sous catégorie @{{noti.sous_categorie_libelle}} </a></td> -->
+                        <td  class="text-left"><a href="#" style="  color: black; cursor: auto;" >L'employeur_id <b>@{{noti.id}}</b> a supprimer la sous catégorie @{{noti.sous_categorie_libelle}} </a></td>
+                       
+
                         <td  class="dropdown "  id="k">
                           <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#"> 
                                 <img src="assetsAdmin/img/menu.png" alt="..."/ id="f">
@@ -57,11 +58,7 @@
                     </tbody>
                   </table>
                 </div>
-                 <div v-if="nextPage" class="flex justify-center">
-                          <button class="btn btn-sm btn-block btn-info">
-                            charger les notifs suivants..
-                          </button>
-                      </div>
+                 {{$notif->links()}}
               </div>
             </div>
           </div>
@@ -148,11 +145,24 @@
          NotificationsDelete: [],
       },
       methods:{
+      
         getNotifications:function(){
           axios.get(window.Laravel.url+'/notificationsAdmin/')
             .then(pagination => {
                  console.log(pagination)
                  this.notifications = window.Laravel.notif.data;
+                 this.nextPage = window.Laravel.notif.next_page_url;
+            })
+            .catch(error =>{
+                 console.log('errors :' , error);
+            })
+        },  fetchcpmment:function(){
+         axios.get(window.Laravel.url)
+     // axios.get(url)
+            .then(pagination => {
+                 this.notifications = this.notifications.concat(window.Laravel.notif.data);
+                 console.log( this.notifications)
+
                  this.nextPage = window.Laravel.notif.next_page_url;
             })
             .catch(error =>{

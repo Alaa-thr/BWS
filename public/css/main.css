@@ -3702,3 +3702,11 @@ i.favoo:hover{
 .swal2-container {
   z-index: 9001;
 }
+#s{
+  display: none;
+
+}
+#m{
+  display: none;
+
+}
