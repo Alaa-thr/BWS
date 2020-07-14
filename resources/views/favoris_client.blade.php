@@ -184,7 +184,7 @@
     </div>
     <div class="wrap-modal11 js-modal1 p-t-80 p-b-20 p-l-15 p-r-15 " v-show="hideModel">
       <div class="overlay-modal11 " @click='CancelArticle'></div>
-        <div class="container" v-show='commande'>
+        <div class="container" v-show='commande' >
                         <div class="bg0 p-t-60 p-b-30 p-lr-15-lg how-pos3-parent">
                             <button class="how-pos3 hov3 trans-04 " v-on:click="CancelArticle()" >
                                 <img src="images/icons/icon-close.png" alt="CLOSE">
@@ -447,19 +447,19 @@
                                             </div>
                                         </div>
 
-                                        <div  class="form-group flex-w p-b-10">
-                                            <div class="size-205 cl2 m-r-2" style="font-size: 15px;">
+                                        <div  class="form-group flex-w p-b-10" >
+                                            <div class="size-205 cl2 m-r-2" style="font-size: 12px; margin-top: 10px;">
                                                 CV
                                             </div>
-                                            <div class="size-219 m-b-5">
-                                                <div class="bg0 ">
-                                                    <input class="form-control m-r-30" id="cv" type="file" :class="{'is-invalid' : message.cv}" v-on:change="cvPreview" accept=
+                                            <div class="size-219 m-b-5" >
+                                                <div class="bg0 " >
+                                                    <input class="form-control" id="cv" type="file" :class="{'is-invalid' : message.cv}" v-on:change="cvPreview" accept=
                                                     "application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
-                                                    text/plain, application/pdf, image/jpeg,image/png">
+                                                    text/plain, application/pdf, image/jpeg,image/png" style="margin-top: 0px; height: 38px; width: 248px; font-weight: 500; left: 24px;">
                                                     <span class="px-3 cl13" v-if="message.cv" v-text="message.cv[0]"></span>
                                                 </div>
                                             </div>
-                                            <span>Si votre fichier de CV est volumineux, ça peut prendre au plus quelques secondes pour le téléchargé.<br> MERCI DE PATIENCE</span>
+                                            <span style="margin-top: 40px;">Si votre fichier de CV est volumineux, ça peut prendre au plus quelques secondes pour le téléchargé.<br> MERCI DE PATIENCE</span>
                                         </div>
 
                                     </form>
