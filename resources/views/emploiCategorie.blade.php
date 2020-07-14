@@ -85,14 +85,15 @@
 				<div class="flex-w flex-c-m m-tb-20">
 			        <div class="m-l-25 respon6-next" style="width: 230px;">
 			            <div class="rs1-select2 bor8 bg0" >
+			              <form action="">
 			                <select class="js-select2" id="tttt">
 				                <option value="0" disabled selected>Sous-Categorie</option>
 				                @foreach($sousC as $sc)
 				                	<option  value="<?php echo($sc->id)?>">{{$sc->libelle}}</option>
 				                @endforeach
-			            </select>
-			                                                                                 
-			            <div class="dropDownSelect2"></div>
+			            	</select>
+			                <div class="dropDownSelect2"></div>
+			              </form>
 			        </div>
 					</div>
 				</div>

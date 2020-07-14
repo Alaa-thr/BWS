@@ -30,7 +30,7 @@ Route::get('/emploi', 'BwsController@emploi')->name('emploi');
 Route::get('/shop/search_categorie={id}', 'BwsController@shopSearch')->name('shopCategorie');
 Route::get('/emploi/search_categorie={id}', 'BwsController@emploiSearch')->name('emploiCategorie');
 
-Route::get('/emploi/search_categorie={id}&sous-categorie={id1}', 'BwsController@emploiSearch');
+Route::get('/emploi/search_categorie={id}&sous-categorie={id1}', 'BwsController@emploiSousCategorieSearch');
 
 Route::post('detailsemp','BwsController@detailsEmploi');
 Route::get('/article', 'BwsController@article')->name('article');
