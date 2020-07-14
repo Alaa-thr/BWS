@@ -29,12 +29,12 @@
                       <th></th>
                     </thead>
                     <tbody>
-                      <tr v-for="vendeura in vendeuradmin" class="js-show-modal1"  v-on:click="AfficherInfo(vendeura.id)" style="cursor: pointer;">
-                        <td>@{{vendeura.id}}</td>
+                      <tr v-for="vendeura in vendeuradmin" style="cursor: pointer;">
+                        <td  class="js-show-modal1"  v-on:click="AfficherInfo(vendeura.id)">@{{vendeura.id}}</td>
 
-                        <td>@{{vendeura.Nom}} @{{vendeura.Prenom}}</td>
-                        <td >@{{vendeura.numTelephone}}</td>
-                        <td >@{{vendeura.email}}</td>
+                        <td  class="js-show-modal1"  v-on:click="AfficherInfo(vendeura.id)">@{{vendeura.Nom}} @{{vendeura.Prenom}}</td>
+                        <td  class="js-show-modal1"  v-on:click="AfficherInfo(vendeura.id)">@{{vendeura.numTelephone}}</td>
+                        <td  class="js-show-modal1"  v-on:click="AfficherInfo(vendeura.id)">@{{vendeura.email}}</td>
                         <td  class="dropdown " id="k">
                             <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
                                 <img src="assetsAdmin/img/menu.png" alt="..." id="k1">

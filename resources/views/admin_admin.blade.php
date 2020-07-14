@@ -54,24 +54,24 @@
                       </th>
                     </thead>
                     <tbody>
-                      <tr v-for="admina in adminadmin" class="js-show-modal1"  v-on:click="AfficherInfo(admina.id)" style="cursor: pointer;">
-                        <td >
+                      <tr v-for="admina in adminadmin" style="cursor: pointer;">
+                        <td  class="js-show-modal1"  v-on:click="AfficherInfo(admina.id)">
                          @{{admina.id}}  
                         </td>
-                        <td>
+                        <td  class="js-show-modal1"  v-on:click="AfficherInfo(admina.id)">
                           @{{admina.nom}} @{{admina.prenom}} 
                         </td>
-                        <td>
+                        <td  class="js-show-modal1"  v-on:click="AfficherInfo(admina.id)">
                           @{{admina.numTelephone}} 
                         </td>
-                        <td>
+                        <td  class="js-show-modal1"  v-on:click="AfficherInfo(admina.id)">
                           @{{admina.email}} 
 
-                        </td>
-                        <td v-if="admina.big_admin === '1' ">
+                        </td >
+                        <td v-if="admina.big_admin === '1' "  class="js-show-modal1"  v-on:click="AfficherInfo(admina.id)">
                            Admin Supèrieure
                         </td>
-                        <td v-else>
+                        <td v-else  class="js-show-modal1"  v-on:click="AfficherInfo(admina.id)">
                           Admin Simple
                         </td>
                         <td  class="dropdown " id="k">
