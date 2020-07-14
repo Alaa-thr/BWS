@@ -27,6 +27,7 @@ class CreateAdminsTable extends Migration
         });
         DB::table('admins')->insert(array('id'=>'1','user_id'=>'1','nom'=>'BWS','prenom'=>'BWS','email'=>'basmah.work_shop@gmail.com','numTelephone'=>'0500000000','numCarteBanquaire'=>'0000001','created_at'=>new \dateTime,
             'updated_at'=>new \dateTime,'big_admin'=>'1'));
+       
     }
 
     /**

@@ -16,12 +16,14 @@ class AddColumnFkCommandes extends Migration
         Schema::table('commandes', function (Blueprint $table) {
             $table->foreign('client_id')->references('id')->on('clients');
             $table->foreign('vendeur_id')->references('id')->on('vendeurs');
-            //$table->foreign('produit_id')->references('id')->on('produits');
             $table->foreign('produit_id')->references('id')->on('produits')->onDelete('cascade');
+            $table->unsignedBigInteger('couleur_id')->nullable();
+            $table->string('taille')->default(0);
+            $table->foreign('couleur_id')->references('id')->on('colors');
 
 
         });
-        DB::unprepared('ALTER TABLE `commandes` DROP PRIMARY KEY ,ADD PRIMARY KEY (`id`,`produit_id`,`client_id`) ');
+        DB::unprepared('ALTER TABLE `commandes` DROP PRIMARY KEY ,ADD PRIMARY KEY (`id`,`produit_id`,`client_id`,`qte`,`type_livraison`,`couleur_id`,`taille`) ');
     }
 
     /**
@@ -38,6 +40,9 @@ class AddColumnFkCommandes extends Migration
             $table->dropForeign(['vendeur_id']);
             $table->dropForeign('produits_produit_id_foreign');
             $table->dropForeign(['produit_id']);
+            $table->dropForeign('colors_couleur_id_foreign');
+            $table->dropForeign(['couleur_id']);
+            $table->dropColumn(['taille_id']);
         });
     }
 }

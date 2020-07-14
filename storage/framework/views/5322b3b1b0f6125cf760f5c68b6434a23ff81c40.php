@@ -77,18 +77,19 @@
 						<h4 class="mtext-105 cl2 txt-center p-b-30 color-t">
 							Contactez_nous
 						</h4>
-
-						<div class="bor8 m-b-20 how-pos4-parent">
-							<input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" name="email" placeholder="Votre Adresse Email" v-model="eemail.adresse_email" :class="{'is-invalid' : message.adresse_email}">
-							<span class="px-3" style="color: #ca2323" v-if="message.adresse_email" v-text="message.adresse_email[0]"></span>
-							<img class="how-pos4 pointer-none" src="images/icons/icon-email.png" alt="ICON">
-						</div>
-
-						<div class="bor8 m-b-30">
-							<textarea class="stext-111 cl2 plh3 size-120 p-lr-28 p-tb-25" name="msg" placeholder="Comment pouvons-nous vous aidez?" v-model="eemail.message" :class="{'is-invalid' : message.message}"></textarea>
-							<span class="px-3" style="color: #ca2323" v-if="message.message" v-text="message.message[0]"></span>
-						</div>
-
+            <div class=" m-b-20">
+  						<div class="bor8 how-pos4-parent" :class="{'is-invalid' : message.adresse_email}">
+  							<input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" name="email" placeholder="Votre Adresse Email" v-model="eemail.adresse_email" >
+  							<img class="how-pos4 pointer-none" src="images/icons/icon-email.png" alt="ICON">
+  						</div>
+              <span class="px-3" style="color: #ca2323;" v-if="message.adresse_email" v-text="message.adresse_email[0]"></span>
+            </div>
+            <div class="m-b-30">
+  						<div class="bor8" :class="{'is-invalid' : message.message}">
+  							<textarea class="stext-111 cl2 plh3 size-120 p-lr-28 p-tb-25" name="msg" placeholder="Comment pouvons-nous vous aidez?" v-model="eemail.message" ></textarea>
+  						</div>
+              <span class="px-3" style="color: #ca2323;" v-if="message.message" v-text="message.message[0]"></span>
+            </div>
 						<button type=""  class="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer bg10" v-on:click="addEmail()">
 							Envoyer
 						</button>

@@ -78,7 +78,7 @@
                         <div class="col-md-8" v-else>
                           <h6 class="title" style="margin-top: -4px;  color: red; margin-left: -10px;" >{{ annoncea.libellé }}</h6><br>
                             <div class="description" style="margin-top: -10px; font-size: 11px; margin-left: -10px;">
-                              {{ MoitieDescription(annoncea.discription,120, '...') }}
+                              {{ MoitieDescription(annoncea.discription,100, '...') }}
                             </div>  
                             <div class="description" style="font-weight: 500; color: black; font-size: 12px; margin-left: -10px; margin-top: 10px;">
                                 Nombre de condidat : {{annoncea.nombre_condidat}}
@@ -169,7 +169,7 @@
                     <div class="form-group mb-3">
                       <label style="margin-left: 50px">Titre</label>
                       <input  type="text" class="form-control" placeholder="Le titre doit commencer avec un Maj ou un nombre" v-model="annc.libellé" :class="{'is-invalid' : message.libellé}" style="margin-left: 50px">
-                      <span class="px-3 cl13" v-if="message.libellé" v-text="message.libellé[0]">
+                      <span class="px-5 cl13" v-if="message.libellé" v-text="message.libellé[0]">
                       </span>
                     </div>
                   </div>
@@ -179,7 +179,7 @@
                     <div class="form-group">
                       <label style="margin-left: 50px">description</label>
                       <textarea class="form-control" placeholder="La description doit commencer avec un Maj ou un nombre" v-model="annc.discription" :class="{'is-invalid' : message.discription}" style="margin-left: 50px"></textarea>
-                      <span class="px-3 cl13" v-if="message.discription" v-text="message.discription[0]">
+                      <span class="px-5 cl13" v-if="message.discription" v-text="message.discription[0]">
                       </span>
                     </div>
                   </div>
@@ -189,31 +189,30 @@
                     <div class="form-group mb-3">
                       <label style="margin-left: 50px">Nombre_condidat</label>
                       <input  type="number" class="form-control" placeholder="entrez ici le nombre de condidat  "  v-model="annc.nombre_condidat " :class="{'is-invalid' : message.nombre_condidat}" style="margin-left: 50px">
-                      <span class="px-3 cl13" v-if="message.nombre_condidat" v-text="message.nombre_condidat[0]">
+                      <span class="px-5 cl13" v-if="message.nombre_condidat" v-text="message.nombre_condidat[0]">
                       </span>
                     </div>
                   </div>
                 </div>
 
                       <div class="row col-md-12 pr-2 flex-t m-b-30">
-                            <select class="form-control form-control-lg m-r-45" id="categoSelect" name="catego" style="height: 40px; width: 320px ;border-radius: 1em;margin-left: 50px;" v-on:change="activeSousCatego($event)" :class="{'is-invalid' : message.catego}">
+                            <select class="form-control form-control-lg m-r-45" id="categoSelect" name="catego" style="height: 40px; width: 320px ;border-radius: 1em;margin-left: 50px;" v-on:change="activeSousCatego($event)" >
                               <option value="" hidden="hidden" selected>&nbsp&nbspSélectionner une Categorie</option> 
                               <option v-for="catego in categories" :value="catego.id" >&nbsp&nbsp{{catego.libelle}}</option> 
                             </select>
-                            <span class="px-3 cl13" v-if="message.catego" v-text="message.catego[0]"></span>
-
+                          <div>
                             <select class="form-control form-control-lg " id="sousCtagoSelect" name="sous_categorie_id" style="height: 40px;width: 320px;border-radius: 1em;margin-left: 50px;" disabled= "true" v-on:change="getIdSousCatego($event)" :class="{'is-invalid' : message.sous_categorie_id}">
                               <option value="" hidden="hidden" selected>&nbsp&nbspSélectionner une Sous Categorie</option> 
                               <option v-for="Scatego in sousCategories" :value="Scatego.id" >&nbsp&nbsp{{Scatego.libelle}}</option> 
                             </select>
-                            <span class="px-3 cl13" v-if="message.sous_categorie_id" v-text="message.sous_categorie_id[0]"></span>
+                            <span class="px-5 cl13" v-if="message.sous_categorie_id" v-text="message.sous_categorie_id[0]"></span>
+                          </div>
                         </div>
                   <div class="row" >
                   <div class="col-md-10 pr-2" >
                     <div class="form-group">
                       <label for="image" style="margin-left: 50px">image</label>
-                      <input type="file" class="form-control"  v-on:change="imagePreview" accept="image/*" :class="{'is-invalid' : message.image}" style="margin-left: 50px">
-                      <span class="px-3 cl13" v-if="message.image" v-text="message.image[0]"></span>
+                      <input type="file" class="form-control"  v-on:change="imagePreview" accept="image/*" style="margin-left: 50px">
                     </div>
                  </div>
                 </div>
@@ -432,7 +431,6 @@
       getSousCategories: function(CategoId){
                   axios.get(window.Laravel.url+'/getAllSouscategories/'+CategoId)
                   .then(response => {
-                    console.log("Souscatego",response.data)
                     this.sousCategories = response.data;
                    })
                   .catch(error => {
@@ -442,7 +440,6 @@
       getCategories:function(){
                  axios.get(window.Laravel.url+'/getAllCategories')
                  .then(response => {
-                  console.log("catego",response.data)
                       this.categories = response.data;
                  })
                  .catch(error => {

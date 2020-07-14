@@ -87,7 +87,7 @@
                 <nav class="limiter-menu-desktop container">
                     
                     <!-- Logo desktop -->       
-                    <a href="#" class="logo">
+                    <a href="<?php echo e(route('accueil')); ?>" class="logo">
                         <img src="<?php echo e(asset('images/icons/LogoFinal2.png')); ?>" alt="IMG-LOGO">
                     </a>
 
@@ -949,7 +949,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
        }
    </script>  
 
-   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChnAfNPjSPo76qR3c9yR5IOWkA9BRlpf0" type="text/javascript"></script>
+   <!--<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChnAfNPjSPo76qR3c9yR5IOWkA9BRlpf0" type="text/javascript"></script>-->
     <script src="<?php echo e(asset('vendor/animsition/js/animsition.min.js')); ?>"></script>
     <script src="<?php echo e(asset('vendor/bootstrap/js/popper.js')); ?>"></script>
     <script src="<?php echo e(asset('vendor/bootstrap/js/bootstrap.min.js')); ?>"></script>

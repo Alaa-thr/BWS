@@ -157,7 +157,11 @@
     
 
     <div class="row" style="margin-left:22px;margin-top:20px;" v-for="emplC in commandeclient2" >
+<<<<<<< HEAD
+    <div class="col-md-4 pr-1" >
+=======
     <div class="col-md-10 pr-1" >
+>>>>>>> 972cd76de5808c4efa19ced1533269b756e75bba
       <div style="margin-left:-16px;">
        <p class="" id="t2" >Information sur l'annonce :<br> </p>
        <p class=""  id="t1"  style="margin-top: 10px;margin-left: -60px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

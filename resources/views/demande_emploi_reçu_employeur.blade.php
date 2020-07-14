@@ -73,8 +73,8 @@
       <div class="dropdown-menu " x-placement="right-start" id="pl"  >
       <a   v-on:click="AfficheInfo(commandec.id)"  class="dropdown-item " 
       style="color: red; font-style: italic; font-weight: 900; cursor: pointer;" >Afficher Plus</a>
-    <a class="dropdown-item " v-on:click="deleteDemandeReçuEmployeur(commandec)"
-    style="color: red; font-style: italic; font-weight: 900; cursor: pointer;">
+
+    <a class="dropdown-item " v-on:click="deleteDemandeReçuEmployeur(commandec)"style="color: red; font-style: italic; font-weight: 900; cursor: pointer;">
     Supprimer</a>
        </div>
        
