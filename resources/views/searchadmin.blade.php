@@ -6,6 +6,7 @@
         <title> {{$search}}</title>
     </head>
     <nav class="navbar navbar-expand-lg navbar-transparent  bg-primary  navbar-absolute">
+                                                         
         <div class="container-fluid">
           <div class="navbar-wrapper">
             <div class="navbar-toggle">
@@ -15,10 +16,69 @@
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="#pablo"> {{$search}} </a>
+            <a class="navbar-brand" style="margin-left: 260px"></a>
+          </div>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-end" id="navigation" >
+          <form  action="/abest" method="get">
+              <div class="input-group no-border"  style="left: -40px;">
+                <input type="search" name="search"  class="form-control" placeholder="Rechercher..." >
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <i class="now-ui-icons ui-1_zoom-bold"></i>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <ul class="navbar-nav" >
+            <li class="nav-item dropdown" style="cursor: pointer; margin-right: 40px;">
+                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <img class="img-xs rounded-circle" src="assetsAdmin/img/admin.jpg" alt="..."  />
+                  <p>
+                    <span class="d-lg-none d-md-block">Quelques Actions</span>
+                  </p>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                  <div class="account-item clearfix js-item-menu">  
+                    <div class="card-body">
+                           
+                        <a >
+                          <table >
+                            <tr>
+                              <td width="50%">
+                                 <a href="assetsAdmin/img/admin.jpg"><img class="img-lg rounded-circle" src="assetsAdmin/img/admin.jpg"    alt="..."></a>
+                              </td>
+                              <td>
+                                   <h6 class="description text-left" ><b id="a">Nabil Baba Ahmed</b></h6><a href ="babaahmednabil3@gmail.com" id ="nab">babaahmednabil3@gmail.com</a>
+                               </td>
+                             </tr>
+                            </table>
+                        </a>  
+                    </div>
+                    <div style="width: 255px; margin-left: 20px;"> 
+                      <hr >
+                     </div>
+                      <a class="dropdown-item" href="{{ route('accueil') }}" id="n"><i class="now-ui-icons business_bank" id="m"></i><b>Allez vers Acceuil</b></a>
+                      <a class="dropdown-item" href="{{ route('profilAdmin') }}" id="n"><i class="now-ui-icons users_single-02" id="m"></i><b>Profil</b></a>
+                      <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();" id="n">
+                        <i class="now-ui-icons media-1_button-power" id="m"></i>
+                        {{ __('Déconnexion') }} </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                          @csrf
+                        </form>
+                  </div>
+                </div> 
+            </li>
+              
+            </ul>
           </div>
         </div>
-    </nav>
+      </nav>
     <div class="panel-header panel-header-sm" >
     </div>
     <div class="content" >
