@@ -1,5 +1,5 @@
-
-<?php $__env->startSection('content'); ?>
+@extends('layouts.template_visiteur')
+@section('content')
 <style type="text/css">
 	.swal2-container {
 	  z-index: 9001;
@@ -7,7 +7,7 @@
 </style>
 	
 	<head>
-		<title><?php echo e(( 'Emplois')); ?></title>
+		<title>{{ ( 'Emplois') }}</title>
 	</head>
 	 <!-- Cart -->
 	 <div class="wrap-header-cart js-panel-cart" style="z-index: 11000; ">
@@ -35,11 +35,11 @@
 
                         <div class="header-cart-item-txt p-t-8"  v-for="fv in favoris" v-if="fv.id === command.produit_id" >
                             <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-                            {{fv.Libellé}}
+                            @{{fv.Libellé}}
                             </a>
 
                             <span class="header-cart-item-info">
-                            {{command.qte}} x  {{fv.prix}} DA
+                            @{{command.qte}} x  @{{fv.prix}} DA
                             </span>
                         </div>
                     </li>
@@ -48,15 +48,15 @@
                 <div class="w-full" >
                     
                 <div class="header-cart-total w-full p-tb-40" v-for="p in prix">
-                        Totale: {{p.prixTo}} DA
+                        Totale: @{{p.prixTo}} DA
                     </div>
 
                     <div class="header-cart-buttons flex-w w-full">
-                        <a href="<?php echo e(route('panier')); ?>" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+                        <a href="{{route('panier')}}" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
                             View Cart
                         </a>
 
-                        <a href="<?php echo e(route('panier')); ?>" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
+                        <a href="{{route('panier')}}" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
                             Check Out
                         </a>
                     </div>
@@ -81,9 +81,20 @@
 	<!-- Annonce d'emploi -->
 	<div class="bg0 m-t-23 p-b-140">
 		<div class="container" id="app">
-			<div class="flex-w flex-sb-m p-b-52">
-				<div class="flex-w flex-l-m filter-tope-group m-tb-10">
-					
+			<div class="flex-w flex-sb-m p-b-60">
+				<div class="flex-w flex-c-m m-tb-20">
+			        <div class="m-l-25 respon6-next" style="width: 230px;">
+			            <div class="rs1-select2 bor8 bg0" >
+			                <select class="js-select2" id="tttt">
+				                <option value="0" disabled selected>Sous-Categorie</option>
+				                @foreach($sousC as $sc)
+				                	<option  value="<?php echo($sc->id)?>">{{$sc->libelle}}</option>
+				                @endforeach
+			            </select>
+			                                                                                 
+			            <div class="dropDownSelect2"></div>
+			        </div>
+					</div>
 				</div>
 
 				<div class="flex-w flex-c-m m-tb-10">
@@ -105,71 +116,71 @@
 					</div>	
 				</div>
 			</div>
-					<?php $__currentLoopData = $emploi; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $emp): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+					@foreach($emploi as $emp)
 		        	<div class="row m-b-10"   style="display: inline-flex;  width: 420px; height: 160px;">
 		        			
 		        		<div style="display: inline-flex;  width: 420px; height: 160px;">
-		        		<?php if($emp->image != null): ?>
+		        		@if($emp->image != null)
 						<div  class="col-md-4 block2 block2-pic hov-img0" style="margin-left: 30px;">
-							<img  src="storage/annonces_image/<?php echo $emp->image ?>"  style="height: 120px; width: 120px; ">
-							<a class="js-show-modal1 block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 " v-on:click="AfficheInfo(<?php echo e(json_encode($emp->id)); ?>)" style="cursor: pointer;">
+							<img  :src="getPicture('<?php echo $emp->image ?>')" style="height: 120px; width: 120px; ">
+							<a class="js-show-modal1 block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 " v-on:click="AfficheInfo({{ json_encode($emp->id) }})" style="cursor: pointer;">
 								Quick View
 							</a>
 						</div>
 
-						<div class="col-md-6 js-show-modal1"  v-on:click="AfficheInfo(<?php echo e(json_encode($emp->id)); ?>)" style="cursor: pointer;">
+						<div class="col-md-6 js-show-modal1"  v-on:click="AfficheInfo({{ json_encode($emp->id) }})" style="cursor: pointer;">
 							<h5 class="title" style="color: red;">
-								<b><?php echo e($emp->libellé); ?></b>
+								<b>{{$emp->libellé}}</b>
 							</h5><br>
 							<div class="description" style="margin-top: -10px; font-size: 14px;">
 								{{ MoitieDescription('<?php echo $emp->discription?>' ,45, '...') }}
 							</div>
 							<div class="description" style="margin-top: 10px;">
-								<b>Nombre de condidat : <?php echo e($emp->nombre_condidat); ?></b>
+								<b>Nombre de condidat : {{$emp->nombre_condidat}}</b>
 							</div>
 						</div>
-						<?php else: ?>
+						@else
 						<p style="height: 60px"></p>
-						<div class="col-md-10 m-l-30 js-show-modal1" v-on:click="AfficheInfo(<?php echo e(json_encode($emp->id)); ?>)" style="cursor: pointer;">
+						<div class="col-md-10 m-l-30 js-show-modal1" v-on:click="AfficheInfo({{ json_encode($emp->id) }})" style="cursor: pointer;">
 							<h5 class="title" style="color: red;" >
-								<b><?php echo e($emp->libellé); ?></b>
+								<b>{{$emp->libellé}}</b>
 							</h5><br>
 							<div class="description" style=" font-size: 14px;">
 								{{ MoitieDescription('<?php echo $emp->discription?>' ,100, '...') }}
 							</div>
 							<div class="description" style="">
-								<b>Nombre de condidat : <?php echo e($emp->nombre_condidat); ?></b>
+								<b>Nombre de condidat : {{$emp->nombre_condidat}}</b>
 							</div>
 						</div>
-						<?php endif; ?>
-						<?php $k=0; ?>
-						<?php for($i=0 ; $i< count($fav) ; $i++): ?>
-								<?php if($fav[$i]->annonce_emploi_id  == $emp->id): ?>
+						@endif
+						@php $k=0; @endphp
+						@for($i=0 ; $i< count($fav) ; $i++)
+								@if($fav[$i]->annonce_emploi_id  == $emp->id)
 										
-									<?php
+									@php
 										$k=$k+1;
 										$i=count($fav);
 										
-									?>
-								<?php endif; ?>
+									@endphp
+								@endif
 
-						<?php endfor; ?>	
-						<?php if($k == 1): ?>
+						@endfor	
+						@if($k == 1)
 							<div class="m-t-100" style="float: right;">
 								
-								<a  class="" v-on:click="AjoutAuFavoris(<?php echo e(json_encode($emp)); ?>)" style="cursor: pointer;" >
+								<a  class="" v-on:click="AjoutAuFavoris({{ json_encode($emp) }})" style="cursor: pointer;" >
 									<i  class="zmdi zmdi-favorite zmdi-hc-lg" style="color: #e60000; " id="<?php echo $emp->id ?>"></i>
 								</a>
 							</div>
-						<?php else: ?>
+						@else
 							<div class="m-t-100" style="float: right;">
 									
-									<a  class="" v-on:click="AjoutAuFavoris(<?php echo e(json_encode($emp)); ?>)" style="cursor: pointer; "  >
+									<a  class="" v-on:click="AjoutAuFavoris({{ json_encode($emp) }})" style="cursor: pointer; "  >
 										<i  class="cl222 zmdi zmdi-favorite-outline zmdi-hc-lg favoo " id="<?php echo $emp->id ?>"></i>
 										
 									</a>
 							</div>
-						<?php endif; ?>
+						@endif
 							<div style="border-left: 2px solid #000; display: inline-block;height: 120px; margin: 0 20px; margin-left: 12px;">
                        		</div>
 						</div>
@@ -178,7 +189,7 @@
 						
 							
 			   </div>
-<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+@endforeach
 			<!-- Load more -->
 			<div class="flex-c-m flex-w w-full p-t-45">
 				<a href="#" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
@@ -187,7 +198,7 @@
 				</a>
 			</div>
 			<div style="margin-left: 900px;"> 
-                   <?php echo e($emploi->links()); ?><!-- pour afficher la pagination -->
+                   {{$emploi->links()}}<!-- pour afficher la pagination -->
              </div>
 		</div>
 	</div>
@@ -197,7 +208,7 @@
   		<div class="container">
 			<div class="bg0 p-t-55 p-b-100 p-lr-15-lg how-pos3-parent" >
 				<button class="how-pos3 hov3 trans-04 " @click='CancelArticle'>
-					<img src="images/icons/icon-close.png" alt="CLOSE">
+					<img src="{{asset('images/icons/icon-close.png')}}" alt="CLOSE">
 				</button>
 				<div class="p-b-30 p-l-40">
 					<h4 class="ltext-102  cl2">
@@ -220,30 +231,30 @@
 				          </div>
 				          <div class="row" v-if="empp.image!=null">
 				            <div class="col-md-10" >
-				              <img  :src="'storage/annonces_image/'+ empp.image" style="width: 300px; height: 190px; " />
+				              <img  :src="getPicture(empp.image)" style="width: 300px; height: 190px; " />
 				              
 				            </div> 
 				          </div>
 				          <div class="row">
 				            <div class="col-md-4">
 				              <div class="title" style="color: red; margin-top: 30px;" >
-				                  <h4><b>{{empp.libellé }}</b></h4><br>
+				                  <h4><b>@{{empp.libellé }}</b></h4><br>
 				              </div>
 				            </div>
 				          </div>
 				          <div class="row" style=" margin-top: -15px;">
 				            <div class="col-md-11 ">
-				               <p class="m-l-10 m-b-10" style="color: black;">{{ empp.discription }}</p>
-				               <p style="color: black;"><b>Le nombre de condidat est :</b> {{empp.nombre_condidat}}</p>
+				               <p class="m-l-10 m-b-10" style="color: black;">@{{ empp.discription }}</p>
+				               <p style="color: black;"><b>Le nombre de condidat est :</b> @{{empp.nombre_condidat}}</p>
 				               <div class="flex-t">
 				               		<p  style="color: black;">
-					               	<b>Pour contacté l'employeur {{ empp.nom }} {{empp.prenom}} : &nbsp</b> </p>
+					               	<b>Pour contacté l'employeur @{{ empp.nom }} @{{empp.prenom}} : &nbsp</b> </p>
 								  <div class="m-t--8">	
 					                <p style="color: black;">
-					                	{{empp.num_tel}}
+					                	@{{empp.num_tel}}
 					                </p>
 					                <p style="color: black;">
-					                   {{empp.email}}
+					                   @{{empp.email}}
 					               </p>
 				               	 </div>
 				               </div>
@@ -358,7 +369,7 @@
 
 
 <script>
-	window.Laravel = <?php echo json_encode([
+	window.Laravel = {!! json_encode([
                "csrfToken"  => csrf_token(),
                "emploi"     => $emploi,
 			   'ImageP'         => $ImageP,
@@ -368,7 +379,7 @@
                'prixTotale'		=> $prixTotale,
                'client'		=> $client,
                "url"      => url("/")  
-    ]); ?>;
+    ]) !!};
 
 
 
@@ -471,6 +482,9 @@
         message: {},
      },
      methods: {
+     		getPicture(img){
+      			return "{{asset('storage/annonces_image')}}"+"/"+img;
+      		},
      		CancelArticle(){
 	      		$('.js-modal1').removeClass('show-modal1');
 	      		this.sendDemande= {
@@ -532,7 +546,7 @@
 							  icon: 'error',
 							  title: 'Oops...',
 							  html: 'Vous devez être connecté tent que <b style="text-decoration: underline;">Client</b> pour pouvez accedé a votre panier.',
-							  footer: '<form method="GET" action="<?php echo e(route("logoutregister")); ?>"><?php echo csrf_field(); ?><a href="<?php echo e(route("logoutregister")); ?>">Créer Compte</a></form>',
+							  footer: '<form method="GET" action="{{ route("logoutregister") }}">@csrf<a href="{{ route("logoutregister") }}">Créer Compte</a></form>',
 							  showCancelButton: true,
 						  	  cancelButtonColor: '#d33',
 							  confirmButtonColor: '#13c940',
@@ -561,7 +575,7 @@
 							  icon: 'error',
 							  title: 'Oops...',
 							  html: 'Vous devez être connecté tent que <b style="text-decoration: underline;">Client</b> pour pouvez accedé a votre panier.',
-							  footer: '<form method="GET" action="<?php echo e(route("logoutregister")); ?>"><?php echo csrf_field(); ?><a href="<?php echo e(route("logoutregister")); ?>">Créer Compte</a></form>',
+							  footer: '<form method="GET" action="{{ route("logoutregister") }}">@csrf<a href="{{ route("logoutregister") }}">Créer Compte</a></form>',
 							  showCancelButton: true,
 							  cancelButtonColor: '#d33',
 							  confirmButtonColor: '#13c940',
@@ -674,6 +688,9 @@
         emplois: [],
       },
       methods:{
+      	getPicture(img){
+      		return "{{asset('storage/annonces_image')}}"+"/"+img;
+      	},
 		AjoutAuFavoris: function(produit){
 				axios.post(window.Laravel.url+'/ajoutaufavorisE/'+produit.id)
 	              .then(response => {
@@ -737,5 +754,4 @@
   });
 </script>
 
-<?php $__env->stopSection(); ?>
-<?php echo $__env->make('layouts.template_visiteur', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\BWS\resources\views/emploi.blade.php ENDPATH**/ ?>
+@endsection

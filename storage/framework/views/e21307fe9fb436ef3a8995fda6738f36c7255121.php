@@ -81,9 +81,20 @@
 	<!-- Annonce d'emploi -->
 	<div class="bg0 m-t-23 p-b-140">
 		<div class="container" id="app">
-			<div class="flex-w flex-sb-m p-b-52">
-				<div class="flex-w flex-l-m filter-tope-group m-tb-10">
-					
+			<div class="flex-w flex-sb-m p-b-60">
+				<div class="flex-w flex-c-m m-tb-20">
+			        <div class="m-l-25 respon6-next" style="width: 230px;">
+			            <div class="rs1-select2 bor8 bg0" >
+			                <select class="js-select2" id="tttt">
+				                <option value="0" disabled selected>Sous-Categorie</option>
+				                <?php $__currentLoopData = $sousC; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sc): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+				                	<option  value="<?php echo($sc->id)?>"><?php echo e($sc->libelle); ?></option>
+				                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+			            </select>
+			                                                                                 
+			            <div class="dropDownSelect2"></div>
+			        </div>
+					</div>
 				</div>
 
 				<div class="flex-w flex-c-m m-tb-10">
@@ -111,7 +122,7 @@
 		        		<div style="display: inline-flex;  width: 420px; height: 160px;">
 		        		<?php if($emp->image != null): ?>
 						<div  class="col-md-4 block2 block2-pic hov-img0" style="margin-left: 30px;">
-							<img  src="storage/annonces_image/<?php echo $emp->image ?>"  style="height: 120px; width: 120px; ">
+							<img  :src="getPicture('<?php echo $emp->image ?>')" style="height: 120px; width: 120px; ">
 							<a class="js-show-modal1 block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 " v-on:click="AfficheInfo(<?php echo e(json_encode($emp->id)); ?>)" style="cursor: pointer;">
 								Quick View
 							</a>
@@ -197,7 +208,7 @@
   		<div class="container">
 			<div class="bg0 p-t-55 p-b-100 p-lr-15-lg how-pos3-parent" >
 				<button class="how-pos3 hov3 trans-04 " @click='CancelArticle'>
-					<img src="images/icons/icon-close.png" alt="CLOSE">
+					<img src="<?php echo e(asset('images/icons/icon-close.png')); ?>" alt="CLOSE">
 				</button>
 				<div class="p-b-30 p-l-40">
 					<h4 class="ltext-102  cl2">
@@ -220,7 +231,7 @@
 				          </div>
 				          <div class="row" v-if="empp.image!=null">
 				            <div class="col-md-10" >
-				              <img  :src="'storage/annonces_image/'+ empp.image" style="width: 300px; height: 190px; " />
+				              <img  :src="getPicture(empp.image)" style="width: 300px; height: 190px; " />
 				              
 				            </div> 
 				          </div>
@@ -471,6 +482,9 @@
         message: {},
      },
      methods: {
+     		getPicture(img){
+      			return "<?php echo e(asset('storage/annonces_image')); ?>"+"/"+img;
+      		},
      		CancelArticle(){
 	      		$('.js-modal1').removeClass('show-modal1');
 	      		this.sendDemande= {
@@ -674,6 +688,9 @@
         emplois: [],
       },
       methods:{
+      	getPicture(img){
+      		return "<?php echo e(asset('storage/annonces_image')); ?>"+"/"+img;
+      	},
 		AjoutAuFavoris: function(produit){
 				axios.post(window.Laravel.url+'/ajoutaufavorisE/'+produit.id)
 	              .then(response => {
@@ -738,4 +755,4 @@
 </script>
 
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('layouts.template_visiteur', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\BWS\resources\views/emploi.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.template_visiteur', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\BWS\resources\views/emploiCategorie.blade.php ENDPATH**/ ?>

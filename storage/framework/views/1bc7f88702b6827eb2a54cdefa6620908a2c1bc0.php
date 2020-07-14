@@ -41,17 +41,17 @@
                       </th>
                     </thead>
                     <tbody>
-                      <tr v-for="employeura in employeuradmin" class="js-show-modal1"  v-on:click="AfficherInfo(employeura.id)" style="cursor: pointer;">
-                        <td>
+                      <tr v-for="employeura in employeuradmin" class="js-show-modal1" >
+                        <td  v-on:click="AfficherInfo(employeura.id)" style="cursor: pointer;">
                           {{employeura.id}}
                         </td>
-                        <td>
+                        <td  v-on:click="AfficherInfo(employeura.id)" style="cursor: pointer;">
                           {{employeura.nom}} {{employeura.prenom}} 
                         </td>
-                        <td>
+                        <td  v-on:click="AfficherInfo(employeura.id)" style="cursor: pointer;">
                           {{employeura.num_tel}}
                         </td>
-                        <td >
+                        <td   v-on:click="AfficherInfo(employeura.id)" style="cursor: pointer;">
                           {{employeura.email}}
                         </td>
                         <td  class="dropdown " id="k">

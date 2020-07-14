@@ -532,11 +532,6 @@
 
 
 <script>
-  function deletee(a){
-    $('#'+a).removeClass('zmdi-favorite');
-    $('#'+a).addClass('zmdi-favorite-outline');
-    document.getElementById(a).style.color = '#d3d3d3';
-  }
   function selectTaille(taille){
     app.ajoutPanier.taille = taille;
                 

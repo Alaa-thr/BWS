@@ -113,7 +113,7 @@
 					<div class="block2" >
 						<div class="block2-pic hov-img0" v-for="imgP in imagesproduit" >
 							
-							<img v-if="imgP.produit_id == <?php echo $prdt->id ?> && imgP.profile === 1"  :src="'storage/produits_image/'+ imgP.image" alt="IMG-PRODUCT" style="height: 334px;width: 300px;">
+							<img v-if="imgP.produit_id == <?php echo $prdt->id ?> && imgP.profile === 1"  :src="getPicture(imgP.image)" alt="IMG-PRODUCT" style="height: 334px;width: 300px;">
 
 							<a href="" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1" v-on:click="detaillProduit({{ json_encode($prdt) }})">
                                 Quick View
@@ -178,7 +178,7 @@
 			        <div class="container">
 			            <div class="bg0 p-t-60 p-b-30 p-lr-15-lg how-pos3-parent">
 			                <button class="how-pos3 hov3 trans-04 " v-on:click="CancelArticle()" >
-			                    <img src="images/icons/icon-close.png" alt="CLOSE">
+			                    <img src="{{asset('images/icons/icon-close.png')}}" alt="CLOSE">
 			                </button>
 
 			                <div class="row">
@@ -188,14 +188,14 @@
                                             <div class=" flex-t">
                                                 <div class="m-r-10">
                                                     <div class ="m-b-10" v-for="imgg in getImageD" style="border: 1px solid">
-                                                    <img   :src="'storage/produits_image/'+imgg.image" alt="IMG-PRODUCT" style="width: 65px;height: 65px;" v-on:click="changePicVue(imgg.image)">
+                                                    <img   :src="getPicture(imgg.image)" alt="IMG-PRODUCT" style="width: 65px;height: 65px;" v-on:click="changePicVue(imgg.image)">
                                                     </div>
                                                 </div>
                                                 
                                                 <div class="item-slick3" >
                                                     <div class="wrap-pic-w">
 
-                                                        <img v-for="img in getImageD" v-if="img.profile==1" :src="'storage/produits_image/'+img.image" alt="IMG-PRODUCT" id="pic"/>
+                                                        <img v-for="img in getImageD" v-if="img.profile==1" :src="getPicture(img.image)" alt="IMG-PRODUCT" id="pic"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -490,6 +490,9 @@
       	
       },
       methods:{
+      	getPicture(img){
+      		return "{{asset('storage/produits_image')}}"+"/"+img;
+      	},
         changePicVue(img){
             changePic(img);
         },

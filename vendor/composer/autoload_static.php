@@ -540,6 +540,7 @@ class ComposerStaticInit6ac30e15a1ee6806079f05ef802d642c
         'App\\Rules\\CategorieExiste' => __DIR__ . '/../..' . '/app/Rules/CategorieExiste.php',
         'App\\Rules\\EmailExist' => __DIR__ . '/../..' . '/app/Rules/EmailExist.php',
         'App\\Rules\\ModifieCategorieExiste' => __DIR__ . '/../..' . '/app/Rules/ModifieCategorieExiste.php',
+        'App\\Rules\\ModifieLibelleDescriptionProduit' => __DIR__ . '/../..' . '/app/Rules/ModifieLibelleDescriptionProduit.php',
         'App\\Rules\\ModifieSousCategorieExiste' => __DIR__ . '/../..' . '/app/Rules/ModifieSousCategorieExiste.php',
         'App\\Rules\\ModifieTextDescriptionArticle' => __DIR__ . '/../..' . '/app/Rules/ModifieTextDescriptionArticle.php',
         'App\\Rules\\NumCarteBancaireExist' => __DIR__ . '/../..' . '/app/Rules/NumCarteBancaireExist.php',

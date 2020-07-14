@@ -29,12 +29,12 @@
                       <th></th>
                     </thead>
                     <tbody>
-                      <tr v-for="vendeura in vendeuradmin" class="js-show-modal1"  v-on:click="AfficherInfo(vendeura.id)" style="cursor: pointer;">
-                        <td>{{vendeura.id}}</td>
+                      <tr v-for="vendeura in vendeuradmin" class="js-show-modal1"  >
+                        <td v-on:click="AfficherInfo(vendeura.id)" style="cursor: pointer;">{{vendeura.id}}</td>
 
-                        <td>{{vendeura.Nom}} {{vendeura.Prenom}}</td>
-                        <td >{{vendeura.numTelephone}}</td>
-                        <td >{{vendeura.email}}</td>
+                        <td v-on:click="AfficherInfo(vendeura.id)" style="cursor: pointer;">{{vendeura.Nom}} {{vendeura.Prenom}}</td>
+                        <td  v-on:click="AfficherInfo(vendeura.id)" style="cursor: pointer;">{{vendeura.numTelephone}}</td>
+                        <td  v-on:click="AfficherInfo(vendeura.id)" style="cursor: pointer;">{{vendeura.email}}</td>
                         <td  class="dropdown " id="k">
                             <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
                                 <img src="assetsAdmin/img/menu.png" alt="..." id="k1">
@@ -221,7 +221,25 @@
                         </div>
                       </td>
                     </tr>
+                    <tr>
+                    <div style="margin-left: 360px; margin-top: -90px;width:1000px;">
+                   
+                    <button id="verif" class="btn btn-success btn-block " style="width:300px;
+                          border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;"  v-on:click="Verifier(vendeuraa.id);"> Produits <br>existent pour publier ?
+                        </button>
+                        <button id="exist" class="btn btn-success btn-block " style="width:300px;display:none;
+                          border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" > Existe 
+                        </button>
+                        <button id="notexis" class="btn btn-disabled btn-block " style="width:300px;display:none;
+                          border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" disabled> Not Existe
+                        </button> 
+                    
+                        </div>
+                   
+                    <td>
+
                   </table>
+                 
                 </div>
               </div>
             </div>
@@ -244,6 +262,7 @@
         window.Laravel = <?php echo json_encode([
                'csrfToken' => csrf_token(),
                   'vendeur' => $vendeur,  //vendeur connecté
+                 
                 'url'      => url('/')  
           ]); ?>;
 </script>
@@ -260,6 +279,34 @@
         },
      },
      methods: {
+       
+        Verifier: function(id){
+          var s = document.getElementById("exist");
+            var m = document.getElementById("notexis");
+            var v= document.getElementById("verif");
+
+          	axios.post(window.Laravel.url+'/verifierproduit/'+id)
+              .then(response => {
+                if(response.data.etat){     //est ce que hadii ma3naha etat===true?? oui
+                      s.style.display = "block";
+                      v.style.display = "none";
+
+                	console.log("ressponse",response.data.etat)}
+
+                  else{     //est ce que hadii ma3naha etat===false?? oui
+                    v.style.display = "none";
+
+                    m.style.display = "block";
+                    console.log("ressssponse",response.data.etat)
+
+                  }
+               })
+              .catch(error => {
+                               
+
+                  console.log('errors : '  , error);
+             })
+          },
            details_vendeur: function(){
              axios.post(window.Laravel.url+'/detailsvendeur',this.detailsV)
 

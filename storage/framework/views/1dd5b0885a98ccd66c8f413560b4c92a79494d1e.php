@@ -42,20 +42,20 @@
                       </th>
                     </thead>
                     <tbody>
-                      <tr v-for="clienta in clientadmin" class="js-show-modal1" v-on:click="AfficherInfo(clienta.id)" style="cursor: pointer;">
-                        <td>
+                      <tr v-for="clienta in clientadmin" class="js-show-modal1" >
+                        <td v-on:click="AfficherInfo(clienta.id)" style="cursor: pointer;">
                           {{clienta.id}}
                         </td>
-                        <td>
+                        <td v-on:click="AfficherInfo(clienta.id)" style="cursor: pointer;">
                           {{clienta.nom}} {{clienta.prenom}}
                         </td>
-                        <td>
+                        <td v-on:click="AfficherInfo(clienta.id)" style="cursor: pointer;">
                           {{clienta.numeroTelephone}}
                         </td>
-                        <td >
+                        <td  v-on:click="AfficherInfo(clienta.id)" style="cursor: pointer;">
                           {{clienta.email}}
                         </td>
-                        <td >
+                        <td  v-on:click="AfficherInfo(clienta.id)" style="cursor: pointer;">
                           {{clienta.ville}}
                         </td>
                         <td  class="dropdown " id="k">

@@ -1,5 +1,5 @@
-@extends('layouts.template_visiteur')
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 
 	<?php
 		$xxxx=21;
@@ -7,7 +7,7 @@
 	?>
 	
 	<head>
-		<title>{{ ( 'Shops') }}</title>
+		<title><?php echo e(( 'Shops')); ?></title>
 	</head>
  <!-- Cart -->
  	 <div class="wrap-header-cart js-panel-cart" style="z-index: 11000; ">
@@ -35,11 +35,11 @@
 
                         <div class="header-cart-item-txt p-t-8"  v-for="fv in favoriss" v-if="fv.id === command.produit_id" >
                             <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-                            @{{fv.Libellé}}
+                            {{fv.Libellé}}
                             </a>
 
                             <span class="header-cart-item-info">
-                            @{{command.qte}} x  @{{fv.prix}} DA
+                            {{command.qte}} x  {{fv.prix}} DA
                             </span>
                         </div>
                     </li>
@@ -48,15 +48,15 @@
                 <div class="w-full" >
                     
                 <div class="header-cart-total w-full p-tb-40" v-for="p in prix">
-                        Totale: @{{p.prixTo}} DA
+                        Totale: {{p.prixTo}} DA
                     </div>
 
                     <div class="header-cart-buttons flex-w w-full">
-                        <a href="{{route('panier')}}" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+                        <a href="<?php echo e(route('panier')); ?>" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
                             View Cart
                         </a>
 
-                        <a href="{{route('panier')}}" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
+                        <a href="<?php echo e(route('panier')); ?>" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
                             Check Out
                         </a>
                     </div>
@@ -106,16 +106,16 @@
 			</div>
 <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
 			<div class="row isotope-grid" id="app1">
-				@foreach($produit as $prdt)	
+				<?php $__currentLoopData = $produit; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $prdt): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>	
 				<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women" >
 				
 
 					<div class="block2" >
 						<div class="block2-pic hov-img0" v-for="imgP in imagesproduit" >
 							
-							<img v-if="imgP.produit_id == <?php echo $prdt->id ?> && imgP.profile === 1"  :src="'storage/produits_image/'+ imgP.image" alt="IMG-PRODUCT" style="height: 334px;width: 300px;">
+							<img v-if="imgP.produit_id == <?php echo $prdt->id ?> && imgP.profile === 1"  :src="getPicture(imgP.image)" alt="IMG-PRODUCT" style="height: 334px;width: 300px;">
 
-							<a href="" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1" v-on:click="detaillProduit({{ json_encode($prdt) }})">
+							<a href="" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1" v-on:click="detaillProduit(<?php echo e(json_encode($prdt)); ?>)">
                                 Quick View
                             </a>
 						</div>
@@ -123,62 +123,63 @@
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l ">
 								<a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-									{{$prdt->Libellé}}
+									<?php echo e($prdt->Libellé); ?>
+
 								</a>
 
 								<span class="stext-105 cl3">
-									{{$prdt->prix}}DA
+									<?php echo e($prdt->prix); ?>DA
 								</span>
 							</div>
-							@php
+							<?php
 								
 								$k=0;
-							@endphp
-						@for($i=0 ; $i< count($fav) ; $i++)
-								@if($fav[$i]->produit_id == $prdt->id)
+							?>
+						<?php for($i=0 ; $i< count($fav) ; $i++): ?>
+								<?php if($fav[$i]->produit_id == $prdt->id): ?>
 										
-									@php
+									<?php
 										$k=$k+1;
 										$i=count($fav);
 										
-									@endphp
+									?>
 								
 									
 
-								@endif
-						@endfor	
-						@if($k == 1)
+								<?php endif; ?>
+						<?php endfor; ?>	
+						<?php if($k == 1): ?>
 							<div class="p-t-3">
 								
-										<a  class="" v-on:click="AjoutAuFavoris({{ json_encode($prdt) }})" style="cursor: pointer;">
+										<a  class="" v-on:click="AjoutAuFavoris(<?php echo e(json_encode($prdt)); ?>)" style="cursor: pointer;">
 											<i  class="zmdi zmdi-favorite zmdi-hc-2x" style="color: #e60000; " id="<?php echo $prdt->id ?>"></i>
 											
 										</a>
 									</div>
-						@else
+						<?php else: ?>
 						<div class=" p-t-3">
 									
-									<a  class="" v-on:click="AjoutAuFavoris({{ json_encode($prdt) }})" style="cursor: pointer; " >
+									<a  class="" v-on:click="AjoutAuFavoris(<?php echo e(json_encode($prdt)); ?>)" style="cursor: pointer; " >
 										<i  class="cl222 zmdi zmdi-favorite-outline zmdi-hc-2x favoo " id="<?php echo $prdt->id ?>"></i>
 										
 									</a>
 								</div>
 	
-						@endif
+						<?php endif; ?>
 						
 							
 						</div>
 					</div>
 				</div>
 				
-			 @endforeach		<!-- Modal1 -->
+			 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>		<!-- Modal1 -->
 			<div class="wrap-modal1 js-modal1 p-t-60 p-b-20" >
 			        <div class="overlay-modal1" v-on:click="CancelArticle()" ></div>
 
 			        <div class="container">
 			            <div class="bg0 p-t-60 p-b-30 p-lr-15-lg how-pos3-parent">
 			                <button class="how-pos3 hov3 trans-04 " v-on:click="CancelArticle()" >
-			                    <img src="images/icons/icon-close.png" alt="CLOSE">
+			                    <img src="<?php echo e(asset('images/icons/icon-close.png')); ?>" alt="CLOSE">
 			                </button>
 
 			                <div class="row">
@@ -188,14 +189,14 @@
                                             <div class=" flex-t">
                                                 <div class="m-r-10">
                                                     <div class ="m-b-10" v-for="imgg in getImageD" style="border: 1px solid">
-                                                    <img   :src="'storage/produits_image/'+imgg.image" alt="IMG-PRODUCT" style="width: 65px;height: 65px;" v-on:click="changePicVue(imgg.image)">
+                                                    <img   :src="getPicture(imgg.image)" alt="IMG-PRODUCT" style="width: 65px;height: 65px;" v-on:click="changePicVue(imgg.image)">
                                                     </div>
                                                 </div>
                                                 
                                                 <div class="item-slick3" >
                                                     <div class="wrap-pic-w">
 
-                                                        <img v-for="img in getImageD" v-if="img.profile==1" :src="'storage/produits_image/'+img.image" alt="IMG-PRODUCT" id="pic"/>
+                                                        <img v-for="img in getImageD" v-if="img.profile==1" :src="getPicture(img.image)" alt="IMG-PRODUCT" id="pic"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -207,19 +208,19 @@
 			                    <div class="col-md-6 col-lg-5 p-b-30">
 			                        <div class="p-r-50 p-t-5 p-lr-0-lg">
 			                            <h4 class="mtext-105 cl2 js-name-detail p-b-14">
-			                                @{{this.detaillproduit.Libellé}}
+			                                {{this.detaillproduit.Libellé}}
 			                            </h4>
 
 			                            <span class="mtext-106 cl2">
-			                                @{{this.detaillproduit.prix}}DA
+			                                {{this.detaillproduit.prix}}DA
 			                            </span>
 
 			                            <p class="stext-102 cl3 p-t-23">
-			                                @{{this.detaillproduit.description}}.
+			                                {{this.detaillproduit.description}}.
 			                            </p>
 			                            <p class="stext-102 cl3 p-t-23 " >
 			                            	<span :data-toggle="!!this.detaillproduit.Nom ? 'tooltip' : false" data-html="true" :title="this.detaillproduit.Nom " >
-			                               Vendeur&nbsp:<b>&nbsp&nbsp@{{this.detaillproduit.Nom}} &nbsp@{{this.detaillproduit.Prenom}}</b>.</span>
+			                               Vendeur&nbsp:<b>&nbsp&nbsp{{this.detaillproduit.Nom}} &nbsp{{this.detaillproduit.Prenom}}</b>.</span>
 			                           		
 			                            </p>
 			                            <!--  -->
@@ -233,7 +234,7 @@
 			                                        <div class="rs1-select2 bor8 bg0" :class="{'is-invalid' : message.taille}">
 			                                            <select class="js-select2" id="tttt" onchange="selectTaille(this.options[this.selectedIndex].value)">
 			                                                <option value="0" disabled selected>Choisir la taille</option>
-			                                                <option v-for="taille in tailles" v-if="taille.produit_id  === detaillproduit.id" :value="taille.nom">@{{taille.nom}}</option>
+			                                                <option v-for="taille in tailles" v-if="taille.produit_id  === detaillproduit.id" :value="taille.nom">{{taille.nom}}</option>
 			                                            </select>
 			                                                                                 
 			                                            <div class="dropDownSelect2"></div>
@@ -252,7 +253,7 @@
 			                                        <div class="rs1-select2 bor8 bg0"  :class="{'is-invalid' : message.couleur_id}">
 			                                            <select class="js-select2" id="cccc" onchange="selectColor(this.options[this.selectedIndex].value)">
 			                                                <option value="0" disabled selected="true">Choisir la couleur</option>
-			                                                <option v-for="color in colors" :value="color.color_id" v-if="color.produit_id === detaillproduit.id">@{{color.nom}}</option>
+			                                                <option v-for="color in colors" :value="color.color_id" v-if="color.produit_id === detaillproduit.id">{{color.nom}}</option>
 			                                            </select>
 			                                            <div class="dropDownSelect2"></div>
 			                                        </div>
@@ -348,8 +349,8 @@
 	
 
 	
-@endsection
-@push('javascripts')
+<?php $__env->stopSection(); ?>
+<?php $__env->startPush('javascripts'); ?>
 <script>
 	function adde(a){
 
@@ -377,7 +378,7 @@
 
 <script>
 
-	window.Laravel = {!! json_encode([
+	window.Laravel = <?php echo json_encode([
                "csrfToken"  => csrf_token(),
                'produit'        => $produit,
                'ImageP'         => $ImageP,
@@ -389,7 +390,7 @@
                'command'        => $command,
                'prixTotale'		=> $prixTotale,
                "url"      => url("/")  
-    ]) !!};
+    ]); ?>;
 </script>
 <script>
      var app11 = new Vue({
@@ -490,6 +491,9 @@
       	
       },
       methods:{
+      	getPicture(img){
+      		return "<?php echo e(asset('storage/produits_image')); ?>"+"/"+img;
+      	},
         changePicVue(img){
             changePic(img);
         },
@@ -607,7 +611,7 @@
 					  icon: 'error',
 					  title: 'Oops...',
 					  html: 'Vous devez être connecté tent que <b style="text-decoration: underline;">Client</b> pour pouvez accedé a votre panier.',
-					  footer: '<form method="GET" action="{{ route("logoutregister") }}">@csrf<a href="{{ route("logoutregister") }}">Créer Compte</a></form>',
+					  footer: '<form method="GET" action="<?php echo e(route("logoutregister")); ?>"><?php echo csrf_field(); ?><a href="<?php echo e(route("logoutregister")); ?>">Créer Compte</a></form>',
 					  showCancelButton: true,
 					  cancelButtonColor: '#d33',
 					  confirmButtonColor: '#13c940',
@@ -631,7 +635,7 @@
 						  icon: 'error',
 						  title: 'Oops...',
 						  html: 'Vous devez être connecté tent que <b style="text-decoration: underline;">Client</b> pour pouvez accedé a votre panier.',
-						  footer: '<form method="GET" action="{{ route("logoutregister") }}">@csrf<a href="{{ route("logoutregister") }}">Créer Compte</a></form>',
+						  footer: '<form method="GET" action="<?php echo e(route("logoutregister")); ?>"><?php echo csrf_field(); ?><a href="<?php echo e(route("logoutregister")); ?>">Créer Compte</a></form>',
 						  showCancelButton: true,
 					  	  cancelButtonColor: '#d33',
 						  confirmButtonColor: '#13c940',
@@ -757,4 +761,5 @@ var map = new google.maps.Map(document.getElementById("adrrsse"),mapProp);
 
 </script>
 
-@endpush
+<?php $__env->stopPush(); ?>
+<?php echo $__env->make('layouts.template_visiteur', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\BWS\resources\views/shopCategorie.blade.php ENDPATH**/ ?>

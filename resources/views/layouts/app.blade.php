@@ -108,7 +108,7 @@
 
                                                             <img v-if="catego.image != null" :src='"/storage/categorie_image/"+catego.image' class="p-b-4">
 
-                                                            <a href="#" class="filter-link stext-106 trans-04">
+        <a :href="'/shop/search_categorie='+catego.id" class="filter-link stext-106 trans-04">
                                                                     @{{catego.libelle}}
                                                             </a>
                                                         </li>
@@ -179,7 +179,7 @@
 
                                                             <img v-if="catego.image != null" :src='"/storage/categorie_image/"+catego.image' class="p-b-4">
 
-                                                            <a href="#" class="filter-link stext-106 trans-04">
+        <a :href="'/emploi/search_categorie='+catego.id"  class="filter-link stext-106 trans-04">
                                                                     @{{catego.libelle}}
                                                             </a>
                                                         </li>

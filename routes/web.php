@@ -26,6 +26,12 @@ Route::get('/accueil', 'BwsController@accueil')->name('accueil');
 Route::get('/apropos', 'BwsController@apropos')->name('apropos');
 Route::get('/shop', 'BwsController@produitVisiteur')->name('shop');
 Route::get('/emploi', 'BwsController@emploi')->name('emploi');
+
+Route::get('/shop/search_categorie={id}', 'BwsController@shopSearch')->name('shopCategorie');
+Route::get('/emploi/search_categorie={id}', 'BwsController@emploiSearch')->name('emploiCategorie');
+
+Route::get('/emploi/search_categorie={id}&sous-categorie={id1}', 'BwsController@emploiSearch');
+
 Route::post('detailsemp','BwsController@detailsEmploi');
 Route::get('/article', 'BwsController@article')->name('article');
 Route::get('/contact','BwsController@contact')->name('contact');

@@ -175,9 +175,9 @@ class RegisterController extends Controller
                             'nom' => $data['nom'],
                             'user_id' => $objet_user->id,
                             'prenom' => $data['prenom'],
+                            'ville' => $data['ville'],
                             'email' => $data['email'],
                             'numTelephone' => $data['numTelephone'],
-                           
                             'Nom_boutique' => $data['Nom_boutique'],
                             'Num_Compte_Banquaire' => $data['Num_Compte_Banquaire'],
                             'image' => $data['photoV'],   
@@ -212,7 +212,8 @@ class RegisterController extends Controller
                             'address' => $data['addrsse_soct'],
                             'nom_societe' => $data['nom_societe'],
                             'num_compte_banquiare' => $data['num_compte_banquiare'],
-                            'image' => $data['photoE'],            
+                            'image' => $data['photoE'],
+                            'ville' => $data['ville'],            
                         ]);
                         return $objet_user;
                 }

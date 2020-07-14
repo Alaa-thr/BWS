@@ -20,7 +20,88 @@ use App\Article;
 class BwsController extends Controller
 {
    
-/************************************************ Visiteur***********************************************/  
+/************************************************ Visiteur***********************************************/ 
+    public function shopSearch($id){
+         $produit = \DB::table('produits')
+         ->join('vendeurs','vendeurs.id', '=', 'produits.vendeur_id')
+         ->join('sous_categories','sous_categories.id','produits.sous_categorie_id')
+         ->where('sous_categories.categorie_id',$id)
+         ->select('vendeurs.Nom', 'vendeurs.Prenom', 'produits.*')
+         ->get();       
+        $imageproduit = \DB::table('imageproduits')->get();
+        $color = \DB::table('colors')->join('color_produits', 'colors.id', '=', 'color_produits.color_id')->get();
+        $taille = \DB::table('taille_produits')->get();
+        $typeLivraison = \DB::table('typechoisirvendeurs')->get();
+        $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+        $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
+        
+        $favori = \DB::table('produits')->get();
+        $imageproduit = \DB::table('imageproduits')->get();
+        $sousC = \DB::table('sous_categories')->where([['categorie_id',$id]])->get();    
+        if(auth()->check() && Auth::user()->type_compte == 'c'){
+            $client =  Client::find(Auth::user()->id);
+            $command = \DB::table('commandes')->where([ ['client_id',$client->id],['id',$client->nbr_cmd]])->get();
+            $prixTotale= \DB::table('commandes')->where([ ['client_id',$client->id],['id',$client->nbr_cmd]])->select(\DB::raw('sum(commandes.prix_total * commandes.qte) as prixTo'))->get();
+            if($prixTotale[0]->prixTo == null){
+                $prixTotale[0]->prixTo = 0.00;
+            }
+           $fav = \DB::table('favoris')->where('client_id',$client->id)->get();
+            return view('shopCategorie',['produit'=>$produit, 'ImageP' => $imageproduit, 'color' => $color, 'typeLivraison' => $typeLivraison, 'taille' => $taille ,'categorie'=>$categorie,'categorieE'=>$categorieE,'fav' => $fav,'command' => $command,'Fav' => $favori,'prixTotale' => $prixTotale,'sousC' => $sousC]);
+        }
+        $prixTotale = \DB::table('commandes')->where('client_id',0)->select(\DB::raw('sum(commandes.prix_total * commandes.qte) as prixTo'))->get();
+        if($prixTotale[0]->prixTo == null){
+            $prixTotale[0]->prixTo = 0.00;
+        }
+
+        $fav=array(); 
+        $command = array();
+        return view('shopCategorie',['produit'=>$produit, 'ImageP' => $imageproduit, 'color' => $color, 'typeLivraison' => $typeLivraison, 'taille' => $taille ,'categorie'=>$categorie,'categorieE'=>$categorieE,'fav' => $fav,'command' => $command,'Fav' => $favori,'prixTotale' => $prixTotale,'sousC' => $sousC]);
+
+    }
+
+    public function emploiSearch($id){
+        
+        if(auth()->check() && Auth::user()->type_compte == 'c'){
+            $c = Client::find(Auth::user()->id);
+            $favoris = \DB::table('produits')->get();
+            $imageproduit = \DB::table('imageproduits')->get();
+            $command = \DB::table('commandes')->where([['commande_envoyee',0]])->get();     
+            $sousC = \DB::table('sous_categories')->where([['categorie_id',$id]])->get();
+            $emploi = \DB::table('annonce_emploies')
+            ->join('sous_categories','sous_categories.id','annonce_emploies.sous_categorie_id')
+            ->where('categorie_id',$id)
+            ->orderBy('created_at','desc')->paginate(21) ;
+            $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+            $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
+            $prixTotale= \DB::table('commandes')->where([ ['client_id',$c->id],['id',$c->nbr_cmd]])->select(\DB::raw('sum(commandes.prix_total * commandes.qte) as prixTo'))->get();
+            if($prixTotale[0]->prixTo == null){
+                $prixTotale[0]->prixTo = 0.00;
+            }
+            $fav = \DB::table('favoris')->where('client_id',$c->id)->get();
+             $c->nom= ucwords($c->nom);
+             $c->prenom= ucwords($c->prenom);
+            return view('emploiCategorie',['emploi'=>$emploi,'categorie'=>$categorie ,'categorieE'=>$categorieE,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command,'prixTotale' => $prixTotale,'client' => $c,'fav' => $fav,'sousC' => $sousC]);
+        }
+        $c['nom'] = "";
+        $c['prenom'] = "";
+        $favoris = \DB::table('produits')->get();
+        $imageproduit = \DB::table('imageproduits')->get();
+        $command = array();     
+        $fav = array();
+        $sousC = \DB::table('sous_categories')->where([['categorie_id',$id]])->get();
+        $emploi = \DB::table('annonce_emploies')
+            ->join('sous_categories','sous_categories.id','annonce_emploies.sous_categorie_id')
+            ->where('categorie_id',$id)
+            ->orderBy('annonce_emploies.created_at','desc')->paginate(21) ;
+        $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+        $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
+        $prixTotale = \DB::table('commandes')->where('client_id',0)->select(\DB::raw('sum(commandes.prix_total * commandes.qte) as prixTo'))->get();
+        if($prixTotale[0]->prixTo == null){
+            $prixTotale[0]->prixTo = 0.00;
+        }
+        return view('emploiCategorie',['emploi'=>$emploi,'categorie'=>$categorie ,'categorieE'=>$categorieE        ,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command,'prixTotale' => $prixTotale,'client' => $c,'fav' => $fav,'sousC' => $sousC]);
+    }
+
     public function getAnnonceHome(){
         $favori = \DB::table('annonce_emploies')->get();
          $annonce = \DB::table('annonce_emploies')
