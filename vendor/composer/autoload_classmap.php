@@ -67,6 +67,7 @@ return array(
     'App\\Rules\\CategorieExiste' => $baseDir . '/app/Rules/CategorieExiste.php',
     'App\\Rules\\EmailExist' => $baseDir . '/app/Rules/EmailExist.php',
     'App\\Rules\\ModifieCategorieExiste' => $baseDir . '/app/Rules/ModifieCategorieExiste.php',
+    'App\\Rules\\ModifieLibelleDescriptionProduit' => $baseDir . '/app/Rules/ModifieLibelleDescriptionProduit.php',
     'App\\Rules\\ModifieSousCategorieExiste' => $baseDir . '/app/Rules/ModifieSousCategorieExiste.php',
     'App\\Rules\\ModifieTextDescriptionArticle' => $baseDir . '/app/Rules/ModifieTextDescriptionArticle.php',
     'App\\Rules\\NumCarteBancaireExist' => $baseDir . '/app/Rules/NumCarteBancaireExist.php',

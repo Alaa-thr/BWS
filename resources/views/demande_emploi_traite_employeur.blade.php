@@ -1,4 +1,4 @@
-@extends('layouts.template_employeur')
+ @extends('layouts.template_employeur')
 
 @section('content')
 
@@ -64,13 +64,13 @@
     </div>
    
     <div class="col-md-4 pl-1" id="a" style="margin-top: -5px;margin-left: 950px">
-      <div class="" id="b" >
-      <a class="f" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#" id="point">
+      <div class="dropdown" id="b" >
+      <a class="f" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#" id="point" >
         <i class="fas fa-ellipsis-v"  id="y"></i>
        </a>
-      <div class="dropdown-menu " x-placement="right-start" id="pl"  >
-      <a   v-on:click="AfficheInfo(commandec.id)"  class="dropdown-item js-show-modal1" 
-      style="color: red; font-style: italic; font-weight: 900; cursor: pointer;" >Afficher Plus</a>
+      <div class="dropdown-menu dropdown-menu-right"  id="pl"  style="margin-right: 300px;">
+      <a class="dropdown-item js-show-modal1"  v-on:click="AfficheInfo(commandec.id)" style="color: red; font-style: italic; font-weight: 900; cursor: pointer;" >  
+      Afficher Plus</a>
     <a class="dropdown-item" v-on:click="deleteCommandeTraiterEmployeur(commandec)"
     style="color: red; font-style: italic; font-weight: 900; cursor: pointer;">
     Supprimer</a>
@@ -101,7 +101,7 @@
 
 </div>
 <!-- Modal1 for laptob-->
-<div class="wrap-modal11 js-modal1 p-t-38 p-b-20 p-l-15 p-r-15"  id="app2"  style="margin-top:50px;">
+<div class="wrap-modal11 js-modal1 p-t-38 p-b-20 p-l-15 p-r-15" v-if="hideModel"  id="app2"  style="margin-top:50px;">
   <div class="overlay-modal11 js-hide-modal1 " ></div>
 
   <div class="container" >
@@ -109,7 +109,7 @@
  
     <div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent" style="width: 985px;"  v-for="commandec in commandeclient2">
 
-      <button class="how-pos3 hov3 trans-04 p-t-6 js-hide-modal1" >
+      <button class="how-pos3 hov3 trans-04 p-t-6 js-hide-modal1"  v-on:click="canceldemande()">
         <img src="images/icon-close.png" alt="CLOSE">
       </button>
       
@@ -118,7 +118,7 @@
     <div class="col-md-4 pr-1" >
       <div class="p-b-30-p-l-40">
          <h4 class="ltext-102 cl2" style="margin-left: 20px"> Demande </h4>
-         <h4 class="ltext-102 cl2" style="margin-left: 170px;margin-top: -30px"> de </h4>
+         <h4 class="ltext-102 cl2" style="margin-left: 170px;margin-top: -30px"> de client</h4>
          <h4 class="ltext-102 cl2" style="margin-left: 220px;margin-top: -30px">@{{commandec.nom}} </h4>
          <h4 class="ltext-102 cl2" style="margin-left: 330px;margin-top: -30px"> @{{commandec.prenom}} </h4>
       </div>
@@ -159,7 +159,7 @@
     <div class="col-md-10 pr-1" >
       <div style="margin-left:-16px;">
        <p class="" id="t2" >Information sur l'annonce :<br> </p>
-       <p class=""  id="t1"  style="margin-top: 10px;margin-left: -60px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       <p class=""  id="t1"  style="margin-top: 10px;margin-left: -60px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        Libellé :</p>
       <p id="t3" style="margin-left:120px;margin-top: -22px"> @{{emplC.libellé}}</p>
        
@@ -205,7 +205,9 @@
     window.Laravel = {!! json_encode([
            "csrfToken"  => csrf_token(),
            "article"   => $article,
-           "idAdmin" => $idAdmin,         'emploC'         => $emploC,  'prV'         => $prV,
+           "idAdmin" => $idAdmin,      
+            'emploC' => $emploC,  
+            'prV'    => $prV,
 
            "url"      => url("/")  
       ]) !!};
@@ -220,11 +222,7 @@ var app2 = new Vue({
   data:{
     commandeclient2: [],employeur:[],produit:[],
     openInfo: false,
-
-    hideModel: false,
-   
- 
- 
+    hideModel: false, 
     detaillsA: {
       idA: 0,
     },
@@ -252,22 +250,9 @@ methods: {
              console.log('errors :' , error);
         })
   },
-
-
-  CancelArticle(article){
-    this.modifier = false ;
-    this.hideModel = false;
-    this.art = {        
-                  id: 0,
-                  admin_id: window.Laravel.idAdmin,
-                  titre: '', 
-                  description: '',
-                  image: ''
-    };
-    this.message = {};
-    article.titre = this.oldArt.titre;
-    article.description = this.oldArt.description;
-  },
+   canceldemande: function(){
+           this.hideModel = false; 
+          },
 
 },    
 });
@@ -381,7 +366,7 @@ methods: {
   
   
   AfficheInfo: function($id){
-    $('.js-modal1').addClass('show-modal1');
+   
     app2.hideModel = true; 
     app2.openAjout = false ;
     app2.openInfo = true;
