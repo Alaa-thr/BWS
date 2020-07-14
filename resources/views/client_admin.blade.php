@@ -247,20 +247,20 @@
                       </th>
                     </thead>
                     <tbody>
-                      <tr v-for="clienta in clientadmin" class="js-show-modal1" v-on:click="AfficherInfo(clienta.id)" style="cursor: pointer;">
-                        <td>
+                      <tr v-for="clienta in clientadmin"  style="cursor: pointer;">
+                        <td class="js-show-modal1" v-on:click="AfficherInfo(clienta.id)">
                           @{{clienta.id}}
                         </td>
-                        <td>
+                        <td class="js-show-modal1" v-on:click="AfficherInfo(clienta.id)">
                           @{{clienta.nom}} @{{clienta.prenom}}
                         </td>
-                        <td>
+                        <td class="js-show-modal1" v-on:click="AfficherInfo(clienta.id)">
                           @{{clienta.numeroTelephone}}
                         </td>
-                        <td >
+                        <td class="js-show-modal1" v-on:click="AfficherInfo(clienta.id)">
                           @{{clienta.email}}
                         </td>
-                        <td >
+                        <td class="js-show-modal1" v-on:click="AfficherInfo(clienta.id)">
                           @{{clienta.ville}}
                         </td>
                         <td  class="dropdown " id="k">

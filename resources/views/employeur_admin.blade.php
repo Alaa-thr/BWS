@@ -245,17 +245,17 @@
                       </th>
                     </thead>
                     <tbody>
-                      <tr v-for="employeura in employeuradmin" class="js-show-modal1"  v-on:click="AfficherInfo(employeura.id)" style="cursor: pointer;">
-                        <td>
+                      <tr v-for="employeura in employeuradmin"  style="cursor: pointer;">
+                        <td class="js-show-modal1"  v-on:click="AfficherInfo(employeura.id)">
                           @{{employeura.id}}
                         </td>
-                        <td>
+                        <td class="js-show-modal1"  v-on:click="AfficherInfo(employeura.id)">
                           @{{employeura.nom}} @{{employeura.prenom}} 
                         </td>
-                        <td>
+                        <td class="js-show-modal1"  v-on:click="AfficherInfo(employeura.id)">
                           @{{employeura.num_tel}}
                         </td>
-                        <td >
+                        <td class="js-show-modal1"  v-on:click="AfficherInfo(employeura.id)">
                           @{{employeura.email}}
                         </td>
                         <td  class="dropdown " id="k">
