@@ -659,5 +659,62 @@ elseif(User::find(Auth::user()->id)->type_compte === 'a') {
 
 
     }
-    
+
+    public function getsearchav(Request $request)
+    {
+        $search = $request->get('search');
+        $vendeur  =\DB::table('vendeurs')->where('Nom', 'like', '%'.$search.'%')
+                                        
+                                         ->orWhere('Prenom', 'like', '%'.$search.'%')
+                                         ->orWhere('numTelephone', 'like', '%'.$search.'%')
+                                         ->orWhere('Addresse', 'like', '%'.$search.'%')
+                                         ->orWhere('Num_Compte_Banquaire', 'like', '%'.$search.'%')
+                                         ->paginate(10);
+        $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+        $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
+
+    return view('vendeur_admin',['vendeur'=>$vendeur,'search' => $search,'categorie'=>$categorie,'categorieE'=>$categorieE]);
+  }
+  public function getsearchae(Request $request)
+    {
+        $search = $request->get('search');
+        $employeur  =\DB::table('employeurs')->where('nom', 'like', '%'.$search.'%')
+                                         ->orWhere('prenom', 'like', '%'.$search.'%')
+                                         ->orWhere('num_tel', 'like', '%'.$search.'%')
+                                         ->orWhere('address', 'like', '%'.$search.'%')
+                                         ->orWhere('num_compte_banquiare', 'like', '%'.$search.'%')
+                                         ->paginate(10);
+        $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+        $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
+
+    return view('employeur_admin',['employeur'=>$employeur,'search' => $search,'categorie'=>$categorie,'categorieE'=>$categorieE]);
+  }
+  public function getsearchac(Request $request)
+  {
+      $search = $request->get('search');
+      $client  =\DB::table('clients')->where('nom', 'like', '%'.$search.'%')
+                                       ->orWhere('prenom', 'like', '%'.$search.'%')
+                                       ->orWhere('numeroTelephone', 'like', '%'.$search.'%')
+                                       ->orWhere('codePostal', 'like', '%'.$search.'%')
+                                       ->paginate(10);
+      $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+      $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
+
+  return view('client_admin',['client'=>$client,'search' => $search,'categorie'=>$categorie,'categorieE'=>$categorieE]);
+}
+public function getsearchaa(Request $request)
+{
+    $search = $request->get('search');
+    $admin  =\DB::table('admins')->where('nom', 'like', '%'.$search.'%')
+                                     ->orWhere('prenom', 'like', '%'.$search.'%')
+                                     ->orWhere('numTelephone', 'like', '%'.$search.'%')
+                                     ->orWhere('numCarteBanquaire', 'like', '%'.$search.'%')
+                                     ->orWhere('email', 'like', '%'.$search.'%')
+                                     ->paginate(10);
+    $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+    $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
+
+return view('admin_admin',['admin'=>$admin,'search' => $search,'categorie'=>$categorie,'categorieE'=>$categorieE]);
+}
+   
 }
