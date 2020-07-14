@@ -79,7 +79,7 @@
                           </div> 
                         </td>
                         <td>
-                          <button class="btn btn-sm btn-block btn-warning" style="margin-left: 140px; width: 120px; border-radius: 0.5em;" v-on:click="recupConfirmer(vend)">
+                          <button class="btn btn-sm btn-block btn-warning" style="margin-left: 100px; width: 120px; border-radius: 0.5em;" v-on:click="recupConfirmer(vend)">
                             <b> Recuperer </b>
                           </button>
                         </td>

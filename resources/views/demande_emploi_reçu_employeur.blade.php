@@ -67,7 +67,7 @@
    
     <div class="col-md-4 pl-1" id="a">
       <div class="dropdown" id="b" >
-      <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#" id="point"  style="margin-left: 245px">
+      <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#" id="point"  style="margin-left: 245px;">
         <i class="fas fa-ellipsis-v"  id="y"></i>
        </a>
       <div class="dropdown-menu dropdown-menu-right"  id="pl"  style="margin-left: 220px; margin-right: 50px;">
@@ -167,7 +167,7 @@
     <div class="col-md-10 pr-1" >
       <div style="margin-left:-16px;">
        <p class="" id="t2" >Information sur l'annonce :<br> </p>
-       <p class=""  id="t1"  style="margin-top: 10px;margin-left: -60px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       <p class=""  id="t1"  style="margin-top: 10px;margin-left: -60px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        Libellé :</p>
       <p id="t3" style="margin-left:120px;margin-top: -22px"> @{{emplC.libellé}}</p>
        
@@ -254,7 +254,7 @@ methods: {
                   console.log(this.employeur)
                   this.employeur.forEach(key=>{
                     if(response.data.etat){
-                    
+                        
                       var position = this.employeur.indexOf(key);
                       this.employeur.splice(position,1);
                     }
@@ -264,6 +264,7 @@ methods: {
                     'a été ajouter dans demande traité avec success.',
                     'success'
                   );
+                  window.location.reload();
                   $('.js-modal1').removeClass('show-modal1');    
                  })
               .catch(error => {
