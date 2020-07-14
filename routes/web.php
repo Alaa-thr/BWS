@@ -38,12 +38,15 @@ Route::get('/deposerproduit', 'BwsController@deposerProduit')->name('deposerProd
 Route::get('/deposeremploi', 'BwsController@deposerEmploi')->name('deposerEmploi');
 Route::get('/getarticlehome', 'BwsController@getArticleHome');
 Route::get('/getproduithome', 'BwsController@getProduitHome');
+Route::get('/getannoncehome', 'BwsController@getAnnonceHome');
 Route::get('/estconnecter', 'BwsController@Estconnecter');
 Route::get('/getcategoriehome', 'BwsController@getCategorieHome');
 Route::get('/getfavoris', 'BwsController@getFavoris');
-Route::delete('/deleteproduitpanier/{id}', 'BwsController@deleteProduitPanier');
+Route::delete('/deleteproduitpanier/{id1}/{id2}/{id3}/{id4}/{id5}', 'BwsController@deleteProduitPanier');
 Route::post('/updateproduitpanier', 'BwsController@updateProduitPanier');
 Route::get('/getproduitpaniershop', 'BwsController@getProduitPanierShop');
+Route::get('/getimageD/{id}', 'BwsController@getImageD');
+
 /************************************************ Admin***********************************************/
 Route::get('/categoriesAdmin', 'AdminController@categories_admin');
 Route::get('/admin', 'AdminController@admin_admin')->name('admin');
@@ -64,7 +67,7 @@ Route::get('/notificationsAdmin', 'AdminController@notifications_admin')->name('
 Route::get('/profilAdmin', 'AdminController@profil_admin')->name('profilAdmin');
 Route::get('/statistiquesAdmin', 'BwsController@statistiques_admin')->name('statistiquesAdmin');
 Route::get('/vendeur', 'AdminController@vendeur_admin')->name('vendeur');
-Route::put('/updateProfilA/{id}','AdminController@update_profil');
+Route::put('/updateProfil','AdminController@update_profil');
 Route::post('/addarticle', 'AdminController@addArticle');
 Route::post('/detaillsarticle', 'AdminController@detaillsArticle');
 Route::post('/addcategorie', 'AdminController@addCategorie');
@@ -169,6 +172,7 @@ Route::delete('/deletenotificationclient/{id}','NotificationController@deleteNot
 
 /*Favoris*/
 Route::post('/ajoutaufavoris/{id}','ClientController@AjoutAuFavoris');
+Route::post('/ajoutaufavorisE/{id}','ClientController@AjoutAuFavorisE');
 Route::delete('/deletefavorisclient/{id}','FavorisController@deletefavorisClient');
 Route::get('/favorisClient', 'ClientController@getProduit')->name('favorisClient');
 Route::post('/annonceaufavoris/{id}','ClientController@AnnonceAuFavoris');
@@ -182,6 +186,10 @@ Route::get('/iscnnected', 'ClientController@isCnnected');
 //Search
 Route::get('/abest', 'BwsController@getsearch')->name('abest');
 Route::get('/abestv', 'BwsController@getsearchVisiteur')->name('abestv');
+Route::get('/abestav', 'BwsController@getsearchav')->name('abestav');
+Route::get('/abestae', 'BwsController@getsearchae')->name('abestae');
+Route::get('/abestac', 'BwsController@getsearchac')->name('abestac');
+Route::get('/abestaa', 'BwsController@getsearchaa')->name('abestaa');
 
 /***Signaler***/
 Route::post('/signalerproduit/{id}','ClientController@SignalerProduit');
@@ -195,3 +203,4 @@ Route::post('/paiementvendeur/{id}','VendeurController@change_valeur_vendeur');
 Route::post('/paiementvend','VendeurController@validateFormProduit');
 
 Route::post('/verifierproduit/{id}','AdminController@Verifier');
+Route::post('/verifierannonce/{id}','AdminController@VerifierAnnonce');

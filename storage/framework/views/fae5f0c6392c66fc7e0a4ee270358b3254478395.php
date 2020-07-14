@@ -1,6 +1,10 @@
 
 <?php $__env->startSection('content'); ?>
-
+<style type="text/css">
+	.swal2-container {
+	  z-index: 9001;
+	}
+</style>
 	
 	<head>
 		<title><?php echo e(( 'Emplois')); ?></title>
@@ -296,55 +300,89 @@
 					</div>
 				</div>
 			</div>
-		        	<div class="row m-b-10"  v-for="emp in emplois" style="display: inline-flex;  width: 420px; height: 160px;">
-						<div v-if="emp.image!=null" class="col-md-4 block2 block2-pic hov-img0" style="margin-left: 30px;">
-							<img   :src="'storage/annonces_image/'+ emp.image" style="height: 120px; width: 350px; ">
-							<a class="js-show-modal1 block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 " v-on:click="AfficheInfo(emp.id)" style="cursor: pointer;">
+					<?php $__currentLoopData = $emploi; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $emp): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+		        	<div class="row m-b-10"   style="display: inline-flex;  width: 420px; height: 160px;">
+		        			
+		        		<div style="display: inline-flex;  width: 420px; height: 160px;">
+		        		<?php if($emp->image != null): ?>
+						<div  class="col-md-4 block2 block2-pic hov-img0" style="margin-left: 30px;">
+							<img  src="storage/annonces_image/<?php echo $emp->image ?>"  style="height: 120px; width: 120px; ">
+							<a class="js-show-modal1 block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 " v-on:click="AfficheInfo(<?php echo e(json_encode($emp->id)); ?>)" style="cursor: pointer;">
 								Quick View
 							</a>
 						</div>
 
-						<div v-if="emp.image!=null" class="col-md-6 js-show-modal1"  v-on:click="AfficheInfo(emp.id)" style="cursor: pointer;">
+						<div class="col-md-6 js-show-modal1"  v-on:click="AfficheInfo(<?php echo e(json_encode($emp->id)); ?>)" style="cursor: pointer;">
 							<h5 class="title" style="color: red;">
-								<b>{{emp.libellé}}</b>
+								<b><?php echo e($emp->libellé); ?></b>
 							</h5><br>
 							<div class="description" style="margin-top: -10px; font-size: 14px;">
-								{{ MoitieDescription(emp.discription,45, '...') }}
+								{{ MoitieDescription('<?php echo $emp->discription?>' ,45, '...') }}
 							</div>
 							<div class="description" style="margin-top: 10px;">
-								<b>Nombre de condidat : {{emp.nombre_condidat}}</b>
-							</div> 
-							<div class="block2-txt-child2 ">
-								<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2" v-on:click="AnnonceAuFavoris(emp.id)">
-									<img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON" style="margin-top: 20px; margin-left: 150px;">
-									<img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON" style="margin-top: 20px; margin-left: 150px;">
-								</a>
+								<b>Nombre de condidat : <?php echo e($emp->nombre_condidat); ?></b>
 							</div>
 						</div>
-						<p v-if="emp.image==null" style="height: 60px"></p>
-						<div v-if="emp.image==null" class="col-md-10 m-l-30 js-show-modal1" v-on:click="AfficheInfo(emp.id)" style="cursor: pointer;">
+						<?php else: ?>
+						<p style="height: 60px"></p>
+						<div class="col-md-10 m-l-30 js-show-modal1" v-on:click="AfficheInfo(<?php echo e(json_encode($emp->id)); ?>)" style="cursor: pointer;">
 							<h5 class="title" style="color: red;" >
-								<b>{{emp.libellé}}</b>
+								<b><?php echo e($emp->libellé); ?></b>
 							</h5><br>
 							<div class="description" style=" font-size: 14px;">
-								{{ MoitieDescription(emp.discription,100, '...') }}
+								{{ MoitieDescription('<?php echo $emp->discription?>' ,100, '...') }}
 							</div>
 							<div class="description" style="">
+<<<<<<< HEAD
 								<b>Nombre de condidat : {{emp.nombre_condidat}}</b>
 							</div> 
 							<div class="block2-txt-child2" style="float: right;">
 								<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2" v-on:click="AnnonceAuFavoris(emp.id)">
 									<img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON" >
 									<img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON" >
-								</a>
+=======
+								<b>Nombre de condidat : <?php echo e($emp->nombre_condidat); ?></b>
 							</div>
 						</div>
-						<div style="border-left: 2px solid #000; display: inline-block;height: 120px; margin: 0 20px; margin-left: 12px;">
-                       </div>
+						<?php endif; ?>
+						<?php $k=0; ?>
+						<?php for($i=0 ; $i< count($fav) ; $i++): ?>
+								<?php if($fav[$i]->annonce_emploi_id  == $emp->id): ?>
+										
+									<?php
+										$k=$k+1;
+										$i=count($fav);
+										
+									?>
+								<?php endif; ?>
+
+						<?php endfor; ?>	
+						<?php if($k == 1): ?>
+							<div class="m-t-100" style="float: right;">
+								
+								<a  class="" v-on:click="AjoutAuFavoris(<?php echo e(json_encode($emp)); ?>)" style="cursor: pointer;" >
+									<i  class="zmdi zmdi-favorite zmdi-hc-lg" style="color: #e60000; " id="<?php echo $emp->id ?>"></i>
+>>>>>>> 110425ded9475f34f0ea1d52bdceac5d36f86ecb
+								</a>
+							</div>
+						<?php else: ?>
+							<div class="m-t-100" style="float: right;">
+									
+									<a  class="" v-on:click="AjoutAuFavoris(<?php echo e(json_encode($emp)); ?>)" style="cursor: pointer; "  >
+										<i  class="cl222 zmdi zmdi-favorite-outline zmdi-hc-lg favoo " id="<?php echo $emp->id ?>"></i>
+										
+									</a>
+							</div>
+						<?php endif; ?>
+							<div style="border-left: 2px solid #000; display: inline-block;height: 120px; margin: 0 20px; margin-left: 12px;">
+                       		</div>
+						</div>
+					
+						
 						
 							
 			   </div>
-
+<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 			<!-- Load more -->
 			<div class="flex-c-m flex-w w-full p-t-45">
 				<a href="#" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
@@ -367,7 +405,7 @@
 				</button>
 				<div class="p-b-30 p-l-40">
 					<h4 class="ltext-102  cl2">
-				           COMMANDE DE   
+				           Fait Une Demande   
 
 					</h4>
 				</div>
@@ -494,9 +532,15 @@
 										<button class=" stext-101 cl0 size-1044 bg11 bor1 trans-04" v-on:click="addDemande(emplois2[0].id)">
 											Demander
 										</button>
+<<<<<<< HEAD
+										<div class=""  style="margin-top:-158%;argin-right:10px;" >
+												<a class="f" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#"   style="  margin-left: 335px;">
+													<i class="fas fa-ellipsis-v"  id="y" style="color: black"></i>
+=======
 										<div class=""  style="margin-top:-162%;argin-right:10px;" >
 												<a class="f" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#"   style="  margin-left: 335px;">
 													<i class="fas fa-ellipsis-v"  id="y"></i>
+>>>>>>> 972cd76de5808c4efa19ced1533269b756e75bba
 												</a>
      									 <div class="dropdown-menu " x-placement="right-start" id="divSignal">
 
@@ -529,6 +573,7 @@
                "emploi"     => $emploi,
 			   'ImageP'         => $ImageP,
                'Fav'         => $Fav,
+               'fav'         => $fav,
                'command'        => $command,
                'prixTotale'		=> $prixTotale,
                'client'		=> $client,
@@ -539,6 +584,17 @@
 
 </script>
 <script>
+	function adde(a){
+
+		$('#'+a).removeClass('zmdi-favorite-outline');
+		$('#'+a).addClass('zmdi-favorite');
+		document.getElementById(a).style.color = '#e60000';
+	}
+	function deletee(a){
+		$('#'+a).removeClass('zmdi-favorite');
+		$('#'+a).addClass('zmdi-favorite-outline');
+		document.getElementById(a).style.color = '#d3d3d3';
+	}
      var app11 = new Vue({
         el: '#app11',
         data:{
@@ -828,7 +884,30 @@
         emplois: [],
       },
       methods:{
+<<<<<<< HEAD
+		AjoutAuFavoris: function(produit){
+				axios.post(window.Laravel.url+'/ajoutaufavorisE/'+produit.id)
+	              .then(response => {
+	              		if(response.data.etat == "add"){
+							swal(produit.libellé, "a été ajouté au liste de favoris.", "success");
+							adde(produit.id);
+               	 		}
+               	 		else{
+               	 			swal(produit.libellé, "a été retiré au liste de favoris.", "success");
+	                		deletee(produit.id);
+               	 		}
+					
+				             
+			        	
+	               })
+	              .catch(error => {
+	                  console.log('errors : '  , error);
+	             })
+            
+        },
+=======
 		
+>>>>>>> 972cd76de5808c4efa19ced1533269b756e75bba
         getEmploi: function(){
 	        axios.get(window.Laravel.url+'/emploi')
 

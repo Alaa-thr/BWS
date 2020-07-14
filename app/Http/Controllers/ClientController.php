@@ -152,7 +152,7 @@ class ClientController extends Controller
                                         $commande->vendeur_id = $request->vendeur_id;
                                         $commande->produit_id = $request->produit_id; 
                                         $commande->prix_total = $request->prix;
-                                        $commande->qte = $request->prix;
+                                        $commande->qte = $request->qte;
                                         $commande->type_livraison = $request->type_livraison;
                                         $commande->couleur_id = $request->couleur_id;
                                         $commande->taille = $request->taille;
@@ -172,7 +172,7 @@ class ClientController extends Controller
                             
             }
             else{//est cncte mais ps client
-                return Response()->json(['etat' => false,'cnncte' => false]);
+                return Response()->json(['etat' => false,'cnncte' => true]);
             }   
                         
         }           
@@ -248,8 +248,23 @@ class ClientController extends Controller
             $favoris = \DB::table('favoris')->where('produit_id', $id)->delete();
             return ['etat' => "remove"];
         }
-        
-        
+    }
+
+    public function AjoutAuFavorisE($id){
+
+        $clientCnncte = Client::find(Auth::user()->id);// njibo l client di ra connecter
+        $favexiste = \DB::table('favoris')->where([['annonce_emploi_id',$id],["client_id", $clientCnncte->id]])->get();
+        if(count($favexiste) == 0){
+            $favoris = new Favori;
+            $favoris->annonce_emploi_id = $id;//$id howa l id ta3 produit
+            $favoris->client_id = $clientCnncte->id;
+            $favoris->save();
+            return ['etat' => "add"];
+        }
+        else{
+            $favoris = \DB::table('favoris')->where('annonce_emploi_id', $id)->delete();
+            return ['etat' => "remove"];
+        }
     }
  
       
@@ -257,7 +272,7 @@ class ClientController extends Controller
 
         if($request->nonCode == 1 && $request->nonAddresse == 1 ){
              $request->validate([
-              'numero_tlf' => ['required', 'string', 'max:10', 'min:10','regex:/0[5-7]+/'],
+              'numero_tlf' => ['required', 'string', 'max:10', 'min:10','regex:/^0[5-7]+/'],
               'email' => ['required', 'string','email'],
               'address' => ['required', 'string'],
               'code_postale' => ['required', 'string', 'max:5', 'min:5','regex:/[0-9]{5}+/'],
@@ -266,21 +281,21 @@ class ClientController extends Controller
         }
         else if($request->nonCode != 1 && $request->nonAddresse == 1){
              $request->validate([
-              'numero_tlf' => ['required', 'string', 'max:10', 'min:10','regex:/0[5-7]+/'],
+              'numero_tlf' => ['required', 'string', 'max:10', 'min:10','regex:/^0[5-7]+/'],
               'email' => ['required', 'string','email'],
               'address' => ['required', 'string'],
              ]);
         }
         else if($request->nonCode == 1 && $request->nonAddresse != 1){
              $request->validate([
-              'numero_tlf' => ['required', 'string', 'max:10', 'min:10','regex:/0[5-7]+/'],
+              'numero_tlf' => ['required', 'string', 'max:10', 'min:10','regex:/^0[5-7]+/'],
               'email' => ['required', 'string','email'],
               'code_postale' => ['required', 'string', 'max:5', 'min:5','regex:/[0-9]{5}+/'],
              ]);
         }
         else if($request->nonCode != 1 && $request->nonAddresse != 1){
              $request->validate([
-              'numero_tlf' => ['required', 'string', 'max:10', 'min:10','regex:/0[5-7]+/'],
+              'numero_tlf' => ['required', 'string', 'max:10', 'min:10','regex:/^0[5-7]+/'],
               'email' => ['required', 'string','email'],
               
              ]);
@@ -308,18 +323,30 @@ class ClientController extends Controller
 
     public function getProduit(){
         $clientCnncte = Client::find(Auth::user()->id);
-        $favoris = \DB::table('produits')->get();
-        $annonce  =\DB::table('annonce_emploies')->get();
-        $produit = \DB::table('favoris')->where([ ['client_id',$clientCnncte->id]])
-        ->orderBy('created_at','desc')->paginate(8); 
+        $favoris = \DB::table('produits')
+        ->join('favoris','favoris.produit_id','=','produits.id')
+        ->join('vendeurs','vendeurs.id', '=', 'produits.vendeur_id')
+        ->select('produits.*','vendeurs.Nom','vendeurs.Prenom')
+        ->where([ ['favoris.client_id',$clientCnncte->id]])
+        ->get();
+        $annonce  =\DB::table('annonce_emploies')
+        ->join('favoris','favoris.annonce_emploi_id','=','annonce_emploies.id')
+        ->select('annonce_emploies.*')
+        ->where([ ['favoris.client_id',$clientCnncte->id]])
+        ->get();
+        $produit = \DB::table('favoris')
+        ->where([ ['client_id',$clientCnncte->id]])
+        ->orderBy('favoris.created_at','desc')->paginate(8); 
         $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
         $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
         $imageproduit = \DB::table('imageproduits')->get();
         
         $command = \DB::table('commandes')->where([ ['client_id',$clientCnncte->id],['commande_envoyee',0]])->get(); 
-       
+        $color = \DB::table('colors')->join('color_produits', 'colors.id', '=', 'color_produits.color_id')->get();
+        $taille = \DB::table('taille_produits')->get();
+        $typeLivraison = \DB::table('typechoisirvendeurs')->get();
         
-        return view('favoris_client',['produit'=>$produit, 'ImageP' => $imageproduit, 'Fav' => $favoris,'annonce'=>$annonce,'command' => $command,'categorie'=>$categorie,'categorieE'=>$categorieE]);
+        return view('favoris_client',['produit'=>$produit, 'ImageP' => $imageproduit, 'Fav' => $favoris,'annonce'=>$annonce,'command' => $command,'categorie'=>$categorie,'categorieE'=>$categorieE,'client' => $clientCnncte,'color' => $color, 'typeLivraison' => $typeLivraison, 'taille' => $taille ,]);
     }
 
     public function addHisto($id){
@@ -330,14 +357,14 @@ class ClientController extends Controller
         $histoProd->save();
         return $histoProd;
     }
-    public function AnnonceAuFavoris($id){
+    /*public function AnnonceAuFavoris($id){
         $clientCnncte = Client::find(Auth::user()->id);
         $annonce = new Favori;
         $annonce->annonce_emploi_id = $id;//$id howa l id ta3 annonce
         $annonce->client_id = $clientCnncte->id;
         $annonce->save();
         return $annonce;
-    }
+    }*/
 
     public function EnvoyerDemande(Request $request){
         
@@ -349,7 +376,7 @@ class ClientController extends Controller
             }
             $request->validate([
              'nom_Prenom' => ['required','string','max:60'],
-             'tlf' => ['required','string','min:10','max:10','regex:/0[5-7][0-9]+/'],
+             'tlf' => ['required','string','min:10','max:10','regex:/^0[5-7][0-9]+/'],
              'email' => ['required','email'],
              'cv' => ['required'],
             ]);
@@ -414,7 +441,10 @@ class ClientController extends Controller
             return Response()->json(['etatee' => true, 'type'=> 1]);
         }
         else if(auth()->check() && Auth::user()->type_compte == 'c'){
-             return Response()->json(['etatee' => true, 'type'=> 2]);
+             $client = $client = Client::find(Auth::user()->id);
+             $client->nom= ucwords($client->nom);
+             $client->prenom= ucwords($client->prenom);
+             return Response()->json(['etatee' => true, 'type'=> 2, 'client'=> $client]);
         }
     }
     public function SignalerProduit($id){

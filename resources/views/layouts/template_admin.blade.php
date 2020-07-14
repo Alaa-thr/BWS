@@ -144,7 +144,11 @@
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
+
+          @if($urlAcctuiel == 'statistiquesAdmin')
             <a class="navbar-brand" style="margin-left: 260px">Nombre Inscription / Mois de L'année Courante</a>
+          @endif
+
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -236,6 +240,9 @@
       // Javascript method's body can be found in assets/js/demos.js
       initDashboardPageCharts();
 
+    });
+     $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip();   
     });
   </script>
 </body>

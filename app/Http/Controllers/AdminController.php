@@ -147,25 +147,29 @@ class AdminController extends Controller
     
     }
 
-    public function update_profil(Request $request, $id) {
+    public function update_profil(Request $request) {
                 
-
+        $request->validate([
+             'numTelephone' =>  ['required', 'string','regex:/^0[5-7][0-9]+/',"min:10","max:10", new NumberExist(4)],
+             'email' =>['required', 'string', 'email', 'max:40', new EmailExist(4)],
+             'nom' =>['required','regex:/[A-Z-0-9][a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
+             'prenom' =>['required','regex:/[A-Z-0-9][a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
+             'numCarteBanquaire' =>['required', new NumCarteBancaireExist(4)],
+         ]);
         $admin = Admin::find(Auth::user()->id);
-        $user = User::find(Auth::user()->id);
-
-        $admin->nom = $request->input('nom');
-        $admin->prenom = $request->input('prenom');
-        $admin->numTelephone = $request->input('num');
-        $admin->email = $request->input('adresse_email'); 
-        $admin->numCarteBanquaire = $request->input('bnq');
+        $user = Auth::user();
+        $admin->nom = $request->nom;
+        $admin->prenom = $request->prenom;
+        $admin->numTelephone = $request->numTelephone;
+        $admin->email = $request->email; 
+        $admin->numCarteBanquaire = $request->numCarteBanquaire;
      
-        $user->numTelephone = $request->input('num');
-        $user->email = $request->input('adresse_email');  
-        
+        $user->numTelephone = $request->numTelephone;
+        $user->email = $request->email; 
         $admin->save();
         $user->save();
        
-        return Response()->json(['etat' => true]);
+        return Response()->json(['etat' => true,'admin'=> $admin]);
     }
     public function categories_admin(){
 
@@ -471,13 +475,24 @@ class AdminController extends Controller
 
     public function Verifier($id){
  
-        $signalsvendeur= \DB::table('paiement_vendeurs')->where([['vendeur_id',$id],['response',0]])->get();
+        $paiementvendeur= \DB::table('paiement_vendeurs')->where([['vendeur_id',$id],['response',0]])->get();
     
-    if(count($signalsvendeur) != 0){
+    if(count($paiementvendeur) != 0){
         return Response()->json(['etat' => true]);
     }
     else 
     return Response()->json(['etat' => false]);
+
+}
+public function VerifierAnnonce($id){
+ 
+    $paiementemployeurs= \DB::table('paiement_employeurs')->where([['employeur_id',$id],['response',0]])->get();
+
+if(count($paiementemployeurs) != 0){
+    return Response()->json(['etat' => true]);
+}
+else 
+return Response()->json(['etat' => false]);
 
 }
 

@@ -22,6 +22,7 @@
   <link href="assetsClient/css/util.css" rel="stylesheet" />
   <link href="assetsClient/css/main.css" rel="stylesheet" />
   <link rel="stylesheet" type="text/css" href="assetsClient/fonts/linearicons-v1.0.0/icon-font.min.css">
+  <link rel="stylesheet" type="text/css" href="<?php echo e(asset('vendor/select2/select2.min.css')); ?>">
   <script src="<?php echo e(asset('jss/vue.js')); ?>"></script>
   <script src="<?php echo e(asset('jss/axios.min.js')); ?>"></script>
   <script src="<?php echo e(asset('jss/sweetalert2.js')); ?>"></script>
@@ -651,8 +652,15 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
   <script src="assetsClient/js/core/popper.min.js"></script>
   <script src="assetsClient/js/core/bootstrap.min.js"></script>
   <script src="assetsClient/js/plugins/perfect-scrollbar.jquery.min.js"></script>
-  <!--  Google Maps Plugin    -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+  <script src="<?php echo e(asset('vendor/select2/select2.min.js')); ?>"></script>
+  <script>
+        $(".js-select2").each(function(){
+            $(this).select2({
+                minimumResultsForSearch: 20,
+                dropdownParent: $(this).next('.dropDownSelect2')
+            });
+        })
+ </script>
   <!-- Chart JS -->
   <script src="assetsClient/js/plugins/chartjs.min.js"></script>
   <!--  Notifications Plugin    -->

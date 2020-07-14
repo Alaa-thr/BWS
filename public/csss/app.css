@@ -6769,6 +6769,8 @@ a.close.disabled {
   transition: opacity 0.15s ease;
 }
 
+
+
 @media (prefers-reduced-motion: reduce) {
   .carousel-control-prev,
   .carousel-control-next {

@@ -70,6 +70,7 @@
       <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#" id="point"  style="margin-left: 245px;">
         <i class="fas fa-ellipsis-v"  id="y"></i>
        </a>
+<<<<<<< HEAD
       <div class="dropdown-menu dropdown-menu-right"  id="pl"  style="margin-left: 220px; margin-right: 50px;">
         <a class="dropdown-item  js-show-modal1"  v-on:click="AfficheInfo(commandec.id)" style="color: red; font-style: italic; font-weight: 900; cursor: pointer;" >
           Afficher Plus
@@ -78,6 +79,20 @@
          Supprimer
         </a>
       </div> 
+=======
+      <div class="dropdown-menu " x-placement="right-start" id="pl"  >
+      <a   v-on:click="AfficheInfo(commandec.id)"  class="dropdown-item " 
+      style="color: red; font-style: italic; font-weight: 900; cursor: pointer;" >Afficher Plus</a>
+<<<<<<< HEAD
+    <a class="dropdown-item " v-on:click="deleteDemandeReçuEmployeur(articlea)"
+=======
+    <a class="dropdown-item " v-on:click="deleteDemandeReçuEmployeur(commandec)"
+>>>>>>> 972cd76de5808c4efa19ced1533269b756e75bba
+    style="color: red; font-style: italic; font-weight: 900; cursor: pointer;">
+    Supprimer</a>
+       </div>
+       
+>>>>>>> 110425ded9475f34f0ea1d52bdceac5d36f86ecb
     </div>    
 
     </div> 
@@ -464,5 +479,8 @@ created:function(){
 </script>
 
 <?php $__env->stopPush(); ?>
+<<<<<<< HEAD
+=======
 
+>>>>>>> 972cd76de5808c4efa19ced1533269b756e75bba
 <?php echo $__env->make('layouts.template_employeur', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\BWS\resources\views/demande_emploi_reçu_employeur.blade.php ENDPATH**/ ?>

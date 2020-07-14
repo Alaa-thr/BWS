@@ -132,12 +132,12 @@
                   <tr>
                     <td style=" width: 4%;">  
                         <div v-if="selectall">
-                          <input type="checkbox" :id="c.id" :value="c.id" v-model="checkedCategorie" @change="changeButton(c)">
-                          <label :for="c.id" style=""></label>
+                          <input type="checkbox" :id="c.id && c.typeCategorie && c.libelle" :value="c.id" v-model="checkedCategorie" @change="changeButton(c)">
+                          <label :for="c.id && c.typeCategorie && c.libelle" style=""></label>
                         </div>
                         <div v-else>
-                          <input type="checkbox" :id="c.id" :value="c.id" v-model="categorieIds" @change="deselectCategorie(c.id)">
-                          <label :for="c.id" style=" "></label>
+                          <input type="checkbox" :id="c.id && c.typeCategorie && c.libelle" :value="c.id" v-model="categorieIds" @change="deselectCategorie(c.id)">
+                          <label :for="c.id && c.typeCategorie && c.libelle" style=" "></label>
                         </div>
                         
                     </td>
