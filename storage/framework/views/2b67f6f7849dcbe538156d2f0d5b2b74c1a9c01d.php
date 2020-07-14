@@ -52,11 +52,7 @@
                         <div class="col-md-5" >
                           <h6 class="title" style="margin-top: -4px;  color: red; margin-left: -10px;" >{{ annoncea.libellé }}</h6><br>
                             <div class="description" style="margin-top: -10px; font-size: 11px; margin-left: -10px;">
-<<<<<<< HEAD
                               {{ MoitieDescription(annoncea.discription,13, '...') }}
-=======
-                              {{ MoitieDescription(annoncea.discription,100, '...') }}
->>>>>>> 110425ded9475f34f0ea1d52bdceac5d36f86ecb
                             </div>  
                             <div class="description" style="font-weight: 500; color: black; font-size: 12px; margin-left: -10px; margin-top: 10px;">
                                 Nombre de condidat : {{annoncea.nombre_condidat}}
@@ -190,12 +186,8 @@
                   <div class="col-md-10 pr-2" >
                     <div class="form-group">
                       <label for="image" style="margin-left: 50px">image</label>
-<<<<<<< HEAD
                       <input type="file" class="form-control"  v-on:change="imagePreview" :class="{'is-invalid' : message.image}" style="margin-left: 50px">
                       <span class="px-3 cl13" v-if="message.image" v-text="message.image[0]"></span>
-=======
-                      <input type="file" class="form-control"  v-on:change="imagePreview" accept="image/*" style="margin-left: 50px">
->>>>>>> 110425ded9475f34f0ea1d52bdceac5d36f86ecb
                     </div>
                  </div>
                 </div>

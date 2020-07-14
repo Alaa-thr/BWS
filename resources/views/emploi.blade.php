@@ -106,12 +106,12 @@
 				</div>
 			</div>
 					@foreach($emploi as $emp)
-		        	<div class="row m-b-10"   style="display: inline-flex;  width: 420px; height: 160px;">
+		        	<div class="row m-b-10"   style="display: inline-flex;  width:417px; height: 160px;">
 		        			
 		        		<div style="display: inline-flex;  width: 420px; height: 160px;">
 		        		@if($emp->image != null)
-						<div  class="col-md-4 block2 block2-pic hov-img0" style="margin-left: 30px;">
-							<img  src="storage/annonces_image/<?php echo $emp->image ?>"  style="height: 120px; width: 120px; ">
+						<div  class="col-md-4 block2 block2-pic hov-img0" style="">
+							<img  src="storage/annonces_image/<?php echo $emp->image ?>"  style="height: 120px; width: 120px; margin-right: 50px;">
 							<a class="js-show-modal1 block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 " v-on:click="AfficheInfo({{ json_encode($emp->id) }})" style="cursor: pointer;">
 								Quick View
 							</a>
@@ -155,14 +155,14 @@
 
 						@endfor	
 						@if($k == 1)
-							<div class="m-t-100" style="float: right;">
+							<div class="" style="margin-top: 80px; margin-left: -30px;">
 								
-								<a  class="" v-on:click="AjoutAuFavoris({{ json_encode($emp) }})" style="cursor: pointer;" >
+								<a  class="" v-on:click="AjoutAuFavoris({{ json_encode($emp) }})" style="cursor: pointer; " >
 									<i  class="zmdi zmdi-favorite zmdi-hc-lg" style="color: #e60000; " id="<?php echo $emp->id ?>"></i>
 								</a>
 							</div>
 						@else
-							<div class="m-t-100" style="float: right;">
+							<div class="" style="margin-top: 100px; margin-left: -20px;">
 									
 									<a  class="" v-on:click="AjoutAuFavoris({{ json_encode($emp) }})" style="cursor: pointer; "  >
 										<i  class="cl222 zmdi zmdi-favorite-outline zmdi-hc-lg favoo " id="<?php echo $emp->id ?>"></i>
@@ -170,7 +170,7 @@
 									</a>
 							</div>
 						@endif
-							<div style="border-left: 2px solid #000; display: inline-block;height: 120px; margin: 0 20px; margin-left: 12px;">
+							<div style="border-left: 2px solid #000; display: inline-block;height: 120px; margin: 0 20px; margin-left:30px;">
                        		</div>
 						</div>
 					
