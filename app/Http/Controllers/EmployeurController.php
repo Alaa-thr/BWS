@@ -38,7 +38,7 @@ class EmployeurController extends Controller
         $employeur->num_tel = $request->input('num');
         $employeur->email = $request->input('adresse_email'); 
         $employeur->nom_societe = $request->input('societe');
-
+        $employeur->num_compte_banquiare = $request->input('bnq');
         $user->numTelephone = $request->input('num');
         $user->email = $request->input('adresse_email');  
         
