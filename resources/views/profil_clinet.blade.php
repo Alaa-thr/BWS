@@ -170,7 +170,9 @@
             <div class="card-body">
               <div class="author">
                 <a href="#">
-                  <img class="avatar border-gray" src="assetsClient/img/input/profil_img.jpg" alt="...">
+                       <img class="avatar border-gray" :src="'storage/profil_image/'+profilclient.image" alt="..."> 
+                 
+
                 </a>
                  <h5 class="title cl13">@{{ profilclient.nom }} @{{ profilclient.prenom }}</h5>
               </div>
@@ -229,6 +231,9 @@
         msg: "hello",
         profilclient:[],
         modif: false,
+          ProduitsPanier: [],
+          favoris: [],
+          imagesproduit: [],
                    
       },
 
@@ -238,6 +243,8 @@
 
             .then(response => {
                  this.profilclient = window.Laravel.client;
+                 this.imagesproduit = window.Laravel.ImageP;
+                this.ProduitsPanier = window.Laravel.command;
             })
             .catch(error =>{
                  console.log('errors :' , error);
@@ -250,36 +257,7 @@
     }
   });
 </script>
-<script>
-     var app1 = new Vue({
-        el: '#app1',
-        data:{
-          message:'hello',
-          ProduitsPanier: [],
-          favoris: [],
-          imagesproduit: [],
-        },
-        methods:{
-          profil_clinet: function(){
-            axios.get(window.Laravel.url+'/profilClient')
-              .then(response => {
-                this.favoris = window.Laravel.Fav;
-                this.imagesproduit = window.Laravel.ImageP;
-                this.ProduitsPanier = window.Laravel.command;
-               })
-              .catch(error => {
-                  console.log('errors : '  , error);
-             })
-          },
-          
 
-        },
-        created:function(){
-            this.profil_clinet();
-
-        }
-     })
-</script>
 
 @endpush
 

@@ -113,7 +113,7 @@
             <div class="card-body">
               <div class="author">
                 <a href="#">
-                  <img class="avatar border-gray" src="assetsClient/img/input/profil_img.jpg" alt="...">
+                       <img class="avatar border-gray" :src="'storage/profil_image/'+profilclient.image" alt="..."> 
                 </a>
                  <h5 class="title cl13">@{{ profilemployeur.nom }} @{{ profilemployeur.prenom }}</h5>
               </div>
