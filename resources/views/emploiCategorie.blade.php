@@ -77,7 +77,9 @@
 			</span>
 		</div>
 	</div>
-
+	@php
+		$url = Route::getCurrentRoute()->uri();
+	@endphp
 	<!-- Annonce d'emploi -->
 	<div class="bg0 m-t-23 p-b-140">
 		<div class="container" id="app">
@@ -85,16 +87,64 @@
 				<div class="flex-w flex-c-m m-tb-20">
 			        <div class="m-l-25 respon6-next" style="width: 230px;">
 			            <div class="rs1-select2 bor8 bg0" >
-			              <form action="">
-			                <select class="js-select2" id="tttt">
-				                <option value="0" disabled selected>Sous-Categorie</option>
+			            	<select class="js-select2" id="tttt" onchange="window.location.href = this.options[this.selectedIndex].value">
+								@if($url != "emploi/search_categorie={id}/sous-categorie={id1}" && $url != "emploi/search_categorie={id}/sous-categorie={id1}/ville={id2}")
+				                	<option value="0" disabled selected>Sous-Categorie</option>
+				                @else
+									<option value="0" disabled selected>
+										@{{name}}
+									</option>
+				                @endif
+				                
 				                @foreach($sousC as $sc)
-				                	<option  value="<?php echo($sc->id)?>">{{$sc->libelle}}</option>
+				                		@if($url == "emploi/search_categorie={id}/sous-categorie={id1}/ville={id2}")
+					                	 	<option  value="/emploi/search_categorie=<?php echo($sc->categorie_id)?>/sous-categorie=<?php echo($sc->id)?>/ville={{request()->route('id2')}}">
+					                			{{$sc->libelle}}
+					                		</option>
+				                		@else
+				                			<option  value="/emploi/search_categorie=<?php echo($sc->categorie_id)?>/sous-categorie=<?php echo($sc->id)?>">
+				                			{{$sc->libelle}}
+				                			</option>
+
+
+				                		@endif
 				                @endforeach
 			            	</select>
 			                <div class="dropDownSelect2"></div>
-			              </form>
-			        </div>
+			            </div>
+					</div>
+					<div class="m-l-25 respon6-next" style="width: 230px;">
+			            <div class="rs1-select2 bor8 bg0" >
+			            	<select class="js-select2" id="villes"  onchange="window.location.href = this.options[this.selectedIndex].value">
+								@if($url != "emploi/search_categorie={id}/ville={id1}" && $url != "emploi/search_categorie={id}/sous-categorie={id1}/ville={id2}")
+				                	<option value="0" disabled selected>Villes</option>
+				                @else
+									<option value="0" disabled selected>
+										@{{ville}}
+									</option>
+				                @endif
+				                
+				                @foreach($ville as $vl)
+				                	@if($url == "emploi/search_categorie={id}")
+				                		<option  value="/emploi/search_categorie={{request()->route('id')}}/ville=<?php echo($vl->nom)?>">
+				                			{{$vl->nom}}
+				                		</option>
+	
+				                	@elseif($url == "emploi/search_categorie={id}/sous-categorie={id1}")
+				                		<option  value="/emploi/search_categorie={{request()->route('id')}}/sous-categorie={{request()->route('id1')}}/ville=<?php echo($vl->nom)?>">
+				                			{{$vl->nom}}
+				                		</option>
+				                	@else
+				                		<option  value="/emploi/search_categorie={{request()->route('id')}}/sous-categorie={{request()->route('id1')}}/ville=<?php echo($vl->nom)?>">
+				                			{{$vl->nom}}
+				                		</option>
+
+				                	@endif
+				                	 	
+				                @endforeach
+			            	</select>
+			                <div class="dropDownSelect2"></div>
+			            </div>
 					</div>
 				</div>
 
@@ -379,6 +429,8 @@
                'command'        => $command,
                'prixTotale'		=> $prixTotale,
                'client'		=> $client,
+               'id'		=>$id,
+               'idville'		=>$idville,
                "url"      => url("/")  
     ]) !!};
 
@@ -687,6 +739,8 @@
       el: '#app',
       data:{
         emplois: [],
+        name: null,
+        ville: null,
       },
       methods:{
       	getPicture(img){
@@ -745,13 +799,26 @@
               .catch(error => {
                   console.log('errors : '  , error);
              })
-          }
+       },
+       selectSousC: function(){
+       		if(window.Laravel.id !=0){
+       		 	this.name =window.Laravel.id[0].libelle;
+       		}
+       		if(window.Laravel.idville != 0){
+       			this.ville = window.Laravel.idville[0].nom;
+       		}
+          	 
+        }
 
         
       },
       created:function(){
         this.getEmploi();
       },
+       mounted:function(){
+       		 	this.selectSousC();
+       		
+      }
   });
 </script>
 

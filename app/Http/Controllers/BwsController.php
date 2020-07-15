@@ -20,11 +20,16 @@ use App\Article;
 class BwsController extends Controller
 {
    
-/************************************************ Visiteur***********************************************/ 
- function emploiSousCategorieSearchpublic($id,$id1){
+/************************************************ ***********************************************/ 
+    public function emploiSousCategoVilleSearch($id,$idSC,$idVille){
         $emploi = \DB::table('annonce_emploies')
-            ->where('sous_categorie_id ',$id1)
-            ->orderBy('created_at','desc')->paginate(21) ;
+            ->join('employeurs','employeurs.id','=','employeur_id')
+            ->select('annonce_emploies.*')
+            ->where([['sous_categorie_id',$idSC],['employeurs.ville',$idVille]])
+            ->orderBy('annonce_emploies.created_at','desc')->paginate(21) ;
+        $idd = \DB::table('sous_categories')->where('id',$idSC)->select('libelle')->get();
+        $idville = \DB::table('villes')->where('nom',$idVille)->select('nom')->get();
+        $ville = \DB::table("villes")->orderBy("nom")->get();
         if(auth()->check() && Auth::user()->type_compte == 'c'){
             $c = Client::find(Auth::user()->id);
             $favoris = \DB::table('produits')->get();
@@ -41,7 +46,7 @@ class BwsController extends Controller
             $fav = \DB::table('favoris')->where('client_id',$c->id)->get();
              $c->nom= ucwords($c->nom);
              $c->prenom= ucwords($c->prenom);
-            return view('emploiCategorie',['emploi'=>$emploi,'categorie'=>$categorie ,'categorieE'=>$categorieE,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command,'prixTotale' => $prixTotale,'client' => $c,'fav' => $fav,'sousC' => $sousC]);
+            return view('emploiCategorie',['emploi'=>$emploi,'categorie'=>$categorie ,'categorieE'=>$categorieE,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command,'prixTotale' => $prixTotale,'client' => $c,'fav' => $fav,'sousC' => $sousC,'id'=>$idd,'idville'=>$idville,'ville'=>$ville]);
         }
         $c['nom'] = "";
         $c['prenom'] = "";
@@ -56,7 +61,97 @@ class BwsController extends Controller
         if($prixTotale[0]->prixTo == null){
             $prixTotale[0]->prixTo = 0.00;
         }
-        return view('emploiCategorie',['emploi'=>$emploi,'categorie'=>$categorie ,'categorieE'=>$categorieE        ,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command,'prixTotale' => $prixTotale,'client' => $c,'fav' => $fav,'sousC' => $sousC]);
+        return view('emploiCategorie',['emploi'=>$emploi,'categorie'=>$categorie ,'categorieE'=>$categorieE        ,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command,'prixTotale' => $prixTotale,'client' => $c,'fav' => $fav,'sousC' => $sousC,'id'=>$idd,'idville'=>$idville,'ville'=>$ville]);
+    }
+
+
+
+    public function emploiVilleSearch($id,$idVille){
+        $emploi = \DB::table('annonce_emploies')
+            ->join('sous_categories','sous_categories.id','=','annonce_emploies.sous_categorie_id')
+            ->join('employeurs','employeurs.id','=','employeur_id')
+            ->select('annonce_emploies.*')
+            ->where([['sous_categories.categorie_id',$id],['employeurs.ville',$idVille]])
+            ->orderBy('annonce_emploies.created_at','desc')->paginate(21) ;
+        $idd = 0;
+        $idville = \DB::table('villes')->where('nom',$idVille)->select('nom')->get();
+        $ville = \DB::table("villes")->orderBy("nom")->get();
+        if(auth()->check() && Auth::user()->type_compte == 'c'){
+            $c = Client::find(Auth::user()->id);
+            $favoris = \DB::table('produits')->get();
+            $imageproduit = \DB::table('imageproduits')->get();
+            $command = \DB::table('commandes')->where([['commande_envoyee',0]])->get();     
+            $sousC = \DB::table('sous_categories')->where([['categorie_id',$id]])->get();
+            
+            $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+            $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
+            $prixTotale= \DB::table('commandes')->where([ ['client_id',$c->id],['id',$c->nbr_cmd]])->select(\DB::raw('sum(commandes.prix_total * commandes.qte) as prixTo'))->get();
+            if($prixTotale[0]->prixTo == null){
+                $prixTotale[0]->prixTo = 0.00;
+            }
+            $fav = \DB::table('favoris')->where('client_id',$c->id)->get();
+             $c->nom= ucwords($c->nom);
+             $c->prenom= ucwords($c->prenom);
+            return view('emploiCategorie',['emploi'=>$emploi,'categorie'=>$categorie ,'categorieE'=>$categorieE,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command,'prixTotale' => $prixTotale,'client' => $c,'fav' => $fav,'sousC' => $sousC,'id'=>$idd,'idville'=>$idville,'ville'=>$ville]);
+        }
+        $c['nom'] = "";
+        $c['prenom'] = "";
+        $favoris = \DB::table('produits')->get();
+        $imageproduit = \DB::table('imageproduits')->get();
+        $command = array();     
+        $fav = array();
+        $sousC = \DB::table('sous_categories')->where([['categorie_id',$id]])->get();
+        $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+        $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
+        $prixTotale = \DB::table('commandes')->where('client_id',0)->select(\DB::raw('sum(commandes.prix_total * commandes.qte) as prixTo'))->get();
+        if($prixTotale[0]->prixTo == null){
+            $prixTotale[0]->prixTo = 0.00;
+        }
+        return view('emploiCategorie',['emploi'=>$emploi,'categorie'=>$categorie ,'categorieE'=>$categorieE        ,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command,'prixTotale' => $prixTotale,'client' => $c,'fav' => $fav,'sousC' => $sousC,'id'=>$idd,'idville'=>$idville,'ville'=>$ville]);
+    }
+
+
+
+
+
+ public function emploiSousCategorieSearch($id,$id1){
+        $ville = \DB::table("villes")->orderBy("nom")->get();
+        $emploi = \DB::table('annonce_emploies')
+            ->where('sous_categorie_id',$id1)
+            ->orderBy('created_at','desc')->paginate(21) ;
+        $idd = \DB::table('sous_categories')->where('id',$id1)->select('libelle')->get();
+        if(auth()->check() && Auth::user()->type_compte == 'c'){
+            $c = Client::find(Auth::user()->id);
+            $favoris = \DB::table('produits')->get();
+            $imageproduit = \DB::table('imageproduits')->get();
+            $command = \DB::table('commandes')->where([['commande_envoyee',0]])->get();     
+            $sousC = \DB::table('sous_categories')->where([['categorie_id',$id]])->get();
+            
+            $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+            $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
+            $prixTotale= \DB::table('commandes')->where([ ['client_id',$c->id],['id',$c->nbr_cmd]])->select(\DB::raw('sum(commandes.prix_total * commandes.qte) as prixTo'))->get();
+            if($prixTotale[0]->prixTo == null){
+                $prixTotale[0]->prixTo = 0.00;
+            }
+            $fav = \DB::table('favoris')->where('client_id',$c->id)->get();
+             $c->nom= ucwords($c->nom);
+             $c->prenom= ucwords($c->prenom);
+            return view('emploiCategorie',['emploi'=>$emploi,'categorie'=>$categorie ,'categorieE'=>$categorieE,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command,'prixTotale' => $prixTotale,'client' => $c,'fav' => $fav,'sousC' => $sousC,'id'=>$idd,'ville'=>$ville, 'idville'=>0]);
+        }
+        $c['nom'] = "";
+        $c['prenom'] = "";
+        $favoris = \DB::table('produits')->get();
+        $imageproduit = \DB::table('imageproduits')->get();
+        $command = array();     
+        $fav = array();
+        $sousC = \DB::table('sous_categories')->where([['categorie_id',$id]])->get();
+        $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+        $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
+        $prixTotale = \DB::table('commandes')->where('client_id',0)->select(\DB::raw('sum(commandes.prix_total * commandes.qte) as prixTo'))->get();
+        if($prixTotale[0]->prixTo == null){
+            $prixTotale[0]->prixTo = 0.00;
+        }
+        return view('emploiCategorie',['emploi'=>$emploi,'categorie'=>$categorie ,'categorieE'=>$categorieE        ,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command,'prixTotale' => $prixTotale,'client' => $c,'fav' => $fav,'sousC' => $sousC,'id'=>$idd,'ville'=>$ville, 'idville'=>0]);
     }
 
 
@@ -99,7 +194,7 @@ class BwsController extends Controller
     }
 
     public function emploiSearch($id){
-        
+        $ville = \DB::table("villes")->orderBy("nom")->get();
         if(auth()->check() && Auth::user()->type_compte == 'c'){
             $c = Client::find(Auth::user()->id);
             $favoris = \DB::table('produits')->get();
@@ -109,7 +204,7 @@ class BwsController extends Controller
             $emploi = \DB::table('annonce_emploies')
             ->join('sous_categories','sous_categories.id','annonce_emploies.sous_categorie_id')
             ->where('categorie_id',$id)
-            ->orderBy('created_at','desc')->paginate(21) ;
+            ->orderBy('annonce_emploies.created_at','desc')->paginate(21) ;
             $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
             $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
             $prixTotale= \DB::table('commandes')->where([ ['client_id',$c->id],['id',$c->nbr_cmd]])->select(\DB::raw('sum(commandes.prix_total * commandes.qte) as prixTo'))->get();
@@ -119,7 +214,7 @@ class BwsController extends Controller
             $fav = \DB::table('favoris')->where('client_id',$c->id)->get();
              $c->nom= ucwords($c->nom);
              $c->prenom= ucwords($c->prenom);
-            return view('emploiCategorie',['emploi'=>$emploi,'categorie'=>$categorie ,'categorieE'=>$categorieE,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command,'prixTotale' => $prixTotale,'client' => $c,'fav' => $fav,'sousC' => $sousC]);
+            return view('emploiCategorie',['emploi'=>$emploi,'categorie'=>$categorie ,'categorieE'=>$categorieE,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command,'prixTotale' => $prixTotale,'client' => $c,'fav' => $fav,'sousC' => $sousC,'id'=>0, 'ville'=> $ville, 'idville'=> 0]);
         }
         $c['nom'] = "";
         $c['prenom'] = "";
@@ -138,7 +233,7 @@ class BwsController extends Controller
         if($prixTotale[0]->prixTo == null){
             $prixTotale[0]->prixTo = 0.00;
         }
-        return view('emploiCategorie',['emploi'=>$emploi,'categorie'=>$categorie ,'categorieE'=>$categorieE        ,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command,'prixTotale' => $prixTotale,'client' => $c,'fav' => $fav,'sousC' => $sousC]);
+        return view('emploiCategorie',['emploi'=>$emploi,'categorie'=>$categorie ,'categorieE'=>$categorieE        ,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command,'prixTotale' => $prixTotale,'client' => $c,'fav' => $fav,'sousC' => $sousC,'id'=>0, 'ville'=> $ville, 'idville'=> 0]);
     }
 
     public function getAnnonceHome(){
