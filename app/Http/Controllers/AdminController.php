@@ -475,13 +475,24 @@ class AdminController extends Controller
 
     public function Verifier($id){
  
-        $signalsvendeur= \DB::table('paiement_vendeurs')->where([['vendeur_id',$id],['response',0]])->get();
+        $paiementvendeur= \DB::table('paiement_vendeurs')->where([['vendeur_id',$id],['response',0]])->get();
     
-    if(count($signalsvendeur) != 0){
+    if(count($paiementvendeur) != 0){
         return Response()->json(['etat' => true]);
     }
     else 
     return Response()->json(['etat' => false]);
+
+}
+public function VerifierAnnonce($id){
+ 
+    $paiementemployeurs= \DB::table('paiement_employeurs')->where([['employeur_id',$id],['response',0]])->get();
+
+if(count($paiementemployeurs) != 0){
+    return Response()->json(['etat' => true]);
+}
+else 
+return Response()->json(['etat' => false]);
 
 }
 

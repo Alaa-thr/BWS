@@ -198,6 +198,10 @@ Route::get('/iscnnected', 'ClientController@isCnnected');
 //Search
 Route::get('/abest', 'BwsController@getsearch')->name('abest');
 Route::get('/abestv', 'BwsController@getsearchVisiteur')->name('abestv');
+Route::get('/abestav', 'BwsController@getsearchav')->name('abestav');
+Route::get('/abestae', 'BwsController@getsearchae')->name('abestae');
+Route::get('/abestac', 'BwsController@getsearchac')->name('abestac');
+Route::get('/abestaa', 'BwsController@getsearchaa')->name('abestaa');
 
 /***Signaler***/
 Route::post('/signalerproduit/{id}','ClientController@SignalerProduit');
@@ -211,3 +215,4 @@ Route::post('/paiementvendeur/{id}','VendeurController@change_valeur_vendeur');
 Route::post('/paiementvend','VendeurController@validateFormProduit');
 
 Route::post('/verifierproduit/{id}','AdminController@Verifier');
+Route::post('/verifierannonce/{id}','AdminController@VerifierAnnonce');

@@ -37,7 +37,7 @@
                         <td  v-on:click="AfficherInfo(vendeura.id)" style="cursor: pointer;">{{vendeura.email}}</td>
                         <td  class="dropdown " id="k">
                             <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
-                                <img src="assetsAdmin/img/menu.png" alt="..." id="k1">
+                                <img src="assetsAdmin/img/menu.png"  id="k1" / >
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" style="margin-top: -10px; margin-right: -10px;">
                               <a class="dropdown-item js-show-modal1" href="#" id="k2" v-on:click="AfficherInfo(vendeura.id)">Details</a>
@@ -222,7 +222,11 @@
                       </td>
                     </tr>
                     <tr>
+<<<<<<< HEAD
                     <div style="margin-left: 360px; margin-top: -90px;width:1000px;">
+=======
+                    <div style="margin-left: 360px; margin-top: -90px; width:500px;">
+>>>>>>> 37ce106a3a35cf9ce56cb8404358bdb03c87f5b8
                    
                     <button id="verif" class="btn btn-success btn-block " style="width:300px;
                           border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;"  v-on:click="Verifier(vendeuraa.id);"> Produits <br>existent pour publier ?

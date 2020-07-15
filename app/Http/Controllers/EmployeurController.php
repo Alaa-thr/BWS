@@ -59,7 +59,7 @@ class EmployeurController extends Controller
     } 
 
     public function detaillsacommandeTraiterEmplyeur(Request $request){
-        $commande_detaills = \DB::table('demande_emploies')->where('id', $request->idA)->get();
+        $commande_detaills = \DB::table('demande_emploies')->join('clients','clients.id','=','demande_emploies.client_id')->join('annonce_emploies','annonce_emploies.id','=','demande_emploies.annonceE_id')->where('demande_emploies.id', $request->idA)->get();
         return  $commande_detaills;
     }
 
