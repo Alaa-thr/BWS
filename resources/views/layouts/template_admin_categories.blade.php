@@ -130,21 +130,12 @@
             <span class="navbar-toggler-bar navbar-kebab"></span>
           </button>
           <div class="collapse navbar-collapse justify-content-end" id="navigation">
-          <form  action="/abest" method="get">
-              <div class="input-group no-border" style="left: -40px;">
-                <input type="search" name="search"  class="form-control" placeholder="Rechercher...">
-                <div class="input-group-append">
-                  <div class="input-group-text">
-                    <i class="now-ui-icons ui-1_zoom-bold"></i>
-                  </div>
-                </div>
-              </div>
-            </form>
+        
+        
             <ul class="navbar-nav">
             <li class="nav-item dropdown" style="cursor: pointer; margin-right: 40px;">
-                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <img class="img-xs rounded-circle" src="assetsAdmin/img/admin.jpg" alt="..."/>
-                  <p>
+               
+               
                     <span class="d-lg-none d-md-block">Quelques Actions</span>
                   </p>
                 </a>
@@ -156,7 +147,8 @@
                           <table >
                             <tr>
                               <td width="50%">
-                                 <a href="assetsAdmin/img/admin.jpg"><img class="img-lg rounded-circle" src="assetsAdmin/img/admin.jpg"    alt="..."></a>
+                                
+                                
                               </td>
                               <td>
                                    <h6 class="description text-left" ><b id="a">Nabil Baba Ahmed</b></h6><a href ="babaahmednabil3@gmail.com" id ="nab">babaahmednabil3@gmail.com</a>

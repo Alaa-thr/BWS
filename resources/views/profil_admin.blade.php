@@ -6,6 +6,85 @@
   <head>
     <title>{{ ( 'Profile') }}</title>
   </head>
+<nav class="navbar navbar-expand-lg navbar-transparent  bg-primary  navbar-absolute">
+                                                         
+                                                         <div class="container-fluid">
+                                                           <div class="navbar-wrapper">
+                                                             <div class="navbar-toggle">
+                                                               <button type="button" class="navbar-toggler">
+                                                                 <span class="navbar-toggler-bar bar1"></span>
+                                                                 <span class="navbar-toggler-bar bar2"></span>
+                                                                 <span class="navbar-toggler-bar bar3"></span>
+                                                               </button>
+                                                             </div>
+                                                 
+                                                          
+                                                          
+                                                 
+                                                           </div>
+                                                           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                                                             <span class="navbar-toggler-bar navbar-kebab"></span>
+                                                             <span class="navbar-toggler-bar navbar-kebab"></span>
+                                                             <span class="navbar-toggler-bar navbar-kebab"></span>
+                                                           </button>
+                                                           <div class="collapse navbar-collapse justify-content-end" id="navigation" >
+                                                           <form  action="/abest" method="get">
+                                                               <div class="input-group no-border"  style="left: -40px;">
+                                                                 <input type="search" name="search"  class="form-control" placeholder="Rechercher..." >
+                                                                 <div class="input-group-append">
+                                                                   <div class="input-group-text">
+                                                                     <i class="now-ui-icons ui-1_zoom-bold"></i>
+                                                                   </div>
+                                                                 </div>
+                                                               </div>
+                                                             </form>
+                                                             <ul class="navbar-nav" >
+                                                             <li class="nav-item dropdown" style="cursor: pointer; margin-right: 40px;">
+                                                                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                   <img class="img-xs rounded-circle"  src="<?php echo asset('storage/profil_image/'.$admin->image) ?>" alt="..."  />
+                                                                   <p>
+                                                                     <span class="d-lg-none d-md-block">Quelques Actions</span>
+                                                                   </p>
+                                                                 </a>
+                                                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                                                                   <div class="account-item clearfix js-item-menu">  
+                                                                     <div class="card-body">
+                                                                            
+                                                                         <a >
+                                                                           <table >
+                                                                             <tr>
+                                                                               <td width="50%">
+                                                                                 <a href="#">
+                                                                                  <img class="img-lg rounded-circle" src="<?php echo asset('storage/profil_image/'.$admin->image) ?>" alt="..."> 
+                                                                                  </a>
+                                                                                </td>
+                                                                               <td>
+                                                                                    <h6 class="description text-left" ><b id="a"> {{ $admin->nom }} {{ $admin->prenom }}</b></h6><a href ="{{ $admin->email }}" id ="nab">{{ $admin->email }}</a>
+                                                                                </td>
+                                                                              </tr>
+                                                                             </table>
+                                                                         </a>  
+                                                                     </div>
+                                                                     <div style="width: 255px; margin-left: 20px;"> 
+                                                                       <hr >
+                                                                      </div>
+                                                                       <a class="dropdown-item" href="{{ route('accueil') }}" id="n"><i class="now-ui-icons business_bank" id="m"></i><b>Allez vers Acceuil</b></a>
+                                                                       <a class="dropdown-item" href="{{ route('profilAdmin') }}" id="n"><i class="now-ui-icons users_single-02" id="m"></i><b>Profil</b></a>
+                                                                       <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                                         document.getElementById('logout-form').submit();" id="n">
+                                                                         <i class="now-ui-icons media-1_button-power" id="m"></i>
+                                                                         {{ __('Déconnexion') }} </a>
+                                                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                                                           @csrf
+                                                                         </form>
+                                                                   </div>
+                                                                 </div> 
+                                                             </li>
+                                                               
+                                                             </ul>
+                                                           </div>
+                                                         </div>
+</nav>
   <div class="main-panel" id="main-panel" >
       
       <div class="panel-header panel-header-sm">
@@ -79,9 +158,68 @@
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
+              <hr>
+                             
+                             <div class="row">
+                              <div class="col-md-6 pl-2">
+                                  <div class="form-group">
+                                    <label >Mot de passe actuel</label>
+                                    <input id="act" name="changepassword" type="password" class="form-control form-control-lg @error('changepassword') is-invalid @enderror" v-model="change.changepassword">
+                                   <img src="images/icons/img_476715.png" style="width:10%" id="show" onclick="myFunction()">
+                                   <img src="images/icons/download.png" style="width:10%;  height: 10%;display: none;"  id="hide" onclick="myFunction()">
+              
+              
+                                    <div id="message2">
+                                          <strong id="err2">
+                                          Entrez vostre mot de pass actuel
+                                          </strong>
+                                          </div>
+                
+                                  </div>
+                                </div>
+                                
+                              </div>
+                              <div class="row">
+                              <div class="col-md-6 pl-2">
+                                  <div class="form-group">
+                                    <label >Nouveau mot de passe</label>
+                                    <input id="nouv" name="current_password" type="password" 
+                                    class="form-control form-control-lg @error('current_password') is-invalid @enderror" v-model="change.current_password">
+                                    <img src="images/icons/img_476715.png" style="width:10%" id="show1" onclick="myFunction1()">
+                                   <img src="images/icons/download.png" style="width:10%;height: 10%;display: none;"  id="hide1" onclick="myFunction1()">
+                                    </div>
+                                </div>
+                                
+                              </div>
+                              <div class="row">
+                              <div class="col-md-6 pl-2">
+                                  <div class="form-group">
+                                    <label >Entrez à nouveau le nouveau mot de passe</label>
+                                    <input id="nouuv" name="new_password" type="password" class="form-control form-control-lg @error('new_password') is-invalid @enderror" v-model="change.new_password">
+                                    <img src="images/icons/img_476715.png" style="width:10%" id="show2" onclick="myFunction2()">
+                                   <img src="images/icons/download.png" style="width:10%;height: 5%;display: none;"  id="hide2" onclick="myFunction2()">
+              
+                                    <div id="message1">
+                                          <strong id="err1">
+                                          Les mots de passe ne sont pas identiques
+                                          </strong>
+                                          </div>
+                                  </div>
+                                </div>
+                                
+                              </div>
+                             
+                            <div class="form-group">
+                              <div class="col-md-6 col-md-offset-4">
+                                  <button type="" id="sub"  v-on:click="changePassword();"> Changer mot de pass</button>
+              
+                              </div>
+                                
+                            </div> 
+              
+                          </div>
+                        </div>
+                      </div>
         <div class="col-md-4" v-on:click="modif = false">
           <div class="card card-user">
             <div class="image">
@@ -90,7 +228,7 @@
             <div class="card-body">
               <div class="author">
                 <a href="#">
-                       <img class="avatar border-gray" :src="'storage/profil_image/'+profilclient.image" alt="..."> 
+                       <img class="avatar border-gray" :src="'storage/profil_image/'+profiladmin.image" alt="..."> 
                 </a>
                  <h5 class="title cl13">@{{ profiladmin.nom }} @{{ profiladmin.prenom }}</h5>
               </div>
@@ -104,6 +242,7 @@
                   <div class="col-md-8 " >@{{ profiladmin.numTelephone }}</div>
                 </div>
               </div>
+              
             </div>
             <hr>
             <div class="button-container">
@@ -157,6 +296,57 @@
 
 @push('javascripts')
 
+<script>
+function myFunction() {
+  var x = document.getElementById("act");
+  if (x.type === "password") {
+    x.type = "text";
+    document.getElementById("show").style.display = "none";
+    document.getElementById("hide").style.display = "block";
+
+  } else {
+    x.type = "password";
+    document.getElementById("show").style.marginTop = "-30px";
+    document.getElementById("show").style.display = "block";
+    document.getElementById("hide").style.display = "none";
+
+  }
+}
+function myFunction1() {
+  var x = document.getElementById("nouv");
+  if (x.type === "password") {
+    x.type = "text";
+    document.getElementById("show1").style.display = "none";
+    document.getElementById("hide1").style.display = "block";
+
+  
+  } 
+  else {
+    x.type = "password";
+    document.getElementById("show1").style.marginTop = "-30px";
+    document.getElementById("show1").style.display = "block";
+    document.getElementById("hide1").style.display = "none";
+
+  }
+}
+function myFunction2() {
+  var x = document.getElementById("nouuv");
+  if (x.type === "password") {
+    x.type = "text";
+    document.getElementById("show2").style.display = "none";
+    document.getElementById("hide2").style.display = "block";
+
+  
+  } else {
+    x.type = "password";
+    document.getElementById("show2").style.marginTop = "-30px";
+    document.getElementById("show2").style.display = "block";
+    document.getElementById("hide2").style.display = "none";
+
+  }
+}
+</script>
+
 
 <script>
         window.Laravel = {!! json_encode([
@@ -174,17 +364,31 @@
         
         profiladmin:[],
         modif: false,
+        profilclient:[],
+        ProduitsPanier: [],
+        favoris: [],
+        imagesproduit: [],
+        message:"hh",
+        change: {
+          changepassword: null,
+          current_password: null,
+          new_password: null,
+
+        },
         oldInformation: {
           nom: window.Laravel.admin.nom,
           prenom: window.Laravel.admin.prenom,
           num: window.Laravel.admin.numTelephone,
           email: window.Laravel.admin.email,
           numB: window.Laravel.admin.numCarteBanquaire,
+          msg: "hello",
+      
         },
         message: {},
                    
       },
     methods: {
+     
       modifieInfoProfils: function(){ 
         axios.put(window.Laravel.url+'/updateProfil',this.profiladmin)
             .then(response => {
@@ -211,6 +415,36 @@
         this.modif=false;
         this.message= {};
       },
+      changePassword: function(){
+          	axios.post(window.Laravel.url+'/changepassword',this.change)
+              .then(response => {
+                if(response.data.a == 0){
+                  console.log('hi 0 :');
+                  window.location.reload();
+
+                }
+                else if(response.data.a == 1){
+                  console.log('hi 1:');
+
+                  document.getElementById("nouv").style.borderColor = "red";
+                  document.getElementById("nouuv").style.borderColor = "red";
+                  document.getElementById("err1").style.display = "block";
+
+                    }
+                    else if(response.data.a == 2){
+                      console.log('hi :2');
+
+                      document.getElementById("act").style.borderColor = "red";
+                      document.getElementById("err2").style.display = "block";
+
+                    }
+
+              
+               })
+              .catch(error => {
+               
+                console.log('error :' , error);             })
+          },
       profil_admin: function(){
         axios.get(window.Laravel.url+'/profilAdmin')
 
