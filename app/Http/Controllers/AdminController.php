@@ -31,29 +31,35 @@ use App\Rules\ModifieSousCategorieExiste;
 use App\Rules\ModifieCategorieExiste;
 class AdminController extends Controller
 {
-     public function profil_admin(){
+    public function profil_admin(){
         $admin=Admin::find(Auth::user()->id); 
+//        echo  $admin->image;
         return view('profil_admin',['admin'=>$admin]);
     }
     public function vendeur_admin(){
         $vendeur =Vendeur::where('deletedv',0)->paginate(10);
+        $admin=Admin::find(Auth::user()->id); 
 
-        return view('vendeur_admin',['vendeur'=>$vendeur]);
+        return view('vendeur_admin',['vendeur'=>$vendeur,'admin'=>$admin]);
     }
 
     public function client_admin(){
         $client =Client::where('deletedc',0)->paginate(10);
-        return view('client_admin',['client'=>$client]);
+        $admin=Admin::find(Auth::user()->id); 
+        return view('client_admin',['client'=>$client, 'admin'=>$admin]);
     }
 
     public function employeur_admin(){
         $employeur = Employeur::where('deletede',0)->paginate(10); 
-        return view('employeur_admin',['employeur'=>$employeur]);
+        $admin=Admin::find(Auth::user()->id); 
+        return view('employeur_admin',['employeur'=>$employeur, 'admin'=>$admin]);
     }
 
     public function admin_admin(){
         $admin = Admin::where('deleteda',0)->paginate(10); 
-        return view('admin_admin',['admin'=>$admin]);
+        $a=Admin::find(Auth::user()->id); 
+
+        return view('admin_admin',['admin'=>$admin, 'a'=>$a]);
     }
     public function recup_vendeur(){
         $vendeur_recup = Vendeur::where('deletedv',1)->paginate(10);
@@ -77,7 +83,7 @@ class AdminController extends Controller
     public function article_admin(){//fcnt qui retourné tout les articles qui sont dans la table "Article" et trie par ordre desc selon son dates de creations
         $c = Admin::find(Auth::user()->id);//recuperé "user_id" de admin qui est connecter       
         $article = \DB::table('articles')->where('admin_id', $c->id)->orderBy('created_at','desc')->paginate(5) ;//recuperé les articles qui sont dans la table "Article" et trie par ordre desc selon son dates de creations et pour "->paginate(5)" c a d f kol page t'affichilek 5 ta3 les article  
-        return view('articles_admin',['article'=>$article, 'idAdmin' => $c->id]);//reteurné a la view "articles_admin" et les 2 attributs "article" (contient tout les articles) et "idAdmin" (id de l'admin cncté) 
+        return view('articles_admin',['article'=>$article, 'idAdmin' => $c->id,'admin' => $c]);//reteurné a la view "articles_admin" et les 2 attributs "article" (contient tout les articles) et "idAdmin" (id de l'admin cncté) 
     }
 
     public function detaillsArticle(Request $request){//fcnt retourné l'article di rena habin n2affichiw les détaills te3o, 3anda un parametre di fih id ta3 article rechercher
@@ -172,12 +178,14 @@ class AdminController extends Controller
         return Response()->json(['etat' => true,'admin'=> $admin]);
     }
     public function categories_admin(){
+        $admin=Admin::find(Auth::user()->id); 
 
+    
         $autre = \DB::table('sous_categories')->where('categorie_id',null)->get();
         $autreProduit = \DB::table('produits')->where('sous_categorie_id',null)->get();
         if(count($autre) == 0 && count($autreProduit) == 0 ){
             $categorie = \DB::table('categories')->where('libelle','<>','Autre')->orderBy('libelle','asc')->paginate(5);
-            return view('categories_admin',['categorie'=>$categorie , 'var'=> 0 ]);
+            return view('categories_admin',['categorie'=>$categorie , 'var'=> 0 ,'admin'=>$admin]);
         }
         else{
             $categorie = \DB::table('categories')->orderBy('libelle','asc')->paginate(5);
@@ -434,10 +442,10 @@ class AdminController extends Controller
          return Response()->json(['etat' => true,'adminAjout' => $admin2]);
     }
     public function notifications_admin(){
-      
-        $notif = \DB::table('admins')->join('notifications','admins.id','=','notifications.admin_id')
+        $admin=Admin::find(Auth::user()->id); 
+       $notif = \DB::table('admins')->join('notifications','admins.id','=','notifications.admin_id')
         ->paginate(24);
-         return view('notifications_admin',['notif'=>$notif]);
+         return view('notifications_admin',['notif'=>$notif, 'admin'=>$admin]);
     }
     public function deleteNotif($id){
        
@@ -449,7 +457,8 @@ class AdminController extends Controller
     public function emails_admin(){
 
         $email = \DB::table('emails')->orderBy('created_at','desc')->get();
-        return view('emails_admin',['em' =>$email]);
+        $admin=Admin::find(Auth::user()->id); 
+        return view('emails_admin',['em' =>$email, 'admin'=>$admin]);
     }
     public function detailsEmail(Request $request){
         $email_details = \DB::table('emails')->where('id',$request->idEM)->get();

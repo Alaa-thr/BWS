@@ -25,7 +25,6 @@ class CreateSignalTable extends Migration
             $table->unique(['client_id', 'vendeur_id']);
             $table->unique(['client_id', 'produit_id']);
             $table->unique(['client_id', 'annonce_emploi_id']);
-
         });
     }
 

@@ -3921,3 +3921,44 @@ margin-bottom: 10%;}
   display: none;
 
 }
+#sub{
+  background-color: rgb(18, 148, 223);
+  border-color: black;
+}
+#err1{
+  display: none;
+    background-color: red;
+  color: white;}
+  #err2{
+    display: none;
+    background-color: red;
+  color: white;}
+  #show{
+  
+    margin-top: -20%;
+    margin-left: 88%;
+  }
+  #hide{
+    display: none;
+    margin-top: -12%;
+    margin-left: 88%;
+  }
+  #show1{
+    margin-top: -20%;
+    margin-left: 88%;
+  }
+  #hide1{
+    display: none;
+    margin-top: -12%;
+    margin-left: 88%;
+  }
+  #show2{
+  
+    margin-top: -20%;
+    margin-left: 88%;
+  }
+  #hide2{
+    display: none;
+    margin-top: -12%;
+    margin-left: 88%;
+  }

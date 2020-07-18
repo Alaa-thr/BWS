@@ -17,7 +17,7 @@ class CreateTarifLivraisonTable extends Migration
             $table->id();       
             $table->unsignedBigInteger('ville_id');
             $table->unsignedBigInteger('vendeur_id'); 
-            $table->double('prix');/*le prix de deplacemant*/
+            $table->float('prix');/*le prix de deplacemant*/
             $table->foreign('ville_id')->references('id')->on('villes');
             $table->foreign('vendeur_id')->references('id')->on('vendeurs');
             $table->timestamps();

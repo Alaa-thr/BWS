@@ -20,7 +20,6 @@ class CreateHistoriquesTable extends Migration
             $table->unsignedBigInteger('annonceE_id')->nullable();
             $table->timestamps();
         });
-        
     }
 
     /**

@@ -164,7 +164,7 @@
             <ul class="navbar-nav" >
             <li class="nav-item dropdown" style="cursor: pointer; margin-right: 40px;">
                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <img class="img-xs rounded-circle" src="assetsAdmin/img/admin.jpg" alt="..."  />
+                  <img class="img-xs rounded-circle"  src="<?php echo asset('storage/profil_image/'.$admin->image) ?>" alt="..."  />
                   <p>
                     <span class="d-lg-none d-md-block">Quelques Actions</span>
                   </p>
@@ -177,10 +177,13 @@
                           <table >
                             <tr>
                               <td width="50%">
-                                 <a href="assetsAdmin/img/admin.jpg"><img class="img-lg rounded-circle" src="assetsAdmin/img/admin.jpg"    alt="..."></a>
+                                  <a href="#">
+                                  <img class="img-lg rounded-circle"  src="<?php echo asset('storage/profil_image/'.$admin->image) ?>" alt="..."> 
+                              </a>
                               </td>
                               <td>
-                                   <h6 class="description text-left" ><b id="a">Nabil Baba Ahmed</b></h6><a href ="babaahmednabil3@gmail.com" id ="nab">babaahmednabil3@gmail.com</a>
+                                   <h6 class="description text-left" ><b id="a">{{ $a->nom }} {{ $a->prenom }}</b></h6>
+                                   <a href ="{{ $a->email }}" id ="nab">{{ $a->email }}</a>
                                </td>
                              </tr>
                             </table>
@@ -361,7 +364,7 @@
                       <div class="card-body" >
                           <div class="author">
                             <a href="#">
-                              <img class="avatar border-gray" src="assetsClient/img/input/profil_img.jpg" alt="..."/>
+                              <img class="avatar border-gray" :src="'storage/profil_image/'+adminaa.image" alt="..."> 
                             </a>
                             <h5 class="title cl13">@{{ adminaa.nom }} @{{ adminaa.prenom }}
                             </h5>

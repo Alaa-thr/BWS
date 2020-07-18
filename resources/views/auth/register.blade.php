@@ -17,7 +17,7 @@
                
                
 
-        <form id="regForm" method="POST" action="{{ route('register') }}">
+        <form id="regForm" method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                 @csrf
 
             
@@ -105,7 +105,7 @@
                     </div>
     </div>
     <div class="from-group  m-b-40 openC" style="display: none">
-                    <input type="file" class="form-control @error('photoC') is-invalid @enderror" name="photoC" value="{{old('photoC')}}" style="height: 45px">
+                    <input type="file" class="form-control @error('photoC') is-invalid @enderror" name="photoC" id="photoC" value="{{old('photoC')}}" style="height: 45px">
                     @error('photoC')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>

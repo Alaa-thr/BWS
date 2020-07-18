@@ -25,10 +25,46 @@ use App\TailleProduit;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\CommandeRequest;
 use App\Rules\Taille; 
- 
+use Session;
+use Hash;
+
+
 class ClientController extends Controller
 {
-    
+      
+    public function changePassword(Request $request){
+       $request->validate([
+            'current_password' => 'required',
+            'changepassword' => 'required',
+            'new_password'      => 'required',
+]);
+
+        if(Hash::check($request->changepassword,Auth::user()->password)){
+           
+            if($request->current_password == $request->new_password)
+            {
+                   
+                \DB::table('users')->where('id',Auth::user()->id)->update(['password' => Hash::make($request->current_password)]);
+               
+                $request->validate([
+                    'current_password' => 'required|string|min:8|confirmed',
+                    'new_password'      => 'required|string|min:8|confirmed',
+        ]);
+
+        return Response()->json(['a' => 0]);
+
+            }
+            else{
+                //$a = 1;
+                return Response()->json(['a' =>1]);
+            }
+        }
+        else{
+            //$a = 2;
+            return Response()->json(['a' => 2]);
+        }
+        
+    }
 
      public function profil_clinet(){
         $client=Client::find(Auth::user()->id);
@@ -37,6 +73,8 @@ class ClientController extends Controller
         $favoris = \DB::table('produits')->get();
         $imageproduit = \DB::table('imageproduits')->get();
         $command = \DB::table('commandes')->where([ ['client_id',$client->id],['commande_envoyee',0]])->get();     
+
+       
         return view('profil_clinet',['client'=>$client,'categorie'=>$categorie,'categorieE'=>$categorieE,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command]);
     }    
     public function update_profil(Request $request, $id) {

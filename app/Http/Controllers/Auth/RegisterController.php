@@ -20,6 +20,8 @@ use App\Rules\EmailExist;
 use App\Rules\NumberExist;
 use App\Rules\NumCarteBancaireExist;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
+
 class RegisterController extends Controller
 {
     /*
@@ -84,7 +86,7 @@ class RegisterController extends Controller
                     'ville' => ['required'],
                     'numTelephone' => ['required', 'string','regex:/0[5-7][0-9]+/',"min:10","max:10", new NumberExist($data['compte'])],
                     'compte' => ['required'],
-                    'photoC' => ['required'],
+                    'photoC' => ['sometimes','image'],
                     
                     ]);
                 }
@@ -130,15 +132,16 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+                   
           
        
                 if($data['compte'] == 1){
                
-               /* $request = request();
-                $exploded = explode(',', $request->photoC);
-                $decoded = base64_decode($exploded[0]);
-                
-                Storage::put('/public/profile_image/' . $data['photoC'], $exploded[0]);*/
+                    $photoCupload = request()->file('photoC');
+                    $photoCname = time() . '.' . $photoCupload->getClientOriginalExtension();
+                    $photoCpath = public_path('storage/profil_image/');
+                    $photoCupload->move($photoCpath,$photoCname);
+                 
                         $objet_user = User::create([
                                 
                                 'numTelephone' => $data['numTelephone'],
@@ -154,7 +157,8 @@ class RegisterController extends Controller
                             'prenom' => $data['prenom'],
                             'ville' => $data['ville'],
                             'email' => $data['email'],
-                           //    'image' => $data['photoC'],                       
+                            'image' =>  $photoCname,
+                     
                             'numeroTelephone' => $data['numTelephone']            
                         ]);
                         
@@ -163,6 +167,10 @@ class RegisterController extends Controller
                 }
                 else if($data['compte'] == 2){
                
+                    $photoVupload = request()->file('photoV');
+                    $photoVname = time() . '.' . $photoVupload->getClientOriginalExtension();
+                    $photoVpath = public_path('storage/profil_image/');
+                    $photoVupload->move($photoVpath,$photoVname);
                         $objet_user = User::create([
                                 
                                 'numTelephone' => $data['numTelephone'],
@@ -180,7 +188,7 @@ class RegisterController extends Controller
                             'numTelephone' => $data['numTelephone'],
                             'Nom_boutique' => $data['Nom_boutique'],
                             'Num_Compte_Banquaire' => $data['Num_Compte_Banquaire'],
-                            'image' => $data['photoV'],   
+                            'image' =>  $photoVname,
                             'Addresse' => $data['addrsse_boutique'],        
                         ]);
                         foreach ( $data['typeL'] as $type ) {
@@ -195,6 +203,11 @@ class RegisterController extends Controller
                 }
                 else if($data['compte'] == 3){
                
+                    $photoEupload = request()->file('photoE');
+                    $photoEname = time() . '.' . $photoEupload->getClientOriginalExtension();
+                    $photoEpath = public_path('storage/profil_image/');
+                    $photoEupload->move($photoEpath,$photoEname);
+
                         $objet_user = User::create([
                                 
                                 'numTelephone' => $data['numTelephone'],
@@ -212,8 +225,9 @@ class RegisterController extends Controller
                             'address' => $data['addrsse_soct'],
                             'nom_societe' => $data['nom_societe'],
                             'num_compte_banquiare' => $data['num_compte_banquiare'],
-                            'image' => $data['photoE'],
+                            'image' =>  $photoEname,
                             'ville' => $data['ville'],            
+
                         ]);
                         return $objet_user;
                 }

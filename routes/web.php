@@ -225,3 +225,5 @@ Route::post('/paiementvend','VendeurController@validateFormProduit');
 
 Route::post('/verifierproduit/{id}','AdminController@Verifier');
 Route::post('/verifierannonce/{id}','AdminController@VerifierAnnonce');
+
+Route::post('/changepassword','ClientController@changePassword');
