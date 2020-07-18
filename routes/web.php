@@ -38,6 +38,7 @@ Route::get('/emploi/search_categorie={id}/sous-categorie={id1}/ville={id2}', 'Bw
 
 Route::get('/emploi/search_categorie={id}/ville={id1}/sous-categorie={id2}', 'BwsController@emploiVilleSousCategoSearch');
 
+Route::get('/sousCategorie', 'BwsController@shopSearchDetails');
 
 
 Route::post('detailsemp','BwsController@detailsEmploi');

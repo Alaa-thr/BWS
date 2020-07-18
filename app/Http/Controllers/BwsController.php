@@ -21,6 +21,48 @@ class BwsController extends Controller
 {
    
 /************************************************ ***********************************************/ 
+public function shopSearchDetails(Request $request){
+
+
+    $produit = \DB::table('produits')->get();       
+        
+
+    if($request->has('sousCategorie')){
+         $produit->where(function ($q) use ($request)
+            {
+                return $q->where('sous_categorie_id',  $request->input('sousCategorie'));
+            });
+    }
+         
+       /* $color = \DB::table('colors')->join('color_produits', 'colors.id', '=', 'color_produits.color_id')->get();
+        $taille = \DB::table('taille_produits')->get();
+        $typeLivraison = \DB::table('typechoisirvendeurs')->get();
+       
+        
+        $sousC = \DB::table('sous_categories')->where([['categorie_id',0]])->get();    
+        
+        $query = User::where('company_id', $request->input('company_id'));
+
+        if ($request->has('last_name'))
+        {
+            $query->where('last_name', 'LIKE', '%' . $request->input('last_name') . '%');
+        }*/
+        
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 public function emploiVilleSousCategoSearch($id,$idVille,$idSC){
         $emploi = \DB::table('annonce_emploies')
             ->join('employeurs','employeurs.id','=','employeur_id')

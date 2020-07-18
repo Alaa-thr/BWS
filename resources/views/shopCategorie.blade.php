@@ -81,8 +81,33 @@
 	<div class="bg0 m-t-23 p-b-140">
 		<div class="container">
 			<div class="flex-w flex-sb-m p-b-52">
-				<div class="flex-w flex-l-m filter-tope-group m-tb-10">
-					
+				<div class="flex-w flex-c-m m-tb-20">
+			        <div class="m-l-25 respon6-next" style="width: 230px;">
+			            <div class="rs1-select2 bor8 bg0" >
+			            	
+				            	<select class="js-select2" id="tttt" onchange="window.location.href = '/sousCategorie'" name='sousCategorie'>
+									
+					                	<option value="0" disabled selected>Sous-Categorie</option>
+					               
+	                   
+	                    
+	                        
+					                @foreach($sousC as $sc)
+						                	 	<option type="submit" value="<? php echo $sc->id ?>">
+						                			{{$sc->libelle}}
+						                		</option>
+						                	
+						            @endforeach
+						                	
+				            	</select>
+				                <div class="dropDownSelect2"></div>
+			                
+				        
+			            </div>
+					</div>
+					<div class="m-l-25 respon6-next" style="width: 230px;">
+			            
+					</div>
 				</div>
 
 				<div class="flex-w flex-c-m m-tb-10">
