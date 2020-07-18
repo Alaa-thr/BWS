@@ -88,7 +88,7 @@
 			        <div class="m-l-25 respon6-next" style="width: 230px;">
 			            <div class="rs1-select2 bor8 bg0" >
 			            	<select class="js-select2" id="tttt" onchange="window.location.href = this.options[this.selectedIndex].value">
-								@if($url != "emploi/search_categorie={id}/sous-categorie={id1}" && $url != "emploi/search_categorie={id}/sous-categorie={id1}/ville={id2}")
+								@if($url != "emploi/search_categorie={id}/sous-categorie={id1}" && $url != "emploi/search_categorie={id}/sous-categorie={id1}/ville={id2}" && $url != "emploi/search_categorie={id}/ville={id1}/sous-categorie={id2}" )
 				                	<option value="0" disabled selected>Sous-Categorie</option>
 				                @else
 									<option value="0" disabled selected>
@@ -101,6 +101,15 @@
 					                	 	<option  value="/emploi/search_categorie=<?php echo($sc->categorie_id)?>/sous-categorie=<?php echo($sc->id)?>/ville={{request()->route('id2')}}">
 					                			{{$sc->libelle}}
 					                		</option>
+					                	@elseif($url == "emploi/search_categorie={id}/ville={id1}")
+					                		<option  value="/emploi/search_categorie=<?php echo($sc->categorie_id)?>/ville={{request()->route('id1')}}/sous-categorie=<?php echo($sc->id)?>">
+					                			{{$sc->libelle}}
+					                		</option>
+					                	@elseif($url == "emploi/search_categorie={id}/ville={id1}/sous-categorie={id2}")
+				                		<option  value="/emploi/search_categorie={{request()->route('id')}}/ville={{request()->route('id1')}}/sous-categorie=<?php echo($sc->id)?>">
+				                			{{$sc->libelle}}
+				                		</option>
+
 				                		@else
 				                			<option  value="/emploi/search_categorie=<?php echo($sc->categorie_id)?>/sous-categorie=<?php echo($sc->id)?>">
 				                			{{$sc->libelle}}
@@ -116,7 +125,7 @@
 					<div class="m-l-25 respon6-next" style="width: 230px;">
 			            <div class="rs1-select2 bor8 bg0" >
 			            	<select class="js-select2" id="villes"  onchange="window.location.href = this.options[this.selectedIndex].value">
-								@if($url != "emploi/search_categorie={id}/ville={id1}" && $url != "emploi/search_categorie={id}/sous-categorie={id1}/ville={id2}")
+								@if($url != "emploi/search_categorie={id}/ville={id1}" && $url != "emploi/search_categorie={id}/sous-categorie={id1}/ville={id2}" && $url != "emploi/search_categorie={id}/ville={id1}/sous-categorie={id2}")
 				                	<option value="0" disabled selected>Villes</option>
 				                @else
 									<option value="0" disabled selected>
@@ -132,6 +141,15 @@
 	
 				                	@elseif($url == "emploi/search_categorie={id}/sous-categorie={id1}")
 				                		<option  value="/emploi/search_categorie={{request()->route('id')}}/sous-categorie={{request()->route('id1')}}/ville=<?php echo($vl->nom)?>">
+				                			{{$vl->nom}}
+				                		</option>
+				                	@elseif($url == "emploi/search_categorie={id}/ville={id1}/sous-categorie={id2}")
+				                		<option  value="/emploi/search_categorie={{request()->route('id')}}/ville=<?php echo($vl->nom)?>/sous-categorie={{request()->route('id2')}}">
+				                			{{$vl->nom}}
+				                		</option>
+
+				                	@elseif($url == "emploi/search_categorie={id}/ville={id1}")
+				                		<option  value="/emploi/search_categorie={{request()->route('id')}}/ville=<?php echo($vl->nom)?>">
 				                			{{$vl->nom}}
 				                		</option>
 				                	@else

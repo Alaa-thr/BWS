@@ -163,6 +163,7 @@
 </script>
 
 <script>
+  function initDashboardPageCharts () {}
    var app = new Vue({
 
     el: '#app',

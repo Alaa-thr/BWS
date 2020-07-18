@@ -88,7 +88,7 @@
 			        <div class="m-l-25 respon6-next" style="width: 230px;">
 			            <div class="rs1-select2 bor8 bg0" >
 			            	<select class="js-select2" id="tttt" onchange="window.location.href = this.options[this.selectedIndex].value">
-								<?php if($url != "emploi/search_categorie={id}/sous-categorie={id1}" && $url != "emploi/search_categorie={id}/sous-categorie={id1}/ville={id2}"): ?>
+								<?php if($url != "emploi/search_categorie={id}/sous-categorie={id1}" && $url != "emploi/search_categorie={id}/sous-categorie={id1}/ville={id2}" && $url != "emploi/search_categorie={id}/ville={id1}/sous-categorie={id2}" ): ?>
 				                	<option value="0" disabled selected>Sous-Categorie</option>
 				                <?php else: ?>
 									<option value="0" disabled selected>
@@ -102,6 +102,17 @@
 					                			<?php echo e($sc->libelle); ?>
 
 					                		</option>
+					                	<?php elseif($url == "emploi/search_categorie={id}/ville={id1}"): ?>
+					                		<option  value="/emploi/search_categorie=<?php echo($sc->categorie_id)?>/ville=<?php echo e(request()->route('id1')); ?>/sous-categorie=<?php echo($sc->id)?>">
+					                			<?php echo e($sc->libelle); ?>
+
+					                		</option>
+					                	<?php elseif($url == "emploi/search_categorie={id}/ville={id1}/sous-categorie={id2}"): ?>
+				                		<option  value="/emploi/search_categorie=<?php echo e(request()->route('id')); ?>/ville=<?php echo e(request()->route('id1')); ?>/sous-categorie=<?php echo($sc->id)?>">
+				                			<?php echo e($sc->libelle); ?>
+
+				                		</option>
+
 				                		<?php else: ?>
 				                			<option  value="/emploi/search_categorie=<?php echo($sc->categorie_id)?>/sous-categorie=<?php echo($sc->id)?>">
 				                			<?php echo e($sc->libelle); ?>
@@ -118,7 +129,7 @@
 					<div class="m-l-25 respon6-next" style="width: 230px;">
 			            <div class="rs1-select2 bor8 bg0" >
 			            	<select class="js-select2" id="villes"  onchange="window.location.href = this.options[this.selectedIndex].value">
-								<?php if($url != "emploi/search_categorie={id}/ville={id1}" && $url != "emploi/search_categorie={id}/sous-categorie={id1}/ville={id2}"): ?>
+								<?php if($url != "emploi/search_categorie={id}/ville={id1}" && $url != "emploi/search_categorie={id}/sous-categorie={id1}/ville={id2}" && $url != "emploi/search_categorie={id}/ville={id1}/sous-categorie={id2}"): ?>
 				                	<option value="0" disabled selected>Villes</option>
 				                <?php else: ?>
 									<option value="0" disabled selected>
@@ -135,6 +146,17 @@
 	
 				                	<?php elseif($url == "emploi/search_categorie={id}/sous-categorie={id1}"): ?>
 				                		<option  value="/emploi/search_categorie=<?php echo e(request()->route('id')); ?>/sous-categorie=<?php echo e(request()->route('id1')); ?>/ville=<?php echo($vl->nom)?>">
+				                			<?php echo e($vl->nom); ?>
+
+				                		</option>
+				                	<?php elseif($url == "emploi/search_categorie={id}/ville={id1}/sous-categorie={id2}"): ?>
+				                		<option  value="/emploi/search_categorie=<?php echo e(request()->route('id')); ?>/ville=<?php echo($vl->nom)?>/sous-categorie=<?php echo e(request()->route('id2')); ?>">
+				                			<?php echo e($vl->nom); ?>
+
+				                		</option>
+
+				                	<?php elseif($url == "emploi/search_categorie={id}/ville={id1}"): ?>
+				                		<option  value="/emploi/search_categorie=<?php echo e(request()->route('id')); ?>/ville=<?php echo($vl->nom)?>">
 				                			<?php echo e($vl->nom); ?>
 
 				                		</option>

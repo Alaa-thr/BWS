@@ -36,6 +36,8 @@ Route::get('/emploi/search_categorie={id}/ville={id1}', 'BwsController@emploiVil
 
 Route::get('/emploi/search_categorie={id}/sous-categorie={id1}/ville={id2}', 'BwsController@emploiSousCategoVilleSearch');
 
+Route::get('/emploi/search_categorie={id}/ville={id1}/sous-categorie={id2}', 'BwsController@emploiVilleSousCategoSearch');
+
 
 
 Route::post('detailsemp','BwsController@detailsEmploi');
@@ -138,6 +140,7 @@ Route::get('/profilVendeur', 'VendeurController@profil_vendeur')->name('profilVe
 Route::put('/updateProfilV/{id}','VendeurController@update_profil');
 Route::get('/produitVendeur', 'VendeurController@getProduit')->name('produitVendeur');
 Route::post('/addproduit', 'VendeurController@addProduit');
+Route::post('/addproduitwithtest', 'VendeurController@addProduitWithTest');
 Route::get('/getAllsouscategories/{id}','VendeurController@getSousCategories');
 Route::get('/getAllcategories', 'VendeurController@getCategories');
 Route::get('/getAllcolor', 'VendeurController@getColors');
@@ -150,8 +153,13 @@ Route::put('/refusercommande/{id}','VendeurController@RefuserCommande');
 Route::post('/addvilles','VendeurController@AjouterVillePrix');
 Route::delete('/deleteproduit/{id}','VendeurController@deleteProduit');
 Route::put('/updateproduit','VendeurController@updateProduit');
-
-
+Route::post('/verifierInputs','VendeurController@verifierInputs');
+Route::get('/gettypelvendeur','VendeurController@getTypeLVendeur');
+Route::get('/getpaimentvendeurr','VendeurController@getPaimentVendeurr');
+Route::get('/getdetailsproduitvendeur/{id}','VendeurController@getDetailsProduitVendeur');
+Route::get('/tarifville','VendeurController@tarifVille');
+Route::delete('/deleteTypeLivr/{id}','VendeurController@deleteTypeLivr');
+Route::post('/addTypeLivr','VendeurController@addTypeLivr');
 /*commande traiter vendeur*/
 Route::get('/commandeTraiterVendeur','VendeurCommandeController@get_commande_traiter_vendeur')->name('commandeTraiterVendeur');
 Route::post('/detaillsacommandetraitervendeur', 'VendeurCommandeController@detaillsacommandeTraiterVendeur'); 

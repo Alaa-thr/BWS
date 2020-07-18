@@ -411,23 +411,6 @@
                       </td>
                     </tr>
                     <tr>
-                      <td>
-                        <div class="title" style="margin-left: 350px; margin-top: -150px;">
-                          abonnements
-                        </div>  
-                      </td>
-                      <td>
-                        <div class="title" style="margin-left: 20px; margin-top: -150px;">
-                          :
-                        </div>
-                      </td>
-                      <td>
-                        <div style="margin-left: 30px; margin-top: -150px;">
-                          @{{ vendeuraa.Nbre_abbon}}
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
                     <div style="margin-left: 360px; margin-top: -90px; width:500px;">
                    
                     <button id="verif" class="btn btn-success btn-block " style="width:300px;

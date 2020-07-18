@@ -287,14 +287,16 @@
     window.Laravel = {!! json_encode([
            "csrfToken"  => csrf_token(),
            "article"   => $article,
-           "idAdmin" => $idAdmin,         'emploC'         => $emploC,  'prV'         => $prV,
+           "idAdmin" => $idAdmin,         
+           'emploC'         => $emploC,  
+           'prV'         => $prV,
 
            "url"      => url("/")  
       ]) !!};
 </script>
 
 <script>
-
+function initDashboardPageCharts () {}
 
 
 var app2 = new Vue({

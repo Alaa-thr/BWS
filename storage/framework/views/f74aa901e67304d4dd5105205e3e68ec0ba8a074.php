@@ -232,7 +232,7 @@
 
 			                                    <div class="size-204 respon6-next">
 			                                        <div class="rs1-select2 bor8 bg0" :class="{'is-invalid' : message.taille}">
-			                                            <select class="js-select2" id="tttt" onchange="selectTaille(this.options[this.selectedIndex].value)">
+			                                            <select class="js-select2 tttt" id="tttt" onchange="selectTaille(this.options[this.selectedIndex].value)">
 			                                                <option value="0" disabled selected>Choisir la taille</option>
 			                                                <option v-for="taille in tailles" v-if="taille.produit_id  === detaillproduit.id" :value="taille.nom">{{taille.nom}}</option>
 			                                            </select>
@@ -251,7 +251,7 @@
 
 			                                    <div class="size-204 respon6-next">
 			                                        <div class="rs1-select2 bor8 bg0"  :class="{'is-invalid' : message.couleur_id}">
-			                                            <select class="js-select2" id="cccc" onchange="selectColor(this.options[this.selectedIndex].value)">
+			                                            <select class="js-select2 cccc" id="cccc" onchange="selectColor(this.options[this.selectedIndex].value)">
 			                                                <option value="0" disabled selected="true">Choisir la couleur</option>
 			                                                <option v-for="color in colors" :value="color.color_id" v-if="color.produit_id === detaillproduit.id">{{color.nom}}</option>
 			                                            </select>
@@ -270,7 +270,7 @@
 
 			                                    <div class="size-204 respon6-next">
 			                                        <div class="rs1-select2 bor8 bg0" :class="{'is-invalid' : message.type_livraison}">
-			                                            <select  class="js-select2" id="TLTLTL" onchange="selectLivraisen(this.options[this.selectedIndex].value)">
+			                                            <select  class="js-select2 TLTLTL" id="TLTLTL" onchange="selectLivraisen(this.options[this.selectedIndex].value)">
 			                                                <option id='TL0' value="0" disabled selected="true">Choisir le type de livraison</option>
 			                                                
 			                                                <option v-for="typeLivraison in typeLivraisons" value="vc" v-if="typeLivraison.vendeur_id === detaillproduit.vendeur_id && typeLivraison.type_livraison === 'vc'">Le vendeur effectuer la livraison</option>
@@ -365,10 +365,10 @@
 	}
 	function initialiser(){
 		
-		document.getElementById("tttt").options.selectedIndex = 0;
-		document.getElementById("cccc").options.selectedIndex = 0;
 		document.getElementById("qtee").value = 0;
-		document.getElementById("TLTLTL").options.selectedIndex = 0;
+		$('.TLTLTL').val('0').select2();
+		$('.cccc').val('0').select2();
+		$('.tttt').val('0').select2();
 	}
 	function changePic(img){
         document.getElementById("pic").src = 'http://localhost:8000/storage/produits_image/'+img;

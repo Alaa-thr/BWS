@@ -22,6 +22,7 @@
   <link href="assetsVendeur/css/util.css" rel="stylesheet" />
   <link href="assetsVendeur/css/main.css" rel="stylesheet" />
   <link rel="stylesheet" type="text/css" href="assetsVendeur/fonts/linearicons-v1.0.0/icon-font.min.css">
+  <link rel="stylesheet" type="text/css" href="{{ asset('vendor/select2/select2.min.css')}}">
   <script src="{{ asset('jss/vue.js') }}"></script>
   <script src="{{asset('jss/axios.min.js')}}"></script>
   <script src="{{asset('jss/sweetalert2.js')}}"></script>
@@ -762,7 +763,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <script src="assetsVendeur/vendor/animsition/js/animsition.min.js"></script>
     <script src="assetsVendeur/vendor/bootstrap/js/popper.js"></script>
     <script src="assetsVendeur/vendor/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assetsVendeur/vendor/select2/select2.min.js"></script>
+
+    <script src="{{ asset('vendor/select2/select2.min.js')}}"></script>
     <script>
         $(".js-select2").each(function(){
             $(this).select2({
@@ -770,7 +772,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                 dropdownParent: $(this).next('.dropDownSelect2')
             });
         })
-    </script>
+   </script>
     <script src="assetsVendeur/vendor/daterangepicker/moment.min.js"></script>
     <script src="assetsVendeur/vendor/daterangepicker/daterangepicker.js"></script>
     <script src="assetsVendeur/vendor/slick/slick.min.js"></script>
