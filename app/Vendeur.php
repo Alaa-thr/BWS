@@ -10,8 +10,7 @@ class Vendeur extends Model
     
 	protected $primaryKey = 'user_id';
     protected $fillable = [
-        'nom','prenom','numTelephone', 'email','user_id','Addresse','Nom_boutique',  
-        'Num_Compte_Banquaire','type_livraison','Nbre_abbon','prix_livraison','image','deletedv',
+        'nom','prenom','numTelephone', 'email','user_id','Addresse','Nom_boutique','Num_Compte_Banquaire','type_livraison','Nbre_abbon','prix_livraison','image','deletedv','ville',
     ];
 
     use SoftDeletes;

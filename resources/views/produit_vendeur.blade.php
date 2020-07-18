@@ -2,6 +2,7 @@
 
 @section('content')
 
+
     <head>
         <title>{{ ( 'Produits') }}</title>
     </head>
@@ -43,6 +44,7 @@
                 <h4 class="card-title " style="margin-top: -30px; margin-left: 50px;">Mes produits</h4>
                
                     <div class="txt-right"style="margin-top: -50px; " >
+                            <button   class="btn-sm btn-light js-show-modal1 m-r-30" style="height: 35px;" v-on:click="showTarifL" ><b>Traif & Type Livraison</b>
                             <button  v-if="suppr" class="btn-sm btn-danger " style="height: 35px; " v-on:click="deleteArrayProduit()"><b>Supprimer</b>
                             </button>
                              <button  v-else class="btn-sm btn-info js-show-modal1 m-r-30" style="height: 35px;" v-on:click="AfficherAjout()" ><b>Ajouter Produit</b>
@@ -62,17 +64,17 @@
                            <input type="checkbox" :id="produit.id" :value="produit.id" v-model="produitIds" @change="deselectProduit(produit.id)">
                            <label :for="produit.id" style="margin-top: 120px; margin-left: -10px;"></label>
                    </div>
-                    <div class="block2" style="margin-top: -140px;">
-                        <div class="block2-pic hov-img0"  style="margin-left: 20px; " v-for="imgP in imagesproduit">
+                    <div class="block2" style="margin-top: -140px;margin-left: 20px; ">
+                        <div class="block2-pic hov-img0" v-for="imgP in imagesproduit">
                             <img v-if="imgP.produit_id === produit.id && imgP.profile === 1" :src="'storage/produits_image/'+ imgP.image" alt="IMG-PRODUCT" style="height: 290px;width: 990px; border: 1;">
 
-                            <a href="" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1" v-on:click="ShowInfo()">
+                            <a href="" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1" v-on:click="dd(produit)">
                                 Quick View
                             </a>
                         </div>
 
                         <div class="block2-txt flex-w flex-t p-t-14">
-                            <div class="block2-txt-child1 flex-col-l " style="margin-left: 20px;">
+                            <div class="block2-txt-child1 flex-col-l " >
                                 <a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
                                     @{{produit.Libellé}}
                                 </a>
@@ -82,14 +84,8 @@
                                 </span>
                             </div>
 
-                            <div class="block2-txt-child2 flex-r p-t-3" style="margin-left: 160px; margin-right: -20px; margin-top: -50px;">
-                                <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-                                    <img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON">
-                                    <img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON">
-                                </a>
-                            </div>
-                            <div class="js-show-modal1"  style="margin-top: -50px; margin-left: 30px; cursor: pointer;"  v-on:click="updateProduit(produit)">
-                                   <img src="../images/icons/document.png" alt="..."/>
+                            <div class="js-show-modal1" v-on:click="updateProduit(produit)">
+                                <img src="../images/icons/document.png" alt="..."/>
                             </div>
                         </div>
                     </div>
@@ -106,156 +102,125 @@
               </div>
          
 <!-- Modal1 -->
-    <div class="wrap-modal11 js-modal1 p-t-80 p-b-20" id='app2' v-if="hideModel">
+    <div class="wrap-modal11 js-modal1 p-t-80 p-b-20" id='app2' v-show="hideModel">
         <div class="overlay-modal11" v-on:click="CancelArticle()"></div>
 
         <div class="container" >
-            <div class="bg0 p-t-60 p-b-30 p-lr-15-lg how-pos3-parent" v-if="openInfo">
+            <div class="bg0 p-t-60 p-b-30 p-lr-15-lg how-pos3-parent" v-show="openInfo">
                 <button class="how-pos3 hov3 trans-04 " v-on:click="CancelArticle()">
                     <img src="images/icons/icon-close.png" alt="CLOSE">
                 </button>
 
                 <div class="row">
-                    <div class="col-md-6 col-lg-7 p-b-30">
-                        <div class="p-l-25 p-r-30 p-lr-0-lg">
-                            <div class="wrap-slick3 flex-sb flex-w">
-                                <div class="wrap-slick3-dots"></div>
-                                <div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
+                                <div class="col-md-6 col-lg-7 p-b-30">
+                                    <div class="p-l-25 p-r-30 p-lr-0-lg">
+                                        <div class="wrap-slick3 flex-sb flex-w">
+                                            <div class=" flex-t">
+                                                <div class="m-r-10">
+                                                    <div class ="m-b-10" v-for="imgg in getImageD" style="border: 1px solid">
+                                                    <img   :src="'storage/produits_image/'+imgg.image" alt="IMG-PRODUCT" style="width: 65px;height: 65px;" v-on:click="changePicVue(imgg.image)">
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="item-slick3" >
+                                                    <div class="wrap-pic-w">
 
-                                <div class="slick3 gallery-lb">
-                                    <div class="item-slick3" data-thumb="images/product-detail-01.jpg">
-                                        <div class="wrap-pic-w pos-relative">
-                                            <img src="images/product-detail-01.jpg" alt="IMG-PRODUCT">
-
-                                            <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="images/product-detail-01.jpg">
-                                                <i class="fa fa-expand"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-
-                                    <div class="item-slick3" data-thumb="images/product-detail-02.jpg">
-                                        <div class="wrap-pic-w pos-relative">
-                                            <img src="images/product-detail-02.jpg" alt="IMG-PRODUCT">
-
-                                            <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="images/product-detail-02.jpg">
-                                                <i class="fa fa-expand"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-
-                                    <div class="item-slick3" data-thumb="images/product-detail-03.jpg">
-                                        <div class="wrap-pic-w pos-relative">
-                                            <img src="images/product-detail-03.jpg" alt="IMG-PRODUCT">
-
-                                            <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="images/product-detail-03.jpg">
-                                                <i class="fa fa-expand"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-6 col-lg-5 p-b-30">
-                        <div class="p-r-50 p-t-5 p-lr-0-lg">
-                            <h4 class="mtext-105 cl2 js-name-detail p-b-14">
-                                Lightweight Jacket
-                            </h4>
-
-                            <span class="mtext-106 cl2">
-                                $58.79
-                            </span>
-
-                            <p class="stext-102 cl3 p-t-23">
-                                Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus ligula. Mauris consequat ornare feugiat.
-                            </p>
-                            
-                            <!--  -->
-                            <div class="p-t-33">
-                                <div class="flex-w flex-r-m p-b-10">
-                                    <div class="size-203 flex-c-m respon6">
-                                        Size
-                                    </div>
-
-                                    <div class="size-204 respon6-next">
-                                        <div class="rs1-select2 bor8 bg0">
-                                            <select class="js-select2" name="time">
-                                                <option>Choose an option</option>
-                                                <option>Size S</option>
-                                                <option>Size M</option>
-                                                <option>Size L</option>
-                                                <option>Size XL</option>
-                                            </select>
-                                            <div class="dropDownSelect2"></div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="flex-w flex-r-m p-b-10">
-                                    <div class="size-203 flex-c-m respon6">
-                                        Color
-                                    </div>
-
-                                    <div class="size-204 respon6-next">
-                                        <div class="rs1-select2 bor8 bg0">
-                                            <select class="js-select2" name="time">
-                                                <option>Choose an option</option>
-                                                <option>Red</option>
-                                                <option>Blue</option>
-                                                <option>White</option>
-                                                <option>Grey</option>
-                                            </select>
-                                            <div class="dropDownSelect2"></div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!--  -->
-                            
-                                <div class="flex-w flex-r-m p-b-10">
-                                    <div class="size-203 flex-c-m respon6">
-                                        Type Livraison
-                                    </div>
-
-                                    <div class="size-204 respon6-next">
-                                        <div class="rs1-select2 bor8 bg0">
-                                            <select class="js-select2" name="time">
-                                                <option>Choose an option</option>
-                                                <option value="1">DHL / 36.00 DA</option>
-                                                <option value="2">Vendeure / 142.50 DA</option>
-                                                <option value="3">Client / 142.50 DA</option>
-                                            </select>
-                                            <div class="dropDownSelect2"></div>
-                                        </div>
-                                    </div>
-                                </div>
-    
-                                <div class="flex-w flex-r-m p-b-10">
-                                    <div class="size-204 flex-w flex-m respon6-next">
-                                        <div class="wrap-num-product flex-w m-r-20 m-tb-10">
-                                            <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-                                                <i class="fs-16 zmdi zmdi-minus"></i>
-                                            </div>
-
-                                            <input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product" value="1">
-
-                                            <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-                                                <i class="fs-16 zmdi zmdi-plus"></i>
+                                                        <img v-for="img in getImageD" v-if="img.profile==1" :src="'storage/produits_image/'+img.image" alt="IMG-PRODUCT" id="pic" style="width:500px;height: 380px;" />
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
 
-                                        <button class="flex-c-m stext-101 cl0 size-101 bg10 bor1 p-lr-15 trans-04 js-addcart-detail">
-                                            Add to cart
-                                        </button>
                                     </div>
-                                </div>  
-                            </div>
-                            
+                                </div>
+                                
+                                <div class="col-md-6 col-lg-5 p-b-30">
+                                    <div class="p-r-50 p-t-5 p-lr-0-lg">
+                                        <div v-for="t in detaillproduit">
+                                        <h4 class="mtext-105 cl2 js-name-detail p-b-14">
+                                            @{{t.Libellé}}
+                                        </h4>
 
-                        </div>
-                    </div>
-                </div>
+                                        <span class="mtext-106 cl2 m-b-20">
+                                           @{{t.Qte_P}} x @{{t.prix}}DA
+                                        </span> <br>
+                                        <span class="mtext-106 cl2 m-b-20">
+                                           Sous-Categorie: @{{t.libelle}} 
+                                        </span> <br>
+                                        <span class="mtext-106 cl2">
+                                           Poids: @{{t.poid}}/kg 
+                                        </span>
+
+                                        <p class="stext-102 cl3 p-t-23">
+                                            @{{t.description}}.
+                                        </p>
+                                        </div>
+                                        <!--  -->
+                                        <div class="p-t-33">
+                                            <div v-show="tailleExiste" class="flex-w flex-r-m p-b-10">
+                                                <div class="size-203 flex-c-m respon6 p-b-10">
+                                                    Taille
+                                                </div>
+
+                                                <div class="size-204 respon6-next">
+                                                    <div class="rs1-select2 bor8 bg0">
+                                                        <select class="js-select2" >
+                                                            <option value="0" disabled selected>Choisir la taille</option>
+                                                            <option v-for="taille in tailless" :value="taille.nom">@{{taille.nom}}</option>
+                                                        </select>
+                                                                                             
+                                                        <div class="dropDownSelect2"></div>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+
+                                            <div class="flex-w flex-r-m p-b-10">
+                                                <div class="size-203 flex-c-m respon6 p-b-10">
+                                                    Couleur
+                                                </div>
+
+                                                <div class="size-204 respon6-next">
+                                                    <div class="rs1-select2 bor8 bg0">
+                                                        <select class="js-select2">
+                                                            <option value="0" disabled selected="true">Choisir la couleur</option>
+                                                            <option v-for="color in colorss" :value="color.color_id"
+                                                            >@{{color.nom}}</option>
+                                                        </select>
+                                                        <div class="dropDownSelect2"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!--  -->
+                                        
+                                            <div class="flex-w flex-r-m p-b-10">
+                                                <div class="size-203 flex-c-m respon6 p-b-10">
+                                                    Type Livraison
+                                                </div>
+
+                                                <div class="size-204 respon6-next">
+                                                    <div class="rs1-select2 bor8 bg0">
+                                                        <select  class="js-select2" >
+                                                            <option id='TL0' value="0" disabled selected="true">Choisir le type de livraison</option>
+                                                            
+                                                            <option v-for="typeLivraison in typeLiv" value="vc" v-if="
+                                                             typeLivraison.type_livraison === 'vc'">Vous effectuer la livraison</option>
+                                                            <option v-for="typeLivraison in typeLiv" value="cv" v-if="
+                                                            typeLivraison.type_livraison === 'cv'">Le client apportez votre produit</option>
+                                                            <option v-for="typeLivraison in typeLiv" value="dhl" v-if="
+                                                            typeLivraison.type_livraison === 'dhl'">DHL(Poste)</option>
+                                                        </select>
+                                                        <div class="dropDownSelect2"></div>
+                                                    </div>
+                                                </div>
+                                            </div>  
+                                        </div>
+                                        
+
+                                    </div>
+                                </div>
+                            </div>
             </div>
             <div class="bg0 p-b-150 p-lr-15-lg how-pos3-parent" v-if="openAjout"style=" width: 990px; padding-top: 45%">
                   <button class="how-pos3 hov3 trans-04 p-t-6" v-on:click="CancelArticle()">
@@ -328,18 +293,18 @@
                               <option value="" hidden="hidden" selected>&nbsp&nbspSélectionner une Ctegorie</option> 
                               <option v-for="catego in categories" :value="catego.id" >&nbsp&nbsp@{{catego.libelle}}</option> 
                             </select>
-                            <span class="px-3 cl13" v-if="message.catego" v-text="message.catego[0]"></span>
-
+                            <div>
                             <select class="form-control form-control-lg " id="sousCtagoSelect" name="sous_categorie_id" style="height: 40px;width: 320px;border-radius: 1em; " disabled= "true" v-on:change="getIdSousCatego($event)" :class="{'is-invalid' : message.sous_categorie_id}">
                               <option value="" hidden="hidden" selected>&nbsp&nbspSélectionner une Sous Categorie</option> 
                               <option v-for="Scatego in sousCategories" :value="Scatego.id" >&nbsp&nbsp@{{Scatego.libelle}}</option> 
                             </select>
                             <span class="px-3 cl13" v-if="message.sous_categorie_id" v-text="message.sous_categorie_id[0]"></span>
+                            </div>
                         </div>
                         <div class="row m-b-30">
                             <div class="col-md-10 pr-2" >
                                 <label>Sélectionner une/plusieurs Couleur(s) pour votre produit</label>
-                                <select class="form-control form-control-lg" id="colorSelect" name ="clr[]" v-model="colorsP" style="border-radius: 1em;" multiple :class="{'is-invalid' : message.colors}"> 
+                                <select class="form-control form-control-lg" id="colorSelect" name ="clr[]" v-model="colorsP" style="border-radius: 1em;" multiple :class="{'is-invalid' : message.colors}" id='clr'> 
                                   <option v-for="color in colors" :value="color.id" >&nbsp&nbsp@{{color.nom}}</option> 
                                 </select>
                                 <span class="px-3 cl13" v-if="message.colors" v-text="message.colors[0]"></span>
@@ -349,7 +314,7 @@
                             <div class="col-md-10 pr-2 "> 
                                 <label>Sélectionner le type de Taille produit</label>
                                 <select class="form-control form-control-lg m-b-25" id="typetpSelect" name="typetp" v-model="Type" style="height: 40px; width: 320px ;border-radius: 1em;" @change="activeTaille()">
-                                  <option value="0" >&nbsp&nbspAucune</option> 
+                                  <option value="0" disabled selected>&nbsp&nbspAucune</option> 
                                   <option value="1">&nbsp&nbspTaille pour les vêtements</option>
                                   <option value="2">&nbsp&nbspPointure pour les chaussures</option>
                                 </select>
@@ -383,9 +348,11 @@
                                           
                                 <button type="submit"  class="btn btn-danger btn-block " style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="CancelArticle()" >Annuler
                                 </button>
-                                <button type="submit" v-if="modifier" class="btn btn-success btn-block m-r-5" style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="updateProduitButton()" >Modifier
+                                <button type="submit" v-if="modifier && addd===false" class="btn btn-success btn-block m-r-5" style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="updateProduitButton()" >Modifier
                                 </button> 
-                                <button type="submit" v-else class="js-show-modal1 btn btn-success btn-block m-r-5" style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="AfficherAjout2()">Suivant
+                                <button type="submit" v-if="modifier == false && addd === false" class="js-show-modal1 btn btn-success btn-block m-r-5" style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="AfficherAjout2()">Suivant
+                                </button>
+                                <button v-if="modifier === false && addd === true" type="submit" class="btn btn-success btn-block m-r-5" style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="addProduitWithTest()" >Ajouter
                                 </button>
                           </div>
                         </div>
@@ -393,7 +360,7 @@
                   </section>
               
             </div>
-            <div class="bg0 p-b-150 p-lr-15-lg how-pos3-parent" v-if="openAjout2 "style=" width: 990px; padding-top: 45%">
+            <div class="bg0 p-b-150 p-lr-15-lg how-pos3-parent" v-if="openAjout2 "style=" width: 990px; padding-top: 10%">
                   <button class="how-pos3 hov3 trans-04 p-t-6" v-on:click="CancelArticle()">
                     <img src="images/icon-close.png" alt="CLOSE">
                   </button>
@@ -404,35 +371,154 @@
                     </div>
                    <div class="form-group m-b-35 m-l-50 " v-for="v in villes" style="display: inline-flex;">
                                     <div  >
-                                        <!--input type="checkbox"  :id="ema.id" :value="ema.id" v-model="checkedEmail" @change="changeButton(ema)">
-                                       <label :for="ema.id" style="margin-left: 30px;"></label-->
-                                        <input type="checkbox" class=" form-control  @error('villeC') is-invalid @enderror" :value="v.id" :id="v.id" name="villeC[]" v-model="checkedville" @change="changeButton(v)">
-                                        <label class="p-l-25 p-t-4" :for="v.id" >@{{v.nom}}</label>
-                                        @error('villeC')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
+                                        <input type="checkbox" class=" form-control  @error('villeC') is-invalid @enderror" :value="v.nom" :id="v.nom" name="villeC[]" v-model="checkedville" @change="changeButton(v)">
+                                        <label class="p-l-25 p-t-4" :for="v.nom" >@{{v.nom}}</label>
                                     </div>
                     </div>
-                    <div class="form-group input-group m-b-60" style="width: 800px; margin-left: 30px;">
+                    <div class="form-group input-group m-b-80" style="width: 800px; margin-left: 30px;">
                                 <div class="input-group mb-3" style="margin-left: 50px;">   
-                                  <input type="number" class="form-control @error('prix_tarif') is-invalid @enderror" aria-label="Recipient's username" aria-describedby="basic-addon2" placeholder="Entrez le prix de livraison pour la(les) ville(s) selectionner" name="prix_tarif" style="height: 45px" v-model='prixx.prx' value="{{old('prix_tarif')}}">
+                                  <input id="addV" type="number" class="form-control @error('prix_tarif') is-invalid @enderror" aria-label="Recipient's username" aria-describedby="basic-addon2" placeholder="Entrez le prix de livraison pour la(les) ville(s) selectionner" name="prix_tarif" style="height: 45px" v-model='prixx.prx' value="{{old('prix_tarif')}}">
                                   <div class="input-group-append">
-                                    <button class="btn btn-block btn-sm btn-success" type="button" style="height: 45px; margin-top: 0px; width: 90px; font-size: 16px; border-bottom-right-radius: 1.8em 1.8em; border-top-right-radius: 1.8em 1.8em;" v-on:click="AjouterArrayVille()">valider</button>
+                                    <button class="btn btn-block btn-sm btn-success"  type="button" style="height: 45px; margin-top: 0px; width: 90px; font-size: 16px; border-bottom-right-radius: 1.8em 1.8em; border-top-right-radius: 1.8em 1.8em;" v-on:click="AjouterArrayVille()">valider</button>
+                                    </div>
+                                    <div v-if='alertTarifDanger' class="alert alert-danger" role="alert" style="width: 800px;background-color: #EF2626">
+                                      Vous devez sélectionner au minimum une ville.
+                                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div v-if='alertTarif' class="alert alert-success" style="width: 800px; background-color: #13c940">
+                                      <strong>Success!</strong> Le tarif de livraison a été enregistré.
+                                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
                                   </div>
+
+                                  <span>Si vous passer cette etape et rien valider, on vas consedére que le tarif de votre lévraison est 0DA.</span>
+                                  
                                 </div>
-                                  @error('prix_tarif')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                  @enderror
+                                
+                                 
                     </div>
-                    <button type="submit" class="btn btn-success btn-block m-r-5" style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700; width: 380px; margin-left: 80px;" v-on:click="addProduit()" >Ajouter
-                    </button>
-                    <button type="submit"  class="btn btn-danger btn-block " style=" border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700; width: 380px; margin-left: 465px; margin-top: -48px" v-on:click="CancelArticle()" >Annuler
-                    </button>
+                    <div class="flex-t m-l-50">
+                        <button type="submit"  class="btn btn-warning m-r-20" style=" margin-top:-48px; border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;width: 280px; " v-on:click="Previous()" >Previous
+                        </button>
+                        <button type="submit"  class="btn btn-danger  m-r-20" style="  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700; width: 280px;  margin-top: -48px" v-on:click="CancelArticle()" >Annuler
+                        </button>
+                        <button type="submit" class="btn btn-success  " style=" margin-top:-48px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700; width: 280px;" v-on:click="addProduit()" >Ajouter
+                        </button>
+                    </div>
+                    
                   </div>
+            </div>
+            <div class="bg0 p-b-150 p-lr-15-lg how-pos3-parent" v-show="tarifL" style=" width: 990px; padding-top: 10%">
+                <button class="how-pos3 hov3 trans-04 p-t-6" v-on:click="CancelArticle()">
+                    <img src="images/icon-close.png" alt="CLOSE">
+                </button>
+                <div class="tab m-t--60 col-md-12 col-sm-6 m-l-15" style="border: 1px" >
+                   <div >
+                       <div >
+                          <h5 class="m-b-50">Tarif de Livraison</h5>
+                       </div>
+                       <div class="size-204 respon6-next m-b-20">
+                            <div class="rs1-select2 bor8 bg0">
+                                <select class="js-select2" >
+                                    <option value="0" disabled selected="true">Ville / Tarif de Livraison</option>                       
+                                    <option v-for='TV in tarifVille'>@{{TV.nom}} / @{{TV.prix}} DA</option>
+                                 </select>
+                                <div class="dropDownSelect2"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <span>Changer Tarif de Livraison des villes:</span>
+                            <div class="flex-t">
+                                <div class="size-204 respon6-next m-r-50" style="width: 470px">
+                                    <div class="rs1-select2  bor8 bg0" @click="alertTarifDangerTarif = false; alertTarifTarif = false ">
+                                        <select class="js-select2 leaderMultiSelctdropdown" name ="villesAddT[]" multiple>
+                                            <option value="0" disabled>Villes </option><option v-for='TV in villes' :value='TV.id'>@{{TV.nom}}</option>
+                                         </select>
+                                        <div class="dropDownSelect2"></div>
+                                    </div>
+                                </div>
+                                <div class="input-group input-group-sm mb-3" style="width: 340px; ">
+                                  <input type="number" class="form-control" placeholder="0DA/Kg" aria-describedby="basic-addon2" style="height: 35px; border: 1px solid grey" v-model='prixx.prx' @click=" alertTarifTarif = false ">
+                                  <div class="input-group-append">
+                                    <button class="btn btn-block btn-sm btn-success"  type="button" style="height: 35px; margin-top: 0px; width: 75px; font-size: 16px; border-bottom-right-radius: 1.8em 1.8em; border-top-right-radius: 1.8em 1.8em;" v-on:click="AjouterArrayVilleTarif()">valider</button>
+                                    </div>
+                                </div>
+                            </div>
+                             <div v-if='alertTarifDangerTarif' class="alert alert-danger" role="alert" style="width: 860px;background-color: #EF2626">
+                                      Vous devez sélectionner au minimum une ville.
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div  v-if="alertTarifTarif" class="alert alert-success" style="width: 860px; background-color: #13c940">
+                                <strong>Success!</strong> Le tarif de livraison a été enregistré.
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        </div>
+
+                   </div>
+                   <hr>
+                   <div >
+                        <div class="m-b-50">
+                          <h5 >Type de Livraison</h5>
+                       </div>
+                       <div >
+                            <div class="flex-t m-b-20">
+                                <span class="m-r-175 m-t-10">Vos Types de Livraison:</span>
+                                <div class="size-204 respon6-next m-r-30" style="width: 470px">
+                                    <div class="rs1-select2 bor8 bg0" @click='typeDelete = false'>
+                                      <select class="js-select2 deleteTL" >
+                                        <option selected value='0' disabled>Type de Livraison</option>
+                                        <option v-for="typeLivraison in typeLivrVendeur" value="vc" v-if="typeLivraison.type_livraison === 'vc'"> Vous effectuer la livraison</option>
+                                        <option v-for="typeLivraison in typeLivrVendeur" value="cv" v-if="typeLivraison.type_livraison === 'cv'">Le client apportez votre produit</option>
+                                        <option v-for="typeLivraison in typeLivrVendeur" value="dhl" v-if="typeLivraison.type_livraison === 'dhl'">DHL(Poste)</option>
+                                      </select>
+                                      <div class="dropDownSelect2"></div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-danger" style=" text-align: center; border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700; width: 98px;" @click="deleteTypeL">Supprimer</button>
+
+                            </div>
+                            <div  v-if="typeDelete" class="alert alert-danger" style="width: 860px; background-color: #EF2626">
+                                 Il ya aucun type de livraison selectionné.
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            
+                            <div class="flex-t">
+                                <span class="m-r-20 m-t-10">Types de livraison que vous n'avez pas choisis:</span>
+                                <div class="size-204 respon6-next m-r-30" style="width: 470px">
+                                    <div class="rs1-select2 bor8 bg0" @click='typeAdd = false'>
+                                      <select class=" js-select2 addTL" >
+                                        <option selected value='0' disabled=>Types n'avez pas choisis</option>
+                                        <option v-for="typeLivraison in typeLivrVendeurNotExiste" value="vc" v-if="typeLivraison.type_livraison === 'vc'"> Vous effectuer la livraison</option>
+                                        <option v-for="typeLivraison in typeLivrVendeurNotExiste" value="cv" v-if="typeLivraison.type_livraison === 'cv'">Le client apportez votre produit</option>
+                                        <option v-for="typeLivraison in typeLivrVendeurNotExiste" value="dhl" v-if="typeLivraison.type_livraison === 'dhl'">DHL(Poste)</option>
+                                      </select>
+                                      <div class="dropDownSelect2"></div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-success" style="  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700; width: 98px;" @click='addTypeL'>Ajouter</button>
+                            </div>
+                            <div  v-if="typeAdd" class="alert alert-danger" style="width: 860px; background-color: #EF2626">
+                                Il ya aucun type de livraison selectionné.
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        </div>
+
+                    
+                   </div>
+                    
+                    
+                </div>
             </div>
         </div>
     </div>
@@ -453,10 +539,62 @@
           ]) !!};
 </script>
 <script>
-
+    function initDashboardPageCharts () {}
         Vue.mixin({
 
             methods:{
+              addProduitWithTest: function(){
+                    app2.produitAjout.image = app2.image;
+                    app2.produitAjout.images = app2.imagesP;
+                    app2.produitAjout.colors = app2.colorsP;
+                    app2.produitAjout.tailles = app2.tailleP;
+                    app2.produitAjout.pointures = app2.PointureP;
+                    app2.produitAjout.typet = app2.Type;
+                    axios.post(window.Laravel.url+"/addproduitwithtest",app2.produitAjout)
+                    .then(response => {
+                      if(response.data.etat){
+                         window.location.reload();
+                         app2.produitAjout = response.data.produitAjout;
+                         app2.imageP = response.data.imageProduitAjout;
+                         app2.produitAjout.id = response.data.produitAjout.id;
+                         app.ProduitsVendeur.unshift(app2.produitAjout);
+                         app.imagesproduit.unshift(app2.imageP);
+                         app2.produitAjout={
+                                id: 0,
+                                sous_categorie_id: '',
+                                catego: '',
+                                Libellé: '',
+                                prix: '',
+                                description: '',
+                                Qte_P: '',
+                                poid: '',
+                                image: '',
+                                images: [],
+                                colors: [],
+                                tailles: [],
+                                pointures: [],
+                                typet: 0,
+                         };
+                         app2.imageP= {
+                            produit_id: 0,
+                            image: ''
+                         };
+                         app2.imagesP= [];
+                         app2.colorsP= [];
+                         app2.tailleP= [];
+                         app2.PointureP= [];
+                         app2.hideModel=false;
+                         app2.openAjout = false;
+                         app2.message = {};
+                         app2.image = '';
+                         app2.Type = '';
+                      }          
+                    })
+                    .catch(error =>{
+                        app2.message = error.response.data.errors;
+                        console.log('errors :' , app2.message);
+                    })
+              },
               addProduit: function(){
                 app2.produitAjout.image = app2.image;
                 app2.produitAjout.images = app2.imagesP;
@@ -464,8 +602,6 @@
                 app2.produitAjout.tailles = app2.tailleP;
                 app2.produitAjout.pointures = app2.PointureP;
                 app2.produitAjout.typet = app2.Type;
-                /*console.log("app2.produitAjout.tailles",app2.produitAjout.tailles);
-                console.log("app2.produitAjout.pointures",app2.produitAjout);*/
                 axios.post(window.Laravel.url+"/addproduit",app2.produitAjout)
                 .then(response => {
                   if(response.data.etat){
@@ -513,7 +649,9 @@
           },         
         }                     
       });
-
+    function changePic(img){
+        document.getElementById("pic").src = 'http://localhost:8000/storage/produits_image/'+img;
+    }
      var app2 = new Vue({
         el: '#app2',
         data:{
@@ -569,10 +707,20 @@
           },
 
           oldprd: {
+            id: 0,
+            sous_categorie_id: '',
+            catego: '',
             Libellé: '',
-            description: '',
             prix: '',
+            description: '',
+            Qte_P: '',
+            poid: '',
             image: '',
+            images: [],
+            colors: [],
+            tailles: [],
+            pointures: [],
+            typet: 0,
           },
           prd: {
             id: 0,
@@ -590,12 +738,123 @@
             pointures: [],
             typet: 0,
           },
+          alertTarif: false,
+          alertTarifDanger: false,
+          typeLVC: null,
+          addd: false,
+          showPaimentPage: true,
+          showpaiment: null,
+          getImageD: [],
+          detaillproduit: [],
+          tailless: [],
+          colorss: [],
+          typeLiv: [],
+          tailleExiste: false,
+          tarifL: false,
+          tarifVille: [],
+          typeLivrVendeur: [],
+          typeLivrVendeurNotExiste: [],
+          villesAddTarif: [],
+          alertTarifDangerTarif: false,
+          alertTarifTarif: false,
+          typeDelete: false,
+          typeAdd: false,
 
           
         },
         methods:{
-          
+            deleteTypeL(){
+                if($('.deleteTL').val() == null){
+                    this.typeDelete = true;
+                }
+                else{
+                    axios.delete(window.Laravel.url+'/deleteTypeLivr/'+$('.deleteTL').val())
+                     .then(response => {
+                         this.typeLivrVendeur.forEach(key=>{
+                            if(key.type_livraison == $('.deleteTL').val()){
+                                var position = this.typeLivrVendeur.indexOf(key);
+                                this.typeLivrVendeurNotExiste.unshift(key);
+                                this.typeLivrVendeur.splice(position,1);
+                            }
+                         })
+                         this.typeDelete = false;
+                         if(this.typeLivrVendeur.length == 0){
+                            $('.deleteTL').val('0');
+                         }
+                     })
+                     .catch(error => {
+                          console.log('errors : '  ,error);
+                     })
+                 }
+                
+            },
+            addTypeL(){
+                if($('.addTL').val() == null){
+                    this.typeAdd = true;
+                }
+                else{
+                    axios.post(window.Laravel.url+'/addTypeLivr',{'type':$('.addTL').val()})
+                     .then(response => {
+                         this.typeLivrVendeurNotExiste.forEach(key=>{
+                            if(key.type_livraison == $('.addTL').val()){
+                                var position = this.typeLivrVendeurNotExiste.indexOf(key);
+                                this.typeLivrVendeur.unshift(key);
+                                this.typeLivrVendeurNotExiste.splice(position,1);
+                            }
+                         })
+                         this.typeAdd = false;
+                         if(this.typeLivrVendeurNotExiste.length == 0){
+                            $('.addTL').val('0');
+                         }
+                     })
+                     .catch(error => {
+                          console.log('errors : '  ,error);
+                     })
+                 }
+                
+            },
+            changePicVue(img){
+                changePic(img);
+            },
+            Previous(){
+                this.openAjout = true ;
+                this.openAjout2 = false;
+            },
+            getPaimentVendeurr(){
+                axios.get(window.Laravel.url+'/getpaimentvendeurr')
+                 .then(response => {
+                     if(response.data){
+                        this.showpaiment = true;
+                     }
+                     else{
+                        this.showpaiment = false;
+                    }
+                 })
+                 .catch(error => {
+                      console.log('errors : '  ,error);
+                 })
+            },
+            getTypeL(){
+                axios.get(window.Laravel.url+'/gettypelvendeur')
+                 .then(response => {
+                     if(response.data){
+                        this.typeLVC = true;
+                        this.modifier = false
+                     }
+                     else{
+                        this.typeLVC = false;
+                        this.addd = true;
+                     }
+                 })
+                 .catch(error => {
+                      console.log('errors : '  ,error);
+                 })
+            },
             CancelArticle(){
+                this.tailless = [];
+                this.colorss = [];
+                this.typeLiv = [];
+                this.detaillproduit = [];
                 this.openAjout = false ;
                 this.hideModel = false;
                 this.produitAjout = { 
@@ -616,20 +875,24 @@
                 this.message = {};
                 this.tailleP= [];
                 this.PointureP= [];
+                this.colorsP= [];
                 this.Type = '';
+                this.modifier= false;
+                this.addd=true;
+                this.Type=0;
             },
             imagePreview(event) {
                var fileR = new FileReader();
                fileR.readAsDataURL(event.target.files[0]);
                fileR.onload = (event) => {                 
                   this.image = event.target.result;
+                  this.prd.image = event.target.result;
                }              
             },
             getVille: function(){
                 axios.get(window.Laravel.url+'/getville')
                  .then(response => {
                       this.villes = response.data;
-                      console.log("this.villes",this.villes)
                  })
                  .catch(error => {
                       console.log('errors : '  ,error);
@@ -640,35 +903,73 @@
               this.openAjout = true;
               
             },
+            AjouterArrayVilleTarif: function(){
+               
+               $('.leaderMultiSelctdropdown').val().forEach(key=>{
+                        this.villesAddTarif.push({id: key})  ;
+                })
+                if(this.villesAddTarif.length == 0){
+                    this.alertTarifDangerTarif = true;
+                }
+               else{
+                    
+                   this.villesAddTarif.forEach(key=>{
+                        key['prix']=this.prixx.prx;
+                    })
+               
+                    this.villesAddTarif.forEach(key => {
+                        axios.post(window.Laravel.url+'/addvilles',key)
+                        .then(response => {
+                                    
+                            this.alertTarifDangerTarif = false;
+                            this.alertTarifTarif = true;
+                            this.villesAddTarif = [];
+                            this.prixx.prx = 0;
+                            $('.leaderMultiSelctdropdown').val('').select2();
+
+                                    
+                        })
+                        .catch(error =>{
+                            console.log('errors :' , error);
+                        })
+                    })
+                     
+                 }
+                 
+                
+                            
+            },
             AjouterArrayVille: function(){
                
                 this.villesAdd.forEach(key=>{
                     key['prix']=this.prixx.prx;
                 })
-            console.log("this.villesAdd",this.villesAdd)
-           
-             this.villesAdd.forEach(key => {
-                        axios.post(window.Laravel.url+'/addvilles',key)
-                          .then(response => {
-                            if(response.data.etat){
-                                console.log("hello")
-                                 this.allSelected = false;
-                                  this.checkedville.length = [];
-                                  this.villesAdd = [];
-                                  this.selectall = true;
-                            }
-                          })
-                          .catch(error =>{
-                                     console.log('errors :' , error);
-                          })
-                      })
-                      
-                         
-            
-            
+                
+                if(this.villesAdd.length == 0){
+                    this.alertTarifDanger = true;
+                }
+                else{
+                     this.villesAdd.forEach(key => {
+                            axios.post(window.Laravel.url+'/addvilles',key)
+                                  .then(response => {
+                                    this.alertTarifDanger = false;
+                                    this.alertTarif = true;
+                            })
+                            .catch(error =>{
+                                             console.log('errors :' , error);
+                                  })
+                     })
+
+                     this.allSelected = false;
+                     this.checkedville = [];
+                     this.villesAdd = [];
+                     this.selectall = true;
+                     this.prixx.prx=0;
+            }
+                            
         },
         updateProduitButton: function(){
-
+            this.tarifL = false;
          if(this.prd.Libellé == ''){
 
             this.prd.Libellé =  this.oldprd.Libellé;         }
@@ -680,36 +981,26 @@
 
             this.prd.prix =  this.oldprd.prix;
          }
-         if(this.prd.Qte_p == ''){
-
-            this.prd.Qte_p =  this.oldprd.Qte_p;
+         if(this.prd.Qte_P == ''){
+            this.prd.Qte_P =  this.oldprd.Qte_P;
          }
          if(this.prd.poid == ''){
 
             this.prd.poid =  this.oldprd.poid;
          }
-         if(this.prd.image == ''){
-            this.prd.image = this.oldprd.image;
-         }  
-         if(this.prd.images == []){
-            this.prd.images =  this.oldprd.images;
-         }
-         if(this.prd.colors == ''){
+         if(this.prd.sous_categorie_id == ''){
 
-            this.prd.colors =  this.oldprd.colors;
+            this.prd.sous_categorie_id =  this.oldprd.sous_categorie_id;
          }
-         if(this.prd.tailles == ''){
+         if(this.prd.id == ''){
 
-            this.prd.tailles =  this.oldprd.tailles;
-         }
-         if(this.prd.pointures == ''){
-            this.prd.pointures =  this.oldprd.pointures;
-         }
-         console.log("this.prd",this.prd)       
+            this.prd.id =  this.oldprd.id;
+         }     
          axios.put(window.Laravel.url+"/updateproduit",this.prd)
          
            .then(response => {
               if(response.data.etat){
+                window.location.reload();
                 this.modifier = false;
                  this.hideModel = false;
                  this.prd = {
@@ -728,17 +1019,46 @@
                         pointures: [],
                         typet: 0,
                       };
+                this.addd = true;
+                this.produitAjout= {
+                    id: 0,
+                    sous_categorie_id: '',
+                    catego: '',
+                    Libellé: '',
+                    prix: '',
+                    description: '',
+                    Qte_P: '',
+                    poid: '',
+                    image: '',
+                    images: [],
+                    colors: [],
+                    tailles: [],
+                    pointures: [],
+                    typet: 0,
+                };
+                this.Type=0;
 
               } 
               
               this.message = {}; 
               this.image = null;
               this.oldprd= {
-                    Libellé: '',
-                    description: '',
-                    prix: '',
-                    image: '',
+                        id: 0,
+                        sous_categorie_id: '',
+                        catego: '',
+                        Libellé: '',
+                        prix: '',
+                        description: '',
+                        Qte_P: '',
+                        poid: '',
+                        image: '',
+                        images: [],
+                        colors: [],
+                        tailles: [],
+                        pointures: [],
+                        typet: 0,
                   }; 
+                this.imagesP=[];
             })
             .catch(error =>{
                 this.message = error.response.data.errors;
@@ -746,13 +1066,16 @@
             })
 
       },
-        imagesPreviews(event) {         
+        imagesPreviews(event) { 
+                this.imagesP = [];
+                this.prd.images = [];        
                for( i = 0 ; i < event.target.files.length ; i++){
                     var fileR = new FileReader();
                     fileR.readAsDataURL(event.target.files[i]);
 
                     fileR.onload = (event) => {                 
-                          this.imagesP.push(event.target.result) ;
+                          this.imagesP.push(event.target.result);
+                          this.prd.images.push(event.target.result);
                     } 
                }
                
@@ -793,20 +1116,31 @@
 
             },
             AfficherAjout2: function(){
-             this.hideModel = true;
-             this.openAjout2 = true;
-             this.openAjout = false
-             this.openInfo = false;
-             this.produitAjout ={
-                        id: 0,
-                        vendeur_id: 0,
-                        sous_categorie_id: 0,
-                        Libellé: '',
-                        prix: 0,
-                        description: '',
-                        Qte_P: 0,
-                        poid: 0
-             }
+             this.tarifL = false;
+             this.produitAjout.image = this.image;
+             this.produitAjout.images = this.imagesP;
+             this.produitAjout.colors = this.colorsP;
+             this.produitAjout.tailles = this.tailleP;
+             this.produitAjout.pointures = this.PointureP;
+             this.produitAjout.typet = this.Type;
+             axios.post(window.Laravel.url+'/verifierInputs',this.produitAjout)
+                 .then(response => {
+                    this.message = {};
+                    if(this.typeLVC == true){
+                        this.openAjout2 = true;
+                    }
+                    else{
+                       this.openAjout2 = false;
+                    }
+                    this.hideModel = true;
+                    this.openAjout = false
+                    this.openInfo = false;
+                 })
+                 .catch(error => {
+                      this.message = error.response.data.errors;
+                      console.log('errors :' , this.message);
+                 })
+             
             },
             activeTaille: function(){
                 if(this.Type == 1){
@@ -834,10 +1168,6 @@
             getIdSousCatego: function(event){
                 this.produitAjout.sous_categorie_id = event.target.value;
             },
-            getIdColor: function(event){
-                
-                console.log("this.produitAjout.colors",event);
-            },
             deselectVille: function(villeId){
              this.villesAdd.forEach(key => {
                   if(key.id == villeId){
@@ -847,22 +1177,27 @@
             });             
           },
           selectAll: function(){
+            this.alertTarifDanger = false;
+            this.alertTarif = false;
             this.selectall = false;
             if (this.allSelected) {
                 for (user in this.villes) {
-                    this.villeIds.push(this.villes[user].id);
+                    this.villeIds.push(this.villes[user].nom);
                     this.villesAdd.push(this.villes[user]);
-                    this.checkedville.push(this.villes[user].id);
+                    this.checkedville.push(this.villes[user].nom);
                 }
              }
              else{
               this.villeIds = [];
               this.selectall = true;
               this.checkedville = [];
+              this.villesAdd = [];
             }
         },
         
          changeButton: function(v){
+            this.alertTarifDanger = false;
+            this.alertTarif = false;
               if(this.checkedville.length > 0){
                  this.villesAdd.push(v);
               }
@@ -872,6 +1207,7 @@
              }
              if(this.checkedville.length < this.villesAdd.length){
                 this.deselectVille(v.id)
+                this.villesAdd = this.villesAdd.filter(function(item) { return item != v; });
               }
           },
         },
@@ -879,6 +1215,7 @@
             this.getCategories();
             this.getColors();
             this.getVille();
+            this.getTypeL();
         }
      })
 </script>
@@ -895,9 +1232,62 @@
           produitIds: [],
           produitDelete :[],
           p:[],
+          
 
         },
         methods:{
+            showTarifL:function(){
+                app2.tarifL = true;
+                app2.hideModel = true;
+                axios.get(window.Laravel.url+'/tarifville')
+                .then(response => {
+                        app2.tarifVille = response.data.tarifv; 
+                        app2.typeLivrVendeur =  response.data.typeL;
+                        app2.typeLivrVendeurNotExiste = response.data.typeLNotExiste;
+                })
+                .catch(error =>{
+                        console.log('errors :' , error);
+                })
+
+            },
+            dd:function(produit){
+                app2.hideModel = true;
+                app2.openAjout = false;
+                app2.openAjout2 = false;
+                app2.openInfo = true;
+                app2.tarifL = false;
+                axios.get(window.Laravel.url+'/getdetailsproduitvendeur/'+produit.id)
+                .then(response => {
+                        app2.tailless = response.data.taille;
+                        app2.colorss = response.data.colors; 
+                        app2.typeLiv = response.data.typeL; 
+                        app2.detaillproduit = response.data.produit;
+                         var i=0;
+                        app2.tailless.forEach(key => {
+                            if(produit.id == key.produit_id ){
+                                    i++;
+                            }
+                        });
+                        if(i != 0){
+                            app2.tailleExiste = true;
+                        }
+                        else{
+                            app2.tailleExiste = false;
+                        }                
+                })
+                .catch(error =>{
+                        console.log('errors :' , error);
+                })
+
+                axios.get(window.Laravel.url+'/getimageD/'+produit.id)
+                .then(response => {
+                        app2.getImageD = response.data.imagee;                       
+                })
+                .catch(error =>{
+                        console.log('errors :' , error);
+                })
+               
+            },
           getProduit: function(){
             axios.get(window.Laravel.url+'/produitVendeur')
               .then(response => {
@@ -1010,12 +1400,15 @@
          app2.openAjout = true;
          app2.openInfo = false;
          app2.modifier = true;
+         app2.addd=false;
          app2.produitAjout = produit;
          app2.oldprd.Libellé = produit.Libellé;
          app2.oldprd.description = produit.description;
          app2.oldprd.prix = produit.prix;
-         app2.oldprd.image = produit.image;
-         app2.prd.id = produit.id;
+         app2.oldprd.Qte_P = produit.Qte_P;
+         app2.oldprd.sous_categorie_id = produit.sous_categorie_id;
+         app2.oldprd.poid = produit.poid;
+         app2.oldprd.id = produit.id;
          
         },      
           AfficherAjout: function(){
@@ -1023,6 +1416,7 @@
              app2.openAjout = true;
              app2.openInfo = false;
              app2.openAjout2 = false;
+             app2.tarifL = false;
               
           },
           deselectProduit: function(produitId){
@@ -1034,18 +1428,18 @@
             });             
          },
            changeButton2: function(p){
-           if(this.checkedproduits.length > 0){
-          this.suppr=true;
-          this.produitDelete.unshift(p);
-        }
-        else{
-          this.produitDelete = [];
-          this.suppr=false;
-        } 
-        if(this.checkedproduits.length < this.produitDelete.length){
-                 this.produitDelete = this.produitDelete.filter(function(item) { return item != p; });
-        }       
-      }, 
+               if(this.checkedproduits.length > 0){
+                  this.suppr=true;
+                  this.produitDelete.unshift(p);
+                }
+                else{
+                  this.produitDelete = [];
+                  this.suppr=false;
+                } 
+                if(this.checkedproduits.length < this.produitDelete.length){
+                         this.produitDelete = this.produitDelete.filter(function(item) { return item != p; });
+                }       
+            }, 
           selectAlll: function() {
               this.selectalll = false;
             if (this.allSelectedd) {
@@ -1076,6 +1470,7 @@
             this.getProduit();
 
         }
-     })
+     });
 </script>
+
 @endpush

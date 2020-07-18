@@ -1110,10 +1110,10 @@
     }
     function initialiser(){
         
-        document.getElementById("tttt").options.selectedIndex = 0;
-        document.getElementById("cccc").options.selectedIndex = 0;
         document.getElementById("qtee").value = 0;
-        document.getElementById("TLTLTL").options.selectedIndex = 0;    
+        $('.TLTLTL').val('0').select2();
+        $('.cccc').val('0').select2();
+        $('.tttt').val('0').select2();    
     }
     function initialiseCV(){
         document.getElementById('cv').value = null;

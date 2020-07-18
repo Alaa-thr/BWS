@@ -115,7 +115,7 @@
 
                                                          <img v-if="catego.image != null" :src='"/storage/categorie_image/"+catego.image' class="p-b-4">
 
-                                                         <a href="#" class="filter-link stext-106 trans-04">
+        <a :href="'/shop/search_categorie='+catego.id" class="filter-link stext-106 trans-04">
                                                             @{{catego.libelle}}
                                                          </a>
                                                         </li>
@@ -187,7 +187,7 @@
 
                                                     <img v-if="catego.image != null" :src='"/storage/categorie_image/"+catego.image' class="p-b-4">
 
-                                                    <a href="#" class="filter-link stext-106 trans-04">
+        <a :href="'/emploi/search_categorie='+catego.id"  class="filter-link stext-106 trans-04">
                                                             @{{catego.libelle}}
                                                     </a>
                                                 </li>
@@ -438,7 +438,7 @@
        <div class="modal-search-header flex-c-m trans-04 js-hide-modal-search" style="z-index: 11000;">
             <div class="container-search-header">
                 <button class="flex-c-m btn-hide-modal-search trans-04 js-hide-modal-search">
-                    <img src="images/icons/icon-close2.png" alt="CLOSE">
+                    <img src="{{asset('images/icons/icon-close2.png')}}" alt="CLOSE">
                 </button>
 
                 <form class="wrap-search-header flex-w p-l-15" action="/abestv" method="get">

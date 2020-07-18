@@ -21,11 +21,11 @@
     </nav>
     <div class="panel-header panel-header-sm" >
     </div>
-    <div class="content" >
+    <div class="content"  >
     
-        <div class="row" id='app'>
+        <div class="row" id='app' >
         
-          <div class="col-md-12">
+          <div class="col-md-12" >
           
             <div class="card">
               <div class="card-header m-b-30">
@@ -39,7 +39,7 @@
                     <!-- Block2 -->
                     <div class="block2">
                         <div class="block2-pic hov-img0" v-for="imgP in imagesproduit">
-                            <img v-if="imgP.produit_id === produit.id && imgP.profile === 1" :src="'storage/produits_image/'+ imgP.image" alt="IMG-PRODUCT" style="height: 290px;width: 990px;">
+                            <img v-if="imgP.produit_id === produit.id && imgP.profile === 1" :src="'storage/produits_image/'+ imgP.image" alt="IMG-PRODUCT" style="height: 334px;width: 300px;">
 
                             <a href="" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1" v-on:click="ShowInfo()">
                                 Quick View
@@ -84,9 +84,11 @@
         
     </div>
 
-			<div class="row"  id="app1" >
-				<div class="col-md-8 col-lg-9 p-b-80" >
-					<div class="p-r-45 p-r-0-lg" >
+    <div class="content" id="xxx">
+
+			<div class="row"  id="app1"  >
+				<div class="col-md-2 col-lg-9 p-b-2"  >
+					<div class="p-r-15 p-r-0-lg" >
 						<!-- item blog -->
 						<div class="p-b-63" v-for="art in articles" >
 							<a :href="'/articleDetaille/'+art.id" class="hov-img0 how-pos5-parent">
@@ -135,18 +137,15 @@
 			
 				
 			</div>
-		</div>
-                  
-                </div>
-                </div>
-
-     
+      </div>
 
 
-        <div class="row"  id="app4">
-         
-                  
-              
+
+      <div class="content" id="xx">
+        <div class="row"  id="app3">
+          
+                
+                   
                <div class="row m-b-10 " v-for="annoncea in annoncesEmployeur" style="display: inline-flex; height: 160px; width: 360px;">
                      
                         <div class="col-md-3 "  >
@@ -173,9 +172,13 @@
                  <div> 
                    <?php echo e($annonce->links()); ?><!-- pour afficher la pagination -->
                 </div>
-             
+              </div>
+             </div>
+           </div>
+         </div>
+        </div>
      </div>
-    <div class="wrap-modal11 js-modal1 p-t-38 p-b-20 p-l-15 p-r-15"  id="app3" v-if="hideModel">
+    <div class="wrap-modal11 js-modal1 p-t-38 p-b-20 p-l-15 p-r-15"  id="app4" v-if="hideModel">
       <div class="overlay-modal11 " v-on:click="CancelAnnonce(annc)"></div>
   
       <div class="container">
@@ -223,8 +226,12 @@
     </div>
 
 
-
-
+		</div>
+                  
+                </div>
+              </div>
+         
+     
 <?php $__env->stopSection(); ?>
 <?php $__env->startPush('javascripts'); ?>
 
@@ -240,12 +247,112 @@
                'ImageP'         => $ImageP,
                'search'         => $search,
              	'article' => $article,
-               "annonce"      => $annonce,
+               "annonce"   => $annonce,
 
                 'url'           => url('/'), 
           ]); ?>;
 </script>
+<script>
 
+
+   
+   
+     var app4 = new Vue({
+      el: '#app4',
+      data:{
+        annoncesemployeur2: [],
+        openInfo: false,
+        hideModel: false,
+       
+        detaillsAn: {
+          idAn: 0,
+        },
+       
+                   
+      },  
+       methods: {
+         
+       detaillsAnnonce: function(){
+
+        axios.post(window.Laravel.url+'/detaillsannonces', this.detaillsAn)
+
+            .then(response => {
+
+                 this.annoncesemployeur2 = response.data;
+            })
+            .catch(error =>{
+                 console.log('errors :' , error);
+            })
+      },
+       imagePreview(event) {
+           var fileR = new FileReader();
+           fileR.readAsDataURL(event.target.files[0]);
+           fileR.onload = (event) => {
+              
+              this.image = event.target.result;
+           }
+           
+      },
+       CancelAnnonce(annonce){
+        this.modifier = false ;
+        this.hideModel = false;
+        
+       },
+
+    
+    },  
+   
+
+  });
+
+
+
+var app3 = new Vue({
+
+    el: '#app3',
+ data:{
+      annoncesEmployeur: [],
+    
+       },
+ methods: {
+      
+
+       AfficheInfo: function($id){
+        app4.hideModel = true; 
+        app4.openInfo = true;
+        app4.detaillsAn.idAn= $id;
+        app4.detaillsAnnonce();
+      }, 
+     getsearch: function(){
+            axios.get(window.Laravel.url+'/abest')
+              .then(response => {
+                this.annoncesEmployeur = window.Laravel.annonce.data;
+                })
+              .catch(error => {
+                  console.log('errors : '  , error);
+             })
+          },
+       MoitieDescription:  function (text, length, suffix){
+          if(text.length <= length){
+            return text;
+
+          }
+         
+          return text.substring(0, length) + suffix;
+
+      },
+     
+    }, 
+    created:function(){
+      this.getsearch();
+    } 
+
+});
+
+
+
+
+</script>
 <script>
      var app = new Vue({
         el: '#app',
@@ -322,107 +429,5 @@
       },
   });
 </script>
-<script>
-
-
-   
-   
-     var app3 = new Vue({
-      el: '#app3',
-      data:{
-        annoncesemployeur2: [],
-        openInfo: false,
-        hideModel: false,
-       
-        detaillsAn: {
-          idAn: 0,
-        },
-       
-                   
-      },  
-       methods: {
-         
-       detaillsAnnonce: function(){
-
-        axios.post(window.Laravel.url+'/detaillsannonces', this.detaillsAn)
-
-            .then(response => {
-
-                 this.annoncesemployeur2 = response.data;
-            })
-            .catch(error =>{
-                 console.log('errors :' , error);
-            })
-      },
-       imagePreview(event) {
-           var fileR = new FileReader();
-           fileR.readAsDataURL(event.target.files[0]);
-           fileR.onload = (event) => {
-              
-              this.image = event.target.result;
-           }
-           
-      },
-       CancelAnnonce(annonce){
-        this.modifier = false ;
-        this.hideModel = false;
-        
-       },
-
-    
-    },  
-   
-
-  });
-
-
-
-var app4 = new Vue({
-
-    el: '#app4',
- data:{
-      annoncesEmployeur: [],
-    
-       },
- methods: {
-      
-
-       AfficheInfo: function($id){
-        app3.hideModel = true; 
-        app3.openInfo = true;
-        app3.detaillsAn.idAn= $id;
-        app3.detaillsAnnonce();
-      }, 
-     getsearch: function(){
-            axios.get(window.Laravel.url+'/abest')
-              .then(response => {
-                this.annoncesEmployeur = window.Laravel.annonce.data;
-                })
-              .catch(error => {
-                  console.log('errors : '  , error);
-             })
-          },
-       MoitieDescription:  function (text, length, suffix){
-          if(text.length <= length){
-            return text;
-
-          }
-         
-          return text.substring(0, length) + suffix;
-
-      },
-     
-    }, 
-    created:function(){
-      this.getsearch();
-    } 
-
-});
-
-
-
-
-</script>
-
 <?php $__env->stopPush(); ?>
 <?php echo $__env->make('layouts.template_clinet', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\BWS\resources\views/searchclient.blade.php ENDPATH**/ ?>

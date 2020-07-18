@@ -263,7 +263,7 @@
                       </th>
                     </thead>
                     <tbody>
-                      <tr v-for="admina in adminadmin" style="cursor: pointer;">
+             <tr v-for="admina in adminadmin" style="cursor: pointer;">
                         <td  class="js-show-modal1"  v-on:click="AfficherInfo(admina.id)">
                          @{{admina.id}}  
                         </td>
@@ -281,6 +281,7 @@
                            Admin Supèrieure
                         </td>
                         <td v-else  class="js-show-modal1"  v-on:click="AfficherInfo(admina.id)">
+
                           Admin Simple
                         </td>
                         <td  class="dropdown " id="k">

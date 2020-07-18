@@ -244,6 +244,7 @@
                         <td  class="js-show-modal1"  v-on:click="AfficherInfo(vendeura.id)">@{{vendeura.Nom}} @{{vendeura.Prenom}}</td>
                         <td  class="js-show-modal1"  v-on:click="AfficherInfo(vendeura.id)">@{{vendeura.numTelephone}}</td>
                         <td  class="js-show-modal1"  v-on:click="AfficherInfo(vendeura.id)">@{{vendeura.email}}</td>
+
                         <td  class="dropdown " id="k">
                             <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
                                 <img src="assetsAdmin/img/menu.png"  id="k1" / >
@@ -409,23 +410,6 @@
                       <td>
                         <div style="margin-left: 30px; margin-top: -200px;">
                           @{{ vendeuraa.Num_Compte_Banquaire }}
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="title" style="margin-left: 350px; margin-top: -150px;">
-                          abonnements
-                        </div>  
-                      </td>
-                      <td>
-                        <div class="title" style="margin-left: 20px; margin-top: -150px;">
-                          :
-                        </div>
-                      </td>
-                      <td>
-                        <div style="margin-left: 30px; margin-top: -150px;">
-                          @{{ vendeuraa.Nbre_abbon}}
                         </div>
                       </td>
                     </tr>

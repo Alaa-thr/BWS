@@ -16,7 +16,7 @@ use App\Paiement_vendeur;
 use App\TailleProduit;
 use App\Tarif_livraison;
 use App\Rules\ModifieLibelleDescriptionProduit;
-
+use App\Typechoisirvendeur;
 use Illuminate\Support\Facades\Storage;
 use Auth;
 use Validator;
@@ -86,10 +86,11 @@ class VendeurController extends Controller
     public function getColors(){
         $color = \DB::table('colors')->orderBy('nom','asc')->get();
         return $color;
-     }
-    public function addProduit(Request $request){
+    }
+
+    public function addProduitWithTest(Request $request){
        
-            if( $request->typet == 2){
+                 if( $request->typet == 2){
                  $request->validate([
                 'Libellé' => ['required','regex:/^[A-Z0-9][-a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
                 'description' => ['required','regex:/^[A-Z0-9][-a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
@@ -128,6 +129,122 @@ class VendeurController extends Controller
                 ]);
                
             }
+            
+            
+                $vendeur = Vendeur::find(Auth::user()->id);               
+                $produit = new Produit;
+                $produit->Libellé = $request->Libellé;
+                $produit->description = $request->description;
+                $produit->Qte_P = $request->Qte_P;                
+                $produit->poid = $request->poid;
+                $produit->prix = $request->prix;
+                $produit->vendeur_id = $vendeur->id;
+                $produit->sous_categorie_id = $request->sous_categorie_id;
+                $produit->save();
+
+                if(count($request->pointures) != 0){
+                        foreach ($request->pointures as $pointure) {
+                            $Pointure = new TailleProduit;
+                            $Pointure->nom = $pointure;
+                            $Pointure->produit_id = $produit->id;
+                            $Pointure->save();
+                        }
+                }
+                else if(count($request->tailles) != 0){
+                        foreach ($request->tailles as $taille) {
+                            $Taille = new TailleProduit;
+                            $Taille->nom = $taille;
+                            $Taille->produit_id = $produit->id;
+                            $Taille->save();
+                        }
+                }
+                foreach ($request->colors as $clr) {
+                    $color = new ColorProduit;
+                    $color->color_id = $clr;
+                    $color->produit_id = $produit->id;
+                    $color->save();
+                }
+                $imageproduit = new Imageproduit; //pour la photo di ychoufoha l users ta3 produit
+                $exploded = explode(',', $request->image);
+                $decoded = base64_decode($exploded[1]);
+                if(str_contains($exploded[0], 'jpeg')){
+                    $extension = 'jpg';
+                }
+                else{
+                    $extension = 'png';
+                }
+                $fileName = str_random().'.'.$extension;
+                Storage::put('/public/produits_image/' . $fileName, $decoded);
+                $imageproduit->image = $fileName;
+                $imageproduit->produit_id = $produit->id;
+                $imageproduit->profile = 1;
+                $imageproduit->save();
+            if($request->images != null ){
+                foreach ($request->images as $imgs) {// pour les photos du produits
+                    $images = new Imageproduit;
+                    $exploded = explode(',', $imgs);
+                    $decoded = base64_decode($exploded[1]);
+                    if(str_contains($exploded[0], 'jpeg')){
+                        $extension = 'jpg';
+                    }
+                    else{
+                        $extension = 'png';
+                    }
+                    $fileName = str_random().'.'.$extension;
+                    Storage::put('/public/produits_image/' . $fileName, $decoded);
+                    $images->image = $fileName;
+                    $images->produit_id = $produit->id;
+                    $images->save();
+                }
+            }   
+                return Response()->json(['etat' => true,'produitAjout' => $produit,'imageProduitAjout' => $imageproduit]);
+    }
+
+    public function verifierInputs(Request $request){
+        if( $request->typet == 2){
+                 $request->validate([
+                'Libellé' => ['required','regex:/^[A-Z0-9][-a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
+                'description' => ['required','regex:/^[A-Z0-9][-a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
+                'prix' =>['required'],
+                'sous_categorie_id' =>['required'],
+                'Qte_P' =>['required'],
+                'poid' =>['required'],
+                'image' =>['required'],
+                'colors' =>['required'],
+                'pointures' =>['required']
+                 ]);
+            }
+             if( $request->typet == 1){               
+                $request->validate([
+                'Libellé' => ['required','regex:/^[A-Z0-9][-a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
+                'description' => ['required','regex:/^[A-Z0-9][-a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
+                'prix' =>['required'],
+                'sous_categorie_id' =>['required'],
+                'Qte_P' =>['required'],
+                'poid' =>['required'],
+                'image' =>['required'],
+                'colors' =>['required'],
+                'tailles' =>['required']
+                ]);
+            }
+            else{
+                $request->validate([
+                'Libellé' => ['required','regex:/^[A-Z0-9][-a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
+                'description' => ['required','regex:/^[A-Z0-9][-a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
+                'prix' =>['required'],
+                'sous_categorie_id' =>['required'],
+                'Qte_P' =>['required'],
+                'poid' =>['required'],
+                'image' =>['required'],
+                'colors' =>['required']
+                ]);
+               
+            }
+            return true;
+    }
+    public function addProduit(Request $request){
+       
+            
             
             
                 $vendeur = Vendeur::find(Auth::user()->id);               
@@ -261,17 +378,84 @@ class VendeurController extends Controller
 
         return ([$traiter,$notification]);
     }
-    public function AjouterVillePrix(Request $request){
-       $vendeur = Vendeur::find(Auth::user()->id);
-       echo $request;
-       $tf = new Tarif_livraison;
-       $tf->ville_id = $request->id;
-       $tf->vendeur_id = $vendeur->id;
-       $tf->prix = $request->prix;
-       $tf->save();
-       return Response()->json(['etat' => true, 'tf' => $tf]);
+    public function getTypeLVendeur(){
+        $vendeur = Vendeur::find(Auth::user()->id);
+        $type = \DB::table("typechoisirvendeurs")
+        ->where([['vendeur_id', $vendeur->id],['type_livraison','vc']])
+        ->select('type_livraison')
+        ->get();
+        $tarif = \DB::table('tarif_livraisons')
+       ->where('vendeur_id',$vendeur->id)
+       ->get();
+       $paiment = \DB::table('paiement_vendeurs')
+       ->where('vendeur_id',$vendeur->id)
+       ->get();
+        if(count($type) == 0){
+            return false;
+        }
+        else if(count($type) != 0 && count($tarif) != 0){
+            return false;
+        }
+        else if(count($type) != 0 && count($tarif) == 0){
+            return true;
+        }
 
     }
+
+    public function getPaimentVendeurr(){
+        $vendeur = Vendeur::find(Auth::user()->id);
+        $paiment = \DB::table('paiement_vendeurs')
+            ->where('vendeur_id',$vendeur->id)
+            ->get();
+        if(count($paiment) == 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+
+    }
+
+    public function AjouterVillePrix(Request $request){
+       $vendeur = Vendeur::find(Auth::user()->id);
+       $tarif = \DB::table('tarif_livraisons')
+       ->where([['ville_id',$request->id],['vendeur_id',$vendeur->id]])
+       ->get();
+       $tf = new Tarif_livraison;
+       if (count($tarif) == 0) {
+           
+           $tf->ville_id = $request->id;
+           $tf->vendeur_id = $vendeur->id;
+           $tf->prix = $request->prix;
+           $tf->save();
+       }
+       else{
+            \DB::table('tarif_livraisons')
+           ->where([['ville_id',$request->id],['vendeur_id',$vendeur->id]])
+           ->update(['prix' => $request->prix]);
+        }
+        
+       return Response()->json(['etat' => true]);
+
+    }
+
+    public function deleteTypeLivr($id){
+       $vendeur = Vendeur::find(Auth::user()->id);
+        \DB::table('typechoisirvendeurs')
+           ->where([['type_livraison',$id],['vendeur_id',$vendeur->id]])
+           ->delete();
+       return Response()->json(['etat' => true]);
+    }
+
+    public function addTypeLivr(Request $request){
+       $vendeur = Vendeur::find(Auth::user()->id);
+       $typeAdd = new Typechoisirvendeur;
+       $typeAdd->vendeur_id  = $vendeur->id;
+       $typeAdd->type_livraison  = $request->type;
+       $typeAdd->save();
+       return Response()->json(['etat' => true]);
+    }
+
     public function deleteProduit($id){
        $imagee = Imageproduit::find($id);
        $produit = Produit::find($id);
@@ -279,15 +463,38 @@ class VendeurController extends Controller
        $produit->delete();
        return Response()->json(['etat' => true]);
     }
-    public function updateProduit(Request $request){
 
-        $request->validate([
-             'Libellé' => ['required','regex:/^[A-Z0-9][-a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
-             'description' => ['required','regex:/^[A-Z0-9][a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
-         ]);
-        $produit2 = Produit::find($request->id);    
-        $img = \DB::table('imageproduits')->where('produit_id',$request->id)->get();
-          $imageproduit = new Imageproduit; 
+    public function getDetailsProduitVendeur($id){
+        $vendeur = Vendeur::find(Auth::user()->id);
+        $colors = \DB::table("color_produits")
+        ->join('colors','colors.id','=','color_produits.color_id')
+        ->where("color_produits.produit_id",$id)
+        ->select('nom')
+        ->get();
+        $taille = \DB::table("taille_produits")
+        ->where("produit_id",$id)
+        ->select('nom','produit_id')
+        ->get();
+        $typeL = \DB::table("typechoisirvendeurs")
+        ->where("vendeur_id",$vendeur->id)
+        ->select('type_livraison')
+        ->get();
+        $produit = \DB::table("produits")
+        ->join('sous_categories','sous_categories.id','=','produits.sous_categorie_id')
+        ->select('produits.*','sous_categories.libelle')
+        ->where([["vendeur_id",$vendeur->id],['produits.id',$id]])
+        ->get();
+
+        return ["colors"=> $colors,"taille"=> $taille,"typeL"=> $typeL,"produit"=> $produit];
+
+    }
+
+    public function updateProduit(Request $request){
+        $tab =array();
+        $vendeur = Vendeur::find(Auth::user()->id);
+        $produit2 = Produit::find($request->id);
+        if($request->image != null){
+                
                 $exploded = explode(',', $request->image);
                 $decoded = base64_decode($exploded[1]);
                 if(str_contains($exploded[0], 'jpeg')){
@@ -298,40 +505,136 @@ class VendeurController extends Controller
                 }
                 $fileName = str_random().'.'.$extension;
                 Storage::put('/public/produits_image/' . $fileName, $decoded);
-                $imageproduit->image = $fileName;
-                $imageproduit->produit_id = $produit->id;
-                $imageproduit->profile = 1;
-                $imageproduit->save();
-            if($request->images != null ){
+                \DB::table('imageproduits')
+                    ->where([['produit_id', $request->id],['profile',1]])
+                    ->update(['image' => $fileName]);
+        }
+        if(count($request->images) != 0 ){
+            $pic = \DB::table('imageproduits')
+                    ->where([['produit_id', $request->id],['profile',0]])
+                    ->select('id')
+                    ->get();
+            $i=0; 
                 foreach ($request->images as $imgs) {
-                    $images = new Imageproduit;
-                    $exploded = explode(',', $imgs);
-                    $decoded = base64_decode($exploded[1]);
-                    if(str_contains($exploded[0], 'jpeg')){
-                        $extension = 'jpg';
+                    if(count($pic)-1 < $i){
+                        $imageproduit = new Imageproduit;
+                        $exploded = explode(',', $imgs);
+                        $decoded = base64_decode($exploded[1]);
+                        if(str_contains($exploded[0], 'jpeg')){
+                            $extension = 'jpg';
+                        }
+                        else{
+                            $extension = 'png';
+                        }
+                        $fileName = str_random().'.'.$extension;
+                        Storage::put('/public/produits_image/' . $fileName, $decoded);
+                        $imageproduit->image = $fileName;
+                        $imageproduit->produit_id = $produit2->id;
+                        $imageproduit->profile = 0;
+                        $imageproduit->save();
                     }
                     else{
-                        $extension = 'png';
+                        array_push($tab, $pic[$i]->id);
+                        $exploded = explode(',', $imgs);
+                        $decoded = base64_decode($exploded[1]);
+                        if(str_contains($exploded[0], 'jpeg')){
+                            $extension = 'jpg';
+                        }
+                        else{
+                            $extension = 'png';
+                        }
+                        $fileName = str_random().'.'.$extension;
+                        Storage::put('/public/produits_image/' . $fileName, $decoded);
+                        \DB::table('imageproduits')
+                        ->where([['produit_id', $request->id],['profile',0],['id',$pic[$i]->id]])
+                        ->update(['image' => $fileName]);
+
                     }
-                    $fileName = str_random().'.'.$extension;
-                    Storage::put('/public/produits_image/' . $fileName, $decoded);
-                    $images->image = $fileName;
-                    $images->produit_id = $produit->id;
-                    $images->save();
+                    $i++;
+
                 }
-            } 
+               
+                if(count($pic) > $i){
+                   
+                    
+                    $supp=\DB::table('imageproduits')
+                    ->where([['produit_id', $request->id],['profile',0]])
+                    ->whereNotIn('id', $tab)
+                    ->delete();
+                   
+                }
+
+            
+        }       
+        if(count($request->colors)!=0){
+            foreach ($request->colors as $clr) {
+                    $color = new ColorProduit;
+                    $color->color_id = $clr;
+                    $color->produit_id = $produit->id;
+                    $color->save();
+            }
+
+        }
+        if(count($request->pointures)!=0){
+            foreach ($request->pointures as $pointure) {
+                    $Pointure = new TailleProduit;
+                    $Pointure->nom = $pointure;
+                    $Pointure->produit_id = $produit->id;
+                    $Pointure->save();
+            }
+
+        }  
+        if(count($request->tailles)!=0){
+            foreach ($request->tailles as $taille) {
+                    $Taille = new TailleProduit;
+                    $Taille->nom = $taille;
+                    $Taille->produit_id = $produit->id;
+                    $Taille->save();
+            }
+
+        }  
         $produit2->Libellé = $request->Libellé;
         $produit2->description = $request->description;
         $produit2->prix = $request->prix;
         $produit2->poid = $request->poid;
         $produit2->sous_categorie_id = $request->sous_categorie_id;
-        $produit2->vendeur_id = $request->vendeur_id;
+        $produit2->vendeur_id = $vendeur->id;
         $produit2->Qte_P = $request->Qte_P;
        
         $produit2->save();
         return Response()->json(['etat' => true,'produitAjout' => $produit2]);
     
     }
+
+    public function tarifVille(){
+        $vendeur = Vendeur::find(Auth::user()->id);
+        $tarifv = \DB::table('tarif_livraisons')
+            ->join('villes','villes.id','=','tarif_livraisons.ville_id')
+            ->where([['vendeur_id', $vendeur->id]])
+            ->select('nom','prix')
+            ->orderBy('nom','asc')
+            ->get();
+        $typeL = \DB::table('typechoisirvendeurs')
+            ->where([['vendeur_id', $vendeur->id]])
+            ->select('type_livraison')
+            ->get();
+        $allType = ['dhl','cv','vc'];
+        $typeLNotExiste  = array();
+        foreach ($allType as $key ) {
+            for ($i=0,$j=0; $i <count($typeL) ; $i++) { 
+                if($key == $typeL[$i]->type_livraison){
+                    $j++;
+                    $i=count($typeL);
+                }
+            }
+            if($j == 0){
+                array_push($typeLNotExiste, ["type_livraison"=>$key]);
+            }
+        }
+
+        return ["tarifv" =>$tarifv,"typeL" =>$typeL,"typeLNotExiste" =>$typeLNotExiste];
+    }
+
     public function change_valeur_vendeur($id){
     
         

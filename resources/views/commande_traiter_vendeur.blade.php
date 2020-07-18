@@ -278,7 +278,7 @@
 </script>
 
 <script>
-
+function initDashboardPageCharts () {}
 
 
 var app2 = new Vue({
