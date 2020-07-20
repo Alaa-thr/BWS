@@ -111,6 +111,17 @@
                                                         </li>
                                                        
                                                     </ul >
+                                                    <ul >
+                                                <li class="p-b-6 " v-if="autreProd === 0">
+
+                                                   
+
+                                                    <a href="{{route('shop')}}" class="filter-link stext-106 trans-04">
+                                                            Autre
+                                                    </a>
+                                                </li>
+                                                       
+                                            </ul >
                                                 </div>
 
             @php 
@@ -179,6 +190,17 @@
 
                                                     <a href="#" class="filter-link stext-106 trans-04">
                                                             @{{catego.libelle}}
+                                                    </a>
+                                                </li>
+                                                       
+                                            </ul >
+                                            <ul >
+                                                <li class="p-b-6 " v-if="autreAnn === 0">
+
+                                                   
+
+                                                    <a href="{{route('emploi')}}" class="filter-link stext-106 trans-04">
+                                                            Autre
                                                     </a>
                                                 </li>
                                                        
@@ -694,6 +716,9 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
             sousCategories: [],
             categoriesE: [],
             count: 6,
+            autreAnn:false,
+            autreProd:false,
+            categorieAnn: [],
             //wayLogin: {{ json_encode(route('login')) }},
          },
          methods:{
@@ -703,6 +728,10 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                         .then(response => {
                            app44.categories = response.data.categorie;
                            app44.sousCategories = response.data.sousCatego;
+                           app44.categorieAnn = response.data.autreProduit;
+                           app44.autreAnn = response.data.autre;
+                           app44.autreProd = response.data.another;
+
                            this.categoriesE =  response.data.categorieE;
                         })
                         .catch(error =>{

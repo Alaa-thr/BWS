@@ -16,6 +16,24 @@ use App\Email;
 use Auth;
 use Redirect;
 use App\Article;
+use DB;
+use Illuminate\Support\Facades\Validator;
+use App\Rules\ModifieTextDescriptionArticle;
+use App\Favori;
+use App\Signal;
+use App\Notification;
+use App\Historique;
+use App\Produit;
+use App\Demande_emploie;
+use App\Annonce_emploie;
+use App\Imageproduit;
+use App\ColorProduit;
+use App\TailleProduit;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\CommandeRequest;
+use App\Rules\Taille; 
+use Session;
+use Hash;
 
 class BwsController extends Controller
 {
@@ -525,13 +543,44 @@ public function emploiVilleSousCategoSearch($id,$idVille,$idSC){
     }
 
     public function getCategorieHome(){
-
         $sousCatego = \DB::table('sous_categories')->get();
         $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
         $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();  
-        return ['categorie'=>$categorie , 'sousCatego'=> $sousCatego,'categorieE'=>$categorieE];
-       
+        $annonce = \DB::table('annonce_emploies')->get();
+        $produi = \DB::table('produits')->get();
+
+        $autresscat = \DB::table('sous_categories')->where('categorie_id',null)->get();
+        $autre = 2;
+        $another = 2;
+        if(count($autresscat) != 0 ){
+            foreach ($autresscat as $sC) {
+                foreach ($annonce as $ann) {
+
+                if($sC->id == $ann->sous_categorie_id){
+                                      
+                            $autre = 0;
+                          }
+                        
+                    
+                    }}
+                
+            foreach ($autresscat as $sC) {
+                foreach ($produi as $pro) {
         
+                        if($sC->id == $pro->sous_categorie_id){
+                                     
+                            $another = 0;
+                                 
+                                }
+                                
+                            
+                            }}
+                            return ['categorie'=>$categorie , 'sousCatego'=> $sousCatego,'categorieE'=>$categorieE,'autre'=>$autre,'another'=>$another];
+                }
+        else{
+       return ['categorie'=>$categorie , 'sousCatego'=> $sousCatego,'categorieE'=>$categorieE];
+       
+        }
     }
 
      public function emploi()
