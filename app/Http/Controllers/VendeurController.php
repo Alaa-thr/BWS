@@ -53,6 +53,14 @@ class VendeurController extends Controller
 
     public function getProduit(){
         $vendeur = Vendeur::find(Auth::user()->id);
+        $paier = \DB::table('paiement_vendeurs')->where('vendeur_id', $vendeur->id)->get();
+        if(count($paier) == 0 ){
+                $notPaier = 0;
+        }
+        else{
+
+            $notPaier = 1;
+        }
         $produit = \DB::table('produits')->where('vendeur_id', $vendeur->id)->orderBy('created_at','desc')->paginate(8);       
         $imageproduit = \DB::table('imageproduits')->get();
         $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
@@ -71,7 +79,7 @@ class VendeurController extends Controller
            }
             
         }
-        return view('produit_vendeur',['produit'=>$produit, 'ImageP' => $imageproduit,'categorie'=>$categorie,'categorieE'=>$categorieE]);
+        return view('produit_vendeur',['produit'=>$produit, 'ImageP' => $imageproduit,'categorie'=>$categorie,'categorieE'=>$categorieE,'notPaier'=>$notPaier]);
     }
 
     public function getSousCategories($CategoId){

@@ -420,12 +420,15 @@ public function emploiVilleSousCategoSearch($id,$idVille,$idSC){
         return view('apropos',['categorie'=>$categorie,'categorieE'=>$categorieE,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command,'prixTotale' => $prixTotale]);
     }
 
-     public function produitVisiteur()
+    public function produitVisiteur()
     {
         $produit = \DB::table('produits')
          ->join('vendeurs','vendeurs.id', '=', 'produits.vendeur_id')
+         ->join('paiement_vendeurs','paiement_vendeurs.vendeur_id', '=', 'produits.vendeur_id')->where('response',1)
          ->select('vendeurs.Nom', 'vendeurs.Prenom', 'produits.*')
-         ->get();       
+         ->orderBy('position','asc')
+         ->get();   
+
         $imageproduit = \DB::table('imageproduits')->get();
         $color = \DB::table('colors')->join('color_produits', 'colors.id', '=', 'color_produits.color_id')->get();
         $taille = \DB::table('taille_produits')->get();
