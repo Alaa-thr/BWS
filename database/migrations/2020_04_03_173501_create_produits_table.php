@@ -22,7 +22,6 @@ class CreateProduitsTable extends Migration
             $table->text('description');
             $table->integer('Qte_P');
             $table->integer('Notation')->nullable();
-            $table->float('poid');
             $table->boolean('produit_attende')->default(0);
             $table->boolean('deleteProduit')->default(0);
             $table->timestamps();

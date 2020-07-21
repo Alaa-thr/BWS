@@ -156,9 +156,7 @@
                                         <span class="mtext-106 cl2 m-b-20">
                                            Sous-Categorie: @{{t.libelle}} 
                                         </span> <br>
-                                        <span class="mtext-106 cl2">
-                                           Poids: @{{t.poid}}/kg 
-                                        </span>
+                                     
 
                                         <p class="stext-102 cl3 p-t-23">
                                             @{{t.description}}.
@@ -273,28 +271,22 @@
                             </div>
                          
                         </div>
-                        <div class="row">
-                          <div class="col-md-10 pr-2" >
-                            <div class="form-group">
-                              <label>Prix</label>
-                              <input type="number" name="prix" class="form-control" placeholder="0.00/DA*" v-model="produitAjout.prix" :class="{'is-invalid' : message.prix}" />
+                      
+                        <div class="row col-md-12 pr-2 flex-t m-b-20">
+                        <div class="form-group m-r-45" style="width: 320px">
+
+                        <label>Prix</label>
+                              <input type="number" name="prix" class="form-control" placeholder="0.00/DA*" v-model="produitAjout.prix" :class="{'is-invalid' : message.prix}" />                              <span class="px-3 cl13" v-if="message.Qte_P" v-text="message.Qte_P[0]"></span>
                               <span class="px-3 cl13" v-if="message.prix" v-text="message.prix[0]">
                               </span>
                             </div>
-                          </div>
-                        </div>
-                        <div class="row col-md-12 pr-2 flex-t m-b-20">
-                         
+
                             <div class="form-group m-r-45" style="width: 320px">
                               <label>Quantité de Produit</label>
                               <input type="number" name="Qte_P" class="form-control" placeholder="0.00/Piece*" v-model="produitAjout.Qte_P" :class="{'is-invalid' : message.Qte_P}"/>
                               <span class="px-3 cl13" v-if="message.Qte_P" v-text="message.Qte_P[0]"></span>
                             </div>
-                            <div class="form-group  " style="width: 320px">
-                              <label>Poid de Produit</label>
-                              <input type="number" name="poid" class="form-control" placeholder="0.00Kg/g*" v-model="produitAjout.poid" :class="{'is-invalid' : message.poid}" />
-                              <span class="px-3 cl13" v-if="message.poid" v-text="message.poid[0]"></span>
-                            </div>
+                          
                          
                         </div>
                         <div class="row col-md-12 pr-2 flex-t m-b-30">
@@ -355,14 +347,24 @@
                         <div class="row">
                           <div class="col-md-10 flex-t">
                                           
-                                <button type="submit"  class="btn btn-danger btn-block " style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="CancelArticle()" >Annuler
+                                <button type="submit"  class="btn btn-danger btn-block " style="margin-top:40px;  border: 0; 
+                                 border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="CancelArticle()" >Annuler
                                 </button>
-                                <button type="submit" v-if="modifier && addd===false" class="btn btn-success btn-block m-r-5" style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="updateProduitButton()" >Modifier
+                                <button type="submit" v-if="modifier && addd===false" class="btn btn-success btn-block m-r-5"
+                                 style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" 
+                                 v-on:click="updateProduitButton()" >Modifier
                                 </button> 
-                                <button type="submit" v-if="modifier == false && addd === false" class="js-show-modal1 btn btn-success btn-block m-r-5" style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="AfficherAjout2()">Suivant
+                                <button type="submit" v-if="modifier == false && addd === false" class="js-show-modal1 btn btn-success
+                                 btn-block m-r-5" style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;"
+                                  v-on:click="AfficherAjout2()">Suivant
                                 </button>
-                                <button v-if="modifier === false && addd === true" type="submit" class="btn btn-success btn-block m-r-5" style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="addProduitWithTest()" >Ajouter
+                                <button v-if="0 == <?php echo $notPaier ?> && modifier === false && addd === true" type="submit" 
+                                class="js-show-modal1 btn btn-success btn-block m-r-5" style="margin-top:40px;  border: 0; 
+                                 border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="AfficherAjout3()">Suivant
                                 </button>
+                               <button v-if=" 1 == <?php echo $notPaier ?> && modifier === false && addd === true" type="submit" class="btn btn-success btn-block m-r-5" style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="addProduitWithTest();" >Ajouter
+                                </button>
+                              
                           </div>
                         </div>
                       </div>
@@ -414,7 +416,88 @@
                         </button>
                         <button type="submit"  class="btn btn-danger  m-r-20" style="  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700; width: 280px;  margin-top: -48px" v-on:click="CancelArticle()" >Annuler
                         </button>
-                        <button type="submit" class="btn btn-success  " style=" margin-top:-48px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700; width: 280px;" v-on:click="addProduit()" >Ajouter
+                        <button type="submit" 
+                                class="js-show-modal1 btn btn-success btn-block m-r-5" style="margin-top:40px;  border: 0; 
+                                 border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="AfficherAjout3()">Suivant
+                                </button>
+                    </div>
+                    
+                  </div>
+            </div>
+
+            <div class="bg0 p-b-150 p-lr-15-lg how-pos3-parent" v-if="openAjout3 "style=" width: 990px; padding-top: 10%">
+                  <button class="how-pos3 hov3 trans-04 p-t-6" v-on:click="CancelArticle()">
+                    <img src="images/icon-close.png" alt="CLOSE">
+                  </button>
+                 <div class="tab " style="border: 1px" >
+                   
+                 <p style="width: 100%;margin-left:11%;margin-top:-61px ;color: rgb(192,4,4);font-size: 40px;"> 
+Paiment:</p><p style="width: 100%;margin-left:11%;margin-top:-11px ;color: black"> <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;.Il y'a 3 emplacement dans ce site :
+ <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+ <p style="width: 100%;margin-left:13%;font-size: 18px;margin-top:-11px ;"> 
+1 er emplacement:900DA/Produit,180DA/Annonce -Par mois-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</p> <p style="width: 100%;margin-left:11%;margin-top:-11px ;color: black">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Les 2 premiers slide dans page 
+<b class="alert-link " style="cursor: pointer;text-decoration: underline;" v-on:click="showImage1">Accueil</b>. <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+*Les 2 premiers&nbsp;ligne dans page 
+<b class="alert-link " style="cursor: pointer;text-decoration: underline;" v-on:click="showImageEmp1">Shop</b>.
+<br><br><br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ <p style="width: 100%;margin-left:13%;font-size: 18px;margin-top:-41px ;"> 
+ 2 er emplacement:500DA/Produit,140DA/Annonce -Par moi<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</p> <p style="width: 100%;margin-left:11%;margin-top:-11px ;color: black">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Les 4 derniers slide dans page 
+<b class="alert-link " style="cursor: pointer;text-decoration: underline;" v-on:click="showImage2">Accueil</b>.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+*Les 5 derniers&nbsp;ligne dans page            
+   <b class="alert-link " style="cursor: pointer;text-decoration: underline;" v-on:click="showImageEmp2">Shop</b>.              
+<br><br><br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ <p style="width: 100%;margin-left:13%;font-size: 18px;margin-top:-41px ;"> 
+
+3 er emplacement:200DA/Produit,70DA/Annonce -Par mois-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</p> <p style="width: 100%;margin-left:11%;margin-top:-11px ;color: black">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+* Le reste dans page <b class="alert-link " style="cursor: pointer;text-decoration: underline;" v-on:click="showImage3"> Accueil</b>. <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+*Le reste dans page         
+      <b class="alert-link " style="cursor: pointer;text-decoration: underline;" v-on:click="showImageEmp3">Shop</b>.
+</p>
+<p style="width: 100%;margin-left:11%;margin-top:5% ;color:black"> Choisir l'emplacement:</p>
+
+          <select  name="select" id="select" style="margin-left:11% ;width: 25%;"> 
+            <option  value="1"> 1</option> 
+            <option  value="2"> 2</option> 
+            <option  value="3"> 3</option> 
+          </select>
+          <p style="width: 35%;margin-left:63%;margin-top:-4.5%;color:black ;padding-bottom:21px">Numéro bancaire pour paiment:</p>
+          <input style="width: 25%;margin-left:63%;margin-top:-21px " class="form-control form-control-lg" id="ccp" name="ccp" type="text"
+           placeholder="  12345 " disabled >
+
+      <div class=" alert-warning" role="alert" style="padding-left: 10px;padding-top: 1px;padding-bottom: 1px;margin-top:5%;">
+        <i class="now-ui-icons travel_info" id="y"></i>
+        Après cette étape votre produit sera ajouté avec les produits qui déjà ajouter .Quand tu fait le paiment il sera ajouté a les autres
+         pages.
+      </div> 
+
+                   
+
+                   
+                    <div class="flex-t m-l-50" style="margin-top:20%;">
+                        <button type="submit"  class="btn btn-warning m-r-20" style=" margin-top:-48px; border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;width: 280px; " v-on:click="Previous()" >Previous
+                        </button>
+                        <button type="submit"  class="btn btn-danger  m-r-20" style="  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700; width: 280px;  margin-top: -48px" v-on:click="CancelArticle()" >Annuler
+                        </button>
+                        <button type="submit" class="btn btn-success  " style=" margin-top:-48px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700; width: 280px;" v-on:click="addProduit();change_valeur_vendeur();" >Ajouter
                         </button>
                     </div>
                     
@@ -543,6 +626,7 @@
 
                'csrfToken'      => csrf_token(),
                'produit'        => $produit,
+               'notPaier'        => $notPaier,
                'ImageP'         => $ImageP,
                 'url'           => url('/'), 
           ]) !!};
@@ -576,7 +660,7 @@
                                 prix: '',
                                 description: '',
                                 Qte_P: '',
-                                poid: '',
+                               // poid: '',
                                 image: '',
                                 images: [],
                                 colors: [],
@@ -628,7 +712,7 @@
                             prix: '',
                             description: '',
                             Qte_P: '',
-                            poid: '',
+                           // poid: '',
                             image: '',
                             images: [],
                             colors: [],
@@ -667,6 +751,8 @@
           hideModel: false,
           openAjout: false,
           openAjout2: false,
+          openAjout3: false,
+
           openInfo: false,
           modifier: false,
           produitAjout: {
@@ -677,7 +763,7 @@
             prix: '',
             description: '',
             Qte_P: '',
-            poid: '',
+          //  poid: '',
             image: '',
             images: [],
             colors: [],
@@ -723,7 +809,7 @@
             prix: '',
             description: '',
             Qte_P: '',
-            poid: '',
+        //    poid: '',
             image: '',
             images: [],
             colors: [],
@@ -739,7 +825,7 @@
             prix: '',
             description: '',
             Qte_P: '',
-            poid: '',
+         //   poid: '',
             image: '',
             images: [],
             colors: [],
@@ -828,6 +914,8 @@
             Previous(){
                 this.openAjout = true ;
                 this.openAjout2 = false;
+                this.openAjout3 = false;
+
             },
             getPaimentVendeurr(){
                 axios.get(window.Laravel.url+'/getpaimentvendeurr')
@@ -859,6 +947,70 @@
                       console.log('errors : '  ,error);
                  })
             },
+            showImage1: function(){
+          Swal.fire({
+          imageUrl: '{{asset('storage/annonces_image/homeplace1.png')}}',
+        
+          imageHeight: 340,
+          imageAlt: 'A tall image'
+        })
+      },
+      showImage2: function(){
+          Swal.fire({
+          imageUrl: '{{asset('storage/annonces_image/homeplace2.png')}}',
+        
+          imageHeight: 340,
+          imageAlt: 'A tall image'
+        })
+      },
+      showImage3: function(){
+          Swal.fire({
+          imageUrl: '{{asset('storage/annonces_image/homeplace3.png')}}',
+        
+          imageHeight: 340,
+          imageAlt: 'A tall image'
+        })
+      },
+      showImageEmp1: function(){
+          Swal.fire({
+          imageUrl: '{{asset('storage/annonces_image/emploplace1.png')}}',
+        
+          imageHeight: 340,
+          imageAlt: 'A tall image'
+        })
+      },
+      showImageEmp2: function(){
+          Swal.fire({
+          imageUrl: '{{asset('storage/annonces_image/emploplace2.png')}}',
+        
+          imageHeight: 340,
+          imageAlt: 'A tall image'
+        })
+      }, 
+      showImageEmp3: function(){
+          Swal.fire({
+          imageUrl: '{{asset('storage/annonces_image/emploplace3.png')}}',
+        
+          imageHeight: 340,
+          imageAlt: 'A tall image'
+        })
+      },   
+      change_valeur_vendeur: function(){
+        select = document.getElementById("select");
+        choice = select.selectedIndex;
+
+axios.post(window.Laravel.url+'/paiementvendeur/'+choice)
+              .then(response => {
+				Swal.fire(
+					  "Admin va envoyer son réponse!",
+					);
+                	console.log("response",response.data)
+               })
+              .catch(error => {
+                  console.log('errors : '  , error);
+             })
+
+},
             CancelArticle(){
                 this.tailless = [];
                 this.colorss = [];
@@ -874,7 +1026,7 @@
                             prix: 0,
                             description: '',
                             Qte_P: 0,
-                            poid: 0,
+                          //  poid: 0,
                             image: '',
                             images: [],
                             colors: [],
@@ -994,10 +1146,8 @@
          if(this.prd.Qte_P == ''){
             this.prd.Qte_P =  this.oldprd.Qte_P;
          }
-         if(this.prd.poid == ''){
-
-            this.prd.poid =  this.oldprd.poid;
-         }
+      
+      
          if(this.prd.sous_categorie_id == ''){
 
             this.prd.sous_categorie_id =  this.oldprd.sous_categorie_id;
@@ -1021,7 +1171,7 @@
                         prix: '',
                         description: '',
                         Qte_P: '',
-                        poid: '',
+                     //   poid: '',
                         image: '',
                         images: [],
                         colors: [],
@@ -1038,7 +1188,7 @@
                     prix: '',
                     description: '',
                     Qte_P: '',
-                    poid: '',
+                  //  poid: '',
                     image: '',
                     images: [],
                     colors: [],
@@ -1060,7 +1210,7 @@
                         prix: '',
                         description: '',
                         Qte_P: '',
-                        poid: '',
+                      //  poid: '',
                         image: '',
                         images: [],
                         colors: [],
@@ -1144,6 +1294,35 @@
                     }
                     this.hideModel = true;
                     this.openAjout = false
+                    this.openInfo = false;
+                 })
+                 .catch(error => {
+                      this.message = error.response.data.errors;
+                      console.log('errors :' , this.message);
+                 })
+             
+            },
+            AfficherAjout3: function(){
+           //  this.tarifL = false;
+           this.openAjout3 = true;
+             this.produitAjout.image = this.image;
+             this.produitAjout.images = this.imagesP;
+             this.produitAjout.colors = this.colorsP;
+             this.produitAjout.tailles = this.tailleP;
+             this.produitAjout.pointures = this.PointureP;
+             this.produitAjout.typet = this.Type;
+             axios.post(window.Laravel.url+'/verifierInputs',this.produitAjout)
+                 .then(response => {
+                    this.message = {};
+                 /*   if(this.typeLVC == true){
+                        this.openAjout3 = true;
+                    }
+                    else{
+                       this.openAjout3 = false;
+                    }*/
+                    this.hideModel = true;
+                    this.openAjout = false
+                    this.openAjout2 = false
                     this.openInfo = false;
                  })
                  .catch(error => {
@@ -1241,6 +1420,7 @@
           produitIds: [],
           produitDelete :[],
           p:[],
+          autrepaier:false,
           
 
         },
@@ -1263,6 +1443,7 @@
                 app2.hideModel = true;
                 app2.openAjout = false;
                 app2.openAjout2 = false;
+                app2.openAjout3 = false;
                 app2.openInfo = true;
                 app2.tarifL = false;
                 axios.get(window.Laravel.url+'/getdetailsproduitvendeur/'+produit.id)
@@ -1302,6 +1483,8 @@
               .then(response => {
                 this.ProduitsVendeur = window.Laravel.produit.data;
                 this.imagesproduit = window.Laravel.ImageP;
+                this.autrepaier = response.data.notPaier;
+
                })
               .catch(error => {
                   console.log('errors : '  , error);
@@ -1416,7 +1599,7 @@
          app2.oldprd.prix = produit.prix;
          app2.oldprd.Qte_P = produit.Qte_P;
          app2.oldprd.sous_categorie_id = produit.sous_categorie_id;
-         app2.oldprd.poid = produit.poid;
+       //  app2.oldprd.poid = produit.poid;
          app2.oldprd.id = produit.id;
          
         },      
@@ -1425,6 +1608,7 @@
              app2.openAjout = true;
              app2.openInfo = false;
              app2.openAjout2 = false;
+             app2.openAjout3 = false;
              app2.tarifL = false;
               
           },

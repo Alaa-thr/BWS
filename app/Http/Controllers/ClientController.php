@@ -235,7 +235,7 @@ class ClientController extends Controller
         ->select('colors.nom', 'imageproduits.produit_id', 'imageproduits.image', 'imageproduits.profile','clients.ville', 'produits.Libellé', 'produits.prix', 'produits.vendeur_id', 'commandes.*', 'vendeurs.Nom as nom_vendeur', 'vendeurs.Prenom as prenom_vendeur',DB::raw('(commandes.prix_total * commandes.qte) as prixTo'))
         ->where([['commandes.client_id', $clientCnncte->id],['commandes.id', $clientCnncte->nbr_cmd],['imageproduits.profile',1]])
         ->get();
-
+        $villes = \DB::table('villes')->get();
         
 
         $color = \DB::table('colors')->join('color_produits', 'colors.id', '=', 'color_produits.color_id')->get();
@@ -248,7 +248,7 @@ class ClientController extends Controller
         $favoris = \DB::table('produits')->get();
         $imageproduit = \DB::table('imageproduits')->get();
         $command = \DB::table('commandes')->where([ ['client_id',$clientCnncte->id],['commande_envoyee',0]])->get();     
-        return view('panier_visiteur',['produitCmds' => $produitCmds,'color' => $color, 'typeLivraison' => $typeLivraison, 'taille' => $taille,'client' => $clientCnncte,'idClient' => $clientCnncte->id,'categorie'=>$categorie,'categorieE'=>$categorieE,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command]);
+        return view('panier_visiteur',['villes' => $villes,'produitCmds' => $produitCmds,'color' => $color, 'typeLivraison' => $typeLivraison, 'taille' => $taille,'client' => $clientCnncte,'idClient' => $clientCnncte->id,'categorie'=>$categorie,'categorieE'=>$categorieE,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command]);
 
 
     } 
@@ -314,36 +314,43 @@ class ClientController extends Controller
       
     public function EnvoyerCommande(Request $request){
 
+       
+       
         if($request->nonCode == 1 && $request->nonAddresse == 1 ){
-             $request->validate([
-              'numero_tlf' => ['required', 'string', 'max:10', 'min:10','regex:/^0[5-7]+/'],
-              'email' => ['required', 'string','email'],
-              'address' => ['required', 'string'],
-              'code_postale' => ['required', 'string', 'max:5', 'min:5','regex:/[0-9]{5}+/'],
+            $request->validate([
+             'numero_tlf' => ['required', 'string', 'max:10', 'min:10','regex:/^0[5-7]+/'],
+             'email' => ['required', 'string','email'],
+             'ville' => ['required', 'string'],
+             'address' => ['required', 'string'],
+             'code_postale' => ['required', 'string', 'max:5', 'min:5','regex:/[0-9]{5}+/'],
 
-             ]);
-        }
-        else if($request->nonCode != 1 && $request->nonAddresse == 1){
-             $request->validate([
-              'numero_tlf' => ['required', 'string', 'max:10', 'min:10','regex:/^0[5-7]+/'],
-              'email' => ['required', 'string','email'],
-              'address' => ['required', 'string'],
-             ]);
-        }
-        else if($request->nonCode == 1 && $request->nonAddresse != 1){
-             $request->validate([
-              'numero_tlf' => ['required', 'string', 'max:10', 'min:10','regex:/^0[5-7]+/'],
-              'email' => ['required', 'string','email'],
-              'code_postale' => ['required', 'string', 'max:5', 'min:5','regex:/[0-9]{5}+/'],
-             ]);
-        }
-        else if($request->nonCode != 1 && $request->nonAddresse != 1){
-             $request->validate([
-              'numero_tlf' => ['required', 'string', 'max:10', 'min:10','regex:/^0[5-7]+/'],
-              'email' => ['required', 'string','email'],
-              
-             ]);
-        }
+            ]);
+       }
+       else if($request->nonCode != 1 && $request->nonAddresse == 1){
+            $request->validate([
+             'numero_tlf' => ['required', 'string', 'max:10', 'min:10','regex:/^0[5-7]+/'],
+             'email' => ['required', 'string','email'],
+             'ville' => ['required', 'string'],
+             'address' => ['required', 'string'],
+            ]);
+       }
+       else if($request->nonCode == 1 && $request->nonAddresse != 1){
+            $request->validate([
+             'numero_tlf' => ['required', 'string', 'max:10', 'min:10','regex:/^0[5-7]+/'],
+             'email' => ['required', 'string','email'],
+             'ville' => ['required', 'string'],
+             'code_postale' => ['required', 'string', 'max:5', 'min:5','regex:/[0-9]{5}+/'],
+            ]);
+       }
+       else if($request->nonCode != 1 && $request->nonAddresse != 1){
+            $request->validate([
+             'numero_tlf' => ['required', 'string', 'max:10', 'min:10','regex:/^0[5-7]+/'],
+             'email' => ['required', 'string','email'],
+             'ville' => ['required', 'string'],
+            ]);
+       }
+      
+
         $clientCnncte = Client::find(Auth::user()->id);// njibo l client di ra connecter
        
         $commandes = \DB::table('commandes')->get();
@@ -352,13 +359,15 @@ class ClientController extends Controller
             \DB::table('commandes')->where([ ['client_id',$clientCnncte->id],['id','=',$clientCnncte->nbr_cmd]])->
             update(['email'=> $request->email ,
             'numero_tlf' => $request->numero_tlf, 'code_postale' => $request->code_postale, 'commande_envoyee' =>1,
-             'ville' =>$clientCnncte->ville,'address' =>$request->address]);}
+             'ville' =>$request->ville,'address' =>$request->address]);}
 
 
         $clientCnncte->nbr_cmd =$clientCnncte->nbr_cmd+1;
         $clientCnncte->addresse = $request->address;
         $clientCnncte->codePostal  = $request->code_postale;
+       $clientCnncte->ville  = $request->ville;
         $clientCnncte->save();
+
 
         session()->flash('success','Cette Commande sera traitée par le vendeur et lui rappeler ou refuser ton commande avec notification');
 

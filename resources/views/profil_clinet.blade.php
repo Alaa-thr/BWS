@@ -380,7 +380,7 @@ function myFunction2() {
               
                })
               .catch(error => {
-               
+                window.location.reload();
                 console.log('error :' , error);             })
           },
       profil_clinet: function(){

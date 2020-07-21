@@ -208,6 +208,12 @@
 			                               Vendeur&nbsp:<b>&nbsp&nbsp@{{this.detaillproduit.Nom}} &nbsp@{{this.detaillproduit.Prenom}}</b>.</span>
 			                           		
 			                            </p>
+
+										<p class="stext-102 cl3 p-t-23 " >
+			                            	<span>
+			                               Boutique&nbsp:<b>&nbsp&nbsp@{{this.detaillproduit.Nom_boutique}}</b>.</span>
+			                           		
+			                            </p>
 			                            <!--  -->
 			                            <div class="p-t-33">
 			                                <div v-show="tailleExiste" class="flex-w flex-r-m p-b-10">

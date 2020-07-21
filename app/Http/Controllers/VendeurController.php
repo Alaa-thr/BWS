@@ -105,7 +105,7 @@ class VendeurController extends Controller
                 'prix' =>['required'],
                 'sous_categorie_id' =>['required'],
                 'Qte_P' =>['required'],
-                'poid' =>['required'],
+              //  'poid' =>['required'],
                 'image' =>['required'],
                 'colors' =>['required'],
                 'pointures' =>['required']
@@ -118,7 +118,7 @@ class VendeurController extends Controller
                 'prix' =>['required'],
                 'sous_categorie_id' =>['required'],
                 'Qte_P' =>['required'],
-                'poid' =>['required'],
+               // 'poid' =>['required'],
                 'image' =>['required'],
                 'colors' =>['required'],
                 'tailles' =>['required']
@@ -131,7 +131,7 @@ class VendeurController extends Controller
                 'prix' =>['required'],
                 'sous_categorie_id' =>['required'],
                 'Qte_P' =>['required'],
-                'poid' =>['required'],
+               // 'poid' =>['required'],
                 'image' =>['required'],
                 'colors' =>['required']
                 ]);
@@ -144,7 +144,7 @@ class VendeurController extends Controller
                 $produit->Libellé = $request->Libellé;
                 $produit->description = $request->description;
                 $produit->Qte_P = $request->Qte_P;                
-                $produit->poid = $request->poid;
+             //   $produit->poid = $request->poid;
                 $produit->prix = $request->prix;
                 $produit->vendeur_id = $vendeur->id;
                 $produit->sous_categorie_id = $request->sous_categorie_id;
@@ -216,7 +216,7 @@ class VendeurController extends Controller
                 'prix' =>['required'],
                 'sous_categorie_id' =>['required'],
                 'Qte_P' =>['required'],
-                'poid' =>['required'],
+               // 'poid' =>['required'],
                 'image' =>['required'],
                 'colors' =>['required'],
                 'pointures' =>['required']
@@ -229,7 +229,7 @@ class VendeurController extends Controller
                 'prix' =>['required'],
                 'sous_categorie_id' =>['required'],
                 'Qte_P' =>['required'],
-                'poid' =>['required'],
+               // 'poid' =>['required'],
                 'image' =>['required'],
                 'colors' =>['required'],
                 'tailles' =>['required']
@@ -242,7 +242,7 @@ class VendeurController extends Controller
                 'prix' =>['required'],
                 'sous_categorie_id' =>['required'],
                 'Qte_P' =>['required'],
-                'poid' =>['required'],
+              //  'poid' =>['required'],
                 'image' =>['required'],
                 'colors' =>['required']
                 ]);
@@ -260,7 +260,7 @@ class VendeurController extends Controller
                 $produit->Libellé = $request->Libellé;
                 $produit->description = $request->description;
                 $produit->Qte_P = $request->Qte_P;                
-                $produit->poid = $request->poid;
+              //  $produit->poid = $request->poid;
                 $produit->prix = $request->prix;
                 $produit->vendeur_id = $vendeur->id;
                 $produit->sous_categorie_id = $request->sous_categorie_id;
@@ -688,7 +688,7 @@ class VendeurController extends Controller
         $produit2->Libellé = $request->Libellé;
         $produit2->description = $request->description;
         $produit2->prix = $request->prix;
-        $produit2->poid = $request->poid;
+      //  $produit2->poid = $request->poid;
         $produit2->sous_categorie_id = $request->sous_categorie_id;
         $produit2->vendeur_id = $vendeur->id;
         $produit2->Qte_P = $request->Qte_P;
@@ -754,7 +754,7 @@ class VendeurController extends Controller
             'prix' =>['required'],
             'sous_categorie_id' =>['required'],
             'Qte_P' =>['required'],
-            'poid' =>['required'],
+            //'poid' =>['required'],
            
              ]);
        
@@ -773,17 +773,3 @@ class VendeurController extends Controller
 
 
 }
- /*$tableIdProduit = [];
-        $imageproduit = [];
-        foreach ($produit as $p) {
-           
-            array_push($tableIdProduit,$p->id);
-        }
-        $c = \DB::table('imageproduits')->select('produit_id')->get();
-        foreach ($tableIdProduit as $p) {
-            foreach ($c as $img) {
-                if($p == $img->produit_id){
-                      array_push($imageproduit,\DB::table('imageproduits')->where('produit_id', $p)->get());
-                }
-            }           
-        }*/

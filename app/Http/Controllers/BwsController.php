@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
@@ -16,6 +16,24 @@ use App\Email;
 use Auth;
 use Redirect;
 use App\Article;
+use DB;
+use Illuminate\Support\Facades\Validator;
+use App\Rules\ModifieTextDescriptionArticle;
+use App\Favori;
+use App\Signal;
+use App\Notification;
+use App\Historique;
+use App\Produit;
+use App\Demande_emploie;
+use App\Annonce_emploie;
+use App\Imageproduit;
+use App\ColorProduit;
+use App\TailleProduit;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\CommandeRequest;
+use App\Rules\Taille; 
+use Session;
+use Hash;
 
 class BwsController extends Controller
 {
@@ -422,6 +440,7 @@ class BwsController extends Controller
          ->get();
          return view('shopCategorie',['produit'=> $produit])->with($this->shopSearchGlobal($idCatego))->with($this->selectt($idSousC,$idColor,$idTaille,0,$idVille,$type)); 
     }
+
 /************************************* PRIX***********************************/
 
 //Prix
@@ -1115,18 +1134,6 @@ class BwsController extends Controller
          return view('shopCategorie',['produit'=> $produit,])->with($this->shopSearchGlobal($idCatego))->with($this->selectt($idSousC,0,0,0,0,0)); 
     }
 
-
-
- 
-
-
-
-
-
-
-
-
-
 public function emploiVilleSousCategoSearch($id,$idVille,$idSC){
         $emploi = \DB::table('annonce_emploies')
             ->join('employeurs','employeurs.id','=','employeur_id')
@@ -1472,12 +1479,23 @@ public function emploiVilleSousCategoSearch($id,$idVille,$idSC){
         return view('apropos',['categorie'=>$categorie,'categorieE'=>$categorieE,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command,'prixTotale' => $prixTotale]);
     }
 
-     public function produitVisiteur()
+    public function produitVisiteur()
     {
         $produit = \DB::table('produits')
          ->join('vendeurs','vendeurs.id', '=', 'produits.vendeur_id')
+         ->join('paiement_vendeurs','paiement_vendeurs.vendeur_id', '=', 'produits.vendeur_id')->where('response',1)
          ->select('vendeurs.Nom', 'vendeurs.Prenom', 'produits.*')
-         ->get();       
+         ->orderBy('position','asc')
+         ->get();   
+
+        $paivendeur  = \DB::table('paiement_vendeurs')->where()->get();   
+         foreach( $paivendeur as $pp)
+         {
+           
+              \DB::table('paiement_vendeurs')->where([['response',1],['updated_at', '>', Carbon::now()->subMonths(1)]])->delete();
+         }
+       
+
         $imageproduit = \DB::table('imageproduits')->get();
         $color = \DB::table('colors')->join('color_produits', 'colors.id', '=', 'color_produits.color_id')->get();
         $taille = \DB::table('taille_produits')->get();
@@ -1598,13 +1616,44 @@ public function emploiVilleSousCategoSearch($id,$idVille,$idSC){
     }
 
     public function getCategorieHome(){
-
         $sousCatego = \DB::table('sous_categories')->get();
         $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
         $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();  
-        return ['categorie'=>$categorie , 'sousCatego'=> $sousCatego,'categorieE'=>$categorieE];
-       
+        $annonce = \DB::table('annonce_emploies')->get();
+        $produi = \DB::table('produits')->get();
+
+        $autresscat = \DB::table('sous_categories')->where('categorie_id',null)->get();
+        $autre = 2;
+        $another = 2;
+        if(count($autresscat) != 0 ){
+            foreach ($autresscat as $sC) {
+                foreach ($annonce as $ann) {
+
+                if($sC->id == $ann->sous_categorie_id){
+                                      
+                            $autre = 0;
+                          }
+                        
+                    
+                    }}
+                
+            foreach ($autresscat as $sC) {
+                foreach ($produi as $pro) {
         
+                        if($sC->id == $pro->sous_categorie_id){
+                                     
+                            $another = 0;
+                                 
+                                }
+                                
+                            
+                            }}
+                            return ['categorie'=>$categorie , 'sousCatego'=> $sousCatego,'categorieE'=>$categorieE,'autre'=>$autre,'another'=>$another];
+                }
+        else{
+       return ['categorie'=>$categorie , 'sousCatego'=> $sousCatego,'categorieE'=>$categorieE];
+       
+        }
     }
 
      public function emploi()

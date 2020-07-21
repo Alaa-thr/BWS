@@ -188,7 +188,9 @@ class AdminController extends Controller
         }
         else{
             $categorie = \DB::table('categories')->orderBy('libelle','asc')->paginate(5);
-            return view('categories_admin',['categorie'=>$categorie , 'var'=> 1 ,'admin'=>$admin]);
+
+            return view('categories_admin',['categorie'=>$categorie , 'var'=> 1,'admin'=>$admin]);
+
         }
         
     }
