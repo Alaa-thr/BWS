@@ -285,6 +285,25 @@
 											</div>
 										</div>
 
+										<div class="form-group flex-w p-b-10">
+											<div class="size-205 cl2 m-r-2" style="font-size: 15px;">
+												Ville
+											</div>
+											<div class="size-219 ">
+												<div class=" bg0">
+												<select class="form-control m-r-30"   :class="{'is-invalid' : message.ville}" style="height: 45px" name="ville" >
+															<option value=""  hidden="hidden" selected>Choisir une ville</option> 
+															@foreach($villes as $ville)
+															<option  value="<?php echo $ville->nom?>" value="<?php echo $ville->nom?>">{{$ville->nom}}</option> 
+															@endforeach
+															</select>
+
+                       								<span class="px-3 cl13" v-if="message.ville" v-text="message.ville[0]">
+                    									    </span>
+												</div>
+											</div>
+										</div>
+
 										<div v-if="adrresse" class="form-group flex-w p-b-10">
 											<div class="size-205 cl2 m-r-2" style="font-size: 15px;">
 												Adrrsse
@@ -370,6 +389,7 @@ methods:{
 	    if(app.codePostale == false){
 	    		app.art.nonCode = 0;
 	    }
+
 	 axios.post(window.Laravel.url+"/envoyercommande",app.art)
 
 	.then(response => {
@@ -383,6 +403,7 @@ methods:{
 			  client_id: window.Laravel.idClient,
 			  numero_tlf: window.Laravel.client.numeroTelephone, 
 			  email: window.Laravel.client.email, 
+			  ville: window.Laravel.client.ville, 
 			  address: window.Laravel.client.addresse, 
 			  code_postale: window.Laravel.client.codePostal,
 			  nonAddresse: 1,
@@ -417,6 +438,7 @@ methods:{
 			client_id: window.Laravel.idClient,
 			numero_tlf: window.Laravel.client.numeroTelephone, 
 			email: window.Laravel.client.email, 
+			ville: window.Laravel.client.ville, 
 			address: window.Laravel.client.addresse, 
 			code_postale: window.Laravel.client.codePostal,
 			nonAddresse: 1,

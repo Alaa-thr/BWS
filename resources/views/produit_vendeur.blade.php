@@ -147,9 +147,7 @@
                                         <span class="mtext-106 cl2 m-b-20">
                                            Sous-Categorie: @{{t.libelle}} 
                                         </span> <br>
-                                        <span class="mtext-106 cl2">
-                                           Poids: @{{t.poid}}/kg 
-                                        </span>
+                                     
 
                                         <p class="stext-102 cl3 p-t-23">
                                             @{{t.description}}.
@@ -264,28 +262,22 @@
                             </div>
                          
                         </div>
-                        <div class="row">
-                          <div class="col-md-10 pr-2" >
-                            <div class="form-group">
-                              <label>Prix</label>
-                              <input type="number" name="prix" class="form-control" placeholder="0.00/DA*" v-model="produitAjout.prix" :class="{'is-invalid' : message.prix}" />
+                      
+                        <div class="row col-md-12 pr-2 flex-t m-b-20">
+                        <div class="form-group m-r-45" style="width: 320px">
+
+                        <label>Prix</label>
+                              <input type="number" name="prix" class="form-control" placeholder="0.00/DA*" v-model="produitAjout.prix" :class="{'is-invalid' : message.prix}" />                              <span class="px-3 cl13" v-if="message.Qte_P" v-text="message.Qte_P[0]"></span>
                               <span class="px-3 cl13" v-if="message.prix" v-text="message.prix[0]">
                               </span>
                             </div>
-                          </div>
-                        </div>
-                        <div class="row col-md-12 pr-2 flex-t m-b-20">
-                         
+
                             <div class="form-group m-r-45" style="width: 320px">
                               <label>Quantité de Produit</label>
                               <input type="number" name="Qte_P" class="form-control" placeholder="0.00/Piece*" v-model="produitAjout.Qte_P" :class="{'is-invalid' : message.Qte_P}"/>
                               <span class="px-3 cl13" v-if="message.Qte_P" v-text="message.Qte_P[0]"></span>
                             </div>
-                            <div class="form-group  " style="width: 320px">
-                              <label>Poid de Produit</label>
-                              <input type="number" name="poid" class="form-control" placeholder="0.00Kg/g*" v-model="produitAjout.poid" :class="{'is-invalid' : message.poid}" />
-                              <span class="px-3 cl13" v-if="message.poid" v-text="message.poid[0]"></span>
-                            </div>
+                          
                          
                         </div>
                         <div class="row col-md-12 pr-2 flex-t m-b-30">
@@ -659,7 +651,7 @@ Paiment:</p><p style="width: 100%;margin-left:11%;margin-top:-11px ;color: black
                                 prix: '',
                                 description: '',
                                 Qte_P: '',
-                                poid: '',
+                               // poid: '',
                                 image: '',
                                 images: [],
                                 colors: [],
@@ -711,7 +703,7 @@ Paiment:</p><p style="width: 100%;margin-left:11%;margin-top:-11px ;color: black
                             prix: '',
                             description: '',
                             Qte_P: '',
-                            poid: '',
+                           // poid: '',
                             image: '',
                             images: [],
                             colors: [],
@@ -762,7 +754,7 @@ Paiment:</p><p style="width: 100%;margin-left:11%;margin-top:-11px ;color: black
             prix: '',
             description: '',
             Qte_P: '',
-            poid: '',
+          //  poid: '',
             image: '',
             images: [],
             colors: [],
@@ -808,7 +800,7 @@ Paiment:</p><p style="width: 100%;margin-left:11%;margin-top:-11px ;color: black
             prix: '',
             description: '',
             Qte_P: '',
-            poid: '',
+        //    poid: '',
             image: '',
             images: [],
             colors: [],
@@ -824,7 +816,7 @@ Paiment:</p><p style="width: 100%;margin-left:11%;margin-top:-11px ;color: black
             prix: '',
             description: '',
             Qte_P: '',
-            poid: '',
+         //   poid: '',
             image: '',
             images: [],
             colors: [],
@@ -1025,7 +1017,7 @@ axios.post(window.Laravel.url+'/paiementvendeur/'+choice)
                             prix: 0,
                             description: '',
                             Qte_P: 0,
-                            poid: 0,
+                          //  poid: 0,
                             image: '',
                             images: [],
                             colors: [],
@@ -1144,10 +1136,8 @@ axios.post(window.Laravel.url+'/paiementvendeur/'+choice)
          if(this.prd.Qte_P == ''){
             this.prd.Qte_P =  this.oldprd.Qte_P;
          }
-         if(this.prd.poid == ''){
-
-            this.prd.poid =  this.oldprd.poid;
-         }
+      
+      
          if(this.prd.sous_categorie_id == ''){
 
             this.prd.sous_categorie_id =  this.oldprd.sous_categorie_id;
@@ -1171,7 +1161,7 @@ axios.post(window.Laravel.url+'/paiementvendeur/'+choice)
                         prix: '',
                         description: '',
                         Qte_P: '',
-                        poid: '',
+                     //   poid: '',
                         image: '',
                         images: [],
                         colors: [],
@@ -1188,7 +1178,7 @@ axios.post(window.Laravel.url+'/paiementvendeur/'+choice)
                     prix: '',
                     description: '',
                     Qte_P: '',
-                    poid: '',
+                  //  poid: '',
                     image: '',
                     images: [],
                     colors: [],
@@ -1210,7 +1200,7 @@ axios.post(window.Laravel.url+'/paiementvendeur/'+choice)
                         prix: '',
                         description: '',
                         Qte_P: '',
-                        poid: '',
+                      //  poid: '',
                         image: '',
                         images: [],
                         colors: [],
@@ -1600,7 +1590,7 @@ axios.post(window.Laravel.url+'/paiementvendeur/'+choice)
          app2.oldprd.prix = produit.prix;
          app2.oldprd.Qte_P = produit.Qte_P;
          app2.oldprd.sous_categorie_id = produit.sous_categorie_id;
-         app2.oldprd.poid = produit.poid;
+       //  app2.oldprd.poid = produit.poid;
          app2.oldprd.id = produit.id;
          
         },      

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
@@ -68,19 +68,7 @@ public function shopSearchDetails(Request $request){
         
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
 public function emploiVilleSousCategoSearch($id,$idVille,$idSC){
         $emploi = \DB::table('annonce_emploies')
             ->join('employeurs','employeurs.id','=','employeur_id')
@@ -428,6 +416,14 @@ public function emploiVilleSousCategoSearch($id,$idVille,$idSC){
          ->select('vendeurs.Nom', 'vendeurs.Prenom', 'produits.*')
          ->orderBy('position','asc')
          ->get();   
+
+        $paivendeur  = \DB::table('paiement_vendeurs')->where()->get();   
+         foreach( $paivendeur as $pp)
+         {
+           
+              \DB::table('paiement_vendeurs')->where([['response',1],['updated_at', '>', Carbon::now()->subMonths(1)]])->delete();
+         }
+       
 
         $imageproduit = \DB::table('imageproduits')->get();
         $color = \DB::table('colors')->join('color_produits', 'colors.id', '=', 'color_produits.color_id')->get();
