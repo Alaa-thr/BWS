@@ -53,25 +53,33 @@ class VendeurController extends Controller
 
     public function getProduit(){
         $vendeur = Vendeur::find(Auth::user()->id);
-        $produit = \DB::table('produits')->where('vendeur_id', $vendeur->id)->orderBy('created_at','desc')->paginate(8);       
+        $paier = \DB::table('paiement_vendeurs')->where('vendeur_id', $vendeur->id)->get();
+        if(count($paier) == 0 ){
+                $notPaier = 0;
+        }
+        else{
+            $notPaier = 1;
+        }
+        $produit = \DB::table('produits')->where('vendeur_id', $vendeur->id)->orderBy('created_at','desc')->paginate(8); 
         $imageproduit = \DB::table('imageproduits')->get();
         $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
         $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
         $notification = \DB::table('notifications')->get();
-
+        $produitsQuantite = \DB::table('produits')->where([['vendeur_id', $vendeur->id],['Qte_P',0]])->get();             
+        foreach($produitsQuantite as $quan){
+            \DB::table('produits')->where([['vendeur_id', $vendeur->id],['Qte_P',0]])->delete();             
+           session()->flash('success','Votre Produit :   était Supprimer car  la quantitée est 0');
+        }
         foreach($notification as $noti){
+
            
 
-            
             if($noti->vendeur_id === $vendeur->id AND $noti->DeleteNotif === 0){
                 session()->flash('danger','Votre Produit :  ' .$noti->nomProduit  .'  était Supprimer car il est Signaler 3 fois');
-               /* $noti->DeleteNotif = 1;
-                $noti->save();
-               */ \DB::table('notifications')->where([['vendeur_id',$vendeur->id],['DeleteNotif',0]])->update(['DeleteNotif' => 1]);
+               \DB::table('notifications')->where([['vendeur_id',$vendeur->id],['DeleteNotif',0]])->update(['DeleteNotif' => 1]);
            }
-            
         }
-        return view('produit_vendeur',['produit'=>$produit, 'ImageP' => $imageproduit,'categorie'=>$categorie,'categorieE'=>$categorieE]);
+        return view('produit_vendeur',['produit'=>$produit, 'ImageP' => $imageproduit,'categorie'=>$categorie,'categorieE'=>$categorieE,'notPaier'=>$notPaier]);
     }
 
     public function getSousCategories($CategoId){
@@ -319,64 +327,148 @@ class VendeurController extends Controller
 
     public function get_commande_vendeur(){
         $c = Vendeur::find(Auth::user()->id);
-        $article = \DB::table('commandes')->where('vendeur_id', $c->id)->orderBy('created_at','desc')->paginate(5);
+        $article = \DB::table('commandes')
+        ->where([['vendeur_id', $c->id],['commande_envoyee', 1],['commande_traiter', 0]])
+        ->select('id')
+        ->distinct('id')
+        ->orderBy('created_at','desc')
+        ->paginate(5);
+
+        $ville=\DB::table('commandes')
+        ->where([['commandes.vendeur_id', $c->id],['commande_envoyee', 1]])
+        ->select("ville")
+        ->get();
+        $tarif =\DB::table('commandes')
+            ->join("villes",'villes.nom','commandes.ville')
+            ->join("tarif_livraisons",'tarif_livraisons.ville_id','villes.id')
+            ->where([['commandes.vendeur_id', $c->id],['commande_envoyee', 1]])
+            ->select('ville','commandes.prix_total','commandes.qte','tarif_livraisons.prix as tarif_prix')
+            ->get();
+        $prixx=array();
+            $i=0;$j=0;
+            foreach ($ville as $key) {
+                $tarif =\DB::table('commandes')
+                ->join("villes",'villes.nom','commandes.ville')
+                ->join("tarif_livraisons",'tarif_livraisons.ville_id','villes.id')
+                ->where([['commandes.vendeur_id', $c->id],['commande_envoyee', 1],['commandes.ville',$key->ville]])
+                ->select('ville','commandes.prix_total','commandes.qte','tarif_livraisons.prix as tarif_prix')
+                ->get();
+                if(count($tarif)!=0){
+                    $i++;
+                    if($j!=0){
+                        
+                        $prix = \DB::table('commandes')
+                        ->join("villes",'villes.nom','commandes.ville')
+                        ->join("tarif_livraisons",'tarif_livraisons.ville_id','villes.id')
+                        ->where([['commandes.vendeur_id', $c->id],['commande_envoyee', 1],['commandes.ville',$key->ville]])
+                        ->select('commandes.id',\DB::raw('sum((commandes.prix_total * commandes.qte)+tarif_livraisons.prix) as PrixTotal'))
+                        ->groupBy('commandes.id')
+                        ->orderBy('commandes.created_at','desc')
+                        ->get();
+                        
+                        array_push($prixx,$prix[0]);
+                    }
+                    else{
+                        $prix = \DB::table('commandes')
+                        ->join("villes",'villes.nom','commandes.ville')
+                        ->join("tarif_livraisons",'tarif_livraisons.ville_id','villes.id')
+                        ->where([['commandes.vendeur_id', $c->id],['commande_envoyee', 1],['commandes.ville',$key->ville]])
+                        ->select('commandes.id',\DB::raw('sum((commandes.prix_total * commandes.qte)+tarif_livraisons.prix) as PrixTotal'))
+                        ->groupBy('commandes.id')
+                        ->orderBy('commandes.created_at','desc')
+                        ->get()
+                        ->toArray();
+
+                        array_push($prixx,$prix[0]);
+                    }
+                   
+               
+               }
+                else{
+                    $j++;
+                    if($i!=0){
+                        $prix = \DB::table('commandes')
+                        ->where([['commandes.vendeur_id', $c->id],['commande_envoyee', 1],['commandes.ville',$key->ville]])
+                        ->select(\DB::raw('sum(commandes.prix_total * commandes.qte) as PrixTotal'),'commandes.id')
+                        ->groupBy('id')
+                        ->orderBy('created_at','desc')
+                        ->get();
+                        
+                        array_push($prixx,$prix[0]);
+                    }
+                    else{
+                         $prix = \DB::table('commandes')
+                        
+                        ->where([['commandes.vendeur_id', $c->id],['commande_envoyee', 1],['commandes.ville',$key->ville]])
+                        ->select(\DB::raw('sum(commandes.prix_total * commandes.qte) as PrixTotal'),'commandes.id')
+                        ->groupBy('id')
+                        ->orderBy('created_at','desc')
+                        ->get()
+                        ->toArray();
+                        array_push($prixx,$prix[0]);
+                    } 
+
+                    
+                }
+
+            }
+        
+      
+        
+        $cmd =\DB::table('commandes')
+        ->join('clients','clients.id','=','commandes.client_id')
+        ->where('commandes.vendeur_id', $c->id)
+        ->select('commandes.*','clients.nom','clients.prenom',\DB::raw('DATE(commandes.created_at) as date'))
+        ->get();  
         $employeur = \DB::table('clients')->get(); 
         $produit = \DB::table('produits')->get(); 
         $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
         $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
-        
-        return view('commande_recu_vendeur',['article'=>$article, 'idAdmin' => $c->id,'emploC' => $employeur,'prV' => $produit,'categorie'=>$categorie,'categorieE'=>$categorieE]);
+        return view('commande_recu_vendeur',['article'=>$article, 'idAdmin' => $c->id,'emploC' => $employeur,'prV' => $produit,'categorie'=>$categorie,'categorieE'=>$categorieE,'cmd'=>$cmd,'prixx'=>$prixx]);
     } 
+
     public function detaillsacommandeVendeur(Request $request){
-        $commande_detaills = \DB::table('commandes')->where('id', $request->idA)->get();
+        $v = Vendeur::find(Auth::user()->id);
+        $commande_detaills = \DB::table('commandes')
+        ->join('clients','clients.id','=','commandes.client_id')
+        ->join('colors','colors.id','=','commandes.couleur_id')
+        ->join('produits','produits.id','=','commandes.produit_id')
+        ->join('imageproduits','imageproduits.produit_id','=','commandes.produit_id')
+        ->where([['commandes.id', $request->idA],['commandes.client_id',$request->idClient],['imageproduits.profile',1],['commandes.vendeur_id',$v->id]])
+        ->select('commandes.*','imageproduits.image','colors.nom','produits.Libellé','clients.nom as nom_client','clients.prenom as prenom_client','clients.id as id_client')
+        ->distinct('commandes.id')
+        ->get();
         return  $commande_detaills;
     }
 
-    public function deleteCommandeVendeur($id){
-        $commande = Commande::find($id);
-        $commande->delete();
-        return Response()->json(['etat' => true]);
-    }
-
-
     
 
-    public function RecuCommande($id){
-        $vendeurCnncte = Vendeur::find(Auth::user()->id);
-
-        $traiter=\DB::table('commandes')->where([ ['vendeur_id',$vendeurCnncte->id],['id','=',$id]])->
-            update(['commande_traiter'=>1]);
-
-       /* $traiter = Commande::find($id);
-        $traiter->save();
-        */session()->flash('success','Cette Commande sera trouvée dans Commande Traitée');
-        return $traiter;
-    }
-
-    public function RefuserCommande($id){
-        $vendeurCnncte = Vendeur::find(Auth::user()->id);
-
-        $traiter=\DB::table('commandes')->where([ ['vendeur_id',$vendeurCnncte->id],['id','=',$id]])->
-            update(['commande_traiter'=>1]);
-
-            $client=\DB::table('commandes')->where([ ['vendeur_id',$vendeurCnncte->id],['id','=',$id]])->get();
-       
-            foreach ($client as $clr) {
-                $color = $clr->client_id;
-               
+    public function RecuCommande($idCmd,$idClient){
+        \DB::table('commandes')->where([['id',$idCmd],['client_id',$idClient],['vendeur_id',Vendeur::find(Auth::user()->id)->id]])->update(['commande_traiter' => 1]);
+        $produit = \DB::table('commandes')->where([['id',$idCmd],['client_id',$idClient],['vendeur_id',Vendeur::find(Auth::user()->id)->id]])->get();
+        foreach ($produit as $key ) {
+            $prdt=\DB::table('produits')->where('id',$key->produit_id)->get();
+            $qte = $prdt[0]->Qte_P-1;
+            if($qte == 0){
+                \DB::table('produits')->where('id',$key->produit_id)->delete();
             }
+            else{
+               \DB::table('produits')->where('id',$key->produit_id)->decrement('Qte_P');
+            }
+        }
+        $traiter = \DB::table('commandes')->where([['id',$idCmd],['client_id',$idClient],['vendeur_id',Vendeur::find(Auth::user()->id)->id]])->take(1)->get();
+        return ["traiter" =>$traiter];
+    }
 
+     public function RefuserCommande($idCmd,$idClient){
+            $vendeurCnncte = Vendeur::find(Auth::user()->id);
+            $traiter = \DB::table('commandes')->where([['id',$idCmd],['client_id',$idClient],['commandes.vendeur_id',$vendeurCnncte->id]])->update(['commande_traiter' => 1]);
             $notification = new Notification;
-            $notification->client_id =$color;
+            $notification->client_id =$idClient;
             $notification->vendeur_id = $vendeurCnncte->id;
-            $notification->cmd_id = $id;
-    
+            $notification->cmd_id = $idCmd;
             $notification->save();
-        session()->flash('success','Cette Commande sera trouvée dans Commande Traité et envoyer une notification pour Ce client lorsque vous avez le refuder ');
-
-       
-
-        return ([$traiter,$notification]);
+       return ["traiter" =>$traiter];
     }
     public function getTypeLVendeur(){
         $vendeur = Vendeur::find(Auth::user()->id);
@@ -669,6 +761,14 @@ class VendeurController extends Controller
             return Response()->json(['etat' => true]);
 
         
+    }
+    public function deleteCommandeVendeur( $idCmd, $idClient,$idVendeur){
+        
+       /* $commande = \DB::table('commandes')
+            ->where([['vendeur_id', $idVendeur],['id', $idCmd],['client_id', $idClient]])
+            ->update(['CmdVendeurDelete'=>1]);*/
+
+        return Response()->json(['etat' => true]);
     }
 
 

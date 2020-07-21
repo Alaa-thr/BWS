@@ -6,7 +6,7 @@
       <title><?php echo e(( 'Demande Reçu ')); ?></title>
   </head>
 
-<div class="main-panel" id="main-panel">
+
   
   <div class="panel-header panel-header-sm" >
   </div>
@@ -70,7 +70,6 @@
       <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#" id="point"  style="margin-left: 245px;">
         <i class="fas fa-ellipsis-v"  id="y"></i>
        </a>
-<<<<<<< HEAD
       <div class="dropdown-menu dropdown-menu-right"  id="pl"  style="margin-left: 220px; margin-right: 50px;">
         <a class="dropdown-item  js-show-modal1"  v-on:click="AfficheInfo(commandec.id)" style="color: red; font-style: italic; font-weight: 900; cursor: pointer;" >
           Afficher Plus
@@ -79,16 +78,6 @@
          Supprimer
         </a>
       </div> 
-=======
-      <div class="dropdown-menu " x-placement="right-start" id="pl"  >
-      <a   v-on:click="AfficheInfo(commandec.id)"  class="dropdown-item " 
-      style="color: red; font-style: italic; font-weight: 900; cursor: pointer;" >Afficher Plus</a>
-
-    <a class="dropdown-item " v-on:click="deleteDemandeReçuEmployeur(commandec)"style="color: red; font-style: italic; font-weight: 900; cursor: pointer;">
-    Supprimer</a>
-       </div>
-       
->>>>>>> 110425ded9475f34f0ea1d52bdceac5d36f86ecb
     </div>    
 
     </div> 
@@ -115,11 +104,7 @@
             </div>      
           </div>
         </div>      
-      </div>
-    </div>
 
-
-</div>
 <!-- Modal1 for laptob-->
 <div class="wrap-modal11 js-modal1 p-t-38 p-b-20 p-l-15 p-r-15" v-if="hideModel"  id="app2"  style="margin-top:50px;">
   <div class="overlay-modal11 js-hide-modal1 " ></div>
@@ -205,12 +190,6 @@
 
     </div>
 
-<!--********************************************************************************************************************************************************************-->
-    
-   
-   
-  </div>
-</div>
 
 
 

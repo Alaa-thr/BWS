@@ -32,8 +32,7 @@ use App\Rules\ModifieCategorieExiste;
 class AdminController extends Controller
 {
     public function profil_admin(){
-        $admin=Admin::find(Auth::user()->id); 
-//        echo  $admin->image;
+        $admin=Admin::find(Auth::user()->id);
         return view('profil_admin',['admin'=>$admin]);
     }
     public function vendeur_admin(){
@@ -189,7 +188,7 @@ class AdminController extends Controller
         }
         else{
             $categorie = \DB::table('categories')->orderBy('libelle','asc')->paginate(5);
-            return view('categories_admin',['categorie'=>$categorie , 'var'=> 1]);
+            return view('categories_admin',['categorie'=>$categorie , 'var'=> 1 ,'admin'=>$admin]);
         }
         
     }

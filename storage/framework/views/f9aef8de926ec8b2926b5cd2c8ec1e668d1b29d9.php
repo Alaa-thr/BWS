@@ -173,7 +173,13 @@
    </div>
 
 
+ <script>
+    $(document).ready(function() {
+      // Javascript method's body can be found in assets/js/demos.js
+      initDashboardPageCharts();
 
+    });
+  </script>
 <script>
   window.Laravel = <?php echo json_encode([
                "csrfToken"  => csrf_token(),

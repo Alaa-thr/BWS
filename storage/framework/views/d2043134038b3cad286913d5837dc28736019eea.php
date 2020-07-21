@@ -1,10 +1,35 @@
 
 <?php $__env->startSection('content'); ?>
 
-	<?php
-		$xxxx=21;
+<?php
+	function modify_url($params,$val,$oldVal){
 
-	?>
+		$replace = $params."=".$val;
+		$subject = $params."=".$oldVal;
+		$y=str_replace ( $subject, $replace,URL::current() );
+		  return $y;
+	}
+	function deleteFrom_url($params,$val){
+		$taillee = "/ville=".request()->route("vil");
+		$type = "/type_livraison=".request()->route("type");
+		
+		if(strpos(Route::getCurrentRoute()->uri(), 'ville') && strpos(Route::getCurrentRoute()->uri(), 'type_livraison')){
+			$y=str_replace($taillee, "", URL::current());
+			$z=str_replace($type, "", $y);
+			return $z.'/'.$params.'='.$val;
+			
+		}
+		else if(strpos(Route::getCurrentRoute()->uri(), 'ville') && !strpos(Route::getCurrentRoute()->uri(), 'type_livraison')){
+			$y=str_replace($taillee, "", URL::current());
+			return $y.'/'.$params.'='.$val;
+		}
+		else{
+			$y=str_replace($type, "", URL::current());
+			return $y.'/'.$params.'='.$val;
+		}
+
+	}
+?>
 	
 	<head>
 		<title><?php echo e(( 'Shops')); ?></title>
@@ -30,7 +55,7 @@
                 <ul class="header-cart-wrapitem w-full"  >
                     <li class="header-cart-item flex-w flex-t m-b-12" v-for="command in ProduitsPanier" >
                         <div class="header-cart-item-img" @click="deleteProduitPanier(command)" >
-                        	<img v-for="imgP in imagesproduit" v-if="imgP.produit_id === command.produit_id && imgP.profile === 1" :src="'storage/produits_image/'+ imgP.image" alt="IMG-PRODUCT"  style="height: 60px;">
+                        	<img v-for="imgP in imagesproduit" v-if="imgP.produit_id === command.produit_id && imgP.profile === 1" :src="getPicture(imgP.image)" alt="IMG-PRODUCT"  style="height: 60px;">
                         </div>
 
                         <div class="header-cart-item-txt p-t-8"  v-for="fv in favoriss" v-if="fv.id === command.produit_id" >
@@ -77,28 +102,33 @@
 			</span>
 		</div>
 	</div>
+	<?php
+		$url = Route::getCurrentRoute()->uri();
+	?>
 	<!-- Product -->
-	<div class="bg0 m-t-23 p-b-140">
-		<div class="container">
-			<div class="flex-w flex-sb-m p-b-52">
-				<div class="flex-w flex-c-m m-tb-20">
-			        <div class="m-l-25 respon6-next" style="width: 230px;">
+	<div class="bg0 m-t-25 p-b-140">
+		<div class="container" >
+			<div class="flex-w flex-sb-m p-b-52" id="app122">
+				<div class="flex-w flex-c-m m-tb-5">
+			        <div class=" respon6-next" style="width: 230px;">
 			            <div class="rs1-select2 bor8 bg0" >
 			            	
-				            	<select class="js-select2" id="tttt" onchange="window.location.href = '/sousCategorie'" name='sousCategorie'>
-									
+				            	<select class="js-select2" onchange="window.location.href = this.options[this.selectedIndex].value" name='sousCategorie'>
+									<?php if($url == "shop/search_categorie={id}"): ?>
 					                	<option value="0" disabled selected>Sous-Categorie</option>
-					               
-	                   
-	                    
-	                        
-					                <?php $__currentLoopData = $sousC; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sc): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-						                	 	<option type="submit" value="<? php echo $sc->id ?>">
-						                			<?php echo e($sc->libelle); ?>
+					                <?php else: ?>
 
-						                		</option>
-						                	
-						            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+					                	<option value="0" disabled selected>{{NameSousCategorie}}</option>
+					                <?php endif; ?>
+									<?php $__currentLoopData = $sousC; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sc): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+	
+										<option type="submit" value="/shop/search_categorie=<?php echo($sc->categorie_id)?>/sous-categorie=<?php echo($sc->id)?>">
+												<?php echo e($sc->libelle); ?>
+
+										</option>
+
+										
+									<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 						                	
 				            	</select>
 				                <div class="dropDownSelect2"></div>
@@ -106,29 +136,281 @@
 				        
 			            </div>
 					</div>
+					<?php if(strpos($url, 'sous-categorie')): ?>
+			        <div class="m-l-25 respon6-next" style="width: 230px;">
+						<div class="rs1-select2 bor8 bg0" >
+							<?php if(strpos($url, 'couleur')!= FALSE && strpos($url, 'prix')==FALSE && strpos($url, 'taille')==FALSE): ?>
+				            	<select class="js-select2"  onchange="window.location.href = this.options[this.selectedIndex].value" >
+									<option value="0" disabled selected>{{NameColor}}</option>
+					                
+									<?php $__currentLoopData = $AllColors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ACL): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+										<option type="submit" value="/shop/search_categorie=<?php echo e(request()->route('id')); ?>/sous-categorie=<?php echo e(request()->route('id1')); ?>/couleur=<?php echo($ACL->nom)?>">
+											<?php echo e($ACL->nom); ?>
+
+										</option>
+									<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+						                	
+				            	</select>
+				                <div class="dropDownSelect2"></div>
+
+
+				            <?php elseif(strpos($url, 'couleur')== FALSE && (strpos($url, 'prix')!=FALSE || strpos($url, 'taille')!=FALSE) && (strpos($url, 'ville')!=FALSE || strpos($url, 'type_livraison')!=FALSE)): ?>
+				            	<select class="js-select2" onchange="window.location.href = this.options[this.selectedIndex].value" >
+					                <option value="0" disabled selected>Couleur</option>
+					                
+									<?php $__currentLoopData = $AllColors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ACL): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+										<option type="submit" value="<?php echo deleteFrom_url('couleur',$ACL->nom)?>">
+											<?php echo e($ACL->nom); ?>
+
+										</option>
+									<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+						                	
+				            	</select>
+				                <div class="dropDownSelect2"></div>
+				            <?php elseif(strpos($url, 'couleur')!= FALSE  && (strpos($url, 'ville')!=FALSE || strpos($url, 'type_livraison')!=FALSE)): ?>
+				            	<select class="js-select2" onchange="window.location.href = this.options[this.selectedIndex].value" >
+					                <option value="0" disabled selected>Couleur</option>
+					                
+									<?php $__currentLoopData = $AllColors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ACL): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+										<option type="submit" value="/shop/search_categorie=<?php echo e(request()->route('id')); ?>/sous-categorie=<?php echo e(request()->route('id1')); ?>/couleur=<?php echo $ACL->nom?>">
+											<?php echo e($ACL->nom); ?>
+
+										</option>
+									<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+						                	
+				            	</select>
+				                <div class="dropDownSelect2"></div>
+
+
+				            <?php elseif(((strpos($url, 'couleur') && strpos($url, 'prix') && strpos($url, 'taille')) || (strpos($url, 'couleur') && strpos($url, 'prix')) || (strpos($url, 'couleur') && strpos($url, 'taille')))&& (strpos($url, 'ville')==FALSE && strpos($url, 'type_livraison')==FALSE)): ?>
+				            	<select class="js-select2" onchange="window.location.href = this.options[this.selectedIndex].value" >
+					                <option value="0" disabled selected>{{NameColor}}</option>
+					                
+									<?php $__currentLoopData = $AllColors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ACL): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+										<option type="submit" value="<?php echo modify_url('couleur',$ACL->nom,request()->route("coul"))?>">
+											<?php echo e($ACL->nom); ?>
+
+										</option>
+									<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+						                	
+				            	</select>
+				                <div class="dropDownSelect2"></div>
+			                <?php else: ?>
+				            	<select class="js-select2" onchange="window.location.href += this.options[this.selectedIndex].value" >
+									<option value="0" disabled selected>Couleur</option>
+					                
+									<?php $__currentLoopData = $AllColors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ACL): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+										<option type="submit" value="/couleur=<?php echo($ACL->nom)?>">
+											<?php echo e($ACL->nom); ?>
+
+										</option>
+									<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+						                	
+				            	</select>
+				                <div class="dropDownSelect2"></div>
+			                
+				        	<?php endif; ?>
+				    
+			            </div>
+			        </div>
+			        <div class="m-l-25 respon6-next" style="width: 230px;">
+						<div class="rs1-select2 bor8 bg0" >
+			            	<?php if(strpos($url, 'couleur')== FALSE && strpos($url, 'prix')==FALSE && strpos($url, 'taille')!=FALSE): ?>
+				            	
+				            	<select class="js-select2"  onchange="window.location.href = this.options[this.selectedIndex].value">
+									
+					                <option value="0" disabled selected>{{NameTaille}}</option>
+
+					                <option  value="<?php echo modify_url('taille','S',request()->route("tail"))?>">S</option>
+	                        		<option  value="<?php echo modify_url('taille','M',request()->route("tail"))?>">M</option>
+	                        		<option  value="<?php echo modify_url('taille','L',request()->route("tail"))?>">L</option>
+	                        		<option  value="<?php echo modify_url('taille','XL',request()->route("tail"))?>">XL</option>
+	                        		<option  value="<?php echo modify_url('taille','XXL',request()->route("tail"))?>">XXL</option>
+	                        		<option  value="<?php echo modify_url('taille','XXXL',request()->route("tail"))?>">XXXL</option>
+
+	                        		<option value="" disabled >Pointure </option>
+					                <?php for($i = 19; $i <= 50; $i++): ?>
+                                            <option value="<?php echo modify_url('taille',$i,request()->route("tail"))?>">&nbsp&nbspPointure <?php echo e($i); ?></option>
+                                    <?php endfor; ?>
+						                	
+				            	</select>
+				                <div class="dropDownSelect2"></div>
+				            <?php elseif(strpos($url, 'taille')== FALSE && (strpos($url, 'prix')!=FALSE || strpos($url, 'couleur')!=FALSE) && (strpos($url, 'ville')!=FALSE || strpos($url, 'type_livraison')!=FALSE)): ?>
+				            	<select class="js-select2" onchange="window.location.href = this.options[this.selectedIndex].value" >
+					                <option value="0" disabled selected>Taille Pour Vetement</option>
+
+					                <option  value="<?php echo deleteFrom_url('taille','S')?>">S</option>
+	                        		<option  value="<?php echo deleteFrom_url('taille','M')?>">M</option>
+	                        		<option  value="<?php echo deleteFrom_url('taille','L')?>">L</option>
+	                        		<option  value="<?php echo deleteFrom_url('taille','XL')?>">XL</option>
+	                        		<option  value="<?php echo deleteFrom_url('taille','XXL')?>">XXL</option>
+	                        		<option  value="<?php echo deleteFrom_url('taille','XXXL')?>">XXXL</option>
+
+	                        		<option value="" disabled >Pointure </option>
+					                <?php for($i = 19; $i <= 50; $i++): ?>
+                                            <option value="<?php echo deleteFrom_url('taille',$i)?>">&nbsp&nbspPointure <?php echo e($i); ?></option>
+                                    <?php endfor; ?>
+						                	
+				            	</select>
+				                <div class="dropDownSelect2"></div>
+				            <?php elseif(strpos($url, 'taille')!= FALSE  && (strpos($url, 'ville')!=FALSE || strpos($url, 'type_livraison')!=FALSE)): ?>
+				                <select class="js-select2" onchange="window.location.href = this.options[this.selectedIndex].value" >
+					                <option value="0" disabled selected>Taille Pour Vetement</option>
+
+					                <option value="/shop/search_categorie=<?php echo e(request()->route('id')); ?>/sous-categorie=<?php echo e(request()->route('id1')); ?>/taille=S">S</option>
+	                        		<option value="/shop/search_categorie=<?php echo e(request()->route('id')); ?>/sous-categorie=<?php echo e(request()->route('id1')); ?>/taille=M">M</option>
+	                        		<option  value="/shop/search_categorie=<?php echo e(request()->route('id')); ?>/sous-categorie=<?php echo e(request()->route('id1')); ?>/taille=L">L</option>
+	                        		<option  value="/shop/search_categorie=<?php echo e(request()->route('id')); ?>/sous-categorie=<?php echo e(request()->route('id1')); ?>/taille=XL">XL</option>
+	                        		<option  value="/shop/search_categorie=<?php echo e(request()->route('id')); ?>/sous-categorie=<?php echo e(request()->route('id1')); ?>/taille=XXL">XXL</option>
+	                        		<option  value="/shop/search_categorie=<?php echo e(request()->route('id')); ?>/sous-categorie=<?php echo e(request()->route('id1')); ?>/taille=XXXL">XXXL</option>
+
+	                        		<option value="" disabled >Pointure </option>
+					                <?php for($i = 19; $i <= 50; $i++): ?>
+                                            <option value="/shop/search_categorie=<?php echo e(request()->route('id')); ?>/sous-categorie=<?php echo e(request()->route('id1')); ?>/taille=<?php echo $i?>">&nbsp&nbspPointure <?php echo e($i); ?></option>
+                                    <?php endfor; ?>
+						                	
+				            	</select>
+				                <div class="dropDownSelect2"></div>
+				            <?php elseif(((strpos($url, 'couleur') && strpos($url, 'prix') && strpos($url, 'taille')) || (strpos($url, 'taille') && strpos($url, 'prix')) || (strpos($url, 'couleur') && strpos($url, 'taille')))&& (strpos($url, 'ville')==FALSE && strpos($url, 'type_livraison')==FALSE)): ?>
+				            	<select class="js-select2"  onchange="window.location.href = this.options[this.selectedIndex].value" >
+									
+					                <option value="0" disabled selected>{{NameTaille}}</option>
+
+					                <option  value="<?php echo modify_url('taille','S',request()->route("tail"))?>">S</option>
+	                        		<option  value="<?php echo modify_url('taille','M',request()->route("tail"))?>">M</option>
+	                        		<option  value="<?php echo modify_url('taille','L',request()->route("tail"))?>">L</option>
+	                        		<option  value="<?php echo modify_url('taille','XL',request()->route("tail"))?>">XL</option>
+	                        		<option  value="<?php echo modify_url('taille','XXL',request()->route("tail"))?>">XXL</option>
+	                        		<option  value="<?php echo modify_url('taille','XXXL',request()->route("tail"))?>">XXXL</option>
+
+	                        		<option value="" disabled >Pointure </option>
+					                <?php for($i = 19; $i <= 50; $i++): ?>
+                                            <option value="<?php echo modify_url('taille',$i,request()->route("tail"))?>">&nbsp&nbspPointure <?php echo e($i); ?></option>
+                                    <?php endfor; ?>
+						                	
+				            	</select>
+				                <div class="dropDownSelect2"></div>
+			                <?php else: ?>
+			                	<select class="js-select2" onchange="window.location.href += this.options[this.selectedIndex].value" >
+									
+					                <option value="0" disabled selected>Taille Pour Vetement</option>
+
+					                <option  value="/taille=S">S</option>
+	                        		<option  value="/taille=M">M</option>
+	                        		<option  value="/taille=L">L</option>
+	                        		<option  value="/taille=XL">XL</option>
+	                        		<option  value="/taille=XXL">XXL</option>
+	                        		<option  value="/taille=XXXL">XXXL</option>
+
+	                        		<option value="" disabled >Pointure </option>
+					                <?php for($i = 19; $i <= 50; $i++): ?>
+                                            <option value="/taille=<?php echo $i?>">&nbsp&nbspPointure <?php echo e($i); ?></option>
+                                    <?php endfor; ?>
+						                	
+				            	</select>
+				                <div class="dropDownSelect2"></div>
+				        	<?php endif; ?>
+			            </div>
+			        </div>
 					<div class="m-l-25 respon6-next" style="width: 230px;">
-			            
-					</div>
-				</div>
+						<div class="rs1-select2 bg0" >
+			            	<h5>Prix: <span id="demo"></span>DA</h5>
+			            	<!--<form id="percent" action="/shop/search_categorie=<?php echo e(request()->route('id')); ?>/sous-categorie=<?php echo e(request()->route('id1')); ?>/prix=10" method="GET">
+  							<input type="range"  min="<?php echo $priceMin ?>" max="<?php echo $priceMax ?>" value="0" style="width: 230px;" oninput='document.getElementById("percent").submit();'>
+				            </form>-->
+							<?php if(strpos($url, 'prix')!= FALSE && strpos($url, 'couleur')==FALSE && strpos($url, 'taille')==FALSE): ?>
+								
+				                <input type="range" id="myRange" min="<?php echo $priceMin ?>" max="<?php echo $priceMax ?>" :value="NamePrix" style="width: 230px;" oninput="updateRange()" onchange="window.location.href = '/shop/search_categorie=<?php echo e(request()->route('id')); ?>/sous-categorie=<?php echo e(request()->route('id1')); ?>/prix='+this.value;">
 
-				<div class="flex-w flex-c-m m-tb-10">
-					<div class="flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search">
-						<i class="icon-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-search"></i>
-						<i class="icon-close-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
-						Search
-					</div>
+
+				            <?php elseif(strpos($url, 'prix')== FALSE && (strpos($url, 'couleur')!=FALSE || strpos($url, 'taille')!=FALSE) && (strpos($url, 'ville')!=FALSE || strpos($url, 'type_livraison')!=FALSE)): ?>
+				            	
+				                <input type="range" id="myRange" min="<?php echo $priceMin ?>" max="<?php echo $priceMax ?>" value="0" style="width: 230px;" oninput="updateRange()" onchange="window.location.href=updateRangeInput(this.value,'prix',this.value)"/>
+				            <?php elseif(strpos($url, 'prix')!= FALSE  && (strpos($url, 'ville')!=FALSE || strpos($url, 'type_livraison')!=FALSE)): ?>
+				                <input type="range" id="myRange" min="<?php echo $priceMin ?>" max="<?php echo $priceMax ?>" :value="NamePrix" style="width: 230px;" oninput="updateRange()" onchange="window.location.href= '/shop/search_categorie=<?php echo e(request()->route('id')); ?>/sous-categorie=<?php echo e(request()->route('id1')); ?>/prix='+this.value"/>
+
+							<?php elseif(((strpos($url, 'couleur') && strpos($url, 'prix') && strpos($url, 'taille')) || (strpos($url, 'couleur') && strpos($url, 'prix')) || (strpos($url, 'prix') && strpos($url, 'taille')))&& (strpos($url, 'ville')==FALSE && strpos($url, 'type_livraison')==FALSE)): ?>
+				            	
+				                <input type="range" id="myRange" min="<?php echo $priceMin ?>" max="<?php echo $priceMax ?>" :value="NamePrix" style="width: 230px;" oninput="updateRange()" onchange="window.location.href= updateRange_url(this.value,'<?php echo e(request()->route('prx')); ?>')"/>
+
+							<?php else: ?>
+								
+				            	<input type="range" id="myRange" min="<?php echo $priceMin ?>" max="<?php echo $priceMax ?>" value="0" style="width: 230px;" oninput="updateRange()" onchange="window.location.href+= '/prix='+this.value"/>
+			                	
+				        	<?php endif; ?>
+  							
+				            
+			            </div>
+			        </div>
+			        <?php endif; ?>
 				</div>
+			    <div class="flex-w flex-c-m m-tb-20">
+			    	
+			       
+			        <?php if(strpos($url, 'couleur')!= FALSE ||strpos($url, 'taille')!= FALSE  ||strpos($url, 'prix')!= FALSE): ?>
+			        <div class="  respon6-next" style="width: 230px;">
+						<div class="rs1-select2 bor8 bg0" >
+			            	<?php if(strpos($url, 'type_livraison')!= FALSE): ?>
+				            	<select class="js-select2"  onchange="window.location.href = this.options[this.selectedIndex].value" >
+									<option v-if='NameTypeL == "vc"' value="vc" disabled selected>Le vendeur effectuer la livraison </option>
+									<option v-else-if='NameTypeL == "cv"' value="cv" disabled selected>Vous apportez votre produit</option>
+									<option v-else-if='NameTypeL == "dhl"' value="dhl" disabled selected>DHL(Poste)</option>
+									
+									<option  value="<?php echo modify_url('type_livraison','vc',request()->route("type"))?>">Le vendeur effectuer la livraison </option>
+									<option   value="<?php echo modify_url('type_livraison','cv',request()->route('type'))?>">Vous apportez votre produit</option>
+									<option   value="<?php echo modify_url('type_livraison','dhl',request()->route('type'))?>">DHL(Poste)</option>
+								</select>
+				                <div class="dropDownSelect2"></div>
+							<?php else: ?>
+				                <select class="js-select2"  onchange="window.location.href += this.options[this.selectedIndex].value" >
+									<option value="0" disabled selected>Type de Livraison</option>
+									<option  value="/type_livraison=vc">Le vendeur effectuer la livraison </option>
+									<option   value="/type_livraison=cv">Vous apportez votre produit</option>
+									<option   value="/type_livraison=dhl">DHL(Poste)</option>
+							    </select>
+				                <div class="dropDownSelect2"></div>
+							<?php endif; ?>
+			                </div>
+				        </div>
+			        
+			        <div class="m-l-25 respon6-next" style="width: 230px;">
+						<div class="rs1-select2 bor8 bg0" >
+			            	<?php if(strpos($url, 'ville')!= FALSE): ?><!--existe-->
+				            	<select class="js-select2" onchange="window.location.href = this.options[this.selectedIndex].value" >
+									<?php if(strpos($url, 'ville')!= FALSE): ?>
+					                	<option value="0" disabled selected>{{NameVille}}</option>
+					               	<?php endif; ?>
+	                   				<?php $__currentLoopData = $ville; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $VIL): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+	                   					<option value="<?php echo modify_url('ville',$VIL->nom,request()->route("vil"))?>">
+												<?php echo e($VIL->nom); ?>
+
+										</option>
+									<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+								</select>
+				                <div class="dropDownSelect2"></div>
+
+				            <?php elseif(strpos($url, 'ville')== FALSE): ?><!-- N'existe pas-->
+				            	<select class="js-select2" onchange="window.location.href += this.options[this.selectedIndex].value" >
+										<option value="0" disabled selected>Ville</option>
+					               		<?php $__currentLoopData = $ville; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $VIL): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+					               			<option value="/ville=<?php echo $VIL->nom ?>">
+												<?php echo e($VIL->nom); ?>
+
+											</option>
+										<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+						        </select>
+				                <div class="dropDownSelect2"></div>
+			               <?php endif; ?> 
+				        
+			            </div>
+			        </div>
+			        <?php endif; ?>
+
+			    </div>
+
 				
-				<!-- Search product -->
-				<div class="dis-none panel-search w-full p-t-10 p-b-15">
-					<div class="bor8 dis-flex p-l-15">
-						<button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
-							<i class="zmdi zmdi-search"></i>
-						</button>
-
-						<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search-product" placeholder="Search">
-					</div>	
-				</div>
+				
+				
 			</div>
 <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
 			<div class="row isotope-grid" id="app1">
@@ -378,6 +660,53 @@
 <?php $__env->stopSection(); ?>
 <?php $__env->startPush('javascripts'); ?>
 <script>
+	function updateRange_url($val,$oldVal){
+		
+		$replace = '/prix='+$val;
+		$subject = '/prix='+$oldVal;
+		$y='<?php echo URL::current()?>'.replace($subject, $replace);
+		  return $y;
+		
+
+	
+	}
+	function updateRangeInput(vall,params,val) {
+	       	$taillee = "/ville="+'<?php echo request()->route("vil")?>';
+			$type = "/type_livraison="+'<?php echo request()->route("type")?>';
+			
+			if('<?php echo Route::getCurrentRoute()->uri()?>'.indexOf('ville')!= -1 && '<?php echo Route::getCurrentRoute()->uri()?>'.indexOf('type_livraison') !=-1){
+				$y='<?php echo URL::current()?>'.replace($taillee, "");
+				$z=$y.replace($type, "");
+				return  $z+'/'+params+'='+val;
+				
+			}
+			else if('<?php echo Route::getCurrentRoute()->uri()?>'.indexOf('ville')!= -1  && '<?php echo Route::getCurrentRoute()->uri()?>'.indexOf('type_livraison') ==-1){
+				$y='<?php echo URL::current()?>'.replace($taillee, "");
+				return  $y+'/'+params+'='+val;
+			}
+			else{
+				$y='<?php echo URL::current()?>'.replace($type, "");
+				return  $y+'/'+params+'='+val;
+			}
+	}
+    function updateRange() {
+        var slider = document.getElementById("myRange");
+		var output = document.getElementById("demo");
+		if(slider!=null   && output!=null){
+			output.innerHTML = slider.value; 
+			slider.oninput = function() {
+			  output.innerHTML = this.value;
+			}
+		}       
+    }
+
+    document.addEventListener('readystatechange', () => {   
+	  	updateRange();
+	});
+
+
+</script>
+<script>
 	function adde(a){
 
 		$('#'+a).removeClass('zmdi-favorite-outline');
@@ -399,6 +728,7 @@
 	function changePic(img){
         document.getElementById("pic").src = 'http://localhost:8000/storage/produits_image/'+img;
     }
+
 </script>
 
 
@@ -414,7 +744,13 @@
                'typeLivraison'       => $typeLivraison,
           		'Fav'         => $Fav,
                'command'        => $command,
+               'NameColor'=> $NameColor,
+               'NameTaille'=> $NameTaille,
+               'NamePrix'=> $NamePrix,
+               'NameVille'=> $NameVille,
+               'NameTypeL'=> $NameTypeL,
                'prixTotale'		=> $prixTotale,
+               'NameSousCategorie' =>$NameSousCategorie,
                "url"      => url("/")  
     ]); ?>;
 </script>
@@ -429,6 +765,9 @@
           prix:[],
         },
         methods:{
+        	getPicture(img){
+      			return "<?php echo e(asset('storage/produits_image')); ?>"+"/"+img;
+      		},
         	deleteProduitPanier: function(produit){
 		       
 		              axios.delete(window.Laravel.url+'/deleteproduitpanier/'+produit.produit_id+'/'+produit.qte+'/'+produit.taille+'/'+produit.type_livraison+'/'+produit.couleur_id)
@@ -768,7 +1107,58 @@
   function seletQte(qte){
   	app1.ajoutPanier.qte = qte; 
   }
+  var app122 = new Vue({
+      el: '#app122',
+      data:{
+      	msg: 'welcome',
+      	NameSousCategorie: null,
+      	NameColor: null,
+      	NameTaille: null,
+      	NamePrix: 0,
+      	NameVille: null,
+      	NameTypeL: null,
+      	
+      },
+      methods:{
+          selectSousC: function(){
+          	console.log(window.Laravel.NameSousCategorie);
+          	console.log('color',window.Laravel.NameColor);
+          	console.log('taille',window.Laravel.NameTaille);
+          	console.log('prix',window.Laravel.NamePrix);
+          	console.log('ville',window.Laravel.NameVille);
+          	console.log('typeL',window.Laravel.NameTypeL);
+       		if(window.Laravel.NameSousCategorie !=0){
+       		 	this.NameSousCategorie =window.Laravel.NameSousCategorie[0].libelle;
+       		 	
+       		}
+       		if(window.Laravel.NameColor !=0){
+       		 	this.NameColor =window.Laravel.NameColor[0].nom;
+       		 	
+       		}
+       		if(window.Laravel.NameTaille !=0){
+       		 	this.NameTaille =window.Laravel.NameTaille[0].nom;
+       		 	
+       		}
+       		if(window.Laravel.NamePrix !=0){
+       		 	this.NamePrix =window.Laravel.NamePrix[0].prix;
+       		 	
+       		}
+       		if(window.Laravel.NameVille !=0){
+       		 	this.NameVille =window.Laravel.NameVille[0].nom;
+       		 	
+       		}
+       		if(window.Laravel.NameTypeL !=0){
+       		 	this.NameTypeL =window.Laravel.NameTypeL[0].type_livraison;
+       		 	
+       		}
+          	 
+          }
 
+      },
+      created:function(){
+      	this.selectSousC();
+      }
+  });
 
 </script>
 
@@ -776,13 +1166,6 @@
 	$(function () {
   $('[data-toggle="tooltip"]').tooltip()
 });
-/*function myMap() {
-var mapProp= {
-  center:new google.maps.LatLng(51.508742,-0.120850),
-  zoom:5,
-};
-var map = new google.maps.Map(document.getElementById("adrrsse"),mapProp);
-}*/
 
 
 </script>

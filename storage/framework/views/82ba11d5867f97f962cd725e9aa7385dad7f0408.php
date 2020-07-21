@@ -6,7 +6,7 @@
       <title><?php echo e(( 'Demande Traiter ')); ?></title>
   </head>
 
-<div class="main-panel" id="main-panel">
+
   
   <div class="panel-header panel-header-sm" >
   </div>
@@ -96,11 +96,7 @@
             </div>      
           </div>
         </div>      
-      </div>
-    </div>
 
-
-</div>
 <!-- Modal1 for laptob-->
 <div class="wrap-modal11 js-modal1 p-t-38 p-b-20 p-l-15 p-r-15" v-if="hideModel"  id="app2"  style="margin-top:50px;">
   <div class="overlay-modal11 js-hide-modal1 " ></div>
@@ -157,11 +153,7 @@
     
 
     <div class="row" style="margin-left:22px;margin-top:20px;" v-for="emplC in commandeclient2" >
-<<<<<<< HEAD
-    <div class="col-md-4 pr-1" >
-=======
     <div class="col-md-10 pr-1" >
->>>>>>> 972cd76de5808c4efa19ced1533269b756e75bba
       <div style="margin-left:-16px;">
        <p class="" id="t2" >Information sur l'annonce :<br> </p>
        <p class=""  id="t1"  style="margin-top: 10px;margin-left: -60px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -181,12 +173,6 @@
 
     </div>
 
-<!--********************************************************************************************************************************************************************-->
-    
-   
-   
-  </div>
-</div>
 
 
 

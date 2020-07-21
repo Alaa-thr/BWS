@@ -103,9 +103,89 @@
                   </div>
                 </div>
               </form>
-            </div>
-          </div>
-        </div>
+              <hr>
+                             
+                             <div class="row">
+                              <div class="col-md-6 pl-2">
+                                  <div class="form-group">
+                                    <label >Mot de passe actuel</label>
+                                    <input id="act" name="changepassword" type="password" class="form-control form-control-lg <?php $__errorArgs = ['changepassword'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" v-model="change.changepassword">
+                                   <img src="images/icons/img_476715.png" style="width:10%" id="show" onclick="myFunction()">
+                                   <img src="images/icons/download.png" style="width:10%;  height: 10%;display: none;"  id="hide" onclick="myFunction()">
+              
+              
+                                    <div id="message2">
+                                          <strong id="err2">
+                                          Entrez vostre mot de pass actuel
+                                          </strong>
+                                          </div>
+                
+                                  </div>
+                                </div>
+                                
+                              </div>
+                              <div class="row">
+                              <div class="col-md-6 pl-2">
+                                  <div class="form-group">
+                                    <label >Nouveau mot de passe</label>
+                                    <input id="nouv" name="current_password" type="password" 
+                                    class="form-control form-control-lg <?php $__errorArgs = ['current_password'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" v-model="change.current_password">
+                                    <img src="images/icons/img_476715.png" style="width:10%" id="show1" onclick="myFunction1()">
+                                   <img src="images/icons/download.png" style="width:10%;height: 10%;display: none;"  id="hide1" onclick="myFunction1()">
+                                    </div>
+                                </div>
+                                
+                              </div>
+                              <div class="row">
+                              <div class="col-md-6 pl-2">
+                                  <div class="form-group">
+                                    <label >Entrez à nouveau le nouveau mot de passe</label>
+                                    <input id="nouuv" name="new_password" type="password" class="form-control form-control-lg <?php $__errorArgs = ['new_password'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" v-model="change.new_password">
+                                    <img src="images/icons/img_476715.png" style="width:10%" id="show2" onclick="myFunction2()">
+                                   <img src="images/icons/download.png" style="width:10%;height: 5%;display: none;"  id="hide2" onclick="myFunction2()">
+              
+                                    <div id="message1">
+                                          <strong id="err1">
+                                          Les mots de passe ne sont pas identiques
+                                          </strong>
+                                          </div>
+                                  </div>
+                                </div>
+                                
+                              </div>
+                             
+                            <div class="form-group">
+                              <div class="col-md-6 col-md-offset-4">
+                                  <button type="" id="sub"  v-on:click="changePassword();"> Changer mot de pass</button>
+              
+                              </div>
+                                
+                            </div> 
+              
+                          </div>
+                        </div>
+                      </div>
         <div class="col-md-4" >
           <div class="card card-user">
             <div class="image">
@@ -114,7 +194,7 @@
             <div class="card-body">
               <div class="author">
                 <a href="#">
-                  <img class="avatar border-gray" src="assetsClient/img/input/profil_img.jpg" alt="...">
+                       <img class="avatar border-gray" :src="'storage/profil_image/'+profilemployeur.image" alt="..."> 
                 </a>
                  <h5 class="title cl13">{{ profilemployeur.nom }} {{ profilemployeur.prenom }}</h5>
               </div>
@@ -153,6 +233,58 @@
 <?php $__env->startPush('javascripts'); ?>
 
 
+<script>
+function myFunction() {
+  var x = document.getElementById("act");
+  if (x.type === "password") {
+    x.type = "text";
+    document.getElementById("show").style.display = "none";
+    document.getElementById("hide").style.display = "block";
+
+  } else {
+    x.type = "password";
+    document.getElementById("show").style.marginTop = "-30px";
+    document.getElementById("show").style.display = "block";
+    document.getElementById("hide").style.display = "none";
+
+  }
+}
+function myFunction1() {
+  var x = document.getElementById("nouv");
+  if (x.type === "password") {
+    x.type = "text";
+    document.getElementById("show1").style.display = "none";
+    document.getElementById("hide1").style.display = "block";
+
+  
+  } 
+  else {
+    x.type = "password";
+    document.getElementById("show1").style.marginTop = "-30px";
+    document.getElementById("show1").style.display = "block";
+    document.getElementById("hide1").style.display = "none";
+
+  }
+}
+function myFunction2() {
+  var x = document.getElementById("nouuv");
+  if (x.type === "password") {
+    x.type = "text";
+    document.getElementById("show2").style.display = "none";
+    document.getElementById("hide2").style.display = "block";
+
+  
+  } else {
+    x.type = "password";
+    document.getElementById("show2").style.marginTop = "-30px";
+    document.getElementById("show2").style.display = "block";
+    document.getElementById("hide2").style.display = "none";
+
+  }
+}
+</script>
+
+
 
 <script>
         window.Laravel = <?php echo json_encode([
@@ -169,9 +301,52 @@
     data:{
         
         profilemployeur:[],
-        modif: false,           
+        modif: false,   
+        msg: "hello",
+        profilclient:[],
+        ProduitsPanier: [],
+        favoris: [],
+        imagesproduit: [],
+        message:"hh",
+        change: {
+          changepassword: null,
+          current_password: null,
+          new_password: null,
+
+        }        
       },
     methods: {
+      changePassword: function(){
+          	axios.post(window.Laravel.url+'/changepassword',this.change)
+              .then(response => {
+                if(response.data.a == 0){
+                  console.log('hi 0 :');
+                  window.location.reload();
+
+                }
+                else if(response.data.a == 1){
+                  console.log('hi 1:');
+
+                  document.getElementById("nouv").style.borderColor = "red";
+                  document.getElementById("nouuv").style.borderColor = "red";
+                  document.getElementById("err1").style.display = "block";
+
+                    }
+                    else if(response.data.a == 2){
+                      console.log('hi :2');
+
+                      document.getElementById("act").style.borderColor = "red";
+                      document.getElementById("err2").style.display = "block";
+
+                    }
+
+              
+               })
+              .catch(error => {
+               
+                console.log('error :' , error);             })
+          },
+      
       profil_employeur: function(){
         axios.get(window.Laravel.url+'/profilEmployeur')
 

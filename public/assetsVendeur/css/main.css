@@ -3875,12 +3875,18 @@ input[type=checkbox]:checked + label:before{
 }
 
 #cmd{
-	margin-top: -70px;
-	padding-top: 68px;
-	margin-bottom: 0px;
-	border: 2px solid gray;
+  margin-top: -70px;
+  padding-top: 68px;
+  margin-bottom: 0px;
+  border: 2px solid gray;
   border-radius: 25px;
   height: 70px;
+}
+#cmddd{
+  
+  border: 2px solid gray;
+  border-radius: 25px;
+  
 }
  #cb{
    margin-left: 33px;

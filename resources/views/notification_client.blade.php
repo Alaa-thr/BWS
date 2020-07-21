@@ -24,10 +24,10 @@
             </div>
             
             <div class="header-cart-content flex-w js-pscroll" id="app1" >
-                <ul class="header-cart-wrapitem w-full" v-for="command in ProduitsPanier" >
-                    <li class="header-cart-item flex-w flex-t m-b-12">
-                        <div class="header-cart-item-img" v-for="imgP in imagesproduit" id="profi">
-                        <img v-if="imgP.produit_id === command.produit_id && imgP.profile === 1" :src="'storage/produits_image/'+ imgP.image" 
+                <ul class="header-cart-wrapitem w-full"  >
+                    <li class="header-cart-item flex-w flex-t m-b-12" v-for="command in ProduitsPanier">
+                        <div class="header-cart-item-img"  @click="deleteProduitPanier(command)">
+                        <img v-for="imgP in imagesproduit" v-if="imgP.produit_id === command.produit_id && imgP.profile === 1" :src="'storage/produits_image/'+ imgP.image" 
                         alt="IMG-PRODUCT"  style="height: 60px;">
                         </div>
 
@@ -45,8 +45,8 @@
                 
                 <div class="w-full" >
                     
-                <div class="header-cart-total w-full p-tb-40">
-                        Total: 
+                <div class="header-cart-total w-full p-tb-40" v-for="p in prix">
+                        Totale: @{{p.prixTo}} DA
                     </div>
 
                     <div class="header-cart-buttons flex-w w-full">
@@ -183,9 +183,10 @@
            "idAdmin" => $idAdmin,
            'emploC'         => $emploC,
            'vendeurC'         => $vendeurC,
-               'ImageP'         => $ImageP,
-               'Fav'         => $Fav,
-               'command'         => $command,
+           'ImageP'         => $ImageP,
+           'Fav'         => $Fav,
+           'command'         => $command,
+           'prixTotale'   => $prixTotale,
            "url"      => url("/")  
       ]) !!};
 </script>
@@ -194,36 +195,6 @@
 
 
 
-var app2 = new Vue({
-  el: '#app2',
-  data:{
-    openInfo: false,
-    hideModel: false,
-    detaillsA: {
-      idA: 0,
-    },
-
-  },
-methods: {
-
-
-  CancelArticle(article){
-    this.modifier = false ;
-    this.hideModel = false;
-    this.art = {        
-                  id: 0,
-                  admin_id: window.Laravel.idAdmin,
-                  titre: '', 
-                  description: '',
-                  image: ''
-    };
-    this.message = {};
-    article.titre = this.oldArt.titre;
-    article.description = this.oldArt.description;
-  },
-
-},    
-});
 
 var app = new Vue({
 
@@ -243,10 +214,7 @@ data:{
   },
 methods: {
   AfficheInfo: function($id){
-    app2.hideModel = true; 
     app2.openAjout = false ;
-    app2.openInfo = true;
-    app2.detaillsA.idA= $id;
     app2.detaillsCommande();
   },
    deleteArrayArticle:function(){
@@ -414,14 +382,38 @@ created:function(){
           ProduitsPanier: [],
           favoris: [],
           imagesproduit: [],
+          prix:[],
         },
         methods:{
+          deleteProduitPanier: function(produit){
+           
+                  axios.delete(window.Laravel.url+'/deleteproduitpanier/'+produit.produit_id+'/'+produit.qte+'/'+produit.taille+'/'+produit.type_livraison+'/'+produit.couleur_id)
+                    .then(response => {
+                      if(response.data.etat){
+                               var position = this.ProduitsPanier.indexOf(produit);
+                               this.ProduitsPanier.splice(position,1);
+                               if(this.ProduitsPanier.lenght == 0){
+                                  this.prix[0].prixTo = 0;
+                               }
+                               else{
+                                  this.prix[0].prixTo -= produit.prix_total*produit.qte;
+                               }
+
+                      }                     
+                    })
+                    .catch(error =>{
+                               console.log('errors :' , error);
+                    })
+
+              
+          },
           get_notification_client: function(){
             axios.get(window.Laravel.url+'/notificationClient')
               .then(response => {
                 this.favoris = window.Laravel.Fav;
                 this.imagesproduit = window.Laravel.ImageP;
                 this.ProduitsPanier = window.Laravel.command;
+                this.prix = window.Laravel.prixTotale;
                })
               .catch(error => {
                   console.log('errors : '  , error);

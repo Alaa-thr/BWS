@@ -216,37 +216,6 @@
                     </div>
     </div>
   </div>
-  <!--<div class="tab " style="border: 2px" >
-    <div class="custom-checkbox m-b-20">
-        <input type="checkbox" class="custom-control-input form-control m-t-2" value="" id="selectall" onclick="selectAll(this);" >
-        <label class="custom-control-label p-l-25 " for="selectall" style="font-size: 20px" >Selectionner Tout :</label>
-    </div>
-   <div class="form-group m-b-35 m-l-50 " v-for="v in villes" style="display: inline-flex;">
-                    <div class="custom-checkbox m-r-14" >
-                        <input type="checkbox" class="custom-control-input form-control  @error('villeC') is-invalid @enderror" value="v.id" :id="v.id" name="villeC[]" >
-                        <label class="custom-control-label p-l-25 p-t-4" :for="v.id" >@{{v.nom}}</label>
-                        @error('villeC')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-    </div>
-    <div class="form-group input-group m-b-60">
-                  <input type="text" class="form-control @error('prix_tarif') is-invalid @enderror" aria-label="Text input with dropdown button" placeholder="Entrez le prix de livraison pour la(les) ville(s) selectionner" name="prix_tarif" style="height: 45px" value="{{old('prix_tarif')}}">
-                  <div class="input-group-append">
-                    <select class="form-control form-control-lg @error('poids') is-invalid @enderror" id="exampleFormControlSelect1"  name="poids" style="height: 45px">
-                            <option value="1" selected {{ old('poids') == 1 ? 'selected' : '' }}>/Kg</option>
-                            <option value="2" {{ old('poids') == 2 ? 'selected' : '' }}>/g</option>
-                    </select>
-                  </div>
-                  @error('prix_tarif')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                  @enderror
-    </div>
-  </div>-->
     <div id="nextPrevious">
       <button type="button" id="prevBtn" onclick="nextPrev(-1,-1)" class="btn-lg m-t-8 btn-block m-r-30" style="background-color:#ca2323;color:white">Previous</button>
       <button type="button" id="nextBtn" onclick="nextPrev(1,1)" class="btn-lg btn-block bg10"  disabled>Creer Compte</button>
@@ -339,10 +308,6 @@ function showTab(n,perv) {
   var select = document.getElementById('exampleFormControlSelect1');
   var options = select.getElementsByTagName('option');
   var cmpt = options[select.selectedIndex].value;
-  
-    console.log('cmpt',cmpt)
-
-
   x[n].style.display = "block";
   if (cmpt==1 || cmpt==2 || cmpt==3){//ki nersa 3la cree compte w tkoun kayna error ki yredni system f register swalah ghi yetbedlo ye9o3do baynin 3la 7sab typeCompte
       onChange();
@@ -357,12 +322,12 @@ function showTab(n,perv) {
     document.getElementById("nextBtn").style.background = "#ddd";
     document.getElementById("nextBtn").innerHTML = "Creer Compte";
   } 
-  else if(n == 0 && perv==-1){
+  else if(n == 0 && perv==1 && cmpt==2){
     document.getElementById('nextBtn').disabled = false; 
     document.getElementById("nextBtn").innerHTML = "Suivant";
     document.getElementById('check2').checked = false;
   }
-  else if(n == 0 && perv==1){
+  else if(n == 0 && perv==1 && cmpt!=2){
     document.getElementById('nextBtn').disabled = true; 
     document.getElementById("nextBtn").innerHTML = "Creer Compte";
   }
@@ -436,10 +401,8 @@ function onChange() {
     if(cmpt==0){
         document.getElementById("nextBtn").innerHTML = "Creer Compte";
         document.getElementById("stepp").style.display = "none";
-        //document.getElementById("nextBtn").style.background = "#ca2323";
     }
     if(cmpt==2){
-        console.log('hello',cmpt)
         document.getElementById('check1').checked = false;
         document.getElementById('check3').checked = false;
         document.getElementById("stepp").style.display = "block";

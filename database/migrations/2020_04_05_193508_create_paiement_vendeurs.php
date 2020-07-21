@@ -16,9 +16,7 @@ class CreatePaiementVendeurs extends Migration
         Schema::create('paiement_vendeurs', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('vendeur_id');
-            $table->unsignedBigInteger('admin_id');
-            $table->boolean('response')->default(0);
-            $table->enum('position_publication',['first','second','third'])->nullable();
+            $table->unsignedBigInteger('admin_id')->nullable();
             $table->timestamps();
         });
     }

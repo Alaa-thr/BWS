@@ -1700,6 +1700,7 @@
                 axios.get(window.Laravel.url+'/getproduithome')
                 .then(response => {
                     app11.produits = response.data.produit;
+                    console.log("app11.produits",app11.produits)
                     app11.imagesproduit = response.data.ImageP;
                     app2.colors = response.data.color;
                     app2.typeLivraisons = response.data.typeLivraison;
@@ -1710,14 +1711,14 @@
                     app111.imagesproduit1 = response.data.ImageP;
                     app111.favoris = response.data.Fav;
                     app11.produits.forEach(key => {
-                        if(i<4){
+                        if(i<4 ){
                             app11.produits1.push(key);
                             i++;
                         }
                     });
                     i=0;
                     app11.produits.forEach(key => {
-                        if(i<8 && i>=4){
+                        if(i<8 && i>=4 ){
                             app11.produits2.push(key);
                             i++;
                         }
@@ -1757,7 +1758,7 @@
                     });
                     i=0;
                     app11.produits.forEach(key => {
-                        if(i<24 && i>=20){
+                        if(i<24 && i>=20 ){
                             app11.produits13.push(key);
                             i++;
                         }

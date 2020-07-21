@@ -25,14 +25,14 @@
             </div>
             
             <div class="header-cart-content flex-w js-pscroll" id="app1" >
-                <ul class="header-cart-wrapitem w-full" v-for="command in ProduitsPanier" >
-                    <li class="header-cart-item flex-w flex-t m-b-12">
-                        <div class="header-cart-item-img" v-for="imgP in imagesproduit" id="profi">
-                        <img v-if="imgP.produit_id === command.produit_id && imgP.profile === 1" :src="'storage/produits_image/'+ imgP.image" 
+                <ul class="header-cart-wrapitem w-full" >
+                    <li class="header-cart-item flex-w flex-t m-b-12" v-for="command in ProduitsPanier" >
+                        <div class="header-cart-item-img"  @click="deleteProduitPanier(command)">
+                        <img v-for="imgP in imagesproduit" v-if="imgP.produit_id === command.produit_id && imgP.profile === 1" :src="'storage/produits_image/'+ imgP.image" 
                         alt="IMG-PRODUCT"  style="height: 60px;">
                         </div>
 
-                        <div class="header-cart-item-txt p-t-8"  v-for="fv in favoris" v-if="fv.id === command.produit_id" id="bb">
+                        <div class="header-cart-item-txt p-t-8"  v-for="fv in favoris" v-if="fv.id === command.produit_id" >
                             <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
                             @{{fv.Libellé}}
                             </a>
@@ -46,8 +46,8 @@
                 
                 <div class="w-full" >
                     
-                <div class="header-cart-total w-full p-tb-40">
-                        Total: 
+                <div class="header-cart-total w-full p-tb-40" v-for="p in prix">
+                        Total: @{{p.prixTo}} DA
                     </div>
 
                     <div class="header-cart-buttons flex-w w-full">
@@ -229,7 +229,7 @@
             <div class="image">
               <img src="assetsClient/img/input/bg5.jpg" alt="...">
             </div>
-            <div class="card-body">
+            <div class="card-body m-b-20">
               <div class="author">
                 <a href="#">
                        <img class="avatar border-gray" :src="'storage/profil_image/'+profilclient.image" alt="..."> 
@@ -249,7 +249,7 @@
                 </div>
               </div>
             </div>
-            <hr>
+            <!--<hr>
             <div class="button-container">
               <a href="https://fr-fr.facebook.com/login/?cuid=AYhDmx48sR6SgDCj4JV3MYV8JfC13sNq3mnhOGhhROZIAsVBzuUFIA6iaDdkoxwds-br6j5a07aST_am1jwjTgH3cytQdv4jQU0a-pvjYtflCb2VGrRQdnEKQoxKcxb-n2zyprqTYUc2LKAg2iEIo14u&next" class="btn btn-neutral btn-icon btn-round btn-lg">
                 <i class="fab fa-facebook-f"></i>
@@ -260,7 +260,7 @@
               <a href="https://accounts.google.com/ServiceLogin/signinchooser?service=mail&passive=true&rm=false&continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&ss=1&scc=1&ltmpl=default&ltmplcache=2&emr=1&osid=1&flowName=GlifWebSignIn&flowEntry=ServiceLogin" class="btn btn-neutral btn-icon btn-round btn-lg">
                 <i class="fab fa-google-plus-g"></i>
               </a>
-            </div>
+            </div>-->
           </div>
         </div>
         
@@ -326,10 +326,11 @@ function myFunction2() {
 <script>
         window.Laravel = {!! json_encode([
                'csrfToken' => csrf_token(),
-                'client'=>$client,  //client connecté
+               'client'=>$client,  //client connecté
                'ImageP'         => $ImageP,
                'Fav'         => $Fav,
                'command'         => $command,
+               'prixTotale'   => $prixTotale,
                'url'       => url('/')  
           ]) !!};
 </script>
@@ -342,21 +343,16 @@ function myFunction2() {
         msg: "hello",
         profilclient:[],
         modif: false,
-        ProduitsPanier: [],
-        favoris: [],
-        imagesproduit: [],
-        message:"hh",
         change: {
           changepassword: null,
           current_password: null,
           new_password: null,
 
-        }
+        },
                    
-      },
-
+    },
     methods: {
-
+      
       changePassword: function(){
           	axios.post(window.Laravel.url+'/changepassword',this.change)
               .then(response => {
@@ -391,9 +387,11 @@ function myFunction2() {
         axios.get(window.Laravel.url+'/profilClient')
 
             .then(response => {
-                 this.profilclient = window.Laravel.client;
-                 this.imagesproduit = window.Laravel.ImageP;
-                this.ProduitsPanier = window.Laravel.command;
+                this.profilclient = window.Laravel.client;
+                app1.imagesproduit = window.Laravel.ImageP;
+                app1.ProduitsPanier = window.Laravel.command;
+                app1.favoris = window.Laravel.Fav;
+                app1.prix = window.Laravel.prixTotale;
             })
             .catch(error =>{
                  console.log('errors :' , error);
@@ -405,6 +403,40 @@ function myFunction2() {
       this.profil_clinet();
     }
   });
+       var app1 = new Vue({
+        el: '#app1',
+        data:{
+          ProduitsPanier: [],
+          favoris: [],
+          imagesproduit: [],
+          prix:[],
+        },
+        methods:{
+          deleteProduitPanier: function(produit){
+           
+                  axios.delete(window.Laravel.url+'/deleteproduitpanier/'+produit.produit_id+'/'+produit.qte+'/'+produit.taille+'/'+produit.type_livraison+'/'+produit.couleur_id)
+                    .then(response => {
+                      if(response.data.etat){
+                               var position = this.ProduitsPanier.indexOf(produit);
+                               this.ProduitsPanier.splice(position,1);
+                               if(this.ProduitsPanier.lenght == 0){
+                                  this.prix[0].prixTo = 0;
+                               }
+                               else{
+                                  this.prix[0].prixTo -= produit.prix_total*produit.qte;
+                               }
+
+                      }                     
+                    })
+                    .catch(error =>{
+                               console.log('errors :' , error);
+                    })
+
+              
+          },
+      },
+
+     })
 </script>
 
 

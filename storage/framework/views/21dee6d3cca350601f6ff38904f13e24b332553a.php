@@ -27,18 +27,28 @@
           <div class="col-md-12">
             <div class="card">
             <?php if(session()->has('danger')): ?>
-<div class="row"> 
-<div class="alert alert-danger" style="  margin-left:33px;width: 960px;">
+              <div class="row"> 
+                <div class="alert alert-danger" style="  margin-left:33px;width: 960px;">
 
-<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;
 
-</button>
- <?php echo e(session()->get('danger')); ?>
+                </button>
+                 <?php echo e(session()->get('danger')); ?>
 
-</div>
+                </div>
 
-</div>
-      <?php endif; ?>
+              </div>
+            <?php endif; ?>
+            <?php if(session()->has('success')): ?>
+              <div class="row"> 
+                <div class="alert alert-danger" style="  margin-left:33px;width: 960px;">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;
+                </button>
+                 <?php echo e(session()->get('success')); ?>
+
+                </div>
+              </div>
+            <?php endif; ?>
               <div class="card-header m-b-30">
                 <input type="checkbox" id="produit" @change="selectAlll()" v-model="allSelectedd">
                 <label for="produit" style="margin-left: 10px; margin-top: 10px;"></label>
@@ -909,7 +919,6 @@ unset($__errorArgs, $__bag); ?>" aria-label="Recipient's username" aria-describe
                 axios.get(window.Laravel.url+'/getville')
                  .then(response => {
                       this.villes = response.data;
-                      console.log("this.villes",this.villes)
                  })
                  .catch(error => {
                       console.log('errors : '  ,error);
@@ -942,7 +951,8 @@ unset($__errorArgs, $__bag); ?>" aria-label="Recipient's username" aria-describe
                             this.alertTarifTarif = true;
                             this.villesAddTarif = [];
                             this.prixx.prx = 0;
-                            $('.leaderMultiSelctdropdown').val('').select2();
+                            
+                            $('.leaderMultiSelctdropdown').val('').trigger('change');
 
                                     
                         })
@@ -1012,8 +1022,7 @@ unset($__errorArgs, $__bag); ?>" aria-label="Recipient's username" aria-describe
          if(this.prd.id == ''){
 
             this.prd.id =  this.oldprd.id;
-         }
-         console.log("this.prd",this.prd)       
+         }     
          axios.put(window.Laravel.url+"/updateproduit",this.prd)
          
            .then(response => {
@@ -1186,10 +1195,6 @@ unset($__errorArgs, $__bag); ?>" aria-label="Recipient's username" aria-describe
             getIdSousCatego: function(event){
                 this.produitAjout.sous_categorie_id = event.target.value;
             },
-            getIdColor: function(event){
-                
-                console.log("this.produitAjout.colors",event);
-            },
             deselectVille: function(villeId){
              this.villesAdd.forEach(key => {
                   if(key.id == villeId){
@@ -1228,7 +1233,6 @@ unset($__errorArgs, $__bag); ?>" aria-label="Recipient's username" aria-describe
                 
              }
              if(this.checkedville.length < this.villesAdd.length){
-                this.deselectVille(v.id)
                 this.villesAdd = this.villesAdd.filter(function(item) { return item != v; });
               }
           },
@@ -1288,7 +1292,6 @@ unset($__errorArgs, $__bag); ?>" aria-label="Recipient's username" aria-describe
                         app2.tailless.forEach(key => {
                             if(produit.id == key.produit_id ){
                                     i++;
-                                    console.log(i);
                             }
                         });
                         if(i != 0){
@@ -1432,8 +1435,6 @@ unset($__errorArgs, $__bag); ?>" aria-label="Recipient's username" aria-describe
          app2.oldprd.sous_categorie_id = produit.sous_categorie_id;
          app2.oldprd.poid = produit.poid;
          app2.oldprd.id = produit.id;
-         console.log("app2.oldprd",app2.oldprd)
-         console.log("produit",produit)
          
         },      
           AfficherAjout: function(){
@@ -1453,18 +1454,18 @@ unset($__errorArgs, $__bag); ?>" aria-label="Recipient's username" aria-describe
             });             
          },
            changeButton2: function(p){
-           if(this.checkedproduits.length > 0){
-          this.suppr=true;
-          this.produitDelete.unshift(p);
-        }
-        else{
-          this.produitDelete = [];
-          this.suppr=false;
-        } 
-        if(this.checkedproduits.length < this.produitDelete.length){
-                 this.produitDelete = this.produitDelete.filter(function(item) { return item != p; });
-        }       
-      }, 
+               if(this.checkedproduits.length > 0){
+                  this.suppr=true;
+                  this.produitDelete.unshift(p);
+                }
+                else{
+                  this.produitDelete = [];
+                  this.suppr=false;
+                } 
+                if(this.checkedproduits.length < this.produitDelete.length){
+                         this.produitDelete = this.produitDelete.filter(function(item) { return item != p; });
+                }       
+            }, 
           selectAlll: function() {
               this.selectalll = false;
             if (this.allSelectedd) {
@@ -1496,11 +1497,6 @@ unset($__errorArgs, $__bag); ?>" aria-label="Recipient's username" aria-describe
 
         }
      });
-    function addTarifToVilles(taille){
-         //app2.villesAdd.push(['prix' =>taille]);
-         console.log(taille);
-                
-    }
 </script>
 
 <?php $__env->stopPush(); ?>

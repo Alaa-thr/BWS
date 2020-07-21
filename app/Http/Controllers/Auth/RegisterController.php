@@ -86,7 +86,7 @@ class RegisterController extends Controller
                     'ville' => ['required'],
                     'numTelephone' => ['required', 'string','regex:/0[5-7][0-9]+/',"min:10","max:10", new NumberExist($data['compte'])],
                     'compte' => ['required'],
-                    'photoC' => ['sometimes','image'],
+                    'photoC' => ['required','image'],
                     
                     ]);
                 }
@@ -102,7 +102,7 @@ class RegisterController extends Controller
                     'Num_Compte_Banquaire' => ['required',  new NumCarteBancaireExist(2)], 
                     'addrsse_boutique'=> ['required'],
                     'compte' => ['required'],
-                    'photoV' => ['required'],
+                    'photoV' => ['required','image'],
                     'typeL' => ['required'],
                     ]);
                 }
@@ -118,7 +118,7 @@ class RegisterController extends Controller
                     'addrsse_soct' => ['required'],
                     'compte' => ['required'],
                     'nom_societe'=> ['required'],
-                    'photoE' => ['required'],
+                    'photoE' => ['required','image'],
                     ]);
                 }
 

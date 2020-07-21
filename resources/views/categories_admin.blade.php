@@ -54,7 +54,7 @@
                                                                              <tr>
                                                                                <td width="50%">
                                                                                  <a href="#">
-                                                                                  <img class="img-lg rounded-circle" src="<?php echo asset('storage/profil_image/'.$admin->image) ?>" alt="..."> 
+      <img class="img-lg rounded-circle" src="<?php echo asset('storage/profil_image/'.$admin->image) ?>" alt="..."> 
                                                                                   </a>
                                                                                 </td>
                                                                                <td>

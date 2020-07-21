@@ -73,9 +73,12 @@ class ClientController extends Controller
         $favoris = \DB::table('produits')->get();
         $imageproduit = \DB::table('imageproduits')->get();
         $command = \DB::table('commandes')->where([ ['client_id',$client->id],['commande_envoyee',0]])->get();     
-
+        $prixTotale= \DB::table('commandes')->where([ ['client_id',$client->id],['id',$client->nbr_cmd]])->select(\DB::raw('sum(commandes.prix_total * commandes.qte) as prixTo'))->get();
+        if($prixTotale[0]->prixTo == null){
+                $prixTotale[0]->prixTo = 0.00;
+        }
        
-        return view('profil_clinet',['client'=>$client,'categorie'=>$categorie,'categorieE'=>$categorieE,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command]);
+        return view('profil_clinet',['client'=>$client,'categorie'=>$categorie,'categorieE'=>$categorieE,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command,'prixTotale' => $prixTotale]);
     }    
     public function update_profil(Request $request, $id) {
                 
@@ -109,14 +112,17 @@ class ClientController extends Controller
 
         $cmd =\DB::table('commandes')->get() ;     
         
-
+        $prixTotale= \DB::table('commandes')->where([ ['client_id',$c->id],['id',$c->nbr_cmd]])->select(\DB::raw('sum(commandes.prix_total * commandes.qte) as prixTo'))->get();
+        if($prixTotale[0]->prixTo == null){
+                $prixTotale[0]->prixTo = 0.00;
+        }
         $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
         $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
         $favoris = \DB::table('produits')->get();
         $imageproduit = \DB::table('imageproduits')->get();
         $command = \DB::table('commandes')->where([ ['client_id',$c->id],['commande_envoyee',0]])->get();     
         
-        return view('commande_client',['article'=>$article, 'idAdmin' => $c->id,'categorie'=>$categorie,'categorieE'=>$categorieE, 'cmd' =>$cmd,'client' =>$c,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command]);
+        return view('commande_client',['article'=>$article, 'idAdmin' => $c->id,'categorie'=>$categorie,'categorieE'=>$categorieE, 'cmd' =>$cmd,'client' =>$c,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command,'prixTotale' => $prixTotale]);
     } 
     public function detaillsCommande(Request $request){
         $clientCnncte = Client::find(Auth::user()->id);

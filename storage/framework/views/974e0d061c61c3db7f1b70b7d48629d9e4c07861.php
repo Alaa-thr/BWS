@@ -1,7 +1,12 @@
 
 
 <?php $__env->startSection('content'); ?>
-
+<style type="text/css">
+    .swal2-container {
+      z-index: 9001;
+    }
+    
+</style>
 <head>
       <title><?php echo e(( 'Commande Traitée')); ?></title>
   </head>
@@ -16,248 +21,193 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header" >
-         
-                <div class="flex-t">
-                    <input type="checkbox" id="article" @change="selectAll()" v-model="allSelected" style="margin-top: 5px;">
-                    <label for="article"></label> 
-                   
-                    <h4 style="margin-top: -6px;margin-left: 10px;">Commande Traitée</h4>
+            <div class="col-md-12">
+              <div class="flex-t col-md-12">
+                <div class="flex-t col-md-6">
+                  <input type="checkbox" id="article" @change="selectAll()" v-model="allSelected">
+                  <label for="article"></label> 
+                  <h4 style="margin-top: -6px;margin-left: 10px;">Commande Traitée</h4>
                 </div>
 
-            <div class="txt-right"style="margin-top: -40px; " >
+                <div class="txt-right col-md-6" >
                   <button v-if="suppr" class="btn-sm btn-danger " style="height: 35px; " v-on:click="deleteArrayArticle()"><b>Supprimer</b>
                   </button>
-                  
-                  
                   <button v-on:click="AnnulerSel()" v-if="suppr" class="btn-sm btn-warning " style="height: 35px; " ><b>Annuler</b>
                   </button>
-               </div>
-         
-            
-            <hr style="margin-top:42px;">       
-          
-        
-            <div class="card-body"   v-for="commandec in commandeclient" v-if="commandec.commande_traiter===1">
-
-<div v-if="selectall" id="c">
-       <input type="checkbox"  style=" margin-left: 10px;" :id="commandec.id" :value="commandec.id" v-model="checkedArticles" @change="changeButton(commandec)">
-      <label :for="commandec.id" style="margin-top: 5px; margin-left: 10px;"></label>
-    </div>
-    <div v-else id="c">
-      <input type="checkbox" :id="commandec.id" :value="commandec.id" style="margin-left: 10px;" v-model="articleIds" @click="deselectArticle(commandec.id)">
-      <label :for="commandec.id" style="margin-top: 5px; margin-left: 10px;"></label>
-    </div>
-
-
-  
-    <div class="card-head" >              
-    <div class="row"  >
-    <div >
-  <p class="cvendeur"  id="txt" >
-  Commande Numero  {{commandec.id}}</p>
-      </div> 
- 
-    
-    <div  class="col-md-4 pr-1" id="cv">
-      <div style="margin-left:22px" >
-          <p id="txt" > prix_total : {{commandec.prix_total}} </p>
-      </div>
-       
-    </div>
-   
-    <div class="col-md-4 pl-1" id="a">
-      <div class="" id="b" >
-      <a class="f" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#" id="point">
-        <i class="fas fa-ellipsis-v"  id="y"></i>
-       </a>
-      <div class="dropdown-menu " x-placement="right-start" id="pl"  >
-      <a   v-on:click="AfficheInfo(commandec.id)"  class="dropdown-item js-show-modal1" 
-      style="color: red; font-style: italic; font-weight: 900; cursor: pointer;" >Afficher Plus</a>
-    <a class="dropdown-item" v-on:click="deleteCommandeVendeur(commandec)"
-    style="color: red; font-style: italic; font-weight: 900; cursor: pointer;">
-    Supprimer</a>
-       </div>
-      
-    </div>    
-
-    </div>      
-
-  </div>      
-
-  <hr  id="cvendeur">
-
-    
-</div>                  
+                </div>
               </div>
-
-            </div>     
+              <hr>       
+            </div>
+            <div class="card-body col-md-12 " >
+              <div class="card-head m-t--20 " style="border: 1px "  v-for="commandec in commandeclient" >
+                <div class="row  col-md-12 ">
+                  <div class=" col-md-12 flex-t" >
+                    <div class="col-md-6" v-if="selectall" >
+                      <input type="checkbox"  :id="commandec.id" :value="commandec.id" v-model="checkedArticles" @change="changeButton(commandec)">
+                      <label :for="commandec.id" id="txt">Commande Numero  {{commandec.id_cmd}}</label>
+                    </div>
+                    <div class="col-md-6 " v-else>
+                      <input type="checkbox" :id="commandec.id" :value="commandec.id"  v-model="articleIds" @click="deselectArticle(commandec.id)">
+                      <label :for="commandec.id" id="txt">Commande Numero  {{commandec.id_cmd}}</label>
+                    </div>
+                  
+                    <div  class="col-md-4 " v-on:click="AfficheInfo(commandec.id,commandec.client_id)">
+                        <label id="txt" > prix_total : {{commandec.prix_total}} DA </label>
+                    </div>
+                    <div class="col-md-2 dropdown">
+                      
+                        <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"  style="float: right;">
+                              <i class="fas fa-ellipsis-v"  id="y"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right"  >
+                            <a  class="dropdown-item js-show-modal1" v-on:click="AfficheInfo(commandec.id,commandec.client_id)" 
+                            style="color: red; font-style: italic; font-weight: 900; cursor: pointer;" >Afficher Plus</a>
+                            <a class="dropdown-item" v-on:click="deleteCommandeVendeur(commandec)"
+                            style="color: red; font-style: italic; font-weight: 900; cursor: pointer;">
+                            Supprimer</a>
+                        </div>
+                     
+                    </div>
+                    
+                  
+                </div>
+              </div>
+              <hr class="m-t-10 m-b-30">                  
+            </div>
+          </div>     
               <?php echo e($article->links()); ?>
 
+        </div>
+      </div>      
+    </div>
+  </div>      
+</div>
+
+<!-- Modal1 for laptob-->
+  <div class="wrap-modal11 js-modal1 p-t-80 p-b-20"  id="app2" v-show="hideModel" >
+      <div class="overlay-modal11 " v-on:click="CancelArticle()"></div>
+      <div class="container col-md-12" >
+        <div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent col-md-12" >
+          <button class="how-pos3 hov3 trans-04 " v-on:click="CancelArticle()" >
+              <img src="images/icons/icon-close.png" alt="CLOSE">
+          </button>
+          <div class="p-b-30 p-l-40" >
+            <h4 class="ltext-102  cl2">
+                     COMMANDE DE    {{client.nom_client.toUpperCase()}} {{client.prenom_client.toUpperCase()}}
+
+              
+            </h4>
+          </div>
+          <div class="row col-md-12 flex-t"  >
+            <div class="col-md-6 " >
+              <div class="p-lr-0-lg" >
+                <div class="wrap-slick3 flex-sb flex-w">
+                  <div class="p-t-20 p-b-20 p-l-50">
+                    <h4 class="mtext-105 cl13 p-l-70">
+                      Produits
+                    </h4>
+                  </div>
+                  <div class="div1">
+                    <div>
+                      <div class="table_row flex-t p-b-20" v-for="produit in commandeclient2" >
+                        <div class="column-1">
+                          <div  style="height: 80px; width: 60px">
+                            <img :src="'storage/produits_image/'+ produit.image" alt="IMG" >
+                          </div>
+                        </div>
+                        <div class="column-2 p-l-40 p-r-40 p-t-10">{{produit.qte}} x {{produit.prix_total}} DA
+                        </div>
+                        <div class="column-2 p-l-40 ">
+                          <div class="input-group mb-3 ">
+                            <div   v-if="produit.type_livraison === 'vc'">Le vendeur effectuer la livraison</div>
+                            <div  v-if="produit.type_livraison === 'cv'">Le client apporte leur produit</div>
+                          <div  v-if="produit.type_livraison === 'dhl'">DHL(Poste)</div> 
+                        </div>
+                        <div class="flex-t m-t--10">
+                          <div>Couleur: {{produit.nom}}</div>
+                          <div v-if="produit.taille != 0">&nbsp&nbsp/&nbsp&nbspTaille: {{produit.taille}}</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          
+          
+
+          <div class="col-md-6">
+            <div class="p-t-20 p-b-50 p-l-50">
+              <h4 class="mtext-105 cl13 p-l-70">
+                      Information sur Client
+              </h4>
+            </div>
+            <div class="col-md-12 p-b-10">
+              <div class="col-md-12 form-group flex-w p-b-20">
+                <div class="size-205 cl2 m-r-2" style="font-size: 15px;">
+                        Numero Telephone
+                </div>
+                <div class="size-219">
+                  <div class=" bg0 ">
+                     <input class="form-control" type="text" :value="client.numero_tlf"Disabled>
+                  </div>
+                </div>
               </div>
 
-            </div>      
+              <div class="col-md-12 form-group flex-w p-b-20">
+                <div class="size-205 cl2 m-r-2" style="font-size: 15px;">
+                        Email
+                </div>
+                <div class="size-219 ">
+                   <div class=" bg0">
+                      <input class="form-control "  type="text" :value="client.email" Disabled>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12 form-group flex-w p-b-20">
+                <div class="size-205 cl2 m-r-2" style="font-size: 15px;">
+                        Ville
+                </div>
+                <div class="size-219">
+                  <div class="bg0">
+                      <input class="form-control " type="text" :value="client.ville" Disabled>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12 form-group flex-w p-b-20">
+                <div class="size-205 cl2 m-r-2" style="font-size: 15px;">
+                        Address
+                </div>
+                <div class="size-219">
+                  <div class="bg0">
+                      <input class="form-control " type="text" :value="client.address" Disabled>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12 form-group flex-w p-b-35">
+                <div class="size-205 cl2 m-r-2" style="font-size: 15px;">
+                        Code Postale
+                </div>
+                <div class="size-219">
+                  <div class="bg0">
+                    <input class="form-control " type="text" :value="client.code_postale" Disabled>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12 flex-t">
+                <div class="col-md-6">
+                  <button v-on:click=" deleteCommandeVendeurr(client)"   class="btn-sm btn-danger " style="border: 0; float: right; border-radius: 1em;height: 35px;" ><b>Supprimer</b>
+                  </button>   
+                </div>       
+              </div>
+            </div>
           </div>
-        </div>      
-      </div>
-     
-    </div>
-
-
-</div>
-<!-- Modal1 for laptob-->
-<div class="wrap-modal11 js-modal1 p-t-38 p-b-20 p-l-15 p-r-15"  id="app2" v-if="hideModel" style="margin-top:122px;">
-  <div class="overlay-modal11 " v-on:click="CancelArticle(art)"></div>
-
-  <div class="container" >
-
- 
-    <div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent" v-if="openInfo " style=" width: 985px; height:451px;"  v-for="commandec in commandeclient2">
-
-      <button class="how-pos3 hov3 trans-04 p-t-6 " v-on:click="hideModel = false">
-        <img src="images/icon-close.png" alt="CLOSE">
-      </button>
-      
-
-      <div class="row" >
-    <div class="col-md-4 pr-1" >
-      <div style="margin-left:22px">
-          <p class="" id="t" >commande {{commandec.id}} </p>
+        </div>
       </div>
     </div>
-    <div class="col-md-4 px-1">
-     
-    </div>
-    <div class="col-md-4 pl-1">
-      <div class=""style="margin-top: 11px;" >
-       
-      <p class=""  id="tt" >{{commandec.created_at}}</p>
-      </div>
-    </div>
-    </div>  
-    <hr  id="clr">
-
-    <div class="row" style="margin-left:22px;margin-top:52px;"  v-for="emplC in employeur" v-if="commandec.client_id  === emplC.id">
-    <div class="col-md-4 pr-1" >
-      <div style="margin-left:-16px;">
-          <p class="" id="t" >Les information sur Client {{commandec.id}} : </p>
-      </div>
-    </div>
-    <div class="col-md-4 px-1" >
-    <div class="" style="margin-left:-126px;margin-top:7px;">
-       
-       <p class=""  id="tt" >{{emplC.nom}}  {{emplC.prenom}}  </p>
-       </div>
-    </div>
-    <div class="col-md-4 pl-1"  >
-      <div class="" style="margin-left:-211px;margin-top:7px;">
-       
-      <p class=""  id="tt" > {{emplC.ville}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        Code Postal:{{emplC.codePostal}} 
- </p>
-      </div>
-    </div>
-
-    <div class="col-md-4 pl-1"  >
-      <div class="" style="margin-left: 200px;margin-top: 51px;">
-       
-      <p class=""  id="tt" > {{emplC.email}}  </p>
-      </div>
-    </div>
-
-    <div class="col-md-4 pl-1"  >
-      <div class="" style="margin-left:350px;margin-top: 51px;">
-       
-      <p class=""  id="tt" >{{emplC.numeroTelephone}}</p>
-      </div>
-    </div>
-    </div>  
-
-
-    <hr  id="clr">
-
-    <div class="row" style="margin-left:22px;margin-top:62px;" v-for="emplC in produit" v-if="commandec.produit_id  === emplC.id">
-    <div class="col-md-4 pr-1" >
-      <div style="margin-left:-16px;">
-          <p class="" id="t" >Les produit commandés sont : </p>
-      </div>
-    </div>
-    <div class="col-md-4 px-1" >
-    <div class="" style="margin-left:-126px;margin-top:7px;">
-       
-       <p class=""  id="tt" >{{emplC.Libellé}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          Prix :{{emplC.prix}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          Quantité :{{commandec.qte}} 
-        </p>
-       </div>
-    </div>
-     
-    </div>  
-
-    <hr  id="clr">
-
-    <div class="row" style="margin-left:22px;margin-top:42px;">
-    <div class="col-md-4 pr-1" >
-      <div style="margin-left:-16px">
-          <p class="" id="t" >Address:{{commandec.address}} </p>
-      </div>
-    </div>
-    <div class="col-md-4 px-1">
-     
-    </div>
-    <div class="col-md-4 pl-1">
-      <div class="">
-       
-      <p class=""  id="tt" >Réponse Vendeur :{{commandec.Réponse_vendeur}}</p>
-      </div>
-    </div>
-    </div>  
-    <hr  id="clr">
-
-    <div class="row" style="margin-left:22px;margin-top:52px;">
-    <div class="col-md-4 pr-1" >
-      <div style="margin-left:-16px">
-          <p class="" id="t" >Type Livraison:{{commandec.type_livraison}} </p>
-      </div>
-    </div>
-    <div class="col-md-4 px-1">
-     
-    </div>
-    <div class="col-md-4 pl-1">
-      <div class="">
-       
-      <p class=""  id="tt" >Ville: {{commandec.ville}}</p>
-      </div>
-    </div>
-    </div>  
-    <div class="row" style="margin-left:422px;margin-top:22px;">
-    <div class="col-md-4 pr-1" >
-      <div style="margin-left:464px">
-      <button v-on:click=" RecuCommande(commandec.id);"   class="btn-sm btn-success " style="height: 35px; " ><b>Traiter</b>
-                  </button>      </div>
-    </div>
-   
-    </div> 
-         
-      </div>
-      </div>
-
-    </div>
-
-<!--********************************************************************************************************************************************************************-->
-    
-   
-   
   </div>
-</div>
-
-
-
-  
-
-
-
-
-
 <?php $__env->stopSection(); ?>
 
 
@@ -272,34 +222,39 @@
     window.Laravel = <?php echo json_encode([
            "csrfToken"  => csrf_token(),
            "article"   => $article,
-           "idAdmin" => $idAdmin,         'emploC'         => $emploC,  'prV'         => $prV,
-
+           "idAdmin" => $idAdmin,
+           'emploC' => $emploC,
+           'prV' => $prV,
+           'cmd' => $cmd,
+           'prixx' => $prixx,
            "url"      => url("/")  
       ]); ?>;
 </script>
 
 <script>
-
+function initDashboardPageCharts () {}
 
 
 var app2 = new Vue({
   el: '#app2',
   data:{
-    commandeclient2: [],employeur:[],produit:[],
-    openInfo: false,
-
+    commandeclient2: [],
+    employeur:[],
+    produit:[],
     hideModel: false,
-   
- 
- 
+    client: {
+      nom_client: 'NON',
+      prenom_client: 'NON'
+    },
     detaillsA: {
       idA: 0,
+      idClient:0,
     },
   
   },
 methods: {
 
-  RecuCommande: function(id){
+          RecuCommande: function(id){
           	axios.put(window.Laravel.url+'/recucommande/'+id)
               .then(response => {
                 	console.log("response",response.data);
@@ -309,42 +264,65 @@ methods: {
                   console.log('errors : '  , error);
              })
           },
+          detaillsacommandeVendeur: function(){;
+            axios.post(window.Laravel.url+'/detaillsacommandevendeur', this.detaillsA)
 
-  detaillsacommandeVendeur: function(){
+                .then(response => {
+                     this.commandeclient2 = response.data;//detaill de commande
+                     this.client = this.commandeclient2[0];
+                })
+                .catch(error =>{
+                     console.log('errors :' , error);
+                })
+          },
+          CancelArticle(){
+            this.hideModel = false;
+          },
+          deleteCommandeVendeurr: function(commande){
+                Swal.fire({
+                  title: 'Etes vous?',
+                  text: "De supprimer cette Commande?",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Oui, Supprimer!'
+                }).then((result) => {
+                  if (result.value) {
+                      axios.delete(window.Laravel.url+'/deletecommandevendeur/'+commande.id+'/'+commande.client_id+'/'+commande.vendeur_id)
+                        .then(response => {
+                          if(response.data.etat){
+
+                              $('.js-modal1').removeClass('show-modal1');
+                              app.commandeclient.forEach(key=>{
+                                console.log(key)
+                                if(key.id == commande.id && key.client_id == commande.client_id && key.vendeur_id == commande.vendeur_id){
+                                  var position = app.commandeclient.indexOf(key);
+                                   app.commandeclient.splice(position,1);
+                                }
+                              })
+                                   
+                                   app.checkedArticles.length = [];
+                                   app.suppr=false;
+                                   app.artilcesDelete = [];
+                                   app.selectall = true;
+                          }                     
+                        })
+                        .catch(error =>{
+                                   console.log('errors :' , error);
+                        })
+                  Swal.fire(
+                    'Effacé!',
+                    'Votre commande a été supprimé.',
+                    'success'
+                  )
+                }
+                
+                })
+          },
 
 
-    axios.post(window.Laravel.url+'/detaillsacommandevendeur', this.detaillsA)
-
-        .then(response => {
-
-             this.commandeclient2 = response.data;
-             this.employeur = window.Laravel.emploC;
-             this.produit = window.Laravel.prV;
-
-             
-        })
-        .catch(error =>{
-             console.log('errors :' , error);
-        })
-  },
-
-
-  CancelArticle(article){
-    this.modifier = false ;
-    this.hideModel = false;
-    this.art = {        
-                  id: 0,
-                  admin_id: window.Laravel.idAdmin,
-                  titre: '', 
-                  description: '',
-                  image: ''
-    };
-    this.message = {};
-    article.titre = this.oldArt.titre;
-    article.description = this.oldArt.description;
-  },
-
-},    
+      },    
 });
 
 var app = new Vue({
@@ -360,6 +338,7 @@ data:{
   allSelected: false,
   articleIds: [],
   selectall: true,
+  tt:[],
 
   },
 methods: {
@@ -390,7 +369,7 @@ methods: {
       }).then((result) => {
           if (result.value) {
             this.artilcesDelete.forEach(key => {
-              axios.delete(window.Laravel.url+'/deletecommandevendeur/'+key.id)
+              axios.delete(window.Laravel.url+'/deletecommandevendeur/'+key.id+'/'+key.client_id+'/'+key.vendeur_id)
                 .then(response => {
                   if(response.data.etat){
                                         
@@ -416,57 +395,84 @@ methods: {
         
         })
    },
- 
-   deleteCommandeVendeur: function(article){
-        Swal.fire({
-    title: 'Etes vous?',
-    text: "De supprimer cette Commande?",
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Oui, Supprimer!'
-  }).then((result) => {
-      if (result.value) {
-          axios.delete(window.Laravel.url+'/deletecommandevendeur/'+article.id)
-            .then(response => {
-              if(response.data.etat){
-                       var position = this.commandeclient.indexOf(article);
-                       this.commandeclient.splice(position,1);
-                       this.checkedArticles.length = [];
-                       this.suppr=false;
-                       this.artilcesDelete = [];
-                       this.selectall = true;
-              }                     
-            })
-            .catch(error =>{
-                       console.log('errors :' , error);
-            })
-      Swal.fire(
-        'Effacé!',
-        'Votre commande a été supprimé.',
-        'success'
-      )
-    }
-    
-    })
-  },
- 
- 
-  
-  
-  AfficheInfo: function($id){
-    app2.hideModel = true; 
-    app2.openAjout = false ;
-    app2.openInfo = true;
-    app2.detaillsA.idA= $id;
+   deleteCommandeVendeur: function(commande){
+                Swal.fire({
+                  title: 'Etes vous?',
+                  text: "De supprimer cette Commande?",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Oui, Supprimer!'
+                }).then((result) => {
+                  if (result.value) {
+                      axios.delete(window.Laravel.url+'/deletecommandevendeur/'+commande.id+'/'+commande.client_id+'/'+commande.vendeur_id)
+                        .then(response => {
+                          if(response.data.etat){
+
+                                $('.js-modal1').removeClass('show-modal1');
+                              app.commandeclient.forEach(key=>{
+                                console.log(key)
+                                if(key.id == commande.id && key.client_id == commande.client_id && key.vendeur_id == commande.vendeur_id){
+                                  var position = app.commandeclient.indexOf(key);
+                                   app.commandeclient.splice(position,1);
+                                }
+                              })
+                                   
+                                   app.checkedArticles.length = [];
+                                   app.suppr=false;
+                                   app.artilcesDelete = [];
+                                   app.selectall = true;
+                          }                     
+                        })
+                        .catch(error =>{
+                                   console.log('errors :' , error);
+                        })
+                  Swal.fire(
+                    'Effacé!',
+                    'Votre commande a été supprimé.',
+                    'success'
+                  )
+                }
+                
+                })
+          },
+ AfficheInfo: function($idCmd,$idClient){
+    $('.js-modal1').addClass('show-modal1');
+    app2.hideModel = true;
+    app2.detaillsA.idA= $idCmd;
+    app2.detaillsA.idClient= $idClient;
     app2.detaillsacommandeVendeur();
   },
   get_commande_vendeur: function(){
             axios.get(window.Laravel.url+'/commandeTraiterVendeur')
 
                 .then(response => {
-                     this.commandeclient = window.Laravel.article.data;
+                     this.tt = window.Laravel.article.data;
+                  var $x=1;
+                  this.tt.forEach(key1 =>{
+
+                        for(i=0; i<window.Laravel.cmd.length  ; i++ ){
+                            if(key1.id == window.Laravel.cmd[i].id){
+                               this.commandeclient.push({id: key1.id ,address:window.Laravel.cmd[i].address,date:window.Laravel.cmd[i].date,client_id:window.Laravel.cmd[i].client_id,id_cmd:$x,vendeur_id:window.Laravel.cmd[i].vendeur_id});
+                               $x++;
+                                i = window.Laravel.cmd.length;
+                            }
+                       }
+                     });
+                  console.log("window.Laravel.prixx",window.Laravel.prixx)
+                  console.log("window.Laravel.cmd",window.Laravel.cmd)
+                  console.log("this.tt",this.tt)
+                  console.log("this.commandeclient",this.commandeclient)
+                  this.commandeclient.forEach(key=>{
+                     for(i=0; i<window.Laravel.prixx.length  ; i++ ){
+                            if(key.id == window.Laravel.prixx[i].id){
+                               this.commandeclient[i]['prix_total']=window.Laravel.prixx[i].PrixTotal;
+                                i = window.Laravel.prixx.length;
+                            }
+                       }
+                    
+                  })
 
                 })
                 .catch(error =>{
@@ -481,7 +487,8 @@ methods: {
     else{
       this.artilcesDelete = [];
       this.suppr=false;
-    }        
+    }
+            
   }, 
   AnnulerSel: function(){
     this.checkedArticles.length = [];

@@ -6,6 +6,62 @@
       <title><?php echo e(( 'Notification ')); ?></title>
   </head>
 
+  <!-- Cart -->
+  <div class="wrap-header-cart js-panel-cart" style="z-index: 11000; ">
+        <div class="s-full js-hide-cart"></div>
+        
+        <div class="header-cart flex-col-l p-l-55 p-r-25">
+            
+            <div class="header-cart-title flex-w flex-sb-m p-b-8">
+                <span class="mtext-103 cl2">
+                    Votre Panier
+                </span>
+
+                <div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart" >
+                    <i class="zmdi zmdi-close" style="margin-left: 171%"></i>
+                </div>
+                
+            </div>
+            
+            <div class="header-cart-content flex-w js-pscroll" id="app1" >
+                <ul class="header-cart-wrapitem w-full"  >
+                    <li class="header-cart-item flex-w flex-t m-b-12" v-for="command in ProduitsPanier">
+                        <div class="header-cart-item-img"  @click="deleteProduitPanier(command)">
+                        <img v-for="imgP in imagesproduit" v-if="imgP.produit_id === command.produit_id && imgP.profile === 1" :src="'storage/produits_image/'+ imgP.image" 
+                        alt="IMG-PRODUCT"  style="height: 60px;">
+                        </div>
+
+                        <div class="header-cart-item-txt p-t-8"  v-for="fv in favoris" v-if="fv.id === command.produit_id" id="bb">
+                            <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
+                            {{fv.Libellé}}
+                            </a>
+
+                            <span class="header-cart-item-info">
+                            {{command.qte}} x  {{fv.prix}} DA
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+                
+                <div class="w-full" >
+                    
+                <div class="header-cart-total w-full p-tb-40" v-for="p in prix">
+                        Totale: {{p.prixTo}} DA
+                    </div>
+
+                    <div class="header-cart-buttons flex-w w-full">
+                        <a href="<?php echo e(route('panier')); ?>" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+                            View Cart
+                        </a>
+
+                        <a href="<?php echo e(route('panier')); ?>" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
+                            Check Out
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>      
+    </div>
 <div class="main-panel" id="main-panel">
   
   <div class="panel-header panel-header-sm" >
@@ -58,13 +114,13 @@
     
     <div  class="col-md-4 pr-1" v-if="notificationc.vendeur_id  === null" >
       <div style="margin-left:22px" v-for="emplC in employeur" v-if=" notificationc.employeur_id  === emplC.id">
-          <p class="" id="h" >Employeur ' {{emplC.nom}}' à déposer une nouvelle annonce d'emploie.</p>
+          <p class="" id="h" >Employeur ' {{emplC.nom}}' à refusr votre  annonce d'emploie {{notificationc.cmd_id}} .</p>
       </div>
        
     </div>
     <div  class="col-md-4 pr-1" v-else="notificationc.employeur_id  === null" >
       <div style="margin-left:22px" v-for="imgA in imagesannonce" v-if=" notificationc.vendeur_id  === imgA.id">
-          <p class="" id="h" >Vendeur ' {{imgA.Nom}}' à déposer un nouveau produit.</p>
+          <p class="" id="h" >Vendeur ' {{imgA.Nom}}' à refusr votre Commande {{notificationc.cmd_id}}</p>
       </div>
        
     </div>
@@ -128,7 +184,10 @@
            "idAdmin" => $idAdmin,
            'emploC'         => $emploC,
            'vendeurC'         => $vendeurC,
-
+           'ImageP'         => $ImageP,
+           'Fav'         => $Fav,
+           'command'         => $command,
+           'prixTotale'   => $prixTotale,
            "url"      => url("/")  
       ]); ?>;
 </script>
@@ -137,36 +196,6 @@
 
 
 
-var app2 = new Vue({
-  el: '#app2',
-  data:{
-    openInfo: false,
-    hideModel: false,
-    detaillsA: {
-      idA: 0,
-    },
-
-  },
-methods: {
-
-
-  CancelArticle(article){
-    this.modifier = false ;
-    this.hideModel = false;
-    this.art = {        
-                  id: 0,
-                  admin_id: window.Laravel.idAdmin,
-                  titre: '', 
-                  description: '',
-                  image: ''
-    };
-    this.message = {};
-    article.titre = this.oldArt.titre;
-    article.description = this.oldArt.description;
-  },
-
-},    
-});
 
 var app = new Vue({
 
@@ -186,10 +215,7 @@ data:{
   },
 methods: {
   AfficheInfo: function($id){
-    app2.hideModel = true; 
     app2.openAjout = false ;
-    app2.openInfo = true;
-    app2.detaillsA.idA= $id;
     app2.detaillsCommande();
   },
    deleteArrayArticle:function(){
@@ -349,6 +375,59 @@ created:function(){
 
 
 </script>
+<script>
+     var app1 = new Vue({
+        el: '#app1',
+        data:{
+          message:'hello',
+          ProduitsPanier: [],
+          favoris: [],
+          imagesproduit: [],
+          prix:[],
+        },
+        methods:{
+          deleteProduitPanier: function(produit){
+           
+                  axios.delete(window.Laravel.url+'/deleteproduitpanier/'+produit.produit_id+'/'+produit.qte+'/'+produit.taille+'/'+produit.type_livraison+'/'+produit.couleur_id)
+                    .then(response => {
+                      if(response.data.etat){
+                               var position = this.ProduitsPanier.indexOf(produit);
+                               this.ProduitsPanier.splice(position,1);
+                               if(this.ProduitsPanier.lenght == 0){
+                                  this.prix[0].prixTo = 0;
+                               }
+                               else{
+                                  this.prix[0].prixTo -= produit.prix_total*produit.qte;
+                               }
 
+                      }                     
+                    })
+                    .catch(error =>{
+                               console.log('errors :' , error);
+                    })
+
+              
+          },
+          get_notification_client: function(){
+            axios.get(window.Laravel.url+'/notificationClient')
+              .then(response => {
+                this.favoris = window.Laravel.Fav;
+                this.imagesproduit = window.Laravel.ImageP;
+                this.ProduitsPanier = window.Laravel.command;
+                this.prix = window.Laravel.prixTotale;
+               })
+              .catch(error => {
+                  console.log('errors : '  , error);
+             })
+          },
+          
+
+        },
+        created:function(){
+            this.get_notification_client();
+
+        }
+     })
+</script>
 <?php $__env->stopPush(); ?>
 <?php echo $__env->make('layouts.template_clinet', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\BWS\resources\views/notification_client.blade.php ENDPATH**/ ?>

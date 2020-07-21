@@ -489,6 +489,7 @@ methods:{
 	    	    axios.get(window.Laravel.url+'/panier')
                 .then(response => {
                 	this.produitCommandes = window.Laravel.produitCmds;
+                	console.log("this.produitCommandes",this.produitCommandes)
                 	this.infoClinet = this.produitCommandes[0];
                 	this.colors = window.Laravel.color;
                 	this.tailles = window.Laravel.taille;

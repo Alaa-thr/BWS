@@ -28,6 +28,136 @@ Route::get('/shop', 'BwsController@produitVisiteur')->name('shop');
 Route::get('/emploi', 'BwsController@emploi')->name('emploi');
 
 Route::get('/shop/search_categorie={id}', 'BwsController@shopSearch')->name('shopCategorie');
+
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}', 'BwsController@shopSousCategorieSearch');
+/************************************* COULEUR***********************************/
+
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/couleur={coul}', 'BwsController@shopSousCategorieColorSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/couleur={coul}/taille={tail}', 'BwsController@shopSousCategorieColorTSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/couleur={coul}/prix={prx}', 'BwsController@shopSousCategorieColorPSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/couleur={coul}/taille={tail}/prix={prx}', 'BwsController@shopSousCategorieColorTPrSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/couleur={coul}/prix={prx}/taille={tail}', 'BwsController@shopSousCategorieColorPTSearch');
+
+//Couleur*Prix
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/couleur={coul}/prix={prx}/ville={vil}', 'BwsController@shopSousCategorieColorPrVSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/couleur={coul}/prix={prx}/type_livraison={type}', 'BwsController@shopSousCategorieColorPrTLSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/couleur={coul}/prix={prx}/ville={vil}/type_livraison={type}', 'BwsController@shopSousCategorieColorPrVTLSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/couleur={coul}/prix={prx}/type_livraison={type}/ville={vil}', 'BwsController@shopSousCategorieColorPrTLVSearch');
+
+
+//Couleur*Prix*Taille
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/couleur={coul}/prix={prx}/taille={tail}/ville={vil}', 'BwsController@shopSousCategorieColorPTVSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/couleur={coul}/prix={prx}/taille={tail}/type_livraison={type}', 'BwsController@shopSousCategorieColorPTTLSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/couleur={coul}/prix={prx}/taille={tail}/ville={vil}/type_livraison={type}', 'BwsController@shopSousCategorieColorPTVTLSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/couleur={coul}/prix={prx}/taille={tail}/type_livraison={type}/ville={vil}', 'BwsController@shopSousCategorieColorPTTLVSearch');
+
+//Couleur*Taille*Prix
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/couleur={coul}/taille={tail}/prix={prx}/ville={vil}', 'BwsController@shopSousCategorieColorTPrVSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/couleur={coul}/taille={tail}/prix={prx}/type_livraison={type}', 'BwsController@shopSousCategorieColorTPrTLSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/couleur={coul}/taille={tail}/prix={prx}/ville={vil}/type_livraison={type}', 'BwsController@shopSousCategorieColorTPrVTLSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/couleur={coul}/taille={tail}/prix={prx}/type_livraison={type}/ville={vil}', 'BwsController@shopSousCategorieColorTPrTLVSearch');
+
+//Couleur
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/couleur={coul}/ville={vil}', 'BwsController@shopSousCategorieColorVSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/couleur={coul}/type_livraison={type}', 'BwsController@shopSousCategorieColorTLSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/couleur={coul}/ville={vil}/type_livraison={type}', 'BwsController@shopSousCategorieColorVTLTSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/couleur={coul}/type_livraison={type}/ville={vil}', 'BwsController@shopSousCategorieColorTLVTPrSearch');
+
+//Couleur*Taille
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/couleur={coul}/taille={tail}/ville={vil}', 'BwsController@shopSousCategorieColorTVSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/couleur={coul}/taille={tail}/type_livraison={type}', 'BwsController@shopSousCategorieColorTTLSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/couleur={coul}/taille={tail}/ville={vil}/type_livraison={type}', 'BwsController@shopSousCategorieColorTVTLSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/couleur={coul}/taille={tail}/type_livraison={type}/ville={vil}', 'BwsController@shopSousCategorieColorTTLVSearch');
+
+/************************************* TAILLE***********************************/
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/taille={tail}', 'BwsController@shopSousCategorieTailleSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/taille={tail}/couleur={coul}', 'BwsController@shopSousCategorieTailleCSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/taille={tail}/prix={prx}', 'BwsController@shopSousCategorieTaillePSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/taille={tail}/couleur={coul}/prix={prx}', 'BwsController@shopSousCategorieTailleCPSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/taille={tail}/prix={prx}/couleur={coul}', 'BwsController@shopSousCategorieTaillePCSearch');
+
+//Taill*Prix*Couleur
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/taille={tail}/prix={prx}/couleur={coul}/ville={vil}', 'BwsController@shopSousCategorieTaillePCVSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/taille={tail}/prix={prx}/couleur={coul}/type_livraison={type}', 'BwsController@shopSousCategorieTaillePCTLSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/taille={tail}/prix={prx}/couleur={coul}/ville={vil}/type_livraison={type}', 'BwsController@shopSousCategorieTaillePCVTLSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/taille={tail}/prix={prx}/couleur={coul}/type_livraison={type}/ville={vil}', 'BwsController@shopSousCategorieTaillePCTLVSearch');
+
+//Taill*Couleur*Prix
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/taille={tail}/couleur={coul}/prix={prx}/ville={vil}', 'BwsController@shopSousCategorieTailleCPVSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/taille={tail}/couleur={coul}/prix={prx}/type_livraison={type}', 'BwsController@shopSousCategorieTailleCPTLSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/taille={tail}/couleur={coul}/prix={prx}/ville={vil}/type_livraison={type}', 'BwsController@shopSousCategorieTailleCPVTLSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/taille={tail}/couleur={coul}/prix={prx}/type_livraison={type}/ville={vil}', 'BwsController@shopSousCategorieTailleCPTLVSearch');
+
+//Taill*Prix
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/taille={tail}/prix={prx}/ville={vil}', 'BwsController@shopSousCategorieTaillePVSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/taille={tail}/prix={prx}/type_livraison={type}', 'BwsController@shopSousCategorieTaillePTLSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/taille={tail}/prix={prx}/ville={vil}/type_livraison={type}', 'BwsController@shopSousCategorieTaillePVTLSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/taille={tail}/prix={prx}/type_livraison={type}/ville={vil}', 'BwsController@shopSousCategorieTaillePTLVSearch');
+
+//Taill*Couleur
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/taille={tail}/couleur={coul}/ville={vil}', 'BwsController@shopSousCategorieTailleCVSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/taille={tail}/couleur={coul}/type_livraison={type}', 'BwsController@shopSousCategorieTailleCTLSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/taille={tail}/couleur={coul}/ville={vil}/type_livraison={type}', 'BwsController@shopSousCategorieTailleCVTLSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/taille={tail}/couleur={coul}/type_livraison={type}/ville={vil}', 'BwsController@shopSousCategorieTailleTLVCSearch');
+
+//Taille
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/taille={tail}/ville={vil}', 'BwsController@shopSousCategorieTailleVSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/taille={tail}/type_livraison={type}', 'BwsController@shopSousCategorieTailleTLSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/taille={tail}/ville={vil}/type_livraison={type}', 'BwsController@shopSousCategorieTailleVTLSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/taille={tail}/type_livraison={type}/ville={vil}', 'BwsController@shopSousCategorieTailleTLVSearch');
+
+/************************************* PRIX***********************************/
+
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/prix={prx}', 'BwsController@shopSousCategoriePrixSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/prix={prx}/couleur={coul}', 'BwsController@shopSousCategoriePrixCSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/prix={prx}/couleur={coul}/taille={tail}', 'BwsController@shopSousCategoriePrixCTSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/prix={prx}/taille={tail}', 'BwsController@shopSousCategoriePrixTSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/prix={prx}/taille={tail}/couleur={coul}', 'BwsController@shopSousCategoriePrixTCSearch');
+//Prix
+
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/prix={prx}/ville={vil}', 'BwsController@shopSousCategoriePrixVSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/prix={prx}/type_livraison={type}', 'BwsController@shopSousCategoriePrixTLSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/prix={prx}/ville={vil}/type_livraison={type}', 'BwsController@shopSousCategoriePrixVTLSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/prix={prx}/type_livraison={type}/ville={vil}', 'BwsController@shopSousCategoriePrixTLVSearch');
+
+
+//Prix*Taille
+
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/prix={prx}/taille={tail}/ville={vil}', 'BwsController@shopSousCategoriePrixTVSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/prix={prx}/taille={tail}/type_livraison={type}', 'BwsController@shopSousCategoriePrixTTLSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/prix={prx}/taille={tail}/ville={vil}/type_livraison={type}', 'BwsController@shopSousCategoriePrixTVTLSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/prix={prx}/taille={tail}/type_livraison={type}/ville={vil}', 'BwsController@shopSousCategoriePrixTTLVSearch');
+
+
+//Prix*Coleur
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/prix={prx}/couleur={coul}/ville={vil}', 'BwsController@shopSousCategoriePrixCVSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/prix={prx}/couleur={coul}/type_livraison={type}', 'BwsController@shopSousCategoriePrixCTLSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/prix={prx}/couleur={coul}/ville={vil}/type_livraison={type}', 'BwsController@shopSousCategoriePrixCVTLSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/prix={prx}/couleur={coul}/type_livraison={type}/ville={vil}', 'BwsController@shopSousCategoriePrixCTLVSearch');
+
+
+//Prix*Taille*Couleur
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/prix={prx}/taille={tail}/couleur={coul}/ville={vil}', 'BwsController@shopSousCategoriePrixTCVSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/prix={prx}/taille={tail}/couleur={coul}/type_livraison={type}', 'BwsController@shopSousCategoriePrixTCTLSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/prix={prx}/taille={tail}/couleur={coul}/ville={vil}/type_livraison={type}', 'BwsController@shopSousCategoriePrixTCVTLSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/prix={prx}/taille={tail}/couleur={coul}/type_livraison={type}/ville={vil}', 'BwsController@shopSousCategoriePrixTCTLVSearch');
+
+
+
+//Prix*Couleur*Taille
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/prix={prx}/couleur={coul}/taille={tail}/ville={vil}', 'BwsController@shopSousCategoriePrixCTVSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/prix={prx}/couleur={coul}/taille={tail}/type_livraison={type}', 'BwsController@shopSousCategoriePrixCTTLSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/prix={prx}/couleur={coul}/taille={tail}/ville={vil}/type_livraison={type}', 'BwsController@shopSousCategoriePrixCTVTLSearch');
+Route::get('/shop/search_categorie={id}/sous-categorie={id1}/prix={prx}/couleur={coul}/taille={tail}/type_livraison={type}/ville={vil}', 'BwsController@shopSousCategoriePrixCTTLVSearch');
+
+
+
+
+
+
+
+
+
 Route::get('/emploi/search_categorie={id}', 'BwsController@emploiSearch')->name('emploiCategorie');
 
 Route::get('/emploi/search_categorie={id}/sous-categorie={id1}', 'BwsController@emploiSousCategorieSearch');
@@ -114,10 +244,12 @@ Route::put('/emailrependu/{id}','AdminController@emailRependu');
 
 /*********************************************** Employeur***********************************************/
 
+Route::post('/verifierInputsAnnonce','EmployeurController@verifierInputsAnnonce');
 Route::get('/profilEmployeur', 'EmployeurController@profil_employeur')->name('profilEmployeur');
 Route::get('/annoncesemploi', 'EmployeurController@annonce_emploi')->name('annoncesemploi');
 Route::put('/updateProfilE/{id}','EmployeurController@update_profil');
 Route::post('/addannonce', 'EmployeurController@addAnnonce');
+Route::post('/addannoncepaiment', 'EmployeurController@addannoncepaiment');
 Route::post('/detaillsannonces', 'EmployeurController@detaillsAnnonce');
 Route::put('/updateannonce','EmployeurController@updateAnnonceButton');
 Route::delete('/deleteannonce/{id}','EmployeurController@deleteAnnonce');
@@ -148,9 +280,9 @@ Route::get('/getAllcolor', 'VendeurController@getColors');
 /*commande reçu vendeur*/
 Route::get('/commandeRecuVendeur','VendeurController@get_commande_vendeur')->name('commandeRecuVendeur');
 Route::post('/detaillsacommandevendeur', 'VendeurController@detaillsacommandeVendeur'); 
-Route::delete('/deletecommandevendeur/{id}','VendeurController@deleteCommandeVendeur');
-Route::put('/recucommande/{id}','VendeurController@RecuCommande');
-Route::put('/refusercommande/{id}','VendeurController@RefuserCommande');
+Route::delete('/deletecommandevendeur/{idCmd}/{idClient}/{idVendeur}','VendeurController@deleteCommandeVendeur');
+Route::put('/recucommande/{id}/{id1}','VendeurController@RecuCommande');
+Route::put('/refusercommande/{id}/{id1}','VendeurController@RefuserCommande');
 Route::post('/addvilles','VendeurController@AjouterVillePrix');
 Route::delete('/deleteproduit/{id}','VendeurController@deleteProduit');
 Route::put('/updateproduit','VendeurController@updateProduit');

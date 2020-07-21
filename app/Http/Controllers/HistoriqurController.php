@@ -23,8 +23,12 @@ class HistoriqurController extends Controller
         $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();       
         $favoris = \DB::table('produits')->get();
         $imageproduit = \DB::table('imageproduits')->get();
-        $command = \DB::table('commandes')->where([ ['client_id',$c->id],['commande_envoyee',0]])->get();     
-        return view('historique_client',['article'=>$article, 'idAdmin' => $c->id,'produitCL' => $produitss,'annoncemploiesCL' => $annoncemploies,'categorie'=>$categorie ,'categorieE'=>$categorieE,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command]);
+        $command = \DB::table('commandes')->where([ ['client_id',$c->id],['commande_envoyee',0]])->get();  
+        $prixTotale= \DB::table('commandes')->where([ ['client_id',$c->id],['id',$c->nbr_cmd]])->select(\DB::raw('sum(commandes.prix_total * commandes.qte) as prixTo'))->get();
+        if($prixTotale[0]->prixTo == null){
+                $prixTotale[0]->prixTo = 0.00;
+        }   
+        return view('historique_client',['article'=>$article, 'idAdmin' => $c->id,'produitCL' => $produitss,'annoncemploiesCL' => $annoncemploies,'categorie'=>$categorie ,'categorieE'=>$categorieE,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command,'prixTotale' => $prixTotale]);
     } 
     
     public function deleteHistorique($id){

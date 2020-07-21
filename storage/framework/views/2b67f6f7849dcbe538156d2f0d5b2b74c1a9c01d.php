@@ -6,14 +6,20 @@
     <title><?php echo e(( 'Annonces Emploies')); ?></title>
   </head>
 
-       <div class="main-panel" id="main-panel">
-        <div class="panel-header panel-header-sm">
-      </div> 
-
-   <div class="content" id="app">
+    <div class="panel-header panel-header-sm"></div> 
+    <div class="content" id="app">
         <div class="row">
           <div class="col-md-12">
             <div class="card">
+              <?php if(session()->has('danger')): ?>
+                  <div class="row"> 
+                    <div class="alert alert-danger" style="  margin-left:33px;width: 960px;">
+                      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                      <?php echo e(session()->get('danger')); ?>
+
+                    </div>
+                  </div>
+              <?php endif; ?>
               <div class="card-header">
                 
                     <div class="flex-t">
@@ -43,16 +49,28 @@
                         <label :for="annoncea.id" style="margin-top: 40px; margin-left: 20px;">
                         </label>
                       </div>
-                        <div class="col-md-3 " >
+                        <div class="col-md-3 " v-if="annoncea.image!=null">
                           <img v-if="annoncea.image"  :src="'storage/annonces_image/'+ annoncea.image" style="height: 110px; width:120px; margin-bottom: 20px ; "/>
-                          <img v-else src="storage/téléchargement.png"  style="height: 90px; width:200px; margin-bottom: 20px ; ">
                           
                         </div>
                         
-                        <div class="col-md-5" >
+                        <div class="col-md-5" v-if="annoncea.image!=null">
                           <h6 class="title" style="margin-top: -4px;  color: red; margin-left: -10px;" >{{ annoncea.libellé }}</h6><br>
                             <div class="description" style="margin-top: -10px; font-size: 11px; margin-left: -10px;">
-                              {{ MoitieDescription(annoncea.discription,13, '...') }}
+                              {{ MoitieDescription(annoncea.discription,40, '...') }}
+                            </div>  
+                            <div class="description" style="font-weight: 500; color: black; font-size: 12px; margin-left: -10px; margin-top: 10px;">
+                                Nombre de condidat : {{annoncea.nombre_condidat}}
+                            </div>
+                            <div class="txt-right m-t-20">
+                                <a class="js-show-modal1 " style=" color: black;  font-style: italic; font-weight: 500; cursor: pointer; margin-right: -30px; " v-on:click="AfficheInfo(annoncea.id)"><b>  Afficher Plus </b>
+                                </a>
+                             </div>
+                        </div>
+                        <div class="col-md-8" v-else>
+                          <h6 class="title" style="margin-top: -4px;  color: red; margin-left: -10px;" >{{ annoncea.libellé }}</h6><br>
+                            <div class="description" style="margin-top: -10px; font-size: 11px; margin-left: -10px;">
+                              {{ MoitieDescription(annoncea.discription,100, '...') }}
                             </div>  
                             <div class="description" style="font-weight: 500; color: black; font-size: 12px; margin-left: -10px; margin-top: 10px;">
                                 Nombre de condidat : {{annoncea.nombre_condidat}}
@@ -82,16 +100,16 @@
                    <?php echo e($annonce->links()); ?><!-- pour afficher la pagination -->
                 </div>
               </div>
-             </div>
-           </div>
-         </div>
+            </div>
+          </div>
         </div>
-     </div>
-    <div class="wrap-modal11 js-modal1 p-t-38 p-b-20 p-l-15 p-r-15"  id="app2" v-if="hideModel">
-      <div class="overlay-modal11 " v-on:click="CancelAnnonce(annc)"></div>
+    </div>
+
+<div class="wrap-modal11 js-modal1 p-t-38 p-b-20 p-l-15 p-r-15"  id="app2" v-if="hideModel">
+  <div class="overlay-modal11 " v-on:click="CancelAnnonce(annc)"></div>
   
-      <div class="container">
-        <div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent" v-if="openInfo " style=" width: 985px; margin-top: 40px;"   v-for="annoncea in annoncesemployeur2">
+  <div class="container">
+      <div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent" v-if="openInfo " style=" width: 970px; margin-top: 40px;"   v-for="annoncea in annoncesemployeur2">
           <button class="how-pos3 hov3 trans-04 p-t-6 " v-on:click="hideModel = false">
             <img src="images/icon-close.png" alt="CLOSE">
           </button>
@@ -106,8 +124,8 @@
           </div>
           <div class="row">
             <div class="col-md-10" >
-              <img v-if="annoncea.image" :src="'storage/annonces_image/'+ annoncea.image" style="width: 1500px; height: 450px; margin-left: 80px; " />
-              <img v-else src="storage/téléchargement.png" style="width: 800px; height: 300px; margin-left: 80px; " />
+              <img v-if="annoncea.image!=null" :src="'storage/annonces_image/'+ annoncea.image" style="width: 1500px; height: 450px; margin-left: 80px; " />
+
             </div> 
           </div>
           <div class="row">
@@ -118,32 +136,32 @@
             </div>
           </div>
           <div class="row">
+            <div class="col-md-10 m-l-50 m-t--10 m-b-10">
+               <p style="color: black;">{{ annoncea.discription }}</p>
+            </div>               
+          </div> 
+          <div class="row">
             <div class="col-md-10">
-              <div class="description" style="margin-left: 90px; margin-top: -20px; font-weight: 700; color: black;">
+              <div class="description" style="margin-left: 90px; font-weight: 700; color: black;">
                 Le nombre de condidat est : {{annoncea.nombre_condidat}}
               </div>
             </div>
-          </div>
-          <div class="row" style="margin-left: 50px; margin-top: 10px;">
-            <div class="col-md-2">
-               <p style="color: black;">{{ annoncea.discription }}</p>
-            </div>               
-          </div>  
-        </div>
+          </div> 
+      </div>
 
     <!--*****************************************************-->
-      <div class="bg0 p-b-150 p-lr-15-lg how-pos3-parent"  v-if="openAjout" style=" width: 985px; padding-top:10%; margin-top: 50px;">
+      <div class="bg0 p-b-150 p-lr-15-lg how-pos3-parent m-t-35" v-if="openAjout" style=" width: 970px; padding-top: 45%">
           <button class="how-pos3 hov3 trans-04 p-t-6" v-on:click="CancelAnnonce(annc)">
             <img src="images/icon-close.png" alt="CLOSE">
           </button>
-          <section class=" creat-annonce "   id="myDIV">     
-              <div  class=" container-creat-annonce">
+          <section class=" creat-article " id="myDIV">     
+              <div  class=" container-creat-article">
                 <div class="row">
                   <div class="col-md-10 pr-2" >
                     <div class="form-group mb-3">
-                      <label style="margin-left: 50px">Titre</label>
-                      <input  type="text" class="form-control" placeholder="Le titre doit commencer avec un Maj ou un nombre" v-model="annc.libellé" :class="{'is-invalid' : message.libellé}" style="margin-left: 50px">
-                      <span class="px-5 cl13" v-if="message.libellé" v-text="message.libellé[0]">
+                      <label >Titre</label>
+                      <input  type="text" class="form-control" placeholder="Le titre doit commencer avec un Maj ou un nombre" v-model="annc.libellé" :class="{'is-invalid' : message.libellé}" >
+                      <span class="px-3 cl13" v-if="message.libellé" v-text="message.libellé[0]">
                       </span>
                     </div>
                   </div>
@@ -151,9 +169,9 @@
                 <div class="row">
                   <div class="col-md-10 pr-2" >
                     <div class="form-group">
-                      <label style="margin-left: 50px">description</label>
-                      <textarea class="form-control" placeholder="La description doit commencer avec un Maj ou un nombre" v-model="annc.discription" :class="{'is-invalid' : message.discription}" style="margin-left: 50px"></textarea>
-                      <span class="px-5 cl13" v-if="message.discription" v-text="message.discription[0]">
+                      <label >description</label>
+                      <textarea class="form-control" placeholder="La description doit commencer avec un Maj ou un nombre" v-model="annc.discription" :class="{'is-invalid' : message.discription}"></textarea>
+                      <span class="px-3 cl13" v-if="message.discription" v-text="message.discription[0]">
                       </span>
                     </div>
                   </div>
@@ -161,100 +179,92 @@
                  <div class="row">
                   <div class="col-md-10 pr-2" >
                     <div class="form-group mb-3">
-                      <label style="margin-left: 50px">Nombre_condidat</label>
-                      <input  type="number" class="form-control" placeholder="entrez ici le nombre de condidat  "  v-model="annc.nombre_condidat " :class="{'is-invalid' : message.nombre_condidat}" style="margin-left: 50px">
-                      <span class="px-5 cl13" v-if="message.nombre_condidat" v-text="message.nombre_condidat[0]">
+                      <label >Nombre_condidat</label>
+                      <input  type="number" class="form-control" placeholder="entrez ici le nombre de condidat  "  v-model="annc.nombre_condidat " :class="{'is-invalid' : message.nombre_condidat}" >
+                      <span class="px-3 cl13" v-if="message.nombre_condidat" v-text="message.nombre_condidat[0]">
                       </span>
                     </div>
                   </div>
                 </div>
-
-                      <div class="row col-md-12 pr-2 flex-t m-b-30">
-                            <select class="form-control form-control-lg m-r-45" id="categoSelect" name="catego" style="height: 40px; width: 320px ;border-radius: 1em;margin-left: 50px;" v-on:change="activeSousCatego($event)" >
+                <div class="row col-md-12 pr-2 flex-t m-b-30">
+                    <select class="form-control form-control-lg m-r-30" id="categoSelect" name="catego" style="height: 40px; width: 300px ;border-radius: 1em;" v-on:change="activeSousCatego($event)" >
                               <option value="" hidden="hidden" selected>&nbsp&nbspSélectionner une Categorie</option> 
                               <option v-for="catego in categories" :value="catego.id" >&nbsp&nbsp{{catego.libelle}}</option> 
-                            </select>
-                          <div>
-                            <select class="form-control form-control-lg " id="sousCtagoSelect" name="sous_categorie_id" style="height: 40px;width: 320px;border-radius: 1em;margin-left: 50px;" disabled= "true" v-on:change="getIdSousCatego($event)" :class="{'is-invalid' : message.sous_categorie_id}">
+                    </select>
+                    <div>
+                        <select class="form-control form-control-lg " id="sousCtagoSelect" name="sous_categorie_id" style="height: 40px;width: 300px;border-radius: 1em;" disabled= "true" v-on:change="getIdSousCatego($event)" :class="{'is-invalid' : message.sous_categorie_id}">
                               <option value="" hidden="hidden" selected>&nbsp&nbspSélectionner une Sous Categorie</option> 
                               <option v-for="Scatego in sousCategories" :value="Scatego.id" >&nbsp&nbsp{{Scatego.libelle}}</option> 
-                            </select>
-                            <span class="px-5 cl13" v-if="message.sous_categorie_id" v-text="message.sous_categorie_id[0]"></span>
-                          </div>
-                        </div>
+                        </select>
+                        <span class="px-3 cl13" v-if="message.sous_categorie_id" v-text="message.sous_categorie_id[0]"></span>
+                      </div>
+                  </div>
                   <div class="row" >
-                  <div class="col-md-10 pr-2" >
-                    <div class="form-group">
-                      <label for="image" style="margin-left: 50px">image</label>
-                      <input type="file" class="form-control"  v-on:change="imagePreview" :class="{'is-invalid' : message.image}" style="margin-left: 50px">
-                      <span class="px-3 cl13" v-if="message.image" v-text="message.image[0]"></span>
+                    <div class="col-md-10 pr-2" >
+                      <div class="form-group">
+                        <label for="image">image</label>
+                        <input type="file" class="form-control"  v-on:change="imagePreview" accept="image/*" :class="{'is-invalid' : message.image}">
+                        <span class="px-3 cl13" v-if="message.image" v-text="message.image[0]"></span>
+                      </div>
+                      </div>
                     </div>
-                 </div>
                 </div>
                 <div class="row">
-                  <div class="col-md-10 flex-t">
-                        <button type="submit" v-if="modifier" class="btn btn-success btn-block " style="margin-top:40px;margin-left: 50px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="updateannoncebutton()" >Modifier
+                  <div class="col-md-10 flex-t m-l-60 m-b-20">
+                        <button type="submit" v-if="modifier" class="btn btn-success btn-block " style="  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="updateannoncebutton()" >Modifier
                         </button> 
-                        <button type="submit" v-else class="btn btn-success btn-block " style="margin-top:40px;margin-left: 50px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;"  v-on:click="myFunction()"> Suivant
+                        <button type="submit" v-if="modifier==false && PaimentExsist==true" class="btn btn-success btn-block " style="  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="addAnnonce()" >Ajouter
                         </button> 
-                        <button type="submit"  class="btn btn-danger btn-block " style="margin-top:40px;  border: 0;margin-left: 50px;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="CancelAnnonce(annc)" >Annuler
+                        <button type="submit"  class="btn btn-danger btn-block " style="  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="CancelAnnonce(annc)" >Annuler
                         </button> 
+                        <button type="submit" v-if="modifier==false && PaimentExsist==false" class="btn btn-success btn-block " style="  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;"  v-on:click="myFunction()"> Suivant
+                        </button> 
+                        
                             
                   </div>
                 </div>
+                </section>
+        </div>
+        <div class="bg0 p-b-150 p-lr-15-lg how-pos3-parent m-t-35" v-if="openPaiment" style=" width: 970px; padding-top: 45%">
+          <button class="how-pos3 hov3 trans-04 p-t-6" v-on:click="CancelAnnonce(annc)">
+            <img src="images/icon-close.png" alt="CLOSE">
+          </button>
+          <section class=" creat-article">     
+            <div  class=" container-creat-article col-md-12">
+              <div class="col-md-12 m-b-30">
+                <h5 class="m-t--40 m-l--40 col-md-12">Paiment</h5>
               </div>
-            
+              <div class="col-md-12">
+                <div class="col-md-12 m-b-40">
+                    <div class="col-md-12 m-b-20">
+                        <span >Vous devez payer pour publier votre annonce(Le paimment sera par MOIS ou ANNONCE).</span>
+                    </div>
+                    <div class="col-md-12 flex-t m-b-15">
+                        <span class = "col-md-6" style="color:black;">Numéro bancaire pour paiment:</span>
+                        <div class ="col-md-6">
+                          <input class =" form-control" type="text" disabled value="<?php echo $idbigAdmin[0]->numCarteBanquaire?>">
+                        </div>
+                    </div>
+                    <div class="col-md-12 flex-t">
+                        <span class = "col-md-6" style="color:black;">Paimment par Mois ou Annonce:</span>
+                        <div class = "col-md-6">
+                          <select class="form-control col-md-12" v-on:change="getTypePaiment($event)" :class="{'is-invalid' : message.typePaiment}">
+                            <option value="0" selected disabled>Mois/Annonce</option>
+                            <option value="m">Mois</option>
+                            <option value="a">Annonce</option>
+                          </select>
+                          <span class="px-3 cl13" v-if="message.typePaiment" v-text="message.typePaiment[0]"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 flex-t">
+                  <button type="submit"  class="btn btn-danger btn-block " style="  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="myFunctionP">Previous</button> 
+                  <button type="submit"  class="btn btn-success btn-block " style=" border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="addAnnonceP();" >Ajouter</button>
+                    
+                </div>    
+              </div>      
+            </div>
           </section>
-              
-              <div  id="div">
-
-              <div>
-              <p style="width: 100%;margin-left:11%;margin-top:-31px ;color:black" > 
-              Paiment:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.Il y'a 3 emplacement dans ce site :
-               <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1 er emplacement:900DA/Produit,180DA/Annonce -Par mois-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              * Les 2 premiers slide dans page Home. <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Les 2 premier ligne dans page Emploi.
-              
-              <br><br><br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2 er emplacement:500DA/Produit,140DA/Annonce -Par mois-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              * Les 4 dernier slide dans page Home. <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Les 4 dernier ligne dans page Emploi.
-              
-              <br><br><br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3 er emplacement:200DA/Produit,70DA/Annonce -Par mois-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              * Le reste dans page Home. <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Le reste dans page Emploi.
-              
-              </p>
- 
-
-              <p style="width: 100%;margin-left:11%;margin-top:5% ;color:black"> Choisir l'emplacement:</p>
-             
-                        <select  name="select" id="select" style="margin-left:11% ;width: 25%;"> 
-                          <option  value="1"> 1</option> 
-                          <option  value="2"> 2</option> 
-                          <option  value="3"> 3</option> 
-                        </select>
-                        <p style="width: 35%;margin-left:63%;margin-top:-4.5%;color:black ;padding-bottom:21px">Numéro bancaire pour paiment:</p>
-                        <input style="width: 25%;margin-left:63%;margin-top:-21px " class="form-control form-control-lg" id="ccp" name="ccp" type="text" placeholder="  12345 " disabled >
-
-                        <div style="width: 90%;padding-bottom: 10px;padding-top: 30px; margin-left: 20px;margin-right: 20px;">
-                    <div class=" alert-warning" role="alert" style="padding-left: 10px;padding-top: 1px;padding-bottom: 1px;">
-                      <i class="now-ui-icons travel_info" id="y"></i>
-                      Après cette étape votre annonce sera ajouté avec les annonces qui déjç ajouter .Quand fait le paiment il sera ajouté a les autres pages.
-                    </div> 
-
-                    <div class="col-md-10 flex-t">
-                       
-                     
-                        <button type="submit"  class="btn btn-danger btn-block " style="margin-top:60px;  border: 0;margin-left: 50px;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="myFunction">Previous
-                        </button> 
-                        <button type="submit"  class="btn btn-success btn-block " style="margin-top:60px;  border: 0;margin-left: 550px;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="addAnnonce();change_valeur()" >Ajouter
-                        </button>
-                  </div>
-                  </div>    
-              </div>
         </div>
       </div>
     </div>
@@ -268,6 +278,7 @@
                "csrfToken"  => csrf_token(),
                "annonce"   => $annonce,
                "idEmployeur" => $idEmployeur,
+               "idbigAdmin"   =>$idbigAdmin,
                "url"      => url("/")  
           ]); ?>;
 </script>
@@ -277,6 +288,40 @@
 
    Vue.mixin({
      methods:{
+          addAnnonceP: function(){
+            app2.annc.image = app2.image;
+             console.log("app.app2.annc",app2.annc)
+            axios.post(window.Laravel.url+"/addannoncepaiment",app2.annc)
+
+            .then(response => {
+              if(response.data.etat){
+                 app2.annc = response.data.annonceAjout;
+                 app2.annc.id = response.data.annonceAjout.id;
+                 window.location.reload();
+                 app.annoncesEmployeur.unshift(app2.annc);
+                 console.log("app.annoncesemployeur",app.annoncesEmployeur)
+                 app2.annc={
+                      id: 0,
+                      employeur_id: window.Laravel.idEmployeur,
+                      sous_categorie_id:'',
+                      catego: '',
+                      libellé: '', 
+                      discription: '',
+                      nombre_condidat:'',
+                      image: null,
+                      typePaiment: '',
+                 };
+                 app2.image = null;
+                 app2.hideModel=false;
+                 app2.openAjout = false;
+                 app2.message = {};
+              }          
+            })
+            .catch(error =>{
+                app2.message = error.response.data.errors;
+                console.log('errors :' , app2.message);
+            })
+          }, 
           addAnnonce: function(){
             app2.annc.image = app2.image;
              console.log("app.app2.annc",app2.annc)
@@ -298,6 +343,7 @@
                       discription: '',
                       nombre_condidat:'',
                       image: null,
+                      typePaiment: '',
                  };
                  app2.image = null;
                  app2.hideModel=false;
@@ -319,6 +365,7 @@
         openInfo: false,
         openAjout: false,
         hideModel: false,
+        openPaiment:false,
         annc: {
           id: 0,
           employeur_id: window.Laravel.idEmployeur,
@@ -327,7 +374,8 @@
           libellé: '', 
           discription: '',
           nombre_condidat:'',
-          image: ''
+          image: '',
+          typePaiment: '',
         },
         oldAnnc: {
           libellé: '', 
@@ -343,11 +391,36 @@
         categories: [],
         modifier: false,
         image: null,
+        PaimentExsist: true,
 
         
                    
       },  
        methods: {
+        getTypePaiment(event){
+          this.annc.typePaiment = event.target.value;
+        },
+         myFunctionP: function(){
+          this.openPaiment = false;
+          this.openInfo = false;
+          this.openAjout = true;
+         },
+         myFunction: function(){
+          this.annc.image = this.image;
+          console.log('annonce',this.annc)
+             axios.post(window.Laravel.url+'/verifierInputsAnnonce',this.annc)
+                 .then(response => {
+                    this.message = {};
+                    
+                    this.openPaiment = true;
+                    this.openInfo = false;
+                    this.openAjout = false;
+                 })
+                 .catch(error => {
+                      this.message = error.response.data.errors;
+                      console.log('errors :' , this.message);
+                 })
+        },
         updateannoncebutton: function(){
          if(this.annc.libellé == ''){
 
@@ -390,7 +463,8 @@
                       libellé: '', 
                       discription: '',
                       nombre_condidat:'',
-                      image: ''
+                      image: '',
+                      typePaiment: '',
                  };
 
               } 
@@ -426,40 +500,10 @@
            var fileR = new FileReader();
            fileR.readAsDataURL(event.target.files[0]);
            fileR.onload = (event) => {
-              
               this.image = event.target.result;
            }
            
       },
-      change_valeur: function(){
-        select = document.getElementById("select");
-choice = select.selectedIndex;
-
-axios.post(window.Laravel.url+'/paiementemployeur/'+choice)
-              .then(response => {
-				Swal.fire(
-					  "Admin va envoyer son réponse!",
-					);
-                	console.log("response",response.data)
-               })
-              .catch(error => {
-                  console.log('errors : '  , error);
-             })
-
-},
-
-       myFunction: function(){
-  var y = document.getElementById("div");
-  var x = document.getElementById("myDIV");
-  if (x.style.display === "none") {
-    x.style.display = "block";
-    y.style.visibility = "hidden";
-
-  } else {
-    x.style.display = "none";
-    y.style.visibility= "visible";
-  }
-},
        CancelAnnonce(annonce){
         this.modifier = false ;
         this.hideModel = false;
@@ -471,7 +515,8 @@ axios.post(window.Laravel.url+'/paiementemployeur/'+choice)
                       libellé: '', 
                       discription: '',
                       nombre_condidat:'',
-                      image: ''
+                      image: '',
+                      typePaiment: '',
         };
         this.message = {};
         annonce.libellé = this.oldAnnc.libellé;
@@ -492,7 +537,13 @@ axios.post(window.Laravel.url+'/paiementemployeur/'+choice)
       getCategories:function(){
                  axios.get(window.Laravel.url+'/getAllCategories')
                  .then(response => {
-                      this.categories = response.data;
+                      this.categories = response.data.categorie;
+                      if(response.data.paimentExiste.length ==0 ||response.data.paimentExiste[0].paiment_par =='a' ){
+                        this.PaimentExsist = false;
+                      }
+                      else{
+                        this.PaimentExsist = true;
+                      }
                  })
                  .catch(error => {
                       console.log('errors : '  ,error);
@@ -622,8 +673,8 @@ var app = new Vue({
         
         })
       },
-       changeButton: function(a){
-        
+       changeButton: function(a){ 
+
         if(this.checkedAnnonces.length > 0){
           this.suppr=true;
           this.annoncesDelete.unshift(a);
@@ -631,7 +682,11 @@ var app = new Vue({
         else{
           this.annoncesDelete = [];
           this.suppr=false;
-        }        
+        } 
+        if(this.checkedAnnonces.length < this.annoncesDelete.length){
+              
+            this.annoncesDelete = this.annoncesDelete.filter(function(item) { return item != a; });
+        }       
       }, 
       AnnulerSel: function(){
         this.checkedAnnonces.length = [];
@@ -689,7 +744,8 @@ var app = new Vue({
        AfficheInfo: function($id){
         app2.hideModel = true; 
         app2.openInfo = true;
-        openAjout = false;
+        app2.openAjout = false;
+        app2.openPaiment = false;
         app2.detaillsAn.idAn= $id;
         app2.detaillsAnnonce();
       }, 

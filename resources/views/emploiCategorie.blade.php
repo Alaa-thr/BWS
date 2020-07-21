@@ -83,7 +83,7 @@
 	<!-- Annonce d'emploi -->
 	<div class="bg0 m-t-23 p-b-140">
 		<div class="container" id="app">
-			<div class="flex-w flex-sb-m p-b-60">
+			<div class="flex-w flex-sb-m p-b-52">
 				<div class="flex-w flex-c-m m-tb-20">
 			        <div class="m-l-25 respon6-next" style="width: 230px;">
 			            <div class="rs1-select2 bor8 bg0" >

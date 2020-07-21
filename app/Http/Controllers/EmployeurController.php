@@ -70,8 +70,10 @@ class EmployeurController extends Controller
     }
 
     public function getCategories(){
+        $e = Employeur::find(Auth::user()->id); 
         $categorie = \DB::table('categories')->where([['id', '<>', 1],['typeCategorie','emploi']])->orderBy('libelle','asc')->get();
-        return $categorie;
+        $paimentExiste = \DB::table('paiement_employeurs')->where('employeur_id', $e->id)->select('paiment_par')->get();
+        return ['categorie'=>$categorie,'paimentExiste'=>$paimentExiste];
     }
 
      public function annonce_emploi(){
@@ -79,21 +81,66 @@ class EmployeurController extends Controller
         $annonce = \DB::table('annonce_emploies')->where('employeur_id', $a->id)->orderBy('created_at','desc')->paginate(6) ; 
         $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
         $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
-        return view('annonce_emploi_employeur',['annonce'=>$annonce, 'idEmployeur' => $a->id,'categorie'=>$categorie ,'categorieE'=>$categorieE]);
+        $idbigAdmin= \DB::table('admins')
+        ->where('id',1)
+        ->select('numCarteBanquaire')
+        ->get();
+        return view('annonce_emploi_employeur',['annonce'=>$annonce, 'idEmployeur' => $a->id,'categorie'=>$categorie ,'categorieE'=>$categorieE,'idbigAdmin'=>$idbigAdmin]);
     }
 
     public function detaillsAnnonce(Request $request){
         $annonce_detaills = \DB::table('annonce_emploies')->where('id', $request->idAn)->get();
         return  $annonce_detaills;
     }
-
+    public function verifierInputsAnnonce(Request $request){
+            $request->validate([
+                     'libellé' => ['required','string','max:70','min:3','regex:/^[A-Z0-9][-a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
+                     'discription' => ['required','min:3','string','regex:/^[A-Z0-9][-a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
+                     'nombre_condidat' => ['required'],
+                     'sous_categorie_id' => ['required'],
+                     'image' => ['nullable','sometimes','regex:/^data:image/']
+            ]);
+            return true;
+    }
+    public function addannoncepaiment(Request $request){
+                $request->validate([
+                     'typePaiment' => ['required']
+                ]);
+                $ECnncte = Employeur::find(Auth::user()->id);
+                $annonce2 = new Annonce_emploie;
+                if($request->image != null){
+                    $exploded = explode(',', $request->image);
+                    $decoded = base64_decode($exploded[1]); 
+                    if(str_contains($exploded[0], 'jpeg')){
+                        $extension = 'jpg';
+                    }
+                    else{
+                        $extension = 'png';
+                    }
+                    $fileName = str_random().'.'.$extension;
+                    Storage::put('/public/annonces_image/' . $fileName, $decoded);
+                    $annonce2->image = $fileName;
+                }
+                $annonce2->libellé = $request->libellé;
+                $annonce2->nombre_condidat = $request->nombre_condidat;
+                $annonce2->discription = $request->discription;
+                $annonce2->employeur_id = $request->employeur_id;
+                $annonce2->sous_categorie_id = $request->sous_categorie_id;
+                $annonce2->save();
+                $paiemtE = new Paiement_employeur;
+                $paiemtE->employeur_id = $ECnncte->id;
+                $paiemtE->paiment_par = $request->typePaiment;
+                $paiemtE->save();
+                return Response()->json(['etat' => true,'annonceAjout' => $annonce2]);
+    }
     public function addAnnonce(Request $request){
                 $request->validate([
                      'libellé' => ['required','string','max:70','min:3','regex:/^[A-Z0-9][-a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
                      'discription' => ['required','min:3','string','regex:/^[A-Z0-9][-a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
                      'nombre_condidat' => ['required'],
                      'sous_categorie_id' => ['required'],
-                 ]);
+                     'image' => ['regex:/^data:image/']
+                ]);
                 $annonce2 = new Annonce_emploie;
                 if($request->image != null){
                     $exploded = explode(',', $request->image);
@@ -129,6 +176,7 @@ class EmployeurController extends Controller
                      'discription' => ['required','min:3','string','regex:/^[A-Z0-9][-a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
                      'nombre_condidat' => ['required'],
                      'sous_categorie_id' => ['required'],
+                     'image' => ['regex:/^data:image/']
         ]);
         $annonce2 = Annonce_emploie::find($request->id);
             

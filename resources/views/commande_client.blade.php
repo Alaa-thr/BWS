@@ -23,14 +23,14 @@
             </div>
             
             <div class="header-cart-content flex-w js-pscroll" id="app1" >
-                <ul class="header-cart-wrapitem w-full" v-for="command in ProduitsPanier" >
-                    <li class="header-cart-item flex-w flex-t m-b-12">
-                        <div class="header-cart-item-img" v-for="imgP in imagesproduit" id="profi">
-                        <img v-if="imgP.produit_id === command.produit_id && imgP.profile === 1" :src="'storage/produits_image/'+ imgP.image" 
+                <ul class="header-cart-wrapitem w-full" >
+                    <li class="header-cart-item flex-w flex-t m-b-12" v-for="command in ProduitsPanier" >
+                        <div class="header-cart-item-img"  @click="deleteProduitPanier(command)">
+                        <img v-for="imgP in imagesproduit" v-if="imgP.produit_id === command.produit_id && imgP.profile === 1" :src="'storage/produits_image/'+ imgP.image" 
                         alt="IMG-PRODUCT"  style="height: 60px;">
                         </div>
 
-                        <div class="header-cart-item-txt p-t-8"  v-for="fv in favoris" v-if="fv.id === command.produit_id" id="bb">
+                        <div class="header-cart-item-txt p-t-8"  v-for="fv in favoris" v-if="fv.id === command.produit_id" >
                             <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
                             @{{fv.Libellé}}
                             </a>
@@ -44,8 +44,8 @@
                 
                 <div class="w-full" >
                     
-                <div class="header-cart-total w-full p-tb-40">
-                        Total: 
+                <div class="header-cart-total w-full p-tb-40" v-for="p in prix">
+                        Total: @{{p.prixTo}} DA
                     </div>
 
                     <div class="header-cart-buttons flex-w w-full">
@@ -61,7 +61,7 @@
             </div>
         </div>      
     </div>
-<div class="main-panel" id="main-panel">
+
   
   <div class="panel-header panel-header-sm" >
   </div>
@@ -119,9 +119,8 @@
     <div class="card-head"  id="cmd"   >              
     <div class="row"  >
     <div >
-  <p class="cvendeur"  id="txt" >
-  Commande @{{commandec.id}}</p>
-      </div> 
+        <p class="cvendeur"  id="txt" >Commande @{{commandec.id}}</p>
+    </div> 
  
     
     <div  class="col-md-4 pr-1" id="cv">
@@ -177,12 +176,7 @@
             </div>      
           </div>
         </div>      
-      </div>
-     
-    </div>
-
-
-</div>
+ 
 <!-- Modal1 for laptob-->
 <div class="wrap-modal11 js-modal1 p-t-40 p-b-20 p-l-15 p-r-15" id='app2'  >
       <div class="overlay-modal11 js-hide-modal1"></div>
@@ -225,7 +219,7 @@
                           </div>
                           <div class="flex-t m-t--10">
                             <div>Couleur: @{{produit.nom}}</div>
-                            <div v-if="produit.taille != null">&nbsp&nbsp/&nbsp&nbspTaille: @{{produit.taille}}</div>
+                            <div v-if="produit.taille != 0">&nbsp&nbsp/&nbsp&nbspTaille: @{{produit.taille}}</div>
                           </div>
                         </div>
                       </div>
@@ -313,20 +307,6 @@
       </div>
     </div>
 
-<!--********************************************************************************************************************************************************************-->
-    
-   
-   
-  </div>
-</div>
-
-
-
-  
-
-
-
-
 
 @endsection
 
@@ -345,9 +325,10 @@
            "idAdmin" => $idAdmin,
            'cmd'    => $cmd,
            'client'    => $client,
-               'ImageP'         => $ImageP,
-               'Fav'         => $Fav,
-               'command'         => $command,
+           'ImageP'         => $ImageP,
+           'Fav'         => $Fav,
+           'command'         => $command,
+           'prixTotale'   => $prixTotale,
            "url"      => url("/")  
       ]) !!};
 </script>
@@ -608,14 +589,40 @@ created:function(){
           ProduitsPanier: [],
           favoris: [],
           imagesproduit: [],
+          prix:[],
         },
         methods:{
+          deleteProduitPanier: function(produit){
+           
+                  axios.delete(window.Laravel.url+'/deleteproduitpanier/'+produit.produit_id+'/'+produit.qte+'/'+produit.taille+'/'+produit.type_livraison+'/'+produit.couleur_id)
+                    .then(response => {
+                      if(response.data.etat){
+                               var position = this.ProduitsPanier.indexOf(produit);
+                               this.ProduitsPanier.splice(position,1);
+                               if(this.ProduitsPanier.lenght == 0){
+                                  this.prix[0].prixTo = 0;
+                               }
+                               else{
+                                  this.prix[0].prixTo -= produit.prix_total*produit.qte;
+                               }
+
+                      }                     
+                    })
+                    .catch(error =>{
+                               console.log('errors :' , error);
+                    })
+
+              
+          },
           get_commande_client: function(){
             axios.get(window.Laravel.url+'/commandeClient')
               .then(response => {
                 this.favoris = window.Laravel.Fav;
                 this.imagesproduit = window.Laravel.ImageP;
                 this.ProduitsPanier = window.Laravel.command;
+                this.prix = window.Laravel.prixTotale;
+
+
                })
               .catch(error => {
                   console.log('errors : '  , error);

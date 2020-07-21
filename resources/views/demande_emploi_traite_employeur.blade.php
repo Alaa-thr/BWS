@@ -6,7 +6,7 @@
       <title>{{ ( 'Demande Traiter ') }}</title>
   </head>
 
-<div class="main-panel" id="main-panel">
+
   
   <div class="panel-header panel-header-sm" >
   </div>
@@ -95,11 +95,7 @@
             </div>      
           </div>
         </div>      
-      </div>
-    </div>
 
-
-</div>
 <!-- Modal1 for laptob-->
 <div class="wrap-modal11 js-modal1 p-t-38 p-b-20 p-l-15 p-r-15" v-if="hideModel"  id="app2"  style="margin-top:50px;">
   <div class="overlay-modal11 js-hide-modal1 " ></div>
@@ -176,12 +172,6 @@
 
     </div>
 
-<!--********************************************************************************************************************************************************************-->
-    
-   
-   
-  </div>
-</div>
 
 
 

@@ -16,9 +16,8 @@ class CreatePaiementEmployeurs extends Migration
         Schema::create('paiement_employeurs', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('employeur_id');
-            $table->unsignedBigInteger('admin_id');
-            $table->boolean('response')->default(0);
-            $table->enum('position_publication',['first','second','third'])->nullable();
+            $table->unsignedBigInteger('admin_id')->nullable();
+            $table->enum('paiment_par',['m','a']);
             $table->timestamps();
         });
     }
