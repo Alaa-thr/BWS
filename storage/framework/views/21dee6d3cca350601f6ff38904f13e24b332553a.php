@@ -159,80 +159,72 @@
                                         <span class="mtext-106 cl2 m-b-20">
                                            Sous-Categorie: {{t.libelle}} 
                                         </span> <br>
-                                        <span class="mtext-106 cl2">
-                                           Poids: {{t.poid}}/kg 
-                                        </span>
+                                     
 
                                         <p class="stext-102 cl3 p-t-23">
                                             {{t.description}}.
                                         </p>
                                         </div>
                                         <!--  -->
-                                        <div class="p-t-33">
-                                            <div v-show="tailleExiste" class="flex-w flex-r-m p-b-10">
-                                                <div class="size-203 flex-c-m respon6 p-b-10">
+            <div class="p-t-33">
+                <div v-show="tailleExiste" class="flex-w flex-r-m p-b-10">
+                    <div class="size-203 flex-c-m respon6 p-b-10">
                                                     Taille
-                                                </div>
+                    </div>
 
-                                                <div class="size-204 respon6-next">
-                                                    <div class="rs1-select2 bor8 bg0">
-                                                        <select class="js-select2" >
-                                                            <option value="0" disabled selected>Choisir la taille</option>
-                                                            <option v-for="taille in tailless" :value="taille.nom">{{taille.nom}}</option>
-                                                        </select>
+                    <div class="size-204 respon6-next">
+                        <div class="rs1-select2 bor8 bg0">
+                            <select class="js-select2" >
+                                <option value="0" disabled selected>Choisir la taille</option>
+                                <option v-for="taille in tailless" :value="taille.nom">{{taille.nom}}</option>
+                            </select>
                                                                                              
-                                                        <div class="dropDownSelect2"></div>
-                                                    </div>
-                                                </div>
+                            <div class="dropDownSelect2"></div>
+                        </div>
+                    </div>
                                                 
-                                            </div>
+                </div>
 
-                                            <div class="flex-w flex-r-m p-b-10">
-                                                <div class="size-203 flex-c-m respon6 p-b-10">
-                                                    Couleur
-                                                </div>
+                <div class="flex-w flex-r-m p-b-10">
+                    <div class="size-203 flex-c-m respon6 p-b-10">
+                            Couleur
+                    </div>
 
-                                                <div class="size-204 respon6-next">
-                                                    <div class="rs1-select2 bor8 bg0">
-                                                        <select class="js-select2">
-                                                            <option value="0" disabled selected="true">Choisir la couleur</option>
-                                                            <option v-for="color in colorss" :value="color.color_id"
-                                                            >{{color.nom}}</option>
-                                                        </select>
-                                                        <div class="dropDownSelect2"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                    <div class="size-204 respon6-next">
+                        <div class="rs1-select2 bor8 bg0">
+                            <select class="js-select2">
+                                <option value="0" disabled selected="true">Choisir la couleur</option>
+                                <option v-for="color in colorss" :value="color.color_id">{{color.nom}}</option>
+                            </select>
+                            <div class="dropDownSelect2"></div>
+                        </div>
+                    </div>
+                 </div>
 
                                             <!--  -->
                                         
-                                            <div class="flex-w flex-r-m p-b-10">
-                                                <div class="size-203 flex-c-m respon6 p-b-10">
+                  <div class="flex-w flex-r-m p-b-10">
+                      <div class="size-203 flex-c-m respon6 p-b-10">
                                                     Type Livraison
-                                                </div>
+                      </div>
 
-                                                <div class="size-204 respon6-next">
-                                                    <div class="rs1-select2 bor8 bg0">
-                                                        <select  class="js-select2" >
-                                                            <option id='TL0' value="0" disabled selected="true">Choisir le type de livraison</option>
+                        <div class="size-204 respon6-next">
+                            <div class="rs1-select2 bor8 bg0">
+                                <select  class="js-select2" >
+                                    <option id='TL0' value="0" disabled selected="true">Choisir le type de livraison</option>
                                                             
-                                                            <option v-for="typeLivraison in typeLiv" value="vc" v-if="
-                                                             typeLivraison.type_livraison === 'vc'">Vous effectuer la livraison</option>
-                                                            <option v-for="typeLivraison in typeLiv" value="cv" v-if="
-                                                            typeLivraison.type_livraison === 'cv'">Le client apportez votre produit</option>
-                                                            <option v-for="typeLivraison in typeLiv" value="dhl" v-if="
-                                                            typeLivraison.type_livraison === 'dhl'">DHL(Poste)</option>
-                                                        </select>
-                                                        <div class="dropDownSelect2"></div>
-                                                    </div>
-                                                </div>
-                                            </div>  
-                                        </div>
-                                        
-
-                                    </div>
-                                </div>
+                                    <option v-for="typeLivraison in typeLiv" value="vc" v-if="typeLivraison.type_livraison === 'vc'">Vous effectuer la livraison</option>
+                                    <option v-for="typeLivraison in typeLiv" value="cv" v-if="typeLivraison.type_livraison === 'cv'">Le client apportez votre produit</option>
+                                    <option v-for="typeLivraison in typeLiv" value="dhl" v-if="typeLivraison.type_livraison === 'dhl'">DHL(Poste)</option>
+                                </select>
+                                <div class="dropDownSelect2"></div>
                             </div>
+                        </div>
+                     </div>  
+                </div>
+              </div>
+          </div>
+        </div>
             </div>
             <div class="bg0 p-b-150 p-lr-15-lg how-pos3-parent" v-if="openAjout"style=" width: 990px; padding-top: 45%">
                   <button class="how-pos3 hov3 trans-04 p-t-6" v-on:click="CancelArticle()">
@@ -263,50 +255,44 @@
                         </div>
                         <div class="row col-md-12 pr-2 flex-t" >
                         
-                            <div class="form-group m-r-35">
+                            <div class="form-group m-r-30" style="width: 305px">
                               <label for='img'>Image<span style="font-size: 12px">(Entrer l'image de profil pour votre produit*)</span></label>
                               <input type="file" class="form-control" accept="image/*" style="height: 40px;"  v-on:change="imagePreview" :class="{'is-invalid' : message.image}"  id='img'/>
                               <span class="px-3 cl13" v-if="message.image" v-text="message.image[0]">
                               </span>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" style="width: 305px">
                               <label for="imgs">Images<span style="font-size: 12px">(Entrer les autres images s'il existe*)</span></label>
                               <input type="file" class="form-control" accept="image/png, image/jpeg" style="height: 40px" id='imgs' name="img[]" v-on:change="imagesPreviews" multiple>
                               
                             </div>
                          
                         </div>
-                        <div class="row">
-                          <div class="col-md-10 pr-2" >
-                            <div class="form-group">
-                              <label>Prix</label>
-                              <input type="number" name="prix" class="form-control" placeholder="0.00/DA*" v-model="produitAjout.prix" :class="{'is-invalid' : message.prix}" />
-                              <span class="px-3 cl13" v-if="message.prix" v-text="message.prix[0]">
-                              </span>
-                            </div>
-                          </div>
-                        </div>
+                      
                         <div class="row col-md-12 pr-2 flex-t m-b-20">
-                         
-                            <div class="form-group m-r-45" style="width: 320px">
-                              <label>Quantité de Produit</label>
-                              <input type="number" name="Qte_P" class="form-control" placeholder="0.00/Piece*" v-model="produitAjout.Qte_P" :class="{'is-invalid' : message.Qte_P}"/>
-                              <span class="px-3 cl13" v-if="message.Qte_P" v-text="message.Qte_P[0]"></span>
-                            </div>
-                            <div class="form-group  " style="width: 320px">
-                              <label>Poid de Produit</label>
-                              <input type="number" name="poid" class="form-control" placeholder="0.00Kg/g*" v-model="produitAjout.poid" :class="{'is-invalid' : message.poid}" />
-                              <span class="px-3 cl13" v-if="message.poid" v-text="message.poid[0]"></span>
-                            </div>
+                          <div class="form-group m-r-30" style="width: 305px">
+
+                                <label>Prix</label>
+                                <input type="number" name="prix" class="form-control" placeholder="0.00/DA*" v-model="produitAjout.prix" :class="{'is-invalid' : message.prix}" />
+                                <span class="px-3 cl13" v-if="message.prix" v-text="message.prix[0]">
+                                </span>
+                          </div>
+
+                          <div class="form-group" style="width: 305px">
+                                <label>Quantité de Produit</label>
+                                <input type="number" name="Qte_P" class="form-control" placeholder="0.00/Piece*" v-model="produitAjout.Qte_P" :class="{'is-invalid' : message.Qte_P}"/>
+                                <span class="px-3 cl13" v-if="message.Qte_P" v-text="message.Qte_P[0]"></span>
+                          </div>
+                            
                          
                         </div>
                         <div class="row col-md-12 pr-2 flex-t m-b-30">
-                            <select class="form-control form-control-lg m-r-45" id="categoSelect" name="catego" style="height: 40px; width: 320px ;border-radius: 1em;" v-on:change="activeSousCatego($event)" :class="{'is-invalid' : message.catego}">
+                            <select class="form-control form-control-lg m-r-30" id="categoSelect" name="catego" style="height: 40px; width: 305px ;border-radius: 1em;" v-on:change="activeSousCatego($event)" :class="{'is-invalid' : message.catego}">
                               <option value="" hidden="hidden" selected>&nbsp&nbspSélectionner une Ctegorie</option> 
                               <option v-for="catego in categories" :value="catego.id" >&nbsp&nbsp{{catego.libelle}}</option> 
                             </select>
                             <div>
-                            <select class="form-control form-control-lg " id="sousCtagoSelect" name="sous_categorie_id" style="height: 40px;width: 320px;border-radius: 1em; " disabled= "true" v-on:change="getIdSousCatego($event)" :class="{'is-invalid' : message.sous_categorie_id}">
+                            <select class="form-control form-control-lg " id="sousCtagoSelect" name="sous_categorie_id" style="height: 40px;width: 305px;border-radius: 1em; " disabled= "true" v-on:change="getIdSousCatego($event)" :class="{'is-invalid' : message.sous_categorie_id}">
                               <option value="" hidden="hidden" selected>&nbsp&nbspSélectionner une Sous Categorie</option> 
                               <option v-for="Scatego in sousCategories" :value="Scatego.id" >&nbsp&nbsp{{Scatego.libelle}}</option> 
                             </select>
@@ -358,14 +344,20 @@
                         <div class="row">
                           <div class="col-md-10 flex-t">
                                           
-                                <button type="submit"  class="btn btn-danger btn-block " style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="CancelArticle()" >Annuler
+                                <button type="submit"  class="btn btn-danger btn-block " style="margin-top:40px;  border: 0; 
+                                 border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="CancelArticle()" >Annuler
                                 </button>
-                                <button type="submit" v-if="modifier && addd===false" class="btn btn-success btn-block m-r-5" style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="updateProduitButton()" >Modifier
+                                <button type="submit" v-if="modifier && addd===false" class="btn btn-success btn-block m-r-5"
+                                 style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" 
+                                 v-on:click="updateProduitButton()" >Modifier
                                 </button> 
-                                <button type="submit" v-if="modifier == false && addd === false" class="js-show-modal1 btn btn-success btn-block m-r-5" style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="AfficherAjout2()">Suivant
+                                <button type="submit" v-if="modifier == false && addd === false" class="js-show-modal1 btn btn-success
+                                 btn-block m-r-5" style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;"
+                                  v-on:click="AfficherAjout2()">Suivant
                                 </button>
-                                <button v-if="modifier === false && addd === true" type="submit" class="btn btn-success btn-block m-r-5" style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="addProduitWithTest()" >Ajouter
+                               <button v-if=" modifier === false && addd === true" type="submit" class="btn btn-success btn-block m-r-5" style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="addProduitWithTest();" >Ajouter
                                 </button>
+                              
                           </div>
                         </div>
                       </div>
@@ -420,7 +412,7 @@ unset($__errorArgs, $__bag); ?>" aria-label="Recipient's username" aria-describe
                                       </button>
                                   </div>
 
-                                  <span>Si vous passer cette etape et rien valider, on vas consedére que le tarif de votre lévraison est 0DA.</span>
+                                  <span>Si vous passer cette etape et rien valider, on vas consedére que le tarif de votre livraison est 0 DA.</span>
                                   
                                 </div>
                                 
@@ -431,12 +423,50 @@ unset($__errorArgs, $__bag); ?>" aria-label="Recipient's username" aria-describe
                         </button>
                         <button type="submit"  class="btn btn-danger  m-r-20" style="  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700; width: 280px;  margin-top: -48px" v-on:click="CancelArticle()" >Annuler
                         </button>
-                        <button type="submit" class="btn btn-success  " style=" margin-top:-48px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700; width: 280px;" v-on:click="addProduit()" >Ajouter
-                        </button>
+                        <button v-if="SuivantPaiment == true" type="submit" class="js-show-modal1 btn btn-success btn-block m-r-5" style="margin-top:-48px;  border: 0;border-radius: 1em; font-size: 12px;  font-weight: 700; width: 280px" v-on:click="AfficherAjout3()">Suivant</button>
+                        <button v-else type="submit" class="js-show-modal1 btn btn-success btn-block" style="margin-top:-48px;  border: 0;border-radius: 1em; font-size: 12px;  font-weight: 700; width: 280px" v-on:click="addProduit()">Ajouter</button>
                     </div>
                     
                   </div>
             </div>
+<!--**************************paimet******************************-->
+
+        <div class="bg0 p-b-150 p-lr-15-lg how-pos3-parent m-t-35" v-if="openPaiment" style=" width: 970px; padding-top: 45%">
+          <button class="how-pos3 hov3 trans-04 p-t-6" v-on:click="CancelAnnonce(annc)">
+            <img src="images/icon-close.png" alt="CLOSE">
+          </button>
+          <section class=" creat-article">     
+            <div  class=" container-creat-article col-md-12">
+              <div class="col-md-12 m-b-30">
+                <h5 class="m-t--40 m-l--40 col-md-12">Paiment</h5>
+              </div>
+              <div class="col-md-12">
+                <div class="col-md-12 m-b-40">
+                    <div class="col-md-12 m-b-20">
+                      <ul>
+                        <li style="list-style-type: disc;"><span >Vous devez payer pour publier votre annonce.</span>
+                        </li>
+                        <li style="list-style-type: disc;"><span >Aprés le paiement vos produits sera publié sur le site.</span>
+                        </li>
+                      </ul>
+                        
+                    </div>
+                    <div class="col-md-12 flex-t m-b-15">
+                        <span class = "col-md-6" style="color:black;">Numéro bancaire pour paiment :</span>
+                        <div class ="col-md-6">
+                          <input class =" form-control" type="text" disabled value="<?php echo $idbigAdmin[0]->numCarteBanquaire?>">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 flex-t">
+                  <button type="submit"  class="btn btn-danger btn-block " style="  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="myFunctionP">Previous</button> 
+                  <button type="submit"  class="btn btn-success btn-block " style=" border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="addProduitwithPaiment();" >Ajouter</button>
+                    
+                </div>    
+              </div>      
+            </div>
+          </section>
+        </div>
             <div class="bg0 p-b-150 p-lr-15-lg how-pos3-parent" v-show="tarifL" style=" width: 990px; padding-top: 10%">
                 <button class="how-pos3 hov3 trans-04 p-t-6" v-on:click="CancelArticle()">
                     <img src="images/icon-close.png" alt="CLOSE">
@@ -560,7 +590,9 @@ unset($__errorArgs, $__bag); ?>" aria-label="Recipient's username" aria-describe
 
                'csrfToken'      => csrf_token(),
                'produit'        => $produit,
+               'notPaier'        => $notPaier,
                'ImageP'         => $ImageP,
+               "idbigAdmin"   =>$idbigAdmin,
                 'url'           => url('/'), 
           ]); ?>;
 </script>
@@ -569,6 +601,57 @@ unset($__errorArgs, $__bag); ?>" aria-label="Recipient's username" aria-describe
         Vue.mixin({
 
             methods:{
+              addProduitwithPaiment: function(){
+                app2.produitAjout.image = app2.image;
+                app2.produitAjout.images = app2.imagesP;
+                app2.produitAjout.colors = app2.colorsP;
+                app2.produitAjout.tailles = app2.tailleP;
+                app2.produitAjout.pointures = app2.PointureP;
+                app2.produitAjout.typet = app2.Type;
+                axios.post(window.Laravel.url+"/addProduitwithPaiment",app2.produitAjout)
+                .then(response => {
+                  if(response.data.etat){
+                     window.location.reload();
+                     app2.produitAjout = response.data.produitAjout;
+                     app2.imageP = response.data.imageProduitAjout;
+                     app2.produitAjout.id = response.data.produitAjout.id;
+                     app.ProduitsVendeur.unshift(app2.produitAjout);
+                     app.imagesproduit.unshift(app2.imageP);
+                     app2.produitAjout={
+                            id: 0,
+                            sous_categorie_id: '',
+                            catego: '',
+                            Libellé: '',
+                            prix: '',
+                            description: '',
+                            Qte_P: '',
+                            image: '',
+                            images: [],
+                            colors: [],
+                            tailles: [],
+                            pointures: [],
+                            typet: 0,
+                     };
+                     app2.imageP= {
+                        produit_id: 0,
+                        image: ''
+                     };
+                     app2.imagesP= [];
+                     app2.colorsP= [];
+                     app2.tailleP= [];
+                     app2.PointureP= [];
+                     app2.hideModel=false;
+                     app2.openAjout = false;
+                     app2.message = {};
+                     app2.image = '';
+                     app2.Type = '';
+                  }          
+                })
+                .catch(error =>{
+                    app2.message = error.response.data.errors;
+                    console.log('errors :' , app2.message);
+                })
+          },
               addProduitWithTest: function(){
                     app2.produitAjout.image = app2.image;
                     app2.produitAjout.images = app2.imagesP;
@@ -593,7 +676,6 @@ unset($__errorArgs, $__bag); ?>" aria-label="Recipient's username" aria-describe
                                 prix: '',
                                 description: '',
                                 Qte_P: '',
-                                poid: '',
                                 image: '',
                                 images: [],
                                 colors: [],
@@ -645,7 +727,6 @@ unset($__errorArgs, $__bag); ?>" aria-label="Recipient's username" aria-describe
                             prix: '',
                             description: '',
                             Qte_P: '',
-                            poid: '',
                             image: '',
                             images: [],
                             colors: [],
@@ -684,6 +765,8 @@ unset($__errorArgs, $__bag); ?>" aria-label="Recipient's username" aria-describe
           hideModel: false,
           openAjout: false,
           openAjout2: false,
+          openAjout3: false,
+          openPaiment: false,
           openInfo: false,
           modifier: false,
           produitAjout: {
@@ -694,7 +777,7 @@ unset($__errorArgs, $__bag); ?>" aria-label="Recipient's username" aria-describe
             prix: '',
             description: '',
             Qte_P: '',
-            poid: '',
+          //  poid: '',
             image: '',
             images: [],
             colors: [],
@@ -740,7 +823,6 @@ unset($__errorArgs, $__bag); ?>" aria-label="Recipient's username" aria-describe
             prix: '',
             description: '',
             Qte_P: '',
-            poid: '',
             image: '',
             images: [],
             colors: [],
@@ -756,7 +838,6 @@ unset($__errorArgs, $__bag); ?>" aria-label="Recipient's username" aria-describe
             prix: '',
             description: '',
             Qte_P: '',
-            poid: '',
             image: '',
             images: [],
             colors: [],
@@ -785,10 +866,26 @@ unset($__errorArgs, $__bag); ?>" aria-label="Recipient's username" aria-describe
           alertTarifTarif: false,
           typeDelete: false,
           typeAdd: false,
+          SuivantPaiment:  true,
+          p: false,
 
           
         },
         methods:{
+            myFunctionP: function(){
+            this.openPaiment = false;
+            this.openInfo = false;
+            if(this.typeLVC == true && this.p ==false){
+              this.openAjout2 =true;
+            }
+            else if(this.typeLVC == true && this.p ==true){
+              this.openAjout = true;
+            }
+            else{
+              this.openAjout = false;
+            }
+            
+           },
             deleteTypeL(){
                 if($('.deleteTL').val() == null){
                     this.typeDelete = true;
@@ -845,6 +942,8 @@ unset($__errorArgs, $__bag); ?>" aria-label="Recipient's username" aria-describe
             Previous(){
                 this.openAjout = true ;
                 this.openAjout2 = false;
+                this.openAjout3 = false;
+
             },
             getPaimentVendeurr(){
                 axios.get(window.Laravel.url+'/getpaimentvendeurr')
@@ -863,19 +962,90 @@ unset($__errorArgs, $__bag); ?>" aria-label="Recipient's username" aria-describe
             getTypeL(){
                 axios.get(window.Laravel.url+'/gettypelvendeur')
                  .then(response => {
-                     if(response.data){
+                    console.log('holl',response.data.etat)
+                     if(response.data.etat){
                         this.typeLVC = true;
                         this.modifier = false
+                     }
+                     else if(!response.data.etat && response.data.paiment){
+                        this.typeLVC = true;
+                        this.modifier = false
+                        this.p = true;
                      }
                      else{
                         this.typeLVC = false;
                         this.addd = true;
+                        this.p = false;
                      }
                  })
                  .catch(error => {
                       console.log('errors : '  ,error);
                  })
             },
+            showImage1: function(){
+          Swal.fire({
+          imageUrl: '<?php echo e(asset('storage/annonces_image/homeplace1.png')); ?>',
+        
+          imageHeight: 340,
+          imageAlt: 'A tall image'
+        })
+      },
+      showImage2: function(){
+          Swal.fire({
+          imageUrl: '<?php echo e(asset('storage/annonces_image/homeplace2.png')); ?>',
+        
+          imageHeight: 340,
+          imageAlt: 'A tall image'
+        })
+      },
+      showImage3: function(){
+          Swal.fire({
+          imageUrl: '<?php echo e(asset('storage/annonces_image/homeplace3.png')); ?>',
+        
+          imageHeight: 340,
+          imageAlt: 'A tall image'
+        })
+      },
+      showImageEmp1: function(){
+          Swal.fire({
+          imageUrl: '<?php echo e(asset('storage/annonces_image/emploplace1.png')); ?>',
+        
+          imageHeight: 340,
+          imageAlt: 'A tall image'
+        })
+      },
+      showImageEmp2: function(){
+          Swal.fire({
+          imageUrl: '<?php echo e(asset('storage/annonces_image/emploplace2.png')); ?>',
+        
+          imageHeight: 340,
+          imageAlt: 'A tall image'
+        })
+      }, 
+      showImageEmp3: function(){
+          Swal.fire({
+          imageUrl: '<?php echo e(asset('storage/annonces_image/emploplace3.png')); ?>',
+        
+          imageHeight: 340,
+          imageAlt: 'A tall image'
+        })
+      },   
+      change_valeur_vendeur: function(){
+        select = document.getElementById("select");
+        choice = select.selectedIndex;
+
+axios.post(window.Laravel.url+'/paiementvendeur/'+choice)
+              .then(response => {
+				Swal.fire(
+					  "Admin va envoyer son réponse!",
+					);
+                	console.log("response",response.data)
+               })
+              .catch(error => {
+                  console.log('errors : '  , error);
+             })
+
+},
             CancelArticle(){
                 this.tailless = [];
                 this.colorss = [];
@@ -891,7 +1061,7 @@ unset($__errorArgs, $__bag); ?>" aria-label="Recipient's username" aria-describe
                             prix: 0,
                             description: '',
                             Qte_P: 0,
-                            poid: 0,
+                          //  poid: 0,
                             image: '',
                             images: [],
                             colors: [],
@@ -1011,10 +1181,8 @@ unset($__errorArgs, $__bag); ?>" aria-label="Recipient's username" aria-describe
          if(this.prd.Qte_P == ''){
             this.prd.Qte_P =  this.oldprd.Qte_P;
          }
-         if(this.prd.poid == ''){
-
-            this.prd.poid =  this.oldprd.poid;
-         }
+      
+      
          if(this.prd.sous_categorie_id == ''){
 
             this.prd.sous_categorie_id =  this.oldprd.sous_categorie_id;
@@ -1038,7 +1206,6 @@ unset($__errorArgs, $__bag); ?>" aria-label="Recipient's username" aria-describe
                         prix: '',
                         description: '',
                         Qte_P: '',
-                        poid: '',
                         image: '',
                         images: [],
                         colors: [],
@@ -1055,7 +1222,6 @@ unset($__errorArgs, $__bag); ?>" aria-label="Recipient's username" aria-describe
                     prix: '',
                     description: '',
                     Qte_P: '',
-                    poid: '',
                     image: '',
                     images: [],
                     colors: [],
@@ -1077,7 +1243,6 @@ unset($__errorArgs, $__bag); ?>" aria-label="Recipient's username" aria-describe
                         prix: '',
                         description: '',
                         Qte_P: '',
-                        poid: '',
                         image: '',
                         images: [],
                         colors: [],
@@ -1144,21 +1309,31 @@ unset($__errorArgs, $__bag); ?>" aria-label="Recipient's username" aria-describe
             },
             AfficherAjout2: function(){
              this.tarifL = false;
+             
              this.produitAjout.image = this.image;
              this.produitAjout.images = this.imagesP;
              this.produitAjout.colors = this.colorsP;
              this.produitAjout.tailles = this.tailleP;
              this.produitAjout.pointures = this.PointureP;
              this.produitAjout.typet = this.Type;
+             
              axios.post(window.Laravel.url+'/verifierInputs',this.produitAjout)
                  .then(response => {
                     this.message = {};
-                    if(this.typeLVC == true){
+                    if(this.typeLVC == true && this.p == false){
                         this.openAjout2 = true;
+                        this.openPaiment = false;
                     }
-                    else{
+                    else if(this.typeLVC == true && this.p == true){
                        this.openAjout2 = false;
+                       this.openPaiment = true;
                     }
+                    if(response.data.length == 0){//le button suivant dans openAjout2 tban
+                      this.SuivantPaiment = true;
+                    }
+                    else{//tban ajouter
+                        this.SuivantPaiment = false;
+                    } 
                     this.hideModel = true;
                     this.openAjout = false
                     this.openInfo = false;
@@ -1167,6 +1342,35 @@ unset($__errorArgs, $__bag); ?>" aria-label="Recipient's username" aria-describe
                       this.message = error.response.data.errors;
                       console.log('errors :' , this.message);
                  })
+             
+            },
+            AfficherAjout3: function(){
+            this.openAjout2 = false;
+            this.openPaiment = true;
+             this.produitAjout.image = this.image;
+             this.produitAjout.images = this.imagesP;
+             this.produitAjout.colors = this.colorsP;
+             this.produitAjout.tailles = this.tailleP;
+             this.produitAjout.pointures = this.PointureP;
+             this.produitAjout.typet = this.Type;
+             /*axios.post(window.Laravel.url+'/verifierInputs',this.produitAjout)
+                 .then(response => {
+                    this.message = {};
+                  if(this.typeLVC == true){
+                        this.openAjout3 = true;
+                    }
+                    else{
+                       this.openAjout3 = false;
+                    }
+                    this.hideModel = true;
+                    this.openAjout = false
+                    this.openAjout2 = false
+                    this.openInfo = false;
+                 })
+                 .catch(error => {
+                      this.message = error.response.data.errors;
+                      console.log('errors :' , this.message);
+                 })*/
              
             },
             activeTaille: function(){
@@ -1258,6 +1462,7 @@ unset($__errorArgs, $__bag); ?>" aria-label="Recipient's username" aria-describe
           produitIds: [],
           produitDelete :[],
           p:[],
+          autrepaier:false,
           
 
         },
@@ -1280,6 +1485,7 @@ unset($__errorArgs, $__bag); ?>" aria-label="Recipient's username" aria-describe
                 app2.hideModel = true;
                 app2.openAjout = false;
                 app2.openAjout2 = false;
+                app2.openAjout3 = false;
                 app2.openInfo = true;
                 app2.tarifL = false;
                 axios.get(window.Laravel.url+'/getdetailsproduitvendeur/'+produit.id)
@@ -1319,6 +1525,8 @@ unset($__errorArgs, $__bag); ?>" aria-label="Recipient's username" aria-describe
               .then(response => {
                 this.ProduitsVendeur = window.Laravel.produit.data;
                 this.imagesproduit = window.Laravel.ImageP;
+                this.autrepaier = response.data.notPaier;
+
                })
               .catch(error => {
                   console.log('errors : '  , error);
@@ -1426,6 +1634,7 @@ unset($__errorArgs, $__bag); ?>" aria-label="Recipient's username" aria-describe
          app2.openAjout = true;
          app2.openInfo = false;
          app2.modifier = true;
+         app2.openPaiment = false;
          app2.addd=false;
          app2.produitAjout = produit;
          app2.oldprd.Libellé = produit.Libellé;
@@ -1433,7 +1642,6 @@ unset($__errorArgs, $__bag); ?>" aria-label="Recipient's username" aria-describe
          app2.oldprd.prix = produit.prix;
          app2.oldprd.Qte_P = produit.Qte_P;
          app2.oldprd.sous_categorie_id = produit.sous_categorie_id;
-         app2.oldprd.poid = produit.poid;
          app2.oldprd.id = produit.id;
          
         },      
@@ -1442,7 +1650,10 @@ unset($__errorArgs, $__bag); ?>" aria-label="Recipient's username" aria-describe
              app2.openAjout = true;
              app2.openInfo = false;
              app2.openAjout2 = false;
+             app2.openPaiment = false;
              app2.tarifL = false;
+
+            
               
           },
           deselectProduit: function(produitId){

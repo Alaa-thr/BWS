@@ -163,71 +163,65 @@
                                         </p>
                                         </div>
                                         <!--  -->
-                                        <div class="p-t-33">
-                                            <div v-show="tailleExiste" class="flex-w flex-r-m p-b-10">
-                                                <div class="size-203 flex-c-m respon6 p-b-10">
+            <div class="p-t-33">
+                <div v-show="tailleExiste" class="flex-w flex-r-m p-b-10">
+                    <div class="size-203 flex-c-m respon6 p-b-10">
                                                     Taille
-                                                </div>
+                    </div>
 
-                                                <div class="size-204 respon6-next">
-                                                    <div class="rs1-select2 bor8 bg0">
-                                                        <select class="js-select2" >
-                                                            <option value="0" disabled selected>Choisir la taille</option>
-                                                            <option v-for="taille in tailless" :value="taille.nom">@{{taille.nom}}</option>
-                                                        </select>
+                    <div class="size-204 respon6-next">
+                        <div class="rs1-select2 bor8 bg0">
+                            <select class="js-select2" >
+                                <option value="0" disabled selected>Choisir la taille</option>
+                                <option v-for="taille in tailless" :value="taille.nom">@{{taille.nom}}</option>
+                            </select>
                                                                                              
-                                                        <div class="dropDownSelect2"></div>
-                                                    </div>
-                                                </div>
+                            <div class="dropDownSelect2"></div>
+                        </div>
+                    </div>
                                                 
-                                            </div>
+                </div>
 
-                                            <div class="flex-w flex-r-m p-b-10">
-                                                <div class="size-203 flex-c-m respon6 p-b-10">
-                                                    Couleur
-                                                </div>
+                <div class="flex-w flex-r-m p-b-10">
+                    <div class="size-203 flex-c-m respon6 p-b-10">
+                            Couleur
+                    </div>
 
-                                                <div class="size-204 respon6-next">
-                                                    <div class="rs1-select2 bor8 bg0">
-                                                        <select class="js-select2">
-                                                            <option value="0" disabled selected="true">Choisir la couleur</option>
-                                                            <option v-for="color in colorss" :value="color.color_id"
-                                                            >@{{color.nom}}</option>
-                                                        </select>
-                                                        <div class="dropDownSelect2"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                    <div class="size-204 respon6-next">
+                        <div class="rs1-select2 bor8 bg0">
+                            <select class="js-select2">
+                                <option value="0" disabled selected="true">Choisir la couleur</option>
+                                <option v-for="color in colorss" :value="color.color_id">@{{color.nom}}</option>
+                            </select>
+                            <div class="dropDownSelect2"></div>
+                        </div>
+                    </div>
+                 </div>
 
                                             <!--  -->
                                         
-                                            <div class="flex-w flex-r-m p-b-10">
-                                                <div class="size-203 flex-c-m respon6 p-b-10">
+                  <div class="flex-w flex-r-m p-b-10">
+                      <div class="size-203 flex-c-m respon6 p-b-10">
                                                     Type Livraison
-                                                </div>
+                      </div>
 
-                                                <div class="size-204 respon6-next">
-                                                    <div class="rs1-select2 bor8 bg0">
-                                                        <select  class="js-select2" >
-                                                            <option id='TL0' value="0" disabled selected="true">Choisir le type de livraison</option>
+                        <div class="size-204 respon6-next">
+                            <div class="rs1-select2 bor8 bg0">
+                                <select  class="js-select2" >
+                                    <option id='TL0' value="0" disabled selected="true">Choisir le type de livraison</option>
                                                             
-                                                            <option v-for="typeLivraison in typeLiv" value="vc" v-if="
-                                                             typeLivraison.type_livraison === 'vc'">Vous effectuer la livraison</option>
-                                                            <option v-for="typeLivraison in typeLiv" value="cv" v-if="
-                                                            typeLivraison.type_livraison === 'cv'">Le client apportez votre produit</option>
-                                                            <option v-for="typeLivraison in typeLiv" value="dhl" v-if="
-                                                            typeLivraison.type_livraison === 'dhl'">DHL(Poste)</option>
-                                                        </select>
-                                                        <div class="dropDownSelect2"></div>
-                                                    </div>
-                                                </div>
-                                            </div>  
-                                        </div>
-                                        
-
-                                    </div>
-                                </div>
+                                    <option v-for="typeLivraison in typeLiv" value="vc" v-if="typeLivraison.type_livraison === 'vc'">Vous effectuer la livraison</option>
+                                    <option v-for="typeLivraison in typeLiv" value="cv" v-if="typeLivraison.type_livraison === 'cv'">Le client apportez votre produit</option>
+                                    <option v-for="typeLivraison in typeLiv" value="dhl" v-if="typeLivraison.type_livraison === 'dhl'">DHL(Poste)</option>
+                                </select>
+                                <div class="dropDownSelect2"></div>
                             </div>
+                        </div>
+                     </div>  
+                </div>
+              </div>
+          </div>
+        </div>
             </div>
             <div class="bg0 p-b-150 p-lr-15-lg how-pos3-parent" v-if="openAjout"style=" width: 990px; padding-top: 45%">
                   <button class="how-pos3 hov3 trans-04 p-t-6" v-on:click="CancelArticle()">
@@ -258,13 +252,13 @@
                         </div>
                         <div class="row col-md-12 pr-2 flex-t" >
                         
-                            <div class="form-group m-r-35">
+                            <div class="form-group m-r-30" style="width: 305px">
                               <label for='img'>Image<span style="font-size: 12px">(Entrer l'image de profil pour votre produit*)</span></label>
                               <input type="file" class="form-control" accept="image/*" style="height: 40px;"  v-on:change="imagePreview" :class="{'is-invalid' : message.image}"  id='img'/>
                               <span class="px-3 cl13" v-if="message.image" v-text="message.image[0]">
                               </span>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" style="width: 305px">
                               <label for="imgs">Images<span style="font-size: 12px">(Entrer les autres images s'il existe*)</span></label>
                               <input type="file" class="form-control" accept="image/png, image/jpeg" style="height: 40px" id='imgs' name="img[]" v-on:change="imagesPreviews" multiple>
                               
@@ -273,29 +267,29 @@
                         </div>
                       
                         <div class="row col-md-12 pr-2 flex-t m-b-20">
-                        <div class="form-group m-r-45" style="width: 320px">
+                          <div class="form-group m-r-30" style="width: 305px">
 
-                        <label>Prix</label>
-                              <input type="number" name="prix" class="form-control" placeholder="0.00/DA*" v-model="produitAjout.prix" :class="{'is-invalid' : message.prix}" />                              <span class="px-3 cl13" v-if="message.Qte_P" v-text="message.Qte_P[0]"></span>
-                              <span class="px-3 cl13" v-if="message.prix" v-text="message.prix[0]">
-                              </span>
-                            </div>
+                                <label>Prix</label>
+                                <input type="number" name="prix" class="form-control" placeholder="0.00/DA*" v-model="produitAjout.prix" :class="{'is-invalid' : message.prix}" />
+                                <span class="px-3 cl13" v-if="message.prix" v-text="message.prix[0]">
+                                </span>
+                          </div>
 
-                            <div class="form-group m-r-45" style="width: 320px">
-                              <label>Quantité de Produit</label>
-                              <input type="number" name="Qte_P" class="form-control" placeholder="0.00/Piece*" v-model="produitAjout.Qte_P" :class="{'is-invalid' : message.Qte_P}"/>
-                              <span class="px-3 cl13" v-if="message.Qte_P" v-text="message.Qte_P[0]"></span>
-                            </div>
-                          
+                          <div class="form-group" style="width: 305px">
+                                <label>Quantité de Produit</label>
+                                <input type="number" name="Qte_P" class="form-control" placeholder="0.00/Piece*" v-model="produitAjout.Qte_P" :class="{'is-invalid' : message.Qte_P}"/>
+                                <span class="px-3 cl13" v-if="message.Qte_P" v-text="message.Qte_P[0]"></span>
+                          </div>
+                            
                          
                         </div>
                         <div class="row col-md-12 pr-2 flex-t m-b-30">
-                            <select class="form-control form-control-lg m-r-45" id="categoSelect" name="catego" style="height: 40px; width: 320px ;border-radius: 1em;" v-on:change="activeSousCatego($event)" :class="{'is-invalid' : message.catego}">
+                            <select class="form-control form-control-lg m-r-30" id="categoSelect" name="catego" style="height: 40px; width: 305px ;border-radius: 1em;" v-on:change="activeSousCatego($event)" :class="{'is-invalid' : message.catego}">
                               <option value="" hidden="hidden" selected>&nbsp&nbspSélectionner une Ctegorie</option> 
                               <option v-for="catego in categories" :value="catego.id" >&nbsp&nbsp@{{catego.libelle}}</option> 
                             </select>
                             <div>
-                            <select class="form-control form-control-lg " id="sousCtagoSelect" name="sous_categorie_id" style="height: 40px;width: 320px;border-radius: 1em; " disabled= "true" v-on:change="getIdSousCatego($event)" :class="{'is-invalid' : message.sous_categorie_id}">
+                            <select class="form-control form-control-lg " id="sousCtagoSelect" name="sous_categorie_id" style="height: 40px;width: 305px;border-radius: 1em; " disabled= "true" v-on:change="getIdSousCatego($event)" :class="{'is-invalid' : message.sous_categorie_id}">
                               <option value="" hidden="hidden" selected>&nbsp&nbspSélectionner une Sous Categorie</option> 
                               <option v-for="Scatego in sousCategories" :value="Scatego.id" >&nbsp&nbsp@{{Scatego.libelle}}</option> 
                             </select>
@@ -358,11 +352,7 @@
                                  btn-block m-r-5" style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;"
                                   v-on:click="AfficherAjout2()">Suivant
                                 </button>
-                                <button v-if="0 == <?php echo $notPaier ?> && modifier === false && addd === true" type="submit" 
-                                class="js-show-modal1 btn btn-success btn-block m-r-5" style="margin-top:40px;  border: 0; 
-                                 border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="AfficherAjout3()">Suivant
-                                </button>
-                               <button v-if=" 1 == <?php echo $notPaier ?> && modifier === false && addd === true" type="submit" class="btn btn-success btn-block m-r-5" style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="addProduitWithTest();" >Ajouter
+                               <button v-if=" modifier === false && addd === true" type="submit" class="btn btn-success btn-block m-r-5" style="margin-top:40px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="addProduitWithTest();" >Ajouter
                                 </button>
                               
                           </div>
@@ -405,7 +395,7 @@
                                       </button>
                                   </div>
 
-                                  <span>Si vous passer cette etape et rien valider, on vas consedére que le tarif de votre lévraison est 0DA.</span>
+                                  <span>Si vous passer cette etape et rien valider, on vas consedére que le tarif de votre livraison est 0 DA.</span>
                                   
                                 </div>
                                 
@@ -416,93 +406,50 @@
                         </button>
                         <button type="submit"  class="btn btn-danger  m-r-20" style="  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700; width: 280px;  margin-top: -48px" v-on:click="CancelArticle()" >Annuler
                         </button>
-                        <button type="submit" 
-                                class="js-show-modal1 btn btn-success btn-block m-r-5" style="margin-top:40px;  border: 0; 
-                                 border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="AfficherAjout3()">Suivant
-                                </button>
+                        <button v-if="SuivantPaiment == true" type="submit" class="js-show-modal1 btn btn-success btn-block m-r-5" style="margin-top:-48px;  border: 0;border-radius: 1em; font-size: 12px;  font-weight: 700; width: 280px" v-on:click="AfficherAjout3()">Suivant</button>
+                        <button v-else type="submit" class="js-show-modal1 btn btn-success btn-block" style="margin-top:-48px;  border: 0;border-radius: 1em; font-size: 12px;  font-weight: 700; width: 280px" v-on:click="addProduit()">Ajouter</button>
                     </div>
                     
                   </div>
             </div>
+<!--**************************paimet******************************-->
 
-            <div class="bg0 p-b-150 p-lr-15-lg how-pos3-parent" v-if="openAjout3 "style=" width: 990px; padding-top: 10%">
-                  <button class="how-pos3 hov3 trans-04 p-t-6" v-on:click="CancelArticle()">
-                    <img src="images/icon-close.png" alt="CLOSE">
-                  </button>
-                 <div class="tab " style="border: 1px" >
-                   
-                 <p style="width: 100%;margin-left:11%;margin-top:-61px ;color: rgb(192,4,4);font-size: 40px;"> 
-Paiment:</p><p style="width: 100%;margin-left:11%;margin-top:-11px ;color: black"> <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;.Il y'a 3 emplacement dans ce site :
- <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
- <p style="width: 100%;margin-left:13%;font-size: 18px;margin-top:-11px ;"> 
-1 er emplacement:900DA/Produit,180DA/Annonce -Par mois-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</p> <p style="width: 100%;margin-left:11%;margin-top:-11px ;color: black">
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Les 2 premiers slide dans page 
-<b class="alert-link " style="cursor: pointer;text-decoration: underline;" v-on:click="showImage1">Accueil</b>. <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-*Les 2 premiers&nbsp;ligne dans page 
-<b class="alert-link " style="cursor: pointer;text-decoration: underline;" v-on:click="showImageEmp1">Shop</b>.
-<br><br><br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
- <p style="width: 100%;margin-left:13%;font-size: 18px;margin-top:-41px ;"> 
- 2 er emplacement:500DA/Produit,140DA/Annonce -Par moi<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</p> <p style="width: 100%;margin-left:11%;margin-top:-11px ;color: black">
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Les 4 derniers slide dans page 
-<b class="alert-link " style="cursor: pointer;text-decoration: underline;" v-on:click="showImage2">Accueil</b>.
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-*Les 5 derniers&nbsp;ligne dans page            
-   <b class="alert-link " style="cursor: pointer;text-decoration: underline;" v-on:click="showImageEmp2">Shop</b>.              
-<br><br><br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
- <p style="width: 100%;margin-left:13%;font-size: 18px;margin-top:-41px ;"> 
-
-3 er emplacement:200DA/Produit,70DA/Annonce -Par mois-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</p> <p style="width: 100%;margin-left:11%;margin-top:-11px ;color: black">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-* Le reste dans page <b class="alert-link " style="cursor: pointer;text-decoration: underline;" v-on:click="showImage3"> Accueil</b>. <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-*Le reste dans page         
-      <b class="alert-link " style="cursor: pointer;text-decoration: underline;" v-on:click="showImageEmp3">Shop</b>.
-</p>
-<p style="width: 100%;margin-left:11%;margin-top:5% ;color:black"> Choisir l'emplacement:</p>
-
-          <select  name="select" id="select" style="margin-left:11% ;width: 25%;"> 
-            <option  value="1"> 1</option> 
-            <option  value="2"> 2</option> 
-            <option  value="3"> 3</option> 
-          </select>
-          <p style="width: 35%;margin-left:63%;margin-top:-4.5%;color:black ;padding-bottom:21px">Numéro bancaire pour paiment:</p>
-          <input style="width: 25%;margin-left:63%;margin-top:-21px " class="form-control form-control-lg" id="ccp" name="ccp" type="text"
-           placeholder="  12345 " disabled >
-
-      <div class=" alert-warning" role="alert" style="padding-left: 10px;padding-top: 1px;padding-bottom: 1px;margin-top:5%;">
-        <i class="now-ui-icons travel_info" id="y"></i>
-        Après cette étape votre produit sera ajouté avec les produits qui déjà ajouter .Quand tu fait le paiment il sera ajouté a les autres
-         pages.
-      </div> 
-
-                   
-
-                   
-                    <div class="flex-t m-l-50" style="margin-top:20%;">
-                        <button type="submit"  class="btn btn-warning m-r-20" style=" margin-top:-48px; border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;width: 280px; " v-on:click="Previous()" >Previous
-                        </button>
-                        <button type="submit"  class="btn btn-danger  m-r-20" style="  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700; width: 280px;  margin-top: -48px" v-on:click="CancelArticle()" >Annuler
-                        </button>
-                        <button type="submit" class="btn btn-success  " style=" margin-top:-48px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700; width: 280px;" v-on:click="addProduit();change_valeur_vendeur();" >Ajouter
-                        </button>
+        <div class="bg0 p-b-150 p-lr-15-lg how-pos3-parent m-t-35" v-if="openPaiment" style=" width: 970px; padding-top: 45%">
+          <button class="how-pos3 hov3 trans-04 p-t-6" v-on:click="CancelAnnonce(annc)">
+            <img src="images/icon-close.png" alt="CLOSE">
+          </button>
+          <section class=" creat-article">     
+            <div  class=" container-creat-article col-md-12">
+              <div class="col-md-12 m-b-30">
+                <h5 class="m-t--40 m-l--40 col-md-12">Paiment</h5>
+              </div>
+              <div class="col-md-12">
+                <div class="col-md-12 m-b-40">
+                    <div class="col-md-12 m-b-20">
+                      <ul>
+                        <li style="list-style-type: disc;"><span >Vous devez payer pour publier votre annonce.</span>
+                        </li>
+                        <li style="list-style-type: disc;"><span >Aprés le paiement vos produits sera publié sur le site.</span>
+                        </li>
+                      </ul>
+                        
                     </div>
+                    <div class="col-md-12 flex-t m-b-15">
+                        <span class = "col-md-6" style="color:black;">Numéro bancaire pour paiment :</span>
+                        <div class ="col-md-6">
+                          <input class =" form-control" type="text" disabled value="<?php echo $idbigAdmin[0]->numCarteBanquaire?>">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 flex-t">
+                  <button type="submit"  class="btn btn-danger btn-block " style="  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="myFunctionP">Previous</button> 
+                  <button type="submit"  class="btn btn-success btn-block " style=" border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="addProduitwithPaiment();" >Ajouter</button>
                     
-                  </div>
+                </div>    
+              </div>      
             </div>
+          </section>
+        </div>
             <div class="bg0 p-b-150 p-lr-15-lg how-pos3-parent" v-show="tarifL" style=" width: 990px; padding-top: 10%">
                 <button class="how-pos3 hov3 trans-04 p-t-6" v-on:click="CancelArticle()">
                     <img src="images/icon-close.png" alt="CLOSE">
@@ -628,6 +575,7 @@ Paiment:</p><p style="width: 100%;margin-left:11%;margin-top:-11px ;color: black
                'produit'        => $produit,
                'notPaier'        => $notPaier,
                'ImageP'         => $ImageP,
+               "idbigAdmin"   =>$idbigAdmin,
                 'url'           => url('/'), 
           ]) !!};
 </script>
@@ -636,6 +584,57 @@ Paiment:</p><p style="width: 100%;margin-left:11%;margin-top:-11px ;color: black
         Vue.mixin({
 
             methods:{
+              addProduitwithPaiment: function(){
+                app2.produitAjout.image = app2.image;
+                app2.produitAjout.images = app2.imagesP;
+                app2.produitAjout.colors = app2.colorsP;
+                app2.produitAjout.tailles = app2.tailleP;
+                app2.produitAjout.pointures = app2.PointureP;
+                app2.produitAjout.typet = app2.Type;
+                axios.post(window.Laravel.url+"/addProduitwithPaiment",app2.produitAjout)
+                .then(response => {
+                  if(response.data.etat){
+                     window.location.reload();
+                     app2.produitAjout = response.data.produitAjout;
+                     app2.imageP = response.data.imageProduitAjout;
+                     app2.produitAjout.id = response.data.produitAjout.id;
+                     app.ProduitsVendeur.unshift(app2.produitAjout);
+                     app.imagesproduit.unshift(app2.imageP);
+                     app2.produitAjout={
+                            id: 0,
+                            sous_categorie_id: '',
+                            catego: '',
+                            Libellé: '',
+                            prix: '',
+                            description: '',
+                            Qte_P: '',
+                            image: '',
+                            images: [],
+                            colors: [],
+                            tailles: [],
+                            pointures: [],
+                            typet: 0,
+                     };
+                     app2.imageP= {
+                        produit_id: 0,
+                        image: ''
+                     };
+                     app2.imagesP= [];
+                     app2.colorsP= [];
+                     app2.tailleP= [];
+                     app2.PointureP= [];
+                     app2.hideModel=false;
+                     app2.openAjout = false;
+                     app2.message = {};
+                     app2.image = '';
+                     app2.Type = '';
+                  }          
+                })
+                .catch(error =>{
+                    app2.message = error.response.data.errors;
+                    console.log('errors :' , app2.message);
+                })
+          },
               addProduitWithTest: function(){
                     app2.produitAjout.image = app2.image;
                     app2.produitAjout.images = app2.imagesP;
@@ -660,7 +659,6 @@ Paiment:</p><p style="width: 100%;margin-left:11%;margin-top:-11px ;color: black
                                 prix: '',
                                 description: '',
                                 Qte_P: '',
-                               // poid: '',
                                 image: '',
                                 images: [],
                                 colors: [],
@@ -712,7 +710,6 @@ Paiment:</p><p style="width: 100%;margin-left:11%;margin-top:-11px ;color: black
                             prix: '',
                             description: '',
                             Qte_P: '',
-                           // poid: '',
                             image: '',
                             images: [],
                             colors: [],
@@ -752,7 +749,7 @@ Paiment:</p><p style="width: 100%;margin-left:11%;margin-top:-11px ;color: black
           openAjout: false,
           openAjout2: false,
           openAjout3: false,
-
+          openPaiment: false,
           openInfo: false,
           modifier: false,
           produitAjout: {
@@ -809,7 +806,6 @@ Paiment:</p><p style="width: 100%;margin-left:11%;margin-top:-11px ;color: black
             prix: '',
             description: '',
             Qte_P: '',
-        //    poid: '',
             image: '',
             images: [],
             colors: [],
@@ -825,7 +821,6 @@ Paiment:</p><p style="width: 100%;margin-left:11%;margin-top:-11px ;color: black
             prix: '',
             description: '',
             Qte_P: '',
-         //   poid: '',
             image: '',
             images: [],
             colors: [],
@@ -854,10 +849,26 @@ Paiment:</p><p style="width: 100%;margin-left:11%;margin-top:-11px ;color: black
           alertTarifTarif: false,
           typeDelete: false,
           typeAdd: false,
+          SuivantPaiment:  true,
+          p: false,
 
           
         },
         methods:{
+            myFunctionP: function(){
+            this.openPaiment = false;
+            this.openInfo = false;
+            if(this.typeLVC == true && this.p ==false){
+              this.openAjout2 =true;
+            }
+            else if(this.typeLVC == true && this.p ==true){
+              this.openAjout = true;
+            }
+            else{
+              this.openAjout = false;
+            }
+            
+           },
             deleteTypeL(){
                 if($('.deleteTL').val() == null){
                     this.typeDelete = true;
@@ -934,13 +945,20 @@ Paiment:</p><p style="width: 100%;margin-left:11%;margin-top:-11px ;color: black
             getTypeL(){
                 axios.get(window.Laravel.url+'/gettypelvendeur')
                  .then(response => {
-                     if(response.data){
+                    console.log('holl',response.data.etat)
+                     if(response.data.etat){
                         this.typeLVC = true;
                         this.modifier = false
+                     }
+                     else if(!response.data.etat && response.data.paiment){
+                        this.typeLVC = true;
+                        this.modifier = false
+                        this.p = true;
                      }
                      else{
                         this.typeLVC = false;
                         this.addd = true;
+                        this.p = false;
                      }
                  })
                  .catch(error => {
@@ -1171,7 +1189,6 @@ axios.post(window.Laravel.url+'/paiementvendeur/'+choice)
                         prix: '',
                         description: '',
                         Qte_P: '',
-                     //   poid: '',
                         image: '',
                         images: [],
                         colors: [],
@@ -1188,7 +1205,6 @@ axios.post(window.Laravel.url+'/paiementvendeur/'+choice)
                     prix: '',
                     description: '',
                     Qte_P: '',
-                  //  poid: '',
                     image: '',
                     images: [],
                     colors: [],
@@ -1210,7 +1226,6 @@ axios.post(window.Laravel.url+'/paiementvendeur/'+choice)
                         prix: '',
                         description: '',
                         Qte_P: '',
-                      //  poid: '',
                         image: '',
                         images: [],
                         colors: [],
@@ -1277,21 +1292,31 @@ axios.post(window.Laravel.url+'/paiementvendeur/'+choice)
             },
             AfficherAjout2: function(){
              this.tarifL = false;
+             
              this.produitAjout.image = this.image;
              this.produitAjout.images = this.imagesP;
              this.produitAjout.colors = this.colorsP;
              this.produitAjout.tailles = this.tailleP;
              this.produitAjout.pointures = this.PointureP;
              this.produitAjout.typet = this.Type;
+             
              axios.post(window.Laravel.url+'/verifierInputs',this.produitAjout)
                  .then(response => {
                     this.message = {};
-                    if(this.typeLVC == true){
+                    if(this.typeLVC == true && this.p == false){
                         this.openAjout2 = true;
+                        this.openPaiment = false;
                     }
-                    else{
+                    else if(this.typeLVC == true && this.p == true){
                        this.openAjout2 = false;
+                       this.openPaiment = true;
                     }
+                    if(response.data.length == 0){//le button suivant dans openAjout2 tban
+                      this.SuivantPaiment = true;
+                    }
+                    else{//tban ajouter
+                        this.SuivantPaiment = false;
+                    } 
                     this.hideModel = true;
                     this.openAjout = false
                     this.openInfo = false;
@@ -1303,23 +1328,23 @@ axios.post(window.Laravel.url+'/paiementvendeur/'+choice)
              
             },
             AfficherAjout3: function(){
-           //  this.tarifL = false;
-           this.openAjout3 = true;
+            this.openAjout2 = false;
+            this.openPaiment = true;
              this.produitAjout.image = this.image;
              this.produitAjout.images = this.imagesP;
              this.produitAjout.colors = this.colorsP;
              this.produitAjout.tailles = this.tailleP;
              this.produitAjout.pointures = this.PointureP;
              this.produitAjout.typet = this.Type;
-             axios.post(window.Laravel.url+'/verifierInputs',this.produitAjout)
+             /*axios.post(window.Laravel.url+'/verifierInputs',this.produitAjout)
                  .then(response => {
                     this.message = {};
-                 /*   if(this.typeLVC == true){
+                  if(this.typeLVC == true){
                         this.openAjout3 = true;
                     }
                     else{
                        this.openAjout3 = false;
-                    }*/
+                    }
                     this.hideModel = true;
                     this.openAjout = false
                     this.openAjout2 = false
@@ -1328,7 +1353,7 @@ axios.post(window.Laravel.url+'/paiementvendeur/'+choice)
                  .catch(error => {
                       this.message = error.response.data.errors;
                       console.log('errors :' , this.message);
-                 })
+                 })*/
              
             },
             activeTaille: function(){
@@ -1592,6 +1617,7 @@ axios.post(window.Laravel.url+'/paiementvendeur/'+choice)
          app2.openAjout = true;
          app2.openInfo = false;
          app2.modifier = true;
+         app2.openPaiment = false;
          app2.addd=false;
          app2.produitAjout = produit;
          app2.oldprd.Libellé = produit.Libellé;
@@ -1599,7 +1625,6 @@ axios.post(window.Laravel.url+'/paiementvendeur/'+choice)
          app2.oldprd.prix = produit.prix;
          app2.oldprd.Qte_P = produit.Qte_P;
          app2.oldprd.sous_categorie_id = produit.sous_categorie_id;
-       //  app2.oldprd.poid = produit.poid;
          app2.oldprd.id = produit.id;
          
         },      
@@ -1608,8 +1633,10 @@ axios.post(window.Laravel.url+'/paiementvendeur/'+choice)
              app2.openAjout = true;
              app2.openInfo = false;
              app2.openAjout2 = false;
-             app2.openAjout3 = false;
+             app2.openPaiment = false;
              app2.tarifL = false;
+
+            
               
           },
           deselectProduit: function(produitId){

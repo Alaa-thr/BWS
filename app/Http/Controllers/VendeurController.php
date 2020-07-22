@@ -79,7 +79,11 @@ class VendeurController extends Controller
                \DB::table('notifications')->where([['vendeur_id',$vendeur->id],['DeleteNotif',0]])->update(['DeleteNotif' => 1]);
            }
         }
-        return view('produit_vendeur',['produit'=>$produit, 'ImageP' => $imageproduit,'categorie'=>$categorie,'categorieE'=>$categorieE,'notPaier'=>$notPaier]);
+        $idbigAdmin= \DB::table('admins')
+        ->where('id',1)
+        ->select('numCarteBanquaire')
+        ->get();
+        return view('produit_vendeur',['produit'=>$produit, 'ImageP' => $imageproduit,'categorie'=>$categorie,'categorieE'=>$categorieE,'notPaier'=>$notPaier,'idbigAdmin'=>$idbigAdmin]);
     }
 
     public function getSousCategories($CategoId){
@@ -98,14 +102,13 @@ class VendeurController extends Controller
 
     public function addProduitWithTest(Request $request){
        
-                 if( $request->typet == 2){
+            if( $request->typet == 2){
                  $request->validate([
                 'Libellé' => ['required','regex:/^[A-Z0-9][-a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
                 'description' => ['required','regex:/^[A-Z0-9][-a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
                 'prix' =>['required'],
                 'sous_categorie_id' =>['required'],
                 'Qte_P' =>['required'],
-              //  'poid' =>['required'],
                 'image' =>['required'],
                 'colors' =>['required'],
                 'pointures' =>['required']
@@ -118,7 +121,6 @@ class VendeurController extends Controller
                 'prix' =>['required'],
                 'sous_categorie_id' =>['required'],
                 'Qte_P' =>['required'],
-               // 'poid' =>['required'],
                 'image' =>['required'],
                 'colors' =>['required'],
                 'tailles' =>['required']
@@ -131,8 +133,7 @@ class VendeurController extends Controller
                 'prix' =>['required'],
                 'sous_categorie_id' =>['required'],
                 'Qte_P' =>['required'],
-               // 'poid' =>['required'],
-                'image' =>['required'],
+                'image' =>['required','regex:/^data:image/'],
                 'colors' =>['required']
                 ]);
                
@@ -143,8 +144,7 @@ class VendeurController extends Controller
                 $produit = new Produit;
                 $produit->Libellé = $request->Libellé;
                 $produit->description = $request->description;
-                $produit->Qte_P = $request->Qte_P;                
-             //   $produit->poid = $request->poid;
+                $produit->Qte_P = $request->Qte_P; 
                 $produit->prix = $request->prix;
                 $produit->vendeur_id = $vendeur->id;
                 $produit->sous_categorie_id = $request->sous_categorie_id;
@@ -217,7 +217,7 @@ class VendeurController extends Controller
                 'sous_categorie_id' =>['required'],
                 'Qte_P' =>['required'],
                // 'poid' =>['required'],
-                'image' =>['required'],
+                'image' =>['required','regex:/^data:image/'],
                 'colors' =>['required'],
                 'pointures' =>['required']
                  ]);
@@ -230,7 +230,7 @@ class VendeurController extends Controller
                 'sous_categorie_id' =>['required'],
                 'Qte_P' =>['required'],
                // 'poid' =>['required'],
-                'image' =>['required'],
+                'image' =>['required','regex:/^data:image/'],
                 'colors' =>['required'],
                 'tailles' =>['required']
                 ]);
@@ -243,24 +243,22 @@ class VendeurController extends Controller
                 'sous_categorie_id' =>['required'],
                 'Qte_P' =>['required'],
               //  'poid' =>['required'],
-                'image' =>['required'],
+                'image' =>['required','regex:/^data:image/'],
                 'colors' =>['required']
                 ]);
                
             }
-            return true;
+            $vendeur = Vendeur::find(Auth::user()->id); 
+            $paimentExiste = \DB::table('paiement_vendeurs')->where('vendeur_id', $vendeur->id)->get();
+            return $paimentExiste;
     }
     public function addProduit(Request $request){
        
-            
-            
-            
-                $vendeur = Vendeur::find(Auth::user()->id);               
+            $vendeur = Vendeur::find(Auth::user()->id);               
                 $produit = new Produit;
                 $produit->Libellé = $request->Libellé;
                 $produit->description = $request->description;
-                $produit->Qte_P = $request->Qte_P;                
-              //  $produit->poid = $request->poid;
+                $produit->Qte_P = $request->Qte_P;
                 $produit->prix = $request->prix;
                 $produit->vendeur_id = $vendeur->id;
                 $produit->sous_categorie_id = $request->sous_categorie_id;
@@ -321,6 +319,78 @@ class VendeurController extends Controller
                     $images->save();
                 }
             }   
+                return Response()->json(['etat' => true,'produitAjout' => $produit,'imageProduitAjout' => $imageproduit]);
+    }
+    public function addProduitwithPaiment(Request $request){
+       
+            $vendeur = Vendeur::find(Auth::user()->id);               
+                $produit = new Produit;
+                $produit->Libellé = $request->Libellé;
+                $produit->description = $request->description;
+                $produit->Qte_P = $request->Qte_P;
+                $produit->prix = $request->prix;
+                $produit->vendeur_id = $vendeur->id;
+                $produit->sous_categorie_id = $request->sous_categorie_id;
+                $produit->save();
+
+                if(count($request->pointures) != 0){
+                        foreach ($request->pointures as $pointure) {
+                            $Pointure = new TailleProduit;
+                            $Pointure->nom = $pointure;
+                            $Pointure->produit_id = $produit->id;
+                            $Pointure->save();
+                        }
+                }
+                else if(count($request->tailles) != 0){
+                        foreach ($request->tailles as $taille) {
+                            $Taille = new TailleProduit;
+                            $Taille->nom = $taille;
+                            $Taille->produit_id = $produit->id;
+                            $Taille->save();
+                        }
+                }
+                foreach ($request->colors as $clr) {
+                    $color = new ColorProduit;
+                    $color->color_id = $clr;
+                    $color->produit_id = $produit->id;
+                    $color->save();
+                }
+                $imageproduit = new Imageproduit; //pour la photo di ychoufoha l users ta3 produit
+                $exploded = explode(',', $request->image);
+                $decoded = base64_decode($exploded[1]);
+                if(str_contains($exploded[0], 'jpeg')){
+                    $extension = 'jpg';
+                }
+                else{
+                    $extension = 'png';
+                }
+                $fileName = str_random().'.'.$extension;
+                Storage::put('/public/produits_image/' . $fileName, $decoded);
+                $imageproduit->image = $fileName;
+                $imageproduit->produit_id = $produit->id;
+                $imageproduit->profile = 1;
+                $imageproduit->save();
+            if($request->images != null ){
+                foreach ($request->images as $imgs) {// pour les photos du produits
+                    $images = new Imageproduit;
+                    $exploded = explode(',', $imgs);
+                    $decoded = base64_decode($exploded[1]);
+                    if(str_contains($exploded[0], 'jpeg')){
+                        $extension = 'jpg';
+                    }
+                    else{
+                        $extension = 'png';
+                    }
+                    $fileName = str_random().'.'.$extension;
+                    Storage::put('/public/produits_image/' . $fileName, $decoded);
+                    $images->image = $fileName;
+                    $images->produit_id = $produit->id;
+                    $images->save();
+                }
+            }
+                $paiemtV = new Paiement_vendeur;
+                $paiemtV->vendeur_id = $vendeur->id;
+                $paiemtV->save();   
                 return Response()->json(['etat' => true,'produitAjout' => $produit,'imageProduitAjout' => $imageproduit]);
     }
 
@@ -480,16 +550,34 @@ class VendeurController extends Controller
        ->where('vendeur_id',$vendeur->id)
        ->get();
        $paiment = \DB::table('paiement_vendeurs')
-       ->where('vendeur_id',$vendeur->id)
-       ->get();
-        if(count($type) == 0){
-            return false;
-        }
-        else if(count($type) != 0 && count($tarif) != 0){
-            return false;
+            ->where('vendeur_id',$vendeur->id)
+            ->get();
+
+        if(count($type) != 0 && count($tarif) != 0){
+            if(count($paiment) == 0){
+                return ['etat'=>false, 'paiment' =>true];
+            }
+            else{
+                return ['etat'=>false, 'paiment' =>false];
+            }
+            
         }
         else if(count($type) != 0 && count($tarif) == 0){
-            return true;
+            if(count($paiment) == 0){
+                return ['etat'=>true, 'paiment' =>true];
+            }
+            else{
+                return ['etat'=>true, 'paiment' =>false];
+            }
+        }
+        else if(count($type) == 0){
+            if(count($paiment) == 0){
+                return ['etat'=>false, 'paiment' =>true];
+            }
+            else{
+                return ['etat'=>false, 'paiment' =>false];
+            }
+           
         }
 
     }
@@ -764,9 +852,9 @@ class VendeurController extends Controller
     }
     public function deleteCommandeVendeur( $idCmd, $idClient,$idVendeur){
         
-       /* $commande = \DB::table('commandes')
+        $commande = \DB::table('commandes')
             ->where([['vendeur_id', $idVendeur],['id', $idCmd],['client_id', $idClient]])
-            ->update(['CmdVendeurDelete'=>1]);*/
+            ->update(['CmdVendeurDelete'=>1]);
 
         return Response()->json(['etat' => true]);
     }

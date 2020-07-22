@@ -16,7 +16,7 @@ class CreateAnnonceEmploiesTable extends Migration
         Schema::create('annonce_emploies', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('employeur_id');
-            $table->unsignedBigInteger('sous_categorie_id');
+            $table->unsignedBigInteger('sous_categorie_id')->nullable();
             $table->string('libellé');
             $table->text('discription');
             $table->integer('nombre_condidat')->default(1);

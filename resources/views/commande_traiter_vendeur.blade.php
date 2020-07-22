@@ -51,7 +51,7 @@
                       <label :for="commandec.id" id="txt">Commande Numero  @{{commandec.id_cmd}}</label>
                     </div>
                   
-                    <div  class="col-md-4 " v-on:click="AfficheInfo(commandec.id,commandec.client_id)">
+                    <div  class="col-md-4 " v-on:click="AfficheInfo(commandec.id,commandec.client_id)" style="cursor: pointer;">
                         <label id="txt" > prix_total : @{{commandec.prix_total}} DA </label>
                     </div>
                     <div class="col-md-2 dropdown">
@@ -196,7 +196,7 @@
                 </div>
               </div>
               <div class="col-md-12 flex-t">
-                <div class="col-md-6">
+                <div class="col-md-12">
                   <button v-on:click=" deleteCommandeVendeurr(client)"   class="btn-sm btn-danger " style="border: 0; float: right; border-radius: 1em;height: 35px;" ><b>Supprimer</b>
                   </button>   
                 </div>       
@@ -347,7 +347,7 @@ methods: {
             Swal.fire({
             icon: 'error',
             title: 'Oops...',
-            text: 'Il ya aucun Article a supprimer!',
+            text: 'Il ya aucun Commande a supprimer!',
 
           }).then((result) => {
             this.allSelected = false;

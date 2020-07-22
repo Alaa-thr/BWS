@@ -110,7 +110,91 @@ class ClientController extends Controller
         ->distinct('id')
         ->paginate(5) ;
 
-        $cmd =\DB::table('commandes')->get() ;     
+        $ville=\DB::table('commandes')
+        ->where([['commandes.client_id', $c->id],['commande_envoyee', 1]])
+        ->select("ville")
+        ->groupBy('ville')
+        ->get();
+        
+        $tarif =\DB::table('commandes')
+            ->join("villes",'villes.nom','commandes.ville')
+            ->join("tarif_livraisons",'tarif_livraisons.ville_id','villes.id')
+            ->where([['commandes.client_id', $c->id],['commande_envoyee', 1]])
+            ->select('commandes.ville')
+            ->groupBy('tarif_livraisons.vendeur_id','ville')
+            ->get();
+            echo($tarif);
+        $prixx=array();
+            $i=0;$j=0;
+            foreach ($ville as $key) {
+                $tarif =\DB::table('commandes')
+                ->join("villes",'villes.nom','commandes.ville')
+                ->join("tarif_livraisons",'tarif_livraisons.ville_id','villes.id')
+                ->where([['commandes.client_id', $c->id],['commande_envoyee', 1],['commandes.ville',$key->ville]])
+                ->select('commandes.ville')
+                ->groupBy('tarif_livraisons.vendeur_id','ville')
+                ->get();
+                if(count($tarif)!=0){
+                    $i++;
+                    if($j!=0){
+                        
+                        $prix = \DB::table('commandes')
+                        ->join("villes",'villes.nom','commandes.ville')
+                        ->join("tarif_livraisons",'tarif_livraisons.ville_id','villes.id')
+                        ->where([['commandes.client_id', $c->id],['commande_envoyee', 1],['commandes.ville',$key->ville]])
+                        ->select('commandes.id',\DB::raw('sum((commandes.prix_total * commandes.qte)+tarif_livraisons.prix) as PrixTotal'))
+                        ->groupBy('commandes.id')
+                        ->orderBy('commandes.created_at','desc')
+                        ->get();
+                        
+                        array_push($prixx,$prix[0]);
+                    }
+                    else{
+                        $prix = \DB::table('commandes')
+                        ->join("villes",'villes.nom','commandes.ville')
+                        ->join("tarif_livraisons",'tarif_livraisons.ville_id','villes.id')
+                        ->where([['commandes.client_id', $c->id],['commande_envoyee', 1],['commandes.ville',$key->ville]])
+                        ->select('commandes.id',\DB::raw('sum((commandes.prix_total * commandes.qte)+tarif_livraisons.prix) as PrixTotal'))
+                        ->groupBy('commandes.id','tarif_livraisons.vendeur_id')
+                        ->orderBy('commandes.created_at','desc')
+                        ->get()
+                        ->toArray();
+
+                        array_push($prixx,$prix[0]);
+                    }
+                   
+               
+               }
+                else{
+                    $j++;
+                    if($i!=0){
+                        $prix = \DB::table('commandes')
+                        ->where([['commandes.client_id', $c->id],['commande_envoyee', 1],['commandes.ville',$key->ville]])
+                        ->select(\DB::raw('sum(commandes.prix_total * commandes.qte) as PrixTotal'),'commandes.id')
+                        ->groupBy('id')
+                        ->orderBy('created_at','desc')
+                        ->get();
+                        
+                        array_push($prixx,$prix[0]);
+                    }
+                    else{
+                         $prix = \DB::table('commandes')
+                        
+                        ->where([['commandes.client_id', $c->id],['commande_envoyee', 1],['commandes.ville',$key->ville]])
+                        ->select(\DB::raw('sum(commandes.prix_total * commandes.qte) as PrixTotal'),'commandes.id')
+                        ->groupBy('id')
+                        ->orderBy('created_at','desc')
+                        ->get()
+                        ->toArray();
+                        array_push($prixx,$prix[0]);
+                    } 
+
+                    
+                }
+
+            }
+        $cmd =\DB::table('commandes')
+        ->select('commandes.*',\DB::raw('DATE(commandes.created_at) as date'))->get() ;     
         
         $prixTotale= \DB::table('commandes')->where([ ['client_id',$c->id],['id',$c->nbr_cmd]])->select(\DB::raw('sum(commandes.prix_total * commandes.qte) as prixTo'))->get();
         if($prixTotale[0]->prixTo == null){
@@ -122,7 +206,7 @@ class ClientController extends Controller
         $imageproduit = \DB::table('imageproduits')->get();
         $command = \DB::table('commandes')->where([ ['client_id',$c->id],['commande_envoyee',0]])->get();     
         
-        return view('commande_client',['article'=>$article, 'idAdmin' => $c->id,'categorie'=>$categorie,'categorieE'=>$categorieE, 'cmd' =>$cmd,'client' =>$c,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command,'prixTotale' => $prixTotale]);
+        return view('commande_client',['article'=>$article, 'idAdmin' => $c->id,'categorie'=>$categorie,'categorieE'=>$categorieE, 'cmd' =>$cmd,'client' =>$c,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command,'prixTotale' => $prixTotale,'prixx'=>$prixx]);
     } 
     public function detaillsCommande(Request $request){
         $clientCnncte = Client::find(Auth::user()->id);
@@ -152,9 +236,13 @@ class ClientController extends Controller
         }
         else{
             if(Auth::user()->type_compte == "c"){
+                $clientCnncte = Client::find(Auth::user()->id);// njibo l client di ra connecter
+                $histoProd = new historique;
+                $histoProd->produit_id =$request->produit_id;
+                $histoProd->client_id = $clientCnncte->id;
+                $histoProd->save();
                 $client =  Client::find(Auth::user()->id);
                 $produitExister = \DB::table('commandes')->where([['id', $client->nbr_cmd],['produit_id',$request->produit_id],['client_id',$client->id]])->get();
-            
                         if($request->tailExst == 1){
                             $request->validate([
                                     'taille' =>['required',new Taille()],
@@ -207,21 +295,18 @@ class ClientController extends Controller
                                         return Response()->json(['cmd'=>$cmd,'prixTotale'=>$prixTotale,'image'=>$image,'commande'=>$commande,'etat' => true,'produitExister' => false]);
                                 }
                                 if($key->taille == $request->taille && $key->qte == $request->qte && $key->type_livraison == $request->type_livraison && $key->couleur_id == $request->couleur_id && $key->id == $client->nbr_cmd && $key->produit_id == $request->produit_id && $key->client_id == $client->id ){
-
                                     return Response()->json(['etat' => true,'produitExister' => true]);
                                 }
                             }
-                                
                         }
-                            
             }
             else{//est cncte mais ps client
                 return Response()->json(['etat' => false,'cnncte' => true]);
             }   
-                        
         }           
+
                 
-        
+
         
     }
     public function ProduitCommande(){

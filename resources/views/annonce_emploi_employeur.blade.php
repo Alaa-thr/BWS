@@ -153,7 +153,7 @@
           <button class="how-pos3 hov3 trans-04 p-t-6" v-on:click="CancelAnnonce(annc)">
             <img src="images/icon-close.png" alt="CLOSE">
           </button>
-          <section class=" creat-article " id="myDIV">     
+          <section class=" creat-article ">     
               <div  class=" container-creat-article">
                 <div class="row">
                   <div class="col-md-10 pr-2" >
@@ -236,16 +236,21 @@
               <div class="col-md-12">
                 <div class="col-md-12 m-b-40">
                     <div class="col-md-12 m-b-20">
-                        <span >Vous devez payer pour publier votre annonce(Le paimment sera par MOIS ou ANNONCE).</span>
+                      <ul>
+                        <li style="list-style-type: disc;"><span >Vous devez payer pour publier votre annonce.</span>
+                        </li>
+                        <li style="list-style-type: disc;"><span >Aprés le paiement vos produits sera publié sur le site.</span>
+                        </li>
+                      </ul>
                     </div>
                     <div class="col-md-12 flex-t m-b-15">
-                        <span class = "col-md-6" style="color:black;">Numéro bancaire pour paiment:</span>
+                        <span class = "col-md-6" style="color:black;">Numéro bancaire pour paiment :</span>
                         <div class ="col-md-6">
                           <input class =" form-control" type="text" disabled value="<?php echo $idbigAdmin[0]->numCarteBanquaire?>">
                         </div>
                     </div>
                     <div class="col-md-12 flex-t">
-                        <span class = "col-md-6" style="color:black;">Paimment par Mois ou Annonce:</span>
+                        <span class = "col-md-6" style="color:black;">Paimment par Mois ou Annonce :</span>
                         <div class = "col-md-6">
                           <select class="form-control col-md-12" v-on:change="getTypePaiment($event)" :class="{'is-invalid' : message.typePaiment}">
                             <option value="0" selected disabled>Mois/Annonce</option>

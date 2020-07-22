@@ -84,7 +84,6 @@ class LoginController extends Controller
 
           $credentials = $request->only('email', 'type_compte', 'password');
           if (Auth::attempt($credentials)) {
-            \Log::info('hello');
               if(Auth::user()->type_compte == "c"){
                  return redirect()->intended(url()->previous());
               }

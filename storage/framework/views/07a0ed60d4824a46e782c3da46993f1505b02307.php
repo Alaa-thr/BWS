@@ -164,7 +164,7 @@
             <ul class="navbar-nav" >
             <li class="nav-item dropdown" style="cursor: pointer; margin-right: 40px;">
                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <img class="img-xs rounded-circle" src="assetsAdmin/img/admin.jpg" alt="..."  />
+                  <img class="img-xs rounded-circle" src="<?php echo asset('storage/profil_image/'.$admin->image) ?>" alt="..."  />
                   <p>
                     <span class="d-lg-none d-md-block">Quelques Actions</span>
                   </p>
@@ -177,10 +177,13 @@
                           <table >
                             <tr>
                               <td width="50%">
-                                 <a href="assetsAdmin/img/admin.jpg"><img class="img-lg rounded-circle" src="assetsAdmin/img/admin.jpg"    alt="..."></a>
-                              </td>
+                              <a href="#">
+                                  <img class="img-lg rounded-circle" src="<?php echo asset('storage/profil_image/'.$admin->image) ?>" alt="..."> 
+                              </a>
+                                </td>
                               <td>
-                                   <h6 class="description text-left" ><b id="a">Nabil Baba Ahmed</b></h6><a href ="babaahmednabil3@gmail.com" id ="nab">babaahmednabil3@gmail.com</a>
+                                   <h6 class="description text-left" ><b id="a"><?php echo e($admin->nom); ?> <?php echo e($admin->prenom); ?></b></h6>
+                                   <a href ="<?php echo e($admin->email); ?>" id ="nab"><?php echo e($admin->email); ?></a>
                                </td>
                              </tr>
                             </table>
@@ -305,7 +308,7 @@
       <div class="overlay-modal11 js-hide-modal1"></div>
   
       <div class="container">
-        <div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent"  style="width: 985px;" v-for="vendeuraa in vendeuradmin2">
+        <div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent"  style="width: 950px;" v-for="vendeuraa in vendeuradmin2">
           <button class="how-pos3 hov3 trans-04 p-t-6 js-hide-modal1">
             <img src="images/icon-close.png" alt="CLOSE"  v-on:click="CancelVend()">
           </button>
@@ -321,7 +324,7 @@
                       <div class="card-body" >
                           <div class="author">
                             <a href="#">
-                              <img class="avatar border-gray" src="assetsClient/img/input/profil_img.jpg" alt="..."/>
+                              <img class="avatar border-gray" :src="'storage/profil_image/'+vendeuraa.image" alt="..."> 
                             </a>
                             <h5 class="title cl13">{{ vendeuraa.Nom }} {{ vendeuraa.Prenom }}
                             </h5>
@@ -418,7 +421,7 @@
                           border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;"  v-on:click="Verifier(vendeuraa.id);"> Produits <br>existent pour publier ?
                         </button>
                         <button id="exist" class="btn btn-success btn-block " style="width:300px;display:none;
-                          border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" > Existe 
+                          border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" @click="appectPublication(vendeuraa)"> Existe et Accepter
                         </button>
                         <button id="notexis" class="btn btn-disabled btn-block " style="width:300px;display:none;
                           border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" disabled> Not Existe
@@ -451,7 +454,8 @@
         window.Laravel = <?php echo json_encode([
                'csrfToken' => csrf_token(),
                   'vendeur' => $vendeur,  //vendeur connecté
-                 
+                  'admin' => $admin,  //vendeur connecté
+
                 'url'      => url('/')  
           ]); ?>;
 </script>
@@ -468,7 +472,19 @@
         },
      },
      methods: {
-       
+       appectPublication(vendeur){
+          axios.post(window.Laravel.url+'/appectPublication',vendeur)
+              .then(response => {
+                $('.js-modal1').removeClass('show-modal1');
+                  Swal.fire({
+                    title: "L'acceptation a était fait par success.",
+                    icon: 'success',
+                  })
+               })
+              .catch(error => {
+                console.log('errors : '  , error);
+             })
+       },
         Verifier: function(id){
           var s = document.getElementById("exist");
             var m = document.getElementById("notexis");
@@ -479,14 +495,11 @@
                 if(response.data.etat){     //est ce que hadii ma3naha etat===true?? oui
                       s.style.display = "block";
                       v.style.display = "none";
-
-                	console.log("ressponse",response.data.etat)}
-
+                    }
                   else{     //est ce que hadii ma3naha etat===false?? oui
                     v.style.display = "none";
 
                     m.style.display = "block";
-                    console.log("ressssponse",response.data.etat)
 
                   }
                })
@@ -593,12 +606,6 @@
   <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="assetsAdmin/js/now-ui-dashboard.min.js?v=1.5.0" type="text/javascript"></script><!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
   <script src="assetsAdmin/demo/demo.js"></script>
-  <script>
-    $(document).ready(function() {
-      // Javascript method's body can be found in assets/js/demos.js
-      initDashboardPageCharts();
 
-    });
-  </script>
 </body>
 </html><?php /**PATH C:\xampp\htdocs\BWS\resources\views/vendeur_admin.blade.php ENDPATH**/ ?>

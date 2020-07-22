@@ -17,6 +17,8 @@ class CreateAdminsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->boolean('big_admin')->default(0);
+            $table->boolean('deleteda')->default(0);
+            $table->boolean('deleted_at')->default('NULL');
             $table->string('nom');
             $table->string('prenom');
             $table->string('email')->unique();
@@ -24,6 +26,7 @@ class CreateAdminsTable extends Migration
             $table->string('numCarteBanquaire')->unique();
             $table->string('image')->default('NULL');
             $table->timestamps();
+            $table->softDeletes();
         });
         DB::table('admins')->insert(array('id'=>'1','user_id'=>'1','nom'=>'BWS','prenom'=>'BWS','email'=>'basmah.work_shop@gmail.com',
         'numTelephone'=>'0500000000','numCarteBanquaire'=>'0000001','image'=>'1595020685.jpg','created_at'=>new \dateTime,

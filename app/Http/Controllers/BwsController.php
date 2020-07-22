@@ -1483,31 +1483,33 @@ public function emploiVilleSousCategoSearch($id,$idVille,$idSC){
     {
         $produit = \DB::table('produits')
          ->join('vendeurs','vendeurs.id', '=', 'produits.vendeur_id')
-         ->join('paiement_vendeurs','paiement_vendeurs.vendeur_id', '=', 'produits.vendeur_id')->where('response',1)
+         ->join('paiement_vendeurs','paiement_vendeurs.vendeur_id', '=', 'produits.vendeur_id')
+         //->where('response',1)
          ->select('vendeurs.Nom', 'vendeurs.Prenom', 'produits.*')
-         ->orderBy('position','asc')
+        // ->orderBy('position','asc')
          ->get();   
-
-        $paivendeur  = \DB::table('paiement_vendeurs')->where()->get();   
+        $paivendeur  = \DB::table('paiement_vendeurs')->get();   
          foreach( $paivendeur as $pp)
          {
-           
-              \DB::table('paiement_vendeurs')->where([['response',1],['updated_at', '>', Carbon::now()->subMonths(1)]])->delete();
+              \DB::table('paiement_vendeurs')->where('updated_at', '>', Carbon::now()->subMonths(1))->delete();
          }
-       
 
+           
         $imageproduit = \DB::table('imageproduits')->get();
         $color = \DB::table('colors')->join('color_produits', 'colors.id', '=', 'color_produits.color_id')->get();
         $taille = \DB::table('taille_produits')->get();
         $typeLivraison = \DB::table('typechoisirvendeurs')->get();
         $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
         $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
-        
         $favori = \DB::table('produits')->get();
         $imageproduit = \DB::table('imageproduits')->get();
-            
         if(auth()->check() && Auth::user()->type_compte == 'c'){
             $client =  Client::find(Auth::user()->id);
+            $commd = \DB::table('commandes')->where([ ['client_id',$client->id],['commande_envoyee',0]])->get(); 
+            foreach($commd as $cx){
+                \DB::table('commandes')->where([ ['client_id',$client->id],['commande_envoyee',0],
+                                                ['updated_at', '<', Carbon::now()->subDays(1)] ])->delete();
+             }
             $command = \DB::table('commandes')->where([ ['client_id',$client->id],['id',$client->nbr_cmd]])->get();
             $prixTotale= \DB::table('commandes')->where([ ['client_id',$client->id],['id',$client->nbr_cmd]])->select(\DB::raw('sum(commandes.prix_total * commandes.qte) as prixTo'))->get();
             if($prixTotale[0]->prixTo == null){
@@ -1573,7 +1575,7 @@ public function emploiVilleSousCategoSearch($id,$idVille,$idSC){
              ->join('imageproduits','imageproduits.produit_id', '=', 'produits.id')
              ->join('paiement_vendeurs','paiement_vendeurs.vendeur_id','=','produits.vendeur_id')
              ->where([['imageproduits.profile',1],['paiement_vendeurs.response',1]])
-             ->select('vendeurs.Nom', 'vendeurs.Prenom', 'produits.*','imageproduits.image','position_publication')
+             ->select('vendeurs.Nom', 'vendeurs.Prenom', 'produits.*','imageproduits.image')
              ->take(24)->get();       
             $imageproduit = \DB::table('imageproduits')->get();
             $color = \DB::table('colors')->join('color_produits', 'colors.id', '=', 'color_produits.color_id')->get();
@@ -1595,7 +1597,7 @@ public function emploiVilleSousCategoSearch($id,$idVille,$idSC){
          $produit = \DB::table('produits')
          ->join('vendeurs','vendeurs.id', '=', 'produits.vendeur_id')
          ->join('paiement_vendeurs','paiement_vendeurs.vendeur_id','=','produits.vendeur_id')
-         ->select('vendeurs.Nom', 'vendeurs.Prenom', 'produits.*','position_publication')
+         ->select('vendeurs.Nom', 'vendeurs.Prenom', 'produits.*')
          ->where('paiement_vendeurs.response',1)
          ->take(24)->get();       
         $imageproduit = \DB::table('imageproduits')->get();

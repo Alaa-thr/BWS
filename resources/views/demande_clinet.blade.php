@@ -71,167 +71,150 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header" >
-          @if(session()->has('success'))
-<div class="row"> 
-<div class="alert alert-success" style="  margin-left:33px;width: 960px;">
+            @if(session()->has('success'))
+                <div class="row"> 
+                  <div class="alert alert-success" style="  margin-left:33px;width: 960px;">
 
-<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;
+                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;
 
-</button>
- {{ session()->get('success')}}
-</div>
-
-</div>
-      @endif
-                <div class="flex-t">
-                    <input type="checkbox" id="article" @change="selectAll()" v-model="allSelected" style="margin-top: 5px;">
-                    <label for="article"></label> 
-                   
-                    <h4 style="margin-top: -6px;margin-left: 10px;">Demandes</h4>
+                  </button>
+                   {{ session()->get('success')}}
+                  </div>
                 </div>
-
-            <div class="txt-right"style="margin-top: -40px; " >
-                  <button v-if="suppr" class="btn-sm btn-danger " style="height: 35px; " v-on:click="deleteArrayArticle()"><b>Supprimer</b>
-                  </button>
-                  
-                  
-                  <button v-on:click="AnnulerSel()" v-if="suppr" class="btn-sm btn-warning " style="height: 35px; " ><b>Annuler</b>
-                  </button>
-               </div>
-         
-            
-            <hr style="margin-top:42px;">       
+            @endif
+            <div class="flex-t col-md-12">
+              <div class="flex-t col-md-4">
+                <input type="checkbox" id="article" @change="selectAll()" v-model="allSelected" style="margin-top: 5px;">
+                <label for="article"></label> 
+                 <h4 style="margin-top: -6px;margin-left: 10px;">Demandes</h4>
+              </div>
+              <div class="flex-t col-md-8">
+                <div class="col-md-8">
+                    <button v-if="suppr" class="btn-sm btn-danger " style="height: 35px; float: right;" v-on:click="deleteArrayArticle()"><b>Supprimer</b>
+                    </button>
+                </div>    
+                <div class="col-md-3">  
+                    <button v-on:click="AnnulerSel()" v-if="suppr" class="btn-sm btn-warning " style="height: 35px; " ><b>Annuler</b>
+                    </button>
+                </div>
+              </div>
+            </div>
+            <hr >       
           
         
             <div class="card-body"  v-for="demandec in demandeclient" >
-
-<div v-if="selectall" id="c">
-       <input type="checkbox"  style=" margin-left: 10px;" :id="demandec.id" :value="demandec.id" v-model="checkedArticles" @change="changeButton(demandec)">
-      <label :for="demandec.id" style="margin-top: 40px; margin-left: 10px;"></label>
-    </div>
-    <div v-else id="c">
-      <input type="checkbox" :id="demandec.id" :value="demandec.id" style="margin-left: 10px;" v-model="articleIds" @click="deselectArticle(demandec.id)">
-      <label :for="demandec.id" style="margin-top: 40px; margin-left: 10px;"></label>
-    </div>
-
-
-  
-    <div class="card-head"  id="cmd"   >              
-    <div class="row"  >
-    <div >
-  <p class="cvendeur"  id="txt" >
-  Demande   @{{demandec.id}}</p>
-      </div> 
- 
-    
-    <div  class="col-md-4 pr-1" id="cv">
-      <div style="margin-left:22px" >
-          <p id="txt" > @{{demandec.created_at}} </p>
-      </div>
-       
-    </div>
-   
-    <div class="col-md-4 pl-1" id="a">
-      <div class="" id="b" >
-      <a class="f" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#" id="point"  style="  margin-left: 245px;">
-        <i class="fas fa-ellipsis-v"  id="y"></i>
-       </a>
-      <div class="dropdown-menu " x-placement="right-start" id="pl" >
-      <a   v-on:click="AfficheInfo(demandec.id)"  class="dropdown-item js-show-modal1" 
-      style="color: red; font-style: italic; font-weight: 900; cursor: pointer;" >Afficher Plus</a>
-    <a class="dropdown-item" v-on:click="deleteCommandeVendeur(demandec)"
-    style="color: red; font-style: italic; font-weight: 900; cursor: pointer;">
-    Supprimer</a>
-       </div>
-      
-    </div>    
-
-    </div>      
-    <div  class="col-md-4 pr-1" id="cb">
-      <div  >
-          <p id="txt" > Addresse : @{{demandec.address}}</p>
-      </div>
-       
-    </div>
-
-    <div  class="col-md-4 pr-1" id="cbb">
-      <div  >
-          <p id="txt" >CV_client : @{{demandec.cv_client}}</p>
-      </div>
-       
-    </div>
-
-  </div>      
-
-  
-
-
-    
-</div>                  
+              <div class="card-head"  id="cmddd"   >              
+                <div class="row col-md-12"  >
+                  <div class="row  col-md-12"  > 
+                    <div class=" col-md-12 flex-t" >
+                      <div class="flex-t col-md-7" v-if="selectall">
+                        <input type="checkbox"  :id="demandec.id" :value="demandec.id" v-model="checkedArticles" @change="changeButton(demandec)">
+                        <label :for="demandec.id"  id="txt" style=" margin-left: 10px;">Demande   @{{demandec.id}}</label>
+                      </div>
+                      <div class="flex-t col-md-7" v-else>
+                        <input type="checkbox" :id="demandec.id" :value="demandec.id" v-model="articleIds" @click="deselectArticle(demandec.id)">
+                       <label :for="demandec.id" id="txt"  style=" margin-left: 10px;">Demande   @{{demandec.id}}</label>
+                      </div>
+                      <div  class="m-t--7 col-md-4 js-show-modal1" v-on:click="AfficheInfo(demandec.id)" style="cursor: pointer;">
+                          <p id="txt" style="float: right;">   @{{demandec.date}}</p>
+                      </div>
+                      <div class="col-md-2 dropdown m-t-5" style="cursor: pointer;">
+                        <a data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"  style="float: right;">
+                          <i class="fas fa-ellipsis-v"  id="y"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" >
+                          <a class="dropdown-item js-show-modal1" v-on:click="AfficheInfo(demandec.id)" style="color: red; font-style: italic; font-weight: 900; cursor: pointer;">Afficher Plus
+                          </a>
+                          <a class="dropdown-item" v-on:click="deleteDemande(demandec)"style="color: red; font-style: italic; font-weight: 900; cursor: pointer;">Supprimer
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12 flex-t m-b-10 js-show-modal1" v-on:click="AfficheInfo(demandec.id)" style="cursor: pointer;">
+                      <div class="col-md-12" >
+                        <p id="txt" >CV_client : @{{demandec.cv_client}} </p>
+                      </div> 
+                    </div>
+                  </div>
+                </div>                  
               </div>
-
             </div>     
               {{$article->links()}}
-              </div>
-
-            </div>      
           </div>
         </div>      
+      </div>
+    </div>      
 
 <!-- Modal1 for laptob-->
-<div class="wrap-modal11 js-modal1 p-t-38 p-b-20 p-l-15 p-r-15"  id="app2" v-if="hideModel" style="margin-top:122px;">
-  <div class="overlay-modal11 " v-on:click="CancelArticle(art)"></div>
+<div class="wrap-modal11 js-modal1 p-t-80 p-b-20 p-l-15 p-r-15"  id="app2" v-if="hideModel" >
+  <div class="overlay-modal11 " v-on:click="CancelArticle()"></div>
 
-  <div class="container">
+  <div class="container" >
 
  
-    <div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent" v-if="openInfo " style=" width: 985px;"   v-for="demandec in demandeclient2">
+    <div class="bg0  p-b-100 p-lr-15-lg how-pos3-parent" style="width: 970px;padding-top: 40%">
 
-      <button class="how-pos3 hov3 trans-04 p-t-6 " v-on:click="hideModel = false">
-        <img src="images/icon-close.png" alt="CLOSE">
+      <button class="how-pos3 hov3 trans-04 p-t-6 js-hide-modal1" v-on:click="CancelArticle()">
+        <img src="images/icon-close.png" alt="CLOSE" >
       </button>
       
-
-      <div class="row" >
-    <div class="col-md-4 pr-1" >
-      <div style="margin-left:22px">
-          <p class="" id="t" >Demande @{{demandec.id}}  </p>
-      </div>
+      <section class=" creat-article ">     
+        <div  class=" container-creat-article">
+          <div class="col-md-12 flex-t m-t--10 m-b-30">
+            <h4 class="ltext-102 col-md-9 cl2 m-l--60" >DEMANDE DE @{{condidat.nom_Prenom.toUpperCase()}}
+            </h4>
+           
+            <div class="col-md-3 m-t--5">
+              <p  id="txt" >@{{condidat.date}}</p>
+            </div>
+          </div>
+          <div class="row col-md-12 m-l--30" >
+            <div class="col-md-12" >
+              <p class="m-l--20" id="txt" >Information de condidat : </p>
+                  <div class="flex-t m-l-10">
+                      <p id="txt">Nom et prenom :</p>
+                     <p id="t3">@{{condidat.nom_Prenom.toUpperCase()}} </p>
+                  </div>
+                  <div class="flex-t m-l-10">
+                    <p id="txt">E-mail: </p>
+                    <p id="t3" >@{{condidat.email}}</p>
+                  </div>
+                  <div class="flex-t m-l-10">
+                      <p id="txt">Numéro_téléphone:</p>
+                     <p id="t3">@{{condidat.numeroTlf}}</p> 
+                  </div>
+                  <div class="flex-t m-l-10">
+                       <p id="txt">CV_client:</p>
+                       <a :href="'storage/demande_cv/'+ condidat.cv_client" download="">
+                          <p style=" cursor: pointer;">@{{condidat.cv_client}}</p>
+                        </a>
+                  </div>
+            </div> 
+          </div>
+          <div class="row col-md-12 m-l--30 m-b-30" >
+            <div class="col-md-12" >
+              <p class="m-l--20" id="txt" >Information sur l'annonce : </p>
+                  <div class="flex-t m-l-10">
+                      <p id="txt">Libellé :</p>
+                     <p id="t3">@{{annoceInfo.libellé}} </p>
+                  </div>
+                  <div class="flex-t m-l-10">
+                    <p id="txt">Discription: </p>
+                    <p id="t3" >@{{annoceInfo.discription}}</p>
+                  </div>
+            </div> 
+          </div>
+          <div class="row col-md-10">
+              <div class="col-md-10">
+                <button v-on:click=" deleteDemandee(condidat);" class="btn-sm btn-danger " style=" height: 35px; border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700; float: right;" ><b>Supprimer</b></button>     
+              </div>
+          </div>
+        </div>
+      </section>
     </div>
-    <div class="col-md-4 px-1">
-     
-    </div>
-    <div class="col-md-4 pl-1">
-      <div class="">
-      <a class="f" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#" id="point">
-        <i class="fas fa-ellipsis-v"  id="y"></i>
-       </a>
-      <div class="dropdown-menu " x-placement="right-start" id="pl">
-      <a   v-on:click="AfficheInfo(demandec.id)"  class="dropdown-item js-show-modal1" style="color: red; font-style: italic; font-weight: 900; cursor: pointer;" >Afficher Plus</a>
-    <a class="dropdown-item" v-on:click="deleteDemande(demandec)"style="color: red; font-style: italic; font-weight: 900; cursor: pointer;">Supprimer</a>
-       </div><p class=""  id="tt" >@{{demandec.created_at}}</p>
-      </div>
-    </div>
-    </div>
-    <div class="row">
-    <div class="col-md-4 pr-1">
-      <div class="">
-      <label  id="ttt">Addresse : @{{demandec.address}}</label>
-      </div>
-    </div>
-    <div class="col-md-4 px-1">
-     
-    </div>
-    <div class="col-md-4 pr-3">
-      <div class="">
-      <label  id="tttt">CV_client : @{{demandec.cv_client}}</label>
-      </div>
-    </div>
-    </div>      
-      </div>
-      </div>
-
-    </div>
+  </div>
+</div>
 
 
 @endsection
@@ -266,13 +249,14 @@ var app2 = new Vue({
   data:{
     demandeclient2: [],
     openInfo: false,
-
+    annoceInfo:[],
     hideModel: false,
-   
- 
- 
     detaillsA: {
       idA: 0,
+    },
+    condidat: {
+      nom_Prenom: 'non',
+
     },
 
   
@@ -281,14 +265,47 @@ var app2 = new Vue({
   },
 methods: {
 
+deleteDemandee: function(article){
 
+    $('.js-modal1').removeClass('show-modal1'); 
+        Swal.fire({
+    title: 'Etes vous?',
+    text: "De supprimer cette Demande?",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Oui, Supprimer!'
+  }).then((result) => {
+      if (result.value) {
+          axios.delete(window.Laravel.url+'/deletedemande/'+article.id)
+            .then(response => {
+              if(response.data.etat){
+                       var position = app.demandeclient.indexOf(article);
+                       app.demandeclient.splice(position,1);
+              }                     
+            })
+            .catch(error =>{
+                       console.log('errors :' , error);
+            })
+      Swal.fire(
+        'Effacé!',
+        'Votre demande a été supprimé.',
+        'success'
+      )
+    }
+    
+    })
+  },
   detaillsDemande: function(){
 
     axios.post(window.Laravel.url+'/detaillsademande', this.detaillsA)
 
         .then(response => {
 
-             this.demandeclient2 = response.data;
+             this.demandeclient2 = response.data.demande_detaills;
+             this.condidat = this.demandeclient2[0] 
+             this.annoceInfo = response.data.annonce[0];
              
         })
         .catch(error =>{
@@ -300,16 +317,7 @@ methods: {
   CancelArticle(article){
     this.modifier = false ;
     this.hideModel = false;
-    this.art = {        
-                  id: 0,
-                  admin_id: window.Laravel.idAdmin,
-                  titre: '', 
-                  description: '',
-                  image: ''
-    };
-    this.message = {};
-    article.titre = this.oldArt.titre;
-    article.description = this.oldArt.description;
+
   },
 
 },    
@@ -448,7 +456,12 @@ methods: {
     else{
       this.artilcesDelete = [];
       this.suppr=false;
-    }        
+    }
+    if(this.checkedArticles.length < this.artilcesDelete.length){
+              
+            this.artilcesDelete = this.artilcesDelete.filter(function(item) { return item != a; });
+        }  
+
   }, 
   AnnulerSel: function(){
     this.checkedArticles.length = [];

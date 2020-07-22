@@ -114,6 +114,17 @@
                                                         </li>
                                                                
                                                     </ul >
+                                                    <ul >
+                                                <li class="p-b-6 " v-if="autreProd === 0">
+
+                                                   
+
+                                                    <a href="<?php echo e(route('shop')); ?>" class="filter-link stext-106 trans-04">
+                                                            Autre
+                                                    </a>
+                                                </li>
+                                                       
+                                            </ul >
                                                 </div>
                                     
             <?php 
@@ -185,6 +196,17 @@
                                                         </li>
                                                                
                                                     </ul >
+                                                    <ul >
+                                                <li class="p-b-6 " v-if="autreAnn === 0">
+
+                                                   
+
+                                                    <a href="<?php echo e(route('emploi')); ?>" class="filter-link stext-106 trans-04">
+                                                            Autre
+                                                    </a>
+                                                </li>
+                                                       
+                                            </ul >
                                         </div>
                                          <?php 
                    
@@ -755,6 +777,9 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
             categories: [],
             sousCategories: [],
             categoriesE: [],
+            autreAnn:false,
+            autreProd:false,
+            categorieAnn: [],
             count: 6,
             //wayLogin: <?php echo e(json_encode(route('login'))); ?>,
          },
@@ -765,6 +790,9 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                            this.categories = response.data.categorie;
                            this.sousCategories = response.data.sousCatego;
                            this.categoriesE =  response.data.categorieE;
+                           this.categorieAnn = response.data.autreProduit;
+                           this.autreAnn = response.data.autre;
+                           this.autreProd = response.data.another;
 
                         })
                         .catch(error =>{

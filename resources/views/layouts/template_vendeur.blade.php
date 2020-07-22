@@ -103,7 +103,7 @@
                                                     <ul >
                                                         <li class="p-b-6 " v-for="(catego,cntt) in categories" :key = 'cntt' v-if="cntt <count">
 
-                                                         <img v-if="catego.image != null" :src='"/storage/categorie_image/"+catego.image' class="p-b-4">
+                    <img v-if="catego.image != null" :src='"/storage/categorie_image/"+catego.image' class="p-b-4">
 
                                                          <a href="#" class="filter-link stext-106 trans-04">
                                                             @{{catego.libelle}}
@@ -186,7 +186,7 @@
                                              <ul >
                                                 <li class="p-b-6 " v-for="(catego,cntt) in categoriesE" :key = 'cntt' v-if="cntt <count">
 
-                                                    <img v-if="catego.image != null" :src='"/storage/categorie_image/"+catego.image' class="p-b-4">
+                    <img v-if="catego.image != null" :src='"/storage/categorie_image/"+catego.image' class="p-b-4">
 
                                                     <a href="#" class="filter-link stext-106 trans-04">
                                                             @{{catego.libelle}}

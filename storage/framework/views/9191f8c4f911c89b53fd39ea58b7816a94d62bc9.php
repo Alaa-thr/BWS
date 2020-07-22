@@ -103,7 +103,7 @@
                                                     <ul >
                                                         <li class="p-b-6 " v-for="(catego,cntt) in categories" :key = 'cntt' v-if="cntt <count">
 
-                                                         <img v-if="catego.image != null" :src='"/storage/categorie_image/"+catego.image' class="p-b-4">
+                    <img v-if="catego.image != null" :src='"/storage/categorie_image/"+catego.image' class="p-b-4">
 
                                                          <a href="#" class="filter-link stext-106 trans-04">
                                                             {{catego.libelle}}
@@ -111,6 +111,17 @@
                                                         </li>
                                                        
                                                     </ul >
+                                                    <ul >
+                                                <li class="p-b-6 " v-if="autreProd === 0">
+
+                                                   
+
+                                                    <a href="<?php echo e(route('shop')); ?>" class="filter-link stext-106 trans-04">
+                                                            Autre
+                                                    </a>
+                                                </li>
+                                                       
+                                            </ul >
                                                 </div>
 
             <?php 
@@ -175,10 +186,21 @@
                                              <ul >
                                                 <li class="p-b-6 " v-for="(catego,cntt) in categoriesE" :key = 'cntt' v-if="cntt <count">
 
-                                                    <img v-if="catego.image != null" :src='"/storage/categorie_image/"+catego.image' class="p-b-4">
+                    <img v-if="catego.image != null" :src='"/storage/categorie_image/"+catego.image' class="p-b-4">
 
                                                     <a href="#" class="filter-link stext-106 trans-04">
                                                             {{catego.libelle}}
+                                                    </a>
+                                                </li>
+                                                       
+                                            </ul >
+                                            <ul >
+                                                <li class="p-b-6 " v-if="autreAnn === 0">
+
+                                                   
+
+                                                    <a href="<?php echo e(route('emploi')); ?>" class="filter-link stext-106 trans-04">
+                                                            Autre
                                                     </a>
                                                 </li>
                                                        
@@ -695,6 +717,9 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
             sousCategories: [],
             categoriesE: [],
             count: 6,
+            autreAnn:false,
+            autreProd:false,
+            categorieAnn: [],
             //wayLogin: <?php echo e(json_encode(route('login'))); ?>,
          },
          methods:{
@@ -704,6 +729,10 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                         .then(response => {
                            app44.categories = response.data.categorie;
                            app44.sousCategories = response.data.sousCatego;
+                           app44.categorieAnn = response.data.autreProduit;
+                           app44.autreAnn = response.data.autre;
+                           app44.autreProd = response.data.another;
+
                            this.categoriesE =  response.data.categorieE;
                         })
                         .catch(error =>{

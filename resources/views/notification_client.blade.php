@@ -214,6 +214,7 @@ data:{
   },
 methods: {
   AfficheInfo: function($id){
+    
     app2.openAjout = false ;
     app2.detaillsCommande();
   },

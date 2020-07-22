@@ -329,7 +329,7 @@
       <div class="overlay-modal11 js-hide-modal1"></div>
   
       <div class="container">
-        <div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent"  style="width: 985px;" v-for="clientaa in clientadmin2">
+        <div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent"  style="width: 950px;" v-for="clientaa in clientadmin2">
           <button class="how-pos3 hov3 trans-04 p-t-6 js-hide-modal1">
             <img src="images/icon-close.png" alt="CLOSE"  v-on:click="CancelClient()">
           </button>

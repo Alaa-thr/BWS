@@ -326,7 +326,7 @@
       <div class="overlay-modal11 js-hide-modal1"></div>
   
       <div class="container">
-        <div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent"  style="width: 985px;" v-for="employeuraa in employeuradmin2">
+        <div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent"  style="width: 950px;" v-for="employeuraa in employeuradmin2">
           <button class="how-pos3 hov3 trans-04 p-t-6 js-hide-modal1">
             <img src="images/icon-close.png" alt="CLOSE"  v-on:click="CancelEmp()">
           </button>
@@ -440,7 +440,7 @@
                           border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;"  v-on:click="VerifierAnnonce(employeuraa.id);"> Annonce <br>existent pour publier ?
                         </button>
                         <button id="exist" class="btn btn-success btn-block " style="width:320px;display:none;
-                          border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" > Existe 
+                          border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" @click='appectAnnonce(employeuraa)'> Existe et Accepter
                         </button>
                         <button id="notexis" class="btn btn-disabled btn-block " style="width:320px;display:none;
                           border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" disabled> Not Existe
@@ -480,6 +480,19 @@
         },
      },
      methods: {
+      appectAnnonce(empl){
+          axios.post(window.Laravel.url+'/appectAnnonce',empl)
+              .then(response => {
+                $('.js-modal1').removeClass('show-modal1');
+                  Swal.fire({
+                    title: "L'acceptation a était fait par success.",
+                    icon: 'success',
+                  })
+               })
+              .catch(error => {
+                console.log('errors : '  , error);
+             })
+       },
       VerifierAnnonce: function(id){
           var s = document.getElementById("exist");
             var m = document.getElementById("notexis");
@@ -490,14 +503,12 @@
                 if(response.data.etat){     //est ce que hadii ma3naha etat===true?? oui
                       s.style.display = "block";
                       v.style.display = "none";
-
-                	console.log("ressponse",response.data.etat)}
+              }
 
                   else{     //est ce que hadii ma3naha etat===false?? oui
                     v.style.display = "none";
 
                     m.style.display = "block";
-                    console.log("ressssponse",response.data.etat)
 
                   }
                })
@@ -605,12 +616,6 @@
   <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="assetsAdmin/js/now-ui-dashboard.min.js?v=1.5.0" type="text/javascript"></script><!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
   <script src="assetsAdmin/demo/demo.js"></script>
-  <script>
-    $(document).ready(function() {
-      // Javascript method's body can be found in assets/js/demos.js
-      initDashboardPageCharts();
 
-    });
-  </script>
 </body>
 </html>

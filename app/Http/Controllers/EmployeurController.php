@@ -50,7 +50,11 @@ class EmployeurController extends Controller
 
     public function get_commande_traiter_emplyeur(){
         $c = Employeur::find(Auth::user()->id);
-        $article = \DB::table('demande_emploies')->where('employeur_id', $c->id)->orderBy('created_at','desc')->paginate(5);
+        $article = \DB::table('demande_emploies')
+        ->join('clients','clients.id','=','demande_emploies.client_id')
+        ->where([['employeur_id', $c->id],['demandeDEmpl',0]])
+        ->select('demande_emploies.*',\DB::raw('DATE(demande_emploies.created_at) as date'),'clients.nom','clients.prenom')
+        ->orderBy('created_at','desc')->paginate(5);
         $employeur = \DB::table('clients')->get(); 
         $produit = \DB::table('annonce_emploies')->get(); 
         $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
@@ -59,8 +63,18 @@ class EmployeurController extends Controller
     } 
 
     public function detaillsacommandeTraiterEmplyeur(Request $request){
-        $commande_detaills = \DB::table('demande_emploies')->join('clients','clients.id','=','demande_emploies.client_id')->join('annonce_emploies','annonce_emploies.id','=','demande_emploies.annonceE_id')->where('demande_emploies.id', $request->idA)->get();
-        return  $commande_detaills;
+        $empl = Employeur::find(Auth::user()->id);
+        $demande_detaills = \DB::table('demande_emploies')->where([['id', $request->idA],['employeur_id',$empl->id]])
+        ->select('demande_emploies.*',\DB::raw('DATE(demande_emploies.created_at) as date'))
+        ->get();
+
+        $annonce = \DB::table('demande_emploies')
+        ->join("annonce_emploies",'annonce_emploies.id','=','demande_emploies.annonceE_id')
+        ->where('demande_emploies.id', $request->idA)
+        ->select('annonce_emploies.*')
+        ->get();
+
+        return  ['demande_detaills'=>$demande_detaills,'annonce'=>$annonce];
     }
 
 
@@ -139,7 +153,7 @@ class EmployeurController extends Controller
                      'discription' => ['required','min:3','string','regex:/^[A-Z0-9][-a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
                      'nombre_condidat' => ['required'],
                      'sous_categorie_id' => ['required'],
-                     'image' => ['regex:/^data:image/']
+                     'image' => ['nullable','sometimes','regex:/^data:image/']
                 ]);
                 $annonce2 = new Annonce_emploie;
                 if($request->image != null){
@@ -205,12 +219,6 @@ class EmployeurController extends Controller
     
     }
 
-
-    public function deleteCommandeTraiterEmployeur($id){
-        $commande = Demande_emploie::find($id);
-        $commande->delete();
-        return Response()->json(['etat' => true]);
-    }
 
 
     public function RecuDemande($id){

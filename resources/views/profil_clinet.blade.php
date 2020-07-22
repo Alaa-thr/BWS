@@ -215,7 +215,7 @@
                
               <div class="form-group">
                 <div class="col-md-6 col-md-offset-4">
-                    <button type="" id="sub"  v-on:click="changePassword();"> Changer mot de pass</button>
+                    <button type="" id="sub" class="btn btn-info" style="border: 0;  border-radius: 2em; font-size: 12px; font-weight: 700;" v-on:click="changePassword();"> Changer mot de pass</button>
 
                 </div>
                   

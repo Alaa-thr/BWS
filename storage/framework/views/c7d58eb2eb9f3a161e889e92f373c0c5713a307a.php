@@ -120,6 +120,17 @@
                                                         </li>
                                                        
                                                     </ul >
+                                                    <ul >
+                                                <li class="p-b-6 " v-if="autreProd === 0">
+
+                                                   
+
+                                                    <a href="<?php echo e(route('shop')); ?>" class="filter-link stext-106 trans-04">
+                                                            Autre
+                                                    </a>
+                                                </li>
+                                                       
+                                            </ul >
                                                 </div>
                                     
                                                  <?php 
@@ -188,6 +199,18 @@
 
                                                     <a href="#" class="filter-link stext-106 trans-04">
                                                             {{catego.libelle}}
+                                                    </a>
+                                                </li>
+                                                       
+                                            </ul >
+
+                                            <ul >
+                                                <li class="p-b-6 " v-if="autreAnn === 0">
+
+                                                   
+
+                                                    <a href="<?php echo e(route('emploi')); ?>" class="filter-link stext-106 trans-04">
+                                                            Autre
                                                     </a>
                                                 </li>
                                                        
@@ -622,7 +645,10 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
             categories: [],
             sousCategories: [],
             categoriesE: [],
+            categorieAnn: [],
             count: 6,
+            autreAnn:false,
+            autreProd:false,
             //wayLogin: <?php echo e(json_encode(route('login'))); ?>,
          },
          methods:{
@@ -632,7 +658,12 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                         .then(response => {
                            app55.categories = response.data.categorie;
                            app55.sousCategories = response.data.sousCatego;
+                           app55.categorieAnn = response.data.autreProduit;
+                           app55.autreAnn = response.data.autre;
+                           app55.autreProd = response.data.another;
                            this.categoriesE =  response.data.categorieE;
+
+                         
                         })
                         .catch(error =>{
                             console.log("errors",error)

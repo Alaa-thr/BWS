@@ -7,6 +7,85 @@
     <head>
     <title><?php echo e(( 'Notification')); ?></title>
   </head>
+  <nav class="navbar navbar-expand-lg navbar-transparent  bg-primary  navbar-absolute">
+                                                         
+                                                         <div class="container-fluid">
+                                                           <div class="navbar-wrapper">
+                                                             <div class="navbar-toggle">
+                                                               <button type="button" class="navbar-toggler">
+                                                                 <span class="navbar-toggler-bar bar1"></span>
+                                                                 <span class="navbar-toggler-bar bar2"></span>
+                                                                 <span class="navbar-toggler-bar bar3"></span>
+                                                               </button>
+                                                             </div>
+                                                 
+                                                          
+                                                          
+                                                 
+                                                           </div>
+                                                           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                                                             <span class="navbar-toggler-bar navbar-kebab"></span>
+                                                             <span class="navbar-toggler-bar navbar-kebab"></span>
+                                                             <span class="navbar-toggler-bar navbar-kebab"></span>
+                                                           </button>
+                                                           <div class="collapse navbar-collapse justify-content-end" id="navigation" >
+                                                           <form  action="/abest" method="get">
+                                                               <div class="input-group no-border"  style="left: -40px;">
+                                                                 <input type="search" name="search"  class="form-control" placeholder="Rechercher..." >
+                                                                 <div class="input-group-append">
+                                                                   <div class="input-group-text">
+                                                                     <i class="now-ui-icons ui-1_zoom-bold"></i>
+                                                                   </div>
+                                                                 </div>
+                                                               </div>
+                                                             </form>
+                                                             <ul class="navbar-nav" >
+                                                             <li class="nav-item dropdown" style="cursor: pointer; margin-right: 40px;">
+                                                                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                   <img class="img-xs rounded-circle"  src="<?php echo asset('storage/profil_image/'.$admin->image) ?>" alt="..."  />
+                                                                   <p>
+                                                                     <span class="d-lg-none d-md-block">Quelques Actions</span>
+                                                                   </p>
+                                                                 </a>
+                                                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                                                                   <div class="account-item clearfix js-item-menu">  
+                                                                     <div class="card-body">
+                                                                            
+                                                                         <a >
+                                                                           <table >
+                                                                             <tr>
+                                                                               <td width="50%">
+                                                                                 <a href="#">
+                                                                                  <img class="img-lg rounded-circle" src="<?php echo asset('storage/profil_image/'.$admin->image) ?>" alt="..."> 
+                                                                                  </a>
+                                                                                </td>
+                                                                               <td>
+                                                                                    <h6 class="description text-left" ><b id="a"> <?php echo e($admin->nom); ?> <?php echo e($admin->prenom); ?></b></h6><a href ="<?php echo e($admin->email); ?>" id ="nab"><?php echo e($admin->email); ?></a>
+                                                                                </td>
+                                                                              </tr>
+                                                                             </table>
+                                                                         </a>  
+                                                                     </div>
+                                                                     <div style="width: 255px; margin-left: 20px;"> 
+                                                                       <hr >
+                                                                      </div>
+                                                                       <a class="dropdown-item" href="<?php echo e(route('accueil')); ?>" id="n"><i class="now-ui-icons business_bank" id="m"></i><b>Allez vers Acceuil</b></a>
+                                                                       <a class="dropdown-item" href="<?php echo e(route('profilAdmin')); ?>" id="n"><i class="now-ui-icons users_single-02" id="m"></i><b>Profil</b></a>
+                                                                       <a class="dropdown-item" href="<?php echo e(route('logout')); ?>" onclick="event.preventDefault();
+                                                                         document.getElementById('logout-form').submit();" id="n">
+                                                                         <i class="now-ui-icons media-1_button-power" id="m"></i>
+                                                                         <?php echo e(__('Déconnexion')); ?> </a>
+                                                                         <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" style="display: none;">
+                                                                           <?php echo csrf_field(); ?>
+                                                                         </form>
+                                                                   </div>
+                                                                 </div> 
+                                                             </li>
+                                                               
+                                                             </ul>
+                                                           </div>
+                                                         </div>
+</nav>
       <div class="main-panel" id="main-panel">
       
       <div class="panel-header panel-header-sm">
@@ -25,7 +104,7 @@
                 <button v-if="suppr" class="btn btn-sm btn-warning btn-block" style="margin-left: 850px; margin-top: -45px; border-radius: 0.8em; width: 130px; height: 35px; " v-on:click="AnnulerSel" ><b>Annuler</b></button>
               </div>
               <div class="card-body">
-                <div class="table-responsive" style="height: 100px;">
+                <div class="table-responsive" style="height: auto;">
                   <table class="table" width="100%">
                     <tbody>
                       <tr v-for="noti in notifications">
@@ -42,11 +121,11 @@
                         <td width="3%">
                           <b><i class="now-ui-icons ui-1_bell-53" style="margin-top: 5px;"></i></b>
                         </td>
-                        <td  class="text-left" v-if="noti.categorie_libelle "><a href="#" style=" color: black; cursor: auto;" >L'admin <b>{{noti.nom}}</b> a supprimer la catégorie {{noti.categorie_libelle}} </a></td>
-                        <td  class="text-left" v-else><a href="#" style="  color: black; cursor: auto;" >L'admin <b>{{noti.nom}}</b> a supprimer la sous catégorie {{noti.sous_categorie_libelle}} </a></td>
-                        
-                        <td  class="dropdown "  id="k">
-                          <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#"> 
+                        <td  class="text-left"><a href="#" style="  color: black; cursor: auto;" >L'employeur_id <b>{{noti.id}}</b> a supprimer la sous catégorie {{noti.sous_categorie_libelle}} </a></td>
+                       
+
+                        <td  class="dropdown"  id="k">
+                          <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#" class=" m-l--10"> 
                                 <img src="assetsAdmin/img/menu.png" alt="..."/ id="f">
                              </a>
                             <div class="dropdown-menu dropdown-menu-right "  style="margin-top: -10px;">
@@ -57,11 +136,8 @@
                     </tbody>
                   </table>
                 </div>
-                 <div v-if="nextPage" class="flex justify-center">
-                          <button class="btn btn-sm btn-block btn-info">
-                            charger les notifs suivants..
-                          </button>
-                      </div>
+                 <?php echo e($notif->links()); ?>
+
               </div>
             </div>
           </div>
@@ -148,11 +224,24 @@
          NotificationsDelete: [],
       },
       methods:{
+      
         getNotifications:function(){
           axios.get(window.Laravel.url+'/notificationsAdmin/')
             .then(pagination => {
                  console.log(pagination)
                  this.notifications = window.Laravel.notif.data;
+                 this.nextPage = window.Laravel.notif.next_page_url;
+            })
+            .catch(error =>{
+                 console.log('errors :' , error);
+            })
+        },  fetchcpmment:function(){
+         axios.get(window.Laravel.url)
+     // axios.get(url)
+            .then(pagination => {
+                 this.notifications = this.notifications.concat(window.Laravel.notif.data);
+                 console.log( this.notifications)
+
                  this.nextPage = window.Laravel.notif.next_page_url;
             })
             .catch(error =>{

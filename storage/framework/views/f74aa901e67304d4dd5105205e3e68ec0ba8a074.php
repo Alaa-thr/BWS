@@ -209,6 +209,12 @@
 			                               Vendeur&nbsp:<b>&nbsp&nbsp{{this.detaillproduit.Nom}} &nbsp{{this.detaillproduit.Prenom}}</b>.</span>
 			                           		
 			                            </p>
+
+										<p class="stext-102 cl3 p-t-23 " >
+			                            	<span>
+			                               Boutique&nbsp:<b>&nbsp&nbsp{{this.detaillproduit.Nom_boutique}}</b>.</span>
+			                           		
+			                            </p>
 			                            <!--  -->
 			                            <div class="p-t-33">
 			                                <div v-show="tailleExiste" class="flex-w flex-r-m p-b-10">
@@ -676,6 +682,7 @@
             axios.get(window.Laravel.url+'/shop')
               .then(response => {
                 this.produits = window.Laravel.produit;
+                console.log(',this.produits',this.produits)
                 this.imagesproduit = window.Laravel.ImageP;
                 this.colors = window.Laravel.color;
                 this.typeLivraisons = window.Laravel.typeLivraison;
@@ -733,13 +740,7 @@
 	$(function () {
   $('[data-toggle="tooltip"]').tooltip()
 });
-/*function myMap() {
-var mapProp= {
-  center:new google.maps.LatLng(51.508742,-0.120850),
-  zoom:5,
-};
-var map = new google.maps.Map(document.getElementById("adrrsse"),mapProp);
-}*/
+
 
 
 </script>

@@ -13,10 +13,10 @@
         <div class="row">
           <div class="col-md-12">
             <div class="card">
-              <div class="card-header">
-                <h4 class="card-title">Vendeur recuperer</h4>
-                <div  style="margin-left: 730px; margin-top: -40px;">
-                    <select class="form-control" onchange="window.location.href=this.value" style="border-radius: 0.8em; cursor: pointer;">
+              <div class="card-header flex-t col-md-12">
+                <h4 class="card-title col-md-4">Vendeur recuperer</h4>
+                <div class="col-md-8 m-t-10">
+                    <select class="form-control" onchange="window.location.href=this.value" style="border-radius: 0.8em; cursor: pointer;float: right;height: 40px;width: 250px;">
                       <option value="0" selected="selected" disabled="disabled">Recuperer les utilisateurs   :</option>
                       <option value="recupervendeur">Recuperer vendeurs</option>
                       <option value="recuperclient">Recuperer clients</option>
@@ -28,7 +28,7 @@
               </div>
               
               <div class="card-body">
-                <div class="table-responsive" style="height: 420px; margin-top: 75px;">
+                <div class="table-responsive" style="height: 420px;">
                   <table class="table">
                     <thead class=" text-primary">
                       <th >

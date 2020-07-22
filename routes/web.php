@@ -193,6 +193,8 @@ Route::get('/getproduitpaniershop', 'BwsController@getProduitPanierShop');
 Route::get('/getimageD/{id}', 'BwsController@getImageD');
 
 /************************************************ Admin***********************************************/
+Route::post('/appectPublication', 'AdminController@appectPublication');
+Route::post('/appectAnnonce', 'AdminController@appectAnnonce');
 Route::get('/categoriesAdmin', 'AdminController@categories_admin');
 Route::get('/admin', 'AdminController@admin_admin')->name('admin');
 Route::get('/articlesAdmin', 'AdminController@article_admin')->name('articlesAdmin');
@@ -260,7 +262,7 @@ Route::delete('/deletedemandereçu/{id}','DemandeReçuController@deleteDemandeRe
 /*Demande traiter*/
 Route::get('/demandeEmploiTraite','EmployeurController@get_commande_traiter_emplyeur')->name('demandeEmploiTraite');
 Route::post('/detaillsacommandetraiteremplyeur', 'EmployeurController@detaillsacommandeTraiterEmplyeur'); 
-Route::delete('/deletecommandetraiteremplyeur/{id}','EmployeurController@deleteCommandeTraiterEmployeur');
+Route::delete('/deletecommandetraiteremplyeur/{id}','EmployeurDemandeController@deleteDemandeReçuEmployeur');
 Route::put('/recudemande/{id}','EmployeurController@RecuDemande');
 /*Demande Reçu*/
 Route::get('/demandeEmploiRecu','EmployeurDemandeController@get_demande_reçu_emplyeur')->name('demandeEmploiRecu');
@@ -274,6 +276,7 @@ Route::put('/updateProfilV/{id}','VendeurController@update_profil');
 Route::get('/produitVendeur', 'VendeurController@getProduit')->name('produitVendeur');
 Route::post('/addproduit', 'VendeurController@addProduit');
 Route::post('/addproduitwithtest', 'VendeurController@addProduitWithTest');
+Route::post('/addProduitwithPaiment', 'VendeurController@addProduitwithPaiment');
 Route::get('/getAllsouscategories/{id}','VendeurController@getSousCategories');
 Route::get('/getAllcategories', 'VendeurController@getCategories');
 Route::get('/getAllcolor', 'VendeurController@getColors');
@@ -359,3 +362,6 @@ Route::post('/verifierproduit/{id}','AdminController@Verifier');
 Route::post('/verifierannonce/{id}','AdminController@VerifierAnnonce');
 
 Route::post('/changepassword','ClientController@changePassword');
+
+
+ /**/

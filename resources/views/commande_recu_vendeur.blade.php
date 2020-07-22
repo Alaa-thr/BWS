@@ -359,7 +359,7 @@ methods: {
                             }
                        }
                      });
-                  console.log("window.Laravel.prixx",window.Laravel.prixx)
+                  
                   this.commandeclient.forEach(key=>{
                      for(i=0; i<window.Laravel.prixx.length  ; i++ ){
                             if(key.id == window.Laravel.prixx[i].id){

@@ -3876,7 +3876,12 @@ input[type=checkbox]:checked + label:before{
     border-radius: 25px;
     height: 70px;
   }
- 
+   #cmddd{
+  
+  border: 2px solid gray;
+  border-radius: 25px;
+  
+}
 #b{
   margin-top: -58px;
 

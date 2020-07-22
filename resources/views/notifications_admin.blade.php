@@ -121,12 +121,11 @@
                         <td width="3%">
                           <b><i class="now-ui-icons ui-1_bell-53" style="margin-top: 5px;"></i></b>
                         </td>
-                      <!--  <td  class="text-left"  v-if="noti.client_id "><a href="#" style="  color: black; cursor: auto;" >L'client_id <b>@{{noti.nom}}</b> a supprimer la sous catégorie @{{noti.sous_categorie_libelle}} </a></td> -->
                         <td  class="text-left"><a href="#" style="  color: black; cursor: auto;" >L'employeur_id <b>@{{noti.id}}</b> a supprimer la sous catégorie @{{noti.sous_categorie_libelle}} </a></td>
                        
 
-                        <td  class="dropdown "  id="k">
-                          <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#"> 
+                        <td  class="dropdown"  id="k">
+                          <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#" class=" m-l--10"> 
                                 <img src="assetsAdmin/img/menu.png" alt="..."/ id="f">
                              </a>
                             <div class="dropdown-menu dropdown-menu-right "  style="margin-top: -10px;">

@@ -164,7 +164,7 @@
             <ul class="navbar-nav" >
             <li class="nav-item dropdown" style="cursor: pointer; margin-right: 40px;">
                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <img class="img-xs rounded-circle"  src="<?php echo asset('storage/profil_image/'.$admin->image) ?>" alt="..."  />
+                  <img class="img-xs rounded-circle" src=" {{asset('storage/profil_image/'.$admin[0]->image)}}" alt="..."  />
                   <p>
                     <span class="d-lg-none d-md-block">Quelques Actions</span>
                   </p>
@@ -178,7 +178,7 @@
                             <tr>
                               <td width="50%">
                                   <a href="#">
-                                  <img class="img-lg rounded-circle"  src="<?php echo asset('storage/profil_image/'.$admin->image) ?>" alt="..."> 
+                                  <img class="img-lg rounded-circle"  src=" {{asset('storage/profil_image/'.$admin[0]->image)}}" alt="..."> 
                               </a>
                               </td>
                               <td>
@@ -222,10 +222,10 @@
         <div class="row">
           <div class="col-md-12">
             <div class="card">
-              <div class="card-header">
-                <h4 class="card-title"> Admin</h4>
-                <div  style="margin-left: 550px; margin-top: -45px; ">
-                    <select class="formm-control" onchange="window.location.href=this.value" style=" width: 250px; height: 40px; border-radius: 0.8em; cursor: pointer;">
+              <div class="card-header col-md-12 flex-t">
+                <h4 class="card-title col-md-3"> Admin</h4>
+                <div  class="col-md-6" >
+                    <select class="form-control m-t-9" onchange="window.location.href=this.value" style=" width: 250px;height: 40px; border-radius: 0.8em; cursor: pointer;float: right;">
                       <option  style="border:none;" value="0" selected="selected" disabled="disabled">Recuperer les utilisateurs   :</option>
                       <option value="recupervendeur">Recuperer vendeurs</option>
                       <option value="recuperclient">Recuperer clients</option>
@@ -233,15 +233,15 @@
                       <option value="recuperadmin">Recuperer admins</option>
                     </select>
                 </div>
-                <div style="margin-left: 830px ; margin-top: -48px;">
-                  <button class="btn btn-sm btn-block btn-info js-show-modal1" style="width: 160px; border-radius: 0.5em; height: 35px; box-shadow: 0 5px 25px rgba(0,0,0,.2);" v-on:click="AfficherAjout()">
+                <div class="col-md-3" >
+                  <button class="btn btn-sm btn-block btn-info js-show-modal1" style="width: 160px; border-radius: 0.5em; height: 35px; box-shadow: 0 5px 10px rgba(0,0,0,.2);float: right;" v-on:click="AfficherAjout()">
                     <b> Ajouter Admin</b>
                   </button>
                 </div>
               </div>
               
               <div class="card-body">
-                <div class="table-responsive" style="height: 420px; margin-top: 65px;">
+                <div class="table-responsive" style="height: 420px;">
                   <table class="table">
                     <thead class=" text-primary">
                       <th >
@@ -348,7 +348,7 @@
       <div class="overlay-modal11 js-hide-modal1"></div>
   
       <div class="container">
-        <div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent" v-if="openInfo"  style="width: 985px;" v-for="adminaa in adminadmin2">
+        <div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent" v-if="openInfo"  style="width: 950px;" v-for="adminaa in adminadmin2">
           <button class="how-pos3 hov3 trans-04 p-t-6 js-hide-modal1">
             <img src="images/icon-close.png" alt="CLOSE"  v-on:click="CancelAdmin()">
           </button>
@@ -430,7 +430,7 @@
 
 <!--***********************************************************************
   ******************************************-->
-        <div class="bg0 p-b-150 p-lr-15-lg how-pos3-parent" v-if="openAjout" style=" width: 985px; padding-top: 45%" >
+        <div class="bg0 p-b-150 p-lr-15-lg how-pos3-parent" v-if="openAjout" style=" width: 950px; padding-top: 45%" >
           <button class="how-pos3 hov3 trans-04 p-t-6" >
             <img src="images/icon-close.png" alt="CLOSE" v-on:click="CancelAjout(adm)">
           </button>
@@ -743,12 +743,6 @@
   <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="assetsAdmin/js/now-ui-dashboard.min.js?v=1.5.0" type="text/javascript"></script><!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
   <script src="assetsAdmin/demo/demo.js"></script>
-  <script>
-    $(document).ready(function() {
-      // Javascript method's body can be found in assets/js/demos.js
-      initDashboardPageCharts();
 
-    });
-  </script>
 </body>
 </html>

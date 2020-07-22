@@ -681,6 +681,7 @@
             axios.get(window.Laravel.url+'/shop')
               .then(response => {
                 this.produits = window.Laravel.produit;
+                console.log(',this.produits',this.produits)
                 this.imagesproduit = window.Laravel.ImageP;
                 this.colors = window.Laravel.color;
                 this.typeLivraisons = window.Laravel.typeLivraison;
@@ -738,13 +739,7 @@
 	$(function () {
   $('[data-toggle="tooltip"]').tooltip()
 });
-/*function myMap() {
-var mapProp= {
-  center:new google.maps.LatLng(51.508742,-0.120850),
-  zoom:5,
-};
-var map = new google.maps.Map(document.getElementById("adrrsse"),mapProp);
-}*/
+
 
 
 </script>

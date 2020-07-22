@@ -104,7 +104,7 @@
                             <img :src="'storage/produits_image/'+ produit.image" alt="IMG" >
                           </div>
                         </div>
-                        <div class="column-2 p-l-40 p-r-40 p-t-10">{{produit.prix_total}} DA
+                        <div class="column-2 p-l-40 p-r-40 p-t-10">{{produit.qte}} x {{produit.prix_total}} DA
                         </div>
                         <div class="column-2 p-l-40 ">
                           <div class="input-group mb-3 ">
@@ -360,7 +360,7 @@ methods: {
                             }
                        }
                      });
-                  console.log("window.Laravel.prixx",window.Laravel.prixx)
+                  
                   this.commandeclient.forEach(key=>{
                      for(i=0; i<window.Laravel.prixx.length  ; i++ ){
                             if(key.id == window.Laravel.prixx[i].id){

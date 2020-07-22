@@ -12,183 +12,129 @@
   </div>
   <div class="content" id="app">
     <div class="row">
+   
       <div class="col-md-12">
         <div class="card">
-
-      
           <div class="card-header" >
-               
-                <div class="flex-t">
-                    <input type="checkbox" id="article" @change="selectAll()" v-model="allSelected" style="margin-top: 5px;">
-                    <label for="article"></label>
-                    <h4 style="margin-top: -6px;margin-left: 10px;">Demande Reçu</h4>
-                </div>
-
-            <div class="txt-right"style="margin-top: -40px; " >
-                  <button v-if="suppr" class="btn-sm btn-danger " style="height: 35px; " v-on:click="deleteArrayDemande()"><b>Supprimer</b>
-                  </button>
-                  
-                  
-                  <button v-on:click="AnnulerSel()" v-if="suppr" class="btn-sm btn-warning " style="height: 35px; " ><b>Annuler</b>
-                  </button>
-               </div>
-         
-            
-            <hr style="margin-top:42px;">       
+            <div class="flex-t col-md-12">
+              <div class="flex-t col-md-6">
+                 <h4 style="margin-top: -6px;margin-left: 10px;">Demande Reçu</h4>
+              </div>
+            </div>
+            <hr >       
           
         
-            <div class="card-body"   v-for="commandec in commandeclient" v-if="commandec.demmande_traiter!==1">
+            <div class="card-body"  v-for="demandec in commandeclient" >
+              <div class="card-head"  id="cmddd"   >              
+                <div class="row col-md-12"  >
+                  <div class="row  col-md-12"  > 
+                    <div class=" col-md-12 flex-t" >
+                      <div class="flex-t col-md-7">
+                        <p id="txt">Demande   {{demandec.id}}</p>
+                      </div>
+                      <div  class="m-t--7 col-md-4 js-show-modal1" v-on:click="AfficheInfo(demandec.id)" style="cursor: pointer;">
+                          <p id="txt" style="float: right;">   {{demandec.date}}</p>
+                      </div>
+                      <div class="col-md-2 dropdown m-t-5" style="cursor: pointer;">
+                        <a data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"  style="float: right;">
+                          <i class="fas fa-ellipsis-v"  id="y"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" >
+                          <a class="dropdown-item js-show-modal1" v-on:click="AfficheInfo(demandec.id)" style="color: red; font-style: italic; font-weight: 900; cursor: pointer;">Afficher Plus
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12 flex-t m-b-10 js-show-modal1" v-on:click="AfficheInfo(demandec.id)" style="cursor: pointer;">
+                      <div class="col-md-8" >
+                        <p id="txt" >Condidat: {{demandec.nom.toUpperCase()}} {{demandec.prenom.toUpperCase()}}</p> 
 
-<div v-if="selectall"  id="c"  style="margin-bottom: -20px">
-       <input type="checkbox"  style=" margin-left: 10px; " :id="commandec.id" :value="commandec.id" v-model="checkedArticles" @change="changeButton(commandec)">
-      <label :for="commandec.id" style="margin-top: 5px; margin-left: 10px;"></label>
-    </div>
-    <div v-else  id="c" >
-      <input type="checkbox" :id="commandec.id" :value="commandec.id" style="margin-left: 10px;" v-model="articleIds" @click="deselectArticle(commandec.id)">
-      <label :for="commandec.id" style="margin-top: 5px; margin-left: 10px;"></label>
-    </div>
-
-
-  
-    <div class="card-head"  id="cmd">              
-    <div class="row"  >
-    <div >
-  <p class="cvendeur"  id="txt" >
-  Demande   {{commandec.id}}</p>
-      </div> 
- 
-    
-    <div  class="col-md-4 pr-1" id="cv">
-      <div style="margin-left:22px" >
-          <p id="txt" style="margin-left: 60px">  {{commandec.date}}</p>
-      </div>
-       
-    </div>
-   
-    <div class="col-md-4 pl-1" id="a">
-      <div class="dropdown" id="b" >
-      <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#" id="point"  style="margin-left: 245px;">
-        <i class="fas fa-ellipsis-v"  id="y"></i>
-       </a>
-      <div class="dropdown-menu dropdown-menu-right"  id="pl"  style="margin-left: 220px; margin-right: 50px;">
-        <a class="dropdown-item  js-show-modal1"  v-on:click="AfficheInfo(commandec.id)" style="color: red; font-style: italic; font-weight: 900; cursor: pointer;" >
-          Afficher Plus
-        </a>
-        <a class="dropdown-item " v-on:click="deleteDemandeReçuEmployeur(commandec)" style="color: red; font-style: italic; font-weight: 900; cursor: pointer;">
-         Supprimer
-        </a>
-      </div> 
-    </div>    
-
-    </div> 
-    <div  >
-<p id="txt" style="margin-top: -20px ;margin-left: 39px" >Condidat: </p> 
-<p id="txt1" style="margin-top: -20px;margin-left:120px;">{{commandec.nom.toUpperCase()}} {{commandec.prenom.toUpperCase()}}</p>
- </div>     
- <div  >
-<p id="txt" style="margin-top: -20px ;margin-left: 150px" >Annonce: </p> 
-<p id="txt1" style="margin-top: -20px;margin-left:220px;">{{commandec.libellé.toUpperCase()}} </p>
- </div>     
- 
-  </div>      
-   
-</div>    
-
-              </div>
-
-            </div>     
+                      </div >
+                      <div class="col-md-4">
+                        <p id="txt" > Annonce: {{demandec.libellé.toUpperCase()}}</p> 
+                      </div> 
+                  </div>
+                </div>
+              </div>                  
+            </div>
+          </div>     
               <?php echo e($article->links()); ?>
 
-              </div>
-
-            </div>      
           </div>
         </div>      
+      </div>
+    </div> 
 
 <!-- Modal1 for laptob-->
-<div class="wrap-modal11 js-modal1 p-t-38 p-b-20 p-l-15 p-r-15" v-if="hideModel"  id="app2"  style="margin-top:50px;">
-  <div class="overlay-modal11 js-hide-modal1 " ></div>
+<div class="wrap-modal11 js-modal1 p-t-80 p-b-20 p-l-15 p-r-15"  id="app2" v-if="hideModel" >
+  <div class="overlay-modal11 " v-on:click="CancelArticle()"></div>
 
   <div class="container" >
 
  
-    <div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent" style="width: 985px;"  v-for="commandec in commandeclient2">
+    <div class="bg0  p-b-100 p-lr-15-lg how-pos3-parent" style="width: 970px;padding-top: 40%">
 
       <button class="how-pos3 hov3 trans-04 p-t-6 js-hide-modal1" v-on:click="canceldemande()">
         <img src="images/icon-close.png" alt="CLOSE" >
       </button>
       
-
-      <div class="row" >
-    <div class="col-md-4 pr-1" >
-      <div class="p-b-30-p-l-40">
-         <h4 class="ltext-102 cl2" style="margin-left: 20px"> Demande </h4>
-         <h4 class="ltext-102 cl2" style="margin-left: 170px;margin-top: -30px"> de </h4>
-         <h4 class="ltext-102 cl2" style="margin-left: 220px;margin-top: -30px">{{commandec.nom}} </h4>
-         <h4 class="ltext-102 cl2" style="margin-left: 330px;margin-top: -30px"> {{commandec.prenom}} </h4>
-      </div>
+      <section class=" creat-article ">     
+        <div  class=" container-creat-article">
+          <div class="col-md-12 flex-t m-t--10 m-b-30">
+            <h4 class="ltext-102 col-md-9 cl2 m-l--60" >DEMANDE DE {{condidat.nom_Prenom.toUpperCase()}}
+            </h4>
+           
+            <div class="col-md-3 m-t--5">
+              <p  id="txt" >{{condidat.date}}</p>
+            </div>
+          </div>
+          <div class="row col-md-12 m-l--30" >
+            <div class="col-md-12" >
+              <p class="m-l--20" id="txt" >Information de condidat : </p>
+                  <div class="flex-t m-l-10">
+                      <p id="txt">Nom et prenom :</p>
+                     <p style="color: #ca2323">{{condidat.nom_Prenom.toUpperCase()}} </p>
+                  </div>
+                  <div class="flex-t m-l-10">
+                    <p id="txt">E-mail: </p>
+                    <p style="color: #ca2323" >{{condidat.email}}</p>
+                  </div>
+                  <div class="flex-t m-l-10">
+                      <p id="txt">Numéro_téléphone:</p>
+                     <p style="color: #ca2323">{{condidat.numeroTlf}}</p> 
+                  </div>
+                  <div class="flex-t m-l-10">
+                       <p id="txt">CV_client:</p>
+                       <a :href="'storage/demande_cv/'+ condidat.cv_client" download="">
+                        <p style=" cursor: pointer;">{{condidat.cv_client}}</p>
+                     </a>
+                  </div>
+            </div> 
+          </div>
+          <div class="row col-md-12 m-l--30 m-b-30" >
+            <div class="col-md-12" >
+              <p class="m-l--20" id="txt" >Information sur l'annonce : </p>
+                  <div class="flex-t m-l-10">
+                      <p id="txt">Libellé :</p>
+                     <p style="color: #ca2323">{{annoceInfo.libellé}} </p>
+                  </div>
+                  <div class="flex-t m-l-10">
+                    <p id="txt">Discription: </p>
+                    <p style="color: #ca2323" >{{annoceInfo.discription}}</p>
+                  </div>
+            </div> 
+          </div>
+          <div class="row col-md-10">
+              <div class="col-md-12">
+                <button v-on:click=" Recudemande(condidat.id);" class="btn-sm btn-success " style=" height: 35px; border: 0; width: 100px; border-radius: 1em; font-size: 12px;  font-weight: 700; float: right;" ><b>Traiter</b></button>     
+              </div>
+          </div>
+        </div>
+      </section>
     </div>
-    <div class="col-md-4 px-1">
-
-     
-    </div>
-    <div class="col-md-4 pl-1" >
-      <div class=""style="margin-top: 11px;" >
-       
-      <p class=""  id="tt" style="margin-left: 180px;margin-top: -5px">{{commandec.date}}</p>
-      </div>
-    </div>
-    </div>  
-   
-
-    <div class="row" style="margin-left:22px;margin-top:52px;"  v-for="emplC in employeur" >
-    <div class="col-md-4 pr-1" >
-      <div style="margin-left:-16px;">
-          <p class="" id="t2" > Information de condidat:<br>  </p>
-              <p id="t1" style="margin-left: 50px;margin-top: 10px">   Nom et prenom :</p>
-             <p id="t3" style="margin-left: 180px;margin-top: -22px">   {{emplC.nom}}  {{emplC.prenom}} <br> </p>
-            <p id="t1" style="margin-left: 50px;margin-top: 10px"> E-mail: </p>
-            <p id="t3" style="margin-left: 110px;margin-top:-22px">{{emplC.email}} 
-              <br>  </p>
-              <p id="t1" style="margin-left: 50px;margin-top: 10px">   Numéro_téléphone:</p>
-             <p id="t3" style="margin-left: 210px;margin-top:-22px">  {{emplC.numeroTelephone}}</p> 
-               <p id="t1" style="margin-left: 50px;margin-top: 10px">   CV_client:{{emplC.cv_client}}</p>
-     
-    </div>
-    </div>  
-
+  </div>
 </div>
-    
-
-    <div class="row" style="margin-left:22px;margin-top:20px;" v-for="emplC in commandeclient2" >
-    <div class="col-md-10 pr-1" >
-      <div style="margin-left:-16px;">
-       <p class="" id="t2" >Information sur l'annonce :<br> </p>
-       <p class=""  id="t1"  style="margin-top: 10px;margin-left: -60px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-       Libellé :</p>
-      <p id="t3" style="margin-left:120px;margin-top: -22px"> {{emplC.libellé}}</p>
-       
-       <p class=""  id="t1" style="margin-top: 10px;margin-left: 50px" > Discription :</p>
-     <p id="t3" style="margin-left: 150px;margin-top: -22px"> {{emplC.discription}} </p>
-       </div>
-    </div>
-    </div>  
-
-    <div class="row" style="margin-left:400px;">
-    <div class="col-md-8 pr-1" >
-      <div style="margin-left:464px">
-      <button v-on:click=" Recudemande(commandec.id);" class="btn-sm btn-success " style="height: 35px; " ><b>Traiter</b>
-
-                  </button>     
-                   </div>
-    </div>
-   
-    </div> 
-    
-      </div>
-      </div>
-
-    </div>
 
 
 
@@ -229,25 +175,28 @@ var app2 = new Vue({
     produit:[],
     openInfo: false,
     hideModel: false,
-   
- 
- 
+    condidat: {
+      nom_Prenom: 'non',
+
+    },
     detaillsA: {
       idA: 0,
     },
+    annoceInfo:[],
                
   },
 methods: {
+
   Recudemande: function(id){
 
             axios.put(window.Laravel.url+'/recudemande/'+id)
               .then(response => {
                   console.log(this.employeur)
-                  this.employeur.forEach(key=>{
-                    if(response.data.etat){
+                  app.commandeclient.forEach(key=>{
+                    if(key.id == id){
                         
-                      var position = this.employeur.indexOf(key);
-                      this.employeur.splice(position,1);
+                      var position = app.commandeclient.indexOf(key);
+                      app.commandeclient.splice(position,1);
                     }
                   })
                   Swal.fire(
@@ -255,7 +204,6 @@ methods: {
                     'a été ajouter dans demande traité avec success.',
                     'success'
                   );
-                  window.location.reload();
                   $('.js-modal1').removeClass('show-modal1');    
                  })
               .catch(error => {
@@ -267,12 +215,15 @@ methods: {
            this.hideModel = false; 
           },
   detaillsdemandeReçuEmplyeur: function(){
+    console.log(",this.detaillsA",this.detaillsA)
     axios.post(window.Laravel.url+'/detaillsdemandereçuemplyeur', this.detaillsA)
         .then(response => {
-             this.commandeclient2 = response.data;
-             this.employeur = window.Laravel.emploC;
-             this.produit = window.Laravel.prV;
-             console.log("this.emplC", this.commandeclient2);
+             this.commandeclient2 = response.data.demande_detaills;
+             this.condidat = this.commandeclient2[0] 
+             this.annoceInfo = response.data.annonce[0]; 
+             console.log("this.condidat", this.commandeclient2);
+             console.log("this.annoceInfo", this.annoceInfo);
+
         })
         .catch(error =>{
              console.log('errors :' , error);

@@ -215,6 +215,8 @@ data:{
   },
 methods: {
   AfficheInfo: function($id){
+    $('.js-modal1').addClass('show-modal1');
+    app2.hideModel = true;
     app2.openAjout = false ;
     app2.detaillsCommande();
   },

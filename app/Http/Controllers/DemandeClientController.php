@@ -17,7 +17,10 @@ class DemandeClientController extends Controller
      
     public function get_demande_client(){
         $c = Client::find(Auth::user()->id);
-        $article = \DB::table('demande_emploies')->where('client_id', $c->id)->orderBy('created_at','desc')->paginate(5) ;
+        $article = \DB::table('demande_emploies')
+        ->where([['client_id', $c->id],['demandeDClient',0]])
+        ->select('demande_emploies.*',\DB::raw('DATE(demande_emploies.created_at) as date'))
+        ->orderBy('created_at','desc')->paginate(5) ;
         $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
         $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
         $favoris = \DB::table('produits')->get();
@@ -30,13 +33,23 @@ class DemandeClientController extends Controller
         return view('demande_clinet',['article'=>$article, 'idAdmin' => $c->id,'categorie'=>$categorie ,'categorieE'=>$categorieE,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command,'prixTotale' => $prixTotale]);
     } 
     public function detaillsDemande(Request $request){
-        $demande_detaills = \DB::table('demande_emploies')->where('id', $request->idA)->get();
-        return  $demande_detaills;
+        $demande_detaills = \DB::table('demande_emploies')->where('id', $request->idA)
+        ->select('demande_emploies.*',\DB::raw('DATE(demande_emploies.created_at) as date'))
+        ->get();
+
+        $annonce = \DB::table('demande_emploies')
+        ->join("annonce_emploies",'annonce_emploies.id','=','demande_emploies.annonceE_id')
+        ->where('demande_emploies.id', $request->idA)
+        ->select('annonce_emploies.*')
+        ->get();
+
+        return  ['demande_detaills'=>$demande_detaills,'annonce'=>$annonce];
     }
 
     public function deleteDemande($id){
         $demande = Demande_emploie::find($id);
-        $demande->delete();
+        $demande->demandeDClient=1;
+        $demande->save();
         return Response()->json(['etat' => true]);
     }
  

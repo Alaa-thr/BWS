@@ -3811,6 +3811,12 @@ input.num-product::-webkit-inner-spin-button {
     border-radius: 25px;
     height: 70px;
   }
+  #cmddd{
+  
+  border: 2px solid gray;
+  border-radius: 25px;
+  
+}
    #cb{
      margin-left: 33px;
      margin-top: -33px;
@@ -3979,4 +3985,18 @@ color: white;}
   display: none;
   margin-top: -12%;
   margin-left: 88%;
+}
+.creat-article{
+  border-style: solid ;
+  border-color: rgb(202, 202, 202);
+  border-radius: 10px;
+  margin-top: -35%;
+  margin-left: 10%;
+  margin-right: 10%;
+
+}
+.container-creat-article{
+  padding: 10%;
+  padding-right: 100px;
+  width: 120%
 }

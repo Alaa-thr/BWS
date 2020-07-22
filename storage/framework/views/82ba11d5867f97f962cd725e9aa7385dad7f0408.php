@@ -12,169 +12,142 @@
   </div>
   <div class="content" id="app">
     <div class="row">
+   
       <div class="col-md-12">
         <div class="card">
           <div class="card-header" >
-                
-                <div class="flex-t">
-                    <input type="checkbox" id="article" @change="selectAll()" v-model="allSelected" style="margin-top: 5px;">
-                    <label for="article"></label>
-                    <h4 style="margin-top: -6px;margin-left: 10px;">Demande Traitée</h4>
+            <div class="col-md-12">
+              <div class="flex-t col-md-12">
+                <div class="flex-t col-md-6">
+                  <input type="checkbox" id="article" @change="selectAll()" v-model="allSelected">
+                  <label for="article"></label> 
+                  <h4 style="margin-top: -6px;margin-left: 10px;">Demande Traitée</h4>
                 </div>
 
-            <div class="txt-right"style="margin-top: -40px; " >
+                <div class="txt-right col-md-6" >
                   <button v-if="suppr" class="btn-sm btn-danger " style="height: 35px; " v-on:click="deleteArrayArticle()"><b>Supprimer</b>
                   </button>
-                  
-                  
                   <button v-on:click="AnnulerSel()" v-if="suppr" class="btn-sm btn-warning " style="height: 35px; " ><b>Annuler</b>
                   </button>
-               </div>
-            
-            <hr style="margin-top:42px;">       
-          
-        
-            <div class="card-body"   v-for="commandec in commandeclient" v-if="commandec.demmande_traiter===1" >
-
-<div v-if="selectall"  id="c"  >
-
-       <input type="checkbox"  style=" margin-left: 10px;" :id="commandec.id" :value="commandec.id" v-model="checkedArticles" @change="changeButton(commandec)">
-      <label :for="commandec.id" style="margin-top: -20px; margin-left: 10px;"></label>
-    </div>
-    <div v-else  id="c" > 
-      <input  type="checkbox" :id="commandec.id" :value="commandec.id" style="margin-left: 10px;" v-model="articleIds" @click="deselectArticle(commandec.id)">
-      <label :for="commandec.id" style="margin-top: 5px; margin-left: 10px;"></label>
-    </div>
-
-
-  
-    <div class="card-head" >              
-    <div class="row"  >
-    <div  style="margin-top: 1px">
-  <p class="cvendeur"  id="txt" >
-  Demande  {{commandec.id}}</p>
-      </div> 
- 
-    
-    <div  class="col-md-4 pr-1" id="cv"  style="margin-top: -68px;margin-left: 350px">
-      <div style="margin-left:22px" >
-          <p id="txt" >  {{commandec.date}}</p>
-      </div>
-       
-    </div>
-   
-    <div class="col-md-4 pl-1" id="a" style="margin-top: -5px;margin-left: 950px">
-      <div class="dropdown" id="b" >
-      <a class="f" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#" id="point" >
-        <i class="fas fa-ellipsis-v"  id="y"></i>
-       </a>
-      <div class="dropdown-menu dropdown-menu-right"  id="pl"  style="margin-right: 300px;">
-      <a class="dropdown-item js-show-modal1"  v-on:click="AfficheInfo(commandec.id)" style="color: red; font-style: italic; font-weight: 900; cursor: pointer;" >  
-      Afficher Plus</a>
-    <a class="dropdown-item" v-on:click="deleteCommandeTraiterEmployeur(commandec)"
-    style="color: red; font-style: italic; font-weight: 900; cursor: pointer;">
-    Supprimer</a>
-       </div>
-      
-    </div>    
-
-    </div>      
-
-  </div>      
-
-  <hr id="cvendeur" style="margin-top: -20px;margin-bottom: -10px">
-
-    
-</div>                  
+                </div>
               </div>
-
-            </div>     
+              <hr>       
+            </div>
+            <div class="card-body col-md-12 " >
+              <div class="card-head m-t--20 " style="border: 1px "  v-for="commandec in commandeclient" >
+                <div class="row  col-md-12 ">
+                  <div class=" col-md-12 flex-t" >
+                    <div class="col-md-6" v-if="selectall" >
+                      <input type="checkbox"  :id="commandec.id" :value="commandec.id" v-model="checkedArticles" @change="changeButton(commandec)">
+                      <label :for="commandec.id" id="txt">Demande  {{commandec.nom_Prenom}}</label>
+                    </div>
+                    <div class="col-md-6 " v-else>
+                      <input type="checkbox" :id="commandec.id" :value="commandec.id"  v-model="articleIds" @click="deselectArticle(commandec.id)">
+                      <label :for="commandec.id" id="txt">Demande  {{commandec.nom_Prenom}}</label>
+                    </div>
+                  
+                    <div  class="col-md-4 m-t-2 js-show-modal1" v-on:click="AfficheInfo(commandec.id,commandec.client_id)" style="cursor: pointer;">
+                        <label id="txt" >{{commandec.date}} DA </label>
+                    </div>
+                    <div class="col-md-2 dropdown">
+                      
+                        <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"  style="float: right;">
+                              <i class="fas fa-ellipsis-v"  id="y"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right"  >
+                            <a  class="dropdown-item js-show-modal1" v-on:click="AfficheInfo(commandec.id,commandec.client_id)" 
+                            style="color: red; font-style: italic; font-weight: 900; cursor: pointer;" >Afficher Plus</a>
+                            <a class="dropdown-item" v-on:click="deleteCommandeTraiterEmployeur(commandec)"
+                            style="color: red; font-style: italic; font-weight: 900; cursor: pointer;">
+                            Supprimer</a>
+                        </div>
+                     
+                    </div>
+                    
+                  
+                </div>
+              </div>
+              <hr class="m-t-10 m-b-30">                  
+            </div>
+          </div>     
               <?php echo e($article->links()); ?>
 
-              </div>
-
-            </div>      
-          </div>
-        </div>      
+        </div>
+      </div>      
+    </div>
+  </div>      
+</div>
+      
 
 <!-- Modal1 for laptob-->
-<div class="wrap-modal11 js-modal1 p-t-38 p-b-20 p-l-15 p-r-15" v-if="hideModel"  id="app2"  style="margin-top:50px;">
-  <div class="overlay-modal11 js-hide-modal1 " ></div>
+<div class="wrap-modal11 js-modal1 p-t-80 p-b-20 p-l-15 p-r-15"  id="app2" v-if="hideModel" >
+  <div class="overlay-modal11 " v-on:click="canceldemande()"></div>
 
   <div class="container" >
 
  
-    <div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent" style="width: 985px;"  v-for="commandec in commandeclient2">
+    <div class="bg0  p-b-100 p-lr-15-lg how-pos3-parent" style="width: 970px;padding-top: 40%">
 
-      <button class="how-pos3 hov3 trans-04 p-t-6 js-hide-modal1"  v-on:click="canceldemande()">
-        <img src="images/icon-close.png" alt="CLOSE">
+      <button class="how-pos3 hov3 trans-04 p-t-6 js-hide-modal1" v-on:click="canceldemande()">
+        <img src="images/icon-close.png" alt="CLOSE" >
       </button>
       
-
-      <div class="row" >
-    <div class="col-md-4 pr-1" >
-      <div class="p-b-30-p-l-40">
-         <h4 class="ltext-102 cl2" style="margin-left: 20px"> Demande </h4>
-         <h4 class="ltext-102 cl2" style="margin-left: 170px;margin-top: -30px"> de client</h4>
-         <h4 class="ltext-102 cl2" style="margin-left: 220px;margin-top: -30px">{{commandec.nom}} </h4>
-         <h4 class="ltext-102 cl2" style="margin-left: 330px;margin-top: -30px"> {{commandec.prenom}} </h4>
-      </div>
+      <section class=" creat-article ">     
+        <div  class=" container-creat-article">
+          <div class="col-md-12 flex-t m-t--10 m-b-30">
+            <h4 class="ltext-102 col-md-9 cl2 m-l--60" >DEMANDE DE {{condidat.nom_Prenom.toUpperCase()}}
+            </h4>
+           
+            <div class="col-md-3 m-t--5">
+              <p  id="txt" >{{condidat.date}}</p>
+            </div>
+          </div>
+          <div class="row col-md-12 m-l--30" >
+            <div class="col-md-12" >
+              <p class="m-l--20" id="txt" >Information de condidat : </p>
+                  <div class="flex-t m-l-10">
+                      <p id="txt">Nom et prenom :</p>
+                     <p style="color: #ca2323">{{condidat.nom_Prenom.toUpperCase()}} </p>
+                  </div>
+                  <div class="flex-t m-l-10">
+                    <p id="txt">E-mail: </p>
+                    <p style="color: #ca2323" >{{condidat.email}}</p>
+                  </div>
+                  <div class="flex-t m-l-10">
+                      <p id="txt">Numéro_téléphone:</p>
+                     <p style="color: #ca2323">{{condidat.numeroTlf}}</p> 
+                  </div>
+                  <div class="flex-t m-l-10">
+                       <p id="txt">CV_client:</p>
+                       <a :href="'storage/demande_cv/'+ condidat.cv_client" download="">
+                        <p style=" cursor: pointer;">{{condidat.cv_client}}</p>
+                     </a>
+                  </div>
+            </div> 
+          </div>
+          <div class="row col-md-12 m-l--30 m-b-30" >
+            <div class="col-md-12" >
+              <p class="m-l--20" id="txt" >Information sur l'annonce : </p>
+                  <div class="flex-t m-l-10">
+                      <p id="txt">Libellé :</p>
+                     <p style="color: #ca2323">{{annoceInfo.libellé}} </p>
+                  </div>
+                  <div class="flex-t m-l-10">
+                    <p id="txt">Discription: </p>
+                    <p style="color: #ca2323" >{{annoceInfo.discription}}</p>
+                  </div>
+            </div> 
+          </div>
+          <div class="row col-md-10">
+              <div class="col-md-12">
+                <button v-on:click=" deleteCommandeTraiterEmployeurr(condidat);" class="btn-sm btn-danger " style=" height: 35px; border: 0; width: 100px; border-radius: 1em; font-size: 12px;  font-weight: 700; float: right;" ><b>Supprimer</b></button>     
+              </div>
+          </div>
+        </div>
+      </section>
     </div>
-    <div class="col-md-4 px-1">
-
-     
-    </div>
-    <div class="col-md-4 pl-1" >
-      <div class=""style="margin-top: 11px;" >
-       
-      <p class=""  id="tt" style="margin-left: 180px;margin-top: -5px">{{commandec.date}}</p>
-      </div>
-    </div>
-    </div>  
-   
-
-    <div class="row" style="margin-left:22px;margin-top:52px;"  v-for="emplC in employeur" >
-    <div class="col-md-4 pr-1" >
-      <div style="margin-left:-16px;">
-          <p class="" id="t2" > Information de condidat:<br>  </p>
-              <p id="t1" style="margin-left: 50px;margin-top: 10px">   Nom et prenom :</p>
-             <p id="t3" style="margin-left: 180px;margin-top: -22px">   {{emplC.nom}}  {{emplC.prenom}} <br> </p>
-            <p id="t1" style="margin-left: 50px;margin-top: 10px"> E-mail: </p>
-            <p id="t3" style="margin-left: 110px;margin-top:-22px">{{emplC.email}} 
-              <br>  </p>
-              <p id="t1" style="margin-left: 50px;margin-top: 10px">   Numéro_téléphone:</p>
-             <p id="t3" style="margin-left: 210px;margin-top:-22px">  {{emplC.numeroTelephone}}</p> 
-               <p id="t1" style="margin-left: 50px;margin-top: 10px">   CV_client:{{emplC.cv_client}}</p>
-     
-    </div>
-    </div>  
-
+  </div>
 </div>
-    
-
-    <div class="row" style="margin-left:22px;margin-top:20px;" v-for="emplC in commandeclient2" >
-    <div class="col-md-10 pr-1" >
-      <div style="margin-left:-16px;">
-       <p class="" id="t2" >Information sur l'annonce :<br> </p>
-       <p class=""  id="t1"  style="margin-top: 10px;margin-left: -60px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-       Libellé :</p>
-      <p id="t3" style="margin-left:120px;margin-top: -22px"> {{emplC.libellé}}</p>
-       
-       <p class=""  id="t1" style="margin-top: 10px;margin-left: 50px" > Discription :</p>
-     <p id="t3" style="margin-left: 150px;margin-top: -22px"> {{emplC.discription}} </p>
-       </div>
-    </div>
-    </div>  
-
-  
-    
-      </div>
-      </div>
-
-    </div>
-
-
-
 
   
 
@@ -211,12 +184,20 @@
 var app2 = new Vue({
   el: '#app2',
   data:{
-    commandeclient2: [],employeur:[],produit:[],
+    commandeclient2: [],
+    employeur:[],
+    produit:[],
     openInfo: false,
     hideModel: false, 
+    condidat: {
+      nom_Prenom: 'non',
+
+    },
     detaillsA: {
       idA: 0,
     },
+    annoceInfo:[],
+               
 
   
   
@@ -224,18 +205,53 @@ var app2 = new Vue({
   },
 methods: {
 
+  deleteCommandeTraiterEmployeurr: function(article){
+    $('.js-modal1').removeClass('show-modal1');
+        Swal.fire({
+    title: 'Etes vous?',
+    text: "De supprimer cette Demande?",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Oui, Supprimer!'
+  }).then((result) => {
+      if (result.value) {
+          axios.delete(window.Laravel.url+'/deletecommandetraiteremplyeur/'+article.id)
+            .then(response => {
+              if(response.data.etat){
+                app.commandeclient.forEach(key =>{
+                  if(key.id == article.id){
 
+                    var position = app.commandeclient.indexOf(key);
+                       app.commandeclient.splice(position,1);
+                  }
+                })
+                       
+                      
+              }                     
+            })
+            .catch(error =>{
+                       console.log('errors :' , error);
+            })
+      Swal.fire(
+        'Effacé!',
+        'Votre Demande a été supprimé.',
+        'success'
+      )
+    }
+    
+    })
+  },
   detaillsacommandeTraiterEmplyeur: function(){
 
     axios.post(window.Laravel.url+'/detaillsacommandetraiteremplyeur', this.detaillsA)
 
         .then(response => {
+            this.commandeclient2 = response.data.demande_detaills;
+             this.condidat = this.commandeclient2[0] 
+             this.annoceInfo = response.data.annonce[0];
 
-             this.commandeclient2 = response.data;
-             this.employeur = window.Laravel.emploC;
-             this.produit = window.Laravel.prV;
-
-             console.log('this.emplC',this.commandeclient2);
         })
         .catch(error =>{
              console.log('errors :' , error);
@@ -270,7 +286,7 @@ methods: {
             Swal.fire({
             icon: 'error',
             title: 'Oops...',
-            text: 'Il ya aucun Article a supprimer!',
+            text: 'Il ya aucun Demande a supprimer!',
 
           }).then((result) => {
             this.allSelected = false;
@@ -282,7 +298,7 @@ methods: {
         }
         Swal.fire({
         title: 'Etes vous?',
-        text: "De supprimer cette Commande?",
+        text: "De supprimer cette Demande?",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -310,7 +326,7 @@ methods: {
                 this.selectall = true;
           Swal.fire(
             'Effacé!',
-            'Votre commande a été supprimé.',
+            'Votre Demande a été supprimé.',
             'success'
           )
         }
@@ -369,6 +385,7 @@ methods: {
 
                 .then(response => {
                      this.commandeclient = window.Laravel.article.data;
+                     console.log("this.commandeclient",this.commandeclient)
 
                 })
                 .catch(error =>{
@@ -383,6 +400,9 @@ methods: {
     else{
       this.artilcesDelete = [];
       this.suppr=false;
+    } 
+    if(this.checkedArticles.length < this.artilcesDelete.length){
+        this.artilcesDelete = this.artilcesDelete.filter(function(item) { return item != a; });
     }        
   }, 
   AnnulerSel: function(){

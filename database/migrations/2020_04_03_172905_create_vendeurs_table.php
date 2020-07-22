@@ -23,9 +23,10 @@ class CreateVendeursTable extends Migration
             $table->string('Addresse');
             $table->string('Nom_boutique')->nullable();
             $table->string('Num_Compte_Banquaire')->unique();
-            $table->integer('Nbre_abbon')->default(0);
             $table->string('image')->nullable();
             $table->integer('Nbre_signal')->default(0);
+            $table->boolean('deletedv')->default(0);
+            $table->boolean('deleted_at')->nullable();
             $table->timestamps();
         });
     }

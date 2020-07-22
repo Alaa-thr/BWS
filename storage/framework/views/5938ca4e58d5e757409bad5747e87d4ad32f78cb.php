@@ -71,113 +71,89 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header" >
-          <?php if(session()->has('success')): ?>
-<div class="row"> 
-<div class="alert alert-success" style="  margin-left:33px;width: 960px;">
+            <?php if(session()->has('success')): ?>
+              <div class="row"> 
+                <div class="alert alert-success" style="  margin-left:33px;width: 960px;">
 
-<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;
 
-</button>
- <?php echo e(session()->get('success')); ?>
+                </button>
+                 <?php echo e(session()->get('success')); ?>
 
-</div>
-
-</div>
-      <?php endif; ?>
-                <div class="flex-t">
-                    <input type="checkbox" id="article" @change="selectAll()" v-model="allSelected" style="margin-top: 5px;">
-                    <label for="article"></label> 
-                   
-                    <h4 style="margin-top: -6px;margin-left: 10px;">Commande </h4>
                 </div>
 
-            <div class="txt-right"style="margin-top: -40px; " >
-                  <button v-if="suppr" class="btn-sm btn-danger " style="height: 35px; " v-on:click="deleteArrayArticle()"><b>Supprimer</b>
-                  </button>
-                  
-                  
-                  <button v-on:click="AnnulerSel()" v-if="suppr" class="btn-sm btn-warning " style="height: 35px; " ><b>Annuler</b>
-                  </button>
-               </div>
-         
-            
-            <hr style="margin-top:42px;">       
-          
-        
-            <div class="card-body"  v-for="commandec in commandeclient" >
-
-<div v-if="selectall" id="c">
-       <input type="checkbox"  style=" margin-left: 10px;" :id="commandec.id" :value="commandec.id" v-model="checkedArticles" @change="changeButton(commandec)">
-      <label :for="commandec.id" style="margin-top: 40px; margin-left: 10px;"></label>
-    </div>
-    <div v-else id="c">
-      <input type="checkbox" :id="commandec.id" :value="commandec.id" style="margin-left: 10px;" v-model="articleIds" @click="deselectArticle(commandec.id)">
-      <label :for="commandec.id" style="margin-top: 40px; margin-left: 10px;"></label>
-    </div>
-
-
-  
-    <div class="card-head"  id="cmd"   >              
-    <div class="row"  >
-    <div >
-        <p class="cvendeur"  id="txt" >Commande {{commandec.id}}</p>
-    </div> 
- 
-    
-    <div  class="col-md-4 pr-1" id="cv">
-      <div style="margin-left:22px" >
-          <p id="txt" > {{commandec.created_at}} </p>
-      </div>
-       
-    </div>
-   
-    <div class="col-md-4 pl-1" id="a">
-      <div class="" id="b" >
-      <a class="f" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#" id="point"  style="  margin-left: 245px;">
-        <i class="fas fa-ellipsis-v"  id="y"></i>
-       </a>
-      <div class="dropdown-menu " x-placement="right-start" id="pl" >
-      <a   v-on:click="AfficheInfo(commandec.id)"  class="dropdown-item js-show-modal1" 
-      style="color: red; font-style: italic; font-weight: 900; cursor: pointer;" >Afficher Plus</a>
-    <a class="dropdown-item" v-on:click="deleteCommandeVendeur(commandec)"
-    style="color: red; font-style: italic; font-weight: 900; cursor: pointer;">
-    Supprimer</a>
-       </div>
-      
-    </div>    
-
-    </div>      
-    <div  class="col-md-4 pr-1" id="cb" >
-      <div  v-if="commandec.address != null">
-          <p id="txt" >Addresse : {{commandec.address}}</p>
-      </div>
-       
-    </div>
-
-    <div  class="col-md-4 pr-1" id="cbb">
-      <div  >
-          <p id="txt" >Prix Total : {{commandec.prix_total}}</p>
-      </div>
-       
-    </div>
-
-  </div>      
-
-  
-
-
-    
-</div>                  
               </div>
-
-            </div>     
+            <?php endif; ?>
+            <div class="flex-t col-md-12">
+              <div class="flex-t col-md-4">
+                  <input type="checkbox" id="article" @change="selectAll()" v-model="allSelected" style="margin-top: 5px;">
+                  <label for="article"></label> 
+                  <h4 style="margin-top: -6px;margin-left: 10px;">Commande </h4>
+              </div>
+              <div class="flex-t col-md-12" >
+                <div class="col-md-5">
+                  <button v-if="suppr" class="btn-sm btn-danger " style="height: 35px; float: right;" v-on:click="deleteArrayArticle()"><b>Supprimer</b></button>
+                </div>
+                <div class="col-md-3" >
+                  <button v-on:click="AnnulerSel()" v-if="suppr" class="btn-sm btn-warning " style="height: 35px;" ><b>Annuler</b>
+                   </button>
+                </div>
+               </div>
+            </div>        
+            <hr >       
+                      
+                    
+          <div class="card-body"  v-for="commandec in commandeclient" >
+            <div class="card-head"  id="cmddd"   >              
+                <div class="row col-md-12"  >
+                  
+                  <div class="row  col-md-12"  > 
+                    <div class=" col-md-12 flex-t" >
+                       <div class="flex-t col-md-7" v-if="selectall">
+                         <input type="checkbox"  :id="commandec.id" :value="commandec.id" v-model="checkedArticles" @change="changeButton(commandec)">
+                        <label id="txt" :for="commandec.id" style="; margin-left: 10px;">Commande {{commandec.id}}</label>
+                      </div>
+                      <div class="flex-t col-md-7" v-else>
+                        <input type="checkbox" :id="commandec.id" :value="commandec.id"  v-model="articleIds" @click="deselectArticle(commandec.id)">
+                        <label id="txt" :for="commandec.id" style=" margin-left: 10px;">Commande {{commandec.id}}</label>
+                      </div>
+                      <div  class="m-t--7 col-md-4 js-show-modal1" v-on:click="AfficheInfo(commandec.id)" style="cursor: pointer;">
+                          <p id="txt" style="float: right;">  {{commandec.date}}</p>
+                      </div>
+                      <div class="col-md-2 dropdown m-t-5" style="cursor: pointer;">
+                        <a data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"  >
+                          <i class="fas fa-ellipsis-v"  id="y"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" >
+                          <a class="dropdown-item js-show-modal1" v-on:click="AfficheInfo(commandec.id)" style="color: red; font-style: italic; font-weight: 900; cursor: pointer;">Afficher Plus
+                          </a>
+                          <a class="dropdown-item" v-on:click="deleteCommandeVendeur(commandec)"style="color: red; font-style: italic; font-weight: 900; cursor: pointer;">Supprimer
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                    <div class="col-md-12 flex-t m-b-10 js-show-modal1" v-on:click="AfficheInfo(commandec.id)" style="cursor: pointer;">
+                      <div  class="m-l--25 col-md-7" v-if="commandec.address">
+                        <p id="txt" >Address: {{commandec.address}}</p> 
+                      </div>
+                      <div class="col-md-7"  v-else >
+                        <p id="txt"  >Code postal: {{commandec.code_postale}}</p>
+                      </div>
+                      <div class="col-md-4" >
+                        <p id="txt" style="float: right;" >Prix_total: {{commandec.prix_total}} DA </p>
+                      </div> 
+                    </div>
+                  </div>
+                </div>
+              </div> 
+            </div>    
               <?php echo e($article->links()); ?>
 
-              </div>
-
-            </div>      
           </div>
         </div>      
+      </div>
+    </div>      
  
 <!-- Modal1 for laptob-->
 <div class="wrap-modal11 js-modal1 p-t-40 p-b-20 p-l-15 p-r-15" id='app2'  >
@@ -212,7 +188,7 @@
                             <img :src="'storage/produits_image/'+ produit.image" alt="IMG">
                           </div>
                         </div>
-                        <div class="column-2 p-l-40 p-r-40 p-t-10">{{produit.prix}} DA
+                        <div class="column-2 p-l-40 p-r-40 p-t-10">{{produit.qte}} x {{produit.prix_total}} DA
                         </div>
                         <div class="column-2 p-l-40 ">
                           <div class="input-group mb-3 ">
@@ -293,7 +269,7 @@
                   <!--  -->
   
                   <div class="flex-w flex-r-m p-b-10">
-                    <div v-on:click="deleteCommande2(commandeclientD.id)">
+                    <div v-on:click="deleteCommande2(commandeclientD)">
                       <button class="cl0 size-102 bg10 bor1 trans-04 m-r-5" 
                       >
                         Supprimer
@@ -332,6 +308,7 @@
            'Fav'         => $Fav,
            'command'         => $command,
            'prixTotale'   => $prixTotale,
+           'prixx' => $prixx,
            "url"      => url("/")  
       ]); ?>;
 </script>
@@ -355,6 +332,8 @@ var app2 = new Vue({
 methods: {
 
    deleteCommande2(cmd){
+    console.log(cmd)
+    console.log('app',app.commandeclient)
       $('.js-modal1').removeClass('show-modal1');
         Swal.fire({
           title: 'Etes vous?',
@@ -366,15 +345,21 @@ methods: {
           confirmButtonText: 'Oui, Supprimer!'
         }).then((result) => {
             if (result.value) {
-                axios.get(window.Laravel.url+'/deletecommande/'+cmd)
+                axios.get(window.Laravel.url+'/deletecommande/'+cmd.id)
                   .then(response => {
                     if(response.data.etat){
-                             var position = app.commandeclient.indexOf(cmd);
-                             app.commandeclient.splice(position,1);
-                             app.checkedArticles.length = [];
-                             app.suppr=false;
-                             app.artilcesDelete = [];
-                             app.selectall = true;
+                      app.commandeclient.forEach(key=>{
+                        if(key.id == cmd.id ){
+                          console.log("1")
+                            var position = app.commandeclient.indexOf(key);
+                        app.commandeclient.splice(position,1);
+                        }
+                      })
+                        
+                        app.checkedArticles.length = [];
+                        app.suppr=false;
+                        app.artilcesDelete = [];
+                        app.selectall = true;
                     }                     
                   })
                   .catch(error =>{
@@ -390,7 +375,6 @@ methods: {
           })
     },
   detaillsCommande: function(){
-
     axios.post(window.Laravel.url+'/detaillsacommande', this.detaillsA)
 
         .then(response => {
@@ -440,7 +424,7 @@ data:{
   },
 methods: {
     deleteCommandeVendeur($cmd){
-      app2.deleteCommande2($cmd.id);
+      app2.deleteCommande2($cmd);
     },
    deleteArrayArticle:function(){
         if(this.artilcesDelete.length == 0){
@@ -511,11 +495,23 @@ AfficheInfo: function($id){
                         for(i=0; i<window.Laravel.cmd.length; i++ ){
                             if(key1.id == window.Laravel.cmd[i].id){
 
-                               this.commandeclient.push({id: key1.id ,prix_total:window.Laravel.cmd[i].prix_total,address:window.Laravel.cmd[i].address,created_at:window.Laravel.cmd[i].created_at});
+                               this.commandeclient.push({id: key1.id ,address:window.Laravel.cmd[i].address,date:window.Laravel.cmd[i].date});
                                 i = window.Laravel.cmd.length;
                             }
                        }
                      });
+                     console.log(",this.commandeclient",this.commandeclient)
+                     console.log(",window.Laravel.prixx",window.Laravel.prixx)
+                      this.commandeclient.forEach(key=>{
+                        for(i=0; i<window.Laravel.prixx.length  ; i++ ){
+                            if(key.id == window.Laravel.prixx[i].id){
+                               this.commandeclient[i]['prix_total']=window.Laravel.prixx[i].PrixTotal;
+                                i = window.Laravel.prixx.length;
+                            }
+                       }
+                    
+                  })
+                      console.log(",this.commandeclient",this.commandeclient)
 
                 })
                 .catch(error =>{

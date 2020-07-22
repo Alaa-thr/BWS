@@ -15,11 +15,11 @@ class AddColumnFkProduits extends Migration
     {
         Schema::table('produits', function (Blueprint $table) {
           
-            $table->foreign('sous_categorie_id')->references('id')->on('sous_categories')->ondelete("SET NULL");
             $table->foreign('vendeur_id')->references('id')->on('vendeurs');
+            $table->foreign('sous_categorie_id')->references('id')->on('sous_categories')->onDelete('SET NULL');     
 
         });
-        DB::unprepared('ALTER TABLE `produits` DROP PRIMARY KEY ,ADD PRIMARY KEY (`id`,`vendeur_id`,`sous_categorie_id`)');
+       
     }
 
     /**
@@ -30,11 +30,11 @@ class AddColumnFkProduits extends Migration
     public function down()
     {
         Schema::table('produits', function (Blueprint $table) {
-            $table->dropForeign('sous_categories_sous_categorie_id_foreign');
-            $table->dropForeign(['sous_categorie_id']);
             $table->dropForeign('vendeurs_vendeur_id_foreign');
             $table->dropForeign(['vendeur_id']);
-
+            $table->dropForeign('sous_categories_sous_categorie_id_foreign');
+            $table->dropForeign(['sous_categorie_id']);
+           
         });
     }
 }

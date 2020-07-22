@@ -70,13 +70,10 @@
                                                                       </div>
                                                                        <a class="dropdown-item" href="{{ route('accueil') }}" id="n"><i class="now-ui-icons business_bank" id="m"></i><b>Allez vers Acceuil</b></a>
                                                                        <a class="dropdown-item" href="{{ route('profilAdmin') }}" id="n"><i class="now-ui-icons users_single-02" id="m"></i><b>Profil</b></a>
-                                                                       <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                                         document.getElementById('logout-form').submit();" id="n">
-                                                                         <i class="now-ui-icons media-1_button-power" id="m"></i>
-                                                                         {{ __('Déconnexion') }} </a>
-                                                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                                                           @csrf
-                                                                         </form>
+                  <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();" id="n">
+          <i class="now-ui-icons media-1_button-power" id="m"></i>{{ __('Déconnexion') }} </a>
+          <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+          </form>
                                                                    </div>
                                                                  </div> 
                                                              </li>

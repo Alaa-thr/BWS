@@ -31,6 +31,18 @@ use App\Rules\ModifieSousCategorieExiste;
 use App\Rules\ModifieCategorieExiste;
 class AdminController extends Controller
 {
+
+    public function appectPublication(Request $request){
+        $admin=Admin::find(Auth::user()->id);
+        \DB::table('paiement_vendeurs')->where('vendeur_id',$request->id)->update(['response'=>1,'admin_id'=>$admin->id]);
+        return true;
+    }
+    public function appectAnnonce(Request $request){
+        $admin=Admin::find(Auth::user()->id);
+        \DB::table('paiement_employeurs')->where('employeur_id',$request->id)->update(['response'=>1,'admin_id'=>$admin->id]);
+        return true;
+    }
+
     public function profil_admin(){
         $admin=Admin::find(Auth::user()->id);
         return view('profil_admin',['admin'=>$admin]);
@@ -47,7 +59,29 @@ class AdminController extends Controller
         $admin=Admin::find(Auth::user()->id); 
         return view('client_admin',['client'=>$client, 'admin'=>$admin]);
     }
+    public function deleteVendeur($id){
+     
+        $vendeur = Vendeur::where('id',$id)->update(['deleted_at' => new \dateTime]);
+        $vendeur = Vendeur::where('id',$id)->update(['deletedv' => 1]);
+        return Response()->json(['etat' => true]);
 
+    }
+    public function deleteClient($id){
+        
+        $client = Client::where('id',$id)->update(['deleted_at' => new \dateTime]);
+          $client = Client::where('id',$id)->update(['deletedc' => 1]);
+        return Response()->json(['etat' => true]);
+    }
+    public function deleteEmployeur($id){
+        $employeur = Employeur::where('id',$id)->update(['deletede' => 1]);
+        $employeur = Employeur::where('id',$id)->update(['deleted_at' => new \dateTime]);
+        return Response()->json(['etat' => true]);
+    }
+    public function deleteAdmin($id){
+        $employeur = Employeur::where('id',$id)->update(['deletede' => 1]);
+        $admin = Admin::where('id',$id)->update(['deleted_at' => new \dateTime]);
+        return Response()->json(['etat' => true]);
+    }
     public function employeur_admin(){
         $employeur = Employeur::where('deletede',0)->paginate(10); 
         $admin=Admin::find(Auth::user()->id); 
@@ -354,27 +388,6 @@ class AdminController extends Controller
         return  $admin_detaills;
     }
 
-    public function deleteVendeur($id){
-     
-        $vendeur = Vendeur::where('id',$id)->update(['deletedv' => 1]);
-        return Response()->json(['etat' => true]);
-        
-    }
-    public function deleteClient($id){
-        
-        $client = Client::where('id',$id)->update(['deletedc' => 1]);
-        return Response()->json(['etat' => true]);
-    }
-    public function deleteEmployeur($id){
-        
-        $employeur = Employeur::where('id',$id)->update(['deletede' => 1]);
-        return Response()->json(['etat' => true]);
-    }
-    public function deleteAdmin($id){
-        
-        $admin = Admin::where('id',$id)->update(['deleteda' => 1]);
-        return Response()->json(['etat' => true]);
-    }
     public function recupConfirmer($id){
         $vendeur = Vendeur::where('id',$id)->update(['deletedv' => 0]);
         return Response()->json(['etat' => true]);   
@@ -498,11 +511,11 @@ public function VerifierAnnonce($id){
  
     $paiementemployeurs= \DB::table('paiement_employeurs')->where([['employeur_id',$id],['response',0]])->get();
 
-if(count($paiementemployeurs) != 0){
-    return Response()->json(['etat' => true]);
-}
-else 
-return Response()->json(['etat' => false]);
+    if(count($paiementemployeurs) != 0){
+        return Response()->json(['etat' => true]);
+    }
+    else 
+    return Response()->json(['etat' => false]);
 
 }
 
