@@ -36,14 +36,6 @@ class LogoutUsers
                 $usr = Admin::find($user->id);
             }
             if($user->number_confirm != null){
-               
-                $user->number_confirm = mt_rand(1000,9999);
-                $user->save();
-                Nexmo::message()->send([
-                    'to'   => '213540844782',
-                    'from' => 'Basmah.ws',
-                    'text' => 'Basmah.ws code '.Auth::user()->number_confirm.'.'
-                ]);
                 $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
                 $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
                 return Response()->view('confirm_number',['categorie'=>$categorie,'categorieE'=>$categorieE]);

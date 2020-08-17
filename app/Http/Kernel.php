@@ -24,7 +24,8 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\LoginUserAdmin::class,
         \App\Http\Middleware\LoginUserClient::class,
         \App\Http\Middleware\LoginUserVendeur::class,
-        \App\Http\Middleware\Confirmation::class
+        \App\Http\Middleware\Confirmation::class,
+        \App\Http\Middleware\LogoutUsers::class,
 
     ];
 
@@ -42,7 +43,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            \App\Http\Middleware\LogoutUsers::class,
+            
 
            
 

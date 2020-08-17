@@ -55,8 +55,10 @@
          },
          methods:{
             sendSms: function(){
+                this.showAlert = false; 
                 axios.get(window.Laravel.url+"/sendsms")
                 .then(response => {
+                    if(response.data)
                     this.showAlert = true; 
                 })
                 .catch(error =>{

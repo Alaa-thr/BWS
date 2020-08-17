@@ -40,7 +40,7 @@ class BwsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('logout.user');
+        $this->middleware('logout.user',['except' => ['redirectTo','sendSms','nexmo']]);
         $this->middleware('confirmation.number');
     }
 
@@ -79,6 +79,11 @@ class BwsController extends Controller
             $messages = 'Le code est incorrect';
             $user->number_confirm = mt_rand(1000,9999);
             $user->save();
+            Nexmo::message()->send([
+                'to'   => '213540844782',
+                'from' => 'Basmah.ws',
+                'text' => 'Basmah.ws code '.Auth::user()->number_confirm.'.'
+            ]);
             return redirect('/confirmation')->withErrors(['number_confirm' => $messages]);
         }
         
@@ -3074,7 +3079,7 @@ public function emploiVilleSousCategoSearch($id,$idVille,$idSC){
         ->join('admins', 'admins.id', '=', 'articles.admin_id')
         ->select('admins.nom','admins.prenom','articles.*',\DB::raw('DATE(articles.created_at) as date'))
         ->orderBy('articles.created_at','desc')
-        ->get(3) ;
+        ->take(3)->get() ;
         return ['allArticle' => $allArticle];
     }
 

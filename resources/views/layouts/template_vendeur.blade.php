@@ -170,7 +170,7 @@
 									<span >
 										<i class="fa fa-angle-right" aria-hidden="true"></i>
 									</span>
-								 <ul class="sub-menu " style="width: 575%;" >
+								 <ul class="sub-menu " style="width: 990%;" >
                                     <div class="flex-w bg6 w-full p-lr-30 p-t-27 p-lr-15-sm">
                                                 <div class="filter-col8  p-b-27">
                                             
