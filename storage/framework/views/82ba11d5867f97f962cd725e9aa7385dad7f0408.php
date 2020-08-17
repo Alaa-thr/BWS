@@ -20,7 +20,7 @@
               <div class="flex-t col-md-12">
                 <div class="flex-t col-md-6">
                   <input type="checkbox" id="article" @change="selectAll()" v-model="allSelected">
-                  <label for="article"></label> 
+                  <label for="article" id="txt"></label> 
                   <h4 style="margin-top: -6px;margin-left: 10px;">Demande Traitée</h4>
                 </div>
 
@@ -47,12 +47,12 @@
                     </div>
                   
                     <div  class="col-md-4 m-t-2 js-show-modal1" v-on:click="AfficheInfo(commandec.id,commandec.client_id)" style="cursor: pointer;">
-                        <label id="txt" >{{commandec.date}} DA </label>
+                        <label id="txt"  style=" cursor: pointer;">{{commandec.date}} </label>
                     </div>
-                    <div class="col-md-2 dropdown">
+                    <div class="col-md-2 dropdown" style="cursor: pointer;">
                       
                         <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"  style="float: right;">
-                              <i class="fas fa-ellipsis-v"  id="y"></i>
+                              <i class="fas fa-ellipsis-v"  style="color: black"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right"  >
                             <a  class="dropdown-item js-show-modal1" v-on:click="AfficheInfo(commandec.id,commandec.client_id)" 
@@ -119,9 +119,9 @@
                   </div>
                   <div class="flex-t m-l-10">
                        <p id="txt">CV_client:</p>
-                       <a :href="'storage/demande_cv/'+ condidat.cv_client" download="">
-                        <p style=" cursor: pointer;">{{condidat.cv_client}}</p>
-                     </a>
+                       <a :href="'storage/demande_cv/'+ condidat.cv_client" download="" >
+                          <p style=" cursor: pointer;color: blue">{{condidat.cv_client}}</p>
+                        </a>
                   </div>
             </div> 
           </div>
@@ -140,7 +140,7 @@
           </div>
           <div class="row col-md-10">
               <div class="col-md-12">
-                <button v-on:click=" deleteCommandeTraiterEmployeurr(condidat);" class="btn-sm btn-danger " style=" height: 35px; border: 0; width: 100px; border-radius: 1em; font-size: 12px;  font-weight: 700; float: right;" ><b>Supprimer</b></button>     
+                <button v-on:click=" deleteCommandeTraiterEmployeurr(condidat);" class="btn-sm btn-danger " style=" height: 35px; border: 0; width: 150px; border-radius: 1em; font-size: 12px;  font-weight: 700; float: right;" ><b>Supprimer</b></button>     
               </div>
           </div>
         </div>
@@ -385,7 +385,6 @@ methods: {
 
                 .then(response => {
                      this.commandeclient = window.Laravel.article.data;
-                     console.log("this.commandeclient",this.commandeclient)
 
                 })
                 .catch(error =>{

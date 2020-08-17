@@ -62,9 +62,9 @@
         </div>      
     </div>
 		<!-- Title page -->
-	<section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url('images/bg-02.jpg');">
-		<h2 class="ltext-105 cl0 txt-center">
-			Contact
+	<section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url('images/contactus.jpg');">
+		<h2 class="ltext-105 cl0 txt-left m-l-70">
+			Contactez Nous
 		</h2>
 	</section>	
 		
@@ -104,7 +104,7 @@
 
 						<div class="size-212 p-t-2">
 							<span class="mtext-110 cl2 color-t">
-								Address
+								Addresse
 							</span>
 
 							<p class="stext-115 cl6 size-213 p-t-18">
@@ -120,11 +120,11 @@
 
 						<div class="size-212 p-t-2">
 							<span class="mtext-110 cl2 color-t">
-								Lets Talk
+								Parlons
 							</span>
 
 							<p class="stext-115 cl6 size-213 p-t-18">
-								+1 800 1236879
+								05-40-84-47-82
 							</p>
 						</div>
 					</div>
@@ -136,11 +136,11 @@
 
 						<div class="size-212 p-t-2">
 							<span class="mtext-110 cl2 color-t">
-								Sale Support
+								Email
 							</span>
 
 							<p class="stext-115 cl6 size-213 p-t-18 ">
-								basmah.WS@gmail.com
+								basmah.work_shop@gmail.com
 							</p>
 						</div>
 					</div>

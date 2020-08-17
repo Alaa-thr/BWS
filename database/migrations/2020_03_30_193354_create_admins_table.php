@@ -17,8 +17,6 @@ class CreateAdminsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->boolean('big_admin')->default(0);
-            $table->boolean('deleteda')->default(0);
-            $table->boolean('deleted_at')->default('NULL');
             $table->string('nom');
             $table->string('prenom');
             $table->string('email')->unique();

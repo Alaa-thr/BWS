@@ -18,12 +18,24 @@ use Validator;
 
 class EmployeurDemandeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('logout.user');
+        $this->middleware('login.employeur');
+    }
     public function get_demande_reçu_emplyeur(){
+        if(!Auth::check()){
+            return view('page_not_found',['categorie'=>\DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get() ,'categorieE'=>\DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get()]);
+            
+        }
         $c = Employeur::find(Auth::user()->id);
         $article = \DB::table('demande_emploies')
         ->join('annonce_emploies','annonce_emploies.id','=','demande_emploies.annonceE_id')
-        ->select('demande_emploies.id','annonce_emploies.libellé',\DB::raw('DATE(demande_emploies.created_at) as date'))
-        ->where([['demande_emploies.employeur_id', $c->id],['demande_emploies.demmande_traiter',0],['demandeDEmpl',0]])->orderBy('demande_emploies.created_at','desc')->paginate(5);
+        ->select('demande_emploies.id','annonce_emploies.libellé',\DB::raw('DATE(demande_emploies.created_at) as date'),'nom_Prenom','email','numeroTlf')
+        ->where([['demande_emploies.employeur_id', $c->id],['demande_emploies.demmande_traiter',0],['demandeDEmpl',0]])
+        ->orderBy('demande_emploies.created_at','desc')
+        ->paginate(15);
+
         $employeur = \DB::table('clients')->get(); 
         $produit = \DB::table('annonce_emploies')->get(); 
 

@@ -15,7 +15,7 @@ use App\User;
 use App\Categorie;
 use App\Sous_categorie;
 use App\Typechoisirvendeur;
-use App\Notification;
+use App\Notificatione;
 use Auth;
 use App\Http\Requests\ArticleRequest;
 use Illuminate\Support\Facades\Storage;
@@ -29,93 +29,142 @@ use App\Rules\CategorieExiste;
 use App\Rules\SousCategorieExiste;
 use App\Rules\ModifieSousCategorieExiste;
 use App\Rules\ModifieCategorieExiste;
+use Carbon\Carbon;
+
 class AdminController extends Controller
 {
-
+    public function __construct()
+    {
+        $this->middleware('logout.user');
+        $this->middleware('login.admin');
+    }
     public function appectPublication(Request $request){
         $admin=Admin::find(Auth::user()->id);
-        \DB::table('paiement_vendeurs')->where('vendeur_id',$request->id)->update(['response'=>1,'admin_id'=>$admin->id]);
+        \DB::table('paiement_vendeurs')->where('vendeur_id',$request->id)->update(['response'=>1,'admin_id'=>$admin->id,'updated_at'=> Carbon::now()]);
+        \DB::table("notificationes")->where('paiement_vendeur_id',$request->id)->delete();
         return true;
     }
     public function appectAnnonce(Request $request){
         $admin=Admin::find(Auth::user()->id);
-        \DB::table('paiement_employeurs')->where('employeur_id',$request->id)->update(['response'=>1,'admin_id'=>$admin->id]);
+        \DB::table('paiement_employeurs')->where('employeur_id',$request->id)->update(['response'=>1,'admin_id'=>$admin->id,'updated_at'=> Carbon::now()]);
+        \DB::table("notificationes")->where('paiement_employeur_id',$request->id)->delete();
         return true;
     }
 
     public function profil_admin(){
+        if(!Auth::check()){
+            return view('page_not_found',['categorie'=>\DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get() ,'categorieE'=>\DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get()]);
+            
+        }
         $admin=Admin::find(Auth::user()->id);
         return view('profil_admin',['admin'=>$admin]);
     }
     public function vendeur_admin(){
-        $vendeur =Vendeur::where('deletedv',0)->paginate(10);
+        if(!Auth::check()){
+            return view('page_not_found',['categorie'=>\DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get() ,'categorieE'=>\DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get()]);
+            
+        }
+        $vendeur =Vendeur::where('deleted_at',null)->paginate(10);
         $admin=Admin::find(Auth::user()->id); 
 
         return view('vendeur_admin',['vendeur'=>$vendeur,'admin'=>$admin]);
     }
 
     public function client_admin(){
-        $client =Client::where('deletedc',0)->paginate(10);
+        if(!Auth::check()){
+            return view('page_not_found',['categorie'=>\DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get() ,'categorieE'=>\DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get()]);
+            
+        }
+        $client =Client::where('deleted_at',null)->paginate(10);
         $admin=Admin::find(Auth::user()->id); 
         return view('client_admin',['client'=>$client, 'admin'=>$admin]);
     }
     public function deleteVendeur($id){
      
         $vendeur = Vendeur::where('id',$id)->update(['deleted_at' => new \dateTime]);
-        $vendeur = Vendeur::where('id',$id)->update(['deletedv' => 1]);
         return Response()->json(['etat' => true]);
 
     }
     public function deleteClient($id){
         
         $client = Client::where('id',$id)->update(['deleted_at' => new \dateTime]);
-          $client = Client::where('id',$id)->update(['deletedc' => 1]);
         return Response()->json(['etat' => true]);
     }
     public function deleteEmployeur($id){
-        $employeur = Employeur::where('id',$id)->update(['deletede' => 1]);
         $employeur = Employeur::where('id',$id)->update(['deleted_at' => new \dateTime]);
         return Response()->json(['etat' => true]);
     }
     public function deleteAdmin($id){
-        $employeur = Employeur::where('id',$id)->update(['deletede' => 1]);
         $admin = Admin::where('id',$id)->update(['deleted_at' => new \dateTime]);
         return Response()->json(['etat' => true]);
     }
     public function employeur_admin(){
-        $employeur = Employeur::where('deletede',0)->paginate(10); 
+        if(!Auth::check()){
+            return view('page_not_found',['categorie'=>\DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get() ,'categorieE'=>\DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get()]);
+            
+        }
+        $employeur = Employeur::where('deleted_at',null)->paginate(10); 
         $admin=Admin::find(Auth::user()->id); 
         return view('employeur_admin',['employeur'=>$employeur, 'admin'=>$admin]);
     }
 
     public function admin_admin(){
-        $admin = Admin::where('deleteda',0)->paginate(10); 
-        $a=Admin::find(Auth::user()->id); 
+        if(!Auth::check()){
+            return view('page_not_found',['categorie'=>\DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get() ,'categorieE'=>\DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get()]);
+            
+        }
+        $adminn = Admin::where('deleted_at',null)->paginate(10); 
+        $admin=Admin::find(Auth::user()->id); 
 
-        return view('admin_admin',['admin'=>$admin, 'a'=>$a]);
+        return view('admin_admin',['adminn'=>$adminn, 'admin'=>$admin]);
     }
     public function recup_vendeur(){
-        $vendeur_recup = Vendeur::where('deletedv',1)->paginate(10);
-        return view('recup_vendeur',['vendeur_recu'=>$vendeur_recup]);
+        if(!Auth::check()){
+            return view('page_not_found',['categorie'=>\DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get() ,'categorieE'=>\DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get()]);
+            
+        }
+        $admin=Admin::find(Auth::user()->id); 
+        $vendeur_recup = \DB::table("vendeurs")->where('deleted_at','<>',null)->paginate(10);
+
+        return view('recup_vendeur',['vendeur_recu'=>$vendeur_recup,'admin'=>$admin]);
     }
     public function recup_client(){
-        $client_recup = Client::where('deletedc',1)->paginate(10);
-        return view('recup_client',['client_recu'=>$client_recup]);
+        if(!Auth::check()){
+            return view('page_not_found',['categorie'=>\DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get() ,'categorieE'=>\DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get()]);
+            
+        }
+        $admin=Admin::find(Auth::user()->id); 
+        $client_recup = \DB::table("clients")->where('deleted_at','<>',null)->paginate(10);
+        return view('recup_client',['client_recu'=>$client_recup,'admin'=>$admin]);
    }
    public function recup_employeur(){
-       $employeur_recup = Employeur::where('deletede',1)->paginate(10);
-        return view('recu_employeur',['employeur_recu'=>$employeur_recup]);
-   
+    if(!Auth::check()){
+            return view('page_not_found',['categorie'=>\DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get() ,'categorieE'=>\DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get()]);
+            
+        }
+    $admin=Admin::find(Auth::user()->id); 
+       $employeur_recup = \DB::table("employeurs")->where('deleted_at','<>',null)->paginate(10);
+       return view('recu_employeur',['employeur_recu'=>$employeur_recup,'admin'=>$admin]);
+        
    }
    public function recup_admin(){
-       $admin_recup = Admin::where('deleteda',1)->paginate(10);
-        return view('recup_admin',['admin_recu'=>$admin_recup]);
+    if(!Auth::check()){
+            return view('page_not_found',['categorie'=>\DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get() ,'categorieE'=>\DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get()]);
+            
+        }
+    $admin=Admin::find(Auth::user()->id); 
+       $admin_recup = \DB::table("admins")->where('deleted_at','<>',null)->paginate(10);
+        return view('recup_admin',['admin_recu'=>$admin_recup,'admin'=>$admin]);
    
    }
 
     public function article_admin(){//fcnt qui retourné tout les articles qui sont dans la table "Article" et trie par ordre desc selon son dates de creations
+        if(!Auth::check()){
+            return view('page_not_found',['categorie'=>\DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get() ,'categorieE'=>\DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get()]);
+            
+        }
         $c = Admin::find(Auth::user()->id);//recuperé "user_id" de admin qui est connecter       
-        $article = \DB::table('articles')->where('admin_id', $c->id)->orderBy('created_at','desc')->paginate(5) ;//recuperé les articles qui sont dans la table "Article" et trie par ordre desc selon son dates de creations et pour "->paginate(5)" c a d f kol page t'affichilek 5 ta3 les article  
+        $article = \DB::table('articles')->where('admin_id', $c->id)->orderBy('created_at','desc')->paginate(10) ;//recuperé les articles qui sont dans la table "Article" et trie par ordre desc selon son dates de creations et pour "->paginate(5)" c a d f kol page t'affichilek 5 ta3 les article  
         return view('articles_admin',['article'=>$article, 'idAdmin' => $c->id,'admin' => $c]);//reteurné a la view "articles_admin" et les 2 attributs "article" (contient tout les articles) et "idAdmin" (id de l'admin cncté) 
     }
 
@@ -189,11 +238,11 @@ class AdminController extends Controller
     public function update_profil(Request $request) {
                 
         $request->validate([
-             'numTelephone' =>  ['required', 'string','regex:/^0[5-7][0-9]+/',"min:10","max:10", new NumberExist(4)],
-             'email' =>['required', 'string', 'email', 'max:40', new EmailExist(4)],
+             'numTelephone' =>  ['required', 'string','regex:/^0[5-7][0-9]+/',"min:10","max:10", new NumberExist(4,$request->id)],
+             'email' =>['required', 'string', 'email', 'max:40', new EmailExist(4,$request->id)],
              'nom' =>['required','regex:/[A-Z-0-9][a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
              'prenom' =>['required','regex:/[A-Z-0-9][a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
-             'numCarteBanquaire' =>['required', new NumCarteBancaireExist(4)],
+             'numCarteBanquaire' =>['required', new NumCarteBancaireExist(4,$request->id)],
          ]);
         $admin = Admin::find(Auth::user()->id);
         $user = Auth::user();
@@ -211,17 +260,22 @@ class AdminController extends Controller
         return Response()->json(['etat' => true,'admin'=> $admin]);
     }
     public function categories_admin(){
+        if(!Auth::check()){
+            return view('page_not_found',['categorie'=>\DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get() ,'categorieE'=>\DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get()]);
+            
+        }
         $admin=Admin::find(Auth::user()->id); 
 
     
-        $autre = \DB::table('sous_categories')->where('categorie_id',null)->get();
-        $autreProduit = \DB::table('produits')->where('sous_categorie_id',null)->get();
+        $autre = \DB::table('sous_categories')->where('categorie_id',1)->get();
+        $autreProduit = \DB::table('produits')->where('sous_categorie_id',1)->get();
         if(count($autre) == 0 && count($autreProduit) == 0 ){
             $categorie = \DB::table('categories')->where('libelle','<>','Autre')->orderBy('libelle','asc')->paginate(5);
+
             return view('categories_admin',['categorie'=>$categorie , 'var'=> 0 ,'admin'=>$admin]);
         }
         else{
-            $categorie = \DB::table('categories')->orderBy('libelle','asc')->paginate(5);
+            $categorie = \DB::table('categories')->where('libelle','<>','Autre')->orderBy('libelle','asc')->paginate(5);
 
             return view('categories_admin',['categorie'=>$categorie , 'var'=> 1,'admin'=>$admin]);
 
@@ -230,28 +284,38 @@ class AdminController extends Controller
     }
 
     public function Shopcategories_admin(){
-        $autre = \DB::table('sous_categories')->where('categorie_id',null)->get();
-        $autreProduit = \DB::table('produits')->where('sous_categorie_id',null)->get();
+        if(!Auth::check()){
+            return view('page_not_found',['categorie'=>\DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get() ,'categorieE'=>\DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get()]);
+            
+        }
+        $admin=Admin::find(Auth::user()->id); 
+        $autre = \DB::table('sous_categories')->where('categorie_id',1)->get();
+        $autreProduit = \DB::table('produits')->where('sous_categorie_id',1)->get();
         if(count($autre) == 0 && count($autreProduit) == 0 ){
             $categoShop = \DB::table('categories')->where([['libelle','<>','Autre'],['typeCategorie','shop']])->orderBy('libelle','asc')->paginate(5);
-            return view('shop_categorie_admin',['categoShop'=>$categoShop, 'var'=> 0]);
+            return view('shop_categorie_admin',['categoShop'=>$categoShop, 'var'=> 0,'admin'=>$admin]);
         }
         else{
-            $categoShop = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->paginate(5);
-            return view('shop_categorie_admin',['categoShop'=>$categoShop, 'var'=> 1]);
+            $categoShop = \DB::table('categories')->where([['typeCategorie','shop'],['libelle','<>','Autre']])->orderBy('libelle','asc')->paginate(5);
+            return view('shop_categorie_admin',['categoShop'=>$categoShop, 'var'=> 1,'admin'=>$admin]);
         }
     }
 
     public function Emploicategories_admin(){
-        $autre = \DB::table('sous_categories')->where('categorie_id',null)->get();
-        $autreProduit = \DB::table('produits')->where('sous_categorie_id',null)->get();
+        if(!Auth::check()){
+            return view('page_not_found',['categorie'=>\DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get() ,'categorieE'=>\DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get()]);
+            
+        }
+        $admin=Admin::find(Auth::user()->id);
+        $autre = \DB::table('sous_categories')->where('categorie_id',1)->get();
+        $autreProduit = \DB::table('produits')->where('sous_categorie_id',1)->get();
         if(count($autre) == 0 && count($autreProduit) == 0 ){
             $categoEpmloi = \DB::table('categories')->where([['libelle','<>','Autre'],['typeCategorie','emploi']])->orderBy('libelle','asc')->paginate(5);;
-            return view('emploi_categorie_admin',['categoEpmloi'=>$categoEpmloi, 'var'=> 0]);
+            return view('emploi_categorie_admin',['categoEpmloi'=>$categoEpmloi, 'var'=> 0,'admin'=>$admin]);
         }
         else{
-            $categoEpmloi = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->paginate(5);
-            return view('emploi_categorie_admin',['categoEpmloi'=>$categoEpmloi, 'var'=> 1]);
+            $categoEpmloi = \DB::table('categories')->where([['libelle','<>','Autre'],['typeCategorie','emploi']])->orderBy('libelle','asc')->paginate(5);
+            return view('emploi_categorie_admin',['categoEpmloi'=>$categoEpmloi, 'var'=> 1,'admin'=>$admin]);
         }
     }
         
@@ -311,18 +375,19 @@ class AdminController extends Controller
 
 
         $categorie = Categorie::find($id);
-        $notification = new Notification;
+        $notification = new Notificatione;
         $notification->admin_id =  Admin::find(Auth::user()->id)->id;
         $notification->categorie_libelle =  $categorie->libelle;
         $notification->typeCategoSousCatego =  $categorie->typeCategorie;
-        $notification->save(); 
+        $notification->save();
         $categorie->delete();
+        \DB::table('sous_categories')->where('categorie_id',null)->update(['categorie_id'=>1]); 
 
      return Response()->json(['etat' => true]);
     }
 
     public function getSousCategories(){
-        $sousCategoNull = \DB::table('sous_categories')->where('categorie_id',null)->orderBy('libelle','asc')->get();
+        $sousCategoNull = \DB::table('sous_categories')->where([['categorie_id',1],['id','<>',1]])->orderBy('libelle','asc')->get();
         $sousCatego = \DB::table('sous_categories')->orderBy('libelle','asc')->get();
         return ['sousCatego' => $sousCatego,'sousCategoNull' => $sousCategoNull];
     }
@@ -362,12 +427,14 @@ class AdminController extends Controller
 
     public function deleteSousCategorie($id){
         $Souscategorie = Sous_categorie::find($id);
-        $notification =  new Notification;
+        $notification =  new Notificatione;
         $notification->admin_id = Admin::find(Auth::user()->id)->id; 
         $notification->sous_categorie_libelle =  $Souscategorie->libelle;
+        $notification->categorie_libelle =  Categorie::where('id',$Souscategorie->categorie_id)->value('libelle'); 
         $notification->typeCategoSousCatego =  Categorie::where('id',$Souscategorie->categorie_id)->value('typeCategorie');     
         $notification->save();
         $Souscategorie->delete();
+        \DB::table('produits')->where('sous_categorie_id',null)->update(['sous_categorie_id'=>1]); 
      return Response()->json(['etat' => true]);
     }
 
@@ -389,35 +456,36 @@ class AdminController extends Controller
     }
 
     public function recupConfirmer($id){
-        $vendeur = Vendeur::where('id',$id)->update(['deletedv' => 0]);
+        $vendeur = \DB::table('vendeurs')->where('id', $id)->update(['deleted_at' => null,'Nbre_signal' => 0]);
         return Response()->json(['etat' => true]);   
     }
     public function recupConfirmerc($id){
-       $client = Client::where('id',$id)->update(['deletedc' => 0]);
+       $client = \DB::table('clients')->where('id', $id)->update(['deleted_at' => null]);
         return Response()->json(['etat' => true]);   
         
     }
     public function recupConfirmere($id){
-        $employeur = Employeur::where('id',$id)->update(['deletede' => 0]);
+        $employeur = \DB::table('employeurs')->where('id', $id)->update(['deleted_at' => null,'Nbre_signal' => 0]);
         return Response()->json(['etat' => true]);   
           
     }
     public function recupConfirmera($id){
-       $admin = Admin::where('id',$id)->update(['deleteda' => 0]);
+       $admin = \DB::table('admins')->where('id', $id)->update(['deleted_at' => null]);
         return Response()->json(['etat' => true]);   
           
     }
     public function addAdmin(Request $request){
         
         $request->validate([
-                'numTelephone' =>  ['required', 'string','regex:/^0[5-7][0-9]+/',"min:10","max:10", new NumberExist(4)],
-                'email' =>['required', 'string', 'email', 'max:40', new EmailExist(4)],
+                'numTelephone' =>  ['required', 'string','regex:/^0[5-7][0-9]+/',"min:10","max:10", new NumberExist(4,$request->id)],
+                'email' =>['required', 'string', 'email', 'max:40', new EmailExist(4,$request->id)],
                 'mtps' =>['required', 'string', 'min:8'],
                 'nom' =>['required','regex:/[A-Z-0-9][a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
                 'prenom' =>['required','regex:/[A-Z-0-9][a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
                 'type' =>['required'],
-                'image' =>['required'],
-                'numCarteBanquaire' =>['required', new NumCarteBancaireExist(4)],
+                'image' => ['required','regex:/^data:image/'],
+                'numCarteBanquaire' =>['required', new NumCarteBancaireExist(4,$request->id)],
+
         ]);
 
          $exploded = explode(',', $request->image);
@@ -456,21 +524,47 @@ class AdminController extends Controller
          return Response()->json(['etat' => true,'adminAjout' => $admin2]);
     }
     public function notifications_admin(){
-        $admin=Admin::find(Auth::user()->id); 
-       $notif = \DB::table('admins')->join('notifications','admins.id','=','notifications.admin_id')
+        if(!Auth::check()){
+            return view('page_not_found',['categorie'=>\DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get() ,'categorieE'=>\DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get()]);
+            
+        }
+        $admin=Admin::find(Auth::user()->id);
+        $notifE= \DB::table('notificationes')
+        ->join('employeurs','employeurs.id','=','notificationes.paiement_employeur_id')
+        ->join('paiement_employeurs','paiement_employeurs.employeur_id','=','notificationes.paiement_employeur_id')
+        ->orderBy('notificationes.created_at','desc')
+
+        ->select('notificationes.paiement_employeur_id','employeurs.nom as nom_empl','employeurs.prenom as prenom_empl','employeurs.num_compte_banquiare','paiment_par')
+        ->groupBy('paiment_par','notificationes.paiement_employeur_id','employeurs.nom','employeurs.prenom','employeurs.num_compte_banquiare')
+        ->get();
+        $notifV = \DB::table('notificationes')
+        ->join('vendeurs','vendeurs.id','=','notificationes.paiement_vendeur_id')
+        ->orderBy('notificationes.created_at','desc')
+        ->select('notificationes.*','vendeurs.Nom as nom_vendeur','vendeurs.Prenom as prenom_vendeur','vendeurs.Num_Compte_Banquaire')
+        ->get(); 
+       $notifA = \DB::table('notificationes')
+        ->join('admins','admins.id','=','notificationes.admin_id')
+        ->orderBy('notificationes.created_at','desc')
+        ->get();
+        $notif= \DB::table('notificationes')
+        ->orderBy('notificationes.created_at','desc')
         ->paginate(24);
-         return view('notifications_admin',['notif'=>$notif, 'admin'=>$admin]);
+         return view('notifications_admin',['notif'=>$notif,'notifA'=>$notifA,'notifV'=>$notifV,'notifE'=>$notifE, 'admin'=>$admin]);
     }
     public function deleteNotif($id){
        
-       $notification = Notification::find($id);
+       $notification = Notificatione::find($id);
        $notification->delete();
        return Response()->json(['etat' => true]);
     }
 
     public function emails_admin(){
+        if(!Auth::check()){
+            return view('page_not_found',['categorie'=>\DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get() ,'categorieE'=>\DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get()]);
+            
+        }
 
-        $email = \DB::table('emails')->orderBy('created_at','desc')->get();
+        $email = \DB::table('emails')->orderBy('created_at','desc')->paginate(9);
         $admin=Admin::find(Auth::user()->id); 
         return view('emails_admin',['em' =>$email, 'admin'=>$admin]);
     }
@@ -485,7 +579,6 @@ class AdminController extends Controller
     }
     public function emailRependu($id){
         $admin = Admin::find(Auth::user()->id);
-        //$admin2 =  Admin::find($id);
         $email = Email::find($id);
         $email->admin_id = $admin->id;
         $email->reponse =1;
@@ -494,6 +587,7 @@ class AdminController extends Controller
             $email->admin_prenom = $admin->prenom;
         }
         $email->save();
+        return true;
     }
 
     public function Verifier($id){
@@ -518,5 +612,361 @@ public function VerifierAnnonce($id){
     return Response()->json(['etat' => false]);
 
 }
+    public function statistiques_admin(){
+        if(!Auth::check()){
+            return view('page_not_found',['categorie'=>\DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get() ,'categorieE'=>\DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get()]);
+            
+        }
+        $NombreInscriptionParMois = \DB::table("users")->where('type_compte','<>','a')->select(\DB::raw('count(id) as `Nombre_Iscription_Par_Mois`'),\DB::raw('YEAR(created_at) year, MONTH(created_at) month'))
+           ->groupby('month','year')
+           ->having('year','=',date("Y"))
+           ->get();
+        $categoriesPlusDemanderShop = \DB::table("produits")
+            ->join('sous_categories','sous_categories.id','=','produits.sous_categorie_id')
+            ->join('categories','categories.id','=','sous_categories.categorie_id')
+            ->where('categories.typeCategorie','shop')
+            ->select(\DB::raw('count(produits.id) as `Catego_shop`'),'categories.libelle')
+           ->groupby('categories.libelle')
+           ->orderBy('categories.libelle','asc')
+           ->get();
+        $categoriesPlusDemanderEmploi = \DB::table("annonce_emploies")
+            ->join('sous_categories','sous_categories.id','=','annonce_emploies.sous_categorie_id')
+            ->join('categories','categories.id','=','sous_categories.categorie_id')
+            ->where('categories.typeCategorie','emploi')
+            ->select(\DB::raw('count(annonce_emploies.id) as `Catego_shop`'),'categories.libelle')
+           ->groupby('categories.libelle')
+           ->orderBy('categories.libelle','asc')
+           ->get();
+        $postulationProduit = \DB::table("produits")
+            ->select(\DB::raw('count(id) as `postulation_produit`'),\DB::raw('YEAR(created_at) year, MONTH(created_at) month'))
+           ->groupby('month','year')
+           ->having('year','=',date("Y"))
+           ->get();
+        $postulationAnnonce = \DB::table("annonce_emploies")
+            ->select(\DB::raw('count(id) as `postulation_annonce`'),\DB::raw('YEAR(created_at) year, MONTH(created_at) month'))
+           ->groupby('month','year')
+           ->having('year','=',date("Y"))
+           ->get();   
+        $commande = \DB::table("commandes")
+            ->where('commandes.commande_envoyee',1)
+            ->select(\DB::raw('count(id) as `commande`'),\DB::raw('YEAR(created_at) year, MONTH(created_at) month'))
+           ->groupby('month','year')
+           ->having('year','=',date("Y"))
+           ->orderBy('month','asc')
+           ->get();
+        $demande = \DB::table("demande_emploies")
+            ->where('demande_emploies.reponse_employeur',1)
+            ->select(\DB::raw('count(id) as `demande`'),\DB::raw('YEAR(created_at) year, MONTH(created_at) month'))
+           ->groupby('month','year')
+           ->having('year','=',date("Y"))
+           ->orderBy('month','asc')
+           ->get();  
+        $client = \DB::table("users")->where('type_compte','c')->select(\DB::raw('count(id) as `Iscription_client`'),\DB::raw('YEAR(created_at) year, MONTH(created_at) month'))
+           ->groupby('month','year')
+           ->having('year','=',date("Y"))
+           ->get();
+        $vendeur = \DB::table("users")->where('type_compte','v')->select(\DB::raw('count(id) as `Iscription_vendeur`'),\DB::raw('YEAR(created_at) year, MONTH(created_at) month'))
+           ->groupby('month','year')
+           ->having('year','=',date("Y"))
+           ->get();
+        $employeur = \DB::table("users")->where('type_compte','e')->select(\DB::raw('count(id) as `Iscription_employeur`'),\DB::raw('YEAR(created_at) year, MONTH(created_at) month'))
+           ->groupby('month','year')
+           ->having('year','=',date("Y"))
+           ->get();
+
+           $admin=Admin::find(Auth::user()->id); 
+
+        return view('statistiques_admin',["NombreInscriptionParMois"=>$NombreInscriptionParMois,"categoriesPlusDemanderShop"=>$categoriesPlusDemanderShop,"categoriesPlusDemanderEmploi"=>$categoriesPlusDemanderEmploi,"postulationProduit"=>$postulationProduit,"postulationAnnonce"=>$postulationAnnonce,"commande"=>$commande,"demande"=>$demande,"client"=>$client,"vendeur"=>$vendeur,"employeur"=>$employeur, 'admin'=>$admin]);
+    }
+       public function getsearchav(Request $request)
+    {
+        if(!Auth::check()){
+            return view('page_not_found',['categorie'=>\DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get() ,'categorieE'=>\DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get()]);
+            
+        }
+        $admin=Admin::find(Auth::user()->id);
+        $search = $request->get('search');
+        $vendeur  =\DB::table('vendeurs')->where('Nom', 'like', '%'.$search.'%')
+                                        
+                                         ->orWhere('Prenom', 'like', '%'.$search.'%')
+                                         ->orWhere('numTelephone', 'like', '%'.$search.'%')
+                                         ->orWhere('Addresse', 'like', '%'.$search.'%')
+                                         ->orWhere('Num_Compte_Banquaire', 'like', '%'.$search.'%')
+                                         ->paginate(10);
+        $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+        $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
+
+    return view('vendeur_admin',['vendeur'=>$vendeur,'search' => $search,'categorie'=>$categorie,'categorieE'=>$categorieE, 'admin'=>$admin]);
+  }
+  public function getsearchae(Request $request)
+    {
+        if(!Auth::check()){
+            return view('page_not_found',['categorie'=>\DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get() ,'categorieE'=>\DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get()]);
+            
+        }
+        $admin=Admin::find(Auth::user()->id);
+        $search = $request->get('search');
+        $employeur  =\DB::table('employeurs')->where('nom', 'like', '%'.$search.'%')
+                                         ->orWhere('prenom', 'like', '%'.$search.'%')
+                                         ->orWhere('num_tel', 'like', '%'.$search.'%')
+                                         ->orWhere('address', 'like', '%'.$search.'%')
+                                         ->orWhere('num_compte_banquiare', 'like', '%'.$search.'%')
+                                         ->paginate(10);
+        $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+        $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
+
+    return view('employeur_admin',['employeur'=>$employeur,'search' => $search,'categorie'=>$categorie,'categorieE'=>$categorieE, 'admin'=>$admin]);
+  }
+  public function getsearchac(Request $request)
+  {
+    if(!Auth::check()){
+            return view('page_not_found',['categorie'=>\DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get() ,'categorieE'=>\DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get()]);
+            
+        }
+     $admin=Admin::find(Auth::user()->id); 
+      $search = $request->get('search');
+      $client  =\DB::table('clients')->where('nom', 'like', '%'.$search.'%')
+                                       ->orWhere('prenom', 'like', '%'.$search.'%')
+                                       ->orWhere('numeroTelephone', 'like', '%'.$search.'%')
+                                       ->orWhere('codePostal', 'like', '%'.$search.'%')
+                                       ->paginate(10);
+      $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+      $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
+
+  return view('client_admin',['client'=>$client,'search' => $search,'categorie'=>$categorie,'categorieE'=>$categorieE,'admin'=>$admin]);
+}
+    public function getsearchaa(Request $request)
+    {
+        if(!Auth::check()){
+            return view('page_not_found',['categorie'=>\DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get() ,'categorieE'=>\DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get()]);
+            
+        }
+        $admin=Admin::find(Auth::user()->id);
+        $search = $request->get('search');
+        $adminn  =\DB::table('admins')->where('nom', 'like', '%'.$search.'%')
+                                         ->orWhere('prenom', 'like', '%'.$search.'%')
+                                         ->orWhere('numTelephone', 'like', '%'.$search.'%')
+                                         ->orWhere('numCarteBanquaire', 'like', '%'.$search.'%')
+                                         ->orWhere('email', 'like', '%'.$search.'%')
+                                         ->paginate(10);
+        $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+        $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
+
+        return view('admin_admin',['adminn'=>$adminn,'search' => $search,'categorie'=>$categorie,'categorieE'=>$categorieE, 'admin'=>$admin]);
+    }
+    public function getsearchaaRecup(Request $request)
+    {
+        if(!Auth::check()){
+            return view('page_not_found',['categorie'=>\DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get() ,'categorieE'=>\DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get()]);
+            
+        }
+        $admin=Admin::find(Auth::user()->id);
+        $search = $request->get('search');
+        $admin_recup  =\DB::table('admins')->where('nom', 'like', '%'.$search.'%')
+                                         ->orWhere('prenom', 'like', '%'.$search.'%')
+                                         ->orWhere('numTelephone', 'like', '%'.$search.'%')
+                                         ->orWhere('numCarteBanquaire', 'like', '%'.$search.'%')
+                                         ->orWhere('email', 'like', '%'.$search.'%')
+                                         ->paginate(10);
+        $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+        $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
+
+        return view('recup_admin',['admin_recu'=>$admin_recup,'search' => $search,'categorie'=>$categorie,'categorieE'=>$categorieE, 'admin'=>$admin]);
+    }
+    public function getsearchavRecup(Request $request)
+    {
+        if(!Auth::check()){
+            return view('page_not_found',['categorie'=>\DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get() ,'categorieE'=>\DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get()]);
+            
+        }
+        $admin=Admin::find(Auth::user()->id);
+        $search = $request->get('search');
+        $vendeur_recup  =\DB::table('vendeurs')->where('Nom', 'like', '%'.$search.'%')
+                                        
+                                         ->orWhere('Prenom', 'like', '%'.$search.'%')
+                                         ->orWhere('numTelephone', 'like', '%'.$search.'%')
+                                         ->orWhere('Addresse', 'like', '%'.$search.'%')
+                                         ->orWhere('Num_Compte_Banquaire', 'like', '%'.$search.'%')
+                                         ->paginate(10);
+        $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+        $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
+
+        return view('recup_vendeur',['vendeur_recu'=>$vendeur_recup,'search' => $search,'categorie'=>$categorie,'categorieE'=>$categorieE, 'admin'=>$admin]);
+    }
+    public function getsearchaeRecup(Request $request)
+    {
+        if(!Auth::check()){
+            return view('page_not_found',['categorie'=>\DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get() ,'categorieE'=>\DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get()]);
+            
+        }
+            $admin=Admin::find(Auth::user()->id);
+            $search = $request->get('search');
+            $employeur_recup  =\DB::table('employeurs')->where('nom', 'like', '%'.$search.'%')
+                                             ->orWhere('prenom', 'like', '%'.$search.'%')
+                                             ->orWhere('num_tel', 'like', '%'.$search.'%')
+                                             ->orWhere('address', 'like', '%'.$search.'%')
+                                             ->orWhere('num_compte_banquiare', 'like', '%'.$search.'%')
+                                             ->paginate(10);
+            $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+            $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
+
+        return view('recu_employeur',['employeur_recu'=>$employeur_recup,'search' => $search,'categorie'=>$categorie,'categorieE'=>$categorieE, 'admin'=>$admin]);
+    }
+    public function getsearchacRecup(Request $request)
+    {
+        if(!Auth::check()){
+            return view('page_not_found',['categorie'=>\DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get() ,'categorieE'=>\DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get()]);
+            
+        }
+         $admin=Admin::find(Auth::user()->id); 
+          $search = $request->get('search');
+          $client_recup  =\DB::table('clients')->where('nom', 'like', '%'.$search.'%')
+                                           ->orWhere('prenom', 'like', '%'.$search.'%')
+                                           ->orWhere('numeroTelephone', 'like', '%'.$search.'%')
+                                           ->orWhere('codePostal', 'like', '%'.$search.'%')
+                                           ->get(10);
+          $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+          $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
+
+        return view('recup_client',['client_recu'=>$client_recup,'search' => $search,'categorie'=>$categorie,'categorieE'=>$categorieE,'admin'=>$admin]);
+    }
+    public function getEmailsSearch(Request $request){
+        if(!Auth::check()){
+            return view('page_not_found',['categorie'=>\DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get() ,'categorieE'=>\DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get()]);
+            
+        }
+        $search = $request->get('search');
+        $email = \DB::table('emails')
+        ->where('adresse_email', 'like', '%'.$search.'%')
+        ->paginate(9);
+        $admin=Admin::find(Auth::user()->id); 
+        return view('emails_admin',['em' =>$email, 'admin'=>$admin]);
+    }
+     public function getArticleSearch(Request $request){
+        if(!Auth::check()){
+            return view('page_not_found',['categorie'=>\DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get() ,'categorieE'=>\DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get()]);
+            
+        }
+        $c = Admin::find(Auth::user()->id);
+        $search = $request->get('search');
+        $article = \DB::table('articles')
+        ->where('titre', 'like', '%'.$search.'%')
+        ->paginate(10) ;
+        return view('articles_admin',['article'=>$article, 'idAdmin' => $c->id,'admin' => $c]);
+    }
+    public function getCategorieSearch(Request $request){
+        if(!Auth::check()){
+            return view('page_not_found',['categorie'=>\DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get() ,'categorieE'=>\DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get()]);
+            
+        }
+        $admin=Admin::find(Auth::user()->id); 
+        $search = $request->get('search');
+    
+        $autre = \DB::table('sous_categories')->where('categorie_id',null)->get();
+        $autreProduit = \DB::table('produits')->where('sous_categorie_id',null)->get();
+        if(count($autre) == 0 && count($autreProduit) == 0 ){
+            $categorie = \DB::table('categories')
+            ->where('libelle', 'like', '%'.$search.'%')
+            ->paginate(10) ;;
+            return view('categories_admin',['categorie'=>$categorie , 'var'=> 0 ,'admin'=>$admin]);
+        }
+        else{
+            $categorie = \DB::table('categories')
+            ->where('libelle', 'like', '%'.$search.'%')
+            ->paginate(10) ;
+
+            return view('categories_admin',['categorie'=>$categorie , 'var'=> 1,'admin'=>$admin]);
+
+        }
+        
+    }
+    public function getCategorieShopSearch(Request $request){
+        if(!Auth::check()){
+            return view('page_not_found',['categorie'=>\DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get() ,'categorieE'=>\DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get()]);
+            
+        }
+        $admin=Admin::find(Auth::user()->id); 
+        $search = $request->get('search');
+    
+        $autre = \DB::table('sous_categories')->where('categorie_id',null)->get();
+        $autreProduit = \DB::table('produits')->where('sous_categorie_id',null)->get();
+        if(count($autre) == 0 && count($autreProduit) == 0 ){
+            $categorie = \DB::table('categories')
+            ->where([['libelle', 'like', '%'.$search.'%'],['typeCategorie','shop']])
+            ->paginate(10) ;;
+            return view('categories_admin',['categorie'=>$categorie , 'var'=> 0 ,'admin'=>$admin]);
+        }
+        else{
+            $categorie = \DB::table('categories')
+            ->where([['libelle', 'like', '%'.$search.'%'],['typeCategorie','shop']])
+            ->paginate(10) ;
+
+            return view('categories_admin',['categorie'=>$categorie , 'var'=> 1,'admin'=>$admin]);
+
+        }
+        
+    }
+    public function getCategorieEmploiSearch(Request $request){
+        if(!Auth::check()){
+            return view('page_not_found',['categorie'=>\DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get() ,'categorieE'=>\DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get()]);
+            
+        }
+        $admin=Admin::find(Auth::user()->id); 
+        $search = $request->get('search');
+    
+        $autre = \DB::table('sous_categories')->where('categorie_id',null)->get();
+        $autreProduit = \DB::table('produits')->where('sous_categorie_id',null)->get();
+        if(count($autre) == 0 && count($autreProduit) == 0 ){
+            $categorie = \DB::table('categories')
+            ->where([['libelle', 'like', '%'.$search.'%'],['typeCategorie','emploi']])
+            ->paginate(10) ;;
+            return view('categories_admin',['categorie'=>$categorie , 'var'=> 0 ,'admin'=>$admin]);
+        }
+        else{
+            $categorie = \DB::table('categories')
+            ->where([['libelle', 'like', '%'.$search.'%'],['typeCategorie','emploi']])
+            ->paginate(10) ;
+
+            return view('categories_admin',['categorie'=>$categorie , 'var'=> 1,'admin'=>$admin]);
+
+        }
+        
+    }
+    public function getNotificationSearch(Request $request){
+        if(!Auth::check()){
+            return view('page_not_found',['categorie'=>\DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get() ,'categorieE'=>\DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get()]);
+            
+        }
+        $admin=Admin::find(Auth::user()->id);
+        $search = $request->get('search'); 
+        $notifE= \DB::table('notificationes')
+        ->join('employeurs','employeurs.id','=','notificationes.paiement_employeur_id')
+        ->join('paiement_employeurs','paiement_employeurs.employeur_id','=','notificationes.paiement_employeur_id')
+        ->where('employeurs.nom', 'like', '%'.$search.'%')
+        ->orWhere('employeurs.prenom', 'like', '%'.$search.'%')
+        ->orWhere('num_compte_banquiare', 'like', '%'.$search.'%')
+        ->select('notificationes.*','employeurs.nom as nom_empl','employeurs.prenom as prenom_empl','employeurs.num_compte_banquiare','paiement_employeurs.paiment_par')
+        ->get();
+        $notifV = \DB::table('notificationes')
+        ->join('vendeurs','vendeurs.id','=','notificationes.paiement_vendeur_id')
+        ->where('vendeurs.Nom', 'like', '%'.$search.'%')
+        ->orWhere('vendeurs.Prenom', 'like', '%'.$search.'%')
+        ->orWhere('Num_Compte_Banquaire', 'like', '%'.$search.'%')
+        ->select('notificationes.*','vendeurs.Nom as nom_vendeur','vendeurs.Prenom as prenom_vendeur','vendeurs.Num_Compte_Banquaire')
+        ->get(); 
+        $notifA = \DB::table('notificationes')
+        ->join('admins','admins.id','=','notificationes.admin_id')
+        ->where('admins.nom', 'like', '%'.$search.'%')
+        ->orWhere('admins.prenom', 'like', '%'.$search.'%')
+        ->orWhere('categorie_libelle', 'like', '%'.$search.'%')
+        ->orWhere('sous_categorie_libelle', 'like', '%'.$search.'%')
+        ->orWhere('typeCategoSousCatego', 'like', '%'.$search.'%')
+        ->get();
+
+        $notif= \DB::table('notificationes')
+        ->paginate(24);
+
+         return view('notifications',['notif'=>$notif,'notifA'=>$notifA,'notifV'=>$notifV,'notifE'=>$notifE, 'admin'=>$admin]);
+    }
 
 }

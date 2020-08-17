@@ -16,9 +16,12 @@ class CreateCategoriesTable extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('libelle');
+            $table->string('typeCategorie')->nullable();
+            $table->unique(['libelle', 'typeCategorie']);
             $table->timestamps();
         });
-        DB::table('categories')->insert(array('id'=>'1', 'libelle'=>'Autre','created_at'=>new \dateTime,'updated_at'=>new \dateTime));
+        DB::table('categories')->insert(array('id'=>'1','libelle'=>'Autre','typeCategorie'=>null,'created_at'=>new \dateTime,'updated_at'=>new \dateTime));
+
     }
 
     /**

@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="<?php echo e(str_replace('_', '-', app()->getLocale())); ?>">
+<html lang="fr" id='html_id'>
 <script src="<?php echo e(asset('js/vue.js')); ?>"></script>
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link  href="<?php echo e(asset('images/icons/favicon.png')); ?>" rel="icon" type="image/png">
+    <link  href="<?php echo e(asset('images/icons/title_icon.png')); ?>" rel="icon" type="image/png">
     
     <!-- CSRF Token -->
     <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
@@ -57,20 +57,19 @@
 
         <div class="container-menu-desktop">
             <!-- Topbar -->
-            <div class="top-bar">
+            <div class="top-bar ">
                 <div class="content-topbar flex-sb-m h-full container">
                     <div class="left-top-bar">
-                        Be Happy with US 
+                        Soyez Heureux avec NOUS 
                     </div>
-
                     <div class="right-top-bar flex-w h-full">
-                        <a href="#" class="flex-c-m trans-04 p-lr-25">
-                            EN
+                        <a class="flex-c-m trans-04 p-lr-25">
+                           <div id="google_translate_element" class="m-t-15"></div>
                         </a>
-                        <a href="#" class="flex-c-m trans-04 p-lr-25">
-                            Help & FAQs
-                        </a>
+                        
                     </div>
+                    
+
                 </div>
             </div>
 
@@ -85,6 +84,7 @@
                     <!-- Menu desktop -->
                     <div class="menu-desktop">
                         <ul class="main-menu">
+                            <?php if(auth()->guard()->guest()): ?>
                             <li class="<?php echo $stripeAccueil ?>">
                                 <a href="<?php echo e(route('accueil')); ?>">Accueil</a>
                             </li>
@@ -115,11 +115,11 @@
                                                                
                                                     </ul >
                                                     <ul >
-                                                <li class="p-b-6 " v-if="autreProd === 0">
+                                                <li class="p-b-6 " v-if="autreProd === 1">
 
                                                    
 
-                                                    <a href="<?php echo e(route('shop')); ?>" class="filter-link stext-106 trans-04">
+                                                    <a href="/shop/search_categorie=1" class="filter-link stext-106 trans-04">
                                                             Autre
                                                     </a>
                                                 </li>
@@ -178,7 +178,7 @@
                                     <span >
                                         <i class="fa fa-angle-right" aria-hidden="true"></i>
                                     </span>
-                                <ul class="sub-menu " style="width: 990%;" >
+                                <ul class="sub-menu " style="width: 575%;" >
                                     <div class="flex-w bg6 w-full p-lr-30 p-t-27 p-lr-15-sm">
                                         <div class="filter-col1  p-b-27">
                                             <div class="mtext-102 cl2 p-b-15" style="color: #ca2323;">
@@ -197,11 +197,11 @@
                                                                
                                                     </ul >
                                                     <ul >
-                                                <li class="p-b-6 " v-if="autreAnn === 0">
+                                                <li class="p-b-6 " v-if="autreAnn === 1">
 
                                                    
 
-                                                    <a href="<?php echo e(route('emploi')); ?>" class="filter-link stext-106 trans-04">
+                                                    <a href="/emploi/search_categorie=1" class="filter-link stext-106 trans-04">
                                                             Autre
                                                     </a>
                                                 </li>
@@ -263,23 +263,255 @@
                             <li >
                                 <a href="<?php echo e(route('contact')); ?>">Contact</a>
                             </li>
+                            <?php else: ?>
+                                <?php if(Auth::user()->number_confirm != null): ?>
+                                    <li class="<?php echo $stripeAccueil ?>">
+                                       <a href="\confirmation">Accueil</a>
+                                    </li>
+                                    <li >
+                                    <div class="menu1">
+                                        <a href="\confirmation">Shop&nbsp&nbsp</a>
+                                        <span >
+                                            <i class="fa fa-angle-right" aria-hidden="true"></i>
+                                        </span>
+                                    </div>
+                                    
+                                        
+                                    </li>
+                            <li class="menu1">
+                                    <a href="\confirmation">Emploi&nbsp&nbsp</a>
+                                    <span >
+                                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                                    </span>
+                               
+                            </li>
+                            <li >
+                                    <a href="\confirmation">Article</a>
+                            </li>
+                            <li >
+                                    <a href="\confirmation">A Propos</a>
+                            </li>
+                            <li >
+                                <a href="\confirmation">Contact</a>
+                            </li>
+
+                                <?php else: ?>
+                                    <li class="<?php echo $stripeAccueil ?>">
+                                        <a href="<?php echo e(route('accueil')); ?>">Accueil</a>
+                                    </li>
+                                    <li >
+                                    <div class="menu1">
+                                        <a href="<?php echo e(route('shop')); ?>">Shop&nbsp&nbsp</a>
+                                        <span >
+                                            <i class="fa fa-angle-right" aria-hidden="true"></i>
+                                        </span>
+                                    </div>
+                                    <ul class="sub-menu " >
+                                            <div class="flex-w bg6 w-full p-lr-30 p-t-27 p-lr-15-sm">
+                                                <div class="filter-col8  p-b-27">
+                                            
+                                                    <div class="mtext-102 cl2 p-b-15 cl13">
+                                                        Catégories
+                                                    </div>
+                                                    <ul >
+                                    
+                                                        <li class="p-b-6 " v-for="(catego,cntt) in categories" :key = 'cntt' v-if="cntt <count">
+
+                                                            <img v-if="catego.image != null" :src='"/storage/categorie_image/"+catego.image' class="p-b-4">
+
+        <a :href="'/shop/search_categorie='+catego.id" class="filter-link stext-106 trans-04">
+                                                                    {{catego.libelle}}
+                                                            </a>
+                                                        </li>
+                                                               
+                                                    </ul >
+                                                    <ul >
+                                                <li class="p-b-6 " v-if="autreProd === 1">
+
+                                                   
+
+                                                    <a href="/shop/search_categorie=1" class="filter-link stext-106 trans-04">
+                                                            Autre
+                                                    </a>
+                                                </li>
+                                                       
+                                            </ul >
+                                                </div>
+                                    
+            <?php 
+                   
+                    for ($k = 0; $k < 6; $k++){
+                            unset($categorie[$k]);               
+                    }
+                    $cc=count($categorie);
+                   
+            ?>                                 
+            <?php for($i=0; $i< $cc;  ): ?>
+           
+                        <?php
+                            $j=0;
+                        ?>
+               
+                        <div class="filter-col8 p-b-27 p-t-39"><!--filteredItems1-->
+                <?php $__currentLoopData = $categorie; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ctgo): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                   
+                    <?php if($j < 6): ?>
+                        <?php
+                            $j++;
+                        ?>            
+                        <ul>
+                            <li class="p-b-6 " >
+                            <?php if($ctgo->image !=null): ?> 
+                                <img src="<?php echo asset('storage/categorie_image/'.$ctgo->image) ?>" class="p-b-4">
+                            <?php endif; ?>
+                                <a href="#" class="filter-link stext-106 trans-04"><?php echo e($ctgo->libelle); ?></a>
+                            </li>
+                        </ul>
+                    <?php endif; ?>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                <?php for($f = 0; $f < $j; $f++): ?>
+                    
+                    <?php $categorie->shift($f);?>                
+                  
+                <?php endfor; ?>
+               
+                <?php
+                    $cc-=$j;
+                ?>
+                                                </div>
+            <?php endfor; ?>
+                                            </div>
+                                        </ul>
+                                        
+                            </li>
+                            <li class="menu1">
+                                    <a href="<?php echo e(route('emploi')); ?>">Emploi&nbsp&nbsp</a>
+                                    <span >
+                                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                                    </span>
+                                <ul class="sub-menu " style="width: 575%;" >
+                                    <div class="flex-w bg6 w-full p-lr-30 p-t-27 p-lr-15-sm">
+                                        <div class="filter-col1  p-b-27">
+                                            <div class="mtext-102 cl2 p-b-15" style="color: #ca2323;">
+                                                Catégories
+                                            </div>
+                            
+                                            <ul >
+                                                        <li class="p-b-6 " v-for="(catego,cntt) in categoriesE" :key = 'cntt' v-if="cntt <count">
+
+                                                            <img v-if="catego.image != null" :src='"/storage/categorie_image/"+catego.image' class="p-b-4">
+
+        <a :href="'/emploi/search_categorie='+catego.id"  class="filter-link stext-106 trans-04">
+                                                                    {{catego.libelle}}
+                                                            </a>
+                                                        </li>
+                                                               
+                                                    </ul >
+                                                    <ul >
+                                                <li class="p-b-6 " v-if="autreAnn === 1">
+
+                                                   
+
+                                                    <a href="/emploi/search_categorie=1" class="filter-link stext-106 trans-04">
+                                                            Autre
+                                                    </a>
+                                                </li>
+                                                       
+                                            </ul >
+                                        </div>
+                                         <?php 
+                   
+                    for ($k = 0; $k < 6; $k++){
+                            unset($categorieE[$k]);               
+                    }
+                    $cc=count($categorieE);
+                   
+            ?>                                 
+            <?php for($i=0; $i< $cc;  ): ?>
+           
+                        <?php
+                            $j=0;
+                        ?>
+               
+                        <div class="filter-col8 p-b-27 p-t-39"><!--filteredItems1-->
+                <?php $__currentLoopData = $categorieE; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ctgo): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                   
+                    <?php if($j < 6): ?>
+                        <?php
+                            $j++;
+                        ?>            
+                        <ul>
+                            <li class="p-b-6 " >
+                            <?php if($ctgo->image !=null): ?> 
+                                <img src="<?php echo asset('storage/categorie_image/'.$ctgo->image) ?>" class="p-b-4">
+                            <?php endif; ?>
+                                <a href="#" class="filter-link stext-106 trans-04"><?php echo e($ctgo->libelle); ?></a>
+                            </li>
+                        </ul>
+                    <?php endif; ?>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                <?php for($f = 0; $f < $j; $f++): ?>
+                    
+                    <?php $categorieE->shift($f);?>                
+                  
+                <?php endfor; ?>
+               
+                <?php
+                    $cc-=$j;
+                ?>
+                                                </div>
+            <?php endfor; ?>
+                                        
+                                    </div>
+                                </ul>
+                            </li>
+                            <li >
+                                    <a href="<?php echo e(route('article')); ?>">Article</a>
+                            </li>
+                            <li >
+                                    <a href="<?php echo e(route('apropos')); ?>">A Propos</a>
+                            </li>
+                            <li >
+                                <a href="<?php echo e(route('contact')); ?>">Contact</a>
+                            </li>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                            
                         </ul>                       
                     </div>  
 
                     <!-- Icon header -->
                     <div class="wrap-icon-header  flex-r-m ">
+                        <?php if(auth()->guard()->guest()): ?>
                         <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-modal-search">
                             <i class="zmdi zmdi-search"></i>
                         </div>
-
+                        <?php else: ?>
+                            <?php if(Auth::user()->number_confirm != null): ?>
+                            <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
+                                <i class="zmdi zmdi-search"></i>
+                            </div>
+                            <?php else: ?>
+                            <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-modal-search">
+                                <i class="zmdi zmdi-search"></i>
+                            </div>
+                            <?php endif; ?>
+                        <?php endif; ?>
                         <?php if(auth()->guard()->guest()): ?>
+                        
                         <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-22 <?php echo $stripePanier ?>" onclick="connecterAvant()" >
                             <i class="zmdi zmdi-shopping-cart"></i>
                         </div>
                         <?php else: ?>
+                            <?php if(Auth::user()->number_confirm != null): ?>
+                            <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-22   <?php echo $stripePanier ?>" >
+                                <i class="zmdi zmdi-shopping-cart"></i>
+                            </div>
+                            <?php else: ?>
                             <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-22   <?php echo $stripePanier ?>" onclick="Estconnecter()" >
                                 <i class="zmdi zmdi-shopping-cart"></i>
                             </div>
+                            <?php endif; ?>
                         <?php endif; ?>
                         
                         <?php if(auth()->guard()->guest()): ?>
@@ -294,7 +526,9 @@
                               </button>
                               
                               <div class="dropdown-menu m-r-35" aria-labelledby="dropdownMenuButton">
-                                <?php if(Auth::user()->type_compte == 'c'): ?>
+                                <?php if(Auth::user()->number_confirm != null): ?>
+                                <a class="dropdown-item" href="\confirmation">Mon Espace</a>
+                                <?php elseif(Auth::user()->type_compte == 'c'): ?>
                                 <a class="dropdown-item" href="<?php echo e(route('profilClient')); ?>">Mon Espace</a>
                                 <?php elseif(Auth::user()->type_compte == 'v'): ?>
                                 <a class="dropdown-item" href="<?php echo e(route('statistiquesVendeur')); ?>">Mon Espace</a>
@@ -361,7 +595,9 @@
                               </button>
                               
                               <div class="dropdown-menu m-r-35" aria-labelledby="dropdownMenuButton">
-                                <?php if(Auth::user()->type_compte == 'c'): ?>
+                                <?php if(Auth::user()->number_confirm != null): ?>
+                                <a class="dropdown-item" href="\confirmation">Mon Espace</a>
+                                <?php elseif(Auth::user()->type_compte == 'c'): ?>
                                 <a class="dropdown-item" href="<?php echo e(route('profilClient')); ?>">Mon Espace</a>
                                 <?php elseif(Auth::user()->type_compte == 'v'): ?>
                                 <a class="dropdown-item" href="<?php echo e(route('statistiquesVendeur')); ?>">Mon Espace</a>
@@ -400,19 +636,15 @@
                 <div class="top-bar-mobile">
                     <div class="content-topbar flex-sb-m h-full container">
                         <div class="left-top-bar">
-                            Be Happy with US 
+                            Soyez Heureux avec NOUS
                         </div>
-        
                         <div class="right-top-bar flex-w h-full">
-                            
-                            <a href="#" class="flex-c-m trans-04 p-lr-25">
-                                EN
-                            </a>
-                                                                                                        
-                            <a href="#" class="flex-c-m trans-04 p-lr-25">
-                                Help & FAQs
-                            </a>
+                          <a class="flex-c-m trans-04 p-lr-25">
+                              <div id="google_translate_element" class="m-t-15"></div>
+                          </a>
+                                    
                         </div>
+
                     </div>
                 </div>
             
@@ -425,7 +657,25 @@
 
                 <li>
                     <a href="<?php echo e(route('shop')); ?>"id="colorr">Shop</a>
-                    
+                    <ul class="sub-menu-m">
+
+                <?php $__currentLoopData = $categorie; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ctgo): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                
+                              
+                        <li>
+                            
+                               <a href="index.html"><?php echo e($ctgo->libelle); ?></a>
+                        </li>
+                           
+                  
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+              
+               
+                                               
+           
+                        
+                        <!--<li><a href="home-03.html">Homepage 3</a></li>-->
+                    </ul>
                     <span class="arrow-main-menu-m">
                         <i class="fa fa-angle-right" aria-hidden="true"></i>
                     </span>
@@ -433,7 +683,11 @@
 
                 <li>
                     <a href="<?php echo e(route('emploi')); ?>" id="colorr">Emploi</a>
-                    
+                    <ul class="sub-menu-m">
+                        <li><a href="index.html">Homepage 1</a></li>
+                        <li><a href="home-02.html">Homepage 2</a></li>
+                        <li><a href="home-03.html">Homepage 3</a></li>
+                    </ul>
                     <span class="arrow-main-menu-m">
                         <i class="fa fa-angle-right" aria-hidden="true"></i>
                     </span>
@@ -460,11 +714,11 @@
                     <img src="images/icons/icon-close2.png" alt="CLOSE">
                 </button>
 
-                <form class="wrap-search-header flex-w p-l-15" action="/abestv" method="get">
+                <form class="wrap-search-header flex-w p-l-15" action="/produit_Aemploi_article" method="get">
                     <button class="flex-c-m trans-04">
                         <i class="zmdi zmdi-search"></i>
                     </button>
-                    <input  type="search" name="search" class="form-control" placeholder="Search...">
+                    <input  type="search" name="search" class="form-control" placeholder="Produit/Annonce Emploi/Article">
                     
                 </form>
                 
@@ -605,7 +859,7 @@ unset($__errorArgs, $__bag); ?>
                         <?php if(Route::has('password.request')): ?>
                                     
                             <div class="card-footer-item card-footer-item-bordered" >
-                                 <a href="<?php echo e(route('password.request')); ?>" style="color:rgb(122, 122, 122); margin-left: 10%;"><?php echo e(__('Forgot Password')); ?></a>
+                                 <a href="<?php echo e(route('password.request')); ?>" style="color:rgb(122, 122, 122); margin-left: 10%;"><?php echo e(__('Mot de Passe Oublié')); ?></a>
                             </div>
                         <?php endif; ?>
                         
@@ -638,106 +892,67 @@ unset($__errorArgs, $__bag); ?>
 
                 <div class="col-sm-6 col-lg-3 p-b-50">
                     <h4 class="stext-301 cl0 p-b-30">
-                        Categories
+                        Type Categories
                     </h4>
 
                     <ul>
                         <li class="p-b-10">
-                            <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                                Women
+                            <a href="<?php echo e(route('shop')); ?>" class="stext-107 cl7 hov-cl1 trans-04">
+                                Shop
                             </a>
                         </li>
 
                         <li class="p-b-10">
-                            <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                                Men
+                            <a href="<?php echo e(route('emploi')); ?>" class="stext-107 cl7 hov-cl1 trans-04">
+                                Emploi
                             </a>
                         </li>
 
-                        <li class="p-b-10">
-                            <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                                Shoes
-                            </a>
-                        </li>
-
-                        <li class="p-b-10">
-                            <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                                Watches
-                            </a>
-                        </li>
                     </ul>
                 </div>
 
                 <div class="col-sm-6 col-lg-3 p-b-50 m-r-120">
                     <h4 class="stext-301 cl0 p-b-30">
-                        GET IN TOUCH
+                        Contactez nous
                     </h4>
 
                     <p class="stext-107 cl7 size-201">
-                        Any questions? Let us know in store at 8th floor, 379 Hudson St, New York, NY 10018 or call us on (+1) 96 716 6879
+                        <?php if(auth()->guard()->guest()): ?>
+                        Des questions, Quelque chose n'est pas bien? Faites-nous savoir sur 05-40-84-47-82, basmah.work_shop@gmail.com ou <a href="<?php echo e(route('contact')); ?>">contact</a>.
+                        <?php else: ?>
+                        <?php if(Auth::user()->number_confirm != null): ?>
+                            Des questions, Quelque chose n'est pas bien? Faites-nous savoir sur 05-40-84-47-82, basmah.work_shop@gmail.com ou <a href="\confirmation">contact</a>.
+                        <?php else: ?>
+                            Des questions, Quelque chose n'est pas bien? Faites-nous savoir sur 05-40-84-47-82, basmah.work_shop@gmail.com ou <a href="<?php echo e(route('contact')); ?>">contact</a>.
+                        <?php endif; ?>
+                        <?php endif; ?>
                     </p>
-
-                    <div class="p-t-27">
-                        <a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
-                            <i class="fa fa-facebook"></i>
-                        </a>
-
-                        <a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
-                            <i class="fa fa-instagram"></i>
-                        </a>
-
-                        <a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
-                            <i class="fa fa-pinterest-p"></i>
-                        </a>
-                    </div>
                 </div>
 
                 <div class="col-sm-6 col-lg-3 p-b-50">
                     <h4 class="stext-301 cl0 p-b-30">
-                        Newsletter
+                        Rejoignez-nous
                     </h4>
-
-                    <form>
-                        <div class="wrap-input1 w-full p-b-4">
-                            <input class="input1 bg-none plh1 stext-107 cl7" type="text" name="email" placeholder="email@example.com">
-                            <div class="focus-input1 trans-04"></div>
-                        </div>
-
-                        <div class="p-t-18">
-                            <button class="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04">
-                                Subscribe
-                            </button>
-                        </div>
-                    </form>
+                    <p class="stext-107 cl7 size-201">
+                        <?php if(auth()->guard()->guest()): ?>
+                       Si vous n'avez pas un compte creé le <a href="<?php echo e(route('register')); ?>">ici</a>.<br>
+                         Ou connecté à votre <a href='#' class="js-show-connect">compte</a>
+                       <?php else: ?>
+                         Si vous n'avez pas un compte creé le.<br>
+                         Ou connecté à votre compte.
+                       <?php endif; ?>
+                      
+                    </p>
                 </div>
             </div>
 
             <div class="p-t-40">
-                <div class="flex-c-m flex-w p-b-18">
-                    <a href="#" class="m-all-1">
-                        <img src="<?php echo e(asset('images/icons/icon-pay-01.png')); ?>" alt="ICON-PAY">
-                    </a>
-
-                    <a href="#" class="m-all-1">
-                        <img src="<?php echo e(asset('images/icons/icon-pay-02.png')); ?>" alt="ICON-PAY">
-                    </a>
-
-                    <a href="#" class="m-all-1">
-                        <img src="<?php echo e(asset('images/icons/icon-pay-03.png')); ?>" alt="ICON-PAY">
-                    </a>
-
-                    <a href="#" class="m-all-1">
-                        <img src="<?php echo e(asset('images/icons/icon-pay-04.png')); ?>" alt="ICON-PAY">
-                    </a>
-
-                    <a href="#" class="m-all-1">
-                        <img src="<?php echo e(asset('images/icons/icon-pay-05.png')); ?>" alt="ICON-PAY">
-                    </a>
-                </div>
+               
 
                 <p class="stext-107 cl6 txt-center">
                     <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+
 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 
                 </p>
@@ -791,8 +1006,9 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                            this.sousCategories = response.data.sousCatego;
                            this.categoriesE =  response.data.categorieE;
                            this.categorieAnn = response.data.autreProduit;
-                           this.autreAnn = response.data.autre;
-                           this.autreProd = response.data.another;
+                           this.autreAnn = response.data.annonce1Var;
+                           this.autreProd = response.data.produit1Var;
+
 
                         })
                         .catch(error =>{
@@ -840,7 +1056,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
          mounted:function(){
             this.Connect();
             this.getCategorieHome();
-         }
+         },
+       
        })
        function connecterAvant(){
         
@@ -861,14 +1078,66 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                              
             });
        }
-       function Estconnecter(){
-
-             $('.js-panel-cart').addClass('show-header-cart'); 
-          
+        function Estconnecter(){
+            axios.get(window.Laravel.url+'/estconnecter')
+              .then(response => {
+                    if(response.data.etat){
+                        $('.js-panel-cart').addClass('show-header-cart');
+                    }
+                    else{
+                        Swal.fire({
+                          icon: 'error',
+                          title: 'Oops...',
+                          html: 'Vous devez être connecté tent que <b style="text-decoration: underline;">Client</b> pour pouvez accedé a votre panier.',
+                          footer: '<form method="GET" action="<?php echo e(route("logoutregister")); ?>"><?php echo csrf_field(); ?><a href="<?php echo e(route("logoutregister")); ?>">Créer Compte</a></form>',
+                          showCancelButton: true,
+                          cancelButtonColor: '#d33',
+                          confirmButtonColor: '#13c940',
+                          confirmButtonText:
+                            'Se Connecter',
+                        }).then((result) => {
+                            if (result.value){                          
+                                axios.post(window.Laravel.url+'/logout')
+                                .then(response => {
+                                          window.location.href = '/accueil';
+                                })
+                                .catch(error => {console.log("error",error)})
+                            }
+                         
+                        });
+                    }
+               })
+              .catch(error => {
+                  console.log('errors : '  , error);
+            })            
+            
        }
 
    </script> 
-   
+
+  
+
+</script>
+
+   <script type="text/javascript">
+
+    
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element');
+}
+    </script>
+
+    <script type="text/javascript" >
+        (function(){var gtConstEvalStartTime = new Date();/*
+
+ Copyright The Closure Library Authors.
+ SPDX-License-Identifier: Apache-2.0
+*/
+function d(b){var a=document.getElementsByTagName("head")[0];a||(a=document.body.parentNode.appendChild(document.createElement("head")));a.appendChild(b)}function _loadJs(b){var a=document.createElement("script");a.type="text/javascript";a.charset="UTF-8";a.src=b;d(a)}function _loadCss(b){var a=document.createElement("link");a.type="text/css";a.rel="stylesheet";a.charset="UTF-8";a.href=b;d(a)}function _isNS(b){b=b.split(".");for(var a=window,c=0;c<b.length;++c)if(!(a=a[b[c]]))return!1;return!0}
+function _setupNS(b){b=b.split(".");for(var a=window,c=0;c<b.length;++c)a.hasOwnProperty?a.hasOwnProperty(b[c])?a=a[b[c]]:a=a[b[c]]={}:a=a[b[c]]||(a[b[c]]={});return a}window.addEventListener&&"undefined"==typeof document.readyState&&window.addEventListener("DOMContentLoaded",function(){document.readyState="complete"},!1);
+if (_isNS('google.translate.Element')){return}(function(){var c=_setupNS('google.translate._const');c._cest = gtConstEvalStartTime;gtConstEvalStartTime = undefined;c._cl='en';c._cuc='googleTranslateElementInit';c._cac='';c._cam='';c._ctkk='440335.1449305758';var h='translate.googleapis.com';var s=(true?'https':window.location.protocol=='https:'?'https':'http')+'://';var b=s+h;c._pah=h;c._pas=s;c._pbi=b+'/translate_static/img/te_bk.gif';c._pci=b+'/translate_static/img/te_ctrl3.gif';c._pli=b+'/translate_static/img/loading.gif';c._plla=h+'/translate_a/l';c._pmi=b+'/translate_static/img/mini_google.png';c._ps=b+'/translate_static/css/translateelement.css';c._puh='translate.google.com';_loadCss(c._ps);_loadJs(b+'/translate_static/js/element/main.js');})();})();
+    </script>
+    
     <script src="<?php echo e(asset('vendor/animsition/js/animsition.min.js')); ?>"></script>
     <script src="<?php echo e(asset('vendor/bootstrap/js/popper.js')); ?>"></script>
     <script src="<?php echo e(asset('vendor/bootstrap/js/bootstrap.min.js')); ?>"></script>
@@ -945,7 +1214,29 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         });
     </script>
     <script src="<?php echo e(asset('js/main.js')); ?>"></script>
+    <script >
 
+        window.addEventListener("load",function() {
+            var x;
+            setTimeout(function () {
+              x=document.getElementsByClassName('goog-te-combo')[0].value;
+
+              if(x == ''){
+                document.getElementById('html_id').style.marginTop = '0px';
+              }
+              else{
+                document.getElementById('html_id').style.marginTop = '-40px';
+              }
+              document.getElementsByClassName('goog-te-combo')[0].onchange = function() {
+                document.getElementById('html_id').style.marginTop = '-40px';
+        }
+            },10500);
+        
+  
+      
+    });
+
+    </script>
 
 </body>
 </html>

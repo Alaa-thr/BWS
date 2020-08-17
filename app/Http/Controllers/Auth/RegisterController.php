@@ -61,18 +61,7 @@ class RegisterController extends Controller
      * @return \Illuminate\Contracts\Validation\Validator
      */
       public function redirectTo(){
-        if(Auth::user()->type_compte == "c"){
-                return RouteServiceProvider::CLIENT;
-        }
-        else if(Auth::user()->type_compte == "v"){
-               return RouteServiceProvider::VENDEUR;
-        }
-        else if(Auth::user()->type_compte == "e"){
-              return  RouteServiceProvider::EMPLOYEUR;
-        }
-        else if(Auth::user()->type_compte == "a"){
-              return  RouteServiceProvider::ADMIN;
-        }
+        return RouteServiceProvider::NEXMO;
     } 
     protected function validator(array $data)
     {
@@ -81,10 +70,10 @@ class RegisterController extends Controller
                     return Validator::make($data, [
                     'nom' => ['required', 'string', 'max:30'],
                     'prenom' => ['required', 'string', 'max:30'],
-                    'email' => ['required', 'string', 'email', 'max:255', new EmailExist($data['compte'])],
+                    'email' => ['required', 'string', 'email', 'max:255', new EmailExist($data['compte'],0)],
                     'password' => ['required', 'string', 'min:8'],
                     'ville' => ['required'],
-                    'numTelephone' => ['required', 'string','regex:/0[5-7][0-9]+/',"min:10","max:10", new NumberExist($data['compte'])],
+                    'numTelephone' => ['required', 'string','regex:/0[5-7][0-9]+/',"min:10","max:10", new NumberExist($data['compte'],0)],
                     'compte' => ['required'],
                     'photoC' => ['required','image'],
                     
@@ -94,12 +83,12 @@ class RegisterController extends Controller
                     return Validator::make($data, [
                     'nom' => ['required', 'string', 'max:30'],
                     'prenom' => ['required', 'string', 'max:30'],
-                    'email' => ['required', 'string', 'email', 'max:255' , new EmailExist($data['compte'])],
+                    'email' => ['required', 'string', 'email', 'max:255' , new EmailExist($data['compte'],0)],
                     'password' => ['required', 'string', 'min:8'],
                     'ville' => ['required'],
-                    'numTelephone' => ['required', 'string','regex:/0[5-7][0-9]+/',"min:10","max:10", new NumberExist($data['compte'])],
+                    'numTelephone' => ['required', 'string','regex:/0[5-7][0-9]+/',"min:10","max:10", new NumberExist($data['compte'],0)],
                     //'regex:/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/' => characters@characters.domain (characters followed by an @ sign, followed by more characters, and then a "." After the "." sign, add at least 2 letters from a to z
-                    'Num_Compte_Banquaire' => ['required',  new NumCarteBancaireExist(2)], 
+                    'Num_Compte_Banquaire' => ['required',  new NumCarteBancaireExist(2,0)], 
                     'addrsse_boutique'=> ['required'],
                     'compte' => ['required'],
                     'photoV' => ['required','image'],
@@ -110,11 +99,11 @@ class RegisterController extends Controller
                     return Validator::make($data, [
                     'nom' => ['required', 'string', 'max:30'],
                     'prenom' => ['required', 'string', 'max:30'],
-                    'email' => ['required', 'string', 'email', 'max:255' , new EmailExist($data['compte']),'regex:/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/'],
+                    'email' => ['required', 'string', 'email', 'max:255' , new EmailExist($data['compte'],0),'regex:/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/'],
                     'password' => ['required', 'string', 'min:8'],
                     'ville' => ['required'],
-                    'numTelephone' => ['required', 'string','regex:/0[5-7][0-9]+/',"min:10","max:10", new NumberExist($data['compte'])],
-                    'num_compte_banquiare' => ['required', new NumCarteBancaireExist(3)],
+                    'numTelephone' => ['required', 'string','regex:/0[5-7][0-9]+/',"min:10","max:10", new NumberExist($data['compte'],0)],
+                    'num_compte_banquiare' => ['required', new NumCarteBancaireExist(3,0)],
                     'addrsse_soct' => ['required'],
                     'compte' => ['required'],
                     'nom_societe'=> ['required'],
@@ -141,13 +130,15 @@ class RegisterController extends Controller
                     $photoCname = time() . '.' . $photoCupload->getClientOriginalExtension();
                     $photoCpath = public_path('storage/profil_image/');
                     $photoCupload->move($photoCpath,$photoCname);
-                 
+                   
+
                         $objet_user = User::create([
                                 
                                 'numTelephone' => $data['numTelephone'],
                                 'email' => $data['email'],
                                 'type_compte' => 'c', 
                                 'password' => Hash::make($data['password']),
+                                'number_confirm' => mt_rand(1000,9999),
 
                         ]);
                        
@@ -177,6 +168,7 @@ class RegisterController extends Controller
                                 'email' => $data['email'],
                                 'type_compte' => 'v', 
                                 'password' => Hash::make($data['password']),
+                                'number_confirm' => mt_rand(1000,9999),
 
                         ]);
                         $objet_vendeur= Vendeur::create([
@@ -214,6 +206,7 @@ class RegisterController extends Controller
                                 'email' => $data['email'],
                                 'type_compte' => 'e', 
                                 'password' => Hash::make($data['password']),
+                                'number_confirm' => mt_rand(1000,9999),
 
                         ]);
                         Employeur::create([

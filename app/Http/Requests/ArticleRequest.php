@@ -25,7 +25,7 @@ class ArticleRequest extends FormRequest {//Request 2asmo "ArticleRequest" ytest
         return [
           'titre' => ['required', 'string', 'max:150', 'min:3','regex:/^[A-Z0-9][a-z0-9A-Z,."_éçè!?$àâ(){}]+/',new TitreDescriptionExist()],
           'description' => ['required', 'string','regex:/^[A-Z0-9][a-z0-9A-Z,."_éçè!?$àâ(){}]+/',new TitreDescriptionExist()],// ^[a-z0-9A-Z] c a d bedya ta3 titre tbeda b a-z ou A-Z ou 0-9
-          'image' => ['required'],
+          'image' =>['required','regex:/^data:image/'],
         ];
         //required => khas ydakhel haja (c a d maykhalich l input vide)
         //string => khas ykoun de type string (c a d ketba)

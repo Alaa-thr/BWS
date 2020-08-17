@@ -1,11 +1,13 @@
 
 
 <?php $__env->startSection('content'); ?>
-<?php
-  $id=1;
+<style type="text/css">
+    .swal2-container {
+      z-index: 9001;
+    }
+    
+</style>
 
-
-?>
 <head>
       <title><?php echo e(( 'Commande Reçu')); ?></title>
   </head>
@@ -26,34 +28,39 @@
                 </div>
                 <hr>
                 <div class="card-body"   v-for="commandec in commandeclient" >
-                  <div class="card-head" id="cmddd" v-on:click="AfficheInfo(commandec.id,commandec.client_id)">              
-                    <div class="row  col-md-12"  > 
-                        <div class=" col-md-12 flex-t" >
-                          <div class=" m-l--25 m-t--7 col-md-6" >
-                              <p id='txt' >Commande {{commandec.id_cmd}}</p>
+                  <div class="card-head" id="cmddd" style="cursor: pointer;">              
+                    <div class="row  col-md-12 m-t-5"  > 
+                        <div class=" col-md-12 flex-t m-b-10" >
+                          <div class=" m-l--25 m-t--7 col-md-8 flex-t"  v-on:click="AfficheInfo(commandec.id,commandec.client_id,commandec)" >
+                              <p  style="color: black">Commande de<p class="m-l--25"  id='txt'>{{commandec.id_cmd}}</p></p>
                           </div>
-                          <div  class="m-t--7 col-md-4">
+                          <div  class="m-t--7 col-md-3" v-on:click="AfficheInfo(commandec.id,commandec.client_id,commandec)" >
                                 <p id="txt" style="float: right;">  {{commandec.date}}</p>
                           </div>
-                          <div class="col-md-2 dropdown">                            
+                          <div class="col-md-2 dropdown m-t-5 m-l--10">                            
                               <a data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"  style="float: right;">
-                                    <i class="fas fa-ellipsis-v"  id="y"></i>
+                                    <i class="fas fa-ellipsis-v"  style="color: black"></i>
                               </a>
                               <div class="dropdown-menu dropdown-menu-right" >
-                                  <a  class="dropdown-item js-show-modal1" v-on:click="AfficheInfo(commandec.id,commandec.client_id)" 
+                                  <a  v-on:click="pdf(commandec.id)" class="dropdown-item"  style="color: red; font-style: italic; font-weight: 900; cursor: pointer;">Télécharger
+                                  </a>
+                                  <a  class="dropdown-item js-show-modal1" v-on:click="AfficheInfo(commandec.id,commandec.client_id,commandec)" 
                                     style="color: red; font-style: italic; font-weight: 900; cursor: pointer;" >Afficher Plus</a>
                               </div>
                           </div> 
                         </div> 
-                        <div class="col-md-12 flex-t m-b-10" >
-                          <div  class="m-l--25 col-md-7" v-if="commandec.address">
-                            <p id="txt" >Address: {{commandec.address}}</p> 
+                        <div class="col-md-12 flex-t m-b-10" v-on:click="AfficheInfo(commandec.id,commandec.client_id,commandec)" >
+                          <div  class="m-l--25 col-md-9 flex-t" v-if="commandec.address">
+                            <p  style="color: black">Address: <p class="m-l--25"  id='txt'>{{commandec.address}}</p></p>
+                         
                           </div> 
-                          <div class="col-md-7"  v-else >
-                            <p id="txt"  >Code postal: {{commandec.code_postale}}</p>
+                          <div class="col-md-9 flex-t"  v-else >
+                            <p  style="color: black">Code postal: <p class="m-l--25"  id='txt'>{{commandec.code_postale}}</p></p>
+                            
                           </div>
-                          <div class="col-md-4">
-                            <p id="txt" style="float: right;" >Prix_total: {{commandec.prix_total}} DA </p>
+                          <div class="col-md-4 flex-t">
+                            <p  style="color: black;float: right;">Prix Totale: <p class="m-l--25"  id='txt'>{{commandec.prix_total}} DA</p></p>
+                          
                           </div>
                         </div>
                       </div>      
@@ -104,7 +111,7 @@
                             <img :src="'storage/produits_image/'+ produit.image" alt="IMG" >
                           </div>
                         </div>
-                        <div class="column-2 p-l-40 p-r-40 p-t-10">{{produit.qte}} x {{produit.prix_total}} DA
+                        <div class="column-2 p-l-40 p-r-40 p-t-10">{{produit.qte}} x {{produit.prix_produit}} DA
                         </div>
                         <div class="column-2 p-l-40 ">
                           <div class="input-group mb-3 ">
@@ -165,7 +172,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-12 form-group flex-w p-b-20">
+              <div class="col-md-12 form-group flex-w p-b-20" v-if="client.address">
                 <div class="size-205 cl2 m-r-2" style="font-size: 15px;">
                         Address
                 </div>
@@ -175,7 +182,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-12 form-group flex-w p-b-35">
+              <div class="col-md-12 form-group flex-w p-b-35" v-if="client.code_postale">
                 <div class="size-205 cl2 m-r-2" style="font-size: 15px;">
                         Code Postale
                 </div>
@@ -187,11 +194,11 @@
               </div>
               <div class="col-md-12 flex-t">
                 <div class="col-md-6 " >
-                  <button v-on:click=" RecuCommande(client.id,client.id_client);"   class="btn-sm btn-success " style="border: 0; float: right;border-radius: 1em;height: 35px;" ><b>Accepté</b>
+                  <button v-on:click=" RecuCommande(client.id,client.id_client);"   class="btn-sm btn-success btn-block" style="border: 0; float: right;border-radius: 1em;height: 35px;" ><b>Accepté</b>
                   </button>  
                 </div> 
                 <div class="col-md-6">
-                  <button v-on:click=" RefuserCommande(client.id,client.id_client);"   class="btn-sm btn-danger " style="border: 0; float: right; border-radius: 1em;height: 35px;" ><b>Refuser</b>
+                  <button v-on:click=" RefuserCommande(client.id,client.id_client);"   class="btn-sm btn-danger btn-block" style="border: 0; float: right; border-radius: 1em;height: 35px;" ><b>Refuser</b>
                   </button>   
                 </div>       
                  
@@ -216,6 +223,7 @@
            'prV' => $prV,
            'cmd' => $cmd,
            'prixx' => $prixx,
+           'tarif' => $tarif,
            "url"      => url("/")  
       ]); ?>;
 </script>
@@ -239,6 +247,10 @@ var app2 = new Vue({
       nom_client: 'NON',
       prenom_client: 'NON'
     },
+    cause: {
+      text: '',
+    },
+    cmdDetails: [],
   
   },
 methods: {
@@ -246,7 +258,7 @@ methods: {
   RecuCommande: function(id,idClient){
              axios.put(window.Laravel.url+'/recucommande/'+id+'/'+idClient)
               .then(response => {
-                  var position = app.commandeclient.indexOf(response.data.traiter[0]);
+                  var position = app.commandeclient.indexOf(this.cmdDetails);
                   app.commandeclient.splice(position,1);
                   $('.js-modal1').removeClass('show-modal1');    
                   Swal.fire({
@@ -261,7 +273,6 @@ methods: {
               })
           },
           RefuserCommande: function(id,idClient){
-            $('.js-modal1').removeClass('show-modal1'); 
             Swal.fire({
               title: 'Etes vous?',
               text: "De refusé cette Commande?",
@@ -273,22 +284,50 @@ methods: {
               cancelButtonText: 'Annuler'
             }).then((result) => {
               if (result.value) {
-                axios.put(window.Laravel.url+'/refusercommande/'+id+'/'+idClient)
-                .then(response => {
-                    var position = app.commandeclient.indexOf(response.data.traiter[0]);
-                    app.commandeclient.splice(position,1);
-                     
-                    this.hideModel = false;  
-                   })
-                .catch(error => {
-                    console.log("errors : "  , error);
-                })
+                 Swal.fire({
+                  title: 'Saisissez la raison du refus',
+                  input: 'textarea',
+                  inputAttributes: {
+                    autocapitalize: 'off'
+                  },
+                  showCancelButton: true,
+                  confirmButtonText: 'Envoyer',
+                  cancelButtonText: 'Annuler',
+                  cancelButtonColor: '#d33',
+                  showLoaderOnConfirm: true,
+                  preConfirm: (login) => {// le cas de texterea vide
+                     var id = document.getElementsByClassName("swal2-textarea");
+                     var value = id[0].value;
+                     this.cause.text = value;
+                    return axios.post(window.Laravel.url+`/checktextarea`,this.cause)
+                      .then(response => {
+                      })
+                      .catch(error => {
+                        Swal.showValidationMessage(
+                          `${error.response.data.errors.text[0]}`
+                        )
+                      })
+                  },
+                }).then((result) => {
+                  if (result.value) {
+                    $('.js-modal1').removeClass('show-modal1');
+                    axios.put(window.Laravel.url+'/refusercommande/'+id+'/'+idClient+'/'+this.cause.text)
+                    .then(response => {
+                        var position = app.commandeclient.indexOf(this.cmdDetails);
+                        app.commandeclient.splice(position,1);
+                        this.hideModel = false;  
+                       })
+                    .catch(error => {
+                        console.log("errors : "  , error);
+                    }) 
+                    Swal.fire(
+                      "Vous trouver!",
+                      'cette commande dans Commande Traiter et une notification a été envoyée au client.',
+                      'success'
+                    )
 
-                Swal.fire(
-                  "Vous trouver!",
-                  'cette commande dans Commande Traiter et une notification a été envoyée au client.',
-                  'success'
-                )
+                  }
+                })               
               }
             })
              
@@ -297,7 +336,7 @@ methods: {
             axios.post(window.Laravel.url+'/detaillsacommandevendeur', this.detaillsA)
 
                 .then(response => {
-                     this.commandeclient2 = response.data;//detaill de commande
+                     this.commandeclient2 = response.data.commande_detaills;//detaill de command
                      this.client = this.commandeclient2[0];
                 })
                 .catch(error =>{
@@ -332,16 +371,29 @@ data:{
   },
 methods: {
   
+  pdf: function(idCmd){
 
- 
- 
+      Swal.fire(
+          "",
+          "Le telechargement de votre commande sera commencé dans quelque seconde",
+          "success"
+      )
+        axios.get(window.Laravel.url+'/dynamic_pdf/pdf/'+idCmd)
+         .then(response => {
+
+          })
+          .catch(error =>{
+            console.log('errors :' , error);
+          })
+                
+    },
   
-  
-  AfficheInfo: function($idCmd,$idClient){
+  AfficheInfo: function($idCmd,$idClient,$cmd){
     $('.js-modal1').addClass('show-modal1');
     app2.hideModel = true;
     app2.detaillsA.idA= $idCmd;
     app2.detaillsA.idClient= $idClient;
+    app2.cmdDetails = $cmd;
     app2.detaillsacommandeVendeur();
   },
   get_commande_vendeur: function(){
@@ -349,25 +401,43 @@ methods: {
 
                 .then(response => {
                   this.tt = window.Laravel.article.data;
+
                   var $x=1;
+                  var $prx = 0,$k=0;
                   this.tt.forEach(key1 =>{
 
                         for(i=0; i<window.Laravel.cmd.length  ; i++ ){
-                            if(key1.id == window.Laravel.cmd[i].id){
-                               this.commandeclient.push({id: key1.id ,address:window.Laravel.cmd[i].address,date:window.Laravel.cmd[i].date,client_id:window.Laravel.cmd[i].client_id,id_cmd:$x});
+                            if(key1.id == window.Laravel.cmd[i].id && key1.client_id == window.Laravel.cmd[i].client_id ){
+                               this.commandeclient.push({id: key1.id ,address:window.Laravel.cmd[i].address,date:window.Laravel.cmd[i].date,client_id:window.Laravel.cmd[i].client_id,id_cmd:window.Laravel.cmd[i].nom.toUpperCase()+' '+window.Laravel.cmd[i].prenom.toUpperCase()});
                                $x++;
                                 i = window.Laravel.cmd.length;
                             }
                        }
                      });
-                  
                   this.commandeclient.forEach(key=>{
-                     for(i=0; i<window.Laravel.prixx.length  ; i++ ){
-                            if(key.id == window.Laravel.prixx[i].id){
-                               this.commandeclient[i]['prix_total']=window.Laravel.prixx[i].PrixTotal;
-                                i = window.Laravel.prixx.length;
+                     
+                      window.Laravel.prixx.forEach(key1=>{
+                        if(key1.id == key.id && key1.client_id == key.client_id){
+                          for(i=0; i<window.Laravel.tarif.length  ; i++ ){
+                            if(key1.ville == window.Laravel.tarif[i].nom && key1.type_livraison == 'vc' ){
+                              $k++;
+                               $prx+= (key1.prix_produit * key1.qte)+window.Laravel.tarif[i].prix;
                             }
-                       }
+                            if(key1.ville == window.Laravel.tarif[i].nom && key1.type_livraison != 'vc' ){
+                              $k++;
+                               $prx+= key1.prix_produit * key1.qte;
+                            }
+                          }
+                          if($k==0){
+                            $prx+= (key1.prix_produit * key1.qte)
+                          }
+                        }
+                        
+                      })
+                     $k=0; 
+                     key['prix_total'] = $prx
+                     $prx=0;
+
                     
                   })
                  

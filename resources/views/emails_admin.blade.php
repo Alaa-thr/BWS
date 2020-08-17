@@ -8,68 +8,73 @@
       </head>
       <nav class="navbar navbar-expand-lg navbar-transparent  bg-primary  navbar-absolute">
                                                          
-                                                         <div class="container-fluid">
-                                                           <div class="navbar-wrapper">
-                                                             <div class="navbar-toggle">
-                                                               <button type="button" class="navbar-toggler">
-                                                                 <span class="navbar-toggler-bar bar1"></span>
-                                                                 <span class="navbar-toggler-bar bar2"></span>
-                                                                 <span class="navbar-toggler-bar bar3"></span>
-                                                               </button>
-                                                             </div>
+        <div class="container-fluid">
+          <div class="navbar-wrapper">
+            <div class="navbar-toggle">
+              <button type="button" class="navbar-toggler">
+                <span class="navbar-toggler-bar bar1"></span>
+                <span class="navbar-toggler-bar bar2"></span>
+                <span class="navbar-toggler-bar bar3"></span>
+              </button>
+            </div>
                                                  
                                                           
                                                           
                                                  
-                                                           </div>
-                                                           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-                                                             <span class="navbar-toggler-bar navbar-kebab"></span>
-                                                             <span class="navbar-toggler-bar navbar-kebab"></span>
-                                                             <span class="navbar-toggler-bar navbar-kebab"></span>
-                                                           </button>
-                                                           <div class="collapse navbar-collapse justify-content-end" id="navigation" >
-                                                           <form  action="/abest" method="get">
-                                                               <div class="input-group no-border"  style="left: -40px;">
-                                                                 <input type="search" name="search"  class="form-control" placeholder="Rechercher..." >
-                                                                 <div class="input-group-append">
-                                                                   <div class="input-group-text">
-                                                                     <i class="now-ui-icons ui-1_zoom-bold"></i>
-                                                                   </div>
-                                                                 </div>
-                                                               </div>
-                                                             </form>
-                                                             <ul class="navbar-nav" >
-                                                             <li class="nav-item dropdown" style="cursor: pointer; margin-right: 40px;">
-                                                                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                   <img class="img-xs rounded-circle"  src="<?php echo asset('storage/profil_image/'.$admin->image) ?>" alt="..."  />
-                                                                   <p>
-                                                                     <span class="d-lg-none d-md-block">Quelques Actions</span>
-                                                                   </p>
-                                                                 </a>
-                                                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                                                                   <div class="account-item clearfix js-item-menu">  
-                                                                     <div class="card-body">
+        </div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-bar navbar-kebab"></span>
+          <span class="navbar-toggler-bar navbar-kebab"></span>
+          <span class="navbar-toggler-bar navbar-kebab"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navigation" >
+        <form  action="/emailsS" method="get" id="sbmt" name="sbmt">
+        <div class="input-group no-border"  style="left: -40px;">
+          <input type="search" name="search"  class="form-control" placeholder="Rechercher..." >
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <i class="now-ui-icons ui-1_zoom-bold" onclick="document.forms['sbmt'].submit();"></i>
+            </div>
+          </div>
+        </div>
+      </form>
+      <ul class="navbar-nav" >
+        <li>
+          <div style="margin-top: 10px; margin-right: 10px;">
+              <div id="google_translate_element"></div>                       
+          </div>
+        </li>
+      <li class="nav-item dropdown" style="cursor: pointer; margin-right: 40px;">
+          <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img class="img-xs rounded-circle"  src="<?php echo asset('storage/profil_image/'.$admin->image) ?>" alt="..."  />
+            <p>
+              <span class="d-lg-none d-md-block">Quelques Actions</span>
+            </p>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+          <div class="account-item clearfix js-item-menu">  
+            <div class="card-body">
                                                                             
-                                                                         <a >
-                                                                           <table >
-                                                                             <tr>
-                                                                               <td width="50%">
-                                                                                 <a href="#">
-                                                                                  <img class="img-lg rounded-circle" src="<?php echo asset('storage/profil_image/'.$admin->image) ?>" alt="..."> 
-                                                                                  </a>
-                                                                                </td>
-                                                                               <td>
-                                                                                    <h6 class="description text-left" ><b id="a"> {{ $admin->nom }} {{ $admin->prenom }}</b></h6><a href ="{{ $admin->email }}" id ="nab">{{ $admin->email }}</a>
-                                                                                </td>
-                                                                              </tr>
-                                                                             </table>
-                                                                         </a>  
-                                                                     </div>
-                                                                     <div style="width: 255px; margin-left: 20px;"> 
-                                                                       <hr >
-                                                                      </div>
-                                                                       <a class="dropdown-item" href="{{ route('accueil') }}" id="n"><i class="now-ui-icons business_bank" id="m"></i><b>Allez vers Acceuil</b></a>
-                                                                       <a class="dropdown-item" href="{{ route('profilAdmin') }}" id="n"><i class="now-ui-icons users_single-02" id="m"></i><b>Profil</b></a>
+                <a >
+                  <table >
+                    <tr>
+                      <td width="50%">
+                        <a href="#">
+                        <img class="img-lg rounded-circle" src="<?php echo asset('storage/profil_image/'.$admin->image) ?>" alt="..."> 
+                </a>
+              </td>
+              <td>
+                  <h6 class="description text-left" ><b id="a"> {{ $admin->nom }} {{ $admin->prenom }}</b></h6><a href ="{{ $admin->email }}" id ="nab">{{ $admin->email }}</a>
+              </td>
+            </tr>
+            </table>
+        </a>  
+    </div>
+          <div style="width: 255px; margin-left: 20px;"> 
+            <hr >
+          </div>
+            <a class="dropdown-item" href="{{ route('accueil') }}" id="n"><i class="now-ui-icons business_bank" id="m"></i><b>Allez vers Acceuil</b></a>
+            <a class="dropdown-item" href="{{ route('profilAdmin') }}" id="n"><i class="now-ui-icons users_single-02" id="m"></i><b>Profil</b></a>
                   <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();" id="n">
           <i class="now-ui-icons media-1_button-power" id="m"></i>{{ __('Déconnexion') }} </a>
           <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -90,21 +95,29 @@
         <div class="row">
           <div class="col-md-12">
             <div class="card">
-              <div class="card-header">
-                <div style=" display: flex; margin-left: 17px; ">
+              <div class="card-header col-md-12" style="display: inline-flex;">
+                <div class="col-md-8" style="display: inline-flex;">
                   <input type="checkbox" id="e" @change="selectAll()" v-model="allSelected" style="">
                   <label for="e"></label>
-                  <h4 class="card-title" style="margin-top: -8px;">Emails</h4>
+                  <h4 style="margin-top: -8px">Emails</h4>
                 </div>
-                <button v-if="suppr" class="btn btn-sm btn-danger  btn-block" style="margin-left: 700px; margin-top: -50px;  border-radius: 0.8em; width: 130px; height: 35px; "  v-on:click="deleteArrayEmail()"><b>supprimer</b>
-                </button>
-                <button v-if="suppr" class="btn btn-sm btn-warning btn-block" style="margin-left: 850px; margin-top: -45px;  border-radius: 0.8em; width: 130px; height: 35px; " v-on:click="AnnulerSel" ><b>Annuler</b>
-                </button>
-                <div >
-                  <hr style="margin-top: -8px;">
+                <div class="col-md-2" >
+                  <button v-if="suppr" class="btn btn-sm btn-danger  btn-block" style=" border-radius: 0.8em; width: 130px; height: 35px;float: right; margin-top: -8px "  v-on:click="deleteArrayEmail()"><b>supprimer</b>
+                  </button>
+                </div>
+                <div class="col-md-2" >
+                  <button v-if="suppr" class="btn btn-sm btn-warning btn-block" style=" border-radius: 0.8em; width: 130px; height: 35px; float: right; margin-top: -8px" v-on:click="AnnulerSel" ><b>Ok</b>
+                  </button>
                 </div>
               </div>
-              <div class="card-body" v-for="ema in emails">
+              <hr >
+              @php
+                 $url = Route::getCurrentRoute()->uri();
+              @endphp
+              <div class="col-md-12" v-if="emails.length == 0 && '<?php echo $url?>'.includes('emailsS') == true" style="text-align: center; margin-bottom: 40px">
+                  <span>Cette Recherche n'a pas de Résultats</span>
+              </div>          
+              <div v-if="emails.length != 0" class="card-body" v-for="ema in emails">
                 <div class="row" >
                   <div v-if="selectall" class="col-md-1" style="margin-left: -10px; ">
                     <input type="checkbox"  :id="ema.id" :value="ema.id" v-model="checkedEmail" @change="changeButton(ema)">
@@ -126,7 +139,6 @@
                     </div>
                   </a>
                   <div class="col-md-2 js-show-modal1">
-                      <!--li  v-if="rep && ema.reponse === 0" class="label11" data-label11="Pas encors répondu"-->
                       <div v-if="rep && ema.reponse === 1" >
                         <img :data-toggle="!!ema.admin_nom ? 'tooltip' : false"  data-html="true" :title="'Ce message a été répondu par Ladmin : '+ema.admin_nom.toUpperCase()+' ' +ema.admin_prenom.toUpperCase()+''" src="assetsAdmin/img/image.jpeg"  style="width: 25px; margin-left: 70px;cursor: pointer;"/>
                       </div>
@@ -142,6 +154,7 @@
                 <hr style="margin-bottom: 5px;">
              </div>
             </div>
+            {{$em->links()}}
           </div>
         </div>
       </div>
@@ -224,6 +237,7 @@
 @push('javascripts')
 
 <script> 
+  function initDashboardPageCharts(){}
         window.Laravel = {!! json_encode([
 
                'csrfToken' => csrf_token(),
@@ -232,6 +246,7 @@
           ]) !!};
 </script>
 <script>
+   
   var app2 = new Vue({
      el: '#app2',
      data:{
@@ -291,8 +306,7 @@
         axios.get(window.Laravel.url+'/emails')
 
             .then(response => {
-                 this.emails = window.Laravel.em;
-                 console.log("window.Laravel.em",window.Laravel.em);
+                 this.emails = window.Laravel.em.data;
             })
             .catch(error =>{
                  console.log('errors :' , error);

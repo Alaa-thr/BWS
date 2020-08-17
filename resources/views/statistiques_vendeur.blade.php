@@ -21,7 +21,7 @@
         </div>
       </nav>
 
-      <div class="panel-header panel-header-lg" >
+      <div class="panel-header panel-header-lg col-md-12" >
         <canvas id="bigDashboardChart" class=""></canvas>
       </div>
       <div class="content" id='app222'>

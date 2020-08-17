@@ -23,9 +23,6 @@ class CreateClientsTable extends Migration
             $table->string('numeroTelephone')->unique();
             $table->string('image')->default('NULL');
             $table->integer('nbr_cmd')->default(1);
-            $table->integer('Nbre_signal')->default(0);
-            $table->boolean('deletedc')->default(0);
-            $table->boolean('deleted_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

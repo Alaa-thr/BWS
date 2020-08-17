@@ -12,8 +12,6 @@ class Admin extends Model
         'nom','prenom','numTelephone','email','user_id','numCarteBanquaire','image','big_admin','deleteda'
     ];
 
-    use SoftDeletes;
-    protected $dates= ['deleted_at'];
     
      public function user()
     {

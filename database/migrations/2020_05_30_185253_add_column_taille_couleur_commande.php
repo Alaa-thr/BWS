@@ -17,7 +17,11 @@ class AddColumnTailleCouleurCommande extends Migration
             $table->unsignedBigInteger('couleur_id')->nullable();
             $table->string('taille')->nullable();
             $table->foreign('couleur_id')->references('id')->on('colors');
+            $table->foreign('client_id')->references('id')->on('clients');
+            $table->foreign('vendeur_id')->references('id')->on('vendeurs');
+            $table->foreign('produit_id')->references('id')->on('produits')->onDelete('cascade');
         });
+        DB::unprepared('ALTER TABLE `commandes` DROP PRIMARY KEY ,ADD PRIMARY KEY (`id`,`produit_id`,`client_id`,`couleur_id`,`taille`,`type_livraison`,`qte`) ');
     }
 
     /**

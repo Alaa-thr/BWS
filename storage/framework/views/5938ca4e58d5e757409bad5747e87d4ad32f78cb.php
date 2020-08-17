@@ -85,12 +85,12 @@
               </div>
             <?php endif; ?>
             <div class="flex-t col-md-12">
-              <div class="flex-t col-md-4">
+              <div class="flex-t col-md-9">
                   <input type="checkbox" id="article" @change="selectAll()" v-model="allSelected" style="margin-top: 5px;">
                   <label for="article"></label> 
                   <h4 style="margin-top: -6px;margin-left: 10px;">Commande </h4>
               </div>
-              <div class="flex-t col-md-12" >
+              <div class="flex-t col-md-3" >
                 <div class="col-md-5">
                   <button v-if="suppr" class="btn-sm btn-danger " style="height: 35px; float: right;" v-on:click="deleteArrayArticle()"><b>Supprimer</b></button>
                 </div>
@@ -121,10 +121,12 @@
                           <p id="txt" style="float: right;">  {{commandec.date}}</p>
                       </div>
                       <div class="col-md-2 dropdown m-t-5" style="cursor: pointer;">
-                        <a data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"  >
-                          <i class="fas fa-ellipsis-v"  id="y"></i>
+                        <a data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"  style="float: right;">
+                          <i class="fas fa-ellipsis-v"  style="color: black"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" >
+                          <a  v-on:click="pdf(commandec.id)" class="dropdown-item"  style="color: red; font-style: italic; font-weight: 900; cursor: pointer;">Télécharger
+                          </a>
                           <a class="dropdown-item js-show-modal1" v-on:click="AfficheInfo(commandec.id)" style="color: red; font-style: italic; font-weight: 900; cursor: pointer;">Afficher Plus
                           </a>
                           <a class="dropdown-item" v-on:click="deleteCommandeVendeur(commandec)"style="color: red; font-style: italic; font-weight: 900; cursor: pointer;">Supprimer
@@ -134,14 +136,17 @@
                     </div>
                   </div>
                     <div class="col-md-12 flex-t m-b-10 js-show-modal1" v-on:click="AfficheInfo(commandec.id)" style="cursor: pointer;">
-                      <div  class="m-l--25 col-md-7" v-if="commandec.address">
-                        <p id="txt" >Address: {{commandec.address}}</p> 
+                      <div  class="m-l--25 col-md-9" v-if="commandec.address">
+                       
+                         <p id="txt" v-if="commandec.address!= null && commandec.code_postale == null">Address: {{commandec.address}}</p> 
+                         <p id="txt" v-if="commandec.address!= null && commandec.code_postale != null">Address: {{commandec.address}} / Code postal: {{commandec.code_postale}}</p> 
                       </div>
-                      <div class="col-md-7"  v-else >
+                      <div class="m-l--25 col-md-9"  v-else >
                         <p id="txt"  >Code postal: {{commandec.code_postale}}</p>
                       </div>
-                      <div class="col-md-4" >
-                        <p id="txt" style="float: right;" >Prix_total: {{commandec.prix_total}} DA </p>
+                      
+                      <div class="col-md-4">
+                        <p id="txt" style="" >Prix Totale: {{commandec.prix_total}} DA </p>
                       </div> 
                     </div>
                   </div>
@@ -172,10 +177,10 @@
           </div>
   
           <div class="row"  >
-            <div class="col-md-6 col-lg-6" >
-              <div class="p-l-50 p-lr-0-lg" >
+            <div class="col-md-7 " >
+              <div class="p-l-30 p-lr-0-lg" >
                 <div class="wrap-slick3 flex-sb flex-w"  id="cb">
-                  <div class="p-t-55 p-b-20 p-l-50" >
+                  <div class="p-t-55 p-b-20 " >
                     <h4 class="cl13 p-l-70">
                       Vos Produits
                     </h4>
@@ -188,13 +193,13 @@
                             <img :src="'storage/produits_image/'+ produit.image" alt="IMG">
                           </div>
                         </div>
-                        <div class="column-2 p-l-40 p-r-40 p-t-10">{{produit.qte}} x {{produit.prix_total}} DA
+                        <div class="column-2 p-l-40 p-r-40 p-t-10">{{produit.qte}} x {{produit.prix_produit}} DA
                         </div>
                         <div class="column-2 p-l-40 ">
                           <div class="input-group mb-3 ">
-                            <div   v-if="produit.type_livraison === 'vc'">Le vendeur effectuer la livraison</div>
-                                              <div  v-if="produit.type_livraison === 'cv'">Vous apportez votre produit</div>
-                                              <div  v-if="produit.type_livraison === 'dhl'">DHL(Poste)</div>  
+                            <div   v-if="produit.type_livraison === 'vc'">Le vendeur effectuer la livraison/ {{produit.type}} DA</div>
+                            <div  v-if="produit.type_livraison === 'cv'">Vous apportez votre produit</div>
+                            <div  v-if="produit.type_livraison === 'dhl'">DHL(Poste)</div>  
                           </div>
                           <div class="flex-t m-t--10">
                             <div>Couleur: {{produit.nom}}</div>
@@ -208,56 +213,66 @@
               </div>
             </div>
             
-            <div class="col-md-6 col-lg-5 p-b-30 m-l-30">
-              <div class=" p-t-5 p-lr-0-lg">
+            <div class="col-md-4 p-b-30" >
+              <div class=" p-t-5 " >
                 
                 <!--  -->
-                <div class="p-t-19">
+                <div class="p-t-19" >
                   <div class="p-b-60  p-l-40">
                     <h4 class="cl13 p-l-50">
                       Vos Informations
                     </h4>
                   </div>
-                  <div class="p-b-10">
-                    <form >
-                      <div class="form-group flex-w p-b-10">
+                 <div class="p-b-10 col-md-12">
+                    <form class="m-l-50 col-md-12" >
+                      <div class="form-group flex-w p-b-10 col-md-12" >
                         <div class="size-205 cl2 m-r-2" style="font-size: 15px;">
                           Numero Telephone
                         </div>
-                        <div class="size-219">
-                          <div class=" bg0 ">
-                            <input class="form-control" id="nom" type="text" :value="commandeclientD.numero_tlf" Disabled>
+                        <div class="size-219 col-md-12">
+                          <div class=" bg0">
+                            <input class="form-control" id="nom" type="text" :value="commandeclientD.numero_tlf" Disabled >
                           </div>
                         </div>
                       </div>
   
-                      <div class="form-group flex-w p-b-10">
+                      <div class="form-group flex-w p-b-10 col-md-12">
                         <div class="size-205 cl2 m-r-2" style="font-size: 15px;">
                           Email
                         </div>
-                        <div class="size-219 ">
+                        <div class="size-219  col-md-12">
                           <div class=" bg0">
                             <input class="form-control m-r-30" id="nom" type="text" :value="commandeclientD.email" Disabled>
                           </div>
                         </div>
                       </div>
+                      <div class="form-group flex-w p-b-10 col-md-12" v-if="commandeclientD.address != null">
+                        <div class="size-205 cl2 m-r-2" style="font-size: 15px;">
+                          Ville
+                        </div>
+                        <div class="size-219 col-md-12">
+                          <div class="bg0">
+                            <input class="form-control m-r-30" id="nom" type="text" :value="commandeclientD.ville" Disabled>
+                          </div>
+                        </div>
+                      </div>
   
-                      <div class="form-group flex-w p-b-10" v-if="commandeclientD.address != null">
+                      <div class="form-group flex-w p-b-10 col-md-12" v-if="commandeclientD.address != null">
                         <div class="size-205 cl2 m-r-2" style="font-size: 15px;">
                           Adrrsse
                         </div>
-                        <div class="size-219">
+                        <div class="size-219 col-md-12">
                           <div class="bg0">
                             <input class="form-control m-r-30" id="nom" type="text" :value="commandeclientD.address" Disabled>
                           </div>
                         </div>
                       </div>
   
-                      <div class="form-group flex-w p-b-10"  v-if="commandeclientD.code_postale != null">
+                      <div class="form-group flex-w p-b-10 col-md-12"  v-if="commandeclientD.code_postale != null">
                         <div class="size-205 cl2 m-r-2" style="font-size: 15px;">
                           code Postale
                         </div>
-                        <div class="size-219">
+                        <div class="size-219 col-md-12">
                           <div class="bg0">
                             <input class="form-control m-r-30" id="nom" type="text" :value="commandeclientD.code_postale" Disabled>
                           </div>
@@ -268,7 +283,7 @@
                   </div>
                   <!--  -->
   
-                  <div class="flex-w flex-r-m p-b-10">
+                  <div class="flex-w flex-r-m p-b-10 col-md-12">
                     <div v-on:click="deleteCommande2(commandeclientD)">
                       <button class="cl0 size-102 bg10 bor1 trans-04 m-r-5" 
                       >
@@ -308,7 +323,6 @@
            'Fav'         => $Fav,
            'command'         => $command,
            'prixTotale'   => $prixTotale,
-           'prixx' => $prixx,
            "url"      => url("/")  
       ]); ?>;
 </script>
@@ -332,8 +346,6 @@ var app2 = new Vue({
 methods: {
 
    deleteCommande2(cmd){
-    console.log(cmd)
-    console.log('app',app.commandeclient)
       $('.js-modal1').removeClass('show-modal1');
         Swal.fire({
           title: 'Etes vous?',
@@ -350,7 +362,7 @@ methods: {
                     if(response.data.etat){
                       app.commandeclient.forEach(key=>{
                         if(key.id == cmd.id ){
-                          console.log("1")
+                        
                             var position = app.commandeclient.indexOf(key);
                         app.commandeclient.splice(position,1);
                         }
@@ -378,8 +390,20 @@ methods: {
     axios.post(window.Laravel.url+'/detaillsacommande', this.detaillsA)
 
         .then(response => {
-             this.commandeclient2 = response.data;
+             this.commandeclient2 = response.data.cmd;
              this.commandeclientD = this.commandeclient2[0];
+             this.commandeclient2.forEach(key=>{
+              
+                  key['type'] = 0;
+                
+             })
+             this.commandeclient2.forEach(key=>{
+              response.data.type_prix.forEach(key1=>{
+                if(key.type_livraison == 'vc' && key.vendeur_id == key1.vendeur_id){
+                  key['type'] = key1.prix
+                }
+              })
+             })
         })
         .catch(error =>{
              console.log('errors :' , error);
@@ -478,7 +502,22 @@ methods: {
         
         })
    },
+    pdf: function(idCmd){
 
+      Swal.fire(
+          "",
+          "Le telechargement de votre commande sera commencé dans quelque seconde",
+          "success"
+      )
+        axios.get(window.Laravel.url+'/dynamic_pdf/pdf/'+idCmd)
+         .then(response => {
+
+          })
+          .catch(error =>{
+            console.log('errors :' , error);
+          })
+                
+    },
 AfficheInfo: function($id){
     app2.hideModel = true; 
     app2.openAjout = false ;
@@ -493,25 +532,15 @@ AfficheInfo: function($id){
                      this.tt = window.Laravel.article.data;
                      this.tt.forEach(key1 =>{
                         for(i=0; i<window.Laravel.cmd.length; i++ ){
-                            if(key1.id == window.Laravel.cmd[i].id){
+                            if(key1.id == window.Laravel.cmd[i].id && key1.client_id == window.Laravel.cmd[i].client_id){
 
-                               this.commandeclient.push({id: key1.id ,address:window.Laravel.cmd[i].address,date:window.Laravel.cmd[i].date});
+                               this.commandeclient.push({id: key1.id ,address:window.Laravel.cmd[i].address,date:window.Laravel.cmd[i].date,prix_total:window.Laravel.cmd[i].prix_totale,code_postale: window.Laravel.cmd[i].code_postale});
                                 i = window.Laravel.cmd.length;
                             }
                        }
                      });
-                     console.log(",this.commandeclient",this.commandeclient)
-                     console.log(",window.Laravel.prixx",window.Laravel.prixx)
-                      this.commandeclient.forEach(key=>{
-                        for(i=0; i<window.Laravel.prixx.length  ; i++ ){
-                            if(key.id == window.Laravel.prixx[i].id){
-                               this.commandeclient[i]['prix_total']=window.Laravel.prixx[i].PrixTotal;
-                                i = window.Laravel.prixx.length;
-                            }
-                       }
-                    
-                  })
-                      console.log(",this.commandeclient",this.commandeclient)
+                   
+                     
 
                 })
                 .catch(error =>{
@@ -602,8 +631,9 @@ created:function(){
                                   this.prix[0].prixTo = 0;
                                }
                                else{
-                                  this.prix[0].prixTo -= produit.prix_total*produit.qte;
+                                  this.prix[0].prixTo -= produit.prix_produit*produit.qte;
                                }
+
 
                       }                     
                     })

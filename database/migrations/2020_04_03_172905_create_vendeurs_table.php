@@ -25,8 +25,6 @@ class CreateVendeursTable extends Migration
             $table->string('Num_Compte_Banquaire')->unique();
             $table->string('image')->nullable();
             $table->integer('Nbre_signal')->default(0);
-            $table->boolean('deletedv')->default(0);
-            $table->boolean('deleted_at')->nullable();
             $table->timestamps();
         });
     }

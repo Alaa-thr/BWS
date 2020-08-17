@@ -14,11 +14,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'BwsController@home');
-
+Route::get('/confirmation', 'BwsController@nexmo')->name('confirmation');
+Route::get('/sendsms', 'BwsController@sendSms');
+Route::post('/number_confirm', 'BwsController@redirectTo');
+Route::fallback(function() {
+	$categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
+        $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
+   return view('page_not_found',['categorieE'=>$categorieE,'categorie'=>$categorie ]); // la vue
+});
 Auth::routes();
 
 /************************************************ Visiteur***********************************************/
-
+Route::get('/dynamic_pdf/pdf/{id}', 'PDFController@pdf');
+Route::get('/compte', 'BwsController@desactivate')->name("compte");
 Route::get('/logoutregister', 'Auth\LoginController@logoutRegister')->name("logoutregister");
 Route::post('/authenticate', 'Auth\LoginController@authenticate')->name("authenticate");
 Route::get('/home', 'HomeController@index')->name('home');
@@ -212,9 +220,9 @@ Route::post('detailsemail','AdminController@detailsEmail');
 Route::get('/employeur', 'AdminController@employeur_admin')->name('employeur');
 Route::get('/notificationsAdmin', 'AdminController@notifications_admin')->name('notificationsAdmin');
 Route::get('/profilAdmin', 'AdminController@profil_admin')->name('profilAdmin');
-Route::get('/statistiquesAdmin', 'BwsController@statistiques_admin')->name('statistiquesAdmin');
+Route::get('/statistiquesAdmin', 'AdminController@statistiques_admin')->name('statistiquesAdmin');
 Route::get('/vendeur', 'AdminController@vendeur_admin')->name('vendeur');
-Route::put('/updateProfil','AdminController@update_profil');
+Route::post('/updateProfil','AdminController@update_profil');
 Route::post('/addarticle', 'AdminController@addArticle');
 Route::post('/detaillsarticle', 'AdminController@detaillsArticle');
 Route::post('/addcategorie', 'AdminController@addCategorie');
@@ -249,9 +257,10 @@ Route::put('/emailrependu/{id}','AdminController@emailRependu');
 Route::post('/verifierInputsAnnonce','EmployeurController@verifierInputsAnnonce');
 Route::get('/profilEmployeur', 'EmployeurController@profil_employeur')->name('profilEmployeur');
 Route::get('/annoncesemploi', 'EmployeurController@annonce_emploi')->name('annoncesemploi');
-Route::put('/updateProfilE/{id}','EmployeurController@update_profil');
+Route::post('/updateProfilE','EmployeurController@update_profil');
 Route::post('/addannonce', 'EmployeurController@addAnnonce');
 Route::post('/addannoncepaiment', 'EmployeurController@addannoncepaiment');
+Route::post('/addpaiment', 'EmployeurController@addpaiment');
 Route::post('/detaillsannonces', 'EmployeurController@detaillsAnnonce');
 Route::put('/updateannonce','EmployeurController@updateAnnonceButton');
 Route::delete('/deleteannonce/{id}','EmployeurController@deleteAnnonce');
@@ -269,23 +278,23 @@ Route::get('/demandeEmploiRecu','EmployeurDemandeController@get_demande_reçu_em
 Route::post('/detaillsdemandereçuemplyeur', 'EmployeurDemandeController@detaillsdemandeReçuEmplyeur'); 
 Route::delete('/deletedemandereçuemplyeur/{id}','EmployeurDemandeController@deleteDemandeReçuEmployeur');
 /************************************************ Vendeur***********************************************/
-
-Route::get('/statistiques', 'BwsController@getstatistique')->name('statistiquesVendeur');
+Route::post('/addpaimentv', 'VendeurController@addpaiment');
+Route::get('/statistiques', 'VendeurController@getstatistique')->name('statistiquesVendeur');
 Route::get('/profilVendeur', 'VendeurController@profil_vendeur')->name('profilVendeur');
-Route::put('/updateProfilV/{id}','VendeurController@update_profil');
+Route::post('/updateProfilV','VendeurController@update_profil');
 Route::get('/produitVendeur', 'VendeurController@getProduit')->name('produitVendeur');
 Route::post('/addproduit', 'VendeurController@addProduit');
 Route::post('/addproduitwithtest', 'VendeurController@addProduitWithTest');
 Route::post('/addProduitwithPaiment', 'VendeurController@addProduitwithPaiment');
 Route::get('/getAllsouscategories/{id}','VendeurController@getSousCategories');
-Route::get('/getAllcategories', 'VendeurController@getCategories');
+Route::get('/getAllcategoriess', 'VendeurController@getCategories');
 Route::get('/getAllcolor', 'VendeurController@getColors');
 /*commande reçu vendeur*/
 Route::get('/commandeRecuVendeur','VendeurController@get_commande_vendeur')->name('commandeRecuVendeur');
 Route::post('/detaillsacommandevendeur', 'VendeurController@detaillsacommandeVendeur'); 
 Route::delete('/deletecommandevendeur/{idCmd}/{idClient}/{idVendeur}','VendeurController@deleteCommandeVendeur');
 Route::put('/recucommande/{id}/{id1}','VendeurController@RecuCommande');
-Route::put('/refusercommande/{id}/{id1}','VendeurController@RefuserCommande');
+Route::put('/refusercommande/{id}/{id1}/{id2}','VendeurController@RefuserCommande');
 Route::post('/addvilles','VendeurController@AjouterVillePrix');
 Route::delete('/deleteproduit/{id}','VendeurController@deleteProduit');
 Route::put('/updateproduit','VendeurController@updateProduit');
@@ -303,7 +312,7 @@ Route::delete('/deletecommandetraitervendeur/{id}','VendeurCommandeController@de
 
 /************************************************ Client***********************************************/
 Route::get('/profilClient','ClientController@profil_clinet')->name('profilClient');
-Route::put('/updateProfilC/{id}','ClientController@update_profil');
+Route::post('/updateProfilC','ClientController@update_profil');
 Route::post('/detaillsacommande', 'ClientController@detaillsCommande'); 
 Route::get('/commandeClient','ClientController@get_commande_client')->name('commandeClient');
 Route::get('/deletecommande/{id}','ClientController@deleteCommande');
@@ -316,6 +325,8 @@ Route::delete('/deletedemande/{id}','DemandeClientController@deleteDemande');
 Route::post('/addpanier','ClientController@addPanier');
 Route::get('/panier','ClientController@ProduitCommande')->name('panier');
 Route::get('/panierdemmande','ClientController@panierDemmande');
+Route::post('/getTarifCommande', 'ClientController@getTarifCommande');
+Route::post('/checktextarea', 'ClientController@checkTextarea'); 
 
 /*historique*/
 Route::get('/historiqueClient','HistoriqurController@get_historique_client')->name('historiqueClient');
@@ -340,12 +351,23 @@ Route::get('/iscnnected', 'ClientController@isCnnected');
 
 /****************Vendeur******Client*******Admin******Employeur*******Visiteur**********/
 //Search
-Route::get('/abest', 'BwsController@getsearch')->name('abest');
-Route::get('/abestv', 'BwsController@getsearchVisiteur')->name('abestv');
-Route::get('/abestav', 'BwsController@getsearchav')->name('abestav');
-Route::get('/abestae', 'BwsController@getsearchae')->name('abestae');
-Route::get('/abestac', 'BwsController@getsearchac')->name('abestac');
-Route::get('/abestaa', 'BwsController@getsearchaa')->name('abestaa');
+Route::get('/articleSe', 'BwsController@getArticleSearch');
+Route::get('/categorieShopS', 'AdminController@getCategorieShopSearch');
+Route::get('/categorieEmploiS', 'AdminController@getCategorieEmploiSearch');
+Route::get('/notificationS', 'AdminController@getNotificationSearch');
+Route::get('/categorieS', 'AdminController@getCategorieSearch');
+Route::get('/emailsS', 'AdminController@getEmailsSearch');
+Route::get('/articleS', 'AdminController@getArticleSearch');
+//Route::get('/abest', 'BwsController@getsearch')->name('abest');
+Route::get('/produit_Aemploi_article', 'BwsController@getsearchVisiteur')->name('abestv');
+Route::get('/abestav', 'AdminController@getsearchav')->name('abestav');
+Route::get('/abestae', 'AdminController@getsearchae')->name('abestae');
+Route::get('/abestac', 'AdminController@getsearchac')->name('abestac');
+Route::get('/abestaa', 'AdminController@getsearchaa')->name('abestaa');
+Route::get('/abestaaR', 'AdminController@getsearchaaRecup');
+Route::get('/abestavR', 'AdminController@getsearchavRecup');
+Route::get('/abestacR', 'AdminController@getsearchacRecup');
+Route::get('/abestaeR', 'AdminController@getsearchaeRecup');
 
 /***Signaler***/
 Route::post('/signalerproduit/{id}','ClientController@SignalerProduit');
@@ -355,7 +377,6 @@ Route::post('/signaleremployeur/{id}','ClientController@SignalerEmployeur');
 
 Route::post('/paiementemployeur/{id}','EmployeurController@change_valeur');
 Route::post('/paimentemp','EmployeurController@validateForm');
-Route::post('/paiementvendeur/{id}','VendeurController@change_valeur_vendeur');
 Route::post('/paiementvend','VendeurController@validateFormProduit');
 
 Route::post('/verifierproduit/{id}','AdminController@Verifier');

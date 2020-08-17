@@ -20,6 +20,7 @@ class CreateSousCategoriesTable extends Migration
             $table->unique(['libelle', 'categorie_id']);
             $table->timestamps();
         });
+        
     }
 
     /**

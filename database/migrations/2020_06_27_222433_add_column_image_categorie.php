@@ -16,6 +16,7 @@ class AddColumnImageCategorie extends Migration
         Schema::table('categories', function (Blueprint $table) {
             $table->string('image')->after('libelle')->nullable();
         });
+        
     }
 
     /**

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr" id='html_id'>
 
 <head>
   <meta charset="utf-8" />
@@ -151,17 +151,22 @@
             <span class="navbar-toggler-bar navbar-kebab"></span>
           </button>
           <div class="collapse navbar-collapse justify-content-end" id="navigation" >
-          <form  action="/abestae" method="get">
+          <form  action="/abestae" method="get" id="sbmt" name='sbmt'>
               <div class="input-group no-border"  style="left: -40px;">
                 <input type="search" name="search"  class="form-control" placeholder="Rechercher..." >
                 <div class="input-group-append">
                   <div class="input-group-text">
-                    <i class="now-ui-icons ui-1_zoom-bold"></i>
+                    <i class="now-ui-icons ui-1_zoom-bold" onclick="document.forms['sbmt'].submit();"></i>
                   </div>
                 </div>
               </div>
             </form>
             <ul class="navbar-nav" >
+              <li>
+          <div style="margin-top: 10px; margin-right: 10px;">
+              <div id="google_translate_element"></div>                       
+          </div>
+        </li>
             <li class="nav-item dropdown" style="cursor: pointer; margin-right: 40px;">
                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <img class="img-xs rounded-circle" src="<?php echo asset('storage/profil_image/'.$admin->image) ?>" alt="..."  />
@@ -247,8 +252,21 @@
 
                       </th>
                     </thead>
+                    <?php
+                      $url = Route::getCurrentRoute()->uri();
+                    ?>
                     <tbody>
-                      <tr v-for="employeura in employeuradmin"  style="cursor: pointer;">
+                      <tr v-if="employeuradmin.length == 0 && '<?php echo $url?>'.includes('abestae') == true" > 
+                        <td></td><td></td>
+                        <td >
+
+                          <small>Cette Recherche n'a pas de Résultats</small>
+                        </td>
+                         <td></td>
+                         <td></td>
+                         <td></td> 
+                      </tr>
+                      <tr v-if="employeuradmin.length != 0" v-for="employeura in employeuradmin"  style="cursor: pointer;">
                         <td class="js-show-modal1"  v-on:click="AfficherInfo(employeura.id)">
                           {{employeura.id}}
                         </td>
@@ -324,7 +342,7 @@
     <!-- Modal1 for laptob-->
     
      <div class="wrap-modal11 js-modal1 p-t-38 p-b-20 p-l-15 p-r-15 " id="app2" v-if="hideModel">
-      <div class="overlay-modal11 js-hide-modal1"></div>
+      <div class="overlay-modal11 js-hide-modal1" v-on:click="CancelEmp()"></div>
   
       <div class="container">
         <div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent"  style="width: 950px;" v-for="employeuraa in employeuradmin2">
@@ -364,72 +382,107 @@
                       </div>
                     </div>
                   </div>
-                  <table>
+                  <table style="margin-top: -40px">
                     <tr>
                       <td>
-                        <div class="title" style="margin-left: 350px; margin-top: -330px;">
+                        <div class="title" style="margin-left: 350px; margin-top: -350px;">
                           Crée Le
                         </div>  
                       </td>
                       <td>
-                        <div class="title" style="margin-left: 20px; margin-top: -330px;">
+                        <div class="title" style="margin-left: 20px; margin-top: -350px;">
                           :
                         </div>
                       </td>
                       <td>
-                        <div style="margin-left: 30px; margin-top: -330px; color: red;">
+                        <div style="margin-left: 30px; margin-top: -350px; color: red;">
                           {{ employeuraa.created_at }}
                         </div>
                       </td>
                     </tr>
                     <tr>
                       <td>
-                        <div class="title" style="margin-left: 350px; margin-top: -260px;">
-                          Adresse
+                        <div class="title" style="margin-left: 350px; margin-top: -300px;">
+                          Societe/Boutique
                         </div>  
                       </td>
                       <td>
-                        <div class="title" style="margin-left: 20px; margin-top: -260px;">
+                        <div class="title" style="margin-left: 20px; margin-top: -300px;">
                           :
                         </div>
                       </td>
                       <td>
-                        <div style="margin-left: 30px; margin-top: -260px;">
-                          {{ employeuraa.address }}
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="title" style="margin-left: 350px; margin-top: -190px;">
-                          Societe
-                        </div>  
-                      </td>
-                      <td>
-                        <div class="title" style="margin-left: 20px; margin-top: -190px;">
-                          :
-                        </div>
-                      </td>
-                      <td>
-                        <div style="margin-left: 30px; margin-top: -190px;">
+                        <div style="margin-left: 30px; margin-top: -300px;">
                           {{ employeuraa.nom_societe }}
                         </div>
                       </td>
                     </tr>
                     <tr>
                       <td>
-                        <div class="title" style="margin-left: 350px; margin-top: -120px;">
-                          N° Compte BNQ
+                        <div class="title" style="margin-left: 350px; margin-top: -250px;">
+                          Ville
                         </div>  
                       </td>
                       <td>
-                        <div class="title" style="margin-left: 20px; margin-top: -120px;">
+                        <div class="title" style="margin-left: 20px; margin-top: -250px;">
                           :
                         </div>
                       </td>
                       <td>
-                        <div style="margin-left: 30px; margin-top: -120px;">
+                        <div style="margin-left: 30px; margin-top: -250px;">
+                          {{ employeuraa.ville }}
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="title" style="margin-left: 350px; margin-top: -200px;">
+                          Adresse S/B
+                        </div>  
+                      </td>
+                      <td>
+                        <div class="title" style="margin-left: 20px; margin-top: -200px;">
+                          :
+                        </div>
+                      </td>
+                      <td>
+                        <div style="margin-left: 30px; margin-top: -200px;">
+                          {{ employeuraa.address }}
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="title" style="margin-left: 350px; margin-top: -150px;">
+                          N° Compte BNQ
+                        </div>  
+                      </td>
+                      <td>
+                        <div class="title" style="margin-left: 20px; margin-top: -150px;">
+                          :
+                        </div>
+                      </td>
+                      <td>
+                        <div style="margin-left: 30px; margin-top: -150px;">
                           {{ employeuraa.num_compte_banquiare  }}
+                        </div>
+                      </td>
+                     
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="title" style="margin-left: 350px; margin-top: -100px;">
+                          Nombre Signal
+                        </div>  
+                      </td>
+                      <td>
+                        <div class="title" style="margin-left: 20px; margin-top: -100px;">
+                          :
+                        </div>
+                      </td>
+                      <td>
+                        <div style="margin-left: 30px; margin-top: -100px;">
+                          {{ employeuraa.Nbre_signal  }}
                         </div>
                       </td>
                      
@@ -471,6 +524,7 @@
 </script>
 
 <script>
+  function initDashboardPageCharts(){}
   var app2 = new Vue({
      el: '#app2',
      data:{
@@ -484,6 +538,8 @@
       appectAnnonce(empl){
           axios.post(window.Laravel.url+'/appectAnnonce',empl)
               .then(response => {
+                document.getElementById("exist").style.display='none';
+                document.getElementById("verif").style.display='block';
                 $('.js-modal1').removeClass('show-modal1');
                   Swal.fire({
                     title: "L'acceptation a était fait par success.",
@@ -584,7 +640,7 @@
                         console.log('errors : ',error)
                      })
                     Swal.fire(
-                      'Deleted!',
+                      'Supprimer!',
                       'Your file has been deleted.',
                       'success',
                     )
@@ -600,6 +656,25 @@
   });
 </script>
 
+
+<script type="text/javascript">
+
+    
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element');
+}
+    </script>
+
+    <script type="text/javascript" >
+        (function(){var gtConstEvalStartTime = new Date();/*
+
+ Copyright The Closure Library Authors.
+ SPDX-License-Identifier: Apache-2.0
+*/
+function d(b){var a=document.getElementsByTagName("head")[0];a||(a=document.body.parentNode.appendChild(document.createElement("head")));a.appendChild(b)}function _loadJs(b){var a=document.createElement("script");a.type="text/javascript";a.charset="UTF-8";a.src=b;d(a)}function _loadCss(b){var a=document.createElement("link");a.type="text/css";a.rel="stylesheet";a.charset="UTF-8";a.href=b;d(a)}function _isNS(b){b=b.split(".");for(var a=window,c=0;c<b.length;++c)if(!(a=a[b[c]]))return!1;return!0}
+function _setupNS(b){b=b.split(".");for(var a=window,c=0;c<b.length;++c)a.hasOwnProperty?a.hasOwnProperty(b[c])?a=a[b[c]]:a=a[b[c]]={}:a=a[b[c]]||(a[b[c]]={});return a}window.addEventListener&&"undefined"==typeof document.readyState&&window.addEventListener("DOMContentLoaded",function(){document.readyState="complete"},!1);
+if (_isNS('google.translate.Element')){return}(function(){var c=_setupNS('google.translate._const');c._cest = gtConstEvalStartTime;gtConstEvalStartTime = undefined;c._cl='en';c._cuc='googleTranslateElementInit';c._cac='';c._cam='';c._ctkk='440335.1449305758';var h='translate.googleapis.com';var s=(true?'https':window.location.protocol=='https:'?'https':'http')+'://';var b=s+h;c._pah=h;c._pas=s;c._pbi=b+'/translate_static/img/te_bk.gif';c._pci=b+'/translate_static/img/te_ctrl3.gif';c._pli=b+'/translate_static/img/loading.gif';c._plla=h+'/translate_a/l';c._pmi=b+'/translate_static/img/mini_google.png';c._ps=b+'/translate_static/css/translateelement.css';c._puh='translate.google.com';_loadCss(c._ps);_loadJs(b+'/translate_static/js/element/main.js');})();})();
+    </script>
 
 <script src="assetsAdmin/js/jquery-3.2.1.min.js"></script>
   <script src="assetsAdmin/js/animsition.min.js"></script>
@@ -617,6 +692,28 @@
   <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="assetsAdmin/js/now-ui-dashboard.min.js?v=1.5.0" type="text/javascript"></script><!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
   <script src="assetsAdmin/demo/demo.js"></script>
+  <script >
 
+        window.addEventListener("load",function() {
+            var x;
+            setTimeout(function () {
+              x=document.getElementsByClassName('goog-te-combo')[0].value;
+              
+              if(x == ''){
+                document.getElementById('html_id').style.marginTop = '0px';
+              }
+              else{
+                document.getElementById('html_id').style.marginTop = '-40px';
+              }
+              document.getElementsByClassName('goog-te-combo')[0].onchange = function() {
+            document.getElementById('html_id').style.marginTop = '-40px';
+        }
+            },15000);
+        
+  
+      
+    });
+
+    </script>
 </body>
 </html><?php /**PATH C:\xampp\htdocs\BWS\resources\views/employeur_admin.blade.php ENDPATH**/ ?>

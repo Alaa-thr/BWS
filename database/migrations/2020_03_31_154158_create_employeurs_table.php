@@ -25,8 +25,6 @@ class CreateEmployeursTable extends Migration
             $table->string('nom_societe')->nullable();
             $table->string('image')->nullable();
             $table->integer('Nbre_signal')->default(0);
-            $table->boolean('deletede')->default(0);
-            $table->boolean('deleted_at')->nullable();
             $table->timestamps();
         });
     }

@@ -1,4 +1,22 @@
-﻿.header-cart {
+﻿
+.goog-te-banner-frame {display: none;}
+
+.goog-logo-link {
+   display:none !important;
+} 
+
+.goog-te-gadget{
+   color: transparent !important;
+}
+
+.goog-te-gadget-icon{
+  display: none;
+}
+
+.goog-te-combo {
+   border-radius: 15%;
+}
+.header-cart {
   position: fixed;
   z-index: 1100;
   margin-top: 2px;
@@ -3818,7 +3836,7 @@ input.num-product::-webkit-inner-spin-button {
   
 }
    #cb{
-     margin-left: 33px;
+     
      margin-top: -33px;
    }
    #cbb{

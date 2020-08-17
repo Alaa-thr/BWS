@@ -86,31 +86,15 @@
 					
 				</div>
 
-				<div class="flex-w flex-c-m m-tb-10">
-					<div class="flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search">
-						<i class="icon-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-search"></i>
-						<i class="icon-close-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
-						Search
-					</div>
-				</div>
-				
-				<!-- Search product -->
-				<div class="dis-none panel-search w-full p-t-10 p-b-15">
-					<div class="bor8 dis-flex p-l-15">
-						<button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
-							<i class="zmdi zmdi-search"></i>
-						</button>
 
-						<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search-product" placeholder="Search">
-					</div>	
-				</div>
 			</div>
 					@foreach($emploi as $emp)
+					
 		        	<div class="row m-b-10"   style="display: inline-flex;  width:417px; height: 160px;">
 		        			
 		        		<div style="display: inline-flex;  width: 420px; height: 160px;">
 		        		@if($emp->image != null)
-						<div  class="col-md-4 block2 block2-pic hov-img0" style="">
+						<div  class="col-md-4 block2 block2-pic hov-img0">
 							<img  src="storage/annonces_image/<?php echo $emp->image ?>"  style="height: 120px; width:120px;">
 							<a class="js-show-modal1 block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 " v-on:click="AfficheInfo({{ json_encode($emp->id) }})" style="cursor: pointer;">
 								Quick View
@@ -130,7 +114,7 @@
 						</div>
 						@else
 						<p style="height: 60px"></p>
-						<div class="col-md-10 m-l-30 js-show-modal1" v-on:click="AfficheInfo({{ json_encode($emp->id) }})" style="cursor: pointer;">
+						<div class="col-md-9 m-l-30 js-show-modal1" v-on:click="AfficheInfo({{ json_encode($emp->id) }})" style="cursor: pointer;">
 							<h5 class="title" style="color: red;" >
 								<b>{{$emp->libellé}}</b>
 							</h5><br>
@@ -179,13 +163,7 @@
 							
 			   </div>
 @endforeach
-			<!-- Load more -->
-			<div class="flex-c-m flex-w w-full p-t-45">
-				<a href="#" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
-					Load More
 
-				</a>
-			</div>
 			<div style="margin-left: 900px;"> 
                    {{$emploi->links()}}<!-- pour afficher la pagination -->
              </div>
@@ -199,12 +177,24 @@
 				<button class="how-pos3 hov3 trans-04 " @click='CancelArticle'>
 					<img src="images/icons/icon-close.png" alt="CLOSE">
 				</button>
-				<div class="p-b-30 p-l-40">
-					<h4 class="ltext-102  cl2">
-				           Fait Une Demande   
-
-					</h4>
-				</div>
+				<div class="p-b-30 p-l-40 flex-t col-md-12">
+                    <h4 class="ltext-102  cl2 col-md-4">
+                           Fait Une Demande   
+                    </h4>
+                    @if (Auth::check() && Auth::user()->type_compte == 'c')
+                    <div class="dropdown col-md-8">
+                        <div class="dropdown " style="float: right;" >
+                            <a data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#"  >
+                            <img src="assetsAdmin/img/menu.png" /> 
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right " >
+                            <a v-on:click="SignalerAnnonce(emplois2[0])" class="dropdown-item js-show-modal1 m-b-10" style="color: red; font-style: italic; font-weight: 600; cursor: pointer;"> Signaler Annonce</a>
+                            <a class="dropdown-item" v-on:click="SignalerEmployeur(emplois2[0])" style="color: red; font-style: italic; font-weight: 600; cursor: pointer;">Signaler Employeur</a>
+                            </div>
+                        </div>
+                    </div>
+                    @endif 
+                </div>
 
 				<div class="row" v-for="empp in emplois2">
 					<div class="col-md-6 col-lg-6  m-l-50">
@@ -235,18 +225,17 @@
 				            <div class="col-md-11 ">
 				               <p class="m-l-10 m-b-10" style="color: black;">@{{ empp.discription }}</p>
 				               <p style="color: black;"><b>Le nombre de condidat est :</b> @{{empp.nombre_condidat}}</p>
-				               <div class="flex-t">
-				               		<p  style="color: black;">
-					               	<b>Pour contacté l'employeur @{{ empp.nom }} @{{empp.prenom}} : &nbsp</b> </p>
-								  <div class="m-t--8">	
-					                <p style="color: black;">
-					                	@{{empp.num_tel}}
-					                </p>
-					                <p style="color: black;">
-					                   @{{empp.email}}
-					               </p>
-				               	 </div>
-				               </div>
+				               <p style="color: black;"><b>Nom Societé/Boutique :</b> @{{empp.nom_societe}}</p>
+                               <p style="color: black;"><b>Adresse Societé/Boutique :</b> @{{empp.address}}</p>
+                               <div >
+                                    <p  style="color: black;">
+                                    <b>Pour contacté l'employeur @{{ empp.nom }} @{{empp.prenom}} : &nbsp</b> </p>
+                                  <div class="m-t-2 m-l-5">  
+                                    <p style="color: black;">
+                                        Tlf: @{{empp.num_tel}}/Email: @{{empp.email}} 
+                                    </p>
+                                 </div>
+                               </div>
 				            </div>               
 				          </div>
           				</section> 
@@ -320,6 +309,7 @@
 								</div>
 								<!--  -->
 
+
 								<div class="flex-w flex-r-m p-b-10">
 									<div class="m-r-60">
 										<button class="stext-101 cl0 size-1044 bg10 bor1 trans-04 m-r-10" v-on:click="CancelArticle">
@@ -328,20 +318,7 @@
 										<button class=" stext-101 cl0 size-1044 bg11 bor1 trans-04" v-on:click="addDemande(emplois2[0].id)">
 											Demander
 										</button>
-										<div class=""  style="margin-top:-158%;argin-right:10px;" >
-												<a class="f" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#"   style="  margin-left: 335px;">
-													<i class="fas fa-ellipsis-v"  id="y" style="color: black"></i>
-												</a>
-     									 <div class="dropdown-menu " x-placement="right-start" id="divSignal">
-
-										  <a  class="dropdown-item"  v-on:click="SignalerAnnonce(empp.id)"  
-												style="color: #0074d9; font-style: italic; font-weight: 900; cursor: pointer;" >   Signaler Annonce</a>
-																<a class="dropdown-item" v-on:click="SignalerEmployeur(empp.employeur_id)"
-												style="color: #0074d9; font-style: italic; font-weight: 900; cursor: pointer;">
-												Signaler Employeur</a>
-      											 </div>
-      
-   									 </div>    		
+										   		
 									</div>
 												
 								</div>	
@@ -402,7 +379,6 @@
 		              axios.delete(window.Laravel.url+'/deleteproduitpanier/'+produit.produit_id)
 		                .then(response => {
 		                  if(response.data.etat){
-		                  	console.log("produit",produit);
 		                           var position = this.ProduitsPanier.indexOf(produit);
 		                           this.ProduitsPanier.splice(position,1);
 		                           if(this.ProduitsPanier.lenght == 0){
@@ -458,6 +434,8 @@
         emplois2: [],
         hideModel: false,
         openInfo: false,
+        notClient: true,
+		notConncted: true,
         detailsEMP:{
           idEMP: 0,
          },
@@ -485,27 +463,40 @@
 				this.message= {};
 				 	
 	      	},
-			  SignalerEmployeur: function(id){
-          	axios.post(window.Laravel.url+'/signaleremployeur/'+id)
+		SignalerEmployeur: function(annonce){
+			axios.post(window.Laravel.url+'/signaleremployeur/'+annonce.employeur_id)
               .then(response => {
 				Swal.fire(
-					  "Signal est fait avec success!",
-					);
+					  "Signale du employeur "+annonce.nom+' '+annonce.prenom+" est fait avec succès!",
+					  "Vous ne vais pas voir ses annonces",
+					  'success'
+					).then((result) => {
+					  if (result.value) {
+					    window.location.reload();
+					  }
+					})
 					$('.js-modal1').removeClass('show-modal1');
-                	console.log("response",response.data)
+                	
                })
               .catch(error => {
                   console.log('errors : '  , error);
              })
-          },
-		SignalerAnnonce: function(id){
-          	axios.post(window.Laravel.url+'/signalerannonce/'+id)
+        },
+		SignalerAnnonce: function(annonce){
+			axios.post(window.Laravel.url+'/signalerannonce/'+annonce.id)
               .then(response => {
+
 				Swal.fire(
-					  "Signal est fait avec success!",
-					);
+					  "Signal est fait avec succès!",
+					  'Vous ne vais pas voir ce annonce',
+					  'success'
+					).then((result) => {
+					  if (result.value) {
+					    window.location.reload();
+					  }
+					})
 					$('.js-modal1').removeClass('show-modal1');
-                	console.log("response",response.data)
+                	
                })
               .catch(error => {
                   console.log('errors : '  , error);
@@ -517,6 +508,7 @@
 
 		            .then(responsee => {
 		            	if(!responsee.data.etatee && responsee.data.type == 0){
+		            		
 		            		this.sendDemande= {
 					      		nom_Prenom: window.Laravel.client.nom.concat(' ').concat(window.Laravel.client.prenom),
 					          	tlf: window.Laravel.client.numeroTelephone,
@@ -655,10 +647,12 @@
 	           }
      	   },
            detaillsAnnonceemp: function(){
+           
 	             axios.post(window.Laravel.url+'/detailsemp',this.detailsEMP)
 
 	            .then(response => {
 	                 this.emplois2 = response.data;
+	               
 	            })
 	            .catch(error =>{
 	                 console.log('errors :' , error);
@@ -677,7 +671,47 @@
 		AjoutAuFavoris: function(produit){
 				axios.post(window.Laravel.url+'/ajoutaufavorisE/'+produit.id)
 	              .then(response => {
-	              		if(response.data.etat == "add"){
+	              		if(response.data.etat == "notConncted"){
+							Swal.fire({
+							  icon: 'error',
+							  title: 'Oops...',
+							  html: 'Vous devez être connecté tent que <b style="text-decoration: underline;">Client</b> pour pouvez accedé a votre panier.',
+							  footer: '<form method="GET" action="{{ route("logoutregister") }}">@csrf<a href="{{ route("logoutregister") }}">Créer Compte</a></form>',
+							  showCancelButton: true,
+						  	  cancelButtonColor: '#d33',
+							  confirmButtonColor: '#13c940',
+							  confirmButtonText:
+							    'Se Connecter',
+							}).then((result) => {
+								if (result.value){
+										$('.js-panel-connect').addClass('show-header-cart');
+								}
+								 
+							});
+               	 		}
+	              		else if(response.data.etat == "notClient"){
+							Swal.fire({
+							  icon: 'error',
+							  title: 'Oops...',
+							  html: 'Vous devez être connecté tent que <b style="text-decoration: underline;">Client</b> pour pouvez accedé a votre panier.',
+							  footer: '<form method="GET" action="{{ route("logoutregister") }}">@csrf<a href="{{ route("logoutregister") }}">Créer Compte</a></form>',
+							  showCancelButton: true,
+							  cancelButtonColor: '#d33',
+							  confirmButtonColor: '#13c940',
+							  confirmButtonText:
+							    'Se Connecter',
+							}).then((result) => {
+								if (result.value){							
+									axios.post(window.Laravel.url+'/logout')
+		              				.then(response => {
+		              						  window.location.href = '/accueil';
+		              				})
+		              				.catch(error => {console.log("error",error)})
+								}
+							 
+							});
+               	 		}
+	              		else if(response.data.etat == "add"){
 							swal(produit.libellé, "a été ajouté au liste de favoris.", "success");
 							adde(produit.id);
                	 		}
@@ -700,7 +734,7 @@
 	            .then(response => {
 	                 this.emplois = window.Laravel.emploi.data;
 	            })
-	            .catch(error =>{p
+	            .catch(error =>{
 	                 console.log('errors :' , error);
 	            })
         },
@@ -719,15 +753,6 @@
           return text.substring(0, length) + suffix;
 
       }, 
-	  AnnonceAuFavoris: function(id){
-          	axios.post(window.Laravel.url+'/annonceaufavoris/'+id)
-              .then(response => {
-                	console.log("response",response.data)
-               })
-              .catch(error => {
-                  console.log('errors : '  , error);
-             })
-          }
 
         
       },

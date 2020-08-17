@@ -16,31 +16,55 @@ use App\Imageproduit;
 use App\Paiement_employeur;
 use App\ColorProduit;
 use App\TailleProduit;
+use App\Notificatione;
 use Auth;
+use App\Rules\NumberExist;
+use App\Rules\EmailExist;
+use App\Rules\NumCarteBancaireExist;
 
 class EmployeurController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('logout.user');
+        $this->middleware('login.employeur');
+        
+    }
      public function profil_employeur(){
+        if(!Auth::check()){
+            return view('page_not_found',['categorie'=>\DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get() ,'categorieE'=>\DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get()]);
+            
+        }
         $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
         $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
         $employeur=Employeur::find(Auth::user()->id); 
         return view('profil_employeur',['employeur'=>$employeur,'categorie'=>$categorie ,'categorieE'=>$categorieE]);
     }
     
-   public function update_profil(Request $request, $id) {
+   public function update_profil(Request $request) {
                 
+        $request->validate([
+             'num_tel' =>  ['required', 'string','regex:/^0[5-7][0-9]+/',"min:10","max:10", new NumberExist(3,$request->id)],
+             'email' =>['required', 'string', 'email', 'max:40', new EmailExist(3,$request->id)],
+             'nom' =>['required','regex:/[-a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
+             'prenom' =>['required','regex:/[-a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
+             'num_compte_banquiare' =>['required','regex:/[0-9]+/', new NumCarteBancaireExist(3,$request->id)],
+             'nom_societe' =>['required', 'string','regex:/[-a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
+             'address' =>['required', 'string','regex:/[-a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
+         ]);
+        $employeur = Employeur::find($request->user_id);
+        $user = User::find($request->user_id);
 
-        $employeur = Employeur::find(Auth::user()->id);
-        $user = User::find(Auth::user()->id);
+        $employeur->nom = $request->nom;
+        $employeur->prenom = $request->prenom;
+        $employeur->num_tel = $request->num_tel;
+        $employeur->email = $request->email; 
+        $employeur->nom_societe = $request->nom_societe;
+        $employeur->num_compte_banquiare = $request->num_compte_banquiare;
+        $employeur->address = $request->address;
 
-        $employeur->nom = $request->input('nom');
-        $employeur->prenom = $request->input('prenom');
-        $employeur->num_tel = $request->input('num');
-        $employeur->email = $request->input('adresse_email'); 
-        $employeur->nom_societe = $request->input('societe');
-        $employeur->num_compte_banquiare = $request->input('bnq');
-        $user->numTelephone = $request->input('num');
-        $user->email = $request->input('adresse_email');  
+        $user->numTelephone = $request->num_tel;
+        $user->email = $request->email;  
         
         $employeur->save();
         $user->save();
@@ -49,10 +73,14 @@ class EmployeurController extends Controller
     }
 
     public function get_commande_traiter_emplyeur(){
+        if(!Auth::check()){
+            return view('page_not_found',['categorie'=>\DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get() ,'categorieE'=>\DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get()]);
+            
+        }
         $c = Employeur::find(Auth::user()->id);
         $article = \DB::table('demande_emploies')
         ->join('clients','clients.id','=','demande_emploies.client_id')
-        ->where([['employeur_id', $c->id],['demandeDEmpl',0]])
+        ->where([['employeur_id', $c->id],['demandeDEmpl',0],['demmande_traiter',1]])
         ->select('demande_emploies.*',\DB::raw('DATE(demande_emploies.created_at) as date'),'clients.nom','clients.prenom')
         ->orderBy('created_at','desc')->paginate(5);
         $employeur = \DB::table('clients')->get(); 
@@ -85,13 +113,42 @@ class EmployeurController extends Controller
 
     public function getCategories(){
         $e = Employeur::find(Auth::user()->id); 
-        $categorie = \DB::table('categories')->where([['id', '<>', 1],['typeCategorie','emploi']])->orderBy('libelle','asc')->get();
+        $categorie = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
         $paimentExiste = \DB::table('paiement_employeurs')->where('employeur_id', $e->id)->select('paiment_par')->get();
         return ['categorie'=>$categorie,'paimentExiste'=>$paimentExiste];
     }
 
      public function annonce_emploi(){
-        $a = Employeur::find(Auth::user()->id);      
+        if(!Auth::check()){
+            return view('page_not_found',['categorie'=>\DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get() ,'categorieE'=>\DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get()]);
+            
+        }
+        $a = Employeur::find(Auth::user()->id);
+        $produit_signaler = \DB::table('annonce_emploies')
+           ->where([['employeur_id', $a->id],['nbr_signal','>=',3]])
+           ->get();
+        $prdS_nom = '';
+        $i=0;
+        foreach($produit_signaler as $prd){
+            if($prdS_nom == ''){
+                $prdS_nom .= ' '.$prd->libellé;
+            }
+            else{
+                $prdS_nom .= ', '.$prd->libellé;
+            }
+           $i++;
+            \DB::table('annonce_emploies')->where('id', $prd->id)->delete();
+            
+        } 
+        if(count($produit_signaler) != 0 && $i == 1){
+
+          session()->flash('danger',"Votre annonces '".$prdS_nom." ' il a été supprimé, car il est signalé 3 fois ou plus.");
+        }
+        if(count($produit_signaler) != 0 && $i > 1){
+
+          session()->flash('danger',"Votre annonces '".$prdS_nom." ' ils ont été supprimés car ils ont été signalés au moins trois fois.");
+        }   
+        $notif =  \DB::table('paiement_employeurs')->where('employeur_id', $a->id)->select('paiment_par')->get();  
         $annonce = \DB::table('annonce_emploies')->where('employeur_id', $a->id)->orderBy('created_at','desc')->paginate(6) ; 
         $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
         $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
@@ -99,11 +156,15 @@ class EmployeurController extends Controller
         ->where('id',1)
         ->select('numCarteBanquaire')
         ->get();
-        return view('annonce_emploi_employeur',['annonce'=>$annonce, 'idEmployeur' => $a->id,'categorie'=>$categorie ,'categorieE'=>$categorieE,'idbigAdmin'=>$idbigAdmin]);
+        return view('annonce_emploi_employeur',['annonce'=>$annonce, 'idEmployeur' => $a->id,'categorie'=>$categorie ,'categorieE'=>$categorieE,'idbigAdmin'=>$idbigAdmin,'notif'=>$notif]);
     }
 
     public function detaillsAnnonce(Request $request){
-        $annonce_detaills = \DB::table('annonce_emploies')->where('id', $request->idAn)->get();
+        $annonce_detaills = \DB::table('annonce_emploies')
+        ->join('sous_categories','sous_categories.id','=','annonce_emploies.sous_categorie_id')
+        ->join('categories','categories.id','=','sous_categories.categorie_id')
+        ->select('annonce_emploies.*','sous_categories.libelle as nomSCatego','categories.libelle as nomCatego','categories.id as categorie_id')
+        ->where('annonce_emploies.id', $request->idAn)->get();
         return  $annonce_detaills;
     }
     public function verifierInputsAnnonce(Request $request){
@@ -116,6 +177,22 @@ class EmployeurController extends Controller
             ]);
             return true;
     }
+
+    public function addpaiment(Request $request){
+                $request->validate([
+                     'typePaiment' => ['required']
+                ]);
+                $ECnncte = Employeur::find(Auth::user()->id);
+                $paiemtE = new Paiement_employeur;
+                $paiemtE->employeur_id = $ECnncte->id;
+                $paiemtE->paiment_par = $request->typePaiment;
+                $paiemtE->save();
+                $notif = new Notificatione;
+                $notif->paiement_employeur_id = $ECnncte->id;
+                $notif->save();
+                return Response()->json(['etat' => true]);
+    }
+
     public function addannoncepaiment(Request $request){
                 $request->validate([
                      'typePaiment' => ['required']
@@ -145,6 +222,9 @@ class EmployeurController extends Controller
                 $paiemtE->employeur_id = $ECnncte->id;
                 $paiemtE->paiment_par = $request->typePaiment;
                 $paiemtE->save();
+                $notif = new Notificatione;
+                $notif->paiement_employeur_id = $ECnncte->id;
+                $notif->save();
                 return Response()->json(['etat' => true,'annonceAjout' => $annonce2]);
     }
     public function addAnnonce(Request $request){
@@ -190,11 +270,12 @@ class EmployeurController extends Controller
                      'discription' => ['required','min:3','string','regex:/^[A-Z0-9][-a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
                      'nombre_condidat' => ['required'],
                      'sous_categorie_id' => ['required'],
-                     'image' => ['regex:/^data:image/']
         ]);
         $annonce2 = Annonce_emploie::find($request->id);
-            
-        if($annonce2->image == $request->image){
+        if($request->image == ''){
+            $annonce2->image = null;
+        }
+        else if($annonce2->image == $request->image){
             $annonce2->image = $request->image;
         }
         else{                  
@@ -228,23 +309,6 @@ class EmployeurController extends Controller
         return $traiter;
     }
 
-    public function change_valeur($id){
-    
-        
-        $clientCnncte = Employeur::find(Auth::user()->id);
-       
-           $signal = new Paiement_employeur;
-            $signal->employeur_id =$clientCnncte->id;
-            if($id == 0)  {             $signal->position_publication = "First";}
-            elseif($id ==1) {          $signal->position_publication = "Second";}
-            elseif($id ==2)  {                  $signal->position_publication = "third";}
-            
-            $signal->admin_id = 1;
-
-            $signal->save();
-        
-        
-    }
     public function validateForm(Request $request){
     
         

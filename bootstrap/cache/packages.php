@@ -1,4 +1,15 @@
 <?php return array (
+  'barryvdh/laravel-dompdf' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Barryvdh\\DomPDF\\ServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'PDF' => 'Barryvdh\\DomPDF\\Facade',
+    ),
+  ),
   'facade/ignition' => 
   array (
     'providers' => 
@@ -43,6 +54,17 @@
     'providers' => 
     array (
       0 => 'Carbon\\Laravel\\ServiceProvider',
+    ),
+  ),
+  'nexmo/laravel' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Nexmo\\Laravel\\NexmoServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Nexmo' => 'Nexmo\\Laravel\\Facade\\Nexmo',
     ),
   ),
   'nunomaduro/collision' => 

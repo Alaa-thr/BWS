@@ -7,82 +7,84 @@
       </head>
       <nav class="navbar navbar-expand-lg navbar-transparent  bg-primary  navbar-absolute">
                                                          
-                                                         <div class="container-fluid">
-                                                           <div class="navbar-wrapper">
-                                                             <div class="navbar-toggle">
-                                                               <button type="button" class="navbar-toggler">
-                                                                 <span class="navbar-toggler-bar bar1"></span>
-                                                                 <span class="navbar-toggler-bar bar2"></span>
-                                                                 <span class="navbar-toggler-bar bar3"></span>
-                                                               </button>
-                                                             </div>
+      <div class="container-fluid">
+        <div class="navbar-wrapper">
+          <div class="navbar-toggle">
+            <button type="button" class="navbar-toggler">
+              <span class="navbar-toggler-bar bar1"></span>
+              <span class="navbar-toggler-bar bar2"></span>
+              <span class="navbar-toggler-bar bar3"></span>
+            </button>
+          </div>
                                                  
                                                           
                                                           
                                                  
-                                                           </div>
-                                                           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-                                                             <span class="navbar-toggler-bar navbar-kebab"></span>
-                                                             <span class="navbar-toggler-bar navbar-kebab"></span>
-                                                             <span class="navbar-toggler-bar navbar-kebab"></span>
-                                                           </button>
-                                                           <div class="collapse navbar-collapse justify-content-end" id="navigation" >
-                                                           <form  action="/abest" method="get">
-                                                               <div class="input-group no-border"  style="left: -40px;">
-                                                                 <input type="search" name="search"  class="form-control" placeholder="Rechercher..." >
-                                                                 <div class="input-group-append">
-                                                                   <div class="input-group-text">
-                                                                     <i class="now-ui-icons ui-1_zoom-bold"></i>
-                                                                   </div>
-                                                                 </div>
-                                                               </div>
-                                                             </form>
-                                                             <ul class="navbar-nav" >
-                                                             <li class="nav-item dropdown" style="cursor: pointer; margin-right: 40px;">
-                                                                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                   <img class="img-xs rounded-circle"  src="<?php echo asset('storage/profil_image/'.$admin->image) ?>" alt="..."  />
-                                                                   <p>
-                                                                     <span class="d-lg-none d-md-block">Quelques Actions</span>
-                                                                   </p>
-                                                                 </a>
-                                                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                                                                   <div class="account-item clearfix js-item-menu">  
-                                                                     <div class="card-body">
+      </div>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-bar navbar-kebab"></span>
+        <span class="navbar-toggler-bar navbar-kebab"></span>
+        <span class="navbar-toggler-bar navbar-kebab"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navigation" >
+      <form  action="/articleS" method="get" id="sbmt" name='sbmt'>
+          <div class="input-group no-border"  style="left: -40px;">
+            <input type="search" name="search"  class="form-control" placeholder="Rechercher..." >
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <i class="now-ui-icons ui-1_zoom-bold" onclick="document.forms['sbmt'].submit();"></i>
+              </div>
+            </div>
+      </div>
+    </form>
+    <ul class="navbar-nav" >
+      <li>
+          <div style="margin-top: 10px; margin-right: 10px;">
+              <div id="google_translate_element"></div>                       
+          </div>
+        </li>
+    <li class="nav-item dropdown" style="cursor: pointer; margin-right: 40px;">
+        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <img class="img-xs rounded-circle"  src="<?php echo asset('storage/profil_image/'.$admin->image) ?>" alt="..."  />
+          <p>
+            <span class="d-lg-none d-md-block">Quelques Actions</span>
+          </p>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+          <div class="account-item clearfix js-item-menu">  
+            <div class="card-body">
                                                                             
-                                                                         <a >
-                                                                           <table >
-                                                                             <tr>
-                                                                               <td width="50%">
-                                                                                 <a href="#">
-                                                                                  <img class="img-lg rounded-circle" src="<?php echo asset('storage/profil_image/'.$admin->image) ?>" alt="..."> 
-                                                                                  </a>
-                                                                                </td>
-                                                                               <td>
-                                                                                    <h6 class="description text-left" ><b id="a"> <?php echo e($admin->nom); ?> <?php echo e($admin->prenom); ?></b></h6><a href ="<?php echo e($admin->email); ?>" id ="nab"><?php echo e($admin->email); ?></a>
-                                                                                </td>
-                                                                              </tr>
-                                                                             </table>
-                                                                         </a>  
-                                                                     </div>
-                                                                     <div style="width: 255px; margin-left: 20px;"> 
-                                                                       <hr >
-                                                                      </div>
-                                                                       <a class="dropdown-item" href="<?php echo e(route('accueil')); ?>" id="n"><i class="now-ui-icons business_bank" id="m"></i><b>Allez vers Acceuil</b></a>
-                                                                       <a class="dropdown-item" href="<?php echo e(route('profilAdmin')); ?>" id="n"><i class="now-ui-icons users_single-02" id="m"></i><b>Profil</b></a>
-                                                                       <a class="dropdown-item" href="<?php echo e(route('logout')); ?>" onclick="event.preventDefault();
-                                                                         document.getElementById('logout-form').submit();" id="n">
-                                                                         <i class="now-ui-icons media-1_button-power" id="m"></i>
-                                                                         <?php echo e(__('Déconnexion')); ?> </a>
-                                                                         <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" style="display: none;">
-                                                                           <?php echo csrf_field(); ?>
-                                                                         </form>
-                                                                   </div>
-                                                                 </div> 
-                                                             </li>
+                <a >
+                  <table >
+    <tr>
+      <td width="50%">
+        <a href="#">
+        <img class="img-lg rounded-circle" src="<?php echo asset('storage/profil_image/'.$admin->image) ?>" alt="..."> 
+        </a>
+      </td>
+      <td>
+                <h6 class="description text-left" ><b id="a"> <?php echo e($admin->nom); ?> <?php echo e($admin->prenom); ?></b></h6><a href ="<?php echo e($admin->email); ?>" id ="nab"><?php echo e($admin->email); ?></a>
+            </td>
+          </tr>
+          </table>
+      </a>  
+  </div>
+  <div style="width: 255px; margin-left: 20px;"> 
+        <hr >
+      </div>
+        <a class="dropdown-item" href="<?php echo e(route('accueil')); ?>" id="n"><i class="now-ui-icons business_bank" id="m"></i><b>Allez vers Acceuil</b></a>
+        <a class="dropdown-item" href="<?php echo e(route('profilAdmin')); ?>" id="n"><i class="now-ui-icons users_single-02" id="m"></i><b>Profil</b></a>
+        <a class="dropdown-item" href="<?php echo e(route('logout')); ?>" onclick="event.preventDefault();document.getElementById('logout-form').submit();" id="n">
+          <i class="now-ui-icons media-1_button-power" id="m"></i><?php echo e(__('Déconnexion')); ?> </a>
+          <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" style="display: none;"><?php echo csrf_field(); ?>
+         </form>
+    </div>
+          </div> 
+      </li>
                                                                
-                                                             </ul>
-                                                           </div>
-                                                         </div>
+      </ul>
+    </div>
+  </div>
 </nav>
     <div class="main-panel" id="main-panel">
       
@@ -92,6 +94,10 @@
         <div class="row">
           <div class="col-md-12">
             <div class="card">
+              <?php
+                 $url = Route::getCurrentRoute()->uri();
+              ?>
+              
               <div class="card-header" >
                     
                     <div class="flex-t">
@@ -113,8 +119,10 @@
              
                 
                 <hr>       
-              
-               <div class="row m-b-10" v-for="articlea in articlesadmin" >
+                <div class="card-header" v-if="articlesadmin.length == 0 && '<?php echo $url?>'.includes('articleS') == true" style="text-align: center; margin-bottom: 40px">
+                  <span>Cette Recherche n'a pas de Résultats</span>
+                </div>
+               <div v-if="articlesadmin.length != 0"  class="row m-b-10" v-for="articlea in articlesadmin" >
                   <div v-if="selectall">
                     <input type="checkbox" :id="articlea.id" :value="articlea.id" v-model="checkedArticles" @change="changeButton(articlea)" >
                     <label :for="articlea.id" style="margin-top: 40px; margin-left: 18px;"></label>
@@ -199,7 +207,7 @@
 
         <!--<div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent" v-if="openInfo "   v-for="articlea in articlesadmin2">-->
 
-        <div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent" v-if="openInfo " style=" width: 985px;"   v-for="articlea in articlesadmin2">
+        <div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent" v-if="openInfo " style=" width: 950px;"   v-for="articlea in articlesadmin2">
 
           <button class="how-pos3 hov3 trans-04 p-t-6 " v-on:click="hideModel = false">
             <img src="images/icon-close.png" alt="CLOSE">
@@ -219,24 +227,23 @@
               <img :src="'storage/articles_image/'+ articlea.image" style="width: 1500px; height: 450px; margin-left: 80px; " />
             </div> 
           </div>
-          <div class="row">
-            <div class="">
-              <div class="title" style="color: red; margin-top: 30px; margin-left: 90px;" >
+          <div class="row col-md-12">
+            <div>
+              <div class="title col-md-8" style="color: red; margin-top: 30px; margin-left: 90px;" >
                   <h4><b>{{  articlea.titre }}</b></h4><br>
+              </div>
+              <div class="col-md-10" style="margin-left: 90px;  ">
+                <p id='txt'>{{ articlea.description }}</p>
               </div>
             </div>
           </div>
-          <div class="row">
-            <div >
-               <p>{{ articlea.description }}</p>
-            </div>               
-          </div>  
+ 
 
         </div>
 
 <!--********************************************************************************************************************************************************************-->
         
-        <div class="bg0 p-b-150 p-lr-15-lg how-pos3-parent" v-if="openAjout" style=" width: 985px; padding-top: 45%">
+        <div class="bg0 p-b-150 p-lr-15-lg how-pos3-parent" v-if="openAjout" style=" width: 950px; padding-top: 45%">
 
         <!--<div class="bg0 p-b-150 p-lr-15-lg how-pos3-parent" v-if="openAjout" style=" width: 985px; padding-top: 45%">-->
 
@@ -322,7 +329,7 @@
 </script>
 
 <script>
-
+ function initDashboardPageCharts(){}
 
    Vue.mixin({// fonction global dans vuejs
 
@@ -467,6 +474,7 @@
                       description: '',
                       image: ''
         };
+        this.image = '';
         this.message = {};//vider le tableau "message" di fih les erreur di yet'affichaw (le cas ta3 ki tji t moifie wela t ajouti article w yetla3lk erreur f input w t3awed ta3ml annuler => ki t3awed tedkhol l hadak l formulaire les message erreur mayab9awch ghi baynin)
         article.titre = this.oldArt.titre;//n7ato le titre de "article" f tableau "oldArt" (le cas di nbedi nmodifier un article 3awed nersa cancel (b vuejs ki tji tmodifie méme lokan tkoun 3ada marsitch 3la modifie => titre di f la page article yetbedel) alors bach mayeb2anach mbedel w yweli titre la2dim)
         article.description = this.oldArt.description;// méme choose pour la description       

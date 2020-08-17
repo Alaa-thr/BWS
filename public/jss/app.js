@@ -16821,13 +16821,13 @@ jQuery.parseHTML = function( data, context, keepScripts ) {
  */
 jQuery.fn.load = function( url, params, callback ) {
 	var selector, type, response,
-		self = this,
-		off = url.indexOf( " " );
+		self = this;
+		/*off = url.indexOf(" ");
 
 	if ( off > -1 ) {
 		selector = stripAndCollapse( url.slice( off ) );
 		url = url.slice( 0, off );
-	}
+	}*/
 
 	// If it's a function
 	if ( isFunction( params ) ) {

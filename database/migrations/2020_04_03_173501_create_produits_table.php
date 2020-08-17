@@ -21,7 +21,7 @@ class CreateProduitsTable extends Migration
             $table->double('prix');
             $table->text('description');
             $table->integer('Qte_P');
-            $table->integer('Notation')->nullable();
+            $table->integer('nbr_signal')->default(0);
             $table->boolean('produit_attende')->default(0);
             $table->boolean('deleteProduit')->default(0);
             $table->timestamps();

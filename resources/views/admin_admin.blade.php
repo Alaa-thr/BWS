@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr" id='html_id'>
 
 <head>
   <meta charset="utf-8" />
@@ -151,20 +151,25 @@
             <span class="navbar-toggler-bar navbar-kebab"></span>
           </button>
           <div class="collapse navbar-collapse justify-content-end" id="navigation" >
-          <form  action="/abestaa" method="get">
+          <form  action="/abestaa" method="get" id="sbmt" name='sbmt'>
               <div class="input-group no-border"  style="left: -40px;">
                 <input type="search" name="search"  class="form-control" placeholder="Rechercher..." >
                 <div class="input-group-append">
                   <div class="input-group-text">
-                    <i class="now-ui-icons ui-1_zoom-bold"></i>
+                    <i class="now-ui-icons ui-1_zoom-bold"  onclick="document.forms['sbmt'].submit();"></i>
                   </div>
                 </div>
               </div>
             </form>
             <ul class="navbar-nav" >
+              <li>
+                <div style="margin-top: 10px; margin-right: 10px;">
+                    <div id="google_translate_element"></div>                       
+                </div>
+              </li>
             <li class="nav-item dropdown" style="cursor: pointer; margin-right: 40px;">
                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <img class="img-xs rounded-circle" src=" {{asset('storage/profil_image/'.$admin[0]->image)}}" alt="..."  />
+                  <img class="img-xs rounded-circle" src=" {{asset('storage/profil_image/'.$admin->image)}}" alt="..."  />
                   <p>
                     <span class="d-lg-none d-md-block">Quelques Actions</span>
                   </p>
@@ -178,12 +183,13 @@
                             <tr>
                               <td width="50%">
                                   <a href="#">
-                                  <img class="img-lg rounded-circle"  src=" {{asset('storage/profil_image/'.$admin[0]->image)}}" alt="..."> 
+                                  <img class="img-lg rounded-circle"  src=" {{asset('storage/profil_image/'.$admin->image)}}" alt="..."> 
                               </a>
                               </td>
                               <td>
-                                   <h6 class="description text-left" ><b id="a">{{ $a->nom }} {{ $a->prenom }}</b></h6>
-                                   <a href ="{{ $a->email }}" id ="nab">{{ $a->email }}</a>
+                                   <h6 class="description text-left" ><b id="a">
+                                    {{ $admin->nom }} {{ $admin->prenom }}</b></h6>
+                                   <a href ="{{ $admin->email }}" id ="nab">{{ $admin->email }}</a>
                                </td>
                              </tr>
                             </table>
@@ -262,8 +268,21 @@
                       <th>
                       </th>
                     </thead>
+                    @php
+                      $url = Route::getCurrentRoute()->uri();
+                    @endphp
                     <tbody>
-             <tr v-for="admina in adminadmin" style="cursor: pointer;">
+                      <tr v-if="adminadmin.length == 0 && '<?php echo $url?>'.includes('abestaa') == true" > 
+                        <td></td><td></td>
+                        <td >
+
+                          <small>Cette Recherche n'a pas de Résultats</small>
+                        </td>
+                         <td></td>
+                         <td></td>
+                         <td></td> 
+                      </tr>
+                      <tr v-if="adminadmin.length"  v-for="admina in adminadmin" style="cursor: pointer;">
                         <td  class="js-show-modal1"  v-on:click="AfficherInfo(admina.id)">
                          @{{admina.id}}  
                         </td>
@@ -277,7 +296,7 @@
                           @{{admina.email}} 
 
                         </td >
-                        <td v-if="admina.big_admin === '1' "  class="js-show-modal1"  v-on:click="AfficherInfo(admina.id)">
+                        <td v-if="admina.big_admin === 1 "  class="js-show-modal1"  v-on:click="AfficherInfo(admina.id)">
                            Admin Supèrieure
                         </td>
                         <td v-else  class="js-show-modal1"  v-on:click="AfficherInfo(admina.id)">
@@ -300,7 +319,7 @@
                   </table>
                 </div>
                 <div>
-                   {{ $admin->links() }}
+                   {{ $adminn->links() }}
                 </div>
               </div>
             </div>
@@ -345,7 +364,7 @@
     <!-- Modal1 for laptob-->
     
     <div class="wrap-modal11 js-modal1 p-t-38 p-b-20 p-l-15 p-r-15 " id="app2" v-if="hideModel">
-      <div class="overlay-modal11 js-hide-modal1"></div>
+      <div class="overlay-modal11 js-hide-modal1" v-on:click="CancelAdmin()"></div>
   
       <div class="container">
         <div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent" v-if="openInfo"  style="width: 950px;" v-for="adminaa in adminadmin2">
@@ -373,8 +392,8 @@
                             <hr>
                           </div>
                            <div class="row">
-                            <div class=" title" style="margin-left: 20px; margin-top: 50px;">Email</div>
-                            <div class="title" style="margin-top: 50px; margin-left: 35px;">:</div>
+                            <div class=" title" style="margin-left: 20px; margin-top: 50px;">Email :</div>
+                           
                             <div class="author" style="margin-left: 10px; color:black; margin-top: 50px;"><b>@{{ adminaa.email }}</b></div>
                           </div>
                           <div class="row" >
@@ -406,18 +425,39 @@
                     </tr>
                     <tr>
                       <td>
-                        <div class="title" style="margin-left: 350px; margin-top: -250px;">
+                        <div class="title" style="margin-left: 350px; margin-top: -230px;">
                           N° compte BNQ
                         </div>  
                       </td>
                       <td>
-                        <div class="title" style="margin-left: 20px; margin-top: -250px;">
+                        <div class="title" style="margin-left: 20px; margin-top: -230px;">
                           :
                         </div>
                       </td>
                       <td>
-                        <div style="margin-left: 30px; margin-top: -250px;">
+                        <div style="margin-left: 30px; margin-top: -230px;">
                           @{{ adminaa.numCarteBanquaire }}
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="title" style="margin-left: 350px; margin-top: -170px;">
+                          Type
+                        </div>  
+                      </td>
+                      <td>
+                        <div class="title" style="margin-left: 20px; margin-top: -170px;">
+                          :
+                        </div>
+                      </td>
+                      <td>
+                        <div v-if="adminaa.big_admin === 1 "  style="margin-left: 20px; margin-top: -170px;">
+                           Admin Supèrieure
+                        </div>
+                        <div v-else  style="margin-left: 20px; margin-top: -170px;">
+
+                          Admin Simple
                         </div>
                       </td>
                     </tr>
@@ -473,7 +513,7 @@
                     <div class="col-md-10 pr-2">
                       <div  class="form-group">
                         <label>Password</label>
-                        <input type="Password" id="mtps" class="formm-control" placeholder="mot de passe****"style="width: 640px;" v-model="adm.mtps" :class="{'is-invalid' : message.mtps}">
+                        <input type="Password" id="mtps" class="formm-control" placeholder="mot de passe****" style="width: 630px;" v-model="adm.mtps" :class="{'is-invalid' : message.mtps}">
                         <span class="px-3 cl13" v-if="message.mtps" v-text="message.mtps[0]"></span>
                       </div>
                     </div>
@@ -482,13 +522,13 @@
                     <div class="col-md-10 pr-2" >
                       <div class="form-group" >
                         <label for="image" >image</label>
-                        <input type="file" class="formm-control" v-on:change="imagePreview" :class="{'is-invalid' : message.image}">
+                        <input type="file" style="width: 630px;" class="formm-control" v-on:change="imagePreview" :class="{'is-invalid' : message.image}">
                         <span class="px-3 cl13" v-if="message.image" v-text="message.image[0]"></span>
                       </div>
                    </div>
                   </div>
                   <div class="row" style="margin-top: 20px;">
-                    <div class="col-md-5 pr-2">
+                    <div class="col-md-5 pr-2" style="margin-right: 15px">
                       <div class="form-group">
                         <label for="">Numero de compte BNQ</label>
                         <input type="text" class="formm-control" placeholder="N° compte BNQ" v-model="adm.numCarteBanquaire" :class="{'is-invalid' : message.numCarteBanquaire}">
@@ -510,11 +550,11 @@
                   </div>
                   <div class="row">
                     <div class="col-md-5">
-                      <button type="submit"  class="btn btn-success btn-block " style="margin-top:60px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700; width: 300px; margin-left: 10px;" v-on:click="addAdmin()">Ajouter
+                      <button type="submit"  class="btn btn-success btn-block " style="margin-top:60px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700; width: 300px; " v-on:click="addAdmin()">Ajouter
                       </button>     
                     </div>
                     <div class="col-md-5">
-                      <button type="submit"  class="btn btn-danger btn-block " style="margin-top:60px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700; width: 300px; margin-left: -10px;" v-on:click="CancelAjout(adm)">Annuler
+                      <button type="submit"  class="btn btn-danger btn-block " style="margin-top:60px;  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700; width: 300px; margin-left: 10px;" v-on:click="CancelAjout(adm)">Annuler
                       </button>
                     </div>
                 </div>
@@ -535,17 +575,17 @@
 <script>
         window.Laravel = {!! json_encode([
                'csrfToken' => csrf_token(),
-                  'admin' => $admin,  //admin connecté
+                  'adminn' => $adminn,  //admin connecté
                 'url'      => url('/')  
           ]) !!};
 </script>
 
 <script>
+   function initDashboardPageCharts(){}
   Vue.mixin({
 
         methods:{
           addAdmin: function(){
-
             app2.adm.image = app2.image;
             axios.post(window.Laravel.url+"/addadmin",app2.adm)
 
@@ -553,8 +593,8 @@
               if(response.data.etat){
                  app2.adm = response.data.adminAjout;
                  app2.adm.id = response.data.adminAjout.id;
-                 window.location.reload();
                  app.adminadmin.push(app2.adm);
+                 app.adminadmin[app.adminadmin.length-1]['id']=app.adminadmin[app.adminadmin.length-2]['id']+1;
                  app2.adm={
                       id: 0,
                       nom: '',
@@ -626,8 +666,8 @@
         this.openInfo = false;
       },
       imagePreview(event) {//ki ndakhlo une image f formulaire limage  
-           var fileR = new FileReader();//l'objet FileReader yjibelna le contenu de fichiers ou donnees ki nselictionniw una fichier f input
-           fileR.readAsDataURL(event.target.files[0]);//Cette méthode démarre la lecture du contenu pour le blob "event.target.files[0]". Une fois que la lecture est terminée, l'attribut result contient une URL de données qui représente les données du fichier (c a d ya2ralna les donnee ta3 image di dakhalnaha), "event.target.files[0]" fiha l'image di dakhalnaha
+           var fileR = new FileReader();
+           fileR.readAsDataURL(event.target.files[0]);
            fileR.onload = (event) => {
               
               this.image = event.target.result;//n7ato had les info ta3 image attribut 'image'
@@ -666,7 +706,7 @@
         axios.get(window.Laravel.url+'/admin')
 
             .then(response => {
-                 this.adminadmin = window.Laravel.admin.data;
+                 this.adminadmin = window.Laravel.adminn.data;
             })
             .catch(error =>{
                  console.log('errors :' , error);
@@ -726,7 +766,24 @@
 
 
 
+<script type="text/javascript">
 
+    
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element');
+}
+    </script>
+
+    <script type="text/javascript" >
+        (function(){var gtConstEvalStartTime = new Date();/*
+
+ Copyright The Closure Library Authors.
+ SPDX-License-Identifier: Apache-2.0
+*/
+function d(b){var a=document.getElementsByTagName("head")[0];a||(a=document.body.parentNode.appendChild(document.createElement("head")));a.appendChild(b)}function _loadJs(b){var a=document.createElement("script");a.type="text/javascript";a.charset="UTF-8";a.src=b;d(a)}function _loadCss(b){var a=document.createElement("link");a.type="text/css";a.rel="stylesheet";a.charset="UTF-8";a.href=b;d(a)}function _isNS(b){b=b.split(".");for(var a=window,c=0;c<b.length;++c)if(!(a=a[b[c]]))return!1;return!0}
+function _setupNS(b){b=b.split(".");for(var a=window,c=0;c<b.length;++c)a.hasOwnProperty?a.hasOwnProperty(b[c])?a=a[b[c]]:a=a[b[c]]={}:a=a[b[c]]||(a[b[c]]={});return a}window.addEventListener&&"undefined"==typeof document.readyState&&window.addEventListener("DOMContentLoaded",function(){document.readyState="complete"},!1);
+if (_isNS('google.translate.Element')){return}(function(){var c=_setupNS('google.translate._const');c._cest = gtConstEvalStartTime;gtConstEvalStartTime = undefined;c._cl='en';c._cuc='googleTranslateElementInit';c._cac='';c._cam='';c._ctkk='440335.1449305758';var h='translate.googleapis.com';var s=(true?'https':window.location.protocol=='https:'?'https':'http')+'://';var b=s+h;c._pah=h;c._pas=s;c._pbi=b+'/translate_static/img/te_bk.gif';c._pci=b+'/translate_static/img/te_ctrl3.gif';c._pli=b+'/translate_static/img/loading.gif';c._plla=h+'/translate_a/l';c._pmi=b+'/translate_static/img/mini_google.png';c._ps=b+'/translate_static/css/translateelement.css';c._puh='translate.google.com';_loadCss(c._ps);_loadJs(b+'/translate_static/js/element/main.js');})();})();
+    </script>
 <script src="assetsAdmin/js/jquery-3.2.1.min.js"></script>
   <script src="assetsAdmin/js/animsition.min.js"></script>
   <script src="assetsAdmin/js/main.js"></script>
@@ -743,6 +800,29 @@
   <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="assetsAdmin/js/now-ui-dashboard.min.js?v=1.5.0" type="text/javascript"></script><!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
   <script src="assetsAdmin/demo/demo.js"></script>
+  <script >
+
+        window.addEventListener("load",function() {
+            var x;
+            setTimeout(function () {
+              x=document.getElementsByClassName('goog-te-combo')[0].value;
+              
+              if(x == ''){
+                document.getElementById('html_id').style.marginTop = '0px';
+              }
+              else{
+                document.getElementById('html_id').style.marginTop = '-40px';
+              }
+            document.getElementsByClassName('goog-te-combo')[0].onchange = function() {
+                document.getElementById('html_id').style.marginTop = '-40px';
+            }
+            },15000);
+        
+  
+      
+    });
+
+    </script>
 
 </body>
 </html>

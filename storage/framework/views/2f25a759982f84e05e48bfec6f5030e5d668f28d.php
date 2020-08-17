@@ -57,16 +57,7 @@
 			<div class="top-bar">
 				<div class="content-topbar flex-sb-m h-full container">
 					<div class="left-top-bar">
-						Be Happy with US 
-					</div>
-
-					<div class="right-top-bar flex-w h-full">
-						<a href="#" class="flex-c-m trans-04 p-lr-25">
-							EN
-						</a>
-						<a href="#" class="flex-c-m trans-04 p-lr-25">
-							Help & FAQs
-						</a>
+						Soyez Heureux avec NOUS 
 					</div>
 				</div>
 			</div>
@@ -104,7 +95,7 @@
 
                                                          <img v-if="catego.image != null" :src='"/storage/categorie_image/"+catego.image' class="p-b-4">
 
-                                                         <a href="#" class="filter-link stext-106 trans-04">
+          <a :href="'/shop/search_categorie='+catego.id" class="filter-link stext-106 trans-04">
                                                             {{catego.libelle}}
                                                          </a>
                                                         </li>
@@ -187,7 +178,7 @@
 
                                                     <img v-if="catego.image != null" :src='"/storage/categorie_image/"+catego.image' class="p-b-4">
 
-                                                    <a href="#" class="filter-link stext-106 trans-04">
+              <a :href="'/emploi/search_categorie='+catego.id"class="filter-link stext-106 trans-04">
                                                             {{catego.libelle}}
                                                     </a>
                                                 </li>
@@ -368,18 +359,7 @@
 				<div class="top-bar-mobile">
 					<div class="content-topbar flex-sb-m h-full container">
 						<div class="left-top-bar">
-							Be Happy with US 
-						</div>
-		
-						<div class="right-top-bar flex-w h-full">
-							
-							<a href="#" class="flex-c-m trans-04 p-lr-25">
-								EN
-							</a>
-																										
-							<a href="#" class="flex-c-m trans-04 p-lr-25">
-								Help & FAQs
-							</a>
+							Soyez Heureux avec NOUS 
 						</div>
 					</div>
 				</div>
@@ -428,11 +408,11 @@
                     <img src="images/icons/icon-close2.png" alt="CLOSE">
                 </button>
 
-                <form class="wrap-search-header flex-w p-l-15" action="/abest" method="get">
+                <form class="wrap-search-header flex-w p-l-15" action="/produit_Aemploi_article" method="get">
                     <button class="flex-c-m trans-04">
                         <i class="zmdi zmdi-search"></i>
                     </button>
-                    <input  type="search" name="search" class="form-control" placeholder="Search...">
+                    <input  type="search" name="search" class="form-control" placeholder="Produit/Annonce Emploi/Article">
                     
                 </form>
                 
@@ -761,7 +741,11 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
   <script src="assetsEmployeur/js/core/popper.min.js"></script>
   <script src="assetsEmployeur/js/core/bootstrap.min.js"></script>
   <script src="assetsEmployeur/js/plugins/perfect-scrollbar.jquery.min.js"></script>
-
+  <script>
+    $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip();   
+    });
+  </script>
   <!-- Chart JS -->
   <script src="assetsEmployeur/js/plugins/chartjs.min.js"></script>
   <!--  Notifications Plugin    -->

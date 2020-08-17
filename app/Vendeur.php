@@ -13,10 +13,6 @@ class Vendeur extends Model
         'nom','prenom','numTelephone', 'email','user_id','Addresse','Nom_boutique','Num_Compte_Banquaire','type_livraison','Nbre_abbon','prix_livraison','image','deletedv','ville',
     ];
 
-    use SoftDeletes;
-    protected $dates= ['deleted_at'];
-
-
     public function user()
     {
         return $this->belongsTo('App\User');

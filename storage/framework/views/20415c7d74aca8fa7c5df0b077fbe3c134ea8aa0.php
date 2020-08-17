@@ -29,10 +29,10 @@
                 <div class="row col-md-12"  >
                   <div class="row  col-md-12"  > 
                     <div class=" col-md-12 flex-t" >
-                      <div class="flex-t col-md-7">
+                      <div class="flex-t col-md-7 m-l--25">
                         <p id="txt">Demande   {{demandec.id}}</p>
                       </div>
-                      <div  class="m-t--7 col-md-4 js-show-modal1" v-on:click="AfficheInfo(demandec.id)" style="cursor: pointer;">
+                      <div  class="m-t--7 col-md-4 js-show-modal1 " v-on:click="AfficheInfo(demandec.id)" style="cursor: pointer;">
                           <p id="txt" style="float: right;">   {{demandec.date}}</p>
                       </div>
                       <div class="col-md-2 dropdown m-t-5" style="cursor: pointer;">
@@ -46,13 +46,14 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-12 flex-t m-b-10 js-show-modal1" v-on:click="AfficheInfo(demandec.id)" style="cursor: pointer;">
-                      <div class="col-md-8" >
-                        <p id="txt" >Condidat: {{demandec.nom.toUpperCase()}} {{demandec.prenom.toUpperCase()}}</p> 
+                  <div class="m-l--25 col-md-12 flex-t m-b-10 js-show-modal1" v-on:click="AfficheInfo(demandec.id)" style="cursor: pointer;">
+                      <div class="col-md-9 flex-t" >
+                        <p  style="color: black">Condidat: <p class="m-l--25"  id='txt'>{{demandec.nom_Prenom.toUpperCase()}}</p></p>
 
                       </div >
-                      <div class="col-md-4">
-                        <p id="txt" > Annonce: {{demandec.libellé.toUpperCase()}}</p> 
+                      <div class="col-md-4 flex-t">
+                        <p class="m-l--25" style="color: black;">Annonce: <p class="m-l--25"  id='txt'>{{demandec.libellé.toUpperCase()}}</p></p>
+                   
                       </div> 
                   </div>
                 </div>
@@ -106,9 +107,10 @@
                   </div>
                   <div class="flex-t m-l-10">
                        <p id="txt">CV_client:</p>
-                       <a :href="'storage/demande_cv/'+ condidat.cv_client" download="">
-                        <p style=" cursor: pointer;">{{condidat.cv_client}}</p>
-                     </a>
+                       
+                     <p style=" cursor: pointer;"><a :href="'storage/demande_cv/'+ condidat.cv_client" download="" style="color: blue">
+                          {{condidat.cv_client}}
+                        </a></p>
                   </div>
             </div> 
           </div>
@@ -127,7 +129,7 @@
           </div>
           <div class="row col-md-10">
               <div class="col-md-12">
-                <button v-on:click=" Recudemande(condidat.id);" class="btn-sm btn-success " style=" height: 35px; border: 0; width: 100px; border-radius: 1em; font-size: 12px;  font-weight: 700; float: right;" ><b>Traiter</b></button>     
+                <button v-on:click=" Recudemande(condidat.id);" class="btn-sm btn-success " style=" height: 35px; border: 0; width: 150px; border-radius: 1em; font-size: 12px;  font-weight: 700; float: right;" ><b>Traiter</b></button>     
               </div>
           </div>
         </div>
@@ -215,14 +217,11 @@ methods: {
            this.hideModel = false; 
           },
   detaillsdemandeReçuEmplyeur: function(){
-    console.log(",this.detaillsA",this.detaillsA)
     axios.post(window.Laravel.url+'/detaillsdemandereçuemplyeur', this.detaillsA)
         .then(response => {
              this.commandeclient2 = response.data.demande_detaills;
              this.condidat = this.commandeclient2[0] 
-             this.annoceInfo = response.data.annonce[0]; 
-             console.log("this.condidat", this.commandeclient2);
-             console.log("this.annoceInfo", this.annoceInfo);
+             this.annoceInfo = response.data.annonce[0];
 
         })
         .catch(error =>{
@@ -317,7 +316,6 @@ methods: {
                        this.suppr=false;
                        this.artilcesDelete = [];
                        this.selectall = true;
-                       console.log("this.commandeclient",this.commandeclient);
               }                     
             })
             .catch(error =>{
@@ -347,7 +345,7 @@ methods: {
             axios.get(window.Laravel.url+'/demandeEmploiRecu')
                 .then(response => {
                      this.commandeclient = window.Laravel.article.data;
-                     console.log('this.commandeclient',this.commandeclient);
+                     
                 })
                 .catch(error =>{
                      console.log('errors :' , error);

@@ -15,12 +15,15 @@ class NumberExist implements Rule
      *
      * @return void
      */
-    private $data;
+    private $typeCompte;
+    private $idUser;
 
-    public function __construct($data)
+    public function __construct($typeCompte,$idUser)
     {
-        $this->data = $data;
+        $this->typeCompte = $typeCompte;
+        $this->idUser = $idUser;
     }
+
 
     /**
      * Determine if the validation rule passes.
@@ -36,36 +39,71 @@ class NumberExist implements Rule
         $vendeurs = Vendeur::All();
         $employeurs = Employeur::All();
         $admins = Admin::All();
-        if($this->data == 1){
-            foreach($clients as $client) {
-                if( $client->numeroTelephone == $value){
-                    return false;
+        if($this->idUser == 0){
+            if($this->typeCompte == 1){
+                foreach($clients as $client) {
+                    if( $client->numeroTelephone == $value){
+                        return false;
+                    }
                 }
             }
-        }
-        else if($this->data == 2){
-            foreach($vendeurs as $vendeur) {
-                if( $vendeur->numTelephone == $value){
-                    return false;
+            else if($this->typeCompte == 2){
+                foreach($vendeurs as $vendeur) {
+                    if( $vendeur->numTelephone == $value){
+                        return false;
+                    }
                 }
             }
-        }
-        else if($this->data == 3){
-            foreach($employeurs as $employeur) {
-                if( $employeur->num_tel == $value){
-                    return false;
+            else if($this->typeCompte == 3){
+                foreach($employeurs as $employeur) {
+                    if( $employeur->num_tel == $value){
+                        return false;
+                    }
                 }
             }
-        }
-        else if($this->data == 4){
-            foreach($admins as $admin) {
-                if( $admin->numTelephone == $value){
-                    return false;
+            else if($this->typeCompte == 4){
+                foreach($admins as $admin) {
+                    if( $admin->numTelephone == $value){
+                        return false;
+                    }
                 }
             }
-        }
 
-            return true;
+                return true;
+
+        }else{
+            if($this->typeCompte == 1){
+                foreach($clients as $client) {
+                    if( $client->numeroTelephone == $value && $client->id != $this->idUser){
+                        return false;
+                    }
+                }
+            }
+            else if($this->typeCompte == 2){
+                foreach($vendeurs as $vendeur) {
+                    if( $vendeur->numTelephone == $value && $vendeur->id != $this->idUser){
+                        return false;
+                    }
+                }
+            }
+            else if($this->typeCompte == 3){
+                foreach($employeurs as $employeur) {
+                    if( $employeur->num_tel == $value && $employeur->id != $this->idUser){
+                        return false;
+                    }
+                }
+            }
+            else if($this->typeCompte == 4){
+                foreach($admins as $admin) {
+                    if( $admin->numTelephone == $value && $admin->id != $this->idUser){
+                        return false;
+                    }
+                }
+            }
+
+                return true;
+        }
+        
     
     }
 

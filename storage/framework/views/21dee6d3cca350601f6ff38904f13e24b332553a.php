@@ -26,9 +26,11 @@
         <div class="row" >
           <div class="col-md-12">
             <div class="card">
-            <?php if(session()->has('danger')): ?>
-              <div class="row"> 
-                <div class="alert alert-danger" style="  margin-left:33px;width: 960px;">
+            
+              <div class="card-header m-b-30">
+              <?php if(session()->has('danger')): ?>
+              <div class="col-md-12 p-b-10"> 
+                <div class="alert alert-danger">
 
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;
 
@@ -40,8 +42,8 @@
               </div>
             <?php endif; ?>
             <?php if(session()->has('success')): ?>
-              <div class="row"> 
-                <div class="alert alert-danger" style="  margin-left:33px;width: 960px;">
+              <div class="col-md-12 p-b-10"> 
+                <div class="alert alert-danger">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;
                 </button>
                  <?php echo e(session()->get('success')); ?>
@@ -49,13 +51,18 @@
                 </div>
               </div>
             <?php endif; ?>
-              <div class="card-header m-b-30">
                 <input type="checkbox" id="produit" @change="selectAlll()" v-model="allSelectedd">
                 <label for="produit" style="margin-left: 10px; margin-top: 10px;"></label>
                 <h4 class="card-title " style="margin-top: -30px; margin-left: 50px;">Mes produits</h4>
-               
                     <div class="txt-right"style="margin-top: -50px; " >
-                            <button   class="btn-sm btn-light js-show-modal1 m-r-30" style="height: 35px;" v-on:click="showTarifL" ><b>Traif & Type Livraison</b>
+                      <?php if($notPaier !=0): ?>
+                            <button  class="btn-sm m-r-30" style="height: 35px; border: 1px solid;cursor: no-drop;" disabled><b data-toggle="tooltip" title="Il existe déja une demande">Demande de publication</b>
+                            </button>
+                      <?php else: ?>
+                            <button class="btn-sm btn-light js-show-modal1 m-r-30" style="height: 35px; border: 1px solid;" v-on:click="showPaimentPart()"><b>Demande de publication</b>
+                            </button>
+                      <?php endif; ?>
+                            <button   class="btn-sm btn-light js-show-modal1 m-r-30" style="height: 35px;border: 1px solid;" v-on:click="showTarifL" ><b>Traif & Type Livraison</b>
                             <button  v-if="suppr" class="btn-sm btn-danger " style="height: 35px; " v-on:click="deleteArrayProduit()"><b>Supprimer</b>
                             </button>
                              <button  v-else class="btn-sm btn-info js-show-modal1 m-r-30" style="height: 35px;" v-on:click="AfficherAjout()" ><b>Ajouter Produit</b>
@@ -79,7 +86,7 @@
                         <div class="block2-pic hov-img0" v-for="imgP in imagesproduit">
                             <img v-if="imgP.produit_id === produit.id && imgP.profile === 1" :src="'storage/produits_image/'+ imgP.image" alt="IMG-PRODUCT" style="height: 290px;width: 990px; border: 1;">
 
-                            <a href="" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1" v-on:click="dd(produit)">
+                            <a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1" v-on:click="dd(produit)">
                                 Quick View
                             </a>
                         </div>
@@ -137,7 +144,7 @@
                                                 <div class="item-slick3" >
                                                     <div class="wrap-pic-w">
 
-                                                        <img v-for="img in getImageD" v-if="img.profile==1" :src="'storage/produits_image/'+img.image" alt="IMG-PRODUCT" id="pic" style="width:500px;height: 380px;" />
+                                                        <img v-for="img in getImageD" v-if="img.profile==1" :src="'storage/produits_image/'+img.image" alt="IMG-PRODUCT" id="pic" style="width:500px;height: 480px;" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -146,6 +153,7 @@
                                     </div>
                                 </div>
                                 
+                             
                                 <div class="col-md-6 col-lg-5 p-b-30">
                                     <div class="p-r-50 p-t-5 p-lr-0-lg">
                                         <div v-for="t in detaillproduit">
@@ -156,9 +164,18 @@
                                         <span class="mtext-106 cl2 m-b-20">
                                            {{t.Qte_P}} x {{t.prix}}DA
                                         </span> <br>
-                                        <span class="mtext-106 cl2 m-b-20">
+                                        <span v-if="t.sous_categorie_id != 1" class="mtext-106 cl2 m-b-20">
                                            Sous-Categorie: {{t.libelle}} 
-                                        </span> <br>
+                                        </span>
+                                        <span  v-if="t.sous_categorie_id == 1" class="mtext-106 cl2 m-b-20">
+                                           Sous-Categorie:  
+                                        </span><small v-if="t.sous_categorie_id == 1">La sous-categorie que vous avez choisi pour ce produit a était suprrimé par l'admin, pour plus d'information <a href="<?php echo e(route('contact')); ?>">contacté le</a>.</small> <br>
+                                        <span v-if="t.categorie_id != 1" class="mtext-106 cl2 m-b-20">
+                                           Categorie: {{t.nomCatego}} 
+                                        </span>
+                                        <span  v-if="t.categorie_id == 1" class="mtext-106 cl2 m-b-20">
+                                           Categorie:  
+                                        </span><small v-if="t.categorie_id == 1">Le categorie que vous avez choisi pour ce produit a était suprrimé par l'admin, pour plus d'information <a href="<?php echo e(route('contact')); ?>">contacté le</a>.</small> <br>
                                      
 
                                         <p class="stext-102 cl3 p-t-23">
@@ -226,7 +243,7 @@
           </div>
         </div>
             </div>
-            <div class="bg0 p-b-150 p-lr-15-lg how-pos3-parent" v-if="openAjout"style=" width: 990px; padding-top: 45%">
+            <div class="bg0 p-b-150 p-lr-15-lg how-pos3-parent" v-if="openAjout" style=" width: 990px; padding-top: 45%">
                   <button class="how-pos3 hov3 trans-04 p-t-6" v-on:click="CancelArticle()">
                     <img src="images/icon-close.png" alt="CLOSE">
                   </button>
@@ -432,7 +449,7 @@ unset($__errorArgs, $__bag); ?>" aria-label="Recipient's username" aria-describe
 <!--**************************paimet******************************-->
 
         <div class="bg0 p-b-150 p-lr-15-lg how-pos3-parent m-t-35" v-if="openPaiment" style=" width: 970px; padding-top: 45%">
-          <button class="how-pos3 hov3 trans-04 p-t-6" v-on:click="CancelAnnonce(annc)">
+          <button class="how-pos3 hov3 trans-04 p-t-6" v-on:click="CancelArticle()">
             <img src="images/icon-close.png" alt="CLOSE">
           </button>
           <section class=" creat-article">     
@@ -444,23 +461,24 @@ unset($__errorArgs, $__bag); ?>" aria-label="Recipient's username" aria-describe
                 <div class="col-md-12 m-b-40">
                     <div class="col-md-12 m-b-20">
                       <ul>
-                        <li style="list-style-type: disc;"><span >Vous devez payer pour publier votre annonce.</span>
+                        <li style="list-style-type: disc;"><span >Vous devez payer pour publier votre produit 500DA/Mois.</span>
                         </li>
-                        <li style="list-style-type: disc;"><span >Aprés le paiement vos produits sera publié sur le site.</span>
+                        <li style="list-style-type: disc;"><span >Aprés le paiement, vos produits sera publié sur le site.</span>
                         </li>
                       </ul>
                         
                     </div>
                     <div class="col-md-12 flex-t m-b-15">
-                        <span class = "col-md-6" style="color:black;">Numéro bancaire pour paiment :</span>
+                        <span class = "col-md-6" style="color:black;">Numéro bancaire pour le paiment :</span>
                         <div class ="col-md-6">
                           <input class =" form-control" type="text" disabled value="<?php echo $idbigAdmin[0]->numCarteBanquaire?>">
                         </div>
                     </div>
                 </div>
                 <div class="col-md-12 flex-t">
-                  <button type="submit"  class="btn btn-danger btn-block " style="  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="myFunctionP">Previous</button> 
-                  <button type="submit"  class="btn btn-success btn-block " style=" border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="addProduitwithPaiment();" >Ajouter</button>
+                  <button v-if="showPaimentPart == true" type="submit"  class="btn btn-danger btn-block " style="  border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="myFunctionP">Previous</button>
+                  <button v-if="showPaimentPart == false" type="submit"  class="btn btn-success btn-block " style=" border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="addPaiment();" >Ajouter</button> 
+                  <button v-if="showPaimentPart == true" type="submit"  class="btn btn-success btn-block " style=" border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700;" v-on:click="addProduitwithPaiment();" >Ajouter</button>
                     
                 </div>    
               </div>      
@@ -573,7 +591,6 @@ unset($__errorArgs, $__bag); ?>" aria-label="Recipient's username" aria-describe
                     
                    </div>
                     
-                    
                 </div>
             </div>
         </div>
@@ -601,6 +618,47 @@ unset($__errorArgs, $__bag); ?>" aria-label="Recipient's username" aria-describe
         Vue.mixin({
 
             methods:{
+              addPaiment: function(){
+                axios.post(window.Laravel.url+"/addpaimentv",app2.produitAjout)
+                .then(response => {
+                  if(response.data.etat){
+                     window.location.reload();
+                     app2.produitAjout={
+                            id: 0,
+                            sous_categorie_id: '',
+                            catego: '',
+                            Libellé: '',
+                            prix: '',
+                            description: '',
+                            Qte_P: '',
+                            image: '',
+                            images: [],
+                            colors: [],
+                            tailles: [],
+                            pointures: [],
+                            typet: 0,
+                     };
+                     app2.imageP= {
+                        produit_id: 0,
+                        image: ''
+                     };
+                     app2.imagesP= [];
+                     app2.colorsP= [];
+                     app2.tailleP= [];
+                     app2.PointureP= [];
+                     app2.hideModel=false;
+                     app2.openPaiment = false;
+                     app2.showPaimentPart = true;
+                     app2.message = {};
+                     app2.image = '';
+                     app2.Type = '';
+                  }          
+                })
+                .catch(error =>{
+                    app2.message = error.response.data.errors;
+                    console.log('errors :' , app2.message);
+                })
+            }, 
               addProduitwithPaiment: function(){
                 app2.produitAjout.image = app2.image;
                 app2.produitAjout.images = app2.imagesP;
@@ -762,6 +820,7 @@ unset($__errorArgs, $__bag); ?>" aria-label="Recipient's username" aria-describe
      var app2 = new Vue({
         el: '#app2',
         data:{
+          showPaimentPart: true,
           hideModel: false,
           openAjout: false,
           openAjout2: false,
@@ -777,7 +836,6 @@ unset($__errorArgs, $__bag); ?>" aria-label="Recipient's username" aria-describe
             prix: '',
             description: '',
             Qte_P: '',
-          //  poid: '',
             image: '',
             images: [],
             colors: [],
@@ -962,7 +1020,6 @@ unset($__errorArgs, $__bag); ?>" aria-label="Recipient's username" aria-describe
             getTypeL(){
                 axios.get(window.Laravel.url+'/gettypelvendeur')
                  .then(response => {
-                    console.log('holl',response.data.etat)
                      if(response.data.etat){
                         this.typeLVC = true;
                         this.modifier = false
@@ -982,70 +1039,6 @@ unset($__errorArgs, $__bag); ?>" aria-label="Recipient's username" aria-describe
                       console.log('errors : '  ,error);
                  })
             },
-            showImage1: function(){
-          Swal.fire({
-          imageUrl: '<?php echo e(asset('storage/annonces_image/homeplace1.png')); ?>',
-        
-          imageHeight: 340,
-          imageAlt: 'A tall image'
-        })
-      },
-      showImage2: function(){
-          Swal.fire({
-          imageUrl: '<?php echo e(asset('storage/annonces_image/homeplace2.png')); ?>',
-        
-          imageHeight: 340,
-          imageAlt: 'A tall image'
-        })
-      },
-      showImage3: function(){
-          Swal.fire({
-          imageUrl: '<?php echo e(asset('storage/annonces_image/homeplace3.png')); ?>',
-        
-          imageHeight: 340,
-          imageAlt: 'A tall image'
-        })
-      },
-      showImageEmp1: function(){
-          Swal.fire({
-          imageUrl: '<?php echo e(asset('storage/annonces_image/emploplace1.png')); ?>',
-        
-          imageHeight: 340,
-          imageAlt: 'A tall image'
-        })
-      },
-      showImageEmp2: function(){
-          Swal.fire({
-          imageUrl: '<?php echo e(asset('storage/annonces_image/emploplace2.png')); ?>',
-        
-          imageHeight: 340,
-          imageAlt: 'A tall image'
-        })
-      }, 
-      showImageEmp3: function(){
-          Swal.fire({
-          imageUrl: '<?php echo e(asset('storage/annonces_image/emploplace3.png')); ?>',
-        
-          imageHeight: 340,
-          imageAlt: 'A tall image'
-        })
-      },   
-      change_valeur_vendeur: function(){
-        select = document.getElementById("select");
-        choice = select.selectedIndex;
-
-axios.post(window.Laravel.url+'/paiementvendeur/'+choice)
-              .then(response => {
-				Swal.fire(
-					  "Admin va envoyer son réponse!",
-					);
-                	console.log("response",response.data)
-               })
-              .catch(error => {
-                  console.log('errors : '  , error);
-             })
-
-},
             CancelArticle(){
                 this.tailless = [];
                 this.colorss = [];
@@ -1061,7 +1054,6 @@ axios.post(window.Laravel.url+'/paiementvendeur/'+choice)
                             prix: 0,
                             description: '',
                             Qte_P: 0,
-                          //  poid: 0,
                             image: '',
                             images: [],
                             colors: [],
@@ -1076,6 +1068,8 @@ axios.post(window.Laravel.url+'/paiementvendeur/'+choice)
                 this.modifier= false;
                 this.addd=true;
                 this.Type=0;
+                this.openPaiment = false;
+                ths.showPaimentPart = true;
             },
             imagePreview(event) {
                var fileR = new FileReader();
@@ -1283,7 +1277,7 @@ axios.post(window.Laravel.url+'/paiementvendeur/'+choice)
                   })
             },
             getCategories:function(){
-                 axios.get(window.Laravel.url+'/getAllcategories')
+                 axios.get(window.Laravel.url+'/getAllcategoriess')
                  .then(response => {
                       this.categories = response.data;
                  })
@@ -1307,6 +1301,7 @@ axios.post(window.Laravel.url+'/paiementvendeur/'+choice)
                 this.getSousCategories(event.target.value);
 
             },
+           
             AfficherAjout2: function(){
              this.tarifL = false;
              
@@ -1353,25 +1348,7 @@ axios.post(window.Laravel.url+'/paiementvendeur/'+choice)
              this.produitAjout.tailles = this.tailleP;
              this.produitAjout.pointures = this.PointureP;
              this.produitAjout.typet = this.Type;
-             /*axios.post(window.Laravel.url+'/verifierInputs',this.produitAjout)
-                 .then(response => {
-                    this.message = {};
-                  if(this.typeLVC == true){
-                        this.openAjout3 = true;
-                    }
-                    else{
-                       this.openAjout3 = false;
-                    }
-                    this.hideModel = true;
-                    this.openAjout = false
-                    this.openAjout2 = false
-                    this.openInfo = false;
-                 })
-                 .catch(error => {
-                      this.message = error.response.data.errors;
-                      console.log('errors :' , this.message);
-                 })*/
-             
+
             },
             activeTaille: function(){
                 if(this.Type == 1){
@@ -1407,6 +1384,7 @@ axios.post(window.Laravel.url+'/paiementvendeur/'+choice)
                   } 
             });             
           },
+          
           selectAll: function(){
             this.alertTarifDanger = false;
             this.alertTarif = false;
@@ -1470,6 +1448,7 @@ axios.post(window.Laravel.url+'/paiementvendeur/'+choice)
             showTarifL:function(){
                 app2.tarifL = true;
                 app2.hideModel = true;
+                app2.openPaiment = false;
                 axios.get(window.Laravel.url+'/tarifville')
                 .then(response => {
                         app2.tarifVille = response.data.tarifv; 
@@ -1494,6 +1473,7 @@ axios.post(window.Laravel.url+'/paiementvendeur/'+choice)
                         app2.colorss = response.data.colors; 
                         app2.typeLiv = response.data.typeL; 
                         app2.detaillproduit = response.data.produit;
+                        console.log("app2.detaillproduit",app2.detaillproduit)
                          var i=0;
                         app2.tailless.forEach(key => {
                             if(produit.id == key.produit_id ){
@@ -1629,12 +1609,14 @@ axios.post(window.Laravel.url+'/paiementvendeur/'+choice)
             }
             
         },
-         updateProduit: function(produit){     
+         updateProduit: function(produit){  
          app2.hideModel = true;
          app2.openAjout = true;
          app2.openInfo = false;
          app2.modifier = true;
          app2.openPaiment = false;
+         app2.openAjout2 = false;
+         app2.tarifL = false;
          app2.addd=false;
          app2.produitAjout = produit;
          app2.oldprd.Libellé = produit.Libellé;
@@ -1644,19 +1626,26 @@ axios.post(window.Laravel.url+'/paiementvendeur/'+choice)
          app2.oldprd.sous_categorie_id = produit.sous_categorie_id;
          app2.oldprd.id = produit.id;
          
+        },
+        showPaimentPart(){
+          app2.hideModel = true;
+          app2.openPaiment = true;
+          app2.openAjout = false;
+          app2.openInfo = false;
+          app2.openAjout2 = false;
+          app2.showPaimentPart = false;
+          app2.tarifL = false;
         },      
-          AfficherAjout: function(){
-             app2.hideModel = true;
-             app2.openAjout = true;
-             app2.openInfo = false;
-             app2.openAjout2 = false;
-             app2.openPaiment = false;
-             app2.tarifL = false;
-
-            
-              
-          },
-          deselectProduit: function(produitId){
+        AfficherAjout: function(){
+          app2.hideModel = true;
+          app2.openAjout = true;
+          app2.openInfo = false;
+          app2.openAjout2 = false;
+          app2.openPaiment = false;
+          app2.showPaimentPart = true;
+          app2.tarifL = false;
+        },
+        deselectProduit: function(produitId){
              this.produitDelete.forEach(key => {
                   if(key.id == produitId){
                       var position = this.produitDelete.indexOf(key);
@@ -1677,6 +1666,13 @@ axios.post(window.Laravel.url+'/paiementvendeur/'+choice)
                          this.produitDelete = this.produitDelete.filter(function(item) { return item != p; });
                 }       
             }, 
+          AnnulerSel: function(){
+              this.checkedproduits.length = [];
+              this.changeButton2(null);
+              this.selectalll = true;
+              this.allSelectedd = false;
+              this.produitIds.length = [];
+          },
           selectAlll: function() {
               this.selectalll = false;
             if (this.allSelectedd) {
@@ -1709,6 +1705,7 @@ axios.post(window.Laravel.url+'/paiementvendeur/'+choice)
         }
      });
 </script>
+
 
 <?php $__env->stopPush(); ?>
 <?php echo $__env->make('layouts.template_vendeur', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\BWS\resources\views/produit_vendeur.blade.php ENDPATH**/ ?>

@@ -1094,7 +1094,7 @@
                                         this.prix[0].prixTo = 0;
                                    }
                                    else{
-                                        this.prix[0].prixTo -= produit.prix_total*produit.qte;
+                                        this.prix[0].prixTo -= produit.prix_produit*produit.qte;
                                    }
 
                           }                     

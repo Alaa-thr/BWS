@@ -10,8 +10,6 @@ class Employeur extends Model
     protected $fillable = [
         'nom','prenom','num_tel', 'email','user_id','address','nom_societe','num_compte_banquiare','image','ville',
     ];
-    use SoftDeletes;
-    protected $dates= ['deleted_at'];
 
  
     public function user()

@@ -15,8 +15,7 @@ class AddColumnFkHistoriques extends Migration
     {
         Schema::table('historiques', function (Blueprint $table) {
             $table->foreign('client_id')->references('id')->on('clients');
-            $table->foreign('produit_id')->references('id')->on('produits')->onDelete('SET NULL');     
-            $table->foreign('annonceE_id')->references('id')->on('annonce_emploies')->onDelete('SET NULL');     
+            $table->foreign('produit_id')->references('id')->on('produits')->onDelete('cascade');      
         });
     }
 

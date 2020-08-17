@@ -21,7 +21,6 @@ class CreateAnnonceEmploiesTable extends Migration
             $table->text('discription');
             $table->integer('nombre_condidat')->default(1);
             $table->string('image')->nullable();
-            $table->boolean('annonceE_attende')->default(0);
             $table->timestamps();
         });
     }

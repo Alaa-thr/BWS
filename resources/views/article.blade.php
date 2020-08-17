@@ -6,7 +6,7 @@
 	<head>
 		<title>{{ ( 'Article') }}</title>
 	</head>
-	   <!-- Cart -->
+	   <!-- Cart --> 
 	    <div class="wrap-header-cart js-panel-cart" style="z-index: 11000; ">
         <div class="s-full js-hide-cart"></div>
         
@@ -68,7 +68,9 @@
 		</h2>
 	</section>	
 
-
+        @php
+            $url = Route::getCurrentRoute()->uri();
+        @endphp
 	<!-- Content page -->
 	<section class="bg0 p-t-62 p-b-60">
 		<div class="container" id="app">
@@ -76,7 +78,11 @@
 				<div class="col-md-8 col-lg-9 p-b-80">
 					<div class="p-r-45 p-r-0-lg">
 						<!-- item blog -->
-						<div class="p-b-63" v-for="art in articles">
+            <div class="p-t-90" v-if="articles.length == 0 && '<?php echo $url?>'.includes('articleSe') == true" style="text-align: center; margin-bottom: 40px">
+                  <span>Cette Recherche n'a pas de Résultats</span>
+            </div>
+              
+						<div  v-else class="p-b-63" v-for="art in articles">
 							<a :href="'/articleDetaille/'+art.id" class="hov-img0 how-pos5-parent">
 								<img :src="'storage/articles_image/'+ art.image"  style="height: 501px; ">
 
@@ -124,48 +130,22 @@
 				<div class="col-md-4 col-lg-3 p-b-80">
 					<div class="side-menu">
 						<div class="bor17 of-hidden pos-relative">
-							<input class="stext-103 cl2 plh4 size-116 p-l-28 p-r-55" type="text" name="search" placeholder="Search">
+              <div class="container-search-header">
+               
 
-							<button class="flex-c-m size-122 ab-t-r fs-18 cl4 hov-cl1 trans-04">
-								<i class="zmdi zmdi-search"></i>
-							</button>
-						</div>
-						<div class="p-t-55">
-							<h4 class="mtext-112 cl2 p-b-33">
-								Categories
-							</h4>
+                <form action="/articleSe" method="get">
+                    <button type="submit" class="flex-c-m size-122 ab-t-r fs-18 cl4 hov-cl1 trans-04">
+                      <i class="zmdi zmdi-search"></i>
+                    </button>
+                    <input  type="search" name="search" class="stext-103 cl2 plh4 size-116 p-l-28 p-r-55" placeholder="Article">
+                    
+                </form>
+                
+                
+            </div>
+							
 
-							<ul>
-								<li class="bor18">
-									<a href="#" class="dis-block stext-115 cl6 hov-cl1 trans-04 p-tb-8 p-lr-4">
-										Fashion
-									</a>
-								</li>
-
-								<li class="bor18">
-									<a href="#" class="dis-block stext-115 cl6 hov-cl1 trans-04 p-tb-8 p-lr-4">
-										Beauty
-									</a>
-								</li>
-
-								<li class="bor18">
-									<a href="#" class="dis-block stext-115 cl6 hov-cl1 trans-04 p-tb-8 p-lr-4">
-										Street Style
-									</a>
-								</li>
-
-								<li class="bor18">
-									<a href="#" class="dis-block stext-115 cl6 hov-cl1 trans-04 p-tb-8 p-lr-4">
-										Life Style
-									</a>
-								</li>
-
-								<li class="bor18">
-									<a href="#" class="dis-block stext-115 cl6 hov-cl1 trans-04 p-tb-8 p-lr-4">
-										DIY & Crafts
-									</a>
-								</li>
-							</ul>
+							
 						</div>
 					</div>
 				</div>

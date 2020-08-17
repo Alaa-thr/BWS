@@ -9,82 +9,85 @@
   </head>
   <nav class="navbar navbar-expand-lg navbar-transparent  bg-primary  navbar-absolute">
                                                          
-                                                         <div class="container-fluid">
-                                                           <div class="navbar-wrapper">
-                                                             <div class="navbar-toggle">
-                                                               <button type="button" class="navbar-toggler">
-                                                                 <span class="navbar-toggler-bar bar1"></span>
-                                                                 <span class="navbar-toggler-bar bar2"></span>
-                                                                 <span class="navbar-toggler-bar bar3"></span>
-                                                               </button>
-                                                             </div>
+  <div class="container-fluid">
+    <div class="navbar-wrapper">
+      <div class="navbar-toggle">
+        <button type="button" class="navbar-toggler">
+          <span class="navbar-toggler-bar bar1"></span>
+          <span class="navbar-toggler-bar bar2"></span>
+          <span class="navbar-toggler-bar bar3"></span>
+        </button>
+      </div>
                                                  
                                                           
                                                           
                                                  
-                                                           </div>
-                                                           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-                                                             <span class="navbar-toggler-bar navbar-kebab"></span>
-                                                             <span class="navbar-toggler-bar navbar-kebab"></span>
-                                                             <span class="navbar-toggler-bar navbar-kebab"></span>
-                                                           </button>
-                                                           <div class="collapse navbar-collapse justify-content-end" id="navigation" >
-                                                           <form  action="/abest" method="get">
-                                                               <div class="input-group no-border"  style="left: -40px;">
-                                                                 <input type="search" name="search"  class="form-control" placeholder="Rechercher..." >
-                                                                 <div class="input-group-append">
-                                                                   <div class="input-group-text">
-                                                                     <i class="now-ui-icons ui-1_zoom-bold"></i>
-                                                                   </div>
-                                                                 </div>
-                                                               </div>
-                                                             </form>
-                                                             <ul class="navbar-nav" >
-                                                             <li class="nav-item dropdown" style="cursor: pointer; margin-right: 40px;">
-                                                                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                   <img class="img-xs rounded-circle"  src="<?php echo asset('storage/profil_image/'.$admin->image) ?>" alt="..."  />
-                                                                   <p>
-                                                                     <span class="d-lg-none d-md-block">Quelques Actions</span>
-                                                                   </p>
-                                                                 </a>
-                                                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                                                                   <div class="account-item clearfix js-item-menu">  
-                                                                     <div class="card-body">
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-bar navbar-kebab"></span>
+      <span class="navbar-toggler-bar navbar-kebab"></span>
+      <span class="navbar-toggler-bar navbar-kebab"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navigation" >
+    <form  action="/notificationS" method="get" id="sbmt" name='sbmt'>
+        <div class="input-group no-border"  style="left: -40px;">
+          <input type="search" name="search"  class="form-control" placeholder="Rechercher..." >
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <i class="now-ui-icons ui-1_zoom-bold" onclick="document.forms['sbmt'].submit();"></i>
+            </div>
+          </div>
+        </div>
+    </form>
+    <ul class="navbar-nav" >
+      <li>
+          <div style="margin-top: 10px; margin-right: 10px;">
+              <div id="google_translate_element"></div>                       
+          </div>
+        </li>
+    <li class="nav-item dropdown" style="cursor: pointer; margin-right: 40px;">
+        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <img class="img-xs rounded-circle"  src="<?php echo asset('storage/profil_image/'.$admin->image) ?>" alt="..."  />
+          <p>
+            <span class="d-lg-none d-md-block">Quelques Actions</span>
+          </p>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+    <div class="account-item clearfix js-item-menu">  
+      <div class="card-body">
                                                                             
-                                                                         <a >
-                                                                           <table >
-                                                                             <tr>
-                                                                               <td width="50%">
-                                                                                 <a href="#">
-                                                                                  <img class="img-lg rounded-circle" src="<?php echo asset('storage/profil_image/'.$admin->image) ?>" alt="..."> 
-                                                                                  </a>
-                                                                                </td>
-                                                                               <td>
-                                                                                    <h6 class="description text-left" ><b id="a"> {{ $admin->nom }} {{ $admin->prenom }}</b></h6><a href ="{{ $admin->email }}" id ="nab">{{ $admin->email }}</a>
-                                                                                </td>
-                                                                              </tr>
-                                                                             </table>
-                                                                         </a>  
-                                                                     </div>
-                                                                     <div style="width: 255px; margin-left: 20px;"> 
-                                                                       <hr >
-                                                                      </div>
-                                                                       <a class="dropdown-item" href="{{ route('accueil') }}" id="n"><i class="now-ui-icons business_bank" id="m"></i><b>Allez vers Acceuil</b></a>
-                                                                       <a class="dropdown-item" href="{{ route('profilAdmin') }}" id="n"><i class="now-ui-icons users_single-02" id="m"></i><b>Profil</b></a>
-                                                                       <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                                         document.getElementById('logout-form').submit();" id="n">
-                                                                         <i class="now-ui-icons media-1_button-power" id="m"></i>
-                                                                         {{ __('Déconnexion') }} </a>
-                                                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                                                           @csrf
-                                                                         </form>
-                                                                   </div>
-                                                                 </div> 
-                                                             </li>
+          <a >
+            <table >
+              <tr>
+                <td width="50%">
+                  <a href="#">
+                  <img class="img-lg rounded-circle" src="<?php echo asset('storage/profil_image/'.$admin->image) ?>" alt="..."> 
+              </a>
+            </td>
+            <td>
+                <h6 class="description text-left" ><b id="a"> {{ $admin->nom }} {{ $admin->prenom }}</b></h6><a href ="{{ $admin->email }}" id ="nab">{{ $admin->email }}</a>
+            </td>
+          </tr>
+          </table>
+      </a>  
+  </div>
+    <div style="width: 255px; margin-left: 20px;"> 
+      <hr >
+    </div>
+      <a class="dropdown-item" href="{{ route('accueil') }}" id="n"><i class="now-ui-icons business_bank" id="m"></i><b>Allez vers Acceuil</b></a>
+      <a class="dropdown-item" href="{{ route('profilAdmin') }}" id="n"><i class="now-ui-icons users_single-02" id="m"></i><b>Profil</b></a>
+      <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();" id="n">
+        <i class="now-ui-icons media-1_button-power" id="m"></i>{{ __('Déconnexion') }} </a>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                  </form>
+            </div>
+          </div> 
+      </li>
                                                                
-                                                             </ul>
-                                                           </div>
-                                                         </div>
+      </ul>
+    </div>
+  </div>
 </nav>
       <div class="main-panel" id="main-panel">
       
@@ -93,49 +96,70 @@
       <div class="content" id="app">
         <div class="row">
           <div class="col-md-12">
-            <div class="card">
-              <div class="card-header">
-                <div style=" display: flex; margin-left: 7px;">
+            <div class="card col-md-12">
+              <div class="card-header col-md-12" style="display: flex;">
+                <div class="col-md-8" style=" display: flex; margin-left: 7px;">
                   <input type="checkbox" id="notification" @change="selectAll()" v-model="allSelected" style="">
                   <label for="notification"></label>
                   <h4 style="margin-top: -6px; margin-left: 5px;">Notifications</h4>
                 </div>
-                <button v-if="suppr" class="btn btn-sm btn-danger  btn-block" style="margin-left: 700px; margin-top: -40px; border-radius: 0.8em; width: 130px; height: 35px; "  v-on:click="deleteArrayNotif()"><b>supprimer</b></button>
-                <button v-if="suppr" class="btn btn-sm btn-warning btn-block" style="margin-left: 850px; margin-top: -45px; border-radius: 0.8em; width: 130px; height: 35px; " v-on:click="AnnulerSel" ><b>Annuler</b></button>
-              </div>
-              <div class="card-body">
-                <div class="table-responsive" style="height: auto;">
-                  <table class="table" width="100%">
-                    <tbody>
-                      <tr v-for="noti in notifications">
-                        <td style=" width: 4%;">  
-                          <div v-if="selectall">
-                            <input type="checkbox" :id="noti.id" :value="noti.id" v-model="checkedNotif" @change="changeButton(noti)">
-                            <label :for="noti.id" style=""></label>
-                          </div>
-                          <div v-else>
-                            <input type="checkbox" :id="noti.id" :value="noti.id" v-model="notificationIds"  @change="deselectNotif(noti.id)">
-                            <label :for="noti.id" style=""></label>
-                          </div>   
-                        </td>
-                        <td width="3%">
-                          <b><i class="now-ui-icons ui-1_bell-53" style="margin-top: 5px;"></i></b>
-                        </td>
-                        <td  class="text-left"><a href="#" style="  color: black; cursor: auto;" >L'employeur_id <b>@{{noti.id}}</b> a supprimer la sous catégorie @{{noti.sous_categorie_libelle}} </a></td>
-                       
-
-                        <td  class="dropdown"  id="k">
-                          <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#" class=" m-l--10"> 
-                                <img src="assetsAdmin/img/menu.png" alt="..."/ id="f">
-                             </a>
-                            <div class="dropdown-menu dropdown-menu-right "  style="margin-top: -10px;">
-                                <a class="dropdown-item" href="#" id="f1" v-on:click="deleteNotification(noti)">Supprimer</a>
-                            </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                <div class="col-md-2" style="float: right; margin-top: -13px">  
+                  <button v-if="suppr" class="btn btn-sm btn-danger  btn-block" style=" border-radius: 0.8em; height: 35px; "  v-on:click="deleteArrayNotif()"><b>supprimer</b></button>
                 </div>
+                <div class="col-md-2" style=" margin-top: -13px">
+                  <button v-if="suppr" class="btn btn-sm btn-warning btn-block" style="border-radius: 0.8em; height: 35px; " v-on:click="AnnulerSel" ><b>Annuler</b></button>
+                </div>
+              </div>
+              <hr >
+              <div class="card-body col-md-12">
+                @php
+                    $url = Route::getCurrentRoute()->uri();
+                @endphp
+                <div class="col-md-12" v-if="notifications.length == 0 && '<?php echo $url?>'.includes('notificationS') == true" style="text-align: center; margin-bottom: 40px">
+                          <span>Cette Recherche n'a pas de Résultats</span>
+                </div>
+                <div v-if="notifications.length != 0 " class=" col-md-12" v-for="noti in notifications" >
+                     
+                      <div class="col-md-12" style="display: inline-flex;">
+                          
+                          <div class="col-md-1" v-if="selectall">
+                            <input type="checkbox" :id="noti.id" :value="noti.id" v-model="checkedNotif" @change="changeButton(noti)">
+                            <label :for="noti.id"></label>
+                          </div>
+                          <div class="col-md-1" v-else>
+                            <input type="checkbox" :id="noti.id" :value="noti.id" v-model="notificationIds"  @change="deselectNotif(noti.id)">
+                            <label :for="noti.id"></label>
+                          </div>
+                          <div v-if="noti.paiement_employeur_id  != null && noti.paiement_vendeur_id == null && noti.admin_id == null && noti.paiment_par =='a'" class="col-md-10" style="color: black">
+                               L'employeur <b>@{{noti.nom_empl.toUpperCase()}} @{{noti.prenom_empl.toUpperCase()}}</b> a demandé de l'acceptation de ces annonces, son numéro de banque: <b>@{{noti.num_compte_banquiare.toUpperCase()}}</b> par <b>Annonce</b>
+                          </div>
+                          <div v-if="noti.paiement_employeur_id  != null && noti.paiement_vendeur_id == null && noti.admin_id == null && noti.paiment_par =='m'" class="col-md-10" style="color: black">
+                               L'employeur <b>@{{noti.nom_empl.toUpperCase()}} @{{noti.prenom_empl.toUpperCase()}}</b> a demandé de l'acceptation de ces annonces, son numéro de banque: <b>@{{noti.num_compte_banquiare.toUpperCase()}}</b> par <b>Mois</b>
+                          </div>
+                          <div v-if="noti.paiement_vendeur_id  != null && noti.paiement_employeur_id == null && noti.admin_id == null" class="col-md-10" style="color: black">
+                               Le Vendeur <b>@{{noti.nom_vendeur.toUpperCase()}} @{{noti.prenom_vendeur.toUpperCase()}}</b> a demandé de l'acceptation de ces produits, son numéro de banque: <b>@{{noti.Num_Compte_Banquaire.toUpperCase()}} </b>
+                          </div>   
+                          <div v-if="noti.admin_id != null && noti.paiement_employeur_id  == null && noti.paiement_vendeur_id == null  && noti.sous_categorie_libelle != null " class="col-md-10" style="color: black">
+                               L'admin <b>@{{noti.nom.toUpperCase()}} @{{noti.prenom.toUpperCase()}}</b> a supprimer la sous-catégorie '&nbsp<b>@{{noti.sous_categorie_libelle}}</b>&nbsp' de catégorie <b>@{{noti.categorie_libelle}}</b> et type <b>@{{noti.typeCategoSousCatego}}</b>
+                          </div>
+                          <div v-if="noti.admin_id != null && noti.paiement_employeur_id  == null && noti.paiement_vendeur_id == null  && noti.sous_categorie_libelle == null " class="col-md-10" style="color: black">
+                               L'admin <b>@{{noti.nom.toUpperCase()}} @{{noti.prenom.toUpperCase()}}</b> a supprimer catégorie '&nbsp<b>@{{noti.categorie_libelle}}</b>&nbsp' de type <b>@{{noti.typeCategoSousCatego}}</b>
+                          </div>
+                          <div  class="col-md-1 dropdown" style="cursor: pointer;">
+                              <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"  style="float: right;">
+                                        <i class="fas fa-ellipsis-v"  ></i>
+                              </a>
+                              <div class="dropdown-menu dropdown-menu-right"  >
+                                  <a class="dropdown-item" v-on:click="deleteNotification(noti)"
+                                      style="color: red; font-style: italic; font-weight: 900; cursor: pointer;">
+                                      Supprimer</a>
+                              </div>
+                               
+                              
+                          </div>
+                      </div>
+                    <hr>
+                  </div>
                  {{$notif->links()}}
               </div>
             </div>
@@ -204,19 +228,22 @@
  <script >
    window.Laravel = {!! json_encode([
                'csrfToken' => csrf_token(),
-                'notif' => $notif,  
+               'notif' => $notif,
+                'notifA' => $notifA,
+                'notifV' => $notifV,
+                'notifE' => $notifE,  
                 'url'      => url('/')  
           ]) !!};
  </script>
 
  <script >
+   function initDashboardPageCharts(){}
    var app = new Vue({
       el: '#app',
       data:{
          notifications: [],
          selectall: true,
          suppr: false,
-         nextPage: null,
          checkedNotif: [],
          allSelected: false,
          notificationIds: [],
@@ -225,28 +252,48 @@
       methods:{
       
         getNotifications:function(){
+          var j=0;
           axios.get(window.Laravel.url+'/notificationsAdmin/')
             .then(pagination => {
-                 console.log(pagination)
-                 this.notifications = window.Laravel.notif.data;
-                 this.nextPage = window.Laravel.notif.next_page_url;
-            })
-            .catch(error =>{
-                 console.log('errors :' , error);
-            })
-        },  fetchcpmment:function(){
-         axios.get(window.Laravel.url)
-     // axios.get(url)
-            .then(pagination => {
-                 this.notifications = this.notifications.concat(window.Laravel.notif.data);
-                 console.log( this.notifications)
+              console.log(",window.Laravel.notifE",window.Laravel.notifE)
+              window.Laravel.notif.data.forEach(key=>{
+                  if(key.admin_id!=null){
+                    window.Laravel.notifA.forEach(key1=>{
+                        if(key1.admin_id == key.admin_id && key1.categorie_libelle==key.categorie_libelle && key1.typeCategoSousCatego==key.typeCategoSousCatego && key1.sous_categorie_libelle==key.sous_categorie_libelle){
+                          this.notifications.push(key1)
+                        }
+                    })
+                  }
 
-                 this.nextPage = window.Laravel.notif.next_page_url;
+                  if(key.paiement_vendeur_id !=null){
+                    window.Laravel.notifV.forEach(key1=>{
+                        if(key1.paiement_vendeur_id  == key.paiement_vendeur_id ){
+                          this.notifications.push(key1)
+                        }
+                    })
+                    
+                  }
+                  if(key.paiement_employeur_id !=null){
+                    for (var i = j; i < window.Laravel.notifE.length; i++) {
+                      console.log("1")
+                      if(key.paiement_employeur_id  == window.Laravel.notifE[i].paiement_employeur_id ){
+                         console.log("2")
+                          this.notifications.push(window.Laravel.notifE[i])
+                          i = window.Laravel.notifE.length;
+                          j++;
+                        }
+                    }
+                    
+                  }
+
+              })
+              console.log("1,this.notifications",this.notifications)
+                 
             })
             .catch(error =>{
                  console.log('errors :' , error);
             })
-        },
+        }, 
         selectAll:function(){
             this.selectall = false;
             if (this.allSelected) {
@@ -291,7 +338,7 @@
                 Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Il ya aucun Notification a supprimer!',
+                text: 'Il ya aucune Notification a supprimer!',
 
               }).then((result) => {
                 this.allSelected = false;
@@ -314,8 +361,7 @@
                       this.NotificationsDelete.forEach(key => {
                         axios.delete(window.Laravel.url+'/deletenotification/'+key.id)
                           .then(response => {
-                            if(response.data.etat){
-                                     window.location.reload();             
+                            if(response.data.etat){             
                                       var position = this.notifications.indexOf(key);
                                       this.notifications.splice(position,1);      
                             }                    
@@ -343,7 +389,7 @@
             }
             else{
                 Swal.fire({
-                  title: 'Etes vous de supprimer ces Notifications?',
+                  title: 'Etes vous sure de supprimer cette Notification?',
                   icon: 'warning',
                   showCancelButton: true,
                   confirmButtonColor: '#3085d6',
@@ -354,8 +400,7 @@
                       this.NotificationsDelete.forEach(key => {
                         axios.delete(window.Laravel.url+'/deletenotification/'+key.id)
                           .then(response => {
-                            if(response.data.etat){
-                                     window.location.reload();             
+                            if(response.data.etat){            
                                       var position = this.notifications.indexOf(key);
                                       this.notifications.splice(position,1);      
                             }                    
@@ -392,7 +437,7 @@
       },
       deleteNotification:function(n){
                 Swal.fire({
-                  title: 'Etes vous sure de supprimer cette notification ??',
+                  title: 'Etes vous sure de supprimer cette Notification?',
                   icon: 'warning',
                   showCancelButton: true,
                   confirmButtonColor: '#3085d6',

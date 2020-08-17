@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr" id='html_id'>
 
 <head>
   <meta charset="utf-8" />
@@ -151,17 +151,22 @@
             <span class="navbar-toggler-bar navbar-kebab"></span>
           </button>
           <div class="collapse navbar-collapse justify-content-end" id="navigation" >
-          <form  action="/abestac" method="get">
+          <form  action="/abestac" method="get" id="sbmt" name='sbmt'>
               <div class="input-group no-border"  style="left: -40px;">
                 <input type="search" name="search"  class="form-control" placeholder="Rechercher..." >
                 <div class="input-group-append">
                   <div class="input-group-text">
-                    <i class="now-ui-icons ui-1_zoom-bold"></i>
+                    <i class="now-ui-icons ui-1_zoom-bold"  onclick="document.forms['sbmt'].submit();"></i>
                   </div>
                 </div>
               </div>
             </form>
             <ul class="navbar-nav" >
+              <li>
+          <div style="margin-top: 10px; margin-right: 10px;">
+              <div id="google_translate_element"></div>                       
+          </div>
+        </li>
             <li class="nav-item dropdown" style="cursor: pointer; margin-right: 40px;">
                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <img class="img-xs rounded-circle" src="<?php echo asset('storage/profil_image/'.$admin->image) ?>" alt="..."  />
@@ -248,9 +253,21 @@
                       <th>
                       </th>
                     </thead>
+                    <?php
+                      $url = Route::getCurrentRoute()->uri();
+                    ?>
                     <tbody>
+                      <tr v-if="clientadmin.length == 0 && '<?php echo $url?>'.includes('abestac') == true" > 
+                        <td></td><td></td>
+                        <td >
 
-                      <tr v-for="clienta in clientadmin"  style="cursor: pointer;">
+                          <small>Cette Recherche n'a pas de Résultats</small>
+                        </td>
+                         <td></td>
+                         <td></td>
+                         <td></td> 
+                      </tr>
+                      <tr v-if="clientadmin.length != 0" v-for="clienta in clientadmin"  style="cursor: pointer;">
                         <td class="js-show-modal1" v-on:click="AfficherInfo(clienta.id)">
                           {{clienta.id}}
                         </td>
@@ -327,7 +344,7 @@
     <!-- Modal1 for laptob-->
     
     <div class="wrap-modal11 js-modal1 p-t-38 p-b-20 p-l-15 p-r-15 " id="app2" v-if="hideModel">
-      <div class="overlay-modal11 js-hide-modal1"></div>
+      <div class="overlay-modal11 js-hide-modal1"  v-on:click="CancelClient()"></div>
   
       <div class="container">
         <div class="bg0 p-t-45 p-b-100 p-lr-15-lg how-pos3-parent"  style="width: 950px;" v-for="clientaa in clientadmin2">
@@ -370,72 +387,93 @@
                   <table>
                     <tr>
                       <td>
-                        <div class="title" style="margin-left: 350px; margin-top: -330px;">
+                        <div class="title" style="margin-left: 350px; margin-top: -350px;">
                           Crée Le
                         </div>  
                       </td>
                       <td>
-                        <div class="title" style="margin-left: 20px; margin-top: -330px;">
+                        <div class="title" style="margin-left: 20px; margin-top: -350px;">
                           :
                         </div>
                       </td>
                       <td>
-                        <div style="margin-left: 30px; margin-top: -330px; color: red;">
+                        <div style="margin-left: 30px; margin-top: -350px; color: red;">
                           {{ clientaa.created_at }}
                         </div>
                       </td>
                     </tr>
                     <tr>
                       <td>
-                        <div class="title" style="margin-left: 350px; margin-top: -260px;">
+                        <div class="title" style="margin-left: 350px; margin-top: -300px;">
                           Ville
                         </div>  
                       </td>
                       <td>
-                        <div class="title" style="margin-left: 20px; margin-top: -260px;">
+                        <div class="title" style="margin-left: 20px; margin-top: -300px;">
                           :
                         </div>
                       </td>
                       <td>
-                        <div style="margin-left: 30px; margin-top: -260px;">
+                        <div style="margin-left: 30px; margin-top: -300px;">
                           {{ clientaa.ville }}
                         </div>
                       </td>
                     </tr>
                     <tr>
                       <td>
-                        <div class="title" style="margin-left: 350px; margin-top: -190px;">
-                          Code Postal
+                        <div class="title" style="margin-left: 350px; margin-top: -250px;">
+                          Addresse
                         </div>  
                       </td>
                       <td>
-                        <div class="title" style="margin-left: 20px; margin-top: -190px;">
+                        <div class="title" style="margin-left: 20px; margin-top: -250px;">
                           :
                         </div>
                       </td>
                       <td>
-                        <div style="margin-left: 30px; margin-top: -190px;">
+                        <div v-if="clientaa.addresse == null" style="margin-left: 30px; margin-top: -250px;">
+                          <small >vide</small>
+                        </div>
+                        <div style="margin-left: 30px; margin-top: -250px;">
+                          {{ clientaa.addresse}}
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="title" style="margin-left: 350px; margin-top: -200px;">
+                          Code Postal
+                        </div>  
+                      </td>
+                      <td>
+                        <div class="title" style="margin-left: 20px; margin-top: -200px;">
+                          :
+                        </div>
+                      </td>
+                      <td>
+                        <div style="margin-left: 30px; margin-top: -200px;">
                           {{ clientaa.codePostal }}
                         </div>
                       </td>
                     </tr>
                     <tr>
                       <td>
-                        <div class="title" style="margin-left: 350px; margin-top: -120px;">
-                          Les commandes
+                        <div class="title" style="margin-left: 350px; margin-top: -150px;">
+                          commandes
                         </div>  
                       </td>
                       <td>
-                        <div class="title" style="margin-left: 20px; margin-top: -120px;">
+                        <div class="title" style="margin-left: 20px; margin-top: -150px;">
                           :
                         </div>
                       </td>
                       <td>
-                        <div style="margin-left: 30px; margin-top: -120px;">
-                          {{ clientaa.nbr_cmd}}
+                        <div style="margin-left: 30px; margin-top: -150px;">
+                          {{ clientaa.nbr_cmd-1}}
                         </div>
                       </td>
                     </tr>
+                    
                   </table>
                 </div>
               </div>
@@ -458,6 +496,7 @@
 </script>
 
 <script>
+   function initDashboardPageCharts(){}
   var app2 = new Vue({
      el: '#app2',
      data:{
@@ -551,6 +590,25 @@
 
 
 
+<script type="text/javascript">
+
+    
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element');
+}
+    </script>
+
+    <script type="text/javascript" >
+        (function(){var gtConstEvalStartTime = new Date();/*
+
+ Copyright The Closure Library Authors.
+ SPDX-License-Identifier: Apache-2.0
+*/
+function d(b){var a=document.getElementsByTagName("head")[0];a||(a=document.body.parentNode.appendChild(document.createElement("head")));a.appendChild(b)}function _loadJs(b){var a=document.createElement("script");a.type="text/javascript";a.charset="UTF-8";a.src=b;d(a)}function _loadCss(b){var a=document.createElement("link");a.type="text/css";a.rel="stylesheet";a.charset="UTF-8";a.href=b;d(a)}function _isNS(b){b=b.split(".");for(var a=window,c=0;c<b.length;++c)if(!(a=a[b[c]]))return!1;return!0}
+function _setupNS(b){b=b.split(".");for(var a=window,c=0;c<b.length;++c)a.hasOwnProperty?a.hasOwnProperty(b[c])?a=a[b[c]]:a=a[b[c]]={}:a=a[b[c]]||(a[b[c]]={});return a}window.addEventListener&&"undefined"==typeof document.readyState&&window.addEventListener("DOMContentLoaded",function(){document.readyState="complete"},!1);
+if (_isNS('google.translate.Element')){return}(function(){var c=_setupNS('google.translate._const');c._cest = gtConstEvalStartTime;gtConstEvalStartTime = undefined;c._cl='en';c._cuc='googleTranslateElementInit';c._cac='';c._cam='';c._ctkk='440335.1449305758';var h='translate.googleapis.com';var s=(true?'https':window.location.protocol=='https:'?'https':'http')+'://';var b=s+h;c._pah=h;c._pas=s;c._pbi=b+'/translate_static/img/te_bk.gif';c._pci=b+'/translate_static/img/te_ctrl3.gif';c._pli=b+'/translate_static/img/loading.gif';c._plla=h+'/translate_a/l';c._pmi=b+'/translate_static/img/mini_google.png';c._ps=b+'/translate_static/css/translateelement.css';c._puh='translate.google.com';_loadCss(c._ps);_loadJs(b+'/translate_static/js/element/main.js');})();})();
+    </script>
+
 <script src="assetsAdmin/js/jquery-3.2.1.min.js"></script>
   <script src="assetsAdmin/js/animsition.min.js"></script>
   <script src="assetsAdmin/js/main.js"></script>
@@ -574,5 +632,28 @@
 
     });
   </script>
+   <script >
+
+        window.addEventListener("load",function() {
+            var x;
+            setTimeout(function () {
+              x=document.getElementsByClassName('goog-te-combo')[0].value;
+
+              if(x == ''){
+                document.getElementById('html_id').style.marginTop = '0px';
+              }
+              else{
+                document.getElementById('html_id').style.marginTop = '-40px';
+              }
+              document.getElementsByClassName('goog-te-combo')[0].onchange = function() {
+                  document.getElementById('html_id').style.marginTop = '-40px';
+              }
+            },15000);
+        
+  
+      
+    });
+
+    </script>
 </body>
 </html><?php /**PATH C:\xampp\htdocs\BWS\resources\views/client_admin.blade.php ENDPATH**/ ?>

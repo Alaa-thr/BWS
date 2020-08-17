@@ -18,9 +18,8 @@ class CreateCommandesTable extends Migration
             $table->unsignedBigInteger('client_id');
             $table->unsignedBigInteger('vendeur_id');
             $table->unsignedBigInteger('produit_id');
-            $table->double('prix_total',20, 2);/* le prix de deplacement * le poids de produit + prix de produit*/
             $table->string('address')->nullable();
-            $table->boolean('Réponse_vendeur')->default(0);
+            $table->boolean('Réponse_vendeur')->default(1);
             $table->integer('qte');
             $table->enum('type_livraison',['dhl', 'vc' , 'cv']);
             $table->string('email')->nullable();
@@ -29,8 +28,13 @@ class CreateCommandesTable extends Migration
             $table->string('ville')->nullable();
             $table->boolean('commande_envoyee')->default(0);
             $table->boolean('commande_traiter')->default(0);
-            $table->timestamps();
+            $table->timestamps(); 
+            
+            $table->double('prix_produit',20, 2);;
+
+
         });
+        
     }
 
     /**

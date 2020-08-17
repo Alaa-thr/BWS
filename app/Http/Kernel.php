@@ -20,6 +20,12 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+        \App\Http\Middleware\LoginUserEmployeur::class,
+        \App\Http\Middleware\LoginUserAdmin::class,
+        \App\Http\Middleware\LoginUserClient::class,
+        \App\Http\Middleware\LoginUserVendeur::class,
+        \App\Http\Middleware\Confirmation::class
+
     ];
 
     /**
@@ -36,6 +42,10 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \App\Http\Middleware\LogoutUsers::class,
+
+           
+
         ],
 
         'api' => [
@@ -62,5 +72,14 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'logout.user' => \App\Http\Middleware\LogoutUsers::class,
+        'login.employeur' => \App\Http\Middleware\LoginUserEmployeur::class,
+        'login.admin' => \App\Http\Middleware\LoginUserAdmin::class,
+        'login.client' => \App\Http\Middleware\LoginUserClient::class,
+        'login.vendeur' => \App\Http\Middleware\LoginUserVendeur::class,
+        'confirmation.number' =>\App\Http\Middleware\Confirmation::class,
     ];
+           
+            
+            
 }

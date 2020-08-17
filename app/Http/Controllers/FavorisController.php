@@ -16,7 +16,16 @@ use Auth;
 
 class FavorisController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('logout.user');
+        $this->middleware('login.client');
+    }
     public function get_favoris_client(){
+        if(!Auth::check()){
+            return view('page_not_found',['categorie'=>\DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get() ,'categorieE'=>\DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get()]);
+            
+        }
         $c = Client::find(Auth::user()->id);
         $article = \DB::table('favoris')
         ->where('client_id', $c->id)->orderBy('created_at','desc')->paginate(5);

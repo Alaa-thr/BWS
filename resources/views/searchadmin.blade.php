@@ -35,6 +35,11 @@
               </div>
             </form>
             <ul class="navbar-nav" >
+              <li>
+          <div style="margin-top: 10px; margin-right: 10px;">
+              <div id="google_translate_element"></div>                       
+          </div>
+        </li>
             <li class="nav-item dropdown" style="cursor: pointer; margin-right: 40px;">
                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <img class="img-xs rounded-circle" src="assetsAdmin/img/admin.jpg" alt="..."  />

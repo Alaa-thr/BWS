@@ -9,7 +9,7 @@
      <title><?php echo e(( 'Basmah.WS')); ?></title>
 <div class="wrap-header-cart js-panel-cart" style="z-index: 11000; ">
         <div class="s-full js-hide-cart"></div>
-        
+       
         <div class="header-cart flex-col-l p-l-55 p-r-25">
             
             <div class="header-cart-title flex-w flex-sb-m p-b-8">
@@ -780,12 +780,19 @@
                             <button class="how-pos3 hov3 trans-04 " v-on:click="CancelArticle()" >
                                 <img src="images/icons/icon-close.png" alt="CLOSE">
                             </button>
-                            <div class="p-b-30 p-l-40">
-                              <h4 class="ltext-102  cl2">
-                                     Fait Un Ajout   
-
-                              </h4>
+                            <?php if(Auth::check() && Auth::user()->type_compte == 'c'): ?>
+                            <div class="col-md-12">
+                               <div class="dropdown" style="float: right;" >
+                                      <a data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#"  >
+                                        <img src="assetsAdmin/img/menu.png" /> 
+                                      </a>
+                                      <div class="dropdown-menu dropdown-menu-right " >
+                                        <a  v-on:click="SignalerProduit(detaillproduit)"  class="dropdown-item js-show-modal1 m-b-10" style="color: red; font-style: italic; font-weight: 600; cursor: pointer;">   Signaler Produit</a>
+                                        <a class="dropdown-item" v-on:click="SignalerVendeur(detaillproduit)"style="color: red; font-style: italic; font-weight: 600; cursor: pointer;">Signaler Vendeur</a>
+                                       </div>
+                                </div> 
                             </div>
+                            <?php endif; ?>
                             <div class="row">
                                 <div class="col-md-6 col-lg-7 p-b-30">
                                     <div class="p-l-25 p-r-30 p-lr-0-lg">
@@ -800,7 +807,7 @@
                                                 <div class="item-slick3" >
                                                     <div class="wrap-pic-w">
 
-                                                        <img v-for="img in getImageD" v-if="img.profile==1" :src="'storage/produits_image/'+img.image" alt="IMG-PRODUCT" id="pic"/>
+                                                        <img v-for="img in getImageD" v-if="img.profile==1" :src="'storage/produits_image/'+img.image" alt="IMG-PRODUCT" id="pic"/ style="height: 600px">
                                                     </div>
                                                 </div>
                                             </div>
@@ -824,9 +831,20 @@
                                         </p>
                                         <p class="stext-102 cl3 p-t-23 " >
                                             <span :data-toggle="!!this.detaillproduit.Nom ? 'tooltip' : false" data-html="true" :title="this.detaillproduit.Nom " >
-                                           Vendeur&nbsp:<b>&nbsp&nbsp{{this.detaillproduit.Nom}} &nbsp{{this.detaillproduit.Prenom}}</b>.</span>
+                                           Vendeur&nbsp:<b>&nbsp&nbsp{{this.detaillproduit.Nom}} &nbsp{{this.detaillproduit.Prenom}}</b></span>
                                             
                                         </p>
+                                        <p class="stext-102 cl3 p-t-2 " >
+                                            <span >
+                                           Boutique&nbsp:<b>&nbsp&nbsp{{this.detaillproduit.Nom_boutique}}</b></span>
+                                            
+                                        </p>
+                                        <p class="stext-102 cl3 p-t-2" >
+                                            <span >
+                                           Adresse Boutique&nbsp:<b>&nbsp&nbsp{{this.detaillproduit.Addresse}}</b></span>
+                                            
+                                        </p>
+                                        
                                         <!--  -->
                                         <div class="p-t-33">
                                             <div v-show="tailleExiste" class="flex-w flex-r-m p-b-10">
@@ -890,13 +908,13 @@
                                             <div class="flex-w flex-r-m p-b-10">
                                                 <div class="size-204 flex-w flex-m respon6-next">
                                                     <div class="wrap-num-product flex-w m-r-20 m-tb-15" :class="{'is-invalid' : message.qte}">
-                                                        <div class="btn-num-product-downp cl8 hov-btn3 trans-04 flex-c-m" @click="callfunctionQte(-1)">
+                                                        <div class="btn-num-product-downp cl8 hov-btn3 trans-04 flex-c-m" @click="callfunctionQte(-1,detaillproduit.Qte_P,'qtee')">
                                                             <i class="fs-16 zmdi zmdi-minus"></i>
                                                         </div>
 
                                                         <input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product" value="0" placeholder="0" id="qtee">
 
-                                                        <div class="btn-num-product-upp cl8 hov-btn3 trans-04 flex-c-m" @click="callfunctionQte(1)">
+                                                        <div class="btn-num-product-upp cl8 hov-btn3 trans-04 flex-c-m" @click="callfunctionQte(1,detaillproduit.Qte_P,'qtee')">
                                                             <i class="fs-16 zmdi zmdi-plus"></i>
                                                         </div>
                                                     </div >
@@ -911,19 +929,7 @@
                                                     </div>
                                                 </div>
                                             </div> 
-                                            <div class=""  style="margin-top:-158%;" >
-      <a class="f" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#"   style="  margin-left: 335px;">
-        <i class="fas fa-ellipsis-v"  id="y" style="color: black"></i>
-       </a>
-      <div class="dropdown-menu " x-placement="right-start" id="divSignal">
-                    <a    v-on:click="SignalerProduit(detaillproduit.id)"  class="dropdown-item js-show-modal1" 
-      style="color: #0074d9; font-style: italic; font-weight: 900; cursor: pointer;" >   Signaler Produit</a>
-                    <a class="dropdown-item" v-on:click="SignalerVendeur(detaillproduit.vendeur_id)"
-    style="color: #0074d9; font-style: italic; font-weight: 900; cursor: pointer;">
-    Signaler Vendeur</a>
-       </div>
-      
-    </div>   
+                                              
                                         </div>
                                         
 
@@ -937,12 +943,26 @@
                 <button class="how-pos3 hov3 trans-04 " @click='CancelArticle'>
                     <img src="images/icons/icon-close.png" alt="CLOSE">
                 </button>
-                <div class="p-b-30 p-l-40">
-                    <h4 class="ltext-102  cl2">
+                <div class="p-b-30 p-l-40 flex-t col-md-12">
+                    <h4 class="ltext-102  cl2 col-md-4">
                            Fait Une Demande   
-
                     </h4>
+                    <?php if(Auth::check() && Auth::user()->type_compte == 'c'): ?>
+                    <div class="dropdown col-md-8">
+                        <div class="dropdown " style="float: right;" >
+                            <a data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#"  >
+                            <img src="assetsAdmin/img/menu.png" /> 
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right " >
+                            <a v-on:click="SignalerAnnonce(emplois2[0])" class="dropdown-item js-show-modal1 m-b-10" style="color: red; font-style: italic; font-weight: 600; cursor: pointer;"> Signaler Annonce</a>
+                            <a class="dropdown-item" v-on:click="SignalerEmployeur(emplois2[0])" style="color: red; font-style: italic; font-weight: 600; cursor: pointer;">Signaler Employeur</a>
+                            </div>
+                        </div>
+                    </div> 
+                    <?php endif; ?>
                 </div>
+                
+
 
                 <div class="row" v-for="empp in emplois2">
                     <div class="col-md-6 col-lg-6  m-l-50">
@@ -972,17 +992,16 @@
                           <div class="row" style=" margin-top: -15px;">
                             <div class="col-md-11 ">
                                <p class="m-l-10 m-b-10" style="color: black;">{{ empp.discription }}</p>
-                               <p style="color: black;"><b>Le nombre de condidat est :</b> {{empp.nombre_condidat}}</p>
-                               <div class="flex-t">
+                               <p style="color: black;"><b>Nombre de condidat :</b> {{empp.nombre_condidat}}</p>
+                               <p style="color: black;"><b>Nom Societé/Boutique :</b> {{empp.nom_societe}}</p>
+                               <p style="color: black;"><b>Adresse Societé/Boutique :</b> {{empp.address}}</p>
+                               <div >
                                     <p  style="color: black;">
                                     <b>Pour contacté l'employeur {{ empp.nom }} {{empp.prenom}} : &nbsp</b> </p>
-                                  <div class="m-t--8">  
+                                  <div class="m-t-2 m-l-5">  
                                     <p style="color: black;">
-                                        {{empp.num_tel}}
+                                        Tlf: {{empp.num_tel}}/Email: {{empp.email}} 
                                     </p>
-                                    <p style="color: black;">
-                                       {{empp.email}}
-                                   </p>
                                  </div>
                                </div>
                             </div>               
@@ -1066,20 +1085,7 @@
                                         <button class="stext-101 cl0 size-1044 bg10 bor1 trans-04 m-r-10" v-on:click="CancelArticle">
                                             Annuler
                                         </button>
-                                        
-                                        <div class=""  style="margin-top:-158%;argin-right:10px;" >
-                                                <a class="f" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#"   style="  margin-left: 335px;">
-                                                    <i class="fas fa-ellipsis-v"  id="y" style="color: black"></i>
-                                                </a>
-                                         <div class="dropdown-menu " x-placement="right-start" id="divSignal">
-                                                                <a  class="dropdown-item"  v-on:click="SignalerAnnonce(1)"  
-                                                style="color: #0074d9; font-style: italic; font-weight: 900; cursor: pointer;" >   Signaler Annonce</a>
-                                                                <a class="dropdown-item" v-on:click="SignalerEmployeur(1)"
-                                                style="color: #0074d9; font-style: italic; font-weight: 900; cursor: pointer;">
-                                                Signaler Employeur</a>
-                                                 </div>
-      
-                                     </div>         
+                                                
                                     </div>
                                                 
                                 </div>  
@@ -1105,30 +1111,35 @@
     ]); ?>;
 </script>
 <script>
+    var $jjj=0;
+    function changeQte(val,qte,id){
+        
+        if(val == 1 && document.getElementById(id).value < qte){
+
+            document.getElementById(id).value = $jjj+1;
+            $jjj++;
+            app11.ajoutPanier.qte = document.getElementById(id).value;
+        }   
+        else if(val == -1 && document.getElementById(id).value > 1){
+            document.getElementById(id).value = $jjj-1;
+            $jjj--;
+            app11.ajoutPanier.qte = document.getElementById(id).value;
+        }               
+    }   
     function changePic(img){
         document.getElementById("pic").src = 'http://localhost:8000/storage/produits_image/'+img;
     }
     function initialiser(){
         
         document.getElementById("qtee").value = 0;
-        $('.TLTLTL').val('0').select2();
-        $('.cccc').val('0').select2();
-        $('.tttt').val('0').select2();    
+        $('.TLTLTL').val('0').trigger('change');
+        $('.cccc').val('0').trigger('change');
+        $('.tttt').val('0').trigger('change');
     }
     function initialiseCV(){
         document.getElementById('cv').value = null;
     }
-    function changeQte(val){
-        var x= parseInt(document.getElementById('qtee').value,10);
-        if(val == 1){
-            document.getElementById('qtee').value = x+1;
-            app11.ajoutPanier.qte = x+1;
-        }   
-        else if(val == -1 && x > 1){
-            document.getElementById('qtee').value = x-1;
-            app11.ajoutPanier.qte = x-1;
-        }               
-    }
+
 
     var app2 = new Vue({
      el: '#app2',
@@ -1158,37 +1169,51 @@
         getImageD: [],
      },
      methods: {
-            SignalerVendeur: function(id){
-                axios.post(window.Laravel.url+'/signalervendeur/'+id)
-                  .then(response => {
-                    Swal.fire(
-                        "Signal est fait avec success!",
-                      );
-                      $('.js-modal1').removeClass('show-modal1');
-                              
-                   })
-                  .catch(error => {
-                      console.log('errors : '  , error);
-                 })
-              },
-              SignalerProduit: function(id){
-                axios.post(window.Laravel.url+'/signalerproduit/'+id)
-                  .then(response => {
-                    Swal.fire(
-                        "Signal est fait avec success!",
-                      );
-                      $('.js-modal1').removeClass('show-modal1');
-                              
-                   })
-                  .catch(error => {
-                      console.log('errors : '  , error);
-                 })
-              },
+        callfunctionQte(val,qte,id){
+            changeQte(val,qte,id);
+        },
+            SignalerVendeur: function(produit){
+            axios.post(window.Laravel.url+'/signalervendeur/'+produit.vendeur_id)
+              .then(response => {
+                //swal(produit.Libellé, "a été ajouté au liste de favoris.", "success");
+                Swal.fire(
+                      "Signale du vendeur "+produit.Nom+' '+produit.Prenom+" est fait avec succès!",
+                      "Vous ne vais pas voir ses produits",
+                      'success'
+                    ).then((result) => {
+                      if (result.value) {
+                        window.location.reload();
+                      }
+                    })
+                    $('.js-modal1').removeClass('show-modal1');
+                    
+               })
+              .catch(error => {
+                  console.log('errors : '  , error);
+             })
+          },
+        SignalerProduit: function(produit){
+            axios.post(window.Laravel.url+'/signalerproduit/'+produit.id)
+              .then(response => {
+
+                Swal.fire(
+                      "Signal est fait avec succès!",
+                      'Vous ne vais pas voir ce produit',
+                      'success'
+                    ).then((result) => {
+                      if (result.value) {
+                        window.location.reload();
+                      }
+                    })
+                    $('.js-modal1').removeClass('show-modal1');
+                    
+               })
+              .catch(error => {
+                  console.log('errors : '  , error);
+             })
+          },
             changePicVue(img){
                 changePic(img);
-            },
-            callfunctionQte(val){
-                changeQte(val);
             },
             addPanier: function(){
                 axios.post(window.Laravel.url+'/addpanier',app11.ajoutPanier)
@@ -1314,25 +1339,40 @@
                 
                     
             },
-              SignalerEmployeur: function(id){
-            axios.post(window.Laravel.url+'/signaleremployeur/'+id)
+            SignalerEmployeur: function(annonce){
+            axios.post(window.Laravel.url+'/signaleremployeur/'+annonce.vendeur_id)
               .then(response => {
                 Swal.fire(
-                      "Signal est fait avec success!",
-                    );
+                      "Signale du employeur "+produit.Nom+' '+produit.Prenom+" est fait avec succès!",
+                      "Vous ne vais pas voir ses annonces",
+                      'success'
+                    ).then((result) => {
+                      if (result.value) {
+                        window.location.reload();
+                      }
+                    })
                     $('.js-modal1').removeClass('show-modal1');
+                    
                })
               .catch(error => {
                   console.log('errors : '  , error);
              })
-          },
-        SignalerAnnonce: function(id){
-            axios.post(window.Laravel.url+'/signalerannonce/'+id)
+        },
+        SignalerAnnonce: function(annonce){
+            axios.post(window.Laravel.url+'/signalerannonce/'+annonce.id)
               .then(response => {
+
                 Swal.fire(
-                      "Signal est fait avec success!",
-                    );
+                      "Signal est fait avec succès!",
+                      'Vous ne vais pas voir ce annonce',
+                      'success'
+                    ).then((result) => {
+                      if (result.value) {
+                        window.location.reload();
+                      }
+                    })
                     $('.js-modal1').removeClass('show-modal1');
+                    
                })
               .catch(error => {
                   console.log('errors : '  , error);
@@ -1487,6 +1527,7 @@
                  axios.post(window.Laravel.url+'/detailsemp',this.detailsEMP)
 
                 .then(response => {
+
                      this.emplois2 = response.data;
                 })
                 .catch(error =>{
@@ -1573,10 +1614,11 @@
          },
          methods:{
             detaillProduit:function(produit){
+                $jjj=0;
                 axios.get(window.Laravel.url+'/getimageD/'+produit.id)
                 .then(response => {
                       app2.getImageD = response.data.imagee;
-                     console.log("app2.getImageD", window.Laravel.image )                       
+                                            
                 })
                 .catch(error =>{
                         console.log('errors :' , error);
@@ -1595,7 +1637,6 @@
                 app2.tailless.forEach(key => {
                     if(app2.detaillproduit.id == key.produit_id ){
                             i++;
-                            console.log('produit');
                     }
                 });
                 if(i != 0){
@@ -1700,7 +1741,6 @@
                 axios.get(window.Laravel.url+'/getproduithome')
                 .then(response => {
                     app11.produits = response.data.produit;
-                    console.log("app11.produits",app11.produits)
                     app11.imagesproduit = response.data.ImageP;
                     app2.colors = response.data.color;
                     app2.typeLivraisons = response.data.typeLivraison;

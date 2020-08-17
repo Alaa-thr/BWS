@@ -120,7 +120,7 @@
                       </div>
                       <div class="col-md-2 dropdown m-t-5" style="cursor: pointer;">
                         <a data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"  style="float: right;">
-                          <i class="fas fa-ellipsis-v"  id="y"></i>
+                          <i class="fas fa-ellipsis-v"  style="color: black"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" >
                           <a class="dropdown-item js-show-modal1" v-on:click="AfficheInfo(demandec.id)" style="color: red; font-style: italic; font-weight: 900; cursor: pointer;">Afficher Plus
@@ -131,9 +131,9 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-12 flex-t m-b-10 js-show-modal1" v-on:click="AfficheInfo(demandec.id)" style="cursor: pointer;">
+                  <div class="col-md-12 flex-t m-b-10 js-show-modal1 m-t-10" v-on:click="AfficheInfo(demandec.id)" style="cursor: pointer;">
                       <div class="col-md-12" >
-                        <p id="txt" >CV_client : @{{demandec.cv_client}} </p>
+                        <span style="color: black" >CV :<b> @{{demandec.cv_client}}</b> </span>
                       </div> 
                     </div>
                   </div>
@@ -186,9 +186,9 @@
                   </div>
                   <div class="flex-t m-l-10">
                        <p id="txt">CV_client:</p>
-                       <a :href="'storage/demande_cv/'+ condidat.cv_client" download="">
-                          <p style=" cursor: pointer;">@{{condidat.cv_client}}</p>
-                        </a>
+                       <p style=" cursor: pointer;"><a :href="'storage/demande_cv/'+ condidat.cv_client" download="" style="color: blue">
+                          @{{condidat.cv_client}}
+                        </a></p>
                   </div>
             </div> 
           </div>
@@ -205,8 +205,8 @@
                   </div>
             </div> 
           </div>
-          <div class="row col-md-10">
-              <div class="col-md-10">
+          <div class=" col-md-10">
+              <div class="col-md-12">
                 <button v-on:click=" deleteDemandee(condidat);" class="btn-sm btn-danger " style=" height: 35px; border: 0;  border-radius: 1em; font-size: 12px;  font-weight: 700; float: right;" ><b>Supprimer</b></button>     
               </div>
           </div>
@@ -527,7 +527,7 @@ created:function(){
                                   this.prix[0].prixTo = 0;
                                }
                                else{
-                                  this.prix[0].prixTo -= produit.prix_total*produit.qte;
+                                  this.prix[0].prixTo -= produit.prix_produit*produit.qte;
                                }
 
                       }                     

@@ -38,6 +38,32 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 
 /*//////////////////////////////////////////////////////////////////
 [ FONT ]*/
+/*.translated-ltr{margin-top:-40px;}
+.translated-ltr{margin-top:-40px;}*/
+@media (max-device-width:768px) and (orientation: landscape) {
+  html {
+   -webkit-text-size-adjust: 100%;
+   -ms-text-size-adjust: 100%;
+  }
+}
+
+.goog-te-banner-frame {display: none;}
+
+.goog-logo-link {
+   display:none !important;
+} 
+
+.goog-te-gadget{
+   color: transparent !important;
+}
+
+.goog-te-gadget-icon{
+  display: none;
+}
+
+.goog-te-combo {
+   border-radius: 15%;
+}
 
 @font-face {
   font-family: Poppins-Regular;

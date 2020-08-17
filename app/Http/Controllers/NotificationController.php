@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Client;
-use App\Notification;
+use App\Notificatione;
 use App\Employeur;
 use App\Vendeur;
 use DB;
@@ -16,9 +16,18 @@ use Auth;
 
 class NotificationController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('logout.user');
+        $this->middleware('login.client');
+    }
     public function get_notification_client(){
+        if(!Auth::check()){
+            return view('page_not_found',['categorie'=>\DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get() ,'categorieE'=>\DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get()]);
+            
+        }
         $c = Client::find(Auth::user()->id);
-        $article = \DB::table('notifications')->where('client_id', $c->id)->orderBy('created_at','desc')->paginate(5) ;
+        $article = \DB::table('notificationes')->where('client_id', $c->id)->orderBy('created_at','desc')->paginate(5) ;
         $employeur = \DB::table('employeurs')->get(); 
         $vendeur = \DB::table('vendeurs')->get(); 
         $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
@@ -26,7 +35,7 @@ class NotificationController extends Controller
         $favoris = \DB::table('produits')->get();
         $imageproduit = \DB::table('imageproduits')->get();
         $command = \DB::table('commandes')->where([ ['client_id',$c->id],['commande_envoyee',0]])->get();     
-        $prixTotale= \DB::table('commandes')->where([ ['client_id',$c->id],['id',$c->nbr_cmd]])->select(\DB::raw('sum(commandes.prix_total * commandes.qte) as prixTo'))->get();
+        $prixTotale= \DB::table('commandes')->where([ ['client_id',$c->id],['id',$c->nbr_cmd]])->select(\DB::raw('sum(commandes.prix_produit * commandes.qte) as prixTo'))->get();
         if($prixTotale[0]->prixTo == null){
                 $prixTotale[0]->prixTo = 0.00;
         }
@@ -36,7 +45,7 @@ class NotificationController extends Controller
    
     
     public function deleteNotificationClient($id){
-        $notification = Notification::find($id);
+        $notification = Notificatione::find($id);
         $notification->delete();
         return Response()->json(['etat' => true]);
     }

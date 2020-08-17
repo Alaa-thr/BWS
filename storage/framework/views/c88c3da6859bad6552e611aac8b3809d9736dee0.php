@@ -5,65 +5,6 @@
 	<head>
 		<title><?php echo e(( 'Panier')); ?></title>
 	</head>
-	
-	  
-	<!-- Cart -->
-	<div class="wrap-header-cart js-panel-cart" style="z-index: 11000; ">
-        <div class="s-full js-hide-cart"></div>
-        
-        <div class="header-cart flex-col-l p-l-55 p-r-25">
-            
-            <div class="header-cart-title flex-w flex-sb-m p-b-8">
-                <span class="mtext-103 cl2">
-                    Votre Panier
-                </span>
-
-                <div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart" >
-                    <i class="zmdi zmdi-close" style="margin-left: 171%"></i>
-                </div>
-                
-            </div>
-            
-            <div class="header-cart-content flex-w js-pscroll" id="app1" >
-                <ul class="header-cart-wrapitem w-full"  >
-                    <li class="header-cart-item flex-w flex-t m-b-12" v-for="command in ProduitsPanier">
-                        <div class="header-cart-item-img"  >
-                        <img v-for="imgP in imagesproduit" v-if="imgP.produit_id === command.produit_id && imgP.profile === 1" :src="'storage/produits_image/'+ imgP.image" 
-                        alt="IMG-PRODUCT"  style="height: 60px;">
-                        </div>
-
-                        <div class="header-cart-item-txt p-t-8"  v-for="fv in favoris" v-if="fv.id === command.produit_id">
-                            <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-                            {{fv.Libellé}}
-                            </a>
-
-                            <span class="header-cart-item-info">
-                            {{command.qte}} x  {{fv.prix}} DA
-                            </span>
-                        </div>
-                    </li>
-                </ul>
-                
-                <div class="w-full" >
-                    
-                <div class="header-cart-total w-full p-tb-40">
-                        Total: 
-                    </div>
-
-                    <div class="header-cart-buttons flex-w w-full">
-                        <a href="<?php echo e(route('panier')); ?>" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
-                            View Cart
-                        </a>
-
-                        <a href="<?php echo e(route('panier')); ?>" class="flex-c-m stext-101 cl0 size-107 bg10 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
-                            Check Out
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>      
-	</div>
-	
 
 	<!-- Shoping Cart -->
 	<div class="bg0 p-t-75 p-b-85" >
@@ -95,8 +36,8 @@
 									<th class="column-3">Prix</th>
 									<th class="column-3 p-l-35">Quantite</th>
 									<th class="column-2 p-l-85">Couleur/Taille</th>
-									<th class="column-6">Livraison / Prix</th>
-									<th class="column-2 p-l-100">Prix Total</th>
+									<th class="column-6">Livraison</th>
+									<th class="column-2 p-l-100">Prix*Quantite</th>
 								</tr>
 
 								<tr class="table_row" v-for="produit in produitCommandes" v-if="produit.commande_envoyee===0">
@@ -116,37 +57,37 @@
 									<td class="column-3">{{produit.prix}}DA</td>
 									<td class="column-4">
 										<div class="wrap-num-product flex-w m-l-auto m-r-0">
-											<div class="btn-num-product-downp cl8 hov-btn3 trans-04 flex-c-m" @click="callfunctionQte(-1, produit.produit_id )">
+											<div class="btn-num-product-downp cl8 hov-btn3 trans-04 flex-c-m" @click="callfunctionQte(-1, produit.produit_id,produit.qte,produit.couleur_id,produit.taille,produit.type_livraison)">
 												<i class="fs-16 zmdi zmdi-minus"></i>
 											</div>
 
-											<input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product" :value="produit.qte" id="qte">
+											<input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product" :value="produit.qte" :id="produit.produit_id">
 
-											<div class="btn-num-product-upp cl8 hov-btn3 trans-04 flex-c-m" @click="callfunctionQte(1, produit.produit_id )">
+											<div class="btn-num-product-upp cl8 hov-btn3 trans-04 flex-c-m" @click="callfunctionQte(1, produit.produit_id,produit.qte,produit.couleur_id,produit.taille,produit.type_livraison)">
 												<i class="fs-16 zmdi zmdi-plus"></i>
 											</div>
 										</div>
 									</td>
 									<td class="column-2 p-l-50">
 										<div v-if="produit.taille != 0" class="flex-t">
-											<select class="custom-select m-r-10" id=""  style="width: 100px"  v-on:change="updateProduitPanier($event,produit.produit_id,'color')" >
-											  <option  value="" disabled>Couleur</option>
-			                                  <option :value="produit.couleur_id">{{produit.nom}}</option>
+											<select class="custom-select m-r-10" id=""  style="width: 100px"  v-on:change="updateProduitPanier($event,produit.produit_id,'color',produit.qte,produit.couleur_id,produit.taille,produit.type_livraison)">
+											  <option  value="0" disabled>Couleur</option>
+			                                  <option :value="produit.couleur_id" selected>{{produit.nom}}</option>
 			                                  <option v-for="color in colors" :value="color.color_id" v-if="color.produit_id === produit.produit_id && color.color_id != produit.couleur_id">{{color.nom}}</option>
 			                                  
 											</select>
 											
-											<select  class="custom-select" id=""  style="width: 100px" v-on:change="updateProduitPanier($event,produit.produit_id,'taille')">
-											 <option  value="" disabled>Taille</option>
-			                                 <option :value="produit.taille">{{produit.taille}}</option>
+											<select  class="custom-select" id=""  style="width: 100px" v-on:change="updateProduitPanier($event,produit.produit_id,'taille',produit.qte,produit.couleur_id,produit.taille,produit.type_livraison)">
+											 <option  value="0" disabled>Taille</option>
+			                                 <option :value="produit.taille" selected>{{produit.taille}}</option>
 											 <option v-for="taille in tailles" :value="taille.nom" v-if="taille.nom != produit.taille && produit.produit_id === taille.produit_id ">{{taille.nom}}</option>
 											</select>
 											
 										</div>
 										<div v-else class="flex-t">
-											<select class="custom-select m-r-10" id=""  style="width: 212px" v-on:change="updateProduitPanier($event,produit.produit_id,'color')">
-											  <option  value="" disabled>Couleur</option>
-			                                  <option :value="produit.couleur_id">{{produit.nom}}</option>
+											<select class="custom-select m-r-10" id=""  style="width: 212px" v-on:change="updateProduitPanier($event,produit.produit_id,'color',produit.qte,produit.couleur_id,produit.taille,produit.type_livraison)">
+											  <option  value="0" disabled>Couleur</option>
+			                                  <option :value="produit.couleur_id" selected>{{produit.nom}}</option>
 			                                  <option v-for="color in colors" :value="color.color_id" v-if="color.produit_id === produit.produit_id && color.color_id != produit.couleur_id">{{color.nom}}</option>
 			                                  
 											</select>
@@ -156,11 +97,11 @@
 									</td>
 									<td class="column-6" >
 										
-											<select class="custom-select " id="inputGroupSelect01" style="width: 270px; margin-top:-17px" v-on:change="updateProduitPanier($event,produit.produit_id,'typeL')">
+											<select class="custom-select " id="inputGroupSelect01" style="width: 270px; margin-top:-17px" v-on:change="updateProduitPanier($event,produit.produit_id,'typeL',produit.qte,produit.couleur_id,produit.taille,produit.type_livraison)">
 											  <option  value="" disabled>Type de Livraison</option>
-											  <option  value="vc" v-if="produit.type_livraison === 'vc'">Le vendeur effectuer la livraison</option>
-			                                  <option value="cv" v-if="produit.type_livraison === 'cv'">Vous apportez votre produit</option>
-			                                  <option value="dhl" v-if="produit.type_livraison === 'dhl'">DHL(Poste)</option>
+											  <option  value="vc" v-if="produit.type_livraison === 'vc'" selected>Le vendeur effectuer la livraison</option>
+			                                  <option value="cv" v-if="produit.type_livraison === 'cv'" selected>Vous apportez votre produit</option>
+			                                  <option value="dhl" v-if="produit.type_livraison === 'dhl'" selected>DHL(Poste)</option>
 			                                  <option v-for="typeLivraison in typeLivraisons" value="vc" v-if="typeLivraison.vendeur_id === produit.vendeur_id && typeLivraison.type_livraison != produit.type_livraison &&  typeLivraison.type_livraison === 'vc'">Le vendeur effectuer la livraison</option>
 			                                  <option v-for="typeLivraison in typeLivraisons" value="cv" v-if="typeLivraison.vendeur_id === produit.vendeur_id && typeLivraison.type_livraison != produit.type_livraison &&  typeLivraison.type_livraison === 'cv'">Vous apportez votre produit</option>
 			                                  <option v-for="typeLivraison in typeLivraisons" value="dhl" v-if="typeLivraison.vendeur_id === produit.vendeur_id && typeLivraison.type_livraison != produit.type_livraison &&  typeLivraison.type_livraison === 'dhl'">DHL(Poste)</option>
@@ -228,9 +169,9 @@
 											</div>
 											<div class="column-2 p-l-40 ">
 												<div class="input-group mb-3 ">
-													<div   v-if="produit.type_livraison === 'vc'">Le vendeur effectuer la livraison</div>
-					                                  <div  v-if="produit.type_livraison === 'cv'">Vous apportez votre produit</div>
-					                                  <div  v-if="produit.type_livraison === 'dhl'">DHL(Poste)</div>	
+													<div   v-if="produit.type_livraison === 'vc'">Le vendeur effectuer la livraison/ {{produit.typee}} DA</div>
+					                                <div  v-if="produit.type_livraison === 'cv'">Vous apportez votre produit</div>
+					                                <div  v-if="produit.type_livraison === 'dhl'">DHL(Poste)</div>	
 												</div>
 												<div class="flex-t m-t--10">
 													<div>Couleur: {{produit.nom}}</div>
@@ -243,8 +184,8 @@
 								</div>
 							</div>
 						</div>
-						<div class="header-cart-total m-l-60 p-tb-40" v-for="t in prixT">
-								<b>Totale:&nbsp</b> {{t.prixTo}}&nbspDA
+						<div class="header-cart-total m-l-60 p-tb-40 m-t-20" v-for="t in prixT" v-if='willayaSelect'>
+								<b>Totale <small>(avec Tarif de Livraison)</small>:&nbsp</b> {{Tarif}}&nbspDA
 						</div>
 					</div>
 				
@@ -283,6 +224,24 @@
 													<input class="form-control m-r-30" id="Email" type="text"   v-model="art.email" :class="{'is-invalid' : message.email}" >
                        								 <span class="px-3 cl13" v-if="message.email" v-text="message.email[0]">
                     								  </span>
+												</div>
+											</div>
+										</div>
+
+										<div class="form-group flex-w p-b-10">
+											<div class="size-205 cl2 m-r-2" style="font-size: 15px;">
+												Ville
+											</div>
+											<div class="size-219 ">
+												<div class=" bg0">
+												<select class="form-control m-r-30"   :class="{'is-invalid' : message.ville}" style="height: 40px" name="ville" @change='changeWillaya($event)' v-model='art.ville'>
+													<option value=""  hidden="hidden" selected>Choisir une ville</option> 
+															<?php $__currentLoopData = $villes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ville): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+													<option  value="<?php echo $ville->id?>" value="<?php echo $ville->nom?>"><?php echo e($ville->nom); ?></option> 
+															<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+												</select>
+												<span class="px-3 cl13" v-if="message.ville" v-text="message.ville[0]">
+                    									    </span>
 												</div>
 											</div>
 										</div>
@@ -352,9 +311,9 @@
                'typeLivraison'         => $typeLivraison,
 			   "client" => $client,
 			   "idClient" => $idClient,
-
 			   'ImageP'         => $ImageP,
                'Fav'         => $Fav,
+               'villes'         => $villes,
                'command'         => $command,
                "url"      => url("/")  
           ]); ?>;
@@ -372,10 +331,18 @@ methods:{
 	    if(app.codePostale == false){
 	    		app.art.nonCode = 0;
 	    }
+	    app.ville = window.Laravel.villes;
+	    app.ville.forEach(key=>{
+	    	if(key.id == app.art.ville){
+	    		app.art.ville = key.nom;
+	    	}
+	    })
+	    app.art.prix_totale = app.Tarif;
 	 axios.post(window.Laravel.url+"/envoyercommande",app.art)
 
 	.then(response => {
 	  if(response.data.etat){
+	  	app.message = {};
 		 app.art = response.data.commandeAjout; 
 		 app.art.id = response.data.commandeAjout.id; 
 		 window.location.reload(); 
@@ -385,14 +352,16 @@ methods:{
 			  client_id: window.Laravel.idClient,
 			  numero_tlf: window.Laravel.client.numeroTelephone, 
 			  email: window.Laravel.client.email, 
+			  ville: '', 
 			  address: window.Laravel.client.addresse, 
 			  code_postale: window.Laravel.client.codePostal,
 			  nonAddresse: 1,
-			  nonCode: 1, 
+			  nonCode: 1,
+			  prix_totale: 0, 
 
 			  
 		 };
-  		 app.message = {};
+  		 
 	   }          
 	})
 	.catch(error =>{
@@ -407,6 +376,8 @@ methods:{
 	var app = new Vue({
 	    el: '#app',
 	    data:{
+
+	      ville: [],
 	      produitCommandes: [],
 	      colors: [],
 	      tailles: [],
@@ -419,26 +390,103 @@ methods:{
 			client_id: window.Laravel.idClient,
 			numero_tlf: window.Laravel.client.numeroTelephone, 
 			email: window.Laravel.client.email, 
+			ville: '', 
 			address: window.Laravel.client.addresse, 
 			code_postale: window.Laravel.client.codePostal,
 			nonAddresse: 1,
-			nonCode: 1, 
+			nonCode: 1,
+			prix_totale: 0,  
 		  },
 		  infoClinet: [] ,
 		  updateP: {
 		  	produit_id: 0,
 		  	val: 0,
-		  	type: ''
+		  	type: '',
+		  	couleur: '',
+		  	taille: '',
+		  	typeL: '',
+		  	qte: '',
 		  },
           message: {},
           produitCommandesDemmande: [],
           prixT: [],
+          Tarif: 0,
+          willayaSelect: false,
+          willayaSelectId: {
+          	id: ''
+          }
 	    },
 	    methods: {
-	    	callfunctionQte(val,id){
-	    		changeQte(val,id);
+	    	changeWillaya(event){
+	    		this.Tarif=0
+	    		var j=0;
+	    		this.willayaSelectId.id = event.target.options[event.target.options.selectedIndex].value;
+	    		axios.post(window.Laravel.url+'/getTarifCommande',this.willayaSelectId)
+		            .then(response => {
+		            	this.produitCommandesDemmande.forEach(key=>{
+			              
+			                  key['typee'] = 0
+			                
+			            })
+		            	this.produitCommandesDemmande.forEach(key=>{
+			              response.data.type_prix.forEach(key1=>{
+			                if(key.type_livraison == 'vc' && key.vendeur_id == key1.vendeur_id){
+			                  key['typee'] = key1.prix
+			                }
+			              })
+			            })
+		            if(response.data.tarif.length < this.produitCommandesDemmande.length){
+		            	this.produitCommandesDemmande.forEach(key=>{
+		            		for (var i = 0; i < response.data.tarif.length; i++)
+		            		{
+		            			if(response.data.tarif[i].qte == key.qte && response.data.tarif[i].couleur_id == key.couleur_id && response.data.tarif[i].taille == key.taille && response.data.tarif[i].type_livraison == key.type_livraison && response.data.tarif[i].produit_id == key.produit_id && response.data.tarif[i].vendeur_id == key.vendeur_id){
+		            				
+		            				j++;
+		            			}
+
+		            		}
+		            		if(j==0){
+		            			this.Tarif+= (key.prix_produit*key.qte)
+		            		}
+		            		else{
+		            			j =0;
+		            		}
+		            	})
+		            }
+		            	response.data.tarif.forEach(key=>{
+		            		for (var i = 0; i < this.produitCommandesDemmande.length; i++) {
+		            			
+		            			if(key.qte == this.produitCommandesDemmande[i].qte && key.couleur_id == this.produitCommandesDemmande[i].couleur_id && key.taille == this.produitCommandesDemmande[i].taille && key.type_livraison == this.produitCommandesDemmande[i].type_livraison && key.produit_id == this.produitCommandesDemmande[i].produit_id && key.ville_id == this.willayaSelectId.id){
+		            					if( key.type_livraison == 'vc' ){
+		            						this.Tarif+= (key.prix_produit*key.qte)+key.prix
+		            						
+		            					}
+		            					else{
+		            						this.Tarif+= (key.prix_produit*key.qte)
+		            					}
+		            					i=this.produitCommandesDemmande.length;
+		            					
+		            			}
+
+
+		            		}
+		            	})
+		            	this.willayaSelect = true;
+		                       
+		            })
+		            .catch(error =>{
+		                console.log('errors :' , error);
+		             })
 	    	},
-	    	updateProduitPanier: function(e,id,type){
+	    	callfunctionQte(val,id,qte,color,taille,tp){
+	    		
+	    		changeQte(val,id,qte,color,taille,tp);
+	    	},
+	    	updateProduitPanier: function(e,id,type,qtee,color,taille,tp){
+	    		this.updateP.couleur = color;
+	    		this.updateP.taille = taille;
+	    		this.updateP.typeL = tp;
+	    		this.updateP.qte = qtee;
 		      	if(type == 'qte'){
 		      		this.updateP.val = e;
 		      	}
@@ -449,10 +497,26 @@ methods:{
 		      	this.updateP.type = type;         
 		        axios.post(window.Laravel.url+'/updateproduitpanier',this.updateP)
 		            .then(response => {
-		                if(response.data.etat){
-		                          
+		            	this.produitCommandes.forEach(key=>{
+		            		
+		            		if(key.couleur_id == color && key.taille == taille && key.qte == qtee && key.type_livraison == tp && key.produit_id == id ){
+		            			if(type == 'taille'){
+		            				key.taille = e.target.options[e.target.options.selectedIndex].value ;
+		            			}else if(type == 'qte'){
+		            				key.qte = e;
+		            			}else if(type == 'color'){
+		            				
+		            				key.couleur_id = e.target.options[e.target.options.selectedIndex].value;
+		            				key.nom = e.target.options[e.target.options.selectedIndex].text;
+		            				
+		            				
+		            			}else if(type == 'typeL'){
+		            				key.type_livraison = e.target.options[e.target.options.selectedIndex].value;
+		            			}
+		            		}
 
-		                }                     
+		            	})
+		                       
 		            })
 		            .catch(error =>{
 		                console.log('errors :' , error);
@@ -496,6 +560,7 @@ methods:{
                 	this.colors = window.Laravel.color;
                 	this.tailles = window.Laravel.taille;
                 	this.typeLivraisons = window.Laravel.typeLivraison;
+
                 })                     
                 .catch(error =>{
                            console.log('errors :' , error);
@@ -518,10 +583,10 @@ methods:{
 	    		else{
 	    			 axios.get(window.Laravel.url+'/panierdemmande')
 	                .then(response => {
+	                	$('.js-modal1').addClass('show-modal1');
 	                	this.produitCommandesDemmande = response.data.produitCmds;
 	                	this.infoClinet = this.produitCommandesDemmande[0];
 	                	this.prixT = response.data.prixT;
-		                $('.js-modal1').addClass('show-modal1');
 			    		this.produitCommandesDemmande.forEach(key => {
 			    			if(key.type_livraison == "vc"){
 			    				this.adrresse = true;
@@ -531,6 +596,12 @@ methods:{
 			    			}
 		    		
 	    				});
+	    				this.produitCommandesDemmande.forEach(key=>{
+			              
+			                  key['typee'] = 0;
+			                
+			            })
+			            
 	                })                     
 	                .catch(error =>{
 	                           console.log('errors :' , error);
@@ -557,15 +628,16 @@ methods:{
 	    },
 	});
 
-	  function changeQte(val,id){
-	  	var x= parseInt(document.getElementById('qte').value,10);
+	  function changeQte(val,id,qte,color,taille,tp){
+
 	 	if(val == 1){
-	 		document.getElementById('qte').value = x+1;
-	 		app.updateProduitPanier(x+1,id,'qte')
+
+	 		document.getElementById(id).value = qte+1;
+	 		app.updateProduitPanier(qte+1,id,'qte',qte,color,taille,tp)
 	 	}	
-	 	else if(val == -1 && x > 1){
-	 		document.getElementById('qte').value = x-1;
-	 		app.updateProduitPanier(x-1,id,'qte')
+	 	else if(val == -1 && qte > 1){
+	 		document.getElementById(id).value = qte-1;
+	 		app.updateProduitPanier(qte-1,id,'qte',qte,color,taille,tp)
 	 	}       		
 	  }
 </script>

@@ -15,11 +15,13 @@ class EmailExist implements Rule
      *
      * @return void
      */
-    private $data;
+    private $typeCompte;
+    private $idUser;
 
-    public function __construct($data)
+    public function __construct($typeCompte,$idUser)
     {
-        $this->data = $data;
+        $this->typeCompte = $typeCompte;
+        $this->idUser = $idUser;
     }
 
     /**
@@ -36,36 +38,71 @@ class EmailExist implements Rule
         $vendeurs = Vendeur::All();
         $employeurs = Employeur::All();
         $admins = Admin::All();
-        if($this->data == 1){
-            foreach($clients as $client) {
-                if( $client->email == $value){
-                    return false;
+        if($this->idUser == 0){
+            if($this->typeCompte == 1){
+                foreach($clients as $client) {
+                    if( $client->email == $value ){
+                        return false;
+                    }
                 }
             }
+            else if($this->typeCompte == 2){
+                foreach($vendeurs as $vendeur) {
+                    if( $vendeur->email == $value ){
+                        return false;
+                    }
+                }
+            }
+            else if($this->typeCompte == 3){
+                foreach($employeurs as $employeur) {
+                    if( $employeur->email == $value ){
+                        return false;
+                    }
+                }
+            }
+            else if($this->typeCompte == 4){
+                foreach($admins as $admin) {
+                    if( $admin->email == $value ){
+                        return false;
+                    }
+                }
+            }
+            
+                return true;
         }
-        else if($this->data == 2){
-            foreach($vendeurs as $vendeur) {
-                if( $vendeur->email == $value){
-                    return false;
+        else{
+           if($this->typeCompte == 1){
+                foreach($clients as $client) {
+                    if( $client->email == $value && $client->id != $this->idUser){
+                        return false;
+                    }
                 }
             }
-        }
-        else if($this->data == 3){
-            foreach($employeurs as $employeur) {
-                if( $employeur->email == $value){
-                    return false;
+            else if($this->typeCompte == 2){
+                foreach($vendeurs as $vendeur) {
+                    if( $vendeur->email == $value && $vendeur->id != $this->idUser){
+                        return false;
+                    }
                 }
             }
-        }
-        else if($this->data == 4){
-            foreach($admins as $admin) {
-                if( $admin->email == $value){
-                    return false;
+            else if($this->typeCompte == 3){
+                foreach($employeurs as $employeur) {
+                    if( $employeur->email == $value && $employeur->id != $this->idUser){
+                        return false;
+                    }
                 }
             }
+            else if($this->typeCompte == 4){
+                foreach($admins as $admin) {
+                    if( $admin->email == $value && $admin->id != $this->idUser){
+                        return false;
+                    }
+                }
+            }
+            
+                return true; 
         }
         
-            return true;
        
         
     }

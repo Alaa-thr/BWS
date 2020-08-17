@@ -25,7 +25,7 @@
               <div class="flex-t col-md-12">
                 <div class="flex-t col-md-6">
                   <input type="checkbox" id="article" @change="selectAll()" v-model="allSelected">
-                  <label for="article"></label> 
+                  <label for="article" id="txt"></label> 
                   <h4 style="margin-top: -6px;margin-left: 10px;">Commande Traitée</h4>
                 </div>
 
@@ -42,22 +42,26 @@
               <div class="card-head m-t--20 " style="border: 1px "  v-for="commandec in commandeclient" >
                 <div class="row  col-md-12 ">
                   <div class=" col-md-12 flex-t" >
-                    <div class="col-md-6" v-if="selectall" >
+                    <div class="col-md-6 flex-t" v-if="selectall" >
                       <input type="checkbox"  :id="commandec.id" :value="commandec.id" v-model="checkedArticles" @change="changeButton(commandec)">
                       <label :for="commandec.id" id="txt">Commande Numero  @{{commandec.id_cmd}}</label>
+                      <img data-toggle="tooltip" title="Vous avez accepté cette commande" v-if='commandec.response == 0' src="{{asset('images/correct.png')}}" style="height: 20px; width: 20px; cursor: pointer;" class="m-t-5 m-l-5"/>
+                      <img data-toggle="tooltip" title="Vous avez refusé cette commande"v-else src="{{asset('images/incorrect.png')}}" style="height: 32px; width: 25px; cursor: pointer;" class=" m-l-5"/>
                     </div>
-                    <div class="col-md-6 " v-else>
+                    <div class="col-md-6 flex-t" v-else>
                       <input type="checkbox" :id="commandec.id" :value="commandec.id"  v-model="articleIds" @click="deselectArticle(commandec.id)">
                       <label :for="commandec.id" id="txt">Commande Numero  @{{commandec.id_cmd}}</label>
+                      <img data-toggle="tooltip" title="Vous avez accepté cette commande"  v-if='commandec.response == 0' src="{{asset('images/correct.png')}}" style="height: 20px; width: 20px; cursor: pointer;" class="m-t-5 m-l-5"/>
+                      <img data-toggle="tooltip" title="Vous avez refusé cette commande" v-else src="{{asset('images/incorrect.png')}}" style="height: 32px; width: 25px; cursor: pointer;" class=" m-l-5"/>
                     </div>
                   
                     <div  class="col-md-4 " v-on:click="AfficheInfo(commandec.id,commandec.client_id)" style="cursor: pointer;">
-                        <label id="txt" > prix_total : @{{commandec.prix_total}} DA </label>
+                        <label id="txt" style="float: right;cursor: pointer;"> prix_total : @{{commandec.prix_total}} DA </label>
                     </div>
-                    <div class="col-md-2 dropdown">
+                    <div class="col-md-2 dropdown" style="cursor: pointer;">
                       
                         <a  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"  style="float: right;">
-                              <i class="fas fa-ellipsis-v"  id="y"></i>
+                              <i class="fas fa-ellipsis-v" style="color: black"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right"  >
                             <a  class="dropdown-item js-show-modal1" v-on:click="AfficheInfo(commandec.id,commandec.client_id)" 
@@ -92,7 +96,8 @@
           </button>
           <div class="p-b-30 p-l-40" >
             <h4 class="ltext-102  cl2">
-                     COMMANDE DE    @{{client.nom_client.toUpperCase()}} @{{client.prenom_client.toUpperCase()}}
+                     COMMANDE DE    @{{client.nom_client.toUpperCase()}} @{{client.prenom_client.toUpperCase()}} <img data-toggle="tooltip" title="Vous avez accepté cette commande" v-if='client.Réponse_vendeur == 0' src="{{asset('images/correct.png')}}" style="height: 40px; width: 40px; cursor: pointer;" class="m-l-5"/>
+                      <img data-toggle="tooltip" title="Vous avez refusé cette commande"v-else src="{{asset('images/incorrect.png')}}" style="height: 65px; width: 50px; cursor: pointer;" class="m-l-5"/>
 
               
             </h4>
@@ -114,7 +119,7 @@
                             <img :src="'storage/produits_image/'+ produit.image" alt="IMG" >
                           </div>
                         </div>
-                        <div class="column-2 p-l-40 p-r-40 p-t-10">@{{produit.qte}} x @{{produit.prix_total}} DA
+                        <div class="column-2 p-l-40 p-r-40 p-t-10">@{{produit.qte}} x @{{produit.prix_produit}} DA
                         </div>
                         <div class="column-2 p-l-40 ">
                           <div class="input-group mb-3 ">
@@ -175,7 +180,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-12 form-group flex-w p-b-20">
+              <div class="col-md-12 form-group flex-w p-b-20" v-if='client.address!= null'>
                 <div class="size-205 cl2 m-r-2" style="font-size: 15px;">
                         Address
                 </div>
@@ -185,13 +190,23 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-12 form-group flex-w p-b-35">
+              <div class="col-md-12 form-group flex-w p-b-35" v-if='client.code_postale!= null'>
                 <div class="size-205 cl2 m-r-2" style="font-size: 15px;">
                         Code Postale
                 </div>
                 <div class="size-219">
                   <div class="bg0">
                     <input class="form-control " type="text" :value="client.code_postale" Disabled>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12 form-group flex-w p-b-35" >
+                <div class="size-205 cl2 m-r-2" style="font-size: 15px;">
+                        Votre Repense
+                </div>
+                <div class="size-219">
+                  <div >
+                    <textarea class="form-control" disabled>@{{notif.cause}}</textarea>
                   </div>
                 </div>
               </div>
@@ -226,6 +241,7 @@
            'prV' => $prV,
            'cmd' => $cmd,
            'prixx' => $prixx,
+           'tarif' => $tarif,
            "url"      => url("/")  
       ]) !!};
 </script>
@@ -249,26 +265,18 @@ var app2 = new Vue({
       idA: 0,
       idClient:0,
     },
+    notif: [],
   
   },
 methods: {
-
-          RecuCommande: function(id){
-          	axios.put(window.Laravel.url+'/recucommande/'+id)
-              .then(response => {
-                	console.log("response",response.data);
-                  window.location.reload();
-               })
-              .catch(error => {
-                  console.log('errors : '  , error);
-             })
-          },
+,
           detaillsacommandeVendeur: function(){;
             axios.post(window.Laravel.url+'/detaillsacommandevendeur', this.detaillsA)
 
                 .then(response => {
-                     this.commandeclient2 = response.data;//detaill de commande
+                     this.commandeclient2 = response.data.commande_detaills;//detaill de commande
                      this.client = this.commandeclient2[0];
+                     this.notif = response.data.notif[0];
                 })
                 .catch(error =>{
                      console.log('errors :' , error);
@@ -294,7 +302,6 @@ methods: {
 
                               $('.js-modal1').removeClass('show-modal1');
                               app.commandeclient.forEach(key=>{
-                                console.log(key)
                                 if(key.id == commande.id && key.client_id == commande.client_id && key.vendeur_id == commande.vendeur_id){
                                   var position = app.commandeclient.indexOf(key);
                                    app.commandeclient.splice(position,1);
@@ -411,7 +418,6 @@ methods: {
 
                                 $('.js-modal1').removeClass('show-modal1');
                               app.commandeclient.forEach(key=>{
-                                console.log(key)
                                 if(key.id == commande.id && key.client_id == commande.client_id && key.vendeur_id == commande.vendeur_id){
                                   var position = app.commandeclient.indexOf(key);
                                    app.commandeclient.splice(position,1);
@@ -449,27 +455,42 @@ methods: {
                 .then(response => {
                      this.tt = window.Laravel.article.data;
                   var $x=1;
+                  var $prx = 0,$k=0;
                   this.tt.forEach(key1 =>{
 
                         for(i=0; i<window.Laravel.cmd.length  ; i++ ){
                             if(key1.id == window.Laravel.cmd[i].id){
-                               this.commandeclient.push({id: key1.id ,address:window.Laravel.cmd[i].address,date:window.Laravel.cmd[i].date,client_id:window.Laravel.cmd[i].client_id,id_cmd:$x,vendeur_id:window.Laravel.cmd[i].vendeur_id});
+                               this.commandeclient.push({id: key1.id ,address:window.Laravel.cmd[i].address,date:window.Laravel.cmd[i].date,client_id:window.Laravel.cmd[i].client_id,id_cmd:$x,vendeur_id:window.Laravel.cmd[i].vendeur_id,response:window.Laravel.cmd[i].Réponse_vendeur});
                                $x++;
                                 i = window.Laravel.cmd.length;
                             }
                        }
                      });
-                  console.log("window.Laravel.prixx",window.Laravel.prixx)
-                  console.log("window.Laravel.cmd",window.Laravel.cmd)
-                  console.log("this.tt",this.tt)
-                  console.log("this.commandeclient",this.commandeclient)
+
                   this.commandeclient.forEach(key=>{
-                     for(i=0; i<window.Laravel.prixx.length  ; i++ ){
-                            if(key.id == window.Laravel.prixx[i].id){
-                               this.commandeclient[i]['prix_total']=window.Laravel.prixx[i].PrixTotal;
-                                i = window.Laravel.prixx.length;
+                     
+                      window.Laravel.prixx.forEach(key1=>{
+                        if(key1.id == key.id && key1.client_id == key.client_id){
+                          for(i=0; i<window.Laravel.tarif.length  ; i++ ){
+                            if(key1.ville == window.Laravel.tarif[i].nom && key1.type_livraison == 'vc' ){
+                              $k++;
+                               $prx+= (key1.prix_produit * key1.qte)+window.Laravel.tarif[i].prix;
                             }
-                       }
+                            if(key1.ville == window.Laravel.tarif[i].nom && key1.type_livraison != 'vc' ){
+                              $k++;
+                               $prx+= key1.prix_produit * key1.qte;
+                            }
+                          }
+                          if($k==0){
+                            $prx+= (key1.prix_produit * key1.qte)
+                          }
+                        }
+                        
+                      })
+                     $k=0; 
+                     key['prix_total'] = $prx
+                     $prx=0;
+
                     
                   })
 

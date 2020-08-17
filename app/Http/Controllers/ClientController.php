@@ -7,13 +7,16 @@ use Illuminate\Http\Request;
 use App\Client;
 use App\Commande;
 use DB;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use App\Rules\ModifieTextDescriptionArticle;
+use App\Rules\checkPassword;
 use App\User;
 use Auth;
 use App\Favori;
+use App\Ville;
 use App\Signal;
-use App\Notification;
+use App\Notificatione;
 use App\Historique;
 use App\Vendeur;
 use App\Produit;
@@ -27,75 +30,71 @@ use App\Http\Requests\CommandeRequest;
 use App\Rules\Taille; 
 use Session;
 use Hash;
+use App\Rules\NumberExist;
+use App\Rules\EmailExist;
+use App\Rules\NumCarteBancaireExist;
 
 
 class ClientController extends Controller
 {
-      
+    public function __construct()
+    {
+        $this->middleware('logout.user');
+        $this->middleware('login.client')->only(['changePassword','profil_clinet','update_profil','get_commande_client','detaillsCommande','deleteCommande','ProduitCommande','panierDemmande','EnvoyerCommande','getProduit','addHisto','SignalerProduit','SignalerVendeur','SignalerAnnonce','SignalerEmployeur']);
+    }
     public function changePassword(Request $request){
        $request->validate([
-            'current_password' => 'required',
-            'changepassword' => 'required',
-            'new_password'      => 'required',
-]);
-
-        if(Hash::check($request->changepassword,Auth::user()->password)){
-           
-            if($request->current_password == $request->new_password)
-            {
-                   
-                \DB::table('users')->where('id',Auth::user()->id)->update(['password' => Hash::make($request->current_password)]);
-               
-                $request->validate([
-                    'current_password' => 'required|string|min:8|confirmed',
-                    'new_password'      => 'required|string|min:8|confirmed',
+            'NewPassword' => 'required|string|min:8',
+            'PasswordCurrent' => ['required',new checkPassword(null)],
+            'ConfirmPassword'      => ['required','string','min:8',new checkPassword($request->NewPassword)]
         ]);
-
-        return Response()->json(['a' => 0]);
-
-            }
-            else{
-                //$a = 1;
-                return Response()->json(['a' =>1]);
-            }
-        }
-        else{
-            //$a = 2;
-            return Response()->json(['a' => 2]);
-        }
-        
+       \DB::table('users')->where('id',Auth::user()->id)->update(['password' => Hash::make($request->NewPassword)]);
     }
 
      public function profil_clinet(){
+        if(!Auth::check()){
+            return view('page_not_found',['categorie'=>\DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get() ,'categorieE'=>\DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get()]);
+            
+        }
+        $ville = Ville::all();
         $client=Client::find(Auth::user()->id);
         $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();
         $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get(); 
         $favoris = \DB::table('produits')->get();
         $imageproduit = \DB::table('imageproduits')->get();
         $command = \DB::table('commandes')->where([ ['client_id',$client->id],['commande_envoyee',0]])->get();     
-        $prixTotale= \DB::table('commandes')->where([ ['client_id',$client->id],['id',$client->nbr_cmd]])->select(\DB::raw('sum(commandes.prix_total * commandes.qte) as prixTo'))->get();
+        $prixTotale= \DB::table('commandes')->where([ ['client_id',$client->id],['id',$client->nbr_cmd]])->select(\DB::raw('sum(commandes.prix_produit * commandes.qte) as prixTo'))->get();
         if($prixTotale[0]->prixTo == null){
                 $prixTotale[0]->prixTo = 0.00;
         }
        
-        return view('profil_clinet',['client'=>$client,'categorie'=>$categorie,'categorieE'=>$categorieE,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command,'prixTotale' => $prixTotale]);
+        return view('profil_clinet',['client'=>$client,'categorie'=>$categorie,'categorieE'=>$categorieE,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command,'prixTotale' => $prixTotale,'ville' => $ville]);
     }    
-    public function update_profil(Request $request, $id) {
+    public function update_profil(Request $request) {
                 
+        $request->validate([
+             'numeroTelephone' =>  ['required', 'string','regex:/^0[5-7][0-9]+/',"min:10","max:10", new NumberExist(1,$request->id)],
+             'email' =>['required', 'string', 'email', 'max:40', new EmailExist(1,$request->id)],
+             'nom' =>['required','regex:/[-a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
+             'prenom' =>['required','regex:/[-a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
+             'codePostal' =>['nullable','regex:/[0-9]+/', new NumCarteBancaireExist(1,$request->id)],
+             'ville' =>['required'],
+             'addresse' =>[ 'nullable','string','regex:/[-a-z0-9A-Z,."_éçè!?$àâ(){}]+/'],
+         ]);
 
-        $client = Client::find(Auth::user()->id);
-        $user = User::find(Auth::user()->id);
-        
+        $client = Client::find($request->user_id);
+        $user = User::find($request->user_id);
 
-        $client->nom = $request->input('nom');
-        $client->prenom = $request->input('prenom');
-        $client->numeroTelephone = $request->input('num_telephone');
-        $client->email = $request->input('adresse_email');
-        $client->codePostal = $request->input('code_postal'); 
-        $client->ville = $request->input('v');
+        $client->nom = $request->nom;
+        $client->prenom = $request->prenom;
+        $client->numeroTelephone = $request->numeroTelephone;
+        $client->email = $request->email;
+        $client->codePostal = $request->codePostal; 
+        $client->ville = $request->ville;
+        $client->addresse = $request->addresse;
 
-        $user->numTelephone = $request->input('num_telephone');
-        $user->email = $request->input('adresse_email');  
+        $user->numTelephone = $request->numeroTelephone;
+        $user->email = $request->email;  
         
         $client->save();
         $user->save();
@@ -103,100 +102,22 @@ class ClientController extends Controller
         return redirect('profilClient');
     }
     public function get_commande_client(){
+        if(!Auth::check()){
+            return view('page_not_found',['categorie'=>\DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get() ,'categorieE'=>\DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get()]);
+            
+        }
         $c = Client::find(Auth::user()->id);
         $article = \DB::table('commandes')
         ->where([['client_id', $c->id],['commande_envoyee',1],['CmdClientDelete',0]])
-        ->select('id')
+        ->select('id','client_id')
         ->distinct('id')
         ->paginate(5) ;
-
-        $ville=\DB::table('commandes')
-        ->where([['commandes.client_id', $c->id],['commande_envoyee', 1]])
-        ->select("ville")
-        ->groupBy('ville')
-        ->get();
-        
-        $tarif =\DB::table('commandes')
-            ->join("villes",'villes.nom','commandes.ville')
-            ->join("tarif_livraisons",'tarif_livraisons.ville_id','villes.id')
-            ->where([['commandes.client_id', $c->id],['commande_envoyee', 1]])
-            ->select('commandes.ville')
-            ->groupBy('tarif_livraisons.vendeur_id','ville')
-            ->get();
-            echo($tarif);
-        $prixx=array();
-            $i=0;$j=0;
-            foreach ($ville as $key) {
-                $tarif =\DB::table('commandes')
-                ->join("villes",'villes.nom','commandes.ville')
-                ->join("tarif_livraisons",'tarif_livraisons.ville_id','villes.id')
-                ->where([['commandes.client_id', $c->id],['commande_envoyee', 1],['commandes.ville',$key->ville]])
-                ->select('commandes.ville')
-                ->groupBy('tarif_livraisons.vendeur_id','ville')
-                ->get();
-                if(count($tarif)!=0){
-                    $i++;
-                    if($j!=0){
-                        
-                        $prix = \DB::table('commandes')
-                        ->join("villes",'villes.nom','commandes.ville')
-                        ->join("tarif_livraisons",'tarif_livraisons.ville_id','villes.id')
-                        ->where([['commandes.client_id', $c->id],['commande_envoyee', 1],['commandes.ville',$key->ville]])
-                        ->select('commandes.id',\DB::raw('sum((commandes.prix_total * commandes.qte)+tarif_livraisons.prix) as PrixTotal'))
-                        ->groupBy('commandes.id')
-                        ->orderBy('commandes.created_at','desc')
-                        ->get();
-                        
-                        array_push($prixx,$prix[0]);
-                    }
-                    else{
-                        $prix = \DB::table('commandes')
-                        ->join("villes",'villes.nom','commandes.ville')
-                        ->join("tarif_livraisons",'tarif_livraisons.ville_id','villes.id')
-                        ->where([['commandes.client_id', $c->id],['commande_envoyee', 1],['commandes.ville',$key->ville]])
-                        ->select('commandes.id',\DB::raw('sum((commandes.prix_total * commandes.qte)+tarif_livraisons.prix) as PrixTotal'))
-                        ->groupBy('commandes.id','tarif_livraisons.vendeur_id')
-                        ->orderBy('commandes.created_at','desc')
-                        ->get()
-                        ->toArray();
-
-                        array_push($prixx,$prix[0]);
-                    }
-                   
-               
-               }
-                else{
-                    $j++;
-                    if($i!=0){
-                        $prix = \DB::table('commandes')
-                        ->where([['commandes.client_id', $c->id],['commande_envoyee', 1],['commandes.ville',$key->ville]])
-                        ->select(\DB::raw('sum(commandes.prix_total * commandes.qte) as PrixTotal'),'commandes.id')
-                        ->groupBy('id')
-                        ->orderBy('created_at','desc')
-                        ->get();
-                        
-                        array_push($prixx,$prix[0]);
-                    }
-                    else{
-                         $prix = \DB::table('commandes')
-                        
-                        ->where([['commandes.client_id', $c->id],['commande_envoyee', 1],['commandes.ville',$key->ville]])
-                        ->select(\DB::raw('sum(commandes.prix_total * commandes.qte) as PrixTotal'),'commandes.id')
-                        ->groupBy('id')
-                        ->orderBy('created_at','desc')
-                        ->get()
-                        ->toArray();
-                        array_push($prixx,$prix[0]);
-                    } 
-
-                    
-                }
-
-            }
+           
         $cmd =\DB::table('commandes')
-        ->select('commandes.*',\DB::raw('DATE(commandes.created_at) as date'))->get() ;     
+        ->select('commandes.*',\DB::raw('DATE(commandes.created_at) as date'))
+        ->get() ;     
         
-        $prixTotale= \DB::table('commandes')->where([ ['client_id',$c->id],['id',$c->nbr_cmd]])->select(\DB::raw('sum(commandes.prix_total * commandes.qte) as prixTo'))->get();
+        $prixTotale= \DB::table('commandes')->where([ ['client_id',$c->id],['id',$c->nbr_cmd]])->select(\DB::raw('sum(commandes.prix_produit * commandes.qte) as prixTo'))->get();
         if($prixTotale[0]->prixTo == null){
                 $prixTotale[0]->prixTo = 0.00;
         }
@@ -206,7 +127,7 @@ class ClientController extends Controller
         $imageproduit = \DB::table('imageproduits')->get();
         $command = \DB::table('commandes')->where([ ['client_id',$c->id],['commande_envoyee',0]])->get();     
         
-        return view('commande_client',['article'=>$article, 'idAdmin' => $c->id,'categorie'=>$categorie,'categorieE'=>$categorieE, 'cmd' =>$cmd,'client' =>$c,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command,'prixTotale' => $prixTotale,'prixx'=>$prixx]);
+        return view('commande_client',['article'=>$article, 'idAdmin' => $c->id,'categorie'=>$categorie,'categorieE'=>$categorieE, 'cmd' =>$cmd,'client' =>$c,'ImageP' => $imageproduit, 'Fav' => $favoris,'command' => $command,'prixTotale' => $prixTotale]);
     } 
     public function detaillsCommande(Request $request){
         $clientCnncte = Client::find(Auth::user()->id);
@@ -216,10 +137,18 @@ class ClientController extends Controller
         ->join('imageproduits','imageproduits.produit_id', '=', 'commandes.produit_id')
         ->join('colors','colors.id', '=', 'commandes.couleur_id')
         ->join('vendeurs','vendeurs.id', '=', 'commandes.vendeur_id')
+        ->distinct('produits.id')
         ->select('colors.nom', 'imageproduits.produit_id', 'imageproduits.image', 'imageproduits.profile', 'commandes.email','commandes.address', 'commandes.code_postale', 'commandes.numero_tlf', 'clients.ville', 'produits.Libellé', 'produits.prix', 'produits.vendeur_id', 'commandes.*', 'vendeurs.Nom as nom_vendeur', 'vendeurs.Prenom as prenom_vendeur')
         ->where([['commandes.client_id', $clientCnncte->id],['commandes.id', $request->idA],['imageproduits.profile',1]])
         ->get();
-        return  $commande_detaills;
+
+        $type = \DB::table('tarif_livraisons')
+        ->join('villes', 'villes.id', '=', 'tarif_livraisons.ville_id')
+        ->where('nom',$commande_detaills[0]->ville)
+        ->select('nom','prix','vendeur_id')
+        ->get();
+       
+        return  ['cmd'=>$commande_detaills,'type_prix'=>$type];
     }
 
     public function deleteCommande($id){
@@ -264,7 +193,7 @@ class ClientController extends Controller
                                 $commande->client_id = $client->id;
                                 $commande->vendeur_id = $request->vendeur_id;
                                 $commande->produit_id = $request->produit_id; 
-                                $commande->prix_total = $request->prix;
+                                $commande->prix_produit = $request->prix;
                                 $commande->qte = $request->qte;
                                 $commande->type_livraison = $request->type_livraison;
                                 $commande->couleur_id = $request->couleur_id;
@@ -283,7 +212,7 @@ class ClientController extends Controller
                                         $commande->client_id = $client->id;
                                         $commande->vendeur_id = $request->vendeur_id;
                                         $commande->produit_id = $request->produit_id; 
-                                        $commande->prix_total = $request->prix;
+                                        $commande->prix_produit = $request->prix;
                                         $commande->qte = $request->qte;
                                         $commande->type_livraison = $request->type_livraison;
                                         $commande->couleur_id = $request->couleur_id;
@@ -309,15 +238,44 @@ class ClientController extends Controller
 
         
     }
-    public function ProduitCommande(){
+
+    public function checkTextarea(Request $request){
+        return $request->validate([
+                'text' =>['required','string','min:5']
+            ]);
+    }
+    public function getTarifCommande(Request $request){
         $clientCnncte = Client::find(Auth::user()->id);
+        $tarif = \DB::table('commandes')
+        ->join('tarif_livraisons','tarif_livraisons.vendeur_id', '=', 'commandes.vendeur_id')
+        ->join('villes','villes.id', '=', 'tarif_livraisons.ville_id')
+        ->where([['commandes.client_id', $clientCnncte->id],['commandes.id', $clientCnncte->nbr_cmd],['tarif_livraisons.ville_id',$request->id]])
+        ->distinct('commandes.vendeur_id')
+        ->select('tarif_livraisons.prix','tarif_livraisons.ville_id','commandes.vendeur_id','commandes.prix_produit','commandes.qte','couleur_id','taille','type_livraison','commandes.produit_id','villes.nom')
+        ->get();
+         $type = \DB::table('tarif_livraisons')
+        ->join('villes', 'villes.id', '=', 'tarif_livraisons.ville_id')
+        ->where('nom',$tarif[0]->nom)
+        ->select('nom','prix','vendeur_id')
+        ->get();
+       
+        return  ['tarif' => $tarif,'type_prix'=>$type];
+       
+    }
+
+    public function ProduitCommande(){
+        if(!Auth::check()){
+            return view('page_not_found',['categorie'=>\DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get() ,'categorieE'=>\DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get()]);
+            
+        }
+        $clientCnncte = Client::find(Auth::user()->id);       
         $produitCmds = \DB::table('commandes')
-        ->join('produits', 'produits.id', '=', 'commandes.produit_id')
+        ->join('produits', 'produits.id', '=', 'commandes.produit_id')        
         ->join('clients','clients.id', '=', 'commandes.client_id')
         ->join('imageproduits','imageproduits.produit_id', '=', 'commandes.produit_id')
         ->join('colors','colors.id', '=', 'commandes.couleur_id')
         ->join('vendeurs','vendeurs.id', '=', 'commandes.vendeur_id')
-        ->select('colors.nom', 'imageproduits.produit_id', 'imageproduits.image', 'imageproduits.profile','clients.ville', 'produits.Libellé', 'produits.prix', 'produits.vendeur_id', 'commandes.*', 'vendeurs.Nom as nom_vendeur', 'vendeurs.Prenom as prenom_vendeur',DB::raw('(commandes.prix_total * commandes.qte) as prixTo'))
+        ->select('colors.nom', 'imageproduits.produit_id', 'imageproduits.image', 'imageproduits.profile','clients.ville', 'produits.Libellé', 'produits.prix', 'produits.vendeur_id', 'commandes.*', 'vendeurs.Nom as nom_vendeur', 'vendeurs.Prenom as prenom_vendeur',DB::raw('(commandes.prix_produit * commandes.qte) as prixTo'))
         ->where([['commandes.client_id', $clientCnncte->id],['commandes.id', $clientCnncte->nbr_cmd],['imageproduits.profile',1]])
         ->get();
         $villes = \DB::table('villes')->get();
@@ -346,53 +304,69 @@ class ClientController extends Controller
         ->join('imageproduits','imageproduits.produit_id', '=', 'commandes.produit_id')
         ->join('colors','colors.id', '=', 'commandes.couleur_id')
         ->join('vendeurs','vendeurs.id', '=', 'commandes.vendeur_id')
-        ->select('colors.nom', 'imageproduits.produit_id', 'imageproduits.image', 'imageproduits.profile','clients.ville', 'produits.Libellé', 'produits.prix', 'produits.vendeur_id', 'commandes.*', 'vendeurs.Nom as nom_vendeur', 'vendeurs.Prenom as prenom_vendeur',DB::raw('(commandes.prix_total * commandes.qte) as prixTo'))
+        ->select('colors.nom', 'imageproduits.produit_id', 'imageproduits.image', 'imageproduits.profile','clients.ville', 'produits.Libellé', 'produits.prix', 'produits.vendeur_id', 'commandes.*', 'vendeurs.Nom as nom_vendeur', 'vendeurs.Prenom as prenom_vendeur',DB::raw('(commandes.prix_produit * commandes.qte) as prixTo'))
         ->where([['commandes.client_id', $clientCnncte->id],['commandes.id', $clientCnncte->nbr_cmd],['imageproduits.profile',1]])
         ->get();
         $prixT = \DB::table('commandes')
         ->join('clients','clients.id', '=', 'commandes.client_id')
-        ->select(DB::raw('sum(commandes.prix_total * commandes.qte) as prixTo'))
+        ->select(DB::raw('sum(commandes.prix_produit * commandes.qte) as prixTo'))
         ->where([['commandes.client_id', $clientCnncte->id],['commandes.id', $clientCnncte->nbr_cmd]])
         ->get();
         if($prixT[0]->prixTo == null){
             $prixT[0]->prixTo  = "0.00";
         }
-
+        
+       
         return  ['produitCmds' => $produitCmds, 'prixT' => $prixT];
     } 
 
 
     public function AjoutAuFavoris($id){
-
-        $clientCnncte = Client::find(Auth::user()->id);// njibo l client di ra connecter
-        $favexiste = \DB::table('favoris')->where([['produit_id',$id],["client_id", $clientCnncte->id]])->get();
-        if(count($favexiste) == 0){
-            $favoris = new Favori;
-            $favoris->produit_id = $id;//$id howa l id ta3 produit
-            $favoris->client_id = $clientCnncte->id;
-            $favoris->save();
-            return ['etat' => "add"];
+        if(!auth()->check()){
+            return ['etat' => "notConncted"];
+        }
+        if(Auth::user()->type_compte =='c'){
+            $clientCnncte = Client::find(Auth::user()->id);// njibo l client di ra connecter
+            $favexiste = \DB::table('favoris')->where([['produit_id',$id],["client_id", $clientCnncte->id]])->get();
+            if(count($favexiste) == 0){
+                $favoris = new Favori;
+                $favoris->produit_id = $id;//$id howa l id ta3 produit
+                $favoris->client_id = $clientCnncte->id;
+                $favoris->save();
+                return ['etat' => "add"];
+            }
+            else{
+                $favoris = \DB::table('favoris')->where('produit_id', $id)->delete();
+                return ['etat' => "remove"];
+            }
         }
         else{
-            $favoris = \DB::table('favoris')->where('produit_id', $id)->delete();
-            return ['etat' => "remove"];
+            return ['etat' => "notClient"];
         }
     }
 
     public function AjoutAuFavorisE($id){
 
-        $clientCnncte = Client::find(Auth::user()->id);// njibo l client di ra connecter
-        $favexiste = \DB::table('favoris')->where([['annonce_emploi_id',$id],["client_id", $clientCnncte->id]])->get();
-        if(count($favexiste) == 0){
-            $favoris = new Favori;
-            $favoris->annonce_emploi_id = $id;//$id howa l id ta3 produit
-            $favoris->client_id = $clientCnncte->id;
-            $favoris->save();
-            return ['etat' => "add"];
+        if(!auth()->check()){
+            return ['etat' => "notConncted"];
+        }
+        if(Auth::user()->type_compte =='c'){
+            $clientCnncte = Client::find(Auth::user()->id);// njibo l client di ra connecter
+            $favexiste = \DB::table('favoris')->where([['annonce_emploi_id',$id],["client_id", $clientCnncte->id]])->get();
+            if(count($favexiste) == 0){
+                $favoris = new Favori;
+                $favoris->annonce_emploi_id = $id;//$id howa l id ta3 produit
+                $favoris->client_id = $clientCnncte->id;
+                $favoris->save();
+                return ['etat' => "add"];
+            }
+            else{
+                $favoris = \DB::table('favoris')->where('annonce_emploi_id', $id)->delete();
+                return ['etat' => "remove"];
+            }
         }
         else{
-            $favoris = \DB::table('favoris')->where('annonce_emploi_id', $id)->delete();
-            return ['etat' => "remove"];
+            return ['etat' => "notClient"];
         }
     }
  
@@ -412,6 +386,7 @@ class ClientController extends Controller
             ]);
        }
        else if($request->nonCode != 1 && $request->nonAddresse == 1){
+            $request->code_postale = null;
             $request->validate([
              'numero_tlf' => ['required', 'string', 'max:10', 'min:10','regex:/^0[5-7]+/'],
              'email' => ['required', 'string','email'],
@@ -420,6 +395,7 @@ class ClientController extends Controller
             ]);
        }
        else if($request->nonCode == 1 && $request->nonAddresse != 1){
+            $request->address = null;
             $request->validate([
              'numero_tlf' => ['required', 'string', 'max:10', 'min:10','regex:/^0[5-7]+/'],
              'email' => ['required', 'string','email'],
@@ -428,6 +404,8 @@ class ClientController extends Controller
             ]);
        }
        else if($request->nonCode != 1 && $request->nonAddresse != 1){
+            $request->address = null;
+            $request->code_postale = null;
             $request->validate([
              'numero_tlf' => ['required', 'string', 'max:10', 'min:10','regex:/^0[5-7]+/'],
              'email' => ['required', 'string','email'],
@@ -440,11 +418,10 @@ class ClientController extends Controller
        
         $commandes = \DB::table('commandes')->get();
        
-        foreach($commandes as $cmd){
-            \DB::table('commandes')->where([ ['client_id',$clientCnncte->id],['id','=',$clientCnncte->nbr_cmd]])->
-            update(['email'=> $request->email ,
-            'numero_tlf' => $request->numero_tlf, 'code_postale' => $request->code_postale, 'commande_envoyee' =>1,
-             'ville' =>$request->ville,'address' =>$request->address]);}
+       
+        \DB::table('commandes')->where([ ['client_id',$clientCnncte->id],['id','=',$clientCnncte->nbr_cmd]])->
+        update(['email'=> $request->email ,'numero_tlf' => $request->numero_tlf, 'code_postale' => $request->code_postale, 'commande_envoyee' =>1,'ville' =>$request->ville,'address' =>$request->address,'prix_totale'=>$request->prix_totale]);
+        
 
 
         $clientCnncte->nbr_cmd =$clientCnncte->nbr_cmd+1;
@@ -460,6 +437,10 @@ class ClientController extends Controller
     }
 
     public function getProduit(){
+        if(!Auth::check()){
+            return view('page_not_found',['categorie'=>\DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get() ,'categorieE'=>\DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get()]);
+            
+        }
         $clientCnncte = Client::find(Auth::user()->id);
         $favoris = \DB::table('produits')
         ->join('favoris','favoris.produit_id','=','produits.id')
@@ -495,14 +476,6 @@ class ClientController extends Controller
         $histoProd->save();
         return $histoProd;
     }
-    /*public function AnnonceAuFavoris($id){
-        $clientCnncte = Client::find(Auth::user()->id);
-        $annonce = new Favori;
-        $annonce->annonce_emploi_id = $id;//$id howa l id ta3 annonce
-        $annonce->client_id = $clientCnncte->id;
-        $annonce->save();
-        return $annonce;
-    }*/
 
     public function EnvoyerDemande(Request $request){
         
@@ -516,7 +489,7 @@ class ClientController extends Controller
              'nom_Prenom' => ['required','string','max:60'],
              'tlf' => ['required','string','min:10','max:10','regex:/^0[5-7][0-9]+/'],
              'email' => ['required','email'],
-             'cv' => ['required'],
+             'cv' => ['required','mimes:pdf,jpeg,png,gif,text,doc,xls,ppt,text,jfif,pjpeg,pjp'],
             ]);
             $employeur = \DB::table('annonce_emploies')->where('id',$request->annonceE_id)->select('employeur_id')->get();
                $exploded = explode(',', $request->cv);
@@ -562,9 +535,9 @@ class ClientController extends Controller
                 $demande->annonceE_id = $request->annonceE_id;
                 $demande->employeur_id = $employeur[0]->employeur_id;
                 $demande->cv_client = $fileName;
-                $demande->nom_Prenom = $client->nom.' '.$client->prenom;
-                $demande->numeroTlf = $client->numeroTelephone;
-                $demande->email = $client->email;
+                $demande->nom_Prenom = $request->nom_Prenom;
+                $demande->numeroTlf = $request->tlf;
+                $demande->email = $request->email;
                 $demande->save();
                return Response()->json(['etat' => true, 'cncte' => true,'demandeExiste' => false]);
         }
@@ -589,96 +562,54 @@ class ClientController extends Controller
     
         $clientCnncte = Client::find(Auth::user()->id);
         $produit = \DB::table('produits')->where('id',$id)->get();
-    
-       
-            $signal = new Signal;
-            $signal->produit_id = $id;
-            $signal->client_id = $clientCnncte->id;
-            $signal->nomProduit = $produit[0]->Libellé;
-            $signal->save();
-            
-            $signalsproduit= \DB::table('signals')->where('produit_id',$id)->get();
-        
-        if(count($signalsproduit) === 3){
-                 $notif = new Notification;
-                 $notif->vendeur_id  = $produit[0]->vendeur_id;
-                 $notif->nomProduit   =  $produit[0]->Libellé;
-                 $notif->save();
-    
-                \DB::table('produits')->where('id', $id)->delete();
-            return ['etat' => "remove"];
-            
-        }
+        \DB::table('produits')->where('id',$id)->increment('nbr_signal');
+        $signal = new Signal;
+        $signal->produit_id = $id;
+        $signal->client_id = $clientCnncte->id;
+        $signal->save();
+        return ['etat' => "remove"];
+ 
     }
     
     public function SignalerVendeur($id){
     
         $clientCnncte = Client::find(Auth::user()->id);
+        $signal = new Signal;
+        $signal->vendeur_id = $id;
+        $signal->client_id = $clientCnncte->id;
+        $signal->save();
+        \DB::table('vendeurs')->where('id',$id)->increment('Nbre_signal');
+        \DB::table('vendeurs')->where([['id',$id],['Nbre_signal','>','5']])->update(['deleted_at' =>Carbon::now()]);
+
         
-    
-       
-            $signal = new Signal;
-            $signal->vendeur_id = $id;
-            $signal->client_id = $clientCnncte->id;
-            
-            $signal->save();
-            
-            $signalsvendeur= \DB::table('signals')->where('vendeur_id',$id)->get();
-        
-        if(count($signalsvendeur) === 5){
-            \DB::table('vendeurs')->where([['id',$id]])->update(['deleted_at' => new \dateTime]);
-            
-            return ['etat' => "remove"];
-            
-        }
+        return ['etat' => "remove"];
     }
     
     public function SignalerAnnonce($id){
     
         $clientCnncte = Client::find(Auth::user()->id);
         $annonce = \DB::table('annonce_emploies')->where('id',$id)->get();
-    
-       
-            $signal = new Signal;
-            $signal->annonce_emploi_id = $id;
-            $signal->client_id = $clientCnncte->id;
-            $signal->nomAnnonce = $annonce[0]->libellé;
-            $signal->save();
-            $signalsannonce= \DB::table('signals')->where('annonce_emploi_id',$id)->get();
+        \DB::table('annonce_emploies')->where('id',$id)->increment('nbr_signal');
+        $signal = new Signal;
+        $signal->annonce_emploi_id = $id;
+        $signal->client_id = $clientCnncte->id;
+        $signal->save();
         
-        if(count($signalsannonce) === 3){
-                 $notif = new Notification;
-                 $notif->employeur_id  = $annonce[0]->employeur_id;
-                 $notif->nomAnnonce   =  $annonce[0]->libellé;
-                 $notif->save();
-    
-                \DB::table('annonce_emploies')->where('id', $id)->delete();
-            return ['etat' => "remove"];
-            
-        }
+        return ['etat' => "remove"];
     }
     
     public function SignalerEmployeur($id){
     
         $clientCnncte = Client::find(Auth::user()->id);
-        
-    
-       
-            $signal = new Signal;
-            $signal->employeur_id = $id;
-            $signal->client_id = $clientCnncte->id;
-            
-            $signal->save();
-            
-            $signalsemployeur= \DB::table('signals')->where('employeur_id',$id)->get();
-        
-        if(count($signalsemployeur) === 5){
-            \DB::table('employeurs')->where([['id',$id]])->update(['deleted_at' => new \dateTime]);
-            
-            return ['etat' => "remove"];
-            
-        }
+        $signal = new Signal;
+        $signal->employeur_id = $id;
+        $signal->client_id = $clientCnncte->id;
+        $signal->save();
+        \DB::table('employeurs')->where('id',$id)->increment('Nbre_signal');
+        \DB::table('employeurs')->where([['id',$id],['Nbre_signal','>','5']])->update(['deleted_at' =>Carbon::now()]);    
+
+        return ['etat' => "remove"];
     }
     
-    }
+}
     

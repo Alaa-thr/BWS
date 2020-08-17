@@ -1,3 +1,4 @@
+
 .header-cart {
   position: fixed;
   z-index: 1100;
@@ -3868,3 +3869,10 @@ margin-bottom: 10%;}
     margin-top: -12%;
     margin-left: 88%;
   }
+
+#txt{
+  color:black;
+  font-size: 15px; 
+  font-weight: 600;
+  font-style: italic;
+}

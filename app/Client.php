@@ -13,8 +13,7 @@ class Client extends Model
         'user_id','nom','prenom','ville','email','codePostal','numeroTelephone',
         'image','nbr_cmd','created_at','updated_at','deletedc','deleted_at'
     ];
-    use SoftDeletes;
-    protected $dates= ['deleted_at'];
+
     public function client()
     {
         return $this->belongsTo('App\Client');

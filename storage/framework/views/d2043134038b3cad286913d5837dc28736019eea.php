@@ -59,7 +59,7 @@
                         </div>
 
                         <div class="header-cart-item-txt p-t-8"  v-for="fv in favoriss" v-if="fv.id === command.produit_id" >
-                            <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
+                            <a class="header-cart-item-name m-b-18 hov-cl1 trans-04">
                             {{fv.Libellé}}
                             </a>
 
@@ -110,9 +110,33 @@
 		<div class="container" >
 			<div class="flex-w flex-sb-m p-b-52" id="app122">
 				<div class="flex-w flex-c-m m-tb-5">
-			        <div class=" respon6-next" style="width: 230px;">
+			        <div v-if="'<?php echo URL::current() ?>'.indexOf('http://localhost:8000/shop/search_categorie=1') == -1" class=" respon6-next" style="width: 230px;">
 			            <div class="rs1-select2 bor8 bg0" >
-			            	
+				            	<select class="js-select2" onchange="window.location.href = this.options[this.selectedIndex].value" name='sousCategorie'>
+									<?php if($url == "shop/search_categorie={id}"): ?>
+					                	<option value="0" disabled selected>Sous-Categorie</option>
+					                <?php else: ?>
+
+					                	<option value="0" disabled selected>{{NameSousCategorie}}</option>
+					                <?php endif; ?>
+									<?php $__currentLoopData = $sousC; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sc): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+	
+									<option type="submit" value="/shop/search_categorie=<?php echo($sc->categorie_id)?>/sous-categorie=<?php echo($sc->id)?>">
+											<?php echo e($sc->libelle); ?>
+
+										</option>
+
+										
+									<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+						                	
+				            	</select>
+				                <div class="dropDownSelect2"></div>
+			                
+				        
+			            </div>
+					</div>
+					<div v-else class=" respon6-next" style="width: 230px;">
+			            <div class="rs1-select2 bor8 bg0" >
 				            	<select class="js-select2" onchange="window.location.href = this.options[this.selectedIndex].value" name='sousCategorie'>
 									<?php if($url == "shop/search_categorie={id}"): ?>
 					                	<option value="0" disabled selected>Sous-Categorie</option>
@@ -136,6 +160,7 @@
 				        
 			            </div>
 					</div>
+				
 					<?php if(strpos($url, 'sous-categorie')): ?>
 			        <div class="m-l-25 respon6-next" style="width: 230px;">
 						<div class="rs1-select2 bor8 bg0" >
@@ -237,7 +262,7 @@
 				                <div class="dropDownSelect2"></div>
 				            <?php elseif(strpos($url, 'taille')== FALSE && (strpos($url, 'prix')!=FALSE || strpos($url, 'couleur')!=FALSE) && (strpos($url, 'ville')!=FALSE || strpos($url, 'type_livraison')!=FALSE)): ?>
 				            	<select class="js-select2" onchange="window.location.href = this.options[this.selectedIndex].value" >
-					                <option value="0" disabled selected>Taille Pour Vetement</option>
+					                <option value="0" disabled selected>Les Tailles</option>
 
 					                <option  value="<?php echo deleteFrom_url('taille','S')?>">S</option>
 	                        		<option  value="<?php echo deleteFrom_url('taille','M')?>">M</option>
@@ -255,7 +280,7 @@
 				                <div class="dropDownSelect2"></div>
 				            <?php elseif(strpos($url, 'taille')!= FALSE  && (strpos($url, 'ville')!=FALSE || strpos($url, 'type_livraison')!=FALSE)): ?>
 				                <select class="js-select2" onchange="window.location.href = this.options[this.selectedIndex].value" >
-					                <option value="0" disabled selected>Taille Pour Vetement</option>
+					                <option value="0" disabled selected>Les Tailles</option>
 
 					                <option value="/shop/search_categorie=<?php echo e(request()->route('id')); ?>/sous-categorie=<?php echo e(request()->route('id1')); ?>/taille=S">S</option>
 	                        		<option value="/shop/search_categorie=<?php echo e(request()->route('id')); ?>/sous-categorie=<?php echo e(request()->route('id1')); ?>/taille=M">M</option>
@@ -293,7 +318,7 @@
 			                <?php else: ?>
 			                	<select class="js-select2" onchange="window.location.href += this.options[this.selectedIndex].value" >
 									
-					                <option value="0" disabled selected>Taille Pour Vetement</option>
+					                <option value="0" disabled selected>Les Tailles</option>
 
 					                <option  value="/taille=S">S</option>
 	                        		<option  value="/taille=M">M</option>
@@ -315,9 +340,6 @@
 					<div class="m-l-25 respon6-next" style="width: 230px;">
 						<div class="rs1-select2 bg0" >
 			            	<h5>Prix: <span id="demo"></span>DA</h5>
-			            	<!--<form id="percent" action="/shop/search_categorie=<?php echo e(request()->route('id')); ?>/sous-categorie=<?php echo e(request()->route('id1')); ?>/prix=10" method="GET">
-  							<input type="range"  min="<?php echo $priceMin ?>" max="<?php echo $priceMax ?>" value="0" style="width: 230px;" oninput='document.getElementById("percent").submit();'>
-				            </form>-->
 							<?php if(strpos($url, 'prix')!= FALSE && strpos($url, 'couleur')==FALSE && strpos($url, 'taille')==FALSE): ?>
 								
 				                <input type="range" id="myRange" min="<?php echo $priceMin ?>" max="<?php echo $priceMax ?>" :value="NamePrix" style="width: 230px;" oninput="updateRange()" onchange="window.location.href = '/shop/search_categorie=<?php echo e(request()->route('id')); ?>/sous-categorie=<?php echo e(request()->route('id1')); ?>/prix='+this.value;">
@@ -430,7 +452,7 @@
 
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l ">
-								<a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+								<a class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 									<?php echo e($prdt->Libellé); ?>
 
 								</a>
@@ -489,7 +511,19 @@
 			                <button class="how-pos3 hov3 trans-04 " v-on:click="CancelArticle()" >
 			                    <img src="<?php echo e(asset('images/icons/icon-close.png')); ?>" alt="CLOSE">
 			                </button>
-
+			                <?php if(Auth::check() && Auth::user()->type_compte == 'c'): ?>
+			                <div class="col-md-12">
+                               <div class="dropdown" style="float: right;" >
+                                      <a data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#"  >
+                                        <img src="<?php echo e(asset('assetsAdmin/img/menu.png')); ?>" /> 
+                                      </a>
+                                      <div class="dropdown-menu dropdown-menu-right " >
+                                        <a  v-on:click="SignalerProduit(detaillproduit)"  class="dropdown-item js-show-modal1 m-b-10" style="color: red; font-style: italic; font-weight: 600; cursor: pointer;">   Signaler Produit</a>
+                                        <a class="dropdown-item" v-on:click="SignalerVendeur(detaillproduit)"style="color: red; font-style: italic; font-weight: 600; cursor: pointer;">Signaler Vendeur</a>
+                                       </div>
+                                </div> 
+                            </div>
+                            <?php endif; ?>
 			                <div class="row">
 			                    <div class="col-md-6 col-lg-7 p-b-30">
                                     <div class="p-l-25 p-r-30 p-lr-0-lg">
@@ -504,7 +538,7 @@
                                                 <div class="item-slick3" >
                                                     <div class="wrap-pic-w">
 
-                                                        <img v-for="img in getImageD" v-if="img.profile==1" :src="getPicture(img.image)" alt="IMG-PRODUCT" id="pic"/>
+                                                        <img v-for="img in getImageD" v-if="img.profile==1" :src="getPicture(img.image)" alt="IMG-PRODUCT" id="pic" style="height: 600px"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -531,6 +565,16 @@
 			                               Vendeur&nbsp:<b>&nbsp&nbsp{{this.detaillproduit.Nom}} &nbsp{{this.detaillproduit.Prenom}}</b>.</span>
 			                           		
 			                            </p>
+			                            <p class="stext-102 cl3 p-t-2 " >
+                                            <span >
+                                           Boutique&nbsp:<b>&nbsp&nbsp{{this.detaillproduit.Nom_boutique}}</b></span>
+                                            
+                                        </p>
+                                        <p class="stext-102 cl3 p-t-2" >
+                                            <span >
+                                           Adresse Boutique&nbsp:<b>&nbsp&nbsp{{this.detaillproduit.Addresse}}</b></span>
+                                            
+                                        </p>
 			                            <!--  -->
 			                            <div class="p-t-33">
 			                                <div v-show="tailleExiste" class="flex-w flex-r-m p-b-10">
@@ -613,19 +657,7 @@
 				                                            Annuler
 				                                        </button>
 			                                        </div>
-													<div class=""  style="margin-top:-330%;" >
-      <a class="f" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#"   style="  margin-left: 335px;">
-        <i class="fas fa-ellipsis-v"  id="y" style="color: black"></i>
-       </a>
-      <div class="dropdown-menu " x-placement="right-start" id="divSignal">
-                    <a    v-on:click="SignalerProduit(detaillproduit.id)"  class="dropdown-item js-show-modal1" 
-      style="color: #0074d9; font-style: italic; font-weight: 900; cursor: pointer;" >   Signaler Produit</a>
-                    <a class="dropdown-item" v-on:click="SignalerVendeur(detaillproduit.vendeur_id)"
-    style="color: #0074d9; font-style: italic; font-weight: 900; cursor: pointer;">
-    Signaler Vendeur</a>
-       </div>
-      
-    </div>    					
+													    					
 														
 			                                    </div>
 
@@ -645,12 +677,7 @@
 				
 			</div>
 
-			<!-- Load more -->
-			<div class="flex-c-m flex-w w-full p-t-45">
-				<a href="#" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
-					Load More
-				</a>
-			</div>
+
 		</div>
 	</div>
 
@@ -720,10 +747,11 @@
 	}
 	function initialiser(){
 		
-		document.getElementById("tttt").options.selectedIndex = 0;
-		document.getElementById("cccc").options.selectedIndex = 0;
+		
 		document.getElementById("qtee").value = 0;
-		document.getElementById("TLTLTL").options.selectedIndex = 0;
+		$('.TLTLTL').val('0').trigger('change');
+    	$('.cccc').val('0').trigger('change');
+    	$('.tttt').val('0').trigger('change');
 	}
 	function changePic(img){
         document.getElementById("pic").src = 'http://localhost:8000/storage/produits_image/'+img;
@@ -862,27 +890,41 @@
         changePicVue(img){
             changePic(img);
         },
-		SignalerVendeur: function(id){
-          	axios.post(window.Laravel.url+'/signalervendeur/'+id)
+		SignalerVendeur: function(produit){
+          	axios.post(window.Laravel.url+'/signalervendeur/'+produit.vendeur_id)
               .then(response => {
+              	
 				Swal.fire(
-					  "Signal est fait avec success!",
-					);
+					  "Signale du vendeur "+produit.Nom+' '+produit.Prenom+" est fait avec succès!",
+					  "Vous ne vais pas voir ses produits",
+					  'success'
+					).then((result) => {
+					  if (result.value) {
+					    window.location.reload();
+					  }
+					})
 					$('.js-modal1').removeClass('show-modal1');
-                	console.log("response",response.data)
+                	
                })
               .catch(error => {
                   console.log('errors : '  , error);
              })
           },
-		SignalerProduit: function(id){
-          	axios.post(window.Laravel.url+'/signalerproduit/'+id)
+		SignalerProduit: function(produit){
+          	axios.post(window.Laravel.url+'/signalerproduit/'+produit.id)
               .then(response => {
+
 				Swal.fire(
-					  "Signal est fait avec success!",
-					);
+					  "Signal est fait avec succès!",
+					  'Vous ne vais pas voir ce produit',
+					  'success'
+					).then((result) => {
+					  if (result.value) {
+					    window.location.reload();
+					  }
+					})
 					$('.js-modal1').removeClass('show-modal1');
-                	console.log("response",response.data)
+                	
                })
               .catch(error => {
                   console.log('errors : '  , error);
@@ -1070,7 +1112,47 @@
           AjoutAuFavoris: function(produit){
 				axios.post(window.Laravel.url+'/ajoutaufavoris/'+produit.id)
 	              .then(response => {
-	              		if(response.data.etat == "add"){
+	              	if(response.data.etat == "notConncted"){
+							Swal.fire({
+							  icon: 'error',
+							  title: 'Oops...',
+							  html: 'Vous devez être connecté tent que <b style="text-decoration: underline;">Client</b> pour pouvez accedé a votre panier.',
+							  footer: '<form method="GET" action="<?php echo e(route("logoutregister")); ?>"><?php echo csrf_field(); ?><a href="<?php echo e(route("logoutregister")); ?>">Créer Compte</a></form>',
+							  showCancelButton: true,
+						  	  cancelButtonColor: '#d33',
+							  confirmButtonColor: '#13c940',
+							  confirmButtonText:
+							    'Se Connecter',
+							}).then((result) => {
+								if (result.value){
+										$('.js-panel-connect').addClass('show-header-cart');
+								}
+								 
+							});
+               	 		}
+	              		else if(response.data.etat == "notClient"){
+							Swal.fire({
+							  icon: 'error',
+							  title: 'Oops...',
+							  html: 'Vous devez être connecté tent que <b style="text-decoration: underline;">Client</b> pour pouvez accedé a votre panier.',
+							  footer: '<form method="GET" action="<?php echo e(route("logoutregister")); ?>"><?php echo csrf_field(); ?><a href="<?php echo e(route("logoutregister")); ?>">Créer Compte</a></form>',
+							  showCancelButton: true,
+							  cancelButtonColor: '#d33',
+							  confirmButtonColor: '#13c940',
+							  confirmButtonText:
+							    'Se Connecter',
+							}).then((result) => {
+								if (result.value){							
+									axios.post(window.Laravel.url+'/logout')
+		              				.then(response => {
+		              						  window.location.href = '/accueil';
+		              				})
+		              				.catch(error => {console.log("error",error)})
+								}
+							 
+							});
+               	 		}
+	              		else if(response.data.etat == "add"){
 							swal(produit.Libellé, "a été ajouté au liste de favoris.", "success");
 							adde(produit.id);
                	 		}
@@ -1121,12 +1203,7 @@
       },
       methods:{
           selectSousC: function(){
-          	console.log(window.Laravel.NameSousCategorie);
-          	console.log('color',window.Laravel.NameColor);
-          	console.log('taille',window.Laravel.NameTaille);
-          	console.log('prix',window.Laravel.NamePrix);
-          	console.log('ville',window.Laravel.NameVille);
-          	console.log('typeL',window.Laravel.NameTypeL);
+          	console.log('window.Laravel.NameTaille',window.Laravel.NameTaille)
        		if(window.Laravel.NameSousCategorie !=0){
        		 	this.NameSousCategorie =window.Laravel.NameSousCategorie[0].libelle;
        		 	
@@ -1137,6 +1214,7 @@
        		}
        		if(window.Laravel.NameTaille !=0){
        		 	this.NameTaille =window.Laravel.NameTaille[0].nom;
+       		 	console.log('this.NameTaille',this.NameTaille)
        		 	
        		}
        		if(window.Laravel.NamePrix !=0){

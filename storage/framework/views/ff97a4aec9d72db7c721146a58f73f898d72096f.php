@@ -84,86 +84,66 @@
 
 </div>
       <?php endif; ?>
-                <div class="flex-t">
-                    <input type="checkbox" id="article" @change="selectAll()" v-model="allSelected" style="margin-top: 5px;">
-                    <label for="article"></label> 
+      <div class="col-md-12 flex-t m-b-10">
+        <div class="flex-t col-md-9">
+            <input type="checkbox" id="article" @change="selectAll()" v-model="allSelected" style="margin-top: 5px;">
+            <label for="article"></label> 
                    
-                    <h4 style="margin-top: -6px;margin-left: 10px;">Historique </h4>
-                </div>
+            <h4 class="m-t--5">Historique </h4>
+        </div>
 
-            <div class="txt-right"style="margin-top: -40px; " >
-                  <button v-if="suppr" class="btn-sm btn-danger " style="height: 35px; " v-on:click="deleteArrayArticle()"><b>Supprimer</b>
-                  </button>
-                  
-                  
-                  <button v-on:click="AnnulerSel()" v-if="suppr" class="btn-sm btn-warning " style="height: 35px; " ><b>Annuler</b>
-                  </button>
-               </div>
-         
-            
-            <hr style="margin-top:42px;">       
+        <div class=" col-md-3 flex-t">
+          <div  class="col-md-6">
+            <button v-if="suppr" class="btn-sm btn-danger " style="height: 35px;float: right; " v-on:click="deleteArrayArticle()"><b>Supprimer</b></button>
+          </div>
+          <div class="col-md-6">
+            <button v-on:click="AnnulerSel()" v-if="suppr" class="btn-sm btn-warning " style="height: 35px;float: right;" ><b>Annuler</b></button>
+          </div>
+        </div>
+      </div>   
+      <hr >       
           
         
-            <div class="card-body"  v-for="historiquec in historiqueclient"  id="his">
-
-<div v-if="selectall" id="c">
-       <input type="checkbox"  style=" margin-left: 10px;" :id="historiquec.id" :value="historiquec.id" v-model="checkedArticles" @change="changeButton(historiquec)">
-      <label :for="historiquec.id" style="margin-top: 40px; margin-left: 10px;"></label>
-    </div>
-    <div v-else id="c">
-      <input type="checkbox" :id="historiquec.id" :value="historiquec.id" style="margin-left: 10px;" v-model="articleIds" @click="deselectArticle(historiquec.id)">
-      <label :for="historiquec.id" style="margin-top: 40px; margin-left: 10px;"></label>
-    </div>
-
-
-  
-    <div class="card-head"   >              
-    <div class="row" id="xcl">
-    <div >
-  <p class=""  id="hh" >
-       {{historiquec.created_at}}</p>
-      </div> 
-    <div class="col-md-4 pr-1" v-if="historiquec.produit_id  === null" >
-      <div style="margin-left:22px" v-for="imgA in imagesannonce" v-if=" historiquec.annonceE_id  === imgA.id">
-          <p class="" id="h" > Ajoutez cette  annonce d'emploie ' {{imgA.libellé}}' à l'historique</p>
-      </div>
-       
-    </div>
-    
-    <div  class="col-md-4 pr-1" v-else="historiquec.annonceE_id  === null" >
-      <div style="margin-left:22px" v-for="imgP in imagesproduit" v-if=" historiquec.produit_id  === imgP.id">
-          <p class="" id="h" >Ajoutez ce produit ' {{imgP.Libellé}}' à l'historique</p>
-      </div>
-       
-    </div>
-
-    <div class="col-md-4 pl-1" >
-      <div class="" >
-      <a class="f" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#" id="point">
-        <i class="fas fa-ellipsis-v"  id="y"></i>
-       </a>
-      <div class="dropdown-menu " x-placement="right-start" id="pl" >
-    <a class="dropdown-item" v-on:click="deleteHistorique(historiquec)"style="color: red; font-style: italic; font-weight: 900; cursor: pointer;">
-    Supprimer</a>
-       </div>
-      
-    </div>    
-
-    </div>      
-   
-
-    
-
-  </div>      
-
-  
-
-
-    
-</div> 
-<hr>
-
+  <div class="">
+    <div class="col-md-12"   v-for="historiquec in historiqueclient">
+      <div class="col-md-12 flex-t">
+        <div v-if="selectall" >
+           <input type="checkbox" :id="historiquec.id" :value="historiquec.id" v-model="checkedArticles" @change="changeButton(historiquec)">
+          <label :for="historiquec.id"></label>
+        </div>
+        <div v-else>
+          <input type="checkbox" :id="historiquec.id" :value="historiquec.id" v-model="articleIds" @click="deselectArticle(historiquec.id)">
+          <label :for="historiquec.id"></label>
+        </div>
+        <div class="card-head col-md-12" >
+          <div class="row col-md-12">
+            <div  class="col-md-8" >
+              
+                  <span v-for="imgP in imagesproduit" v-if=" historiquec.produit_id  === imgP.id" style="color:black">Vous avez ajouté le produit <b>{{imgP.Libellé}}</b> du vendeur <b>{{imgP.Nom}} {{imgP.Prenom}}</b> au panier</span>
+              
+            </div>
+            <div class="col-md-3">
+                <span  style="color:black">{{historiquec.created_at}}</span>
+            </div> 
+            
+            <div class="col-md-1">
+              <div class="dropdown" style="float: right;">
+                <a data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
+                  <i class="fas fa-ellipsis-v"  style="color: black"></i>
+                 </a>
+                <div class="dropdown-menu dropdown-menu-right"  >
+                  <a class="dropdown-item" v-on:click="deleteHistorique(historiquec)"style="color: red; font-style: italic; font-weight: 900; cursor: pointer;">
+                      Supprimer</a>
+                </div>
               </div>
+            </div>
+          </div>
+        </div> 
+      </div>
+          <hr>
+    </div>
+  
+  </div>
 
             </div>     
               <?php echo e($article->links()); ?>
@@ -173,13 +153,6 @@
             </div>      
           </div>
         </div>      
-
-
-  
-
-
-
-
 
 <?php $__env->stopSection(); ?>
 
@@ -197,7 +170,6 @@
            "article"   => $article,
            "idAdmin" => $idAdmin,
            'produitCL'         => $produitCL,
-           'annoncemploiesCL'         => $annoncemploiesCL,
            'ImageP'         => $ImageP,
            'Fav'         => $Fav,
            'command'         => $command,
@@ -216,7 +188,7 @@ el: '#app',
 
 data:{
   historiqueclient: [],
-  imagesproduit:[],imagesannonce:[],
+  imagesproduit:[],
   suppr: false, 
   checkedArticles: [],
   artilcesDelete: [],
@@ -325,7 +297,6 @@ methods: {
                 .then(response => {
                      this.historiqueclient = window.Laravel.article.data;
                      this.imagesproduit = window.Laravel.produitCL;
-                     this.imagesannonce = window.Laravel.annoncemploiesCL;
                 })
                 .catch(error =>{
                      console.log('errors :' , error);
@@ -339,6 +310,10 @@ methods: {
     else{
       this.artilcesDelete = [];
       this.suppr=false;
+    } 
+    if(this.checkedArticles.length < this.artilcesDelete.length){
+              
+        this.artilcesDelete = this.artilcesDelete.filter(function(item) { return item != a; });
     }        
   }, 
   AnnulerSel: function(){

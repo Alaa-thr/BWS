@@ -7,82 +7,80 @@
     </head>
     <nav class="navbar navbar-expand-lg navbar-transparent  bg-primary  navbar-absolute">
                                                          
-                                                         <div class="container-fluid">
-                                                           <div class="navbar-wrapper">
-                                                             <div class="navbar-toggle">
-                                                               <button type="button" class="navbar-toggler">
-                                                                 <span class="navbar-toggler-bar bar1"></span>
-                                                                 <span class="navbar-toggler-bar bar2"></span>
-                                                                 <span class="navbar-toggler-bar bar3"></span>
-                                                               </button>
-                                                             </div>
-                                                 
-                                                          
-                                                          
-                                                 
-                                                           </div>
-                                                           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-                                                             <span class="navbar-toggler-bar navbar-kebab"></span>
-                                                             <span class="navbar-toggler-bar navbar-kebab"></span>
-                                                             <span class="navbar-toggler-bar navbar-kebab"></span>
-                                                           </button>
-                                                           <div class="collapse navbar-collapse justify-content-end" id="navigation" >
-                                                           <form  action="/abest" method="get">
-                                                               <div class="input-group no-border"  style="left: -40px;">
-                                                                 <input type="search" name="search"  class="form-control" placeholder="Rechercher..." >
-                                                                 <div class="input-group-append">
-                                                                   <div class="input-group-text">
-                                                                     <i class="now-ui-icons ui-1_zoom-bold"></i>
-                                                                   </div>
-                                                                 </div>
-                                                               </div>
-                                                             </form>
-                                                             <ul class="navbar-nav" >
-                                                             <li class="nav-item dropdown" style="cursor: pointer; margin-right: 40px;">
-                                                                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                   <img class="img-xs rounded-circle"  src="<?php echo asset('storage/profil_image/'.$admin->image) ?>" alt="..."  />
-                                                                   <p>
-                                                                     <span class="d-lg-none d-md-block">Quelques Actions</span>
-                                                                   </p>
-                                                                 </a>
-                                                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                                                                   <div class="account-item clearfix js-item-menu">  
-                                                                     <div class="card-body">
+      <div class="container-fluid">
+        <div class="navbar-wrapper">
+          <div class="navbar-toggle">
+            <button type="button" class="navbar-toggler">
+              <span class="navbar-toggler-bar bar1"></span>
+              <span class="navbar-toggler-bar bar2"></span>
+              <span class="navbar-toggler-bar bar3"></span>
+            </button>
+          </div>
+        </div>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-bar navbar-kebab"></span>
+        <span class="navbar-toggler-bar navbar-kebab"></span>
+        <span class="navbar-toggler-bar navbar-kebab"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navigation" >
+      <form  action="/categorieS" method="get" id="sbmt" name='sbmt'>
+      <div class="input-group no-border"  style="left: -40px;">
+        <input type="search" name="search"  class="form-control" placeholder="Rechercher..." >
+        <div class="input-group-append">
+          <div class="input-group-text">
+            <i class="now-ui-icons ui-1_zoom-bold" onclick="document.forms['sbmt'].submit();"></i>
+          </div>
+        </div>
+      </div>
+    </form>
+      <ul class="navbar-nav" >
+        <li>
+          <div style="margin-top: 10px; margin-right: 10px;">
+              <div id="google_translate_element"></div>                       
+          </div>
+        </li>
+      <li class="nav-item dropdown" style="cursor: pointer; margin-right: 40px;">
+          <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img class="img-xs rounded-circle"  src="<?php echo asset('storage/profil_image/'.$admin->image) ?>" alt="..."  />
+            <p>
+              <span class="d-lg-none d-md-block">Quelques Actions</span>
+            </p>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+            <div class="account-item clearfix js-item-menu">  
+              <div class="card-body">
                                                                             
-                                                                         <a >
-                                                                           <table >
-                                                                             <tr>
-                                                                               <td width="50%">
-                                                                                 <a href="#">
+    <a >
+      <table >
+        <tr>
+          <td width="50%">
+            <a href="#">
       <img class="img-lg rounded-circle" src="<?php echo asset('storage/profil_image/'.$admin->image) ?>" alt="..."> 
-                                                                                  </a>
-                                                                                </td>
-                                                                               <td>
-                                                                                    <h6 class="description text-left" ><b id="a"> {{ $admin->nom }} {{ $admin->prenom }}</b></h6><a href ="{{ $admin->email }}" id ="nab">{{ $admin->email }}</a>
-                                                                                </td>
-                                                                              </tr>
-                                                                             </table>
-                                                                         </a>  
-                                                                     </div>
-                                                                     <div style="width: 255px; margin-left: 20px;"> 
-                                                                       <hr >
-                                                                      </div>
-                                                                       <a class="dropdown-item" href="{{ route('accueil') }}" id="n"><i class="now-ui-icons business_bank" id="m"></i><b>Allez vers Acceuil</b></a>
-                                                                       <a class="dropdown-item" href="{{ route('profilAdmin') }}" id="n"><i class="now-ui-icons users_single-02" id="m"></i><b>Profil</b></a>
-                                                                       <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                                         document.getElementById('logout-form').submit();" id="n">
-                                                                         <i class="now-ui-icons media-1_button-power" id="m"></i>
-                                                                         {{ __('Déconnexion') }} </a>
-                                                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                                                           @csrf
-                                                                         </form>
-                                                                   </div>
-                                                                 </div> 
-                                                             </li>
+            </a>
+          </td>
+          <td>
+              <h6 class="description text-left" ><b id="a"> {{ $admin->nom }} {{ $admin->prenom }}</b></h6><a href ="{{ $admin->email }}" id ="nab">{{ $admin->email }}</a>
+          </td>
+        </tr>
+        </table>
+    </a>  
+</div>
+<div style="width: 255px; margin-left: 20px;"> 
+    <hr >
+  </div>
+    <a class="dropdown-item" href="{{ route('accueil') }}" id="n"><i class="now-ui-icons business_bank" id="m"></i><b>Allez vers Acceuil</b></a>
+    <a class="dropdown-item" href="{{ route('profilAdmin') }}" id="n"><i class="now-ui-icons users_single-02" id="m"></i><b>Profil</b></a>
+    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();" id="n">
+      <i class="now-ui-icons media-1_button-power" id="m"></i>__('Déconnexion') }} </a>
+      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">@csrf
+      </form>
+          </div>
+        </div> 
+    </li>
                                                                
-                                                             </ul>
-                                                           </div>
-                                                         </div>
+   </ul>
+  </div>
+</div>
 </nav>
     <div class="main-panel" id="main-panel">
       
@@ -92,97 +90,114 @@
         <div class="row">
           <div class="col-md-12">
             <div class="card">
-              <div class="card-header">
-
-                <div style=" display: flex">
+              <div class="card-header col-md-12" >
+                <div class="col-md-12" style=" display: inline-flex;">
+                  <div class="col-md-5" style=" display: inline-flex;">
                         <input type="checkbox" id="categorie" @change="selectAll()" v-model="allSelected">
                         <label for="categorie"></label>
                         <h4 style="margin-top: -6px;">Categories</h4>
-                </div>
+                  </div>
                   
-                  <div class="row">
-                    <div class="col-md-4">
-                      <select  class="form-control" onchange="window.location.href=this.value" style="margin-left: 450px; margin-top: -45px; border-radius: 0.8em; width: 230px; height: 40px; cursor: pointer;">
+                  <div class=" col-md-9" style="display: inline-flex;">
+                    <div class="col-md-5">
+                      <select  class="form-control" onchange="window.location.href=this.value" style="float: right;margin-top: -3px; border-radius: 0.8em; height: 40px; cursor: pointer;">
                       <option value="0" selected disabled>Choisie le type de Categories :</option>
                       <option value="shopCategories">Shop Categories</option>
                       <option value="emploiCategories">Emploi Categories</option>
                     </select>
-                      <button v-if="suppr" class="btn btn-sm btn-danger  btn-block" style="margin-left: 700px; margin-top: -40px; border-radius: 0.8em; width: 130px; height: 40px; "  v-on:click="deleteArrayCategorie()"><b>supprimer</b></button>
-                      <button v-if="suppr" class="btn btn-sm btn-warning btn-block" style="margin-left: 850px; margin-top: -50px; border-radius: 0.8em; width: 130px; height: 40px; " v-on:click="AnnulerSel" ><b>Annuler</b></button>
-
-                      <button v-else class="btn btn-sm   btn-block" style="margin-left: 730px; margin-top: -40px; border-radius: 0.8em; background-color: #00CED1; width: 230px; height: 40px; " v-on:click="ajouterCategorie" ><b>Ajouter une Catégorie</b></button>
+                    </div>
+                   <div class="col-md-8" style="display: inline-flex;">
+                      <div v-if="suppr" class="col-md-4">
+                        <button  class="btn btn-sm btn-danger" style="margin-top: -3px; border-radius: 0.8em; height: 40px;"  v-on:click="deleteArrayCategorie()"><b>supprimer</b></button>
+                      </div>
+                      <div v-if="suppr" class="col-md-4">
+                        <button  class="btn btn-sm btn-warning" style=" margin-top: -3px;border-radius: 0.8em; height: 40px;" v-on:click="AnnulerSel" ><b>Annuler</b></button>
+                      </div>
+                      <div v-else class="col-md-11">
+                        <button  class=" btn btn-sm " style="margin-top: -3px; border-radius: 0.8em; background-color: #00CED1; height: 40px;  " v-on:click="ajouterCategorie" ><b>Ajouter une Catégorie</b></button>
+                      </div>
                     </div>
                   </div>
-                
-                <div class="row" v-if="open" style=" margin-left: 30px; ">
-                  <div class="col-md-6 ">
-                    <div class="form-group" style="width: 600px;">
+                </div>
+
+                <div class="row col-md-12" v-if="open" style=" display: inline-flex; ">
+                  <div class="col-md-8 ">
+                    <div class="form-group col-md-13">
                       <label ><b>Nom</b></label>
                       <input name="nom" type="text" class="form-control" placeholder="Entrez le nom de catégorie (Le nom doit être commencé avec un Maj ou un Numero)" v-model="ccategorie.libelle" style="color: black;" :class="{'is-invalid' : message.libelle}"/>
                       <span class="px-3" style="color: #ca2323" v-if="message.libelle" v-text="message.libelle[0]"></span>
 
                       <div style="display: inline-flex; margin-top: 10px;">
 
-                        <select v-if="edit === false" class="form-control" id="typeCategorie" name ="typeCategorie" @change="SavetTypeCategorie($event)" :class="{'is-invalid' : message.typeCategorie}" style="margin-right: 20px; height: 38px; width: 290px">
+                        <select v-if="edit === false" class="form-control" id="typeCategorie" name ="typeCategorie" @change="SavetTypeCategorie($event)" :class="{'is-invalid' : message.typeCategorie}" style="margin-right: 20px; height: 38px;">
                         <option value="0" selected disabled>Choisie le type de Categories :</option>
                         <option value="shop">Shop Categories</option>
                         <option value="emploi">Emploi Categories</option>
                         </select>                        
-                        <input type="file" class="form-control "  v-on:change="imagePreview" accept="image/*" :class="{'is-invalid' : message.image}" accept="image/png, image/jpeg" style="height: 38px; width: 290px">
+                        <input type="file" class="form-control "  v-on:change="imagePreview" accept="image/*" :class="{'is-invalid' : message.image}" accept="image/png, image/jpeg" style="height: 38px;">
+                        <input v-if="edit === true" type="file" class="form-control "  v-on:change="imagePreview" accept="image/*" :class="{'is-invalid' : message.image}" accept="image/png, image/jpeg" style="height: 38px;">
                         
                       </div>
                       <span class="px-3" v-if="message.typeCategorie" v-text="message.typeCategorie[0]" style="color: #ca2323"></span>
                     </div>
                   </div>
-                  <div v-if="edit === false" class="col-md-2 " style="margin-left: 20px;">
-                    <div  style="margin-left: 120px; width: 120px; margin-top: 40px; border:0; ">
-                      <button v-if="edit" type="submit" class="btn btn-block" style="font-size: 12px; border-radius: 1.3em; font-weight: 900;" v-on:click="updateCategorieButton()">Modifier</button>
+                  <div class="col-md-4" style="margin-top: 30px; display: inline-flex;">
+                    
+                    
+                    <div v-if="edit" class="col-md-6 ">
+                        <button  type="submit" class="btn btn-block" style="font-size: 12px; border-radius: 1.3em; font-weight: 900;" v-on:click="updateCategorieButton()">Modifier</button>
+                    </div>
+                    <div v-else class="col-md-6 ">
+                        <button  type="submit" class="btn btn-success btn-block" style="font-size: 12px; border-radius: 1.3em; font-weight: 900;" v-on:click="addCategorie" >Ajouter</button>
+                     </div>
+                     <div  class="col-md-6 "style="  height: 30px;   ">
+                          <button type="submit" class="btn btn-danger btn-block" style="font-size: 12px; border-radius: 1.3em; font-weight: 900;" v-on:click="CancelCatego(ccategorie)">Annuler </button>
+                     </div>
 
-                      <button v-else type="submit" class="btn btn-success btn-block" style="font-size: 12px; border-radius: 1.3em; font-weight: 900;" v-on:click="addCategorie" >Ajouter</button>
-                   </div>
-                  </div>
-                  <div v-if="edit === false">
-                   <div  style="margin-left: 100px; width: 120px; height: 30px; margin-top: 40px;  border:0; margin-left: 110px;">
-                        <button type="submit" class="btn btn-danger btn-block" style="font-size: 12px; border-radius: 1.3em; font-weight: 900;" v-on:click="CancelCatego(ccategorie)">Annuler </button>
-                   </div>
-                  </div>
-                  <div v-if="edit" class="col-md-2 " style="margin-left: 20px;">
-                    <div  style="margin-left: 120px; width: 120px; margin-top: 20px; border:0; ">
-                      <button v-if="edit" type="submit" class="btn btn-block" style="font-size: 12px; border-radius: 1.3em; font-weight: 900;" v-on:click="updateCategorieButton()">Modifier</button>
-
-                      <button v-else type="submit" class="btn btn-success btn-block" style="font-size: 12px; border-radius: 1.3em; font-weight: 900;" v-on:click="addCategorie" >Ajouter</button>
-                   </div>
-                  </div>
-                  <div v-if="edit">
-                   <div  style="margin-left: 100px; width: 120px; height: 30px; margin-top: 20px;  border:0; margin-left: 110px;">
-                        <button type="submit" class="btn btn-danger btn-block" style="font-size: 12px; border-radius: 1.3em; font-weight: 900;" v-on:click="CancelCatego(ccategorie)">Annuler </button>
-                   </div>
-                  </div>
-                  <div style="padding-bottom: 10px; margin-left: -40px;margin-right: 5px;">
+                  
+                  </div> 
+                </div>
+                  <div class="row col-md-12" v-if="open" style="padding-bottom: 10px;">
                     <div class=" alert-warning" role="alert" style="padding-left: 10px;padding-top: 1px;padding-bottom: 1px;">
                       <i class="now-ui-icons travel_info" id="y"></i>
                        Vous pouvez choisir des images pour votre catégories ici:<a href="https://www.flaticon.com" class="alert-link" target=_blank> Free Vector Icons</a>. Et l'image doit etre de taille 16x16 px, pour avoir une organisation comme
                       <b class="alert-link " style="cursor: pointer;text-decoration: underline;" v-on:click="showImage">ceci</b>.
                     </div> 
-                  </div>             
-                </div>
+                  </div>            
                 
+                
+
               </div>
             </div>
           </div>
         </div>
       
 <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-          <div v-if="AutreExiste" class="row" style="margin-top: 20px;">
+           @php
+            $url = Route::getCurrentRoute()->uri();
+           @endphp
+           <div class="row"  v-if="categories.length == 0 && '<?php echo $url?>'.includes('categorieS') == true">
+             <div  class="col-md-12" >
+              <div class="card">
+                <div class="card-header">
+                  <div style="text-align: center; margin-bottom: 40px">
+                          <span>Cette Recherche n'a pas de Résultats</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div v-if="AutreExiste && '<?php echo $url?>'.includes('categorieS') != true" class="row" style="margin-top: 20px;">
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
                 <table width="100%" id="c.id">
                   <tr>
                     <td style="width: 99%;">
-                        <div> 
-                           <h4 class="card-title" style="font-weight: 500px;"><b>Autre
-                           </b></h4>
+                        <div style="display: inline-flex;"> 
+                           <h4 class="card-title" style="font-weight: 500px;"><b>Autre 
+                           </b></h4><small style="font-size: 13px; margin-top: 20px"> (Toutes les sous-catégories appartenant à des catégories supprimées)</small>
                         </div>
                     </td>
                   </tr>
@@ -202,11 +217,13 @@
           </div>
         </div>
 <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+       
         <div class="row" style="margin-top: 20px;" v-for="c in categories">
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <table width="100%" id="c.id">
+                
+                <table v-if="categories.length != 0" width="100%" id="c.id">
                   <tr>
                     <td style=" width: 4%;">  
                         <div v-if="selectall">
@@ -244,9 +261,9 @@
                         </a>
                         <div  class="dropdown-menu dropdown-menu-right" style="margin-top: 15px;" >
                           <div class="account-item clearfix js-item-menu">
-                            <a class="dropdown-item"  style="color: blue; font-style: italic; cursor: pointer;" v-on:click="updateCategorie(c)"><b>Modifier</b>
+                            <a class="dropdown-item"  style="color: red; font-style: italic; cursor: pointer;" v-on:click="updateCategorie(c)"><b>Modifier</b>
                             </a>
-                            <a class="dropdown-item"  v-on:click="deleteCategorie(c)" style="color: blue; font-style: italic; cursor: pointer;"><b>Supprimer</b>
+                            <a class="dropdown-item"  v-on:click="deleteCategorie(c)" style="color: red; font-style: italic; cursor: pointer;"><b>Supprimer</b>
                             </a>
                           </div>
                         </div>
@@ -255,26 +272,27 @@
                   </tr>
                 </table> 
 <!--***************************Sous Catego******************************************************-->
-               <div class="row" v-if="open2 && c.id === idSousCatego" style="margin-top: -5px; margin-left: 30px;">
-                      <div class="col-md-6 ">
-                        <div class="form-group" style="width: 600px;">
+               <div class="row col-md-12" v-if="open2 && c.id === idSousCatego" style="display: inline-flex;">
+                  <div class="col-md-8 ">
+                    <div class="form-group" >
                           <label ><b>Nom</b></label>
                           <input name="nom" type="text" class="form-control" placeholder="Entrez le nom de sous-catégorie (Le nom doit être commencé avec un Maj ou un Numero)" v-model="SousCategoAjout.libelle" :class="{'is-invalid' : message.libelle}"/>
-                      <span class="px-3" style="color: #ca2323" v-if="message.libelle" v-text="message.libelle[0]"></span>
-                        </div>
-                      </div>
-                      <div class="col-md-2 ">
-                        <div v-if="edit" style="margin-left: 140px; width: 120px; margin-top: 23px; border:0; ">
-                          <button  type="submit" class="btn btn-block" style="font-size: 12px; border-radius: 1.3em; font-weight: 900;" v-on:click="updateSousCategorieButton()">Modifier</button>
-                        </div>
-                        <div v-else style="margin-left: 140px; width: 120px; margin-top: 23px; border:0; ">
-                         <button type="submit" class="btn btn-success btn-block" style="font-size: 12px; border-radius: 1.3em; font-weight: 900;" v-on:click="addSousCategorie(c.id)">Ajouter</button>
-                        </div>
-                      </div>
-                      <div  style="margin-left: 130px; width: 120px; height: 30px; margin-top: 14px;  border:0; ">
-                        <button type="submit" class="btn btn-danger btn-block" style="font-size: 12px; border-radius: 1.3em; font-weight: 900;" v-on:click="CancelSousCatego(SousCategoAjout)">Annuler</button>
-                      </div>
+                          <span class="px-3" style="color: #ca2323" v-if="message.libelle" v-text="message.libelle[0]"></span>
+                    </div>
                   </div>
+                  <div class="col-md-4" style="margin-top: 12px; display: inline-flex;">
+                    <div v-if="edit"class='col-md-6'>
+                          <button  type="submit" class="btn btn-block" style="font-size: 12px; border-radius: 1.3em; font-weight: 900;" v-on:click="updateSousCategorieButton()">Modifier</button>
+                    </div>
+                    <div v-else class='col-md-6'>
+                        <button type="submit" class="btn btn-success btn-block" style="font-size: 12px; border-radius: 1.3em; font-weight: 900;" v-on:click="addSousCategorie(c.id)">Ajouter</button>
+                    </div>
+                    <div class='col-md-6'>
+                        <button type="submit" class="btn btn-danger btn-block" style="font-size: 12px; border-radius: 1.3em; font-weight: 900;" v-on:click="CancelSousCatego(SousCategoAjout)">Annuler</button>
+                    </div>
+                  </div>
+                  
+              </div>
 <!--*********************************************************************************-->                 
                   <div style="margin-top: -10px;">               
                      <hr> 
@@ -293,8 +311,8 @@
                               </a>
                               <div  class="dropdown-menu dropdown-menu-center"  >
                                 <div class="account-item clearfix js-item-menu">
-                                  <a class="dropdown-item" style="color: blue; font-style: italic; cursor: pointer;" v-on:click="updateSousCategorie(sousCatego)"><b>Modifier</b></a>
-                                  <a class="dropdown-item" style="color: blue; font-style: italic; cursor: pointer;" v-on:click="deleteSousCategorie(sousCatego)"><b>Supprimer</b></a>
+                                  <a class="dropdown-item" style="color: red; font-style: italic; cursor: pointer;" v-on:click="updateSousCategorie(sousCatego)"><b>Modifier</b></a>
+                                  <a class="dropdown-item" style="color: red; font-style: italic; cursor: pointer;" v-on:click="deleteSousCategorie(sousCatego)"><b>Supprimer</b></a>
                                 </div>
                               </div>
                             </div>
@@ -357,7 +375,7 @@
 </script>
 
 <script>
-  
+   function initDashboardPageCharts(){}
   var app = new Vue({
       el: '#app',
       data:{
@@ -700,6 +718,7 @@
              axios.get(window.Laravel.url+'/categories')
              .then(response => {
                   this.categories = window.Laravel.categorie.data;
+                  console.log('window.Laravel.var',window.Laravel.var)
                   if(window.Laravel.var == 1){
                         this.AutreExiste = true;
                   }
@@ -842,7 +861,7 @@
                 this.open = false;
                 Swal.fire({
                   title: 'Etes vous sure de supprimer cette sous-categorie ??',
-                  html: "<smal style='font-size:15px; display:flex'><h6 style='color: red'>ATTENTION!</h6>Toutes les produits appartenant à cette sous-catégorie seront ajouter a une categorie 'Autre' .</smal>",
+                  html: "<smal style='font-size:15px; display:flex'><h6 style='color: red'>ATTENTION!</h6>Toutes les produits appartenant à cette sous-catégorie seront perdues .</smal>",
                   icon: 'warning',
                   showCancelButton: true,
                   confirmButtonColor: '#3085d6',
@@ -920,6 +939,7 @@
                         libelle :'',
                         image: null,
                   };
+            this.message = {};
             
       },
       ajouterSouscategorie: function(id){
@@ -932,6 +952,7 @@
                 categorie_id:0 ,
                 libelle :'',
             };
+            this.message = {};
 
       },
       deselectCategorie: function(categorieId){

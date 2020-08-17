@@ -16,6 +16,7 @@ class AddColumnCategorieIdSousCategories extends Migration
         Schema::table('sous_categories', function (Blueprint $table) {
             $table->foreign('categorie_id')->references('id')->on('categories')->onDelete('SET NULL');     
         });
+        DB::table('sous_categories')->insert(array('id'=>'1','libelle'=>'Autre','categorie_id'=>1,'created_at'=>new \dateTime,'updated_at'=>new \dateTime));
        
     }
 

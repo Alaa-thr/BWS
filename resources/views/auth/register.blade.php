@@ -113,7 +113,7 @@
                     @enderror
                     <div class=" m-t-15">
                       <input type="checkbox" class="form-check-input m-l-2" id="check1" onchange="openSubmit(1)">
-                      <label class="form-check-label m-l-8" for="check1" style="color: black;">J'ai lu et j'accepte les <a style=" color: #007bff;" class="pointer js-show-modal1" id="condi">Conditions générales de l'achat et vente</a> de Basmah.WS</label>
+                      <label class="form-check-label m-l-8" for="check1" style="color: black;">J'ai lu et j'accepte les <a style=" color: #007bff;" class="pointer js-show-modal1" id="condi" @click="openCondition('c')">Conditions générales de l'achat et vente</a> de Basmah.WS</label>
                     </div>
                         
     </div>
@@ -189,7 +189,7 @@
                     @enderror
                     <div class=" m-t-15">
                       <input type="checkbox" class="form-check-input m-l-2" id="check3" onchange="openSubmit(3)">
-                      <label class="form-check-label m-l-8" for="check3" style="color: black;">J'ai lu et j'accepte les <a style=" color: #007bff;" class="pointer js-show-modal1" id="condi">Conditions générales de l'achat et vente</a> de Basmah.WS</label>
+                      <label class="form-check-label m-l-8" for="check3" style="color: black;">J'ai lu et j'accepte les <a style=" color: #007bff;" class="pointer js-show-modal1" id="condi" @click="openCondition('e')">Conditions générales de l'achat et vente</a> de Basmah.WS</label>
                     </div>
                         
     </div>
@@ -212,7 +212,7 @@
                     @enderror
                     <div class=" m-t-15">
                       <input type="checkbox" class="form-check-input m-l-2" id="check2" onchange="openSubmit(2)">
-                      <label class="form-check-label m-l-8" for="check2" style="color: black;">J'ai lu et j'accepte les <a style=" color: #007bff;" class="pointer js-show-modal1" id="condi" >Conditions générales de l'achat et vente</a> de Basmah.WS</label>
+                      <label class="form-check-label m-l-8" for="check2" style="color: black;">J'ai lu et j'accepte les <a style=" color: #007bff;" class="pointer js-show-modal1" id="condi" @click="openCondition('v')">Conditions générales de l'achat et vente</a> de Basmah.WS</label>
                     </div>
     </div>
   </div>
@@ -232,7 +232,7 @@
    
         </div>
     </section>
-</div>
+
 <!-- Modal1 -->
     <div class="wrap-modal1 js-modal1 p-t-60 p-b-20" >
         <div class="overlay-modal1 js-hide-modal1"></div>
@@ -243,53 +243,93 @@
                     <img src="{{ asset('images/icons/icon-close.png')}}" alt="CLOSE">
                 </button>
 
-                <div class="row">
+                <div class="row" v-if='client'>
                     
-                      <div class="col-md-12 col-lg-12 p-b-30">
-                        Introduction
+                      <div class="col-md-12 col-lg-12 p-b-40 p-r-30" >
+                        <div class="col-md-12 col-lg-12 p-r-30 m-l-30">
+                            <h2 style="color:red">À compter du 3 août 2020 </h2> 
+                            <div class="col-md-12 col-lg-12 m-t-25 p-r-30">
+                                <p class="m-b-20" style="font-size: 20px;color:black;">
+                                    Merci d'utiliser notre site commercial Basmah Work&Shop pour l'achat/vente Produit et offre/consulter et postuler Demande d'emploie. Nous sommes heureux que vous soyez ici. Veuillez lire attentivement ces conditions d'utilisation avant d'accéder ou d'utiliser BWS. Parce qu'il s'agit d'un contrat si important entre nous et nos utilisateurs, nous avons essayé de le rendre aussi clair que possible. Pour votre commodité, nous avons présenté ces conditions dans un bref résumé non contraignant suivi des conditions juridiques complètes. Si vous n'acceptez pas nos conditions d'utilisation, vous ne pouvez pas crée un compte BWS.
+                                </p>
+                                
+                                <ul style="list-style-type: disc;font-size: 20px;color:black;">Pour les conditions qui sont doivent respecter par vous se sont:
+                                    
+                                        <li class="m-l-30" style="list-style-type: disc;font-size: 20px;color:black;">Votre compte sa sera déconnecté automatiquement au délai de 48h.</li>
+                                        <li class="m-l-30" style="list-style-type: disc;font-size: 20px;color:black;">Après la déconnexion votre panier sera vidé. </li>
+                                        <li class="m-l-30" style="list-style-type: disc;font-size: 20px;color:black;">Votre demande ou commande non terminé seront annulées.</li>
+                                        <li class="m-l-30" style="list-style-type: disc;font-size: 20px;color:black;">Nous somme pas responsable de la livraison dans le cas de le produit n'est parvenu, et une fausse demande d'emploi .</li>
+                                        <li class="m-l-30" style="list-style-type: disc;font-size: 20px;color:black;">Un seul numéro de téléphone/ou adresse e-mail pour créer seulement un compte.</li>
+                                        <li class="m-l-30" style="list-style-type: disc;font-size: 20px;color:black;"> Vous avez le droit pour signaler des produits/annonces emplois dans le cas de contenu illégale et vendeurs/employeurs .</li>
+                                    
+                                    
+                                </ul>
 
-L’utilisation de Jumia est soumise à l'acceptation pleine et sans réserve de toutes les conditions ci-après et de toutes les conditions affichées sur le site Web.
+                            </div>
 
-Toute utilisation des Services aussi bien par l’utilisateur emporte de plein droit l’application des présentes CGU.
+                        </div>
 
-Jumia se réserve le droit de supprimer un utilisateur, considérant qu’il n’a pas respecté les CGU, sans le lui notifier.
 
-Conditions Générale d'utilisation
+                        
+                    </div>
 
-Interprétation des termes
-Les conditions présentes s'appliquent à la fois au singulier et au pluriel. Chaque fois que le contexte peut l’exiger, tout pronom doit inclure le masculin et le féminin correspondant. Les termes «notamment», «comprend» et «y compris» est réputée être suivie par l'expression «sans limitation». Sauf si le contexte ne s'y oppose, les termes «aux présentes», «des présentes», «aux présentes», «ci-après" et les termes au sens similaire se référent aux conditions dans son ensemble.
+                </div>
+                <div class="row" v-if='vendeur'>
+                    
+                      <div class="col-md-12 col-lg-12 p-b-40 p-r-30" >
+                        <div class="col-md-12 col-lg-12 p-r-30 m-l-30">
+                            <h2 style="color:red">À compter du 3 août 2020 </h2> 
+                            <div class="col-md-12 col-lg-12 m-t-25 p-r-30">
+                                <p class="m-b-20" style="font-size: 20px;color:black;">
+                                    Merci d'utiliser notre site commercial Basmah Work&Shop pour l'achat/vente Produit et offre/consulter et postuler Demande d'emploie. Nous sommes heureux que vous soyez ici. Veuillez lire attentivement ces conditions d'utilisation avant d'accéder ou d'utiliser BWS. Parce qu'il s'agit d'un contrat si important entre nous et nos utilisateurs, nous avons essayé de le rendre aussi clair que possible. Pour votre commodité, nous avons présenté ces conditions dans un bref résumé non contraignant suivi des conditions juridiques complètes. Si vous n'acceptez pas nos conditions d'utilisation, vous ne pouvez pas crée un compte BWS.
+                                </p>
+                                
+                                <ul style="list-style-type: disc;font-size: 20px;color:black;">Pour les conditions qui sont doivent respecter par vous se sont:
+                                    
+                                        <li class="m-l-30" style="list-style-type: disc;font-size: 20px;color:black;">Votre compte sa sera déconnecté automatiquement au délai de 48h.</li>
+                                        <li class="m-l-30" style="list-style-type: disc;font-size: 20px;color:black;">Vos produits seront publié dans notre site si le payement est fait.</li>
+                                        <li class="m-l-30" style="list-style-type: disc;font-size: 20px;color:black;">Le client a la possibilité de signaler vos produits si sont illégal. si le produit a était signalé 3 fois ou plus ce dernier sera supprimé.</li>
+                                        <li class="m-l-30" style="list-style-type: disc;font-size: 20px;color:black;">Le client a la possibilité de vous signaler, et votre compte sera désactivés si vous avez 5 signal. Dans le cas de désactivation du compte vous devez contacter l'admis pour le récupérer.</li>
+                                        <li class="m-l-30" style="list-style-type: disc;font-size: 20px;color:black;">Un seul numéro de téléphone/ou adresse e-mail pour créer seulement un compte.</li>
+                                        <li class="m-l-30" style="list-style-type: disc;font-size: 20px;color:black;">Il existe 3 types de livraison, et vous avez le droit de choisir ce qui vous convient .</li>
+                                        <li class="m-l-30" style="list-style-type: disc;font-size: 20px;color:black;">Si vous avez la possibilité de faire la livraison, vous devais ajoutez le tarif à chaque ville, si vous n’avais pas l’ajouté nous devons compté que le tarif est 0DA .</li>
+                                    
+                                    
+                                </ul>
 
-Divisibilité
-Si une disposition des conditions est jugée invalide ou inapplicable en tout ou en partie, cette invalidité ou inapplicabilité ne s'attache qu'à une disposition ou partie d'une disposition. Toutes les autres dispositions des présentes Conditions restent valables.
+                            </div>
 
-Utilisation du site Web :
-Lors de la procédure d'inscription au site Web. vous créez un mot de passe et un nom de compte.
-Vous êtes responsable du maintien de la confidentialité du nom de compte et du mot de passe, et êtes entièrement responsable de toutes les activités liées à votre compte.
-À cette fin, vous vous engagez à :
-1. aviser immédiatement Jumia de toute utilisation frauduleuse de votre compte ou de toute autre violation de sécurité
-2. vous assurer que vous quittez votre compte à la fin de chaque session d’utilisation.
+                        </div>
 
-Vous acceptez et vous engagez à utiliser le site Web uniquement pour afficher et téléchargez des données appropriées. A titre d'exemple, vous acceptez et vous vous engagez à ne pas:
-1. diffamer, abuser, harceler, traquer, menacer ou violer les droits individuels;
-2. publier, afficher, télécharger, distribuer ou disséminer tout sujet inapproprié, vulgaire, diffamatoire, obscène, indécent ou illégal, nom, élément ou information personnels;
-3. télécharger des fichiers qui contiennent des logiciels ou autres éléments protégés par les lois de propriété intellectuelle, sauf si vous possédez ou contrôlez les droits afférents ou ayez reçu tous les consentements nécessaires pour cela;
-4. télécharger ou distribuer des fichiers qui contiennent des virus, des fichiers corrompus ou tout autre logiciel ou programme similaire pouvant endommager le fonctionnement du site Web ou un ordinateur;
-5. mener des enquêtes ou à terme, des concours, des programmes effets « boule de neige»,
-6. télécharger un fichier publié par un autre utilisateur d'un service que vous savez, ou devriez raisonnablement savoir, ne peut pas être légalement distribué de cette manière;
-7. falsifier ou supprimer toute mention d'auteur, des avis juridiques ou autres appropriés ou des désignations ou étiquettes exclusives concernant l'origine ou la source d'un logiciel ou autre matériel contenu dans un fichier qui est téléchargé;
-8. violer tout code de conduite ou autres directives, qui peuvent être applicables pour ou à un service particulier;
-9. transgresser les lois ou règlements applicables pour le moment en vigueur dans ou en dehors de l'Algérie, et
-10. atteinte à aucun des termes et conditions du présent Accord ou tous autres termes et conditions d'utilisation du site Web contient par ailleurs ici.
 
-L'utilisateur accepte et s'engage à ne pas modifier, copier, distribuer, transmettre, afficher, exécuter, reproduire, publier, donner licence, créer des œuvres dérivées, transférer ou vendre toute information ou logiciel obtenu à partir du site Web. La reproduction illimitée ou massive, la copie du contenu à des fins commerciales ou non commerciales, ou la modification injustifiée de données et d'informations contenus sur le site Web n'est pas autorisée.
+                        
+                    </div>
 
-Responsabilité de l’utilisateur :
-Les utilisateurs sont seuls responsables de tous les éléments du contenu téléchargé sur le site Web. Jumia ne vérifie pas, ne cautionne pas et ne se porte pas garant du contenu de l’utilisateur ou généralement de tout contenu affiché sur le site Web Internet. Les utilisateurs peuvent être tenus légalement responsables de leurs contenus, en particulier, lorsqu’ils sont diffamatoires ou protégés par droit d'auteur etc. Si vous rencontrez un abus ou êtes témoin d’une violation des Conditions, merci de rapporter ce dernier au Service Client.
+                </div>
+                <div class="row" v-if='employeur'>
+                     <div class="col-md-12 col-lg-12 p-b-40 p-r-30" >
+                        <div class="col-md-12 col-lg-12 p-r-30 m-l-30">
+                            <h2 style="color:red">À compter du 3 août 2020 </h2> 
+                            <div class="col-md-12 col-lg-12 m-t-25 p-r-30">
+                                <p class="m-b-20" style="font-size: 20px;color:black;">
+                                    Merci d'utiliser notre site commercial Basmah Work&Shop pour l'achat/vente Produit et offre/consulter et postuler Demande d'emploie. Nous sommes heureux que vous soyez ici. Veuillez lire attentivement ces conditions d'utilisation avant d'accéder ou d'utiliser BWS. Parce qu'il s'agit d'un contrat si important entre nous et nos utilisateurs, nous avons essayé de le rendre aussi clair que possible. Pour votre commodité, nous avons présenté ces conditions dans un bref résumé non contraignant suivi des conditions juridiques complètes. Si vous n'acceptez pas nos conditions d'utilisation, vous ne pouvez pas crée un compte BWS.
+                                </p>
+                                
+                                <ul style="list-style-type: disc;font-size: 20px;color:black;">Pour les conditions qui sont doivent respecter par vous se sont:
+                                    
+                                        <li class="m-l-30" style="list-style-type: disc;font-size: 20px;color:black;">Votre compte sa sera déconnecté automatiquement au délai de 48h.</li>
+                                        <li class="m-l-30" style="list-style-type: disc;font-size: 20px;color:black;">Le client a la possibilité de signaler vos annonces d'emplois si sont illégal. si l’annonce a était signalé 3 fois ou plus cette derniere sera supprimé. </li>
+                                        <li class="m-l-30" style="list-style-type: disc;font-size: 20px;color:black;">Le client a la possibilité de vous signaler, et votre compte sera désactivés si vous avez 5 signal. Dans le cas de désactivation du compte vous devez contacter l'admis pour le récupérer. </li>
+                                        <li class="m-l-30" style="list-style-type: disc;font-size: 20px;color:black;">Vos annonces d'emplois seront publié dans notre site si le payement est fait.</li>
+                                        <li class="m-l-30" style="list-style-type: disc;font-size: 20px;color:black;">Un seul numéro de téléphone/ou adresse e-mail pour créer seulement un compte.</li>
+                                    
+                                    
+                                </ul>
 
-Exactitude des données utilisateur :
-Vous certifiez que vous êtes le propriétaire du contenu que vous nous soumettez et que le contenu ne porte pas atteinte aux droits de propriété intellectuelle ou autres droits.
+                            </div>
 
-Vous certifiez également que, à votre connaissance, aucune action, poursuite, procédure, ou enquête n’a été engagée ou menacée à votre encontre à propos du contenu que vous soumettez, en particulier lorsqu’il s’agit d’une marque ou d’un nom commercial. Vous vous engagez à fournir des informations exactes quant à ses coordonnées personnelles ainsi que toute autre information nécessaire à l'accès aux Services du Site Web et à mettre à jour régulièrement ces informations si nécessaire, ces informations étant protégées conformément à la réglementation applicable.
+                        </div>
+
 
                         
                     </div>
@@ -298,7 +338,7 @@ Vous certifiez également que, à votre connaissance, aucune action, poursuite, 
             </div>
         </div>
     </div>
-
+</div>
 <script>
 var currentTab = 0;
 showTab(currentTab,1); 
@@ -556,10 +596,30 @@ button:hover {
 
     el: '#app',
     data:{
-      villes : [],             
+      villes : [],
+      client: false,
+      vendeur: false,
+      employeur: false,             
 
  /*event.target.value  pour recuperé */      
     },methods:{
+        openCondition($type){
+            if($type == 'c'){
+                this.client = true;
+                this.vendeur = false;
+                this.employeur = false;
+            }
+            else if($type == 'v'){
+                this.vendeur = true;
+                this.client = false;
+                this.employeur = false;
+            }
+            else if($type == 'e'){
+                this.employeur = true;
+                this.client = false;
+                this.vendeur = false;
+            }
+        },
         getVille() {
             axios.get(window.Laravel.url+"/getville")
             .then(response => {

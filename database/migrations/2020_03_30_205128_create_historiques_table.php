@@ -17,7 +17,6 @@ class CreateHistoriquesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('client_id');
             $table->unsignedBigInteger('produit_id')->nullable();
-            $table->unsignedBigInteger('annonceE_id')->nullable();
             $table->timestamps();
         });
     }

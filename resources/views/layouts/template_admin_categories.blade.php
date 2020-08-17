@@ -1,13 +1,12 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr" id='html_id'>
 
 <head>
   <meta charset="utf-8" />
   <link rel="apple-touch-icon" sizes="76x76" href="assetsAdmin/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="assetsAdmin/img/favicon.png">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+  <link rel="icon" type="image/png" href="{{ asset('images/icons/title_icon.png')}}">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
@@ -26,7 +25,7 @@
          $stripeCatego='';
                 
          $urlAcctuiel = Route::getCurrentRoute()->uri();
-         if($urlAcctuiel == 'categories' || $urlAcctuiel == 'shopCategories' || $urlAcctuiel == 'emploiCategories'){
+         if($urlAcctuiel == 'categories' || $urlAcctuiel == 'shopCategories' || $urlAcctuiel == 'emploiCategories' || strpos($urlAcctuiel, 'categorieS?search=') ==0){
              $stripeCatego='active';
          }
   ?>
@@ -38,6 +37,8 @@
     <div class="sidebarr" data-color="griss" style="z-index: 10000;">
       <!--
         Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
+      }
+      }
     -->
       <div class="logo">
         <img src ="assetsAdmin/img/logo1.png" alt="...">
@@ -181,7 +182,24 @@
      </div>
            
       @stack('javascripts')
-  
+  <script type="text/javascript">
+
+    
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element');
+}
+    </script>
+
+    <script type="text/javascript" >
+        (function(){var gtConstEvalStartTime = new Date();/*
+
+ Copyright The Closure Library Authors.
+ SPDX-License-Identifier: Apache-2.0
+*/
+function d(b){var a=document.getElementsByTagName("head")[0];a||(a=document.body.parentNode.appendChild(document.createElement("head")));a.appendChild(b)}function _loadJs(b){var a=document.createElement("script");a.type="text/javascript";a.charset="UTF-8";a.src=b;d(a)}function _loadCss(b){var a=document.createElement("link");a.type="text/css";a.rel="stylesheet";a.charset="UTF-8";a.href=b;d(a)}function _isNS(b){b=b.split(".");for(var a=window,c=0;c<b.length;++c)if(!(a=a[b[c]]))return!1;return!0}
+function _setupNS(b){b=b.split(".");for(var a=window,c=0;c<b.length;++c)a.hasOwnProperty?a.hasOwnProperty(b[c])?a=a[b[c]]:a=a[b[c]]={}:a=a[b[c]]||(a[b[c]]={});return a}window.addEventListener&&"undefined"==typeof document.readyState&&window.addEventListener("DOMContentLoaded",function(){document.readyState="complete"},!1);
+if (_isNS('google.translate.Element')){return}(function(){var c=_setupNS('google.translate._const');c._cest = gtConstEvalStartTime;gtConstEvalStartTime = undefined;c._cl='en';c._cuc='googleTranslateElementInit';c._cac='';c._cam='';c._ctkk='440335.1449305758';var h='translate.googleapis.com';var s=(true?'https':window.location.protocol=='https:'?'https':'http')+'://';var b=s+h;c._pah=h;c._pas=s;c._pbi=b+'/translate_static/img/te_bk.gif';c._pci=b+'/translate_static/img/te_ctrl3.gif';c._pli=b+'/translate_static/img/loading.gif';c._plla=h+'/translate_a/l';c._pmi=b+'/translate_static/img/mini_google.png';c._ps=b+'/translate_static/css/translateelement.css';c._puh='translate.google.com';_loadCss(c._ps);_loadJs(b+'/translate_static/js/element/main.js');})();})();
+    </script>
   <script src="assetsAdmin/js/core/jquery.min.js"></script>
   <script src="assetsAdmin/js/core/popper.min.js"></script>
   <script src="assetsAdmin/js/core/bootstrap.min.js"></script>
@@ -195,6 +213,29 @@
   <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="assetsAdmin/js/now-ui-dashboard.min.js?v=1.5.0" type="text/javascript"></script><!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
   <script src="assetsAdmin/demo/demo.js"></script>
+  <script >
+
+        window.addEventListener("load",function() {
+            var x;
+            setTimeout(function () {
+              x=document.getElementsByClassName('goog-te-combo')[0].value;
+
+              if(x == ''){
+                document.getElementById('html_id').style.marginTop = '0px';
+              }
+              else{
+                document.getElementById('html_id').style.marginTop = '-40px';
+              }
+              document.getElementsByClassName('goog-te-combo')[0].onchange = function() {
+            document.getElementById('html_id').style.marginTop = '-40px';
+        }
+            },10500);
+        
+  
+      
+    });
+
+    </script>
 
 </body>
 </html>

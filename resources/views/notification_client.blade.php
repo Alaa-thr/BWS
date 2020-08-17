@@ -62,7 +62,7 @@
             </div>
         </div>      
     </div>
-<div class="main-panel" id="main-panel">
+
   
   <div class="panel-header panel-header-sm" >
   </div>
@@ -71,100 +71,63 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header" >
-                
-                <div class="flex-t">
-                    <input type="checkbox" id="article" @change="selectAll()" v-model="allSelected" style="margin-top: 5px;">
-                    <label for="article"></label>
-                    <h4 style="margin-top: -6px; margin-left: 10px;">Notification</h4>
-                </div>
-
-            <div class="txt-right"style="margin-top: -40px; " >
-                  <button v-if="suppr" class="btn-sm btn-danger " style="height: 35px; " v-on:click="deleteArrayArticle()"><b>Supprimer</b>
-                  </button>
-                  
-                  
-                  <button v-on:click="AnnulerSel()" v-if="suppr" class="btn-sm btn-warning " style="height: 35px; " ><b>Annuler</b>
-                  </button>
-               </div>
-            
-            <hr style="margin-top:42px;">       
-          
-        
-            <div class="card-body"    v-for="notificationc in notificationclient" >
-
-<div v-if="selectall" >                    
-<div id="noti" >    
- <i class="now-ui-icons ui-1_bell-53" ></i></div> 
-       <label :for="notificationc.id" style="margin-top: 40px; margin-left: 10px;"></label>
-    </div>
-    <div v-else >
-      <div id="ch1">
-      <input type="checkbox" :id="notificationc.id" :value="notificationc.id" style="margin-left: -20px;" v-model="articleIds" @click="deselectArticle(notificationc.id)"></div>
-      <label :for="notificationc.id" style="margin-top: 65px; margin-left: 10px;"></label>
-    </div>
-
-
-  <div class="card-head"  id="hmd"  >              
-    <div class="row"  >
-    <div >
-  <p class=""  id="hh" >
-       @{{notificationc.id}}</p>
-      </div> 
- 
-    
-    <div  class="col-md-4 pr-1" v-if="notificationc.vendeur_id  === null" >
-      <div style="margin-left:22px" v-for="emplC in employeur" v-if=" notificationc.employeur_id  === emplC.id">
-          <p class="" id="h" >Employeur ' @{{emplC.nom}}' à refusr votre  annonce d'emploie @{{notificationc.cmd_id}} .</p>
-      </div>
-       
-    </div>
-    <div  class="col-md-4 pr-1" v-else="notificationc.employeur_id  === null" >
-      <div style="margin-left:22px" v-for="imgA in imagesannonce" v-if=" notificationc.vendeur_id  === imgA.id">
-          <p class="" id="h" >Vendeur ' @{{imgA.Nom}}' à refusr votre Commande @{{notificationc.cmd_id}}</p>
-      </div>
-       
-    </div>
-    <div class="col-md-4 pl-1" >
-      <div class="" >
-      <a class="f" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#" id="point">
-        <i class="fas fa-ellipsis-v"  id="y"></i>
-       </a>
-      <div class="dropdown-menu " x-placement="right-start" id="pl"  >
-      <a   v-on:click="AfficheInfo(notificationc.id)"  class="dropdown-item js-show-modal1" 
-      style="color: red; font-style: italic; font-weight: 900; cursor: pointer;" >Afficher Plus</a>
-    <a class="dropdown-item" v-on:click="deleteNotificationClient(notificationc)"
-    style="color: red; font-style: italic; font-weight: 900; cursor: pointer;">
-    Supprimer</a>
-       </div>
-      
-    </div>    
-
-    </div>      
-
-  </div>      
-
-  <hr>
-
-    
-</div>                  
+            <div class="col-md-12 flex-t">    
+              <div class="flex-t col-md-9">
+                  <input type="checkbox" id="article" @change="selectAll()" v-model="allSelected">
+                  <label for="article"></label>
+                  <h4 class="m-t--5">Notification</h4>
               </div>
-
-            </div>     
+              <div class="flex-t col-md-3" >
+                <div  class="col-md-6">
+                  <button v-if="suppr" class="btn-sm btn-danger " style="height: 35px;float: right; " v-on:click="deleteArrayArticle()"><b>Supprimer</b>
+                  </button>
+                </div>
+                  
+                <div  class="col-md-6">  
+                  <button v-on:click="AnnulerSel()" v-if="suppr" class="btn-sm btn-warning " style="height: 35px;float: right; " ><b>Annuler</b>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <hr>
+            <div class="col-md-12" v-for="notificationc in notificationclient" >
+              <div class="col-md-12 flex-t">
+                <div v-if="selectall" >                    
+                  <input type="checkbox" :id="notificationc.id" :value="notificationc.id" v-model="checkedArticles" @change="changeButton(notificationc)"> 
+                  <label :for="notificationc.id"></label>
+                </div>
+                <div v-else >
+                  <input type="checkbox" :id="notificationc.id" :value="notificationc.id" v-model="articleIds" @click="deselectArticle(notificationc.id)">
+                  <label :for="notificationc.id"></label>
+                </div>
+                <div class="card-head col-md-12" >              
+                  <div class="row col-md-12"  >
+                    <div  class="col-md-11" v-on:click="AfficheInfo(notificationc.id)" style="cursor: pointer;">
+                      <span  v-for="imgA in imagesannonce" v-if=" notificationc.vendeur_id  === imgA.id" style="color:black" >Le vendeur <b>@{{imgA.Nom}}</b> a était refusé l'achat de ces produits dans ta commande numero <b>@{{notificationc.cmd_id}}</b>
+                      </span>
+                    </div>
+                    <div class="col-md-1" >
+                      <div class="dropdown" style="float: right;">
+                        <a data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="#">
+                          <i class="fas fa-ellipsis-v"  style="color: black"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right"  >
+                          <a   v-on:click="AfficheInfo(notificationc.id)"  class="dropdown-item js-show-modal1" style="color: red; font-style: italic; font-weight: 900; cursor: pointer;" >Afficher Plus</a>
+                          <a class="dropdown-item" v-on:click="deleteNotificationClient(notificationc)"style="color: red; font-style: italic; font-weight: 900; cursor: pointer;"> Supprimer</a>
+                         </div>
+                      </div>
+                    </div>
+                  </div>
+                </div> 
+              </div>
+              <hr>                 
+            </div>
+          </div>     
               {{$article->links()}}
           </div>
-    
-</div>
-
-
-
-  
-</div>
-
-</div>
-
-
-
-
+        </div>
+      </div>
+    </div>
 
 @endsection
 
@@ -203,7 +166,8 @@ el: '#app',
 
 data:{
   notificationclient: [],
-  employeur:[],imagesannonce:[],
+  employeur:[],
+  imagesannonce:[],
   suppr: false, 
   checkedArticles: [],
   artilcesDelete: [],
@@ -214,9 +178,16 @@ data:{
   },
 methods: {
   AfficheInfo: function($id){
-    
-    app2.openAjout = false ;
-    app2.detaillsCommande();
+    this.notificationclient.forEach(key=>{
+      if(key.id == $id){
+        Swal.fire({
+                  title: 'A couse de',
+                  html: '<div class="bor8"><textarea disabled class="stext-115 cl2 plh3 size-120 p-lr-28 p-tb-25" style="font-size: 17px;">'+key.cause+'</textarea></div>',
+                  showCancelButton: false,
+                  confirmButtonText: 'Ok',
+        })
+      }
+   }) 
   },
    deleteArrayArticle:function(){
         if(this.artilcesDelete.length == 0){
@@ -331,6 +302,9 @@ methods: {
     else{
       this.artilcesDelete = [];
       this.suppr=false;
+    }
+    if(this.checkedArticles.length < this.artilcesDelete.length){
+      this.artilcesDelete = this.artilcesDelete.filter(function(item) { return item != a; });
     }        
   }, 
   AnnulerSel: function(){
@@ -397,7 +371,7 @@ created:function(){
                                   this.prix[0].prixTo = 0;
                                }
                                else{
-                                  this.prix[0].prixTo -= produit.prix_total*produit.qte;
+                                  this.prix[0].prixTo -= produit.prix_produit*produit.qte;
                                }
 
                       }                     
