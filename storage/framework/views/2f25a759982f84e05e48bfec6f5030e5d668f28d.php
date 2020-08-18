@@ -1,13 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr" id='html_id'>
 
 <head>
   <meta charset="utf-8"/>
   <link rel="apple-touch-icon" sizes="76x76" href="assetsEmployeur/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="assetsEmployeur/img/favicon.png">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-
-  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+  <link rel="icon" type="image/png" href="<?php echo e(asset('images/icons/title_icon.png')); ?>">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
@@ -58,7 +56,14 @@
 				<div class="content-topbar flex-sb-m h-full container">
 					<div class="left-top-bar">
 						Soyez Heureux avec NOUS 
-					</div>
+					</div>                    
+          <div class="right-top-bar flex-w h-full">
+              <a class="flex-c-m trans-04 p-lr-25">
+                  <div id="google_translate_element" class="m-t-15"></div>
+              </a>
+                        
+          </div>
+
 				</div>
 			</div>
 
@@ -102,11 +107,11 @@
                                                        
                                                     </ul >
                                                     <ul >
-                                                <li class="p-b-6 " v-if="autreProd === 0">
+                                                <li class="p-b-6 " v-if="autreProd === 1">
 
                                                    
 
-                                                    <a href="<?php echo e(route('shop')); ?>" class="filter-link stext-106 trans-04">
+                                                    <a href="/shop/search_categorie=1" class="filter-link stext-106 trans-04">
                                                             Autre
                                                     </a>
                                                 </li>
@@ -185,11 +190,11 @@
                                                        
                                             </ul >
                                             <ul >
-                                                <li class="p-b-6 " v-if="autreAnn === 0">
+                                                <li class="p-b-6 " v-if="autreAnn === 1">
 
                                                    
 
-                                                    <a href="<?php echo e(route('emploi')); ?>" class="filter-link stext-106 trans-04">
+                                                    <a href="/emploi/search_categorie=1" class="filter-link stext-106 trans-04">
                                                             Autre
                                                     </a>
                                                 </li>
@@ -361,6 +366,12 @@
 						<div class="left-top-bar">
 							Soyez Heureux avec NOUS 
 						</div>
+            <div class="right-top-bar flex-w h-full">
+              <a class="flex-c-m trans-04 p-lr-25">
+                  <div id="google_translate_element" class="m-t-15"></div>
+              </a>
+                                
+            </div>
 					</div>
 				</div>
 			
@@ -550,121 +561,72 @@
 	    	
 		 	<?php echo $__env->yieldContent('content'); ?>
 			<div>
-  <footer class="bg3 p-t-75 p-b-32 ">
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-6 col-lg-3 p-b-50 p-l-30">
-          
-        </div>
+  <footer class="bg3 p-t-75 p-b-32" style="margin-top:12%;">
+        <div class="container">
+            <div class="row">
+                <div class="p-b-50" style="width: 15%;">
+                   
+                </div>
 
-        <div class="col-sm-6 col-lg-3 p-b-50">
-          <h4 class="stext-301 cl0 p-b-30">
-            Categories
-          </h4>
+                <div class="col-sm-6 col-lg-3 p-b-50">
+                    <h4 class="stext-301 cl0 p-b-30 p-l-20">
+                        Type Categories
+                    </h4>
 
-          <ul>
-            <li class="p-b-10">
-              <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                Women
-              </a>
-            </li>
+                    <ul>
+                        <li class="p-b-10 p-l-20">
+                            <a href="<?php echo e(route('shop')); ?>" class="stext-107 cl7 hov-cl1 trans-04">
+                                Shop
+                            </a>
+                        </li>
 
-            <li class="p-b-10">
-              <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                Men
-              </a>
-            </li>
+                        <li class="p-b-10 p-l-20">
+                            <a href="<?php echo e(route('emploi')); ?>" class="stext-107 cl7 hov-cl1 trans-04">
+                                Emploi
+                            </a>
+                        </li>
 
-            <li class="p-b-10">
-              <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                Shoes
-              </a>
-            </li>
+                    </ul>
+                </div>
 
-            <li class="p-b-10">
-              <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                Watches
-              </a>
-            </li>
-          </ul>
-        </div>
+                <div class="col-sm-6 col-lg-3 p-b-50 m-r-120">
+                    <h4 class="stext-301 cl0 p-b-30">
+                        Contactez nous
+                    </h4>
+                    <ul>
+                      <li class="stext-107 cl7 size-201">Des questions, Quelque chose n'est pas bien? Faites-nous savoir sur 05-40-84-47-82, basmah.work_shop@gmail.com ou <a href="<?php echo e(route('contact')); ?>" style="color: #148bff;">contact</a>.
+                        
+                      </li>
+                    </ul>
+                   
+                </div>
 
-        <div class="col-sm-6 col-lg-3 p-b-50">
-          <h4 class="stext-301 cl0 p-b-30">
-            GET IN TOUCH
-          </h4>
-
-          <p class="stext-107 cl7 size-201">
-            Any questions? Let us know in store at 8th floor, 379 Hudson St, New York, NY 10018 or call us on (+1) 96 716 6879
-          </p>
-
-          <div class="p-t-27">
-            <a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
-              <i class="fa fa-facebook"></i>
-            </a>
-
-            <a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
-              <i class="fa fa-instagram"></i>
-            </a>
-
-            <a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
-              <i class="fa fa-pinterest-p"></i>
-            </a>
-          </div>
-        </div>
-
-        <div class="col-sm-6 col-lg-3 p-b-50">
-          <h4 class="stext-301 cl0 p-b-30">
-            Newsletter
-          </h4>
-
-          <form>
-            <div class="wrap-input1 w-full p-b-4">
-              <input class="input1 bg-none plh1 stext-107 cl7" type="text" name="email" placeholder="email@example.com">
-              <div class="focus-input1 trans-04"></div>
+                <div class="col-sm-6 col-lg-3 p-b-50">
+                    <h4 class="stext-301 cl0 p-b-30">
+                        Rejoignez-nous
+                    </h4>
+                    <ul>
+                      <li class="stext-107 cl7 ">
+                        Si vous n'avez pas un compte creé le.<br>
+                         Ou connecté à votre compte.
+                      </li>
+                    </ul>
+                    
+                </div>
             </div>
 
-            <div class="p-t-18">
-              <button class="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04">
-                Subscribe
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
+            <div class="p-t-25 p-b-15">
+               
 
-      <div class="p-t-40">
-        <div class="flex-c-m flex-w p-b-18">
-          <a href="#" class="m-all-1">
-            <img src="images/icons/icon-pay-01.png" alt="ICON-PAY">
-          </a>
-
-          <a href="#" class="m-all-1">
-            <img src="images/icons/icon-pay-02.png" alt="ICON-PAY">
-          </a>
-
-          <a href="#" class="m-all-1">
-            <img src="images/icons/icon-pay-03.png" alt="ICON-PAY">
-          </a>
-
-          <a href="#" class="m-all-1">
-            <img src="images/icons/icon-pay-04.png" alt="ICON-PAY">
-          </a>
-
-          <a href="#" class="m-all-1">
-            <img src="images/icons/icon-pay-05.png" alt="ICON-PAY">
-          </a>
-        </div>
-
-        <p class="stext-107 cl6 txt-center m-b-13">
-          <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                <p class="stext-107 cl6 txt-center">
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with<i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" style="color: #148bff;">Basmah.ws</a>
 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 
-        </p>
-      </div>
-    </div>
-  </footer>
+                </p>
+            </div>
+        </div>
+    </footer>
 
  </div>
 
@@ -694,8 +656,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                            app66.categories = response.data.categorie;
                            app66.sousCategories = response.data.sousCatego;
                            app66.categorieAnn = response.data.autreProduit;
-                           app66.autreAnn = response.data.autre;
-                           app66.autreProd = response.data.another;
+                           app66.autreAnn = response.data.annonce1Var;
+                           app66.autreProd = response.data.produit1Var;
 
                            this.categoriesE =  response.data.categorieE;
                         })
@@ -734,6 +696,24 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
             });
        }
   </script>
+  <script type="text/javascript">
+
+    
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'fr'}, 'google_translate_element');
+}
+    </script>
+
+    <script type="text/javascript" >
+        (function(){var gtConstEvalStartTime = new Date();/*
+
+ Copyright The Closure Library Authors.
+ SPDX-License-Identifier: Apache-2.0
+*/
+function d(b){var a=document.getElementsByTagName("head")[0];a||(a=document.body.parentNode.appendChild(document.createElement("head")));a.appendChild(b)}function _loadJs(b){var a=document.createElement("script");a.type="text/javascript";a.charset="UTF-8";a.src=b;d(a)}function _loadCss(b){var a=document.createElement("link");a.type="text/css";a.rel="stylesheet";a.charset="UTF-8";a.href=b;d(a)}function _isNS(b){b=b.split(".");for(var a=window,c=0;c<b.length;++c)if(!(a=a[b[c]]))return!1;return!0}
+function _setupNS(b){b=b.split(".");for(var a=window,c=0;c<b.length;++c)a.hasOwnProperty?a.hasOwnProperty(b[c])?a=a[b[c]]:a=a[b[c]]={}:a=a[b[c]]||(a[b[c]]={});return a}window.addEventListener&&"undefined"==typeof document.readyState&&window.addEventListener("DOMContentLoaded",function(){document.readyState="complete"},!1);
+if (_isNS('google.translate.Element')){return}(function(){var c=_setupNS('google.translate._const');c._cest = gtConstEvalStartTime;gtConstEvalStartTime = undefined;c._cl='en';c._cuc='googleTranslateElementInit';c._cac='';c._cam='';c._ctkk='440335.1449305758';var h='translate.googleapis.com';var s=(true?'https':window.location.protocol=='https:'?'https':'http')+'://';var b=s+h;c._pah=h;c._pas=s;c._pbi=b+'/translate_static/img/te_bk.gif';c._pci=b+'/translate_static/img/te_ctrl3.gif';c._pli=b+'/translate_static/img/loading.gif';c._plla=h+'/translate_a/l';c._pmi=b+'/translate_static/img/mini_google.png';c._ps=b+'/translate_static/css/translateelement.css';c._puh='translate.google.com';_loadCss(c._ps);_loadJs(b+'/translate_static/js/element/main.js');})();})();
+    </script>
   <script src="assetsEmployeur/js/jquery-3.2.1.min.js"></script>
   <script src="assetsEmployeur/js/animsition.min.js"></script>
   <script src="assetsEmployeur/js/main.js"></script>
@@ -753,6 +733,29 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
   <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="assetsEmployeur/js/now-ui-dashboard.min.js?v=1.5.0" type="text/javascript"></script><!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
   <script src="assetsEmployeur/demo/demo.js"></script>
+   <script >
+
+        window.addEventListener("load",function() {
+            var x;
+            setTimeout(function () {
+              x=document.getElementsByClassName('goog-te-combo')[0].value;
+
+              if(x == ''){
+                document.getElementById('html_id').style.marginTop = '0px';
+              }
+              else{
+                document.getElementById('html_id').style.marginTop = '-40px';
+              }
+              document.getElementsByClassName('goog-te-combo')[0].onchange = function() {
+            document.getElementById('html_id').style.marginTop = '-40px';
+        }
+            },10500);
+        
+  
+      
+    });
+
+    </script>
 
 </body>
 </html><?php /**PATH C:\xampp\htdocs\BWS\resources\views/layouts/template_employeur.blade.php ENDPATH**/ ?>

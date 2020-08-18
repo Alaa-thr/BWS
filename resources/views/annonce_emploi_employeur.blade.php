@@ -487,8 +487,9 @@
           if(this.annc.sousCategories == ''){
 
             this.annc.sousCategories =  this.oldAnnc.sousCategories;
-         }        
-         axios.put(window.Laravel.url+"/updateannonce",this.annc)
+         }
+         console.log('this.annc',this.annc)        
+         /*axios.put(window.Laravel.url+"/updateannonce",this.annc)
 
             .then(response => {
               if(response.data.etat){
@@ -525,7 +526,7 @@
             .catch(error =>{
                 this.message = error.response.data.errors;
                 console.log('errors :' , this.message);
-            })
+            })*/
 
       }, 
        detaillsAnnonce: function(){

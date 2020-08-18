@@ -559,14 +559,29 @@ class ClientController extends Controller
         }
     }
     public function SignalerProduit($id){
-    
+        $i=0;
         $clientCnncte = Client::find(Auth::user()->id);
         $produit = \DB::table('produits')->where('id',$id)->get();
         \DB::table('produits')->where('id',$id)->increment('nbr_signal');
-        $signal = new Signal;
-        $signal->produit_id = $id;
-        $signal->client_id = $clientCnncte->id;
-        $signal->save();
+        $produit_signal =\DB::table('produits')->where([['id',$id],['nbr_signal','>=','3']])->get();
+        
+        if(count($produit_signal) != 0){
+            $notif = new Notificatione;
+            foreach ($produit as $key ) {
+                $notif->nom_produit = $key->Libellé;
+                $notif->vendeur_id = $key->vendeur_id;
+                $notif->save();
+            }
+            $i++;
+            \DB::table('produits')->where([['id',$id],['nbr_signal','>=','3']])->delete();
+        }
+        if($i == 0){
+            $signal = new Signal;
+            $signal->produit_id = $id;
+            $signal->client_id = $clientCnncte->id;
+            $signal->save();
+        }
+        
         return ['etat' => "remove"];
  
     }
@@ -579,21 +594,35 @@ class ClientController extends Controller
         $signal->client_id = $clientCnncte->id;
         $signal->save();
         \DB::table('vendeurs')->where('id',$id)->increment('Nbre_signal');
-        \DB::table('vendeurs')->where([['id',$id],['Nbre_signal','>','5']])->update(['deleted_at' =>Carbon::now()]);
+        \DB::table('vendeurs')->where([['id',$id],['Nbre_signal','>=','5']])->update(['deleted_at' =>Carbon::now()]);
 
         
         return ['etat' => "remove"];
     }
     
     public function SignalerAnnonce($id){
-    
+        
+        $i=0;
         $clientCnncte = Client::find(Auth::user()->id);
         $annonce = \DB::table('annonce_emploies')->where('id',$id)->get();
         \DB::table('annonce_emploies')->where('id',$id)->increment('nbr_signal');
-        $signal = new Signal;
-        $signal->annonce_emploi_id = $id;
-        $signal->client_id = $clientCnncte->id;
-        $signal->save();
+        $annonce_signal =\DB::table('annonce_emploies')->where([['id',$id],['nbr_signal','>=','3']])->get();
+        if(count($annonce_signal) != 0){
+            $notif = new Notificatione;
+            foreach ($annonce as $key ) {
+                $notif->nom_annonce = $key->libellé;
+                $notif->vendeur_id = $key->vendeur_id;
+                $notif->save();
+            }
+            $i++;
+            \DB::table('annonce_emploies')->where([['id',$id],['nbr_signal','>=','3']])->delete();
+        }
+        if($i == 0){
+            $signal = new Signal;
+            $signal->produit_id = $id;
+            $signal->client_id = $clientCnncte->id;
+            $signal->save();
+        }
         
         return ['etat' => "remove"];
     }
@@ -606,7 +635,7 @@ class ClientController extends Controller
         $signal->client_id = $clientCnncte->id;
         $signal->save();
         \DB::table('employeurs')->where('id',$id)->increment('Nbre_signal');
-        \DB::table('employeurs')->where([['id',$id],['Nbre_signal','>','5']])->update(['deleted_at' =>Carbon::now()]);    
+        \DB::table('employeurs')->where([['id',$id],['Nbre_signal','>=','5']])->update(['deleted_at' =>Carbon::now()]);    
 
         return ['etat' => "remove"];
     }

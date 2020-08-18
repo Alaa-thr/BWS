@@ -78,20 +78,20 @@ class VendeurController extends Controller
             
         }
         $vendeur = Vendeur::find(Auth::user()->id);
-        $produit_signaler = \DB::table('produits')
-           ->where([['vendeur_id', $vendeur->id],['nbr_signal','>=',3]])
+        $produit_signaler = \DB::table('notificationes')
+           ->where([['vendeur_id', $vendeur->id],['nom_produit','<>',null]])
            ->get();
         $prdS_nom = '';
         $i=0;
         foreach($produit_signaler as $prd){
             if($prdS_nom == ''){
-                $prdS_nom .= ' '.$prd->Libellé;
+                $prdS_nom .= ' '.$prd->nom_produit;
             }
             else{
-                $prdS_nom .= ', '.$prd->Libellé;
+                $prdS_nom .= ', '.$prd->nom_produit;
             }
            $i++;
-            \DB::table('produits')->where('id', $prd->id)->delete();
+           
             
         } 
         if(count($produit_signaler) != 0 && $i == 1){
@@ -102,6 +102,7 @@ class VendeurController extends Controller
 
           session()->flash('danger',"Votre Produit '".$prdS_nom." ' ils ont été supprimés car ils ont été signalés au moins trois fois.");
         }
+        \DB::table('notificationes')->where([['vendeur_id', $vendeur->id],['nom_produit','<>',null]])->delete();
         $paier = \DB::table('paiement_vendeurs')->where('vendeur_id', $vendeur->id)->get();
         if(count($paier) == 0 ){
                 $notPaier = 0;

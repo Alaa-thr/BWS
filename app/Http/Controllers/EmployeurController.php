@@ -124,20 +124,20 @@ class EmployeurController extends Controller
             
         }
         $a = Employeur::find(Auth::user()->id);
-        $produit_signaler = \DB::table('annonce_emploies')
-           ->where([['employeur_id', $a->id],['nbr_signal','>=',3]])
+        $produit_signaler = \DB::table('notificationes')
+           ->where([['employeur_id', $a->id],['nom_annonce','<>',null]])
            ->get();
         $prdS_nom = '';
         $i=0;
         foreach($produit_signaler as $prd){
             if($prdS_nom == ''){
-                $prdS_nom .= ' '.$prd->libellé;
+                $prdS_nom .= ' '.$prd->nom_annonce;
             }
             else{
-                $prdS_nom .= ', '.$prd->libellé;
+                $prdS_nom .= ', '.$prd->nom_annonce;
             }
            $i++;
-            \DB::table('annonce_emploies')->where('id', $prd->id)->delete();
+           
             
         } 
         if(count($produit_signaler) != 0 && $i == 1){
@@ -147,7 +147,8 @@ class EmployeurController extends Controller
         if(count($produit_signaler) != 0 && $i > 1){
 
           session()->flash('danger',"Votre annonces '".$prdS_nom." ' ils ont été supprimés car ils ont été signalés au moins trois fois.");
-        }   
+        }  
+        \DB::table('notificationes')->where([['employeur_id', $vendeur->id],['nom_annonce','<>',null]])->delete(); 
         $notif =  \DB::table('paiement_employeurs')->where('employeur_id', $a->id)->select('paiment_par')->get();  
         $annonce = \DB::table('annonce_emploies')->where('employeur_id', $a->id)->orderBy('created_at','desc')->paginate(6) ; 
         $categorie = \DB::table('categories')->where('typeCategorie','shop')->orderBy('libelle','asc')->get();

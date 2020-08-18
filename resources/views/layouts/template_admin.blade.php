@@ -215,17 +215,13 @@ if (_isNS('google.translate.Element')){return}(function(){var c=_setupNS('google
             var x;
             setTimeout(function () {
               x=document.getElementsByClassName('goog-te-combo')[0].value;
-              alert(document.getElementsByClassName('goog-te-combo')[0].value);
               if(x == ''){
-                alert("hi");
                 document.getElementById('html_id').style.marginTop = '0px';
               }
               else{
-                alert("no");
                 document.getElementById('html_id').style.marginTop = '-40px';
               }
               document.getElementsByClassName('goog-te-combo')[0].onchange = function() {
-                alert("hello");
                   document.getElementById('html_id').style.marginTop = '-40px';
               }
             },10500);

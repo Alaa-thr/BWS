@@ -28,9 +28,11 @@ class LogoutUsers
             }
             else if($user->type_compte == 'v'){
                 $usr = Vendeur::find($user->id);
+                
             }
             else if($user->type_compte == 'e'){
                 $usr = Employeur::find($user->id);
+                
             }
             else if($user->type_compte == 'a'){
                 $usr = Admin::find($user->id);
@@ -40,7 +42,7 @@ class LogoutUsers
                 $categorieE = \DB::table('categories')->where('typeCategorie','emploi')->orderBy('libelle','asc')->get();
                 return Response()->view('confirm_number',['categorie'=>$categorie,'categorieE'=>$categorieE]);
             }
-            if ($usr->deleted_at != null) {
+            if ($usr->deleted_at != null ) {
                 Auth::logout();
 
                 return redirect()->route('compte');

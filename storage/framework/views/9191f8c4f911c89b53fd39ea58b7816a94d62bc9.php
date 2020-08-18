@@ -170,7 +170,7 @@
 									<span >
 										<i class="fa fa-angle-right" aria-hidden="true"></i>
 									</span>
-								 <ul class="sub-menu " style="width: 575%;" >
+								 <ul class="sub-menu " style="width: 990%;" >
                                     <div class="flex-w bg6 w-full p-lr-30 p-t-27 p-lr-15-sm">
                                                 <div class="filter-col8  p-b-27">
                                             
@@ -574,23 +574,23 @@
   <footer class="bg3 p-t-75 p-b-32" style="margin-top:12%;">
         <div class="container">
             <div class="row">
-                <div class="p-b-50" style="width: 8%;">
+                <div class="p-b-50" style="width: 15%;">
                    
                 </div>
 
                 <div class="col-sm-6 col-lg-3 p-b-50">
-                    <h4 class="stext-301 cl0 p-b-30">
+                    <h4 class="stext-301 cl0 p-b-30 p-l-20">
                         Type Categories
                     </h4>
 
                     <ul>
-                        <li class="p-b-10">
+                        <li class="p-b-10 p-l-20">
                             <a href="<?php echo e(route('shop')); ?>" class="stext-107 cl7 hov-cl1 trans-04">
                                 Shop
                             </a>
                         </li>
 
-                        <li class="p-b-10">
+                        <li class="p-b-10 p-l-20">
                             <a href="<?php echo e(route('emploi')); ?>" class="stext-107 cl7 hov-cl1 trans-04">
                                 Emploi
                             </a>
@@ -603,33 +603,34 @@
                     <h4 class="stext-301 cl0 p-b-30">
                         Contactez nous
                     </h4>
-
-                    <p class="stext-107 cl7 size-201">
-                        Des questions, Quelque chose n'est pas bien? Faites-nous savoir sur 05-40-84-47-82, basmah.work_shop@gmail.com ou <a href="<?php echo e(route('contact')); ?>">contact</a>.
-                    </p>
+                    <ul>
+                      <li class="stext-107 cl7 size-201">Des questions, Quelque chose n'est pas bien? Faites-nous savoir sur 05-40-84-47-82, basmah.work_shop@gmail.com ou <a href="<?php echo e(route('contact')); ?>" style="color: #148bff;">contact</a>.
+                        
+                      </li>
+                    </ul>
+                   
                 </div>
 
                 <div class="col-sm-6 col-lg-3 p-b-50">
                     <h4 class="stext-301 cl0 p-b-30">
                         Rejoignez-nous
                     </h4>
-                    <p class="stext-107 cl7 size-201">
-                       Si vous n'avez pas un compte creé le <a href="<?php echo e(route('register')); ?>">ici</a>.<br><?php if(auth()->guard()->guest()): ?>
-                         Ou connecté à votre <a href='#' class="js-show-connect">compte</a>
-                       <?php else: ?>
-                         Ou connecté à votre compte
-                       <?php endif; ?>.
-                      
-                    </p>
+                    <ul>
+                      <li class="stext-107 cl7 ">
+                        Si vous n'avez pas un compte creé le.<br>
+                         Ou connecté à votre compte.
+                      </li>
+                    </ul>
+                    
                 </div>
             </div>
 
-            <div class="p-t-40">
+            <div class="p-t-25 p-b-15">
                
 
                 <p class="stext-107 cl6 txt-center">
                     <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with<i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" style="color: #148bff;">Basmah.ws</a>
 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 
                 </p>

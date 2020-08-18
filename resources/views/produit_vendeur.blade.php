@@ -1144,20 +1144,28 @@
         },
         updateProduitButton: function(){
             this.tarifL = false;
-         if(this.prd.Libellé == ''){
-
-            this.prd.Libellé =  this.oldprd.Libellé;         }
-         if(this.prd.description == ''){
-
-            this.prd.description =  this.oldprd.description;
-         }
-         if(this.prd.prix == ''){
-
-            this.prd.prix =  this.oldprd.prix;
-         }
-         if(this.prd.Qte_P == ''){
-            this.prd.Qte_P =  this.oldprd.Qte_P;
-         }
+            this.prd.Libellé = this.produitAjout.Libellé;
+            this.prd.description = this.produitAjout.description;
+            this.prd.prix = this.produitAjout.prix;
+            this.prd.Qte_P = this.produitAjout.Qte_P;
+            this.prd.sous_categorie_id = this.produitAjout.sous_categorie_id;
+            this.prd.id = this.produitAjout.id;
+            this.prd.colors = this.colorsP;
+            this.prd.tailles = this.tailleP;
+            this.prd.pointures = this.PointureP;
+            this.prd.typet = this.Type;
+            if(this.prd.Libellé == ''){
+              this.prd.Libellé =  this.oldprd.Libellé;
+            }
+            if(this.prd.description == ''){
+              this.prd.description =  this.oldprd.description;
+            }
+            if(this.prd.prix == ''){
+              this.prd.prix =  this.oldprd.prix;
+            }
+            if(this.prd.Qte_P == ''){
+              this.prd.Qte_P =  this.oldprd.Qte_P;
+            }
       
       
          if(this.prd.sous_categorie_id == ''){
@@ -1168,6 +1176,7 @@
 
             this.prd.id =  this.oldprd.id;
          }     
+
          axios.put(window.Laravel.url+"/updateproduit",this.prd)
          
            .then(response => {
